@@ -195,6 +195,67 @@ class TimeslotController extends Controller
 
         return $this->redirect($this->generateUrl('timeslot'));
     }
+    
+    /**
+    * Affect the timeslot to an orga
+    *
+    * @Route("/{id}/affect/{orgaid}", name="timeslot_affect")
+    * 
+    */
+    public function affectAction($id,$orgaid)
+    {
+    	
+    	$em = $this->getDoctrine()->getEntityManager();
+    	
+    	$orga = $em->getRepository('PHPMBundle:Orga')->find($orgaid);
+    	
+    	if (!$orga) {
+    		throw $this->createNotFoundException('Unable to find Orga entity.');
+    	}
+     	$timeslot = $em->getRepository('PHPMBundle:Timeslot')->find($id);
+
+        if (!$timeslot) {
+            throw $this->createNotFoundException('Unable to find Timeslot entity.');
+        }
+        
+       // exit(var_dump($timeslot->setOrga($orga)));
+        $timeslot->setOrga($orga);
+        $em->persist($timeslot);
+        $em->flush();
+    	
+    	return $this->redirect($this->generateUrl('orga_planning',array( 'id'=> $orgaid )));
+    }
+    
+    /**
+    * Desaffect the timeslot to an orga
+    *
+    * @Route("/{id}/desaffect/{orgaid}", name="timeslot_desaffect")
+    *
+    */
+    public function deaffectAction($id,$orgaid)
+    {
+    	 
+    	$em = $this->getDoctrine()->getEntityManager();
+    	 
+    	$orga = $em->getRepository('PHPMBundle:Orga')->find(1);
+    	 
+    	if (!$orga) {
+    		throw $this->createNotFoundException('Unable to find Orga entity.');
+    	}
+    	$timeslot = $em->getRepository('PHPMBundle:Timeslot')->find($id);
+    
+    	if (!$timeslot) {
+    		throw $this->createNotFoundException('Unable to find Timeslot entity.');
+    	}
+    
+    	// exit(var_dump($timeslot->setOrga($orga)));
+    	$timeslot->setOrga($orga);
+    	$em->persist($timeslot);
+    	$em->flush();
+    	 
+    	return $this->redirect($this->generateUrl('orga_planning',array( 'id'=> $orgaid )));
+    }
+    
 
     private function createDeleteForm($id)
     {

@@ -67,24 +67,7 @@ class OrgaController extends Controller
      */
     public function planningAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $entity = $em->getRepository('PHPMBundle:Orga')->find($id);
-        
-        
-        return array(
-            'entity' => $entity
-        );
-    }
-    
-    
-     /**
-     * Get Affectable Timeslots
-     *
-     * @Route("/{id}/affectation", name="orga_affectation")
-     * @Template()
-     */
-    public function affectationAction($id)
-    {
+       
     	$em = $this->getDoctrine()->getEntityManager();
     	
     	
@@ -92,7 +75,8 @@ class OrgaController extends Controller
         
         return array(
             'affectable' => $em->getRepository('PHPMBundle:Timeslot')->getAffectable($id),
-       		'affected' => $em->getRepository('PHPMBundle:Orga')->find($id)
+       		'affected' => $em->getRepository('PHPMBundle:Orga')->find($id),
+       		'orgaid'=>$id
         );
     }
 
@@ -210,7 +194,7 @@ class OrgaController extends Controller
      * Deletes a Orga entity.
      *
      * @Route("/{id}/delete", name="orga_delete")
-     * @Method("post")
+     * 
      */
     public function deleteAction($id)
     {
