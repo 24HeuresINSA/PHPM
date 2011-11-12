@@ -1,0 +1,13 @@
+{% extends "::base.html.twig"  %}
+
+
+{% block title %}
+Affectation
+{% endblock %}
+
+{% block content %}
+{% for timeslot in entity %}
+         {{ timeslot.begintime|date('l H:i') }} - {{ timeslot.endtime|date('H:i') }} - {{timeslot.task.name}} <br/>
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>{% block title %}{% endblock %} - PHPlanningMaker</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+        <link rel ="stylesheet" href = "{{ asset('desktop.css') }}" />
+    </head>
+    <body>
+        <div id="header" >
+        
+        {% include "::header.html.twig" %} 
+        <h2>{{ block('title') }}</h2>
+        {% include "::menubar.html.twig" %} 
+        </div>
+        
+        
+       <!-- {% block sidebar %}<div id="sidebar"></div>{% endblock %} -->
+        <div id="content">{% block content %}{% endblock %}</div>
+        <div class="clear"></div>
+        <div id="footer">{% include "::footer.html.twig"%} </div>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

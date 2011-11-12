@@ -1,0 +1,13 @@
+[parameters]
+    database_driver="pdo_mysql"
+    database_host="localhost"
+    database_port=""
+    database_name="symfony"
+    database_user="symfony"
+    database_password="symfo"
+    mailer_transport="smtp"
+    mailer_host="localhost"
+    mailer_user=""
+    mailer_password=""
+    locale="en"
+    secret="c475878b7e71a1330809d1b58a6a6c3a3ee6c621"

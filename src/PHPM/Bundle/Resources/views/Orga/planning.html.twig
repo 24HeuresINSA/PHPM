@@ -1,0 +1,13 @@
+{% extends "::base.html.twig"  %}
+
+
+{% block title %}
+Planning of {{ entity.name }}
+{% endblock %}
+
+{% block content %}
+{% for timeslot in entity.timeslots %}
+         {{ timeslot.begintime|date('l H:i') }} - {{ timeslot.endtime|date('H:i') }} - {{timeslot.task.name}} <br/>
+    {% endfor %}
+
+{% endblock %}

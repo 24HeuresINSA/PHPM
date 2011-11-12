@@ -1,0 +1,32 @@
+{% extends "::base.html.twig"  %}
+
+{% block title %}
+Timeslot edit
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<form action="{{ path('timeslot_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+    <p>
+        <button type="submit">Edit</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('timeslot') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('timeslot_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}
