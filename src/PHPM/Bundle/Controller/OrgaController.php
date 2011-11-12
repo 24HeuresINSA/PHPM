@@ -75,8 +75,8 @@ class OrgaController extends Controller
         
         return array(
             'affectable' => $em->getRepository('PHPMBundle:Timeslot')->getAffectable($id),
-       		'affected' => $em->getRepository('PHPMBundle:Orga')->find($id),
-       		'orgaid'=>$id
+       		'orga' => $em->getRepository('PHPMBundle:Orga')->find($id)
+       		
         );
     }
 

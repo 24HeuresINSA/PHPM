@@ -2,17 +2,17 @@
 
 
 {% block title %}
-Planning
+{{ orga.name}} - Planning
 {% endblock %}
 
 {% block content %}
 <h3>Affected Timeslots</h3>
-{% for timeslot in affected.timeslots %}
-         <a href="{{ path('timeslot_desaffect', { 'id': timeslot.id , 'orgaid': orgaid }) }}">{{ timeslot.begintime|date('l H:i') }} - {{ timeslot.endtime|date('H:i') }} - {{timeslot.task.name}}</a> <br/>
+{% for timeslot in orga.timeslots %}
+         <a href="{{ path('timeslot_desaffect', { 'id': timeslot.id , 'orgaid': orga.id }) }}">{{ timeslot.begintime|date('l H:i') }} - {{ timeslot.endtime|date('H:i') }} - {{timeslot.task.name}}</a> <br/>
     {% endfor %}
 <h3>Affectable Timeslots</h3>
 {% for timeslot in affectable %}
-         <a href="{{ path('timeslot_affect', { 'id': timeslot.id , 'orgaid': orgaid }) }}">{{ timeslot.begintime|date('l H:i') }} - {{ timeslot.endtime|date('H:i') }} - {{timeslot.task.name}} </a><br/>
+         <a href="{{ path('timeslot_affect', { 'id': timeslot.id , 'orgaid': orga.id }) }}">{{ timeslot.begintime|date('l H:i') }} - {{ timeslot.endtime|date('H:i') }} - {{timeslot.task.name}} </a><br/>
 {% endfor %}
 
 {% endblock %}

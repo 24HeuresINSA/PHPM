@@ -13,43 +13,22 @@ Orga list
 {% block content %}
 
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Begintime</th>
-            <th>Endtime</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
+<ul>
     {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('orga_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.name }}</td>
-            <td>{{ entity.begintime|date('Y-m-d H:i:s') }}</td>
-            <td>{{ entity.endtime|date('Y-m-d H:i:s') }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('orga_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('orga_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('orga_planning', { 'id': entity.id }) }}">planning</a>
-                    </li>
-                    
-                </ul>
-            </td>
-            <td></td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
 
+
+	<li>
+	<a href="{{ path('orga_planning', { 'id': entity.id }) }}">{{ entity.name }}</a>
+	 - <a href="{{ path('orga_edit', { 'id': entity.id }) }}">edit</a>
+	 - <a href="{{ path('orga_show', { 'id': entity.id }) }}">show</a>
+	</li>
+
+
+
+
+	{% endfor %}
+
+</ul>
 <ul>
     <li>
         <a href="{{ path('orga_new') }}">
