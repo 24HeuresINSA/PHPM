@@ -26,10 +26,13 @@ class TimeslotController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
+        
         $entities = $em->getRepository('PHPMBundle:Timeslot')->findAll();
 
         return array('entities' => $entities);
     }
+    
+    
 
     /**
      * Finds and displays a Timeslot entity.

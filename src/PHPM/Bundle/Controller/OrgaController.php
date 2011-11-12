@@ -78,38 +78,21 @@ class OrgaController extends Controller
     
     
      /**
-     * Shows the planning of an orga
+     * Get Affectable Timeslots
      *
      * @Route("/{id}/affectation", name="orga_affectation")
      * @Template()
      */
     public function affectationAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        
-        
-        
-        $dql = "SELECT t FROM PHPMBundle:Timeslot t WHERE
-            t.id NOT IN 
-                (
-                SELECT t2.id FROM
-                PHPMBundle:Timeslot t1,
-                PHPMBundle:Timeslot t2
-                WHERE t1.orga =$id
-                AND (
-                NOT(t1.endtime <= t2.begintime OR t1.begintime >=t2.endtime)
-                OR t2.orga IS NOT NULL )
-                )
-            ";
-
-
-        $query = $em->createQuery($dql);
-        
-        $entity = $query->getResult();
-        
+    	$em = $this->getDoctrine()->getEntityManager();
+    	
+    	
+    	 
         
         return array(
-            'entity' => $entity
+            'affectable' => $em->getRepository('PHPMBundle:Timeslot')->getAffectable($id),
+       		'affected' => $em->getRepository('PHPMBundle:Orga')->find($id)
         );
     }
 

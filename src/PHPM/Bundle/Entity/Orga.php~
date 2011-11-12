@@ -122,4 +122,28 @@ class Orga
     {
         return $this->name;
     }
+    public function __construct()
+    {
+        $this->timeslots = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add timeslots
+     *
+     * @param PHPM\Bundle\Entity\Timeslot $timeslots
+     */
+    public function addTimeslot(\PHPM\Bundle\Entity\Timeslot $timeslots)
+    {
+        $this->timeslots[] = $timeslots;
+    }
+
+    /**
+     * Get timeslots
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getTimeslots()
+    {
+        return $this->timeslots;
+    }
 }
