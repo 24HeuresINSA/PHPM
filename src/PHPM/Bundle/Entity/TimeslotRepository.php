@@ -40,5 +40,27 @@ class TimeslotRepository extends EntityRepository
 		return  $entity;
 	}
 	
+	public function getAffectedAtTime($taskid,$time)
+	{
+		$em = $this->getEntityManager();
+	
+	
+	
+		$dql = "SELECT t FROM PHPMBundle:Timeslot t WHERE
+		WHERE t.task =$id
+		AND (
+		NOT(t1.endtime <= t2.begintime OR t1.begintime >=t2.endtime)
+		OR t2.orga != 1 )
+		)
+		";
+	
+	
+		$query = $em->createQuery($dql);
+	
+		$entity = $query->getResult();
+	
+		return  $entity;
+	}
+	
 	
 }

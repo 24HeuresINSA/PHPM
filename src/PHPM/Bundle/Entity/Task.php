@@ -229,4 +229,28 @@ class Task
     {
         return $this->timeslots;
     }
+    
+    public function isPopulated(){
+    	
+    	
+    	$ok= false;
+    	$times=array();
+    	 foreach ( $this->timeslots as $ts){
+    	 	$dt=$ts->getBegintime();
+    	 	array_push($times, $dt->getTimestamp());
+    	 	
+    	 }
+    	 
+    	var_dump(array_count_values($times));
+    	 
+    	 
+    	 
+    	 
+    	 
+    	
+    	
+    	
+    	return $ok;
+    }
+    
 }
