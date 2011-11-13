@@ -35,20 +35,7 @@ class Task
      */
     private $description;
 
-    /**
-     * @var datetime $begintime
-     *
-     * @ORM\Column(name="begintime", type="datetime")
-     */
-    private $begintime;
-
-    /**
-     * @var datetime $endtime
-     *
-     * @ORM\Column(name="endtime", type="datetime")
-     */
-    private $endtime;
-
+   
     /**
      * @var smallint $duration
      *
@@ -67,6 +54,11 @@ class Task
      * @ORM\OneToMany(targetEntity="Timeslot", mappedBy="task")
      */
     protected $timeslots;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Timespan", mappedBy="task")
+     */
+    protected $timespans;
     
     
     
@@ -121,45 +113,7 @@ class Task
         return $this->description;
     }
 
-    /**
-     * Set begintime
-     *
-     * @param datetime $begintime
-     */
-    public function setBegintime($begintime)
-    {
-        $this->begintime = $begintime;
-    }
-
-    /**
-     * Get begintime
-     *
-     * @return datetime 
-     */
-    public function getBegintime()
-    {
-        return $this->begintime;
-    }
-
-    /**
-     * Set endtime
-     *
-     * @param datetime $endtime
-     */
-    public function setEndtime($endtime)
-    {
-        $this->endtime = $endtime;
-    }
-
-    /**
-     * Get endtime
-     *
-     * @return datetime 
-     */
-    public function getEndtime()
-    {
-        return $this->endtime;
-    }
+ 
 
     /**
      * Set duration
@@ -230,27 +184,26 @@ class Task
         return $this->timeslots;
     }
     
-    public function isPopulated(){
-    	
-    	
-    	$ok= false;
-    	$times=array();
-    	 foreach ( $this->timeslots as $ts){
-    	 	$dt=$ts->getBegintime();
-    	 	array_push($times, $dt->getTimestamp());
-    	 	
-    	 }
-    	 
-    	var_dump(array_count_values($times));
-    	 
-    	 
-    	 
-    	 
-    	 
-    	
-    	
-    	
-    	return $ok;
-    }
+   
     
+
+    /**
+     * Add timespans
+     *
+     * @param PHPM\Bundle\Entity\Timespan $timespans
+     */
+    public function addTimespan(\PHPM\Bundle\Entity\Timespan $timespans)
+    {
+        $this->timespans[] = $timespans;
+    }
+
+    /**
+     * Get timespans
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getTimespans()
+    {
+        return $this->timespans;
+    }
 }

@@ -5,14 +5,12 @@ namespace PHPM\Bundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * PHPM\Bundle\Entity\Timeslot
+ * PHPM\Bundle\Entity\Timespan
+ *
  * @ORM\Table()
- * @ORM\Entity
- * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\TimeslotRepository")
- * 
- * 
- *  */
-class Timeslot
+ * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\TimespanRepository")
+ */
+class Timespan
 {
     /**
      * @var integer $id
@@ -38,11 +36,12 @@ class Timeslot
     private $endtime;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Orga", inversedBy="timeslots")
-     * @ORM\JoinColumn(name="orga_id", referencedColumnName="id")
+     * @var smallint $orgasneeded
+     *
+     * @ORM\Column(name="orgasneeded", type="smallint")
      */
-    protected $orga;
-    
+    private $orgasneeded;
+
     /**
      * @ORM\ManyToOne(targetEntity="Task", inversedBy="timeslots")
      * @ORM\JoinColumn(name="task_id", referencedColumnName="id")
@@ -100,23 +99,23 @@ class Timeslot
     }
 
     /**
-     * Set orga
+     * Set orgasneeded
      *
-     * @param PHPM\Bundle\Entity\Orga $orga
+     * @param smallint $orgasneeded
      */
-    public function setOrga(\PHPM\Bundle\Entity\Orga $orga)
+    public function setOrgasneeded($orgasneeded)
     {
-        $this->orga = $orga;
+        $this->orgasneeded = $orgasneeded;
     }
 
     /**
-     * Get orga
+     * Get orgasneeded
      *
-     * @return PHPM\Bundle\Entity\Orga 
+     * @return smallint 
      */
-    public function getOrga()
+    public function getOrgasneeded()
     {
-        return $this->orga;
+        return $this->orgasneeded;
     }
 
     /**
@@ -138,4 +137,8 @@ class Timeslot
     {
         return $this->task;
     }
+    
+    
+    
+    
 }

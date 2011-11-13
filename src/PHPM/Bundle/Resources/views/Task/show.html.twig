@@ -9,10 +9,7 @@ Task
 
 {% block content %}
 
-<b>IS POPULATED : </b>{% if entity.isPopulated  %}
-YES{% else %}
-NO
-{% endif %}
+<b>IS POPULATED : </b>
  <br/>
 
 
@@ -26,11 +23,7 @@ NO
             <th>Name</th>                <td>{{ entity.name }}</td>        </tr>
         <tr>
             <th>Description</th>                <td>{{ entity.description }}</td>        </tr>
-        <tr>
-            <th>Begintime</th>                <td>{{ entity.begintime|date('Y-m-d H:i:s') }}</td>        </tr>
-        <tr>
-            <th>Endtime</th>                <td>{{ entity.endtime|date('Y-m-d H:i:s') }}</td>        </tr>
-        <tr>
+        
             <th>Duration</th>                <td>{{ entity.duration }}</td>        </tr>
         <tr>
             <th>Overlap</th>                <td>{{ entity.overlap }}</td>        </tr>

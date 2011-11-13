@@ -35,20 +35,7 @@ class Task
      */
     private $description;
 
-    /**
-     * @var datetime $begintime
-     *
-     * @ORM\Column(name="begintime", type="datetime")
-     */
-    private $begintime;
-
-    /**
-     * @var datetime $endtime
-     *
-     * @ORM\Column(name="endtime", type="datetime")
-     */
-    private $endtime;
-
+   
     /**
      * @var smallint $duration
      *
@@ -67,6 +54,11 @@ class Task
      * @ORM\OneToMany(targetEntity="Timeslot", mappedBy="task")
      */
     protected $timeslots;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Timespan", mappedBy="task")
+     */
+    protected $timespans;
     
     
     
@@ -228,5 +220,49 @@ class Task
     public function getTimeslots()
     {
         return $this->timeslots;
+    }
+    
+    public function isPopulated(){
+    	
+    	
+    	$ok= false;
+    	$times=array();
+    	 foreach ( $this->timeslots as $ts){
+    	 	$dt=$ts->getBegintime();
+    	 	array_push($times, $dt->getTimestamp());
+    	 	
+    	 }
+    	 
+    	var_dump(array_count_values($times));
+    	 
+    	 
+    	 
+    	 
+    	 
+    	
+    	
+    	
+    	return $ok;
+    }
+    
+
+    /**
+     * Add timespans
+     *
+     * @param PHPM\Bundle\Entity\Timespan $timespans
+     */
+    public function addTimespan(\PHPM\Bundle\Entity\Timespan $timespans)
+    {
+        $this->timespans[] = $timespans;
+    }
+
+    /**
+     * Get timespans
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getTimespans()
+    {
+        return $this->timespans;
     }
 }

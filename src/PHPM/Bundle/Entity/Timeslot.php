@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * PHPM\Bundle\Entity\Timeslot
  * @ORM\Table()
- * @ORM\Entity
  * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\TimeslotRepository")
  * 
  * 

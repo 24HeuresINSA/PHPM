@@ -62,5 +62,72 @@ class TimeslotRepository extends EntityRepository
 		return  $entity;
 	}
 	
+	public function getFromTimespan($taskid,$timespanid)
+	{
+		$em = $this->getEntityManager();
+	
+	
+	
+		$dql = "SELECT t FROM PHPMBundle:Timeslot t , PHPMBundle:Timespan tsp
+		WHERE tsp.id= $timespanid AND t.task = $taskid
+		AND 
+		(t.begintime <= tsp.endtime AND t.endtime >=tsp.begintime)
+		
+		";
+	
+	
+		$query = $em->createQuery($dql);
+	
+		$entity = $query->getResult();
+	
+		return  $entity;
+	}
+	
+	
+	
+	public function getHours(){
+		
+		
+        $sql = '
+SELECT t, max(orgas) FROM (
+(
+SELECT t, count(t2b) AS orgas FROM
+((
+SELECT t0.begintime AS t FROM Timeslot t0, Timespan tsp WHERE t0.task_id=1 AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)
+)
+UNION
+(
+SELECT t0.endtime  FROM Timeslot t0, Timespan tsp WHERE t0.task_id=1 AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)
+) ) AS t1 , 
+
+(SELECT t0.begintime AS t2b, t0.endtime AS t2e FROM Timeslot t0, Timespan tsp WHERE t0.task_id=1 AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)) AS t2
+
+
+WHERE (t>=t2b AND t<t2e)
+GROUP BY t
+)
+UNION
+ (
+SELECT t, 0 FROM
+((
+SELECT t0.begintime AS t FROM Timeslot t0, Timespan tsp WHERE t0.task_id=1 AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)
+)
+UNION
+(
+SELECT t0.endtime  FROM Timeslot t0, Timespan tsp WHERE t0.task_id=1 AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)
+) ) AS t1 , 
+
+(SELECT t0.begintime AS t2b, t0.endtime AS t2e FROM Timeslot t0, Timespan tsp WHERE t0.task_id=1 AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)) AS t2
+
+
+WHERE NOT(t>=t2b AND t<t2e)
+GROUP BY t
+)
+
+)AS t3 GROUP BY t';
+        $rows = $this->getEntityManager()->getConnection()->execute($sql);
+		return $rows;
+	}
+	
 	
 }
