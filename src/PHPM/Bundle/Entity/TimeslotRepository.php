@@ -125,7 +125,15 @@ GROUP BY t
 )
 
 )AS t3 GROUP BY t';
-        $rows = $this->getEntityManager()->getConnection()->execute($sql);
+$rsm = new ResultSetMapping;
+$rsm->addEntityResult('ts', 'u');
+$rsm->addFieldResult('u', 'id', 'id');
+$rsm->addFieldResult('u', 'name', 'name');
+
+$query = $this->_em->createNativeQuery('SELECT id, name FROM users WHERE name = ?', $rsm);
+$query->setParameter(1, 'romanb');
+
+$users = $query->getResult();
 		return $rows;
 	}
 	
