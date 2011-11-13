@@ -85,22 +85,23 @@ class TimeslotRepository extends EntityRepository
 	
 	
 	
-	public function getHours(){
+	public function getHours($tsp){
 		
+		$tid=$tsp->getId();
 		
-        $sql = '
-SELECT t, max(orgas) FROM (
+        $sql = "
+SELECT t, max(orgas) AS o FROM (
 (
 SELECT t, count(t2b) AS orgas FROM
 ((
-SELECT t0.begintime AS t FROM Timeslot t0, Timespan tsp WHERE t0.task_id=1 AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)
+SELECT t0.begintime AS t FROM Timeslot t0, Timespan tsp WHERE tsp.id=$tid AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)
 )
 UNION
 (
-SELECT t0.endtime  FROM Timeslot t0, Timespan tsp WHERE t0.task_id=1 AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)
+SELECT t0.endtime  FROM Timeslot t0, Timespan tsp WHERE tsp.id=$tid AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)
 ) ) AS t1 , 
 
-(SELECT t0.begintime AS t2b, t0.endtime AS t2e FROM Timeslot t0, Timespan tsp WHERE t0.task_id=1 AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)) AS t2
+(SELECT t0.begintime AS t2b, t0.endtime AS t2e FROM Timeslot t0, Timespan tsp WHERE tsp.id=$tid AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)) AS t2
 
 
 WHERE (t>=t2b AND t<t2e)
@@ -110,30 +111,28 @@ UNION
  (
 SELECT t, 0 FROM
 ((
-SELECT t0.begintime AS t FROM Timeslot t0, Timespan tsp WHERE t0.task_id=1 AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)
+SELECT t0.begintime AS t FROM Timeslot t0, Timespan tsp WHERE tsp.id=$tid AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)
 )
 UNION
 (
-SELECT t0.endtime  FROM Timeslot t0, Timespan tsp WHERE t0.task_id=1 AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)
+SELECT t0.endtime  FROM Timeslot t0, Timespan tsp WHERE tsp.id=$tid AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)
 ) ) AS t1 , 
 
-(SELECT t0.begintime AS t2b, t0.endtime AS t2e FROM Timeslot t0, Timespan tsp WHERE t0.task_id=1 AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)) AS t2
+(SELECT t0.begintime AS t2b, t0.endtime AS t2e FROM Timeslot t0, Timespan tsp WHERE tsp.id=$tid AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)) AS t2
 
 
 WHERE NOT(t>=t2b AND t<t2e)
 GROUP BY t
 )
 
-)AS t3 GROUP BY t';
-$rsm = new ResultSetMapping;
-$rsm->addEntityResult('ts', 'u');
-$rsm->addFieldResult('u', 'id', 'id');
-$rsm->addFieldResult('u', 'name', 'name');
+)AS t3 GROUP BY t";
 
-$query = $this->_em->createNativeQuery('SELECT id, name FROM users WHERE name = ?', $rsm);
-$query->setParameter(1, 'romanb');
+$conn = $this->_em->getConnection();
+$rows = $conn->fetchAll($sql);
 
-$users = $query->getResult();
+
+
+
 		return $rows;
 	}
 	

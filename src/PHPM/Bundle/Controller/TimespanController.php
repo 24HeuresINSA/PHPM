@@ -47,15 +47,15 @@ class TimespanController extends Controller
             throw $this->createNotFoundException('Unable to find Timespan entity.');
         }
 		//exit(var_dump($em->getRepository('PHPMBundle:Timespan')));
-        $hours = $em->getRepository('PHPMBundle:Timeslot')->getHours();
-        var_dump($hours);
-        
+        $hours = $em->getRepository('PHPMBundle:Timeslot')->getHours($entity);
+                
         
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(), 
+        		'hours' => $hours
         		);
     }
 
