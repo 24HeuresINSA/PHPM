@@ -13,43 +13,22 @@ Task list
 {% block content %}
 
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Begintime</th>
-            <th>Endtime</th>
-            <th>Duration</th>
-            <th>Overlap</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
+<ul>
     {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('task_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.name }}</td>
-            <td>{{ entity.description }}</td>
-            <td>{{ entity.begintime|date('Y-m-d H:i:s') }}</td>
-            <td>{{ entity.endtime|date('Y-m-d H:i:s') }}</td>
-            <td>{{ entity.duration }}</td>
-            <td>{{ entity.overlap }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('task_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('task_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+
+
+	<li>
+	<a href="{{ path('task_planning', { 'id': entity.id }) }}">{{ entity.name }}</a>
+	 - <a href="{{ path('task_edit', { 'id': entity.id }) }}">edit</a>
+	 - <a href="{{ path('task_show', { 'id': entity.id }) }}">show</a>
+	</li>
+
+
+
+
+	{% endfor %}
+
+</ul>
 
 <ul>
     <li>

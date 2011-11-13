@@ -244,6 +244,39 @@ class TaskController extends Controller
         $result='ok';
        return new Response($result);
     }
+    
+    
+    /**
+    * Shows the timeslots of a task
+    *
+    * @Route("/{id}/planning", name="task_planning")
+    * @Template()
+    */
+    public function planningAction($id)
+    {
+    	 
+    	$em = $this->getDoctrine()->getEntityManager();
+    	 
+    	 
+    
+    
+    	return array(
+                'entity' => $em->getRepository('PHPMBundle:Task')->find($id)
+    	 
+    	);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     private function createDeleteForm($id)
     {
@@ -252,6 +285,10 @@ class TaskController extends Controller
             ->getForm()
         ;
     }
+    
+    
+    
+    
     
     
     
