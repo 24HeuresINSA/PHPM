@@ -3,9 +3,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>{% block title %}{% endblock %} - PHPlanningMaker</title>
-        {% block stylesheets %}{% endblock %}
+{% stylesheets '@PHPMBundle/Resources/public/css/*'  %}
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset(asset_url)}}" />
+ {% endstylesheets %}
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
-        <link rel ="stylesheet" href = "{{ asset('desktop.css') }}" />
+        
     </head>
     <body>
         <div id="header" >
