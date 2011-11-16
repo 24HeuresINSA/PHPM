@@ -25,13 +25,17 @@ class TimeslotRepository extends EntityRepository
 	                SELECT t2.id FROM
 	                PHPMBundle:Timeslot t1,
 	                PHPMBundle:Timeslot t2
-	                WHERE t1.orga =$id
-	                AND (
-	                NOT(t1.endtime <= t2.begintime OR t1.begintime >=t2.endtime)
-	                OR t2.orga != 1 )
+	                WHERE 
+	                ((t1.orga = $id) AND (t1.endtime > t2.begintime AND t1.begintime <t2.endtime) )
+	                OR
+	                (t2.orga != 1 ) 
+	                
+	                
+	                
 	                )
 	            ";
 	
+		
 	
 		$query = $em->createQuery($dql);
 	

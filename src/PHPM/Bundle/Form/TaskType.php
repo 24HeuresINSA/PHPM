@@ -12,8 +12,7 @@ class TaskType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('begintime')
-            ->add('endtime')
+
             ->add('duration')
             ->add('overlap')
         ;
