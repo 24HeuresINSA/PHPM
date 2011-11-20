@@ -90,54 +90,39 @@ class TimeslotRepository extends EntityRepository
 	
 	
 	public function getHours($tsp){
-		
+		$conn = $this->_em->getConnection();
 		$tid=$tsp->getId();
 		
-        $sql = "
-SELECT t, max(orgas) AS o FROM (
-(
-SELECT t, count(t2b) AS orgas FROM
-((
-SELECT t0.begintime AS t FROM Timeslot t0, Timespan tsp WHERE tsp.id=$tid AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)
-)
-UNION
-(
-SELECT t0.endtime  FROM Timeslot t0, Timespan tsp WHERE tsp.id=$tid AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)
-) ) AS t1 , 
+		$sql = "CREATE TEMPORARY TABLE te SELECT  t.endtime AS t FROM Timeslot t, Timespan tsp WHERE tsp.id=$tid AND (t.begintime <= tsp.endtime AND t.endtime >= tsp.begintime)  ;
+		
+		CREATE TEMPORARY TABLE tb SELECT  t.begintime AS t FROM Timeslot t, Timespan tsp WHERE tsp.id=$tid AND (t.begintime <= tsp.endtime AND t.endtime >= tsp.begintime)  ;
+		
+		CREATE TEMPORARY TABLE t1 SELECT * FROM tb UNION SELECT * FROM te UNION SELECT begintime from Timespan WHERE tsp.id=$tid UNION SELECT endtime from Timespan WHERE tsp.id=$tid;
+		
+		CREATE TEMPORARY TABLE t2 SELECT  t.begintime, t.endtime FROM Timeslot t, Timespan tsp  WHERE  (t.begintime <= tsp.endtime AND t.endtime >= tsp.begintime) AND orga_id !=1 ;
+		
+		CREATE TEMPORARY TABLE hours SELECT t , SUM(IF(begintime<= t AND endtime >t,1,0)) AS o from t1, t2  GROUP BY t ;
+		
+		
+		
+		
+		";
+		
+		
+		$conn->query($sql)->closeCursor();
 
-(SELECT t0.begintime AS t2b, t0.endtime AS t2e FROM Timeslot t0, Timespan tsp WHERE tsp.id=$tid AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)) AS t2
-
-
-WHERE (t>=t2b AND t<t2e)
-GROUP BY t
-)
-UNION
- (
-SELECT t, 0 FROM
-((
-SELECT t0.begintime AS t FROM Timeslot t0, Timespan tsp WHERE tsp.id=$tid AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)
-)
-UNION
-(
-SELECT t0.endtime  FROM Timeslot t0, Timespan tsp WHERE tsp.id=$tid AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)
-) ) AS t1 , 
-
-(SELECT t0.begintime AS t2b, t0.endtime AS t2e FROM Timeslot t0, Timespan tsp WHERE tsp.id=$tid AND (t0.begintime <= tsp.endtime AND t0.endtime >= tsp.begintime)) AS t2
+$sql = "SELECT t, o  FROM hours  ";
 
 
-WHERE NOT(t>=t2b AND t<t2e)
-GROUP BY t
-)
-
-)AS t3 GROUP BY t";
-
-$conn = $this->_em->getConnection();
-$rows = $conn->fetchAll($sql);
+$st = $conn->prepare($sql)->execute();
 
 
 
 
-		return $rows;
+
+
+
+		return $st;
 	}
 	
 	

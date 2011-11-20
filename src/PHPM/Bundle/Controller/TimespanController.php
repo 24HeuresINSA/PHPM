@@ -48,7 +48,7 @@ class TimespanController extends Controller
         }
 		//exit(var_dump($em->getRepository('PHPMBundle:Timespan')));
         $hours = $em->getRepository('PHPMBundle:Timeslot')->getHours($entity);
-                
+        exit(var_dump($hours));
         
         $deleteForm = $this->createDeleteForm($id);
 
