@@ -7,6 +7,5 @@
 /app/config/parameters.ini
 /bundles/
 
-src/.DS_Store
-
+.metadata
 .DS_Store
