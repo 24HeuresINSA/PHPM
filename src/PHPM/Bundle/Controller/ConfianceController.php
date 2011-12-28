@@ -49,10 +49,9 @@ class ConfianceController extends Controller
     		
     	}
     	$response = new Response();
-    	$response->setContent('helo');
-
+    	$response->setContent(json_encode($a));
 		$response->headers->set('Content-Type', 'application/json');
-    	exit(var_dump($a));
+    	
     
     	return $response;
     }
