@@ -1,3 +1,5 @@
+{% extends "::base.html.twig"  %}
+{% block content %}
 <h1>PlageHoraire creation</h1>
 
 <form action="{{ path('plagehoraire_create') }}" method="post" {{ form_enctype(form) }}>
@@ -14,3 +16,4 @@
         </a>
     </li>
 </ul>
+{% endblock %}
