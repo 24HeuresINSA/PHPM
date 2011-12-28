@@ -199,4 +199,34 @@ class TacheController extends Controller
             ->getForm()
         ;
     }
+
+
+/**
+* Import all Tache entities.
+*
+* @Route("/import", name="tache_import")
+* @Template()
+*/
+public function importAction()
+{
+	$jason = "[{\"id\":11,\"nom\":\"TENIR LE PUTAIN DE BAR\",\"categorie\":\"Barres\",\"description\":\"MAIS TU VA LE TENIR TON BAR, MERDE\",\"plages\":[{\"id\":11,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":12,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":13,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712}]},{\"id\":22,\"nom\":\"TENIR LE PUTAIN DE BAR\",\"categorie\":\"Barres\",\"description\":\"MAIS TU VA LE TENIR TON BAR, MERDE\",\"plages\":[{\"id\":21,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":22,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":23,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712}]},{\"id\":33,\"nom\":\"TENIR LE PUTAIN DE BAR\",\"categorie\":\"Barres\",\"description\":\"MAIS TU VA LE TENIR TON BAR, MERDE\",\"plages\":[{\"id\":31,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":32,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":33,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712}]}]";
+	//$jason = fopen("taches.json", "r");
+	print"<pre>";
+	$tabArray = json_decode($jason, TRUE);
+	var_dump($tabArray);
+	print"</pre>";
+	$em = $this->getDoctrine()->getEntityManager();
+	$entities = $em->getRepository('PHPMBundle:Tache')->findById(2);
+
+	foreach ($tabArray as $tache_en_traitement) {
+		//var_dump($tache_en_traitement['id']);
+		$entities = $em->getRepository('PHPMBundle:Tache')->findById($tache_en_traitement['id']);
+		print ($entities);
+		
+	}
+	
+	exit(var_dump($entities));
+	return array();
+}
+
 }
