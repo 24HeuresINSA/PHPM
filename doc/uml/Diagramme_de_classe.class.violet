@@ -7,8 +7,7 @@
      <void property="text"> 
       <string>nom
 description
-
-</string> 
+lieu</string> 
      </void> 
     </void> 
     <void property="name"> 
