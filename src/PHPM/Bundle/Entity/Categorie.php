@@ -90,6 +90,6 @@ class Categorie
 
     public function __toString()
     {
-	return getNom();
+	return $this->getNom();
     }
 }

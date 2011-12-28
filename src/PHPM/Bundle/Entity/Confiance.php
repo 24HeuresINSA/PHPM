@@ -168,4 +168,9 @@ class Confiance
     {
         return $this->orgas;
     }
+    
+    public function __toString()
+    {
+	return $this->getNom();
+    }
 }

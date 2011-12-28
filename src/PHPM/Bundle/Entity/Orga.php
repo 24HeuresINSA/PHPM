@@ -331,4 +331,9 @@ class Orga
     {
         return $this->disponibilites;
     }
+    
+    public function __toString()
+    {
+    	return $this->getPrenom()." ".$this->getNom();
+    }
 }
