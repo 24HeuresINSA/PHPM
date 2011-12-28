@@ -1,0 +1,18 @@
+PHPM\Bundle\Entity\Confiance:
+  type: entity
+  table: null
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    nom:
+      type: string
+      length: 255
+    valeur:
+      type: integer
+    couleur:
+      type: string
+      length: 255
+  lifecycleCallbacks: {  }
