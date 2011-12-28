@@ -1,0 +1,41 @@
+<h1>Confiance list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Valeur</th>
+            <th>Couleur</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('confiance_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.nom }}</td>
+            <td>{{ entity.valeur }}</td>
+            <td>{{ entity.couleur }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('confiance_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('confiance_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('confiance_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>

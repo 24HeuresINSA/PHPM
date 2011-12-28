@@ -1,0 +1,65 @@
+<h1>Orga</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Nom</th>
+            <td>{{ entity.nom }}</td>
+        </tr>
+        <tr>
+            <th>Prenom</th>
+            <td>{{ entity.prenom }}</td>
+        </tr>
+        <tr>
+            <th>Telephone</th>
+            <td>{{ entity.telephone }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ entity.email }}</td>
+        </tr>
+        <tr>
+            <th>Datedenaissance</th>
+            <td>{{ entity.dateDeNaissance|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Departement</th>
+            <td>{{ entity.departement }}</td>
+        </tr>
+        <tr>
+            <th>Commentaire</th>
+            <td>{{ entity.commentaire }}</td>
+        </tr>
+        <tr>
+            <th>Permisb</th>
+            <td>{{ entity.permisB }}</td>
+        </tr>
+        <tr>
+            <th>Permisb2ans</th>
+            <td>{{ entity.permisB2ans }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('orga') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('orga_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('orga_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

@@ -1,0 +1,39 @@
+<h1>Disponibilite list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Debut</th>
+            <th>Fin</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('disponibilite_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{% if entity.debut %}{{ entity.debut|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{% if entity.fin %}{{ entity.fin|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('disponibilite_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('disponibilite_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('disponibilite_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
