@@ -1,0 +1,18 @@
+PHPM\Bundle\Entity\Tache:
+  type: entity
+  table: null
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    nom:
+      type: string
+      length: 255
+    description:
+      type: text
+    lieu:
+      type: string
+      length: 255
+  lifecycleCallbacks: {  }
