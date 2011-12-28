@@ -139,4 +139,9 @@ class Disponibilite
     {
         return $this->creneaux;
     }
+    
+    public function __toString()
+    {
+    	return $this->getDebut()->format('D H:i')." - ".$this->getFin()->format('D H:i');
+    }
 }

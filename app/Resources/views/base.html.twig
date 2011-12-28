@@ -18,8 +18,8 @@
         </div>
         
         
-       {% block sidebar %}<div id="sidebar"></div>{% endblock %}
-        <div id="content">{% block content %}{% endblock %}</div>
+        <div id="menu_sup">{% block menu_sup %} <p>Il y aura ici le menu superieur</p> {% endblock %}</div>
+        <div id="content">{% block content %} <p>Il y aura ici le contenu</p> {% endblock %}</div>
         <div class="clear"></div>
         <div id="footer"></div>
         {% block javascripts %}{% endblock %}

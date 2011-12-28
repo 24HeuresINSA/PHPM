@@ -1,3 +1,5 @@
+{% extends "::base.html.twig"  %}
+{% block content %}
 <h1>Confiance creation</h1>
 
 <form action="{{ path('confiance_create') }}" method="post" {{ form_enctype(form) }}>
@@ -14,3 +16,4 @@
         </a>
     </li>
 </ul>
+{% endblock %}

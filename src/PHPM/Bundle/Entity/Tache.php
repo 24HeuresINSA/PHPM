@@ -193,4 +193,9 @@ class Tache
     {
         return $this->plagesHoraire;
     }
+    
+    public function __toString()
+    {
+    	return $this->getNom();
+    }
 }
