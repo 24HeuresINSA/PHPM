@@ -87,4 +87,9 @@ class Categorie
     {
         return $this->taches;
     }
+
+    public function __toString()
+    {
+	return getNom();
+    }
 }
