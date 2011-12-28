@@ -1,0 +1,33 @@
+PHPM\Bundle\Entity\Orga:
+  type: entity
+  table: null
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    nom:
+      type: string
+      length: 255
+    prenom:
+      type: string
+      length: 255
+    telephone:
+      type: string
+      length: 255
+    email:
+      type: string
+      length: 255
+    dateDeNaissance:
+      type: date
+    departement:
+      type: string
+      length: 255
+    commentaire:
+      type: text
+    permisB:
+      type: boolean
+    permisB2ans:
+      type: boolean
+  lifecycleCallbacks: {  }
