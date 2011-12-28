@@ -173,4 +173,9 @@ class Confiance
     {
 	return $this->getNom();
     }
+    
+    public function toArray()
+    {
+    	return array("nom" => $this->getNom(),"couleur" => $this->getCouleur());
+    }
 }

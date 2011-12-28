@@ -2,6 +2,8 @@
 
 namespace PHPM\Bundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -31,6 +33,32 @@ class ConfianceController extends Controller
         return array('entities' => $entities);
     }
 
+    /**
+    * Lists all Confiance entities as JSON.
+    *
+    * @Route("/index.json", name="confiance_json")
+    * 
+    */
+    public function indexJsonAction()
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$entities = $em->getRepository('PHPMBundle:Confiance')->findAll();
+    	
+    	foreach ($entities as $entity){
+    		$a[$entity->getId()] = $entity->toArray();
+    		
+    	}
+    	$response = new Response();
+    	$response->setContent('helo');
+
+		$response->headers->set('Content-Type', 'application/json');
+    	exit(var_dump($a));
+    
+    	return $response;
+    }
+    
+    
+    
     /**
      * Finds and displays a Confiance entity.
      *
