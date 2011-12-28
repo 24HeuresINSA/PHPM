@@ -199,4 +199,50 @@ class OrgaController extends Controller
             ->getForm()
         ;
     }
+	
+	
+	 /**
+     * Import Orgas from website.
+     *
+     * @Route("/import", name="orga_import")
+     * 
+     */
+	public function importAction()	
+	{
+		
+					
+			$url = "inscriptionOrgas.json";			
+			$json = file_get_contents($url);
+			
+			$listeOrgaArray = json_decode($json,TRUE);
+			
+			echo ("<pre>");
+			var_dump($listeOrgaArray);
+			echo("</pre>");
+				
+				
+				
+				
+			
+			/*	
+			$plagehorraire = array ("1325083264", "1325083265");	
+				
+			$disponibilites = array ($plagehorraire,$plagehorraire, $plagehorraire);
+							
+        	$orga = array("id"=>1, "nom"=>"Bourgin", "prenom" => "Sylvain", "telephone" => "0685178329",
+        	"email" => "patate@gmail.com", "dateDeNaissance" => "2012-01-01", "departement" => "IF", 
+        	"commentaire" => "Le charisme c'est au BDE qu'on le trouve", "permisB" => "true", "permisB2ans" => "true",
+        	"disponibilites" => $disponibilites);
+			$orgas = array($orga,$orga,$orga,$orga);
+			exit(print_r(json_encode($orgas)));
+			*/
+	
+  
+     	
+     	
+     	return array();
+		
+		
+	}
+	
 }
