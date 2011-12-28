@@ -7,5 +7,9 @@
 /app/config/parameters.ini
 /bundles/
 
+# Metadata
 .metadata
 .DS_Store
+
+# Aptana-specific
+.project
