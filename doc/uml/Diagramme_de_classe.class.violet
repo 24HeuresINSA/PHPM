@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?> 
-<java version="1.6.0_26" class="java.beans.XMLDecoder"> 
+<java version="1.6.0_29" class="java.beans.XMLDecoder"> 
  <object class="com.horstmann.violet.ClassDiagramGraph"> 
   <void method="addNode"> 
    <object id="ClassNode0" class="com.horstmann.violet.ClassNode"> 
     <void property="attributes"> 
      <void property="text"> 
-      <string>Nom
-Description
+      <string>nom
+description
 
 </string> 
      </void> 
     </void> 
     <void property="name"> 
      <void property="text"> 
-      <string>Tâche</string> 
+      <string>Tache</string> 
      </void> 
     </void> 
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>917.0</double> 
+     <double>918.0</double> 
      <double>176.0</double> 
     </void> 
    </object> 
@@ -28,18 +28,13 @@ Description
    <object id="ClassNode1" class="com.horstmann.violet.ClassNode"> 
     <void property="attributes"> 
      <void property="text"> 
-      <string>Horaire/date début
-Horaire de fin</string> 
-     </void> 
-    </void> 
-    <void property="methods"> 
-     <void property="text"> 
-      <string>getDurée</string> 
+      <string>debut
+fin</string> 
      </void> 
     </void> 
     <void property="name"> 
      <void property="text"> 
-      <string>Créneau</string> 
+      <string>Creneau</string> 
      </void> 
     </void> 
    </object> 
@@ -54,13 +49,13 @@ Horaire de fin</string>
    <object id="ClassNode2" class="com.horstmann.violet.ClassNode"> 
     <void property="attributes"> 
      <void property="text"> 
-      <string>Timestamp Début
-Timestamp Fin</string> 
+      <string>debut
+fin</string> 
      </void> 
     </void> 
     <void property="name"> 
      <void property="text"> 
-      <string>Plage Horaire</string> 
+      <string>PlageHoraire</string> 
      </void> 
     </void> 
    </object> 
@@ -75,20 +70,22 @@ Timestamp Fin</string>
    <object id="ClassNode3" class="com.horstmann.violet.ClassNode"> 
     <void property="attributes"> 
      <void property="text"> 
-      <string>Timestamp Début
-Timestamp Fin</string> 
+      <string>debut
+fin
+
+</string> 
      </void> 
     </void> 
     <void property="name"> 
      <void property="text"> 
-      <string>Disponibilité</string> 
+      <string>Disponibilite</string> 
      </void> 
     </void> 
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>444.0</double> 
-     <double>346.0</double> 
+     <double>443.0</double> 
+     <double>389.0</double> 
     </void> 
    </object> 
   </void> 
@@ -96,14 +93,15 @@ Timestamp Fin</string>
    <object id="ClassNode4" class="com.horstmann.violet.ClassNode"> 
     <void property="attributes"> 
      <void property="text"> 
-      <string>Nom prénom
-Téléphone
-Mail
-Date de Naissance
-Département
-Commentaire
-Permis B
-</string> 
+      <string>nom
+prenom
+telephone
+email
+dateDeNaissance
+departement
+commentaire
+permisB
+permisB2ans</string> 
      </void> 
     </void> 
     <void property="name"> 
@@ -123,9 +121,9 @@ Permis B
    <object id="ClassNode5" class="com.horstmann.violet.ClassNode"> 
     <void property="attributes"> 
      <void property="text"> 
-      <string>Nom
-Niveau
-Couleur</string> 
+      <string>nom
+valeur
+couleur</string> 
      </void> 
     </void> 
     <void property="name"> 
@@ -145,12 +143,12 @@ Couleur</string>
    <object id="ClassNode6" class="com.horstmann.violet.ClassNode"> 
     <void property="attributes"> 
      <void property="text"> 
-      <string>Nom</string> 
+      <string>nom</string> 
      </void> 
     </void> 
     <void property="name"> 
      <void property="text"> 
-      <string>Catégorie</string> 
+      <string>Categorie</string> 
      </void> 
     </void> 
    </object> 
@@ -282,6 +280,16 @@ email</string>
    </object> 
    <object idref="ClassNode6"/> 
    <object idref="ClassNode0"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.NoteEdge"/> 
+   <object idref="ClassNode3"/> 
+   <object idref="ClassNode3"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.NoteEdge"/> 
+   <object idref="ClassNode3"/> 
+   <object idref="ClassNode3"/> 
   </void> 
  </object> 
 </java> 
