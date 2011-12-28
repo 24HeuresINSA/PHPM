@@ -14,6 +14,7 @@ class DefaultController extends Controller
      */
     public function homeAction()
     {
+    	//exit(var_dump($processors = $this->container->getParameter('my.name')));
         return array();
     }
 }

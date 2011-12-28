@@ -1,6 +1,8 @@
 imports:
     - { resource: parameters.ini }
     - { resource: security.yml }
+    phpm_bundle:
+        resource: @PHPMBundle/Resources/config/services.yml
 
 framework:
     #esi:             ~
