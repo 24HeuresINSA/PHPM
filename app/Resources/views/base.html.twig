@@ -5,7 +5,9 @@
         <title>{% block title %}{% endblock %} - PHPlanningMaker</title>
 
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
-        
+        {% block stylesheets %}
+            <link href="{{ asset('/css/desktop.css') }}" type="text/css" rel="stylesheet" />
+        {% endblock %}
     </head>
     <body>
         <div id="header" >
