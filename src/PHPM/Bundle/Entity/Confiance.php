@@ -28,6 +28,11 @@ class Confiance
      * @var string $couleur
      */
     private $couleur;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Tache", mappedBy="orga")
+    */
+    protected $disponibilites;
 
 
     /**

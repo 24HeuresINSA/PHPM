@@ -23,6 +23,12 @@ class Disponibilite
      * @var datetime $fin
      */
     private $fin;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Creneau", mappedBy="plageHoraire")
+    */
+    protected $creneaux;
+    
 
 
     /**

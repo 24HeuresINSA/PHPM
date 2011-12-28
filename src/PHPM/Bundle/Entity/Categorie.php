@@ -18,6 +18,17 @@ class Categorie
      * @var string $nom
      */
     private $nom;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Tache", mappedBy="confiance")
+    */
+    protected $taches;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Orga", mappedBy="confiance")
+    */
+    protected $orgas;
+    
 
 
     /**

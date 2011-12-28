@@ -23,6 +23,18 @@ class Creneau
      * @var datetime $fin
      */
     private $fin;
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="PlageHoraire", inversedBy="creneaux")
+    * @ORM\JoinColumn(name="PlageHoraire_id", referencedColumnName="id")
+    */
+    protected $plageHoraire;
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="Disponibilite", inversedBy="creneaux")
+    * @ORM\JoinColumn(name="Disponiblite_id", referencedColumnName="id")
+    */
+    protected $disponibilite;
 
 
     /**

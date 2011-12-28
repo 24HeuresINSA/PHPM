@@ -61,6 +61,18 @@ class Orga
 
 
     /**
+    * @ORM\OneToMany(targetEntity="Disponibilite", mappedBy="orga")
+    */
+    protected $disponibilites;
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="Confiance", inversedBy="orga")
+    * @ORM\JoinColumn(name="Confiance_id", referencedColumnName="id")
+    */
+    protected $confiance;
+    
+    
+    /**
      * Get id
      *
      * @return integer 
