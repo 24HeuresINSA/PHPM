@@ -83,6 +83,19 @@ class Orga
      * @ORM\Column(name="permisB2ans", type="boolean")
      */
     private $permisB2ans;
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="Confiance", inversedBy="orgas")
+    * @ORM\JoinColumn(name="confiance_id", referencedColumnName="id")
+    */
+    protected $confiance;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Disponibilite", mappedBy="orga")
+    */
+    protected $disponibilites;
+    
+    
 
 
     /**

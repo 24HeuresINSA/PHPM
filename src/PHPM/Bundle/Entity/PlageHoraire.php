@@ -34,6 +34,17 @@ class PlageHoraire
      * @ORM\Column(name="fin", type="datetime")
      */
     private $fin;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Creneau", mappedBy="plageHoraire")
+    */
+    protected $creneaux;
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="Tache", inversedBy="PlagesHoraires")
+    * @ORM\JoinColumn(name="plageHoraire_id", referencedColumnName="id")
+    */
+    protected $tache;
 
 
     /**

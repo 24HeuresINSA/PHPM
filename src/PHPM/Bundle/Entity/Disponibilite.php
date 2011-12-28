@@ -34,7 +34,17 @@ class Disponibilite
      * @ORM\Column(name="fin", type="datetime")
      */
     private $fin;
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="Orga", inversedBy="disponibilites")
+    * @ORM\JoinColumn(name="disponibilite_id", referencedColumnName="id")
+    */
+    protected $orga;
 
+    /**
+    * @ORM\OneToMany(targetEntity="Creneau", mappedBy="plagesHoraire")
+    */
+    protected $creneaux;
 
     /**
      * Get id

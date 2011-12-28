@@ -27,6 +27,11 @@ class Categorie
      * @ORM\Column(name="nom", type="string", length=255)
      */
     private $nom;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Tache", mappedBy="categorie")
+    */
+    protected $taches;
 
 
     /**

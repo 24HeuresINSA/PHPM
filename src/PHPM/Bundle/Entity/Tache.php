@@ -41,6 +41,23 @@ class Tache
      * @ORM\Column(name="lieu", type="string", length=255)
      */
     private $lieu;
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="taches")
+    * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id")
+    */
+    protected $categorie;
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="Confiance", inversedBy="taches")
+    * @ORM\JoinColumn(name="confiance_id", referencedColumnName="id")
+    */
+    protected $confiance;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="PlageHoraire", mappedBy="tache")
+    */
+    protected $plagesHoraire;
 
 
     /**

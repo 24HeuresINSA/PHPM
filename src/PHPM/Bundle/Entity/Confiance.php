@@ -41,6 +41,17 @@ class Confiance
      * @ORM\Column(name="couleur", type="string", length=255)
      */
     private $couleur;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Tache", mappedBy="confiance")
+    */
+    protected $taches;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Orga", mappedBy="confiance")
+    */
+    protected $orgas;
+    
 
 
     /**
