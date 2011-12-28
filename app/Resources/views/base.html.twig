@@ -3,25 +3,23 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>{% block title %}{% endblock %} - PHPlanningMaker</title>
-{% stylesheets '@PHPMBundle/Resources/public/css/*'  %}
-        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset(asset_url)}}" />
- {% endstylesheets %}
+
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
         
     </head>
     <body>
         <div id="header" >
         
-        {% include "::header.html.twig" %} 
+        
         <h2>{{ block('title') }}</h2>
-        {% include "::menubar.html.twig" %} 
+        
         </div>
         
         
        <!-- {% block sidebar %}<div id="sidebar"></div>{% endblock %} -->
         <div id="content">{% block content %}{% endblock %}</div>
         <div class="clear"></div>
-        <div id="footer">{% include "::footer.html.twig"%} </div>
+        <div id="footer"></div>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
