@@ -7,6 +7,7 @@
      <void property="text"> 
       <string>Nom
 Description
+
 </string> 
      </void> 
     </void> 
@@ -18,8 +19,8 @@ Description
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>920.0</double> 
-     <double>191.0</double> 
+     <double>917.0</double> 
+     <double>176.0</double> 
     </void> 
    </object> 
   </void> 
@@ -98,8 +99,11 @@ Timestamp Fin</string>
       <string>Nom prénom
 Téléphone
 Mail
+Date de Naissance
 Département
-Commentaire</string> 
+Commentaire
+Permis B
+</string> 
      </void> 
     </void> 
     <void property="name"> 
@@ -110,8 +114,8 @@ Commentaire</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>455.0</double> 
-     <double>180.0</double> 
+     <double>434.0</double> 
+     <double>136.0</double> 
     </void> 
    </object> 
   </void> 
