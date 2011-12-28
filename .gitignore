@@ -6,3 +6,7 @@
 /vendor/
 /app/config/parameters.ini
 /bundles/
+
+src/.DS_Store
+
+.DS_Store
