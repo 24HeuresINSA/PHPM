@@ -261,10 +261,11 @@ class OrgaController extends Controller
 					$validator = $this->get('validator');
     				$errors = $validator->validate($entity);
 
+    				
 				    if (count($errors) > 0) {
 				    	$err =$errors[0];
-				    	$simplifiedError = array($err->getMessageTemplate(),$err->getPropertyPath(), $err->getInvalidValue());
-				    	$validationErrors[$inscriptionOrga['prenom']." ".$inscriptionOrga['nom']]=$simplifiedError;
+				    	$simplifiedError = array("message" => $err->getMessageTemplate(), "champInvalide" => $err->getPropertyPath(), "valeurInvalide" => $err->getInvalidValue(), "orga" => $err->getRoot()->toArray());
+				    	array_push($validationErrors,$simplifiedError);
 				    	
 				    }else{
 				        $em->persist($entity);
@@ -303,8 +304,8 @@ class OrgaController extends Controller
 						
 					
 				}
-		exit(var_dump($validationErrors));
-		return array();
+		
+		return array("errors" => $validationErrors);
 	}
 	
 }

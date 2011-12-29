@@ -2,4 +2,18 @@
 
 {% block title %}
 	Orga -> Import
+	
+
+	
+	
+{% endblock %}
+
+
+{% block content %}
+	{% for entity in errors %}
+       {{ entity.message }} </br> 
+       {{ entity.champInvalide }} </br> 
+       {{ entity.valeurInvalide }} </br> 
+    {% endfor %}
+    
 {% endblock %}
