@@ -1,6 +1,6 @@
 {% extends "::base.html.twig"  %}
 {% block content %}
-<h1>Tache list</h1>
+<h1>Liste des t&acirc;ches</h1>
 
 <table class="records_list">
     <thead>
@@ -33,11 +33,13 @@
     {% endfor %}
     </tbody>
 </table>
+{% endblock %}
 
+{% block menu_actions %}
 <ul>
     <li>
         <a href="{{ path('tache_new') }}">
-            Create a new entry
+            Cr&eacute;er une nouvelle tache :
         </a>
     </li>
 </ul>
