@@ -19,10 +19,10 @@ class OrgaController extends Controller
 	 /**
      * Lists all Orga entities.
      *
-     * @Route("/{id}/affectation", name="orga_affectation")
+     * @Route("/affectation", name="orga_affectation")
      * @Template()
      */
-    public function affectationAction($id)
+    public function affectationAction()
     {
     	$em = $this->getDoctrine()->getEntityManager();
 
