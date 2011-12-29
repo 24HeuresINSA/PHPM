@@ -16,6 +16,35 @@ use PHPM\Bundle\Form\OrgaType;
  */
 class OrgaController extends Controller
 {
+	 /**
+     * Lists all Orga entities.
+     *
+     * @Route("/{id}/affectation", name="orga_affectation")
+     * @Template()
+     */
+    public function affectationAction($id)
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('PHPMBundle:Orga')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Orga entity.');
+        }
+
+        $editForm = $this->createForm(new OrgaType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+      
+    }
+	
+	
+	
     /**
      * Lists all Orga entities.
      *
