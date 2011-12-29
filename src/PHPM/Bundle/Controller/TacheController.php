@@ -321,7 +321,7 @@ public function importAction()
 	var_dump($tabArray);
 	print"</pre>";
 	//*/
-	
+	 
 	exit(print($entities[0]->getId()));
 	return array();
 }
