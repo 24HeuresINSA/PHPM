@@ -239,6 +239,7 @@ public function importAction()
 		foreach ($tache_en_traitement['plages'] as $creneau_en_traitement){
 			print $creneau_en_traitement['id'];
 			print"	";
+			print "<br/";
 		}
 		//*/
 	}
