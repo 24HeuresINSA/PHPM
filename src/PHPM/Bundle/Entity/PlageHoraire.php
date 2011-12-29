@@ -148,6 +148,8 @@ class PlageHoraire
     
     public function toArray()
     {
+    	
+    	$a = array();
     	foreach ($this->getCreneaux() as $entity){
     		$a[$entity->getId()] = $entity->toArray();
     		
