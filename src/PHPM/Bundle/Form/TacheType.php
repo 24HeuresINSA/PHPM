@@ -17,7 +17,6 @@ class TacheType extends AbstractType
             ->add('confiance')
 			->add('consignes')
 			->add('materielNecessaire')
-			->add('nbOrgasNecessaires')
 			->add('permisNecessaire')
         ;
     }

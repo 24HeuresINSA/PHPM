@@ -2,6 +2,7 @@
 
 namespace PHPM\Bundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -27,8 +28,35 @@ class TacheController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $entities = $em->getRepository('PHPMBundle:Tache')->findAll();
+        
+        
 
         return array('entities' => $entities);
+    }
+    
+    /**
+    * Lists all Tache entities as JSON.
+    *
+    * @Route("/index.json", name="tache_json")
+    *
+    */
+    public function indexJsonAction()
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$entities = $em->getRepository('PHPMBundle:Tache')->findAll();
+    	 
+    	$a = array();
+    	 
+    	foreach ($entities as $entity){
+    		$a[$entity->getId()] = $entity->toArray();
+    
+    	}
+    	$response = new Response();
+    	$response->setContent(json_encode($a));
+    	$response->headers->set('Content-Type', 'application/json');
+    	 
+    
+    	return $response;
     }
 
     /**
@@ -212,12 +240,16 @@ class TacheController extends Controller
 	public function importAction()
 	{
 		
-		$jason = "[{\"id\":1,\"nom\":\"TENIR LE PUTAIN DE BAR\",\"categorie\":\"Barres\",\"description\":\"MAIS TU VA LE TENIR TON BAR, MERDE\",\"plages\":[{\"id\":1,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":2,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":3,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712}]},{\"id\":2,\"nom\":\"TENIR LE PUTAIN DE BAR\",\"categorie\":\"Barres\",\"description\":\"MAIS TU VA LE TENIR TON BAR, MERDE\",\"plages\":[{\"id\":1,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":2,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":3,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712}]},{\"id\":3,\"nom\":\"TENIR LE PUTAIN DE BAR\",\"categorie\":\"Barres\",\"description\":\"MAIS TU VA LE TENIR TON BAR, MERDE\",\"plages\":[{\"id\":1,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":2,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":3,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712}]}]";
+		$jason = "{\"1\":{\"id\":1,\"nom\":\"Tenir le bar\",\"lieu\":\"Bar AIP\",\"confiance\":{\"nom\":\"Soft\",\"couleur\":\"blue\"},\"categorie\":{\"nom\":\"Bar\"},\"permisNecessaire\":0,\"plagesHoraire\":{\"1\":{\"debut\":{\"date\":\"2011-12-01 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"fin\":{\"date\":\"2011-12-02 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"nbOrgasNecessaires\":10,\"creneaux\":[]},\"2\":{\"debut\":{\"date\":\"2011-12-02 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"fin\":{\"date\":\"2011-12-03 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"nbOrgasNecessaires\":1,\"creneaux\":[]}}},\"2\":{\"id\":2,\"nom\":\"Installer le PS1\",\"lieu\":\"Laurent Bonnevay\",\"confiance\":{\"nom\":\"Hard\",\"couleur\":\"orange\"},\"categorie\":{\"nom\":\"S\u00e9curit\u00e9\"},\"permisNecessaire\":0,\"plagesHoraire\":{\"3\":{\"debut\":{\"date\":\"2011-12-01 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"fin\":{\"date\":\"2011-12-06 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"nbOrgasNecessaires\":3,\"creneaux\":[]}}}}";
+	
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$entities = $em->getRepository('PHPMBundle:Tache')->findAll();
 		
 		$tabArray = json_decode($jason, TRUE);
+		
+		//Affichage de l'import et de la db
+		/*
 		print"<pre>";
 		var_dump($tabArray);
 		print"</pre>";
@@ -228,6 +260,7 @@ class TacheController extends Controller
 		var_dump($elements->toArray());
 		}
 		print"</pre>";
+		//*/
 		
 		foreach ($tabArray as $tache_en_traitement) {
 			$found = FALSE;
@@ -243,11 +276,40 @@ class TacheController extends Controller
 				print "ajout de la tache ";
 				print $tache_en_traitement['id'];
 				print "<br />";
+					
+				$entity  = new tache();
+				$entity->setId($tache_en_traitement['id']);
+				$entity->setNom($tache_en_traitement['nom']);
+				$entity->setConsignes($tache_en_traitement['consigne']);
+				$entity->setMaterielNecessaire($tache_en_traitement['materielNecessaire']);
+				$entity->setPermisNecessaire($tache_en_traitement['permisNecessaire']);
+				$entity->setLieu($tache_en_traitement['lieu']);
+				$entity->setCategorie( $tache_en_traitement['categorie']);
+				$entity->setConfiance( $tache_en_traitement['confiance']);
+				$entity->addPlageHoraire( $tache_en_traitement['plagesHoraire']);
+				$entity->setStatut(0);
+					
+				$validator = $this->get('validator');
+				$errors = $validator->validate($entity);
+				
+				if (count($errors) > 0) {
+					$err =$errors[0];
+					$simplifiedError = array($err->getMessageTemplate(),$err->getPropertyPath(), $err->getInvalidValue());
+					$validationErrors[$tache_en_traitement['id']." ".$tache_en_traitement['nom']]=$simplifiedError;
+					 
+				}else{
+					$em->persist($entity);
+					$em->flush();
+				}
+			}else{
+				print "tache ";
+				print $tache_en_traitement['id'];
+				print " deja a jour <br />";				
 			}
 		}	
 			
 		
-	exit(print($tabArray[0]));
+	exit(print($tabArray));
 	return array();
 	}
 	

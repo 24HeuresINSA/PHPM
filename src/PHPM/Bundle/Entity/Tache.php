@@ -2,6 +2,7 @@
 
 namespace PHPM\Bundle\Entity;
 
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -45,13 +46,6 @@ class Tache
     */
     private $materielNecessaire;
     
-    /**
-    * @var smallint $nbOrgasNecessaires
-    *
-    * @ORM\Column(name="nbOrgasNecessaires", type="smallint")
-    * @Assert\Min(limit = "0")
-    */
-    private $nbOrgasNecessaires;
     
     /**
     * @var smallint $permisNecessaire
@@ -216,36 +210,20 @@ class Tache
     	
     	
     	return array(
+    	"id" => $this->getId(),
     	"nom" => $this->getNom(),
     	"lieu" => $this->getLieu(),
+    	"materielNecessaire" => $this->getMaterielNecessaire(),
+    	"consignes" => $this->getConsignes(),
     	"confiance" => $this->getConfiance()->toArray(),
     	"categorie" => $this->getCategorie()->toArray(),
     	"permisNecessaire" => $this->getPermisNecessaire(),
-    	"nbOrgasNecessaires" => $this->getNbOrgasNecessaires(),
     	"plagesHoraire" => $a);
     	
     }
     
 
-    /**
-     * Set nbOrgasNecessaires
-     *
-     * @param smallint $nbOrgasNecessaires
-     */
-    public function setNbOrgasNecessaires($nbOrgasNecessaires)
-    {
-        $this->nbOrgasNecessaires = $nbOrgasNecessaires;
-    }
 
-    /**
-     * Get nbOrgasNecessaires
-     *
-     * @return smallint 
-     */
-    public function getNbOrgasNecessaires()
-    {
-        return $this->nbOrgasNecessaires;
-    }
 
     /**
      * Set permisNecessaire

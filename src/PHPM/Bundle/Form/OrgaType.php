@@ -20,6 +20,7 @@ class OrgaType extends AbstractType
             ->add('commentaire')
             ->add('permis')
 			->add('confiance')
+			->add('statut')
         ;
     }
 
