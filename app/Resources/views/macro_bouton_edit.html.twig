@@ -1,0 +1,8 @@
+{% macro bouton_edit(lien) %}
+{% image output="images/logo.png"
+            '@PHPMBundle/Resources/public/images/icon_configure.png'             
+%}
+<div class="bouton_edit"> <a href="{{ lien }}"><img src="{{ asset_url }}" /></a>
+{% endimage %} 
+
+{% endmacro %}
