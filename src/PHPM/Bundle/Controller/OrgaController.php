@@ -243,32 +243,43 @@ class OrgaController extends Controller
 			
 			foreach($listeOrgaArray as $case => $inscriptionOrga)
 				{
-					//print_r($inscriptionOrga);
-					//$Nom = array_search('nom', $inscriptionOrga);			
-					//$entities[$tache_en_traitement['id'];
-					
-					//$Nom = $inscriptionOrga['nom']; 
 					$inscriptionOrga['nom']=strtoupper($inscriptionOrga['nom']);
 					$inscriptionOrga['prenom']=strtoupper($inscriptionOrga['prenom']);	
 					
+					$orgaNonTrouve=TRUE;
 					$i = 0;
 					foreach ($entitiesOrga as $key) 
 					{
-						$nomOrgaBDD = $entitiesOrga[$i]->getnom();
+						$nomOrgaBDD = $entitiesOrga[$i]->getnom();    
+						$prenomOrgaBDD = $entitiesOrga[$i]->getprenom();
+						$telephoneOrgaBDD = $entitiesOrga[$i]->gettelephone();					
 						
-						if ($inscriptionOrga['nom'] == $nomOrgaBDD)
+						if ($inscriptionOrga['nom'] == $nomOrgaBDD AND $inscriptionOrga['prenom'] == $prenomOrgaBDD
+							AND $inscriptionOrga['telephone'] == $telephoneOrgaBDD)
 						{
-							echo $nomOrgaBDD;
-							echo "trouve";
+					
+							$orgaNonTrouve=FALSE;
+							//echo $nomOrgaBDD;
+							//echo "trouve";
 						}
 						
 						
-						
+
 						
 						
 						
 						$i++;
 					}
+
+					if ($orgaNonTrouve)
+					{
+					echo $inscriptionOrga['prenom'];
+					echo 'orga a rajouter';
+					echo "<p>";							
+					}
+
+
+
 
 					//print($entitiesOrga[0]->getnom());
 					
