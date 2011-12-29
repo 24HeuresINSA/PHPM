@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\OrgaRepository")
- * @UniqueEntity(array("email","telephone"))
+ * @UniqueEntity(fields={"email","telephone"})
  */
 class Orga
 {
@@ -47,7 +47,7 @@ class Orga
     */
     private $surnom;
 
-    private $message="haah";
+    
     /**
      * @var string $telephone
      *
