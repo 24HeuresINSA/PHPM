@@ -3,6 +3,7 @@
 namespace PHPM\Bundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * PHPM\Bundle\Entity\Tache
@@ -25,6 +26,7 @@ class Tache
      * @var string $nom
      *
      * @ORM\Column(name="nom", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $nom;
 
@@ -32,6 +34,7 @@ class Tache
      * @var text $consignes
      *
      * @ORM\Column(name="consignes", type="text")
+     * @Assert\NotBlank()
      */
     private $consignes;
     
@@ -46,6 +49,7 @@ class Tache
     * @var smallint $nbOrgasNecessaires
     *
     * @ORM\Column(name="nbOrgasNecessaires", type="smallint")
+    * @Assert\Min(limit = "0")
     */
     private $nbOrgasNecessaires;
     
@@ -53,6 +57,7 @@ class Tache
     * @var smallint $permisNecessaire
     *
     * @ORM\Column(name="permisNecessaire", type="smallint")
+    * @Assert\Min(limit = "0")
     */
     private $permisNecessaire;
 
@@ -60,6 +65,7 @@ class Tache
      * @var string $lieu
      *
      * @ORM\Column(name="lieu", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $lieu;
     

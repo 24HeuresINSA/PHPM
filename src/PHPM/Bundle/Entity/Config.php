@@ -3,12 +3,15 @@
 namespace PHPM\Bundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * PHPM\Bundle\Entity\Config
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\ConfigRepository")
+ * @UniqueEntity("field")
  */
 class Config
 {
@@ -24,7 +27,8 @@ class Config
     /**
      * @var string $field
      *
-     * @ORM\Column(name="field", type="string", length=255)
+     * @ORM\Column(name="field", type="string", length=255, unique=true)
+     * @Assert\NotBlank()
      */
     private $field;
 
@@ -32,6 +36,7 @@ class Config
      * @var string $value
      *
      * @ORM\Column(name="value", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $value;
 
