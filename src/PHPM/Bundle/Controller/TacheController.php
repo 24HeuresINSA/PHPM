@@ -229,6 +229,7 @@ public function importAction()
 		print $tache_en_traitement['nom'];
 		print "<br />";
 		$found = FALSE;
+		$majorShift = FALSE;
 		foreach ($entities as $elements){
 			if ($elements->getId() == $tache_en_traitement['id']){
 				$found = TRUE;
@@ -241,15 +242,31 @@ public function importAction()
 // la tache existe déjà, on va donc comparer que les données n'ont pas été changées
 			print "on l'a deja <br />";
 
-			$elements->getPlagesHoraire();
-			$tache_en_traitement['plages'];
-			
+			foreach ($tache_en_traitement['plages'] as $timerTM){
+				foreach ($elements->getPlagesHoraire() as $timerPM){
+					$found = FALSE;
+					if ($timerPM == $timerTM){
+						$found = TRUE;
+						break;
+					}
+				}
+				if ($found){
+					//Le creneau existe, on vérifie qu'il est toujours bon
+					print "hehe creneaux trouve";
+					
+				}else{
+					//Le creneau n'existe pas, on va donc l'ajouter à la DB
+					print "on l'ajoute <br />";
+				}
+			}
 			
 		}else{
 //La tache n'existe pas, on va donc l'ajouter à la DB
 			print "on l'ajoute <br />";
 		}
-	}
+		
+		
+	}//fin du foreach de chaque tache
 	
 	
 		//Traitement des taches supprimées
