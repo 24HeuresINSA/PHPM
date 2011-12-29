@@ -232,6 +232,13 @@ class OrgaController extends Controller
 	{
 		$em = $this->getDoctrine()->getEntityManager();	
 		$orgaAValider = $em->getRepository('PHPMBundle:Orga')->findByStatut(0);
+		
+		$listeOrgaARetourne = array();
+		
+		// mettre array avec nom, prenom, email, nbheures, portable, checkbox 
+		
+		
+		
 			/*
 			foreach ($orgaAValider as $orga) 
 			{
