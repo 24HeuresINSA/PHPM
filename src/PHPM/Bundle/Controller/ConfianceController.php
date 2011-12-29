@@ -44,6 +44,8 @@ class ConfianceController extends Controller
     	$em = $this->getDoctrine()->getEntityManager();
     	$entities = $em->getRepository('PHPMBundle:Confiance')->findAll();
     	
+    	$a = array();
+    	
     	foreach ($entities as $entity){
     		$a[$entity->getId()] = $entity->toArray();
     		
