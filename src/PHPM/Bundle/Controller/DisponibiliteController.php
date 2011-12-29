@@ -168,7 +168,7 @@ class DisponibiliteController extends Controller
      * Deletes a Disponibilite entity.
      *
      * @Route("/{id}/delete", name="disponibilite_delete")
-     * @Method("post")
+     * 
      */
     public function deleteAction($id)
     {

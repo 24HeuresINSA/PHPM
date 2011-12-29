@@ -168,7 +168,7 @@ class PlageHoraireController extends Controller
      * Deletes a PlageHoraire entity.
      *
      * @Route("/{id}/delete", name="plagehoraire_delete")
-     * @Method("post")
+     * 
      */
     public function deleteAction($id)
     {
