@@ -225,7 +225,7 @@ class OrgaController extends Controller
      * Import Orgas from website.
      *
      * @Route("/import", name="orga_import")
-     * 
+     * @Template()
      */
 	public function importAction()	
 	{
@@ -311,9 +311,24 @@ class OrgaController extends Controller
 	            		
 						// ajout des disponibilite
 						
-						$entitydisponibilite = new disponibilite();
+
+						$em->flush();	
+						$idOrgaAjoute= $em->getRepository('PHPMBundle:Orga')->findOneByTelephone($inscriptionOrga['telephone']);	
+
 						
 						
+						foreach($inscriptionOrga['disponibilites'] as $dispoAAjoute)
+							{
+								$entitydisponibilite = new disponibilite();						
+								$entitydisponibilite->setOrga($idOrgaAjoute);
+								$debutdispo = date ('y-m-d', $dispoAAjoute[0]);
+								$entitydisponibilite->setDebut(new \DateTime("20$debutdispo"));
+								$findispo = date ('y-m-d', $dispoAAjoute[1]);
+								$entitydisponibilite->setFin(new \DateTime("20$findispo"));
+								$em->persist($entitydisponibilite);
+								$em->flush();							
+							}
+
 						
 						
 						
@@ -381,7 +396,7 @@ class OrgaController extends Controller
   
      	
      	
-     	return;
+     	return array();
 		
 		
 	}
