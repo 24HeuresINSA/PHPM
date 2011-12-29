@@ -15,7 +15,10 @@
 		
 		{# même chose pour Javascript #}
         {% block javascript %}
-			{% javascripts '@PHPMBundle/Resources/public/js/general.js' %}
+			{% javascripts
+				'@PHPMBundle/Resources/public/js/general.js'
+				'@PHPMBundle/Resources/public/js/lib/jquery.min.js'
+			%}
 				<script src="{{ asset_url }}" type="text/javascript"></script>
 			{% endjavascripts %}
         {% endblock %}
