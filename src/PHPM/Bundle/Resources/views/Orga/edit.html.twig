@@ -14,6 +14,7 @@
 {% endblock %}
 
 {% block menu_action %}
+
 <ul class="record_actions">
     <li>
         <a href="{{ path('orga') }}">
@@ -21,7 +22,8 @@
         </a>
     </li>
     <li>
-        <form action="{{ path('orga_delete', { 'id': entity.id }) }}" method="post">
+    	
+        <form action=javascript:confirm_delete("{{ path('orga_delete', { 'id': entity.id }) }}") method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>

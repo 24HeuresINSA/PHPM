@@ -98,6 +98,7 @@ class Orga
      * @ORM\Column(name="permis", type="smallint")
      */
     private $permis;
+    
 
 
     /**
@@ -110,6 +111,13 @@ class Orga
     * @ORM\OneToMany(targetEntity="Disponibilite", mappedBy="orga")
     */
     protected $disponibilites;
+    
+    /**
+    * @var smallint $statut
+    * @Assert\Choice(choices = {"0", "1"})
+    * @ORM\Column(name="statut", type="smallint")
+    */
+    private $statut;
     
     
 
@@ -376,5 +384,25 @@ class Orga
         	"confiance" => $this->getConfiance()->toArray(),
         	"disponibilites" => $a);
     	 
+    }
+
+    /**
+     * Set statut
+     *
+     * @param smallint $statut
+     */
+    public function setStatut($statut)
+    {
+        $this->statut = $statut;
+    }
+
+    /**
+     * Get statut
+     *
+     * @return smallint 
+     */
+    public function getStatut()
+    {
+        return $this->statut;
     }
 }

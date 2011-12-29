@@ -33,8 +33,8 @@ $(function() {
 	pmAffectation.data = {};
 	
 	// infos courantes
-	pmAffectation.curent = {};
-	pmAffectation.current.plage = 0; // par défaut on est sur la plage 0
+	pmAffectation.current = {};
+	pmAffectation.current.plage = 1; // par défaut on est sur la plage 0
 	
 	// les MVC
 	pmAffectation.models = {};
@@ -43,10 +43,13 @@ $(function() {
 	
 /*
  * Lancement
+ * Effectif que quand le document est prêt
  */
+$(document).ready(function() {
 	// 1 : lancer les requêtes pour les paramètres
 	pmAffectation.controllers.parameter = new ParameterController();
 	pmAffectation.controllers.parameter.getData();
 	
 	// 2 : mettre en place les éléments
+});
 	
