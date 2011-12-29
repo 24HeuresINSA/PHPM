@@ -23,7 +23,20 @@ body {
 	border-right: 1px solid #003366;
 	margin-right: 1%;
 }
+
+/*
+ * Vue agenda
+ * au milieu de la fenêtre
+ */
 .calendar {
 	float: left;
 	width: 60%;
+}
+
+/*
+ * Barre latérale droite
+ * Avec la liste des tâches
+ */
+.sidebar_tache {
+	
 }
