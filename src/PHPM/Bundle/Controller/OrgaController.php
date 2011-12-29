@@ -2,6 +2,7 @@
 
 namespace PHPM\Bundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -231,7 +232,7 @@ class OrgaController extends Controller
 	{
 		// Gerer l'import du json
 		
-	/*
+	$em = $this->getDoctrine()->getEntityManager();
 		$url = "inscriptionOrgas.json";			
 		$json = file_get_contents($url);
 		
@@ -243,28 +244,41 @@ class OrgaController extends Controller
 					$inscriptionOrga['prenom']=strtoupper($inscriptionOrga['prenom']);
 					
 					
-					$confiance = $entitiesOrga = $em->getRepository('PHPMBundle:Confiance')->findOneById(1);  // pour récupérer confiance
-						
-						$entity  = new orga();
-						$entity->setNom($inscriptionOrga['nom']);
-						$entity->setPrenom($inscriptionOrga['prenom']);
-						$entity->setConfiance($confiance);
-						$entity->settelephone($inscriptionOrga['telephone']);
-						$entity->setemail($inscriptionOrga['email']);
-						$entity->setdepartement($inscriptionOrga['departement']);
-						$entity->setcommentaire($inscriptionOrga['commentaire']);
-						$entity->setpermis($inscriptionOrga['permis']);
-						$entity->setDateDeNaissance(new \DateTime($inscriptionOrga['dateDeNaissance']));
-						$entity->setSurnom($inscriptionOrga['surnom']);	
-						$entity->setStatut(0);			
-						$em->persist($entity);
-	            		
+					$confiance = $em->getRepository('PHPMBundle:Confiance')->findOneById(1);  // pour récupérer confiance
+					
+					$entity  = new orga();
+					$entity->setNom($inscriptionOrga['nom']);
+					$entity->setPrenom($inscriptionOrga['prenom']);
+					$entity->setConfiance($confiance);
+					$entity->settelephone($inscriptionOrga['telephone']);
+					$entity->setemail($inscriptionOrga['email']);
+					$entity->setdepartement($inscriptionOrga['departement']);
+					$entity->setcommentaire($inscriptionOrga['commentaire']);
+					$entity->setpermis($inscriptionOrga['permis']);
+					$entity->setDateDeNaissance(new \DateTime($inscriptionOrga['dateDeNaissance']));
+					$entity->setSurnom($inscriptionOrga['surnom']);	
+					$entity->setStatut(0);			
+					
+					$validator = $this->get('validator');
+    				$errors = $validator->validate($entity);
+
+				    if (count($errors) > 0) {
+				        return new Response(var_dump($errors, true));
+				    } else {
+				        return new Response('The author is valid! Yes!');
+				    }
+					exit();
+					
+					
+					$em->persist($entity);
+            		
 	            		
 						// ajout des disponibilite
 						
 
-				//		$em->flush();	
-						$idOrgaAjoute= $em->getRepository('PHPMBundle:Orga')->findOneByTelephone($inscriptionOrga['telephone']);	
+					$em->flush();	
+					
+					$idOrgaAjoute= $em->getRepository('PHPMBundle:Orga')->findOneByTelephone($inscriptionOrga['telephone']);	
 
 						
 						
@@ -279,7 +293,7 @@ class OrgaController extends Controller
 								$em->persist($entitydisponibilite);
 								
 								
-								//$em->flush();							
+								$em->flush();							
 							}
 
 						
@@ -287,8 +301,6 @@ class OrgaController extends Controller
 					
 				}
 				
-		
-		*/
 		return array();
 	}
 	
