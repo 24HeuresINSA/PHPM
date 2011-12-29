@@ -1,7 +1,7 @@
 {% extends "::base.html.twig"  %}
 {% block content %}
 {% block title %}
-	Disponibilit&eacute;es -> Edition
+	Disponibilit&eacute;s -> Edition
 {% endblock %}
 
 <form action="{{ path('disponibilite_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
