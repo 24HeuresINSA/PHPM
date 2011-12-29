@@ -1,9 +1,10 @@
 {% extends "::base.html.twig"  %}
-{% block content %}
+
 {% block title %}
 	Orgas -> Cr&eacute;er un Orga
 {% endblock %}
 
+{% block content %}
 <form action="{{ path('orga_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>

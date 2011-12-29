@@ -1,9 +1,10 @@
 {% extends "::base.html.twig"  %}
-{% block content %}
+
 {% block title %}
 	Cat&eacute;gories -> Cr&eacute;er une cat&eacute;gorie
 {% endblock %}
 
+{% block content %}
 <form action="{{ path('categorie_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>

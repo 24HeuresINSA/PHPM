@@ -1,10 +1,10 @@
 {% extends "::base.html.twig"  %}
-{% block content %}
+
 {% block title %}
 	Disponibilit&eacute;s -> Cr&eacute;er une Disponibilit&eacute;e
 {% endblock %}
-<h1>Disponibilite creation</h1>
 
+{% block content %}
 <form action="{{ path('disponibilite_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
