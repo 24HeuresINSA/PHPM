@@ -8,6 +8,19 @@
 .message {
 	float: left;
 	width: 80%;
-	margin: 10%;
-	z-index: 1000;
+	margin: -25px 10%;
+	padding: 0;
+	z-index: 500;
+	position: fixed;
+}
+.success, .alert {
+	padding: 20px 30px;
+}
+.success {
+	background: rgba(51, 230, 51, 0.90);
+	border: 1px solid rgb(0, 120, 0);
+}
+.alert {
+	background: rgba(240, 180, 180, 0.90);
+	border: 1px solid rgb(120, 0, 0);	
 }
