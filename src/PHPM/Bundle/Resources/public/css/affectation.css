@@ -2,6 +2,7 @@
  * Feuille de style spécifique à la vue Affectation
  */
 
+
 /*
  * Override
  */
@@ -12,6 +13,7 @@ body {
 	padding: 0;
 	width: 100%;
 }
+
 
 /*
  * Barre latérale gauche
@@ -25,6 +27,7 @@ body {
 	margin-right: 1%;
 }
 
+
 /*
  * Vue agenda
  * au milieu de la fenêtre
@@ -34,6 +37,24 @@ body {
 	width: 60%;
 	height: 991px;  /* peut être modifié par ailleurs - rajouter 30 pour le titre  - 1 pour la dernière bordure */
 }
+
+/* barre des heures */
+.hours {
+	float: left;
+	width: 5%;
+	max-width: 5%;
+	overflow: hidden;
+	height: 961px;
+	margin-top: 30px;
+}
+.heure {
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+}
+
+/* chaque jour */
 .jour {
 	height: 100%;
 	/* width setté dynamiquement */
@@ -49,6 +70,8 @@ body {
 	text-align: center;
 	background: #BBB;
 }
+
+/* quart d'heure */
 .quart_heure {
 	width: 100%;
 	height: 9px; /* fait 10 avec la bordure */
@@ -65,6 +88,7 @@ body {
 .quart_heure:last-of-type {
 	border-bottom: 1px solid #333;	
 }
+
 
 /*
  * Barre latérale droite
