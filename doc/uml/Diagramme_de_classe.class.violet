@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?> 
-<java version="1.6.0_29" class="java.beans.XMLDecoder"> 
+<java version="1.6.0_26" class="java.beans.XMLDecoder"> 
  <object class="com.horstmann.violet.ClassDiagramGraph"> 
   <void method="addNode"> 
    <object id="ClassNode0" class="com.horstmann.violet.ClassNode"> 
@@ -7,7 +7,6 @@
      <void property="text"> 
       <string>nom
 consignes
-nom et tél responsable {string}
 lieu
 matériel nécessaire</string> 
      </void> 
@@ -20,8 +19,8 @@ matériel nécessaire</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>918.0</double> 
-     <double>176.0</double> 
+     <double>603.0</double> 
+     <double>273.0</double> 
     </void> 
    </object> 
   </void> 
@@ -41,8 +40,8 @@ fin</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>651.0</double> 
-     <double>518.0</double> 
+     <double>329.0</double> 
+     <double>704.0</double> 
     </void> 
    </object> 
   </void> 
@@ -62,8 +61,8 @@ fin</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>907.0</double> 
-     <double>321.0</double> 
+     <double>602.0</double> 
+     <double>694.0</double> 
     </void> 
    </object> 
   </void> 
@@ -85,8 +84,8 @@ fin
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>443.0</double> 
-     <double>389.0</double> 
+     <double>168.0</double> 
+     <double>699.0</double> 
     </void> 
    </object> 
   </void> 
@@ -113,8 +112,8 @@ permis {int 3 valeurs}</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>434.0</double> 
-     <double>136.0</double> 
+     <double>152.0</double> 
+     <double>232.0</double> 
     </void> 
    </object> 
   </void> 
@@ -135,8 +134,8 @@ couleur</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>655.0</double> 
-     <double>194.0</double> 
+     <double>404.0</double> 
+     <double>183.0</double> 
     </void> 
    </object> 
   </void> 
@@ -155,8 +154,8 @@ couleur</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1169.0</double> 
-     <double>197.0</double> 
+     <double>947.0</double> 
+     <double>240.0</double> 
     </void> 
    </object> 
   </void> 
@@ -193,30 +192,8 @@ email</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>227.0</double> 
-     <double>204.0</double> 
-    </void> 
-   </object> 
-  </void> 
-  <void method="addNode"> 
-   <object class="com.horstmann.violet.ClassNode"> 
-    <void property="attributes"> 
-     <void property="text"> 
-      <string>nom
-date_debut {date}
-date_fin {date}</string> 
-     </void> 
-    </void> 
-    <void property="name"> 
-     <void property="text"> 
-      <string>Plage</string> 
-     </void> 
-    </void> 
-   </object> 
-   <object class="java.awt.geom.Point2D$Double"> 
-    <void method="setLocation"> 
-     <double>240.0</double> 
-     <double>341.0</double> 
+     <double>1063.0</double> 
+     <double>558.0</double> 
     </void> 
    </object> 
   </void> 
@@ -313,6 +290,18 @@ date_fin {date}</string>
    <object class="com.horstmann.violet.NoteEdge"/> 
    <object idref="ClassNode3"/> 
    <object idref="ClassNode3"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    </void> 
+    <void property="lineStyle"> 
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
+    </void> 
+   </object> 
+   <object idref="ClassNode4"/> 
+   <object idref="ClassNode0"/> 
   </void> 
  </object> 
 </java> 
