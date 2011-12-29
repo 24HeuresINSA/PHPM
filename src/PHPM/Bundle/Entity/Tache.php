@@ -29,11 +29,32 @@ class Tache
     private $nom;
 
     /**
-     * @var text $description
+     * @var text $consignes
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="consignes", type="text")
      */
-    private $description;
+    private $consignes;
+    
+    /**
+    * @var text $materielNecessaire
+    *
+    * @ORM\Column(name="materielNecessaire", type="text")
+    */
+    private $materielNecessaire;
+    
+    /**
+    * @var smallint $nbOrgasNecessaires
+    *
+    * @ORM\Column(name="nbOrgasNecessaires", type="smallint")
+    */
+    private $nbOrgasNecessaires;
+    
+    /**
+    * @var smallint $permisNecessaire
+    *
+    * @ORM\Column(name="permisNecessaire", type="smallint")
+    */
+    private $permisNecessaire;
 
     /**
      * @var string $lieu
@@ -90,25 +111,6 @@ class Tache
         return $this->nom;
     }
 
-    /**
-     * Set description
-     *
-     * @param text $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * Get description
-     *
-     * @return text 
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
 
     /**
      * Set lieu
@@ -201,6 +203,7 @@ class Tache
     
     public function toArray()
     {
+    	$a = array();
     	foreach ($this->getPlagesHoraire() as $entity){
     		$a[$entity->getId()] = $entity->toArray();
     	}
@@ -211,8 +214,90 @@ class Tache
     	"lieu" => $this->getLieu(),
     	"confiance" => $this->getConfiance()->toArray(),
     	"categorie" => $this->getCategorie()->toArray(),
+    	"permisNecessaire" => $this->getPermisNecessaire(),
+    	"nbOrgasNecessaires" => $this->getNbOrgasNecessaires(),
     	"plagesHoraire" => $a);
     	
     }
     
+
+    /**
+     * Set nbOrgasNecessaires
+     *
+     * @param smallint $nbOrgasNecessaires
+     */
+    public function setNbOrgasNecessaires($nbOrgasNecessaires)
+    {
+        $this->nbOrgasNecessaires = $nbOrgasNecessaires;
+    }
+
+    /**
+     * Get nbOrgasNecessaires
+     *
+     * @return smallint 
+     */
+    public function getNbOrgasNecessaires()
+    {
+        return $this->nbOrgasNecessaires;
+    }
+
+    /**
+     * Set permisNecessaire
+     *
+     * @param smallint $permisNecessaire
+     */
+    public function setPermisNecessaire($permisNecessaire)
+    {
+        $this->permisNecessaire = $permisNecessaire;
+    }
+
+    /**
+     * Get permisNecessaire
+     *
+     * @return smallint 
+     */
+    public function getPermisNecessaire()
+    {
+        return $this->permisNecessaire;
+    }
+
+    /**
+     * Set consignes
+     *
+     * @param text $consignes
+     */
+    public function setConsignes($consignes)
+    {
+        $this->consignes = $consignes;
+    }
+
+    /**
+     * Get consignes
+     *
+     * @return text 
+     */
+    public function getConsignes()
+    {
+        return $this->consignes;
+    }
+
+    /**
+     * Set materielNecessaire
+     *
+     * @param text $materielNecessaire
+     */
+    public function setMaterielNecessaire($materielNecessaire)
+    {
+        $this->materielNecessaire = $materielNecessaire;
+    }
+
+    /**
+     * Get materielNecessaire
+     *
+     * @return text 
+     */
+    public function getMaterielNecessaire()
+    {
+        return $this->materielNecessaire;
+    }
 }

@@ -1,6 +1,8 @@
 {% extends "::base.html.twig"  %}
 {% block content %}
-<h1>Cr&eacute;er un cr&eacute;neau</h1>
+{% block title %}
+	Cr&eacute;neaux -> Cr&eacute;er un cr&eacute;neau
+{% endblock %}
 
 <form action="{{ path('creneau_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}

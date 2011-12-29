@@ -1,6 +1,9 @@
 {% extends "::base.html.twig"  %}
 {% block content %}
-<h1>Liste des indices de confiance</h1>
+{% import "::macro_bouton_edit.html.twig" as bouton_edit %}
+{% block title %}
+	Confiance -> Liste des indices
+{% endblock %}
 
 <table class="records_list">
     <thead>
@@ -20,14 +23,7 @@
             <td>{{ entity.valeur }}</td>
             <td>{{ entity.couleur }}</td>
             <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('confiance_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('confiance_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+				{{ bouton_edit.bouton_edit( path('confiance_edit', { 'id': entity.id }) ) }}
             </td>
         </tr>
     {% endfor %}

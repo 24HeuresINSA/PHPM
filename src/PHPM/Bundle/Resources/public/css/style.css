@@ -103,7 +103,7 @@ a {
  * Content
  */
 .content {
-	width: 94%;
+	width: 100%;
 	padding: 0 3%;
 	text-align: justify;
 }
@@ -119,10 +119,12 @@ a {
 
 table {
 	border-collapse:collapse;
+	width: 90%;
+	text-align: center;
 }
 
 th {
-	background: #ddd;	
+	background: #ccc;	
 	border: thin solid black;
 	margin: 0;
 }

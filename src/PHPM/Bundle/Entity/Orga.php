@@ -78,19 +78,13 @@ class Orga
     private $commentaire;
 
     /**
-     * @var boolean $permisB
+     * @var smallint $permis
      *
-     * @ORM\Column(name="permisB", type="boolean")
+     * @ORM\Column(name="permis", type="smallint")
      */
-    private $permisB;
+    private $permis;
 
-    /**
-     * @var boolean $permisB2ans
-     *
-     * @ORM\Column(name="permisB2ans", type="boolean")
-     */
-    private $permisB2ans;
-    
+
     /**
     * @ORM\ManyToOne(targetEntity="Confiance", inversedBy="orgas")
     * @ORM\JoinColumn(name="confiance_id", referencedColumnName="id")
@@ -256,44 +250,26 @@ class Orga
     }
 
     /**
-     * Set permisB
+     * Set permis
      *
-     * @param boolean $permisB
+     * @param smallint $permis
      */
-    public function setPermisB($permisB)
+    public function setPermis($permis)
     {
-        $this->permisB = $permisB;
+        $this->permis = $permis;
     }
 
     /**
-     * Get permisB
+     * Get permis
      *
-     * @return boolean 
+     * @return smallint
      */
-    public function getPermisB()
+    public function getPermis()
     {
-        return $this->permisB;
+        return $this->permis;
     }
 
-    /**
-     * Set permisB2ans
-     *
-     * @param boolean $permisB2ans
-     */
-    public function setPermisB2ans($permisB2ans)
-    {
-        $this->permisB2ans = $permisB2ans;
-    }
-
-    /**
-     * Get permisB2ans
-     *
-     * @return boolean 
-     */
-    public function getPermisB2ans()
-    {
-        return $this->permisB2ans;
-    }
+   
     public function __construct()
     {
         $this->disponibilites = new \Doctrine\Common\Collections\ArrayCollection();
@@ -366,6 +342,7 @@ class Orga
     
     public function toArray()
     {
+    	$a = array();
     	foreach ($this->getDisponibilites() as $entity){
     		$a[$entity->getId()] = $entity->toArray();
     	}
@@ -379,6 +356,7 @@ class Orga
     		"email" => $this->getEmail(),
     		"dateDeNaissance" => $this->getDateDeNaissance(),
     		"departement" => $this->getDepartement(),
+    		"permis"=>$this->getPermis(),
     		"commentaire" => $this->getCommentaire(),
         	"confiance" => $this->getConfiance()->toArray(),
         	"disponibilites" => $a);

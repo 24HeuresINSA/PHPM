@@ -1,6 +1,9 @@
 {% extends "::base.html.twig"  %}
 {% block content %}
-<h1>Cat&eacute;gories disponibles</h1>
+{% import "::macro_bouton_edit.html.twig" as bouton_edit %}
+{% block title %}
+	Cat&eacute;gories -> Cat&eacute;gories disponibles
+{% endblock %}
 
 <table class="records_list">
     <thead>
@@ -16,14 +19,7 @@
             <td><a href="{{ path('categorie_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td>{{ entity.nom }}</td>
             <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('categorie_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('categorie_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+				{{ bouton_edit.bouton_edit( path('categorie_edit', { 'id': entity.id }) ) }}
             </td>
         </tr>
     {% endfor %}

@@ -1,6 +1,8 @@
 {% extends "::base.html.twig"  %}
 {% block content %}
-<h1>Editer le creneau</h1>
+{% block title %}
+	Cr&eacute;neau -> Edition
+{% endblock %}
 
 <form action="{{ path('creneau_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     {{ form_widget(edit_form) }}
