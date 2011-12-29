@@ -1,9 +1,9 @@
 {% extends "::base.html.twig"  %}
-{% block content %}
 {% block title %}
 	T&acirc;ches -> D&eacute;tails de la T&acirc;che
 {% endblock %}
 
+{% block content %}
 <table class="record_properties">
     <tbody>
         <tr>
@@ -16,7 +16,7 @@
         </tr>
         <tr>
             <th>Description</th>
-            <td>{{ entity.description }}</td>
+            <td>{{ entity.consignes }}</td>
         </tr>
         <tr>
             <th>Lieu</th>

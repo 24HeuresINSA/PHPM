@@ -258,7 +258,7 @@ class OrgaController extends Controller
 						$surnomOrgaBDD = $entitiesOrga[$i]->getsurnom();
 						$departementOrgaBDD = $entitiesOrga[$i]->getdepartement();
 						$commentaireOrgaBDD = $entitiesOrga[$i]->getcommentaire();
-						$permiOrgaBDD = $entitiesOrga[$i]->getpermis();
+						$permisOrgaBDD = $entitiesOrga[$i]->getpermis();
 						$dateDeNaissanceOrgaBDD = $entitiesOrga[$i]->getDateDeNaissance();
 						
 						
@@ -302,12 +302,23 @@ class OrgaController extends Controller
 						$entity->setemail($inscriptionOrga['email']);
 						$entity->setdepartement($inscriptionOrga['departement']);
 						$entity->setcommentaire($inscriptionOrga['commentaire']);
-						$entity->setpermis(1);
+						$entity->setpermis($inscriptionOrga['permis']);
 						$entity->setDateDeNaissance(new \DateTime($inscriptionOrga['dateDeNaissance']));
 						$entity->setSurnom($inscriptionOrga['surnom']);				
 						$em->persist($entity);
+	            		
+	            		
+						// ajout des creneaux 
+						
+						
+						
+						
+						
+	            		
 	            		$em->flush();
-											
+							
+						
+																
 						}
 	
 
