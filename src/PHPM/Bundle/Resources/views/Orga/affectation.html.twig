@@ -14,11 +14,16 @@
 	{% endstylesheets %}
 {% endblock %}
 
-{% block script %}
+{% block javascript %}
 	{{ parent() }}
+	{# attention dans les include Javascript l'ordre compte ! #}
 	{% javascripts
-		'@PHPMBundle/Resources/public/js/lib/jquery.min.js'
 		'@PHPMBundle/Resources/public/js/lib/jquery-ui.min.js'
+		'@PHPMBundle/Resources/public/js/affectation/util/*'
+		'@PHPMBundle/Resources/public/js/affectation/model/*'
+		'@PHPMBundle/Resources/public/js/affectation/view/*'
+		'@PHPMBundle/Resources/public/js/affectation/controller/*'
+		'@PHPMBundle/Resources/public/js/affectation/*'
 	%}
 		<script src="{{ asset_url }}" type="text/javascript"></script>
 	{% endjavascripts %}
@@ -49,7 +54,9 @@
 		Morbi suscipit aliquam lacus tristique aliquam. Donec ultricies dui eu libero tincidunt viverra. Nunc quis urna arcu, ac pellentesque justo. Sed turpis sapien, mollis sed commodo vitae, consequat at orci. Quisque enim nisl, pretium sed blandit vitae, auctor sed tellus. Maecenas tellus nulla, fermentum non venenatis eu, sodales vel nibh. Quisque sagittis rhoncus metus eu vehicula. Aliquam erat volutpat. Vivamus semper suscipit ante et auctor. Aliquam erat volutpat. Aliquam sodales nibh ut urna accumsan sodales. Duis ultrices vulputate justo vitae gravida. Ut vehicula massa eu risus condimentum at vestibulum risus commodo. Nulla facilisi. Suspendisse ultrices neque nec nunc luctus sagittis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
 	</div>
 	
-	<div class="sidebar_tache" id="sidebar_tache"></div>
+	<div class="sidebar_tache" id="sidebar_tache">
+		Ceci est la derière colonne
+	</div>
 
 {% endblock %}
 
