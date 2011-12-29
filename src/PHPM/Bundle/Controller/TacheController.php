@@ -240,38 +240,46 @@ public function importAction()
 		
 		if ($found){
 // la tache existe déjà, on va donc comparer que les données n'ont pas été changées
-			print "on l'a deja <br />";
+			print "on a deja la tache <br />";
 
-			foreach ($tache_en_traitement['plages'] as $timerTM){
-				foreach ($elements->getPlagesHoraire() as $timerPM){
-					$found = FALSE;
-					if ($timerPM->getId() == $timerTM->getId()){
+			foreach ($tache_en_traitement['plages'] as $timeTM){
+				$found = FALSE;
+				foreach ($elements->getPlagesHoraire() as $timePM){
+					
+					if ($timePM->getId() == $timeTM['id']){
 						$found = TRUE;
 						break;
 					}
 				}
 				if ($found){
 					//Le creneau existe, on vérifie qu'il est toujours bon
-					print "hehe creneaux trouve";
-					if ($timerPM->getDebut() == $timerTM->getDebut){
-						if ($timerPM->getFin() == $timerTM->getFin){
+					print "hehe creneaux trouve<br/>";
+					//TODO: virer le strtotime   
+					if ($timePM->getDebut()->format('Y-m-d H:i:s') == strtotime($timeTM['debut']) ){
+						if (strtotime($timePM->getFin())  == strtotime($timeTM['fin']) ){
 							print "everything's fine";
 						}
 					}else{
 						//changement de créneau, on modifie
+						print "on modifie le creneau <br/>"; 
 						$shiftLevel = 3;
 						
 					}
 				}else{
 					//Le creneau n'existe pas, on va donc l'ajouter à la DB
-					print "on l'ajoute <br />";
+					print "on ajoute le creneau <br />";
 					$shiftLevel = 1;
 				}
+			//TODO: gestion du nombre orga
+				//if ($tache_en_traitement['orga'] != $elements->getNombreOrga()){
+					//changer 
+				//}
+				
 			}
-			
+		//TODO: changement mineurs: nom, description 
 		}else{
 //La tache n'existe pas, on va donc l'ajouter à la DB
-			print "on l'ajoute <br />";
+			print "on ajoute la tache <br />";
 			$shiftLevel = 1;
 		}
 		
@@ -291,7 +299,8 @@ public function importAction()
 			
 			if (!$found){
 // La tache n'existe plus, on va donc la supprimer
-				print "on la supprime <br />";
+				print "on supprime les creneaux <br />";
+				print "on supprime la tache <br />";
 			}
 		
 		}
