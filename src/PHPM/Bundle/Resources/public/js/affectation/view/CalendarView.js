@@ -19,12 +19,11 @@ CalendarView.prototype = {
 	 */
 	setPlage: function(plage) {
 		// calcule le nombre de jours - il faut passer par les TS, +1
-		var _nbJours = (pmAffectation.data.parameter.plage[plage]['jour_fin'].getTime()-pmAffectation.data.parameter.plage[plage]['jour_debut'].getTime())/(24*60*60*1000)+1;
-		
-		console.log(_nbJours);
+		var _nbJours = (pmAffectation.data.calendar.plage[plage]['jour_fin'].getTime()-pmAffectation.data.calendar.plage[plage]['jour_debut'].getTime())/(24*60*60*1000)+1;
 		
 		for (var _i=0;_i<_nbJours;_i++) {
-			$('#calendar').append(this.makeADay("04/12/1990", _nbJours));
+			var _date = new Date(pmAffectation.data.calendar.plage[plage]['jour_debut'].getTime()+_i*24*60*60*1000);
+			$('#calendar').append(this.makeADay(_date.getDate()+'/'+_date.getMonth()+1, _nbJours));
 		}
 	},
 	// fabrique un jour
@@ -33,7 +32,9 @@ CalendarView.prototype = {
 		_html += '<div class="titre_date">'+date+'</div>';
 		
 		for (var _i=0;_i<96;_i++) {
-			_html += '<div class="quart_heure" id="quart_heure_'+_i+'" heure="'+date+' '+Math.floor(_i/4)+':'+_i%4*15+'"></div>';
+			var _dts = date+' '+Math.floor(_i/4)+':'+_i%4*15;
+			_html += '<div class="quart_heure" id="quart_heure_'+_i+'" heure="'+_dts+'" ';
+			_html += 'onclick="pmAffectation.controllers.calendar.click(\''+_dts+'\')"></div>';
 		}
 		
 		_html += '</div>';

@@ -32,7 +32,7 @@ body {
 .calendar {
 	float: left;
 	width: 60%;
-	height: 990px;  /* peut être modifié par ailleurs - rajouter 30 pour le titre */
+	height: 991px;  /* peut être modifié par ailleurs - rajouter 30 pour le titre  - 1 pour la dernière bordure */
 }
 .jour {
 	height: 100%;
