@@ -144,4 +144,10 @@ class Disponibilite
     {
     	return $this->getDebut()->format('D H:i')." - ".$this->getFin()->format('D H:i');
     }
+    
+    public function toArray()
+    {
+    	return array("debut" => $this->getDebut(),"fin" => $this->getFin());
+    }
+    
 }
