@@ -1,5 +1,6 @@
 {% extends "::base.html.twig"  %}
 {% block content %}
+{% import "::macro_bouton_edit.html.twig" as bouton_edit %}
 <h1>Liste des t&acirc;ches</h1>
 
 <table class="records_list">
@@ -20,14 +21,7 @@
             <td>{{ entity.description }}</td>
             <td>{{ entity.lieu }}</td>
             <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('tache_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('tache_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+					{{ bouton_edit.bouton_edit( path('tache_edit', { 'id': entity.id }) ) }}
             </td>
         </tr>
     {% endfor %}

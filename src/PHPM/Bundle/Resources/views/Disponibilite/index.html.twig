@@ -1,5 +1,6 @@
 {% extends "::base.html.twig"  %}
 {% block content %}
+{% import "::macro_bouton_edit.html.twig" as bouton_edit %}
 <h1>Disponibilite list</h1>
 
 <table class="records_list">
@@ -18,14 +19,7 @@
             <td>{% if entity.debut %}{{ entity.debut|date('Y-m-d H:i:s') }}{% endif%}</td>
             <td>{% if entity.fin %}{{ entity.fin|date('Y-m-d H:i:s') }}{% endif%}</td>
             <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('disponibilite_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('disponibilite_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+				{{ bouton_edit.bouton_edit( path('disponibilite_edit', { 'id': entity.id }) ) }}
             </td>
         </tr>
     {% endfor %}
