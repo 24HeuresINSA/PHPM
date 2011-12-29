@@ -213,27 +213,33 @@ public function importAction()
 	$jason = "[{\"id\":1,\"nom\":\"TENIR LE PUTAIN DE BAR\",\"categorie\":\"Barres\",\"description\":\"MAIS TU VA LE TENIR TON BAR, MERDE\",\"plages\":[{\"id\":1,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":2,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":3,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712}]},{\"id\":2,\"nom\":\"TENIR LE PUTAIN DE BAR\",\"categorie\":\"Barres\",\"description\":\"MAIS TU VA LE TENIR TON BAR, MERDE\",\"plages\":[{\"id\":1,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":2,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":3,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712}]},{\"id\":3,\"nom\":\"TENIR LE PUTAIN DE BAR\",\"categorie\":\"Barres\",\"description\":\"MAIS TU VA LE TENIR TON BAR, MERDE\",\"plages\":[{\"id\":1,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":2,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":3,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712}]}]";
 	//$jason = fopen("taches.json", "r");
 	
-	// on affiche le jason
-	
-	print"<pre>";
 	$tabArray = json_decode($jason, TRUE);
+	
+	
+	// on affiche le jason
+	/*
+	print"<pre>";
 	//var_dump($tabArray);
 	print"</pre>";
-	
+	//*/
 	
 	$em = $this->getDoctrine()->getEntityManager();
-	
 	$entities = $em->getRepository('PHPMBundle:Tache')->findAll();
 
+	
 	foreach ($tabArray as $tache_en_traitement) {
 		//*
 		print $tache_en_traitement['id'];
 		print"	";
 		print $tache_en_traitement['nom'];
 		print "<br />";
+		print "coucou";
 		if (isset($entities[$tache_en_traitement['id']-1])){
 			print $entities[$tache_en_traitement['id']-1];
-			$entities[$tache_en_traitement['id']-1]->getId();
+			print "<br />";
+			print $entities[$tache_en_traitement['id']-1]->toArray();
+			print "<br />";
+			print $entities[$tache_en_traitement['id']-1]->getId();
 			print "<br />";
 			foreach ($tache_en_traitement['plages'] as $creneau_en_traitement){
 				print $creneau_en_traitement['id'];
@@ -269,7 +275,10 @@ public function importAction()
 	
 	print "<br />";	
 	print "<br />";
-	//print var_dump($entities[0]);
+	print $entities[0]->getId();
+	print "<pre>";
+	print_r ($entities->toArray());
+	print "</pre>";
 	print "<br />";	
 	print "<br />";
 	

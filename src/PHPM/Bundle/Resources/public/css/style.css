@@ -80,6 +80,7 @@ a {
 	padding: 0;
 	z-index: 500;
 	position: fixed;
+	display: none;
 }
 .success, .alert, .notification {
 	padding: 20px 30px;
@@ -125,6 +126,7 @@ th {
 	border: thin solid black;
 	margin: 0;
 }
+
 
 tr {
 	background: #ddd;	
