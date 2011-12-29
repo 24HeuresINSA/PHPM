@@ -2,6 +2,7 @@
  * Feuille de style spécifique à la vue Affectation
  */
 
+
 /*
  * Override
  */
@@ -12,6 +13,7 @@ body {
 	padding: 0;
 	width: 100%;
 }
+
 
 /*
  * Barre latérale gauche
@@ -25,6 +27,7 @@ body {
 	margin-right: 1%;
 }
 
+
 /*
  * Vue agenda
  * au milieu de la fenêtre
@@ -34,6 +37,30 @@ body {
 	width: 60%;
 	height: 991px;  /* peut être modifié par ailleurs - rajouter 30 pour le titre  - 1 pour la dernière bordure */
 }
+
+/* barre des heures */
+.hours {
+	float: left;
+	width: 5%;
+	max-width: 5%;
+	overflow: hidden;
+	height: 961px;
+	margin-top: 30px;
+}
+.hour {
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+}
+.hour:nth-of-type(even) {
+	background: #BBB;
+}
+.hour:nth-of-type(odd) {
+	background: #DDD;
+}
+
+/* chaque jour */
 .jour {
 	height: 100%;
 	/* width setté dynamiquement */
@@ -49,22 +76,32 @@ body {
 	text-align: center;
 	background: #BBB;
 }
+
+/* heure */
+.heure:nth-of-type(odd) {
+	background: #f6f6f6;
+}
+.heure:last-of-type {
+	border-bottom: 1px solid #333;	
+}
+
+
+/* quart d'heure */
 .quart_heure {
 	width: 100%;
 	height: 9px; /* fait 10 avec la bordure */
 }
-.quart_heure:nth-of-type(4n+2) {
-	border-top: 1px solid #333;
-}
-.quart_heure:nth-of-type(4n+4) {
-	border-top: 1px solid #AAA;
-}
-.quart_heure:nth-of-type(2n+1) {
+/* l'ordre des bordures comptes, la plus épaisse dessus */
+.quart_heure:nth-of-type(2n+2) {
 	border-top: 1px dashed #AAA;
 }
-.quart_heure:last-of-type {
-	border-bottom: 1px solid #333;	
+.quart_heure:nth-of-type(2n+1) {
+	border-top: 1px solid #AAA;
 }
+.quart_heure:first-of-type {
+	border-top: 1px solid #333;
+}
+
 
 /*
  * Barre latérale droite
