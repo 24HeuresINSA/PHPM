@@ -254,49 +254,72 @@ class OrgaController extends Controller
 						$nomOrgaBDD = $entitiesOrga[$i]->getnom();    
 						$prenomOrgaBDD = $entitiesOrga[$i]->getprenom();
 						$telephoneOrgaBDD = $entitiesOrga[$i]->gettelephone();					
+						$emailOrgaBDD = $entitiesOrga[$i]->getemail();
+						$surnomOrgaBDD = $entitiesOrga[$i]->getsurnom();
+						$departementOrgaBDD = $entitiesOrga[$i]->getdepartement();
+						$commentaireOrgaBDD = $entitiesOrga[$i]->getcommentaire();
+						$permiOrgaBDD = $entitiesOrga[$i]->getpermis();
+						$dateDeNaissanceOrgaBDD = $entitiesOrga[$i]->getDateDeNaissance();
+						
+						
 						
 						if ($inscriptionOrga['nom'] == $nomOrgaBDD AND $inscriptionOrga['prenom'] == $prenomOrgaBDD
 							AND $inscriptionOrga['telephone'] == $telephoneOrgaBDD)
 						{
-					
 							$orgaNonTrouve=FALSE;
-							//echo $nomOrgaBDD;
-							//echo "trouve";
 						}
 						
-						
+						if ($inscriptionOrga['nom'] == $nomOrgaBDD AND $inscriptionOrga['prenom'] == $prenomOrgaBDD
+						AND $inscriptionOrga['telephone'] == $telephoneOrgaBDD AND $inscriptionOrga['email'] == $emailOrgaBDD
+						AND $inscriptionOrga['surnom'] == $surnomOrgaBDD AND $inscriptionOrga['departement'] == $departementOrgaBDD
+						AND $inscriptionOrga['commentaire'] == $commentaireOrgaBDD AND $inscriptionOrga['permis'] == $permisOrgaBDD)
+							{
+					//			echo $dateDeNaissanceOrgaBDD;
+								echo 'orga deja present a lidentique dans la bdd';
+							}
 
-						
+						// rajouter les permis et date de naissance
 						
 						
 						$i++;
 					}
 
-					if ($orgaNonTrouve)
-					{
-					echo $inscriptionOrga['prenom'];
-					echo 'orga a rajouter';
-					echo "<p>";		
-					
-					$entity  = new orga();
-					$entity->setNom($inscriptionOrga['nom']);
-					$entity->setPrenom($inscriptionOrga['prenom']);
-					//$entity->setConfiance(1);
-					$entity->settelephone($inscriptionOrga['telephone']);
-					$entity->setemail($inscriptionOrga['email']);
-					$entity->setdepartement($inscriptionOrga['departement']);
-					$entity->setcommentaire($inscriptionOrga['commentaire']);
-					$entity->setpermisB(1);
-					$entity->setpermisB2ans(1);
-					$entity->setDateDeNaissance(new \DateTime("2012-12-05"));
-					$entity->setSurnom($inscriptionOrga['surnom']);				
-					
-					$em->persist($entity);
-            		$em->flush();
-										
-					}
-	
+
+
+					if ($orgaNonTrouve)    // si l'orga nexiste pas on lajoute
+						{
+						echo $inscriptionOrga['prenom'];
+						echo 'orga a rajouter';
+						echo "<p>";		
+						
+						$confiance = $entitiesOrga = $em->getRepository('PHPMBundle:Confiance')->findOneById(1);  // pour récupérer confiance
+						
+						$entity  = new orga();
+						$entity->setNom($inscriptionOrga['nom']);
+						$entity->setPrenom($inscriptionOrga['prenom']);
+						$entity->setConfiance($confiance);
+						$entity->settelephone($inscriptionOrga['telephone']);
+						$entity->setemail($inscriptionOrga['email']);
+						$entity->setdepartement($inscriptionOrga['departement']);
+						$entity->setcommentaire($inscriptionOrga['commentaire']);
+						$entity->setpermis(1);
+						$entity->setDateDeNaissance(new \DateTime($inscriptionOrga['dateDeNaissance']));
+						$entity->setSurnom($inscriptionOrga['surnom']);				
+						$em->persist($entity);
+	            		$em->flush();
+											
 						}
+	
+
+
+					
+					
+					
+	
+	
+	
+	
+					}
 						
 					/*
 					echo ("<pre>");
