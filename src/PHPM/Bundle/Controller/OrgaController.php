@@ -216,10 +216,27 @@ class OrgaController extends Controller
 			
 			$listeOrgaArray = json_decode($json,TRUE);
 			
+			foreach($listeOrgaArray as $case => $inscriptionOrga)
+				{
+					//print_r($inscriptionOrga);
+					//$Nom = array_search('nom', $inscriptionOrga);			
+					
+					
+					//$Nom = $inscriptionOrga['nom']; 
+					$inscriptionOrga['nom']=strtoupper($inscriptionOrga['nom']);
+					$inscriptionOrga['prenom']=strtoupper($inscriptionOrga['prenom']);	
+					//echo $Nom;
+					echo ("<pre>");
+					print_r($inscriptionOrga);
+					echo("</pre>");
+				}	
+			
+			echo "plouf";
+			/*
 			echo ("<pre>");
 			var_dump($listeOrgaArray);
 			echo("</pre>");
-				
+				*/
 				
 				
 				
@@ -240,7 +257,7 @@ class OrgaController extends Controller
   
      	
      	
-     	return array();
+     	return $listeOrgaArray;
 		
 		
 	}
