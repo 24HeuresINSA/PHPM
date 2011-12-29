@@ -190,7 +190,7 @@ class OrgaController extends Controller
      * Deletes a Orga entity.
      *
      * @Route("/{id}/delete", name="orga_delete")
-     * @Method("post")
+     * 
      */
     public function deleteAction($id)
     {
@@ -227,12 +227,12 @@ class OrgaController extends Controller
      * Import Orgas from website.
      *
      * @Route("/import", name="orga_import")
-     * @Template
+     * 
      */
 	public function importAction()	
 	{
 		// Gerer l'import du json
-		
+		//@Template
 		$em = $this->getDoctrine()->getEntityManager();
 		$url = "inscriptionOrgas.json";			
 		$json = file_get_contents($url);
@@ -270,22 +270,7 @@ class OrgaController extends Controller
 				    }else{
 				        $em->persist($entity);
 				        $em->flush();
-				    } 
-					
-					
-					
-					
-            		
-	            		
-						// ajout des disponibilite
-						/*
-
-						
-					
-					$idOrgaAjoute= $em->getRepository('PHPMBundle:Orga')->findOneByTelephone($inscriptionOrga['telephone']);	
-
-						
-						
+						$idOrgaAjoute= $em->getRepository('PHPMBundle:Orga')->findOneByTelephone($inscriptionOrga['telephone']);
 						foreach($inscriptionOrga['disponibilites'] as $dispoAAjoute)
 							{
 								$entitydisponibilite = new disponibilite();						
@@ -295,13 +280,11 @@ class OrgaController extends Controller
 								$findispo = date ('y-m-d', $dispoAAjoute[1]);
 								$entitydisponibilite->setFin(new \DateTime("20$findispo"));
 								$em->persist($entitydisponibilite);
-								
-								
 								$em->flush();							
 							}
-
-					*/	
-						
+								
+				    } 
+				
 					
 				}
 		

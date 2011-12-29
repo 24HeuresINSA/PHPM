@@ -192,7 +192,7 @@ class CategorieController extends Controller
      * Deletes a Categorie entity.
      *
      * @Route("/{id}/delete", name="categorie_delete")
-     * @Method("post")
+     * 
      */
     public function deleteAction($id)
     {
