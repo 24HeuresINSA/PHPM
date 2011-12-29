@@ -240,7 +240,7 @@ class TacheController extends Controller
 	public function importAction()
 	{
 		
-		$jason = "{\"1\":{\"id\":1,\"nom\":\"Tenir le bar\",\"lieu\":\"Bar AIP\",\"confiance\":{\"nom\":\"Soft\",\"couleur\":\"blue\"},\"categorie\":{\"nom\":\"Bar\"},\"permisNecessaire\":0,\"plagesHoraire\":{\"1\":{\"debut\":{\"date\":\"2011-12-01 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"fin\":{\"date\":\"2011-12-02 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"nbOrgasNecessaires\":10,\"creneaux\":[]},\"2\":{\"debut\":{\"date\":\"2011-12-02 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"fin\":{\"date\":\"2011-12-03 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"nbOrgasNecessaires\":1,\"creneaux\":[]}}},\"2\":{\"id\":2,\"nom\":\"Installer le PS1\",\"lieu\":\"Laurent Bonnevay\",\"confiance\":{\"nom\":\"Hard\",\"couleur\":\"orange\"},\"categorie\":{\"nom\":\"S\u00e9curit\u00e9\"},\"permisNecessaire\":0,\"plagesHoraire\":{\"3\":{\"debut\":{\"date\":\"2011-12-01 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"fin\":{\"date\":\"2011-12-06 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"nbOrgasNecessaires\":3,\"creneaux\":[]}}}}";
+		$jason = "{\"1\":{\"id\":3,\"nom\":\"Tenir le bar\",\"lieu\":\"Bar AIP\",\"confiance\":{\"nom\":\"Soft\",\"couleur\":\"blue\"},\"categorie\":{\"nom\":\"Bar\"},\"permisNecessaire\":0,\"plagesHoraire\":{\"1\":{\"debut\":{\"date\":\"2011-12-01 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"fin\":{\"date\":\"2011-12-02 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"nbOrgasNecessaires\":10,\"creneaux\":[]},\"2\":{\"debut\":{\"date\":\"2011-12-02 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"fin\":{\"date\":\"2011-12-03 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"nbOrgasNecessaires\":1,\"creneaux\":[]}}},\"2\":{\"id\":2,\"nom\":\"Installer le PS1\",\"lieu\":\"Laurent Bonnevay\",\"confiance\":{\"nom\":\"Hard\",\"couleur\":\"orange\"},\"categorie\":{\"nom\":\"S\u00e9curit\u00e9\"},\"permisNecessaire\":0,\"plagesHoraire\":{\"3\":{\"debut\":{\"date\":\"2011-12-01 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"fin\":{\"date\":\"2011-12-06 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"nbOrgasNecessaires\":3,\"creneaux\":[]}}}}";
 	
 		
 		$em = $this->getDoctrine()->getEntityManager();
@@ -249,7 +249,7 @@ class TacheController extends Controller
 		$tabArray = json_decode($jason, TRUE);
 		
 		//Affichage de l'import et de la db
-		/*
+		//*
 		print"<pre>";
 		var_dump($tabArray);
 		print"</pre>";
@@ -276,11 +276,11 @@ class TacheController extends Controller
 				print "ajout de la tache ";
 				print $tache_en_traitement['id'];
 				print "<br />";
-					
+				//*	
 				$entity  = new tache();
 				$entity->setId($tache_en_traitement['id']);
 				$entity->setNom($tache_en_traitement['nom']);
-				$entity->setConsignes($tache_en_traitement['consigne']);
+				//$entity->setConsignes($tache_en_traitement['consignes']);
 				$entity->setMaterielNecessaire($tache_en_traitement['materielNecessaire']);
 				$entity->setPermisNecessaire($tache_en_traitement['permisNecessaire']);
 				$entity->setLieu($tache_en_traitement['lieu']);
@@ -301,6 +301,7 @@ class TacheController extends Controller
 					$em->persist($entity);
 					$em->flush();
 				}
+				//*/
 			}else{
 				print "tache ";
 				print $tache_en_traitement['id'];
