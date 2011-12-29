@@ -1,7 +1,9 @@
 {% extends "::base.html.twig"  %}
 {% block content %}
 {% import "::macro_bouton_edit.html.twig" as bouton_edit %}
-<h1>Liste des plages horaires</h1>
+{% block title %}
+	Plages horaires -> Liste des plages horaires
+{% endblock %}
 
 <table class="records_list">
     <thead>
