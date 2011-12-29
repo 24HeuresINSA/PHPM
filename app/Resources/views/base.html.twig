@@ -15,7 +15,7 @@
 		
 		{# même chose pour Javascript #}
         {% block javascript %}
-			{% javascripts '@PHPMBundle/Resources/public/css/style.css' %}
+			{% javascripts '@PHPMBundle/Resources/public/js/general.js' %}
 				<script src="{{ asset_url }}" type="text/javascript"></script>
 			{% endjavascripts %}
         {% endblock %}
@@ -50,6 +50,8 @@
         </div> 
         
         <div class="content">
+        	<div class="message" id="message"><!-- ici arriveront les messages, classes alert ou success --></div>
+        	
         	{% block content %}
         		<p>Il y aura ici le contenu</p>
         	{% endblock %}
