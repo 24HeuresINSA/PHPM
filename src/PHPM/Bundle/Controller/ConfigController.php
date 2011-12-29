@@ -213,7 +213,7 @@ class ConfigController extends Controller
     
     	$pref = $em->getRepository('PHPMBundle:Config')->findOneByField($string);
     
-    	if (!$entity) {
+    	if (!$pref) {
     		throw $this->createNotFoundException('Unable to find Config entity.');
     	}
     	    	
