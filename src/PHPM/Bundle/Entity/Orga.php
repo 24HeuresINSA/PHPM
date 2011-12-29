@@ -40,7 +40,7 @@ class Orga
     *
     * @ORM\Column(name="surnom", type="string", length=255)
     */
-    private $prenom;
+    private $surnom;
 
     /**
      * @var string $telephone
