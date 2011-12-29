@@ -19,11 +19,11 @@ a {
 }
 
 tr {
-	background: red;	
+	background: #ddd;	
 }
 
 tr:hover{
-	background: #aaa;
+	background: #dfdfdf;
 	
 }
 
