@@ -21,7 +21,7 @@
     </thead>
     <tbody>
     {% for entity in entities %}
-        <tr>
+        <tr style="cursor:pointer" onclick="window.location='{{ path('orga_show', { 'id': entity.id }) }}'">
             <td><a href="{{ path('orga_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td>{{ entity.nom }}</td>
             <td>{{ entity.prenom }}</td>
