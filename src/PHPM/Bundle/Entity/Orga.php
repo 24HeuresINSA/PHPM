@@ -4,12 +4,14 @@ namespace PHPM\Bundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * PHPM\Bundle\Entity\Orga
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\OrgaRepository")
+ * @UniqueEntity(array("email","telephone"))
  */
 class Orga
 {
@@ -49,7 +51,7 @@ class Orga
     /**
      * @var string $telephone
      *
-     * @ORM\Column(name="telephone", type="string", length=255)
+     * @ORM\Column(name="telephone", type="string", length=255, unique=true)
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern="/0[67][0-9]{8}/",
@@ -61,7 +63,7 @@ class Orga
     /**
      * @var string $email
      *
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(name="email", type="string", length=255, unique=true)
      * 
      * @Assert\Email(     * 
      *     checkMX = true
