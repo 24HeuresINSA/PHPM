@@ -119,6 +119,13 @@ a {
 table {
 	border-collapse:collapse;
 }
+
+th {
+	background: #ddd;	
+	border: thin solid black;
+	margin: 0;
+}
+
 tr {
 	background: #ddd;	
 	margin: 0;
