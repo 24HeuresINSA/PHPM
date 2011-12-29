@@ -1,0 +1,13 @@
+/*
+ * Feuille de style spécifique à la vue Affectation
+ */
+
+/*
+ * Messages
+ */
+.message {
+	float: left;
+	width: 80%;
+	margin: 10%;
+	z-index: 1000;
+}
