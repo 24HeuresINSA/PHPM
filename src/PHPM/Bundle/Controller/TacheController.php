@@ -229,7 +229,7 @@ public function importAction()
 		print $tache_en_traitement['nom'];
 		print "<br />";
 		$found = FALSE;
-		$majorShift = FALSE;
+		$shiftLevel = 0;
 		foreach ($entities as $elements){
 			if ($elements->getId() == $tache_en_traitement['id']){
 				$found = TRUE;
@@ -245,7 +245,7 @@ public function importAction()
 			foreach ($tache_en_traitement['plages'] as $timerTM){
 				foreach ($elements->getPlagesHoraire() as $timerPM){
 					$found = FALSE;
-					if ($timerPM == $timerTM){
+					if ($timerPM->getId() == $timerTM->getId()){
 						$found = TRUE;
 						break;
 					}
@@ -253,16 +253,26 @@ public function importAction()
 				if ($found){
 					//Le creneau existe, on vérifie qu'il est toujours bon
 					print "hehe creneaux trouve";
-					
+					if ($timerPM->getDebut() == $timerTM->getDebut){
+						if ($timerPM->getFin() == $timerTM->getFin){
+							print "everything's fine";
+						}
+					}else{
+						//changement de créneau, on modifie
+						$shiftLevel = 3;
+						
+					}
 				}else{
 					//Le creneau n'existe pas, on va donc l'ajouter à la DB
 					print "on l'ajoute <br />";
+					$shiftLevel = 1;
 				}
 			}
 			
 		}else{
 //La tache n'existe pas, on va donc l'ajouter à la DB
 			print "on l'ajoute <br />";
+			$shiftLevel = 1;
 		}
 		
 		
@@ -311,7 +321,7 @@ public function importAction()
 	var_dump($tabArray);
 	print"</pre>";
 	//*/
-	
+	 
 	exit(print($entities[0]->getId()));
 	return array();
 }

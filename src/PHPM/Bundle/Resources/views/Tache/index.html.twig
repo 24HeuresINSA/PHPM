@@ -13,7 +13,11 @@
             <th>Nom</th>
             <th>Consignes</th>
             <th>Lieu</th>
+            <th>Mat&eacute;rielNecessaire</th>
+            <th>nbOrgasNecessaires</th>
+            <th>permisNecessaire</th>
             <th>Actions</th>
+            
         </tr>
     </thead>
     <tbody>
@@ -23,6 +27,9 @@
             <td>{{ entity.nom }}</td>
             <td>{{ entity.consignes }}</td>
             <td>{{ entity.lieu }}</td>
+            <td>{{ entity.materielNecessaire }}</td>
+            <td>{{ entity.nbOrgasNecessaires }}</td>
+            <td>{{ entity.permisNecessaire }}</td>
             <td>
 					{{ bouton_edit.bouton_edit( path('tache_edit', { 'id': entity.id }) ) }}
             </td>

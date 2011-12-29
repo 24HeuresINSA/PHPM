@@ -1,9 +1,10 @@
 {% extends "::base.html.twig"  %}
-{% block content %}
+
 {% block title %}
 	Confiance -> Cr&eacute;er un indice de confiance
 {% endblock %}
 
+{% block content %}
 <form action="{{ path('confiance_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
