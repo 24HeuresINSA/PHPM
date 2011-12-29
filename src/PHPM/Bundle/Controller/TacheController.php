@@ -200,6 +200,55 @@ class TacheController extends Controller
         ;
     }
 
+    
+    
+    
+	/**
+	* Import all Tache entities.
+	*
+	* @Route("/import", name="tache_import")
+	* @Template()
+	*/
+	public function importAction()
+	{
+		
+		$jason = "[{\"id\":1,\"nom\":\"TENIR LE PUTAIN DE BAR\",\"categorie\":\"Barres\",\"description\":\"MAIS TU VA LE TENIR TON BAR, MERDE\",\"plages\":[{\"id\":1,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":2,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":3,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712}]},{\"id\":2,\"nom\":\"TENIR LE PUTAIN DE BAR\",\"categorie\":\"Barres\",\"description\":\"MAIS TU VA LE TENIR TON BAR, MERDE\",\"plages\":[{\"id\":1,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":2,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":3,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712}]},{\"id\":3,\"nom\":\"TENIR LE PUTAIN DE BAR\",\"categorie\":\"Barres\",\"description\":\"MAIS TU VA LE TENIR TON BAR, MERDE\",\"plages\":[{\"id\":1,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":2,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":3,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712}]}]";
+		
+		$em = $this->getDoctrine()->getEntityManager();
+		$entities = $em->getRepository('PHPMBundle:Tache')->findAll();
+		
+		$tabArray = json_decode($jason, TRUE);
+		print"<pre>";
+		var_dump($tabArray);
+		print"</pre>";
 
-
-}
+		print"<pre>";
+		foreach ($entities as $elements){
+			print $elements->getId();
+		var_dump($elements->toArray());
+		}
+		print"</pre>";
+		
+		foreach ($tabArray as $tache_en_traitement) {
+			$found = FALSE;
+			foreach ($entities as $elements){
+				if ($elements->getId() == $tache_en_traitement['id']){	
+					$found = TRUE;
+					break;
+				}
+				
+			}
+			if (!$found){
+				//On ajoute la tache
+				print "ajout de la tache ";
+				print $tache_en_traitement['id'];
+				print "<br />";
+			}
+		}	
+			
+		
+	exit(print($tabArray[0]));
+	return array();
+	}
+	
+	}
