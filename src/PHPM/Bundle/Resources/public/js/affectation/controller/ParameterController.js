@@ -15,6 +15,7 @@ ParameterController.prototype = {
 	initialize: function() {
 		pmAffectation.data.parameter = {};
 		pmAffectation.models.parameter = new ParameterModel(); // création du modèle
+		pmAffectation.views.calendar = new CalendarView();
 	},
 	
 	/*
@@ -35,5 +36,7 @@ ParameterController.prototype = {
 	},
 	callbackPlages: function() {
 		pmAffectation.data.parameter.plage = pmAffectation.models.parameter.getPlages();
+		
+		pmAffectation.views.calendar.setPlage(pmAffectation.current.plage);
 	}
 }
