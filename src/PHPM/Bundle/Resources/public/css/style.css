@@ -70,6 +70,33 @@ a {
 	color: #fdfdfd;
 }
 
+/*
+ * Messages
+ */
+.message {
+	float: left;
+	width: 80%;
+	margin: -25px 10%;
+	padding: 0;
+	z-index: 500;
+	position: fixed;
+}
+.success, .alert, .notification {
+	padding: 20px 30px;
+}
+.success {
+	background: rgba(51, 230, 51, 0.90);
+	border: 1px solid rgb(0, 120, 0);
+}
+.alert {
+	background: rgba(240, 180, 180, 0.90);
+	border: 1px solid rgb(120, 0, 0);	
+}
+.notification {
+	background: rgba(248, 248, 140, 0.95);
+	border: 1px solid rgb(255, 255, 20);		
+}
+
 
 /*
  * Content

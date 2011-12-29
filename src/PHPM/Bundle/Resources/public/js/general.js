@@ -15,7 +15,7 @@ message = {
 		
 		$('#message').html('<div class="alert">'+str+'</div>');
 		
-		$("#message").fadeOut(10000, 'swing'); // disparait après 10 secondes
+		$("#message").fadeOut(10000, 'linear'); // disparait après 10 secondes
 	},
 	
 	success: function (str) {
@@ -23,6 +23,14 @@ message = {
 		
 		$('#message').html('<div class="success">'+str+'</div>');
 		
-		$("#message").fadeOut(10000, 'swing'); // disparait après 10 secondes
-	}
+		$("#message").fadeOut(10000, 'linear'); // disparait après 10 secondes
+	},
+	
+	notification: function (str) {
+		$("#message").show();
+		
+		$('#message').html('<div class="notification">'+str+'</div>');
+		
+		$("#message").fadeOut(12000, 'linear'); // disparait après 12 secondes
+	},
 }
