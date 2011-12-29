@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PHPM\Bundle\Entity\Orga;
+use PHPM\Bundle\Entity\Disponibilite;
 use PHPM\Bundle\Form\OrgaType;
 
 /**
@@ -308,14 +309,17 @@ class OrgaController extends Controller
 						$em->persist($entity);
 	            		
 	            		
-						// ajout des creneaux 
+						// ajout des disponibilite
+						
+						$entitydisponibilite = new disponibilite();
+						
 						
 						
 						
 						
 						
 	            		
-	            		$em->flush();
+	            	//	$em->flush();
 							
 						
 																
