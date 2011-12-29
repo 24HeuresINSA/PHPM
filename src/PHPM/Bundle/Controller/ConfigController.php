@@ -169,7 +169,7 @@ class ConfigController extends Controller
      * Deletes a Config entity.
      *
      * @Route("/{id}/delete", name="config_delete")
-     * @Method("post")
+     * 
      */
     public function deleteAction($id)
     {

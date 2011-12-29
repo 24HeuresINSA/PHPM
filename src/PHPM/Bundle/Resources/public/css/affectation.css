@@ -70,14 +70,24 @@ body {
 .jour:first-of-type {
 	border-left: 1px solid #333;
 }
-.titre_date {
+.titre_date, .titre_date_fixed {
 	height: 30px;
 	line-height: 30px;
 	text-align: center;
 	background: #BBB;
 }
+.titre_date {
+	width: 100%;
+}
+.titre_date_fixed {
+	position: fixed;
+	opacity: 0.7;
+}
 
 /* heure */
+.heure:nth-of-type(1) {
+	margin-top: 30px;
+}
 .heure:nth-of-type(odd) {
 	background: #f6f6f6;
 }

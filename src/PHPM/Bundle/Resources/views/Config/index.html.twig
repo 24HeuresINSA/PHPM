@@ -1,39 +1,24 @@
-<h1>Config list</h1>
+{% extends "::base.html.twig"  %}
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Field</th>
-            <th>Value</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('config_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.field }}</td>
-            <td>{{ entity.value }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('config_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('config_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+{% block title %}
+	Configuration -> Accueil
+{% endblock %}
 
+{% block content %}
+
+{% endblock %}
+
+{% block menu_action %}
 <ul>
     <li>
-        <a href="{{ path('config_new') }}">
-            Create a new entry
+        <a href="{{ path('orga_import') }}">
+            Import d'orgas
         </a>
     </li>
+    <li>
+        <a href="{{ path('orga_validation') }}">
+            Validation d'orgas
+        </a>
+   </li>
 </ul>
+{% endblock %}

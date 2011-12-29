@@ -168,7 +168,7 @@ class CreneauController extends Controller
      * Deletes a Creneau entity.
      *
      * @Route("/{id}/delete", name="creneau_delete")
-     * @Method("post")
+     * 
      */
     public function deleteAction($id)
     {

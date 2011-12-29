@@ -197,7 +197,7 @@ class ConfianceController extends Controller
      * Deletes a Confiance entity.
      *
      * @Route("/{id}/delete", name="confiance_delete")
-     * @Method("post")
+     * 
      */
     public function deleteAction($id)
     {
