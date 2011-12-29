@@ -18,14 +18,6 @@ a {
 	text-decoration: underline;
 }
 
-tr {
-	background: #ddd;	
-}
-
-tr:hover{
-	background: #dfdfdf;
-	
-}
 
 /*
  * Header
@@ -92,6 +84,30 @@ tr:hover{
 	border-bottom: 1px solid #000;
 	margin-top: 0;
 }
+
+/*
+ * Tableaux
+ */
+
+table {
+	border-collapse:collapse;
+}
+tr {
+	background: #ddd;	
+	margin: 0;
+}
+
+tr:hover{
+	background: #d0d0d0;
+	
+}
+
+td {
+	font-family: sans-serif;
+	border: thin solid black;
+	text-align: center;
+}
+
 
 /*
  * Footer
