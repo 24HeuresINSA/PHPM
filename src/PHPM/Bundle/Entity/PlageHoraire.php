@@ -146,4 +146,18 @@ public function __toString()
     	return $this->getDebut()->format('D H:i')." - ".$this->getFin()->format('D H:i');
     }
     
+    public function toArray()
+    {
+    	foreach ($this->getCreneaux() as $entity){
+    		$a[$entity->getId()] = $entity->toArray();
+    		 
+    	}
+    	
+    	return array(
+    	"debut" => $this->getDebut(),
+    	"fin" => $this->getFin(),
+    	"creneaux" => $this->toArray());
+    }
+    
+    
 }
