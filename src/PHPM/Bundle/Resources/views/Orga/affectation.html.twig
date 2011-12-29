@@ -14,12 +14,18 @@
 	{% endstylesheets %}
 {% endblock %}
 
+{% block script %}
+	{{ parent() }}
+	{% javascripts
+		'@PHPMBundle/Resources/public/js/lib/jquery.min.js'
+		'@PHPMBundle/Resources/public/js/lib/jquery-ui.min.js'
+	%}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+{% endblock %}
+
 {% block content %}
-	<div class="message" id="message"><!-- ici arriveront les messages, alert -->
-		<div class="alert">
-			Message de test ebfihezbfbrgb rqgv vgl  qehjrgvhjv vh vqgjhlv qehjrlgv ilueg irqzylkugzbjl rqeug ukregbtilruel qrueklg lkqgrbl rqegq qzvlrh bqrljzgqhjlrzf q qzl gezqjgf lezqg f hjlrqvrqgv jrehbgesv gjbehrv hjv ghejrgv ehjrgv hjerqv hjrqgv
-		</div>
-	</div>
+	<div class="message" id="message"><!-- ici arriveront les messages, classes alert ou success --></div>
 	
 	<div class="sidebar_orga" id ="sidebar_orga"></div>
 	
