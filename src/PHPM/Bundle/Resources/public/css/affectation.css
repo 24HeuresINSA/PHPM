@@ -3,9 +3,27 @@
  */
 
 /*
+ * Override
+ */
+body {
+	background: #fff;
+}
+.content {
+	padding: 0;
+}
+
+/*
  * Barre latérale gauche
  * Avec la liste des orgas
  */
 .sidebar_orga {
-	
+	float: left;
+	width: 20%;
+	height: 100%;
+	border-right: 1px solid #003366;
+	margin-right: 1%;
+}
+.calendar {
+	float: left;
+	width: 60%;
 }
