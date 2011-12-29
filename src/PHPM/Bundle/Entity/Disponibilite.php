@@ -42,7 +42,7 @@ class Disponibilite
     protected $orga;
 
     /**
-    * @ORM\OneToMany(targetEntity="Creneau", mappedBy="plagesHoraire")
+    * @ORM\OneToMany(targetEntity="Creneau", mappedBy="disponibilite")
     */
     protected $creneaux;
 
