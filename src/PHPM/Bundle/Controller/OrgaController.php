@@ -275,27 +275,26 @@ class OrgaController extends Controller
 					{
 					echo $inscriptionOrga['prenom'];
 					echo 'orga a rajouter';
-					echo "<p>";							
+					echo "<p>";		
+					
+					$entity  = new orga();
+					$entity->setNom($inscriptionOrga['nom']);
+					$entity->setPrenom($inscriptionOrga['prenom']);
+					//$entity->setConfiance(1);
+					$entity->settelephone($inscriptionOrga['telephone']);
+					$entity->setemail($inscriptionOrga['email']);
+					$entity->setdepartement($inscriptionOrga['departement']);
+					$entity->setcommentaire($inscriptionOrga['commentaire']);
+					$entity->setpermisB(1);
+					$entity->setpermisB2ans(1);
+					$entity->setDateDeNaissance(new \DateTime("2012-12-05"));
+					$entity->setSurnom($inscriptionOrga['surnom']);				
+					
+					$em->persist($entity);
+            		$em->flush();
+										
 					}
-
-
-
-
-					//print($entitiesOrga[0]->getnom());
-					
-					//echo ("<pre>");
-					//echo $entitiesOrga;
-					//echo("</pre>");	
-					
-					
-												
-							;
-							/*
-							if ($OrgaBDD['nom'] == $inscriptionOrga['nom'])
-							{
-								echo "enorme tu ma trouve";
-							}
-							 */		
+	
 						}
 						
 					/*
