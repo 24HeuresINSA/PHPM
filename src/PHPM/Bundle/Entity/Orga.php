@@ -343,4 +343,24 @@ class Orga
     {
     	return $this->getPrenom()." ".$this->getNom();
     }
+
+    /**
+     * Set surnom
+     *
+     * @param string $surnom
+     */
+    public function setSurnom($surnom)
+    {
+        $this->surnom = $surnom;
+    }
+
+    /**
+     * Get surnom
+     *
+     * @return string 
+     */
+    public function getSurnom()
+    {
+        return $this->surnom;
+    }
 }

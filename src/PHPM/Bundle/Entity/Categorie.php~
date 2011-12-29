@@ -87,4 +87,14 @@ class Categorie
     {
         return $this->taches;
     }
+
+    public function __toString()
+    {
+	return $this->getNom();
+    }
+    
+    public function toArray()
+    {
+    	return array("nom" => $this->getNom());
+    }
 }

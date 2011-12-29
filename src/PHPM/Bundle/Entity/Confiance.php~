@@ -168,4 +168,14 @@ class Confiance
     {
         return $this->orgas;
     }
+    
+    public function __toString()
+    {
+	return $this->getNom();
+    }
+    
+    public function toArray()
+    {
+    	return array("nom" => $this->getNom(),"couleur" => $this->getCouleur());
+    }
 }
