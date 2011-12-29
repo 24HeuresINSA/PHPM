@@ -103,7 +103,8 @@ email
 dateDeNaissance
 departement
 commentaire
-permis {int 3 valeurs}</string> 
+permis {int 3 valeurs}
+statut</string> 
      </void> 
     </void> 
     <void property="name"> 

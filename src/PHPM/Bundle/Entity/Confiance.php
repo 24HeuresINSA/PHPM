@@ -3,6 +3,7 @@
 namespace PHPM\Bundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * PHPM\Bundle\Entity\Confiance
@@ -25,6 +26,7 @@ class Confiance
      * @var string $nom
      *
      * @ORM\Column(name="nom", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $nom;
 
@@ -32,6 +34,7 @@ class Confiance
      * @var smallint $valeur
      *
      * @ORM\Column(name="valeur", type="smallint")
+     * @Assert\NotBlank()
      */
     private $valeur;
 
@@ -39,6 +42,7 @@ class Confiance
      * @var string $couleur
      *
      * @ORM\Column(name="couleur", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $couleur;
     

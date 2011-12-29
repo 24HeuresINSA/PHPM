@@ -3,12 +3,15 @@
 namespace PHPM\Bundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * PHPM\Bundle\Entity\User
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\UserRepository")
+ * @UniqueEntity("email")
  */
 class User
 {
@@ -22,14 +25,19 @@ class User
     private $id;
 
     /**
-     * @var string $username
+     * @var string $login
      *
-     * @ORM\Column(name="username", type="string", length=255)
+     * @ORM\Column(name="login", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $username;
 
     /**
      * @var string $pass
+     * 
+     * @Assert\MinLength(
+     *     limit=5
+     * )
      *
      * @ORM\Column(name="pass", type="string", length=255)
      */
@@ -38,7 +46,8 @@ class User
     /**
      * @var string $email
      *
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(name="email", type="string", length=255, unique=true)
+     * @Assert\Email()
      */
     private $email;
 
@@ -53,25 +62,7 @@ class User
         return $this->id;
     }
 
-    /**
-     * Set username
-     *
-     * @param string $username
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-    }
-
-    /**
-     * Get username
-     *
-     * @return string 
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
+  
 
     /**
      * Set pass
@@ -116,5 +107,25 @@ class User
     public function __toString()
     {
     	return $this->getLogin();
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
+    /**
+     * Get username
+     *
+     * @return string 
+     */
+    public function getUsername()
+    {
+        return $this->username;
     }
 }

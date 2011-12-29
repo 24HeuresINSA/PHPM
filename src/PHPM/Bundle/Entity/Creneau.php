@@ -3,6 +3,7 @@
 namespace PHPM\Bundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * PHPM\Bundle\Entity\Creneau
@@ -25,6 +26,7 @@ class Creneau
      * @var datetime $debut
      *
      * @ORM\Column(name="debut", type="datetime")
+     * @Assert\DateTime()
      */
     private $debut;
 
@@ -32,6 +34,7 @@ class Creneau
      * @var datetime $fin
      *
      * @ORM\Column(name="fin", type="datetime")
+     * @Assert\DateTime()
      */
     private $fin;
     
