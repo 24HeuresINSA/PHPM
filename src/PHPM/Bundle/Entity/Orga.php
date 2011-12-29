@@ -52,7 +52,7 @@ class Orga
      * @ORM\Column(name="telephone", type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Regex(
-     *     pattern="/[0-9]{10}/",
+     *     pattern="/0[67][0-9]{8}/",
      *     message="Veuillez renseigner un numéro de portable valide."
      * )
      */
