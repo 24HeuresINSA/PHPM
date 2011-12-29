@@ -45,13 +45,6 @@ class Tache
     */
     private $materielNecessaire;
     
-    /**
-    * @var smallint $nbOrgasNecessaires
-    *
-    * @ORM\Column(name="nbOrgasNecessaires", type="smallint")
-    * @Assert\Min(limit = "0")
-    */
-    private $nbOrgasNecessaires;
     
     /**
     * @var smallint $permisNecessaire
@@ -227,25 +220,7 @@ class Tache
     }
     
 
-    /**
-     * Set nbOrgasNecessaires
-     *
-     * @param smallint $nbOrgasNecessaires
-     */
-    public function setNbOrgasNecessaires($nbOrgasNecessaires)
-    {
-        $this->nbOrgasNecessaires = $nbOrgasNecessaires;
-    }
 
-    /**
-     * Get nbOrgasNecessaires
-     *
-     * @return smallint 
-     */
-    public function getNbOrgasNecessaires()
-    {
-        return $this->nbOrgasNecessaires;
-    }
 
     /**
      * Set permisNecessaire

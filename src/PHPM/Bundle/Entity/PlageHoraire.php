@@ -39,6 +39,14 @@ class PlageHoraire
     private $fin;
     
     /**
+    * @var smallint $nbOrgasNecessaires
+    *
+    * @ORM\Column(name="nbOrgasNecessaires", type="smallint")
+    * @Assert\Min(limit = "0")
+    */
+    private $nbOrgasNecessaires;
+    
+    /**
     * @ORM\OneToMany(targetEntity="Creneau", mappedBy="plageHoraire")
     */
     protected $creneaux;
@@ -49,6 +57,7 @@ class PlageHoraire
     */
     protected $tache;
 
+    
 
     /**
      * Get id
@@ -165,4 +174,24 @@ class PlageHoraire
     }
     
     
+
+    /**
+     * Set nbOrgasNecessaires
+     *
+     * @param smallint $nbOrgasNecessaires
+     */
+    public function setNbOrgasNecessaires($nbOrgasNecessaires)
+    {
+        $this->nbOrgasNecessaires = $nbOrgasNecessaires;
+    }
+
+    /**
+     * Get nbOrgasNecessaires
+     *
+     * @return smallint 
+     */
+    public function getNbOrgasNecessaires()
+    {
+        return $this->nbOrgasNecessaires;
+    }
 }
