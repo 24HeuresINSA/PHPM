@@ -92,4 +92,9 @@ class Categorie
     {
 	return $this->getNom();
     }
+    
+    public function toArray()
+    {
+    	return array("nom" => $this->getNom());
+    }
 }
