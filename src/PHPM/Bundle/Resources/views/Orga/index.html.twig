@@ -1,6 +1,6 @@
 {% extends "::base.html.twig"  %}
 {% block content %}
-<h1>Orga list</h1>
+<h1>Liste des organisateurs</h1>
 
 <table class="records_list">
     <thead>
@@ -46,11 +46,15 @@
     </tbody>
 </table>
 
+{% endblock %}
+
+{% block menu_actions %}
 <ul>
     <li>
         <a href="{{ path('orga_new') }}">
-            Create a new entry
+            Cr&eacute;er un nouvel orga
         </a>
     </li>
 </ul>
 {% endblock %}
+
