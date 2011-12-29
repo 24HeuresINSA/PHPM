@@ -214,18 +214,13 @@ public function importAction()
 	//$jason = fopen("taches.json", "r");
 	
 	$tabArray = json_decode($jason, TRUE);
-	
-	
-	// on affiche le jason
-	/*
-	print"<pre>";
-	//var_dump($tabArray);
-	print"</pre>";
-	//*/
-	
+
+	//On récupère les données de PM
 	$em = $this->getDoctrine()->getEntityManager();
 	$entities = $em->getRepository('PHPMBundle:Tache')->findAll();
 
+	//Traitement des tâches
+	print"Traitement des nouvelles taches et des taches modifiees<br />";
 	
 	foreach ($tabArray as $tache_en_traitement) {
 		//*
@@ -233,54 +228,72 @@ public function importAction()
 		print"	";
 		print $tache_en_traitement['nom'];
 		print "<br />";
-		print "coucou";
-		if (isset($entities[$tache_en_traitement['id']-1])){
-			print $entities[$tache_en_traitement['id']-1];
-			print "<br />";
-			print $entities[$tache_en_traitement['id']-1]->toArray();
-			print "<br />";
-			print $entities[$tache_en_traitement['id']-1]->getId();
-			print "<br />";
-			foreach ($tache_en_traitement['plages'] as $creneau_en_traitement){
-				print $creneau_en_traitement['id'];
-				print "<br />";
-				$existingPlage = $entities[$tache_en_traitement['id']-1]->getPlagesHoraire();
-				$current = $creneau_en_traitement['id'];
-				if($existingPlage[$current-1] != NULL){
-					print "id du creneau  ";
-					print $current;
-					print "  plage du creneau  ";
-					print $existingPlage[$current-1];
-					print "  id de la plage  ";
-					print $existingPlage[$current-1]->getId();
-					print "<br />";
-				}else{
-					print "pas de crenau";
-					print "<br />";
-				}
-
+		$found = FALSE;
+		foreach ($entities as $elements){
+			if ($elements->getId() == $tache_en_traitement['id']){
+				$found = TRUE;
+				break;
 			}
-		}else{
-			print "tache not found";
 		}
 		
-		//*/
+		
+		if ($found){
+// la tache existe déjà, on va donc comparer que les données n'ont pas été changées
+			print "on l'a deja <br />";
+
+			$elements->getPlagesHoraire();
+			$tache_en_traitement['plages'];
+			
+			
+		}else{
+//La tache n'existe pas, on va donc l'ajouter à la DB
+			print "on l'ajoute <br />";
+		}
 	}
-	print "<br />";
-	/*
-	print"<pre>";
-	var_dump($tache_en_traitement['plages']);
-	print"</pre>";
-	*/
 	
-	print "<br />";	
+	
+		//Traitement des taches supprimées
+		foreach ($entities as $tache_en_traitement) {
+			$found = FALSE;
+			foreach ($tabArray as $elements){
+				if ($elements['id'] == $tache_en_traitement->getId()){
+					$found = TRUE;
+					break;
+				}
+				}
+			
+			if (!$found){
+// La tache n'existe plus, on va donc la supprimer
+				print "on la supprime <br />";
+			}
+		
+		}
+		
+	
+	print "-------------------------------------------------------------";
 	print "<br />";
-	print $entities[0]->getId();
+	print "Les donnees";
+	print "<br />";
 	print "<pre>";
-	print_r ($entities->toArray());
+	foreach ($entities as $elements){
+		print "tache numero ";
+		print $elements->getId();
+		print " <br />";
+		print_r ($elements->toArray());
+	}
 	print "</pre>";
+	
+	print "<br />";
 	print "<br />";	
 	print "<br />";
+	
+	// on affiche le jason
+	//*
+	print "la c'est le jason!! <br />";
+	print"<pre>";
+	var_dump($tabArray);
+	print"</pre>";
+	//*/
 	
 	exit(print($entities[0]->getId()));
 	return array();
