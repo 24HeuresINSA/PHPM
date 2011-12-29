@@ -13,7 +13,10 @@ class PlageHoraireType extends AbstractType
             ->add('debut')
             ->add('fin')
             ->add('tache')
-        ;
+			->add('nbOrgasNecessaires')
+			
+			;
+
     }
 
     public function getName()
