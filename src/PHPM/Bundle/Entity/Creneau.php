@@ -138,5 +138,9 @@ class Creneau
         return $this->plageHoraire;
     }
     
+    public function toArray()
+    {
+    	return array("debut" => $this->getDebut(),"fin" => $this->getFin());
+    }
     
 }
