@@ -35,8 +35,8 @@
             <td>{% if entity.dateDeNaissance %}{{ entity.dateDeNaissance|date('Y-m-d H:i:s') }}{% endif%}</td>
             <td>{{ entity.departement }}</td>
             <td>{{ entity.commentaire }}</td>
-            <td>{{ entity.permisB }}</td>
-            <td>{{ entity.permisB2ans }}</td>
+            <td>{{ entity.permis }}</td>
+            
             <td>
             	{{ bouton_edit.bouton_edit( path('orga_edit', { 'id': entity.id }) ) }}
             </td>
