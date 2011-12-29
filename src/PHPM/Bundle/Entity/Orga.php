@@ -53,7 +53,7 @@ class Orga
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern="/[0-9]{10}/",
-     *     message="$this->message"
+     *     message="Veuillez renseigner un numéro de portable valide."
      * )
      */
     private $telephone;
@@ -94,7 +94,7 @@ class Orga
 
     /**
      * @var smallint $permis
-     *
+     * @Assert\Choice(choices = {"0", "1", "2"})
      * @ORM\Column(name="permis", type="smallint")
      */
     private $permis;
