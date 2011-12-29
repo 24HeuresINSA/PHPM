@@ -210,13 +210,14 @@ class TacheController extends Controller
 public function importAction()
 {
 	//recevoir le jason de TM
-	$jason = "[{\"id\":1,\"nom\":\"TENIR LE PUTAIN DE BAR\",\"categorie\":\"Barres\",\"description\":\"MAIS TU VA LE TENIR TON BAR, MERDE\",\"plages\":[{\"id\":11,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":12,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":13,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712}]},{\"id\":2,\"nom\":\"TENIR LE PUTAIN DE BAR\",\"categorie\":\"Barres\",\"description\":\"MAIS TU VA LE TENIR TON BAR, MERDE\",\"plages\":[{\"id\":21,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":22,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":23,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712}]},{\"id\":3,\"nom\":\"TENIR LE PUTAIN DE BAR\",\"categorie\":\"Barres\",\"description\":\"MAIS TU VA LE TENIR TON BAR, MERDE\",\"plages\":[{\"id\":31,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":32,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":33,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712}]}]";
+	$jason = "[{\"id\":1,\"nom\":\"TENIR LE PUTAIN DE BAR\",\"categorie\":\"Barres\",\"description\":\"MAIS TU VA LE TENIR TON BAR, MERDE\",\"plages\":[{\"id\":1,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":2,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":3,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712}]},{\"id\":2,\"nom\":\"TENIR LE PUTAIN DE BAR\",\"categorie\":\"Barres\",\"description\":\"MAIS TU VA LE TENIR TON BAR, MERDE\",\"plages\":[{\"id\":1,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":2,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":3,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712}]},{\"id\":3,\"nom\":\"TENIR LE PUTAIN DE BAR\",\"categorie\":\"Barres\",\"description\":\"MAIS TU VA LE TENIR TON BAR, MERDE\",\"plages\":[{\"id\":1,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":2,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712},{\"id\":3,\"orgasNecessaires\":3,\"debut\":1234567,\"fin\":456712}]}]";
 	//$jason = fopen("taches.json", "r");
 	
 	// on affiche le jason
+	
 	print"<pre>";
 	$tabArray = json_decode($jason, TRUE);
-	var_dump($tabArray);
+	//var_dump($tabArray);
 	print"</pre>";
 	
 	
@@ -229,35 +230,49 @@ public function importAction()
 		print $tache_en_traitement['id'];
 		print"	";
 		print $tache_en_traitement['nom'];
-		print "<br/>";
+		print "<br />";
 		if (isset($entities[$tache_en_traitement['id']-1])){
 			print $entities[$tache_en_traitement['id']-1];
+			$entities[$tache_en_traitement['id']-1]->getId();
+			print "<br />";
+			foreach ($tache_en_traitement['plages'] as $creneau_en_traitement){
+				print $creneau_en_traitement['id'];
+				print "<br />";
+				$existingPlage = $entities[$tache_en_traitement['id']-1]->getPlagesHoraire();
+				$current = $creneau_en_traitement['id'];
+				if($existingPlage[$current-1] != NULL){
+					print "id du creneau  ";
+					print $current;
+					print "  plage du creneau  ";
+					print $existingPlage[$current-1];
+					print "  id de la plage  ";
+					print $existingPlage[$current-1]->getId();
+					print "<br />";
+				}else{
+					print "pas de crenau";
+					print "<br />";
+				}
+
+			}
 		}else{
 			print "tache not found";
 		}
-		print "<br/>";
-		foreach ($tache_en_traitement['plages'] as $creneau_en_traitement){
-			print $creneau_en_traitement['id'];
-			print"	";
-			print "<br/";
-		}
+		
 		//*/
 	}
-	print "<br/>";
+	print "<br />";
 	/*
 	print"<pre>";
 	var_dump($tache_en_traitement['plages']);
 	print"</pre>";
 	*/
-	//$entities = $em->getRepository('PHPMBundle:Tache')->findById($tache_en_traitement['id']);
-	//$entities = $em->getRepository('PHPMBundle:Tache')->findById(1);
-
-	print "<br/>";
 	
+	print "<br />";	
+	print "<br />";
+	//print var_dump($entities[0]);
+	print "<br />";	
+	print "<br />";
 	
-	print "<br/>";
-	print "<br/>";
-
 	exit(print($entities[0]->getId()));
 	return array();
 }
