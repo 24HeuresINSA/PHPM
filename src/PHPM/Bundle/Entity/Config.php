@@ -5,12 +5,12 @@ namespace PHPM\Bundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * PHPM\Bundle\Entity\Regkey
+ * PHPM\Bundle\Entity\Config
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\RegkeyRepository")
+ * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\ConfigRepository")
  */
-class Regkey
+class Config
 {
     /**
      * @var integer $id
