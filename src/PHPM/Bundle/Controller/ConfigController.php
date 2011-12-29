@@ -2,6 +2,7 @@
 
 namespace PHPM\Bundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -199,4 +200,27 @@ class ConfigController extends Controller
             ->getForm()
         ;
     }
+    
+    /**
+    * Renvoie la préférence "string" 
+    *
+    * @Route("/getpref/{string}", name="config_getpref")
+    * @Template()
+    */
+    public function getprefAction($string)
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    
+    	$pref = $em->getRepository('PHPMBundle:Config')->findOneByField($string);
+    
+    	    	
+    	$response = new Response();
+    	$response->setContent($pref->getValue());
+		$response->headers->set('Content-Type', 'text/plain');
+    	
+    
+    	return $response;
+    }
+    
+    
 }

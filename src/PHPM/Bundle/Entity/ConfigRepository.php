@@ -3,6 +3,7 @@
 namespace PHPM\Bundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * ConfigRepository
@@ -12,4 +13,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class ConfigRepository extends EntityRepository
 {
+	
+	public function getPairsStartingBy($string)
+	{
+		
+		 return $this->getEntityManager()
+            ->createQuery("SELECT c FROM PHPMBundle:Config c WHERE c.field LIKE :string ")
+		 	->setParameter('string', $string."%")
+		 	->getResult();
+	}
+	
 }
