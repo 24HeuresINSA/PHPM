@@ -18,9 +18,8 @@ class OrgaType extends AbstractType
             ->add('dateDeNaissance')
             ->add('departement')
             ->add('commentaire')
-            ->add('permisB')
-            ->add('permisB2ans')
-            ->add('confiance')
+            ->add('permis')
+			->add('confiance')
         ;
     }
 
