@@ -315,7 +315,11 @@ public function importAction()
 		print "tache numero ";
 		print $elements->getId();
 		print " <br />";
-		print_r ($elements->toArray());
+		$coucou = $elements->toArray();
+		print_r ($coucou);
+		print "encode <br/>";
+		print_r (json_encode($coucou));
+		
 	}
 	print "</pre>";
 	
