@@ -34,6 +34,13 @@ class Orga
      * @ORM\Column(name="prenom", type="string", length=255)
      */
     private $prenom;
+    
+    /**
+    * @var string $surnom
+    *
+    * @ORM\Column(name="surnom", type="string", length=255)
+    */
+    private $prenom;
 
     /**
      * @var string $telephone
