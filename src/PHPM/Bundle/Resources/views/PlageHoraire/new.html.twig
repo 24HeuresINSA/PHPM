@@ -1,9 +1,9 @@
 {% extends "::base.html.twig"  %}
-{% block content %}
 {% block title %}
 	Plages horaires -> Cr&eacute;er une plage horaire
 {% endblock %}
 
+{% block content %}
 <form action="{{ path('plagehoraire_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>

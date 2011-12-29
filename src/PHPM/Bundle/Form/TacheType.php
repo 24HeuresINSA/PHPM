@@ -11,10 +11,14 @@ class TacheType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('description')
+            ->add('consignes')
             ->add('lieu')
             ->add('categorie')
             ->add('confiance')
+			->add('consignes')
+			->add('materielNecessaire')
+			->add('nbOrgasNecessaires')
+			->add('permisNecessaire')
         ;
     }
 
