@@ -1,0 +1,56 @@
+{% extends "::base.html.twig"  %}
+
+{% block title %}
+	Affectation T&acirc;ches -> Orga
+{% endblock %}
+
+{% block style %}
+	{{ parent() }}
+	{% stylesheets 
+		'@PHPMBundle/Resources/public/css/affectation.css'
+		'@PHPMBundle/Resources/public/css/jquery-ui/themes/smoothness/jquery-ui-1.8.16.custom.css'
+	 %}
+		<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+	{% endstylesheets %}
+{% endblock %}
+
+{% block script %}
+	{{ parent() }}
+	{% javascripts
+		'@PHPMBundle/Resources/public/js/lib/jquery.min.js'
+		'@PHPMBundle/Resources/public/js/lib/jquery-ui.min.js'
+	%}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+{% endblock %}
+
+{% block content %}
+	<div class="sidebar_orga" id ="sidebar_orga"></div>
+	
+	<div class="calendar" id="calendar">
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ullamcorper augue eget urna iaculis volutpat. Proin lacinia porta consequat. Morbi nec tellus sit amet nisl fermentum condimentum a non lorem. Ut nisi mi, malesuada at condimentum sit amet, placerat ac turpis. Aliquam justo lectus, fringilla non pretium sit amet, tincidunt id est. Fusce luctus velit feugiat ipsum aliquet aliquet. Cras semper dapibus purus, sed elementum metus euismod vel. Mauris bibendum, tellus vestibulum condimentum iaculis, neque mauris imperdiet tellus, quis elementum sapien velit in velit. Etiam tempus, augue adipiscing blandit condimentum, augue turpis imperdiet massa, rutrum pharetra dolor justo sed quam. Aenean volutpat eros sed libero iaculis cursus. Morbi mauris neque, tristique vel vulputate et, accumsan vel risus. Etiam dictum lobortis libero vel aliquam. Sed accumsan, turpis ac viverra ullamcorper, arcu purus feugiat ante, id dictum ante enim in mauris. Ut fermentum magna scelerisque ligula volutpat at aliquam nisl tincidunt. Proin eu nulla in libero bibendum hendrerit nec ut orci. Donec sed orci ipsum.
+		
+		Quisque ut libero ut augue cursus sollicitudin vel dapibus tellus. Duis accumsan varius molestie. Nunc tincidunt est eu massa lacinia tincidunt. Quisque porttitor risus ac diam ornare sit amet malesuada dolor placerat. Duis ornare porta leo sit amet blandit. Praesent nec tortor sed ante interdum pretium eu eget dui. Nulla euismod sagittis ipsum nec ultrices. Morbi auctor suscipit dolor sed tincidunt. Suspendisse hendrerit fringilla suscipit. Mauris blandit ante vel sem sagittis eu dapibus arcu euismod. Nulla nec ipsum est, semper blandit odio. Sed iaculis metus eget purus imperdiet lobortis.
+		
+		Morbi suscipit aliquam lacus tristique aliquam. Donec ultricies dui eu libero tincidunt viverra. Nunc quis urna arcu, ac pellentesque justo. Sed turpis sapien, mollis sed commodo vitae, consequat at orci. Quisque enim nisl, pretium sed blandit vitae, auctor sed tellus. Maecenas tellus nulla, fermentum non venenatis eu, sodales vel nibh. Quisque sagittis rhoncus metus eu vehicula. Aliquam erat volutpat. Vivamus semper suscipit ante et auctor. Aliquam erat volutpat. Aliquam sodales nibh ut urna accumsan sodales. Duis ultrices vulputate justo vitae gravida. Ut vehicula massa eu risus condimentum at vestibulum risus commodo. Nulla facilisi. Suspendisse ultrices neque nec nunc luctus sagittis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+		
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ullamcorper augue eget urna iaculis volutpat. Proin lacinia porta consequat. Morbi nec tellus sit amet nisl fermentum condimentum a non lorem. Ut nisi mi, malesuada at condimentum sit amet, placerat ac turpis. Aliquam justo lectus, fringilla non pretium sit amet, tincidunt id est. Fusce luctus velit feugiat ipsum aliquet aliquet. Cras semper dapibus purus, sed elementum metus euismod vel. Mauris bibendum, tellus vestibulum condimentum iaculis, neque mauris imperdiet tellus, quis elementum sapien velit in velit. Etiam tempus, augue adipiscing blandit condimentum, augue turpis imperdiet massa, rutrum pharetra dolor justo sed quam. Aenean volutpat eros sed libero iaculis cursus. Morbi mauris neque, tristique vel vulputate et, accumsan vel risus. Etiam dictum lobortis libero vel aliquam. Sed accumsan, turpis ac viverra ullamcorper, arcu purus feugiat ante, id dictum ante enim in mauris. Ut fermentum magna scelerisque ligula volutpat at aliquam nisl tincidunt. Proin eu nulla in libero bibendum hendrerit nec ut orci. Donec sed orci ipsum.
+		
+		Quisque ut libero ut augue cursus sollicitudin vel dapibus tellus. Duis accumsan varius molestie. Nunc tincidunt est eu massa lacinia tincidunt. Quisque porttitor risus ac diam ornare sit amet malesuada dolor placerat. Duis ornare porta leo sit amet blandit. Praesent nec tortor sed ante interdum pretium eu eget dui. Nulla euismod sagittis ipsum nec ultrices. Morbi auctor suscipit dolor sed tincidunt. Suspendisse hendrerit fringilla suscipit. Mauris blandit ante vel sem sagittis eu dapibus arcu euismod. Nulla nec ipsum est, semper blandit odio. Sed iaculis metus eget purus imperdiet lobortis.
+		
+		Morbi suscipit aliquam lacus tristique aliquam. Donec ultricies dui eu libero tincidunt viverra. Nunc quis urna arcu, ac pellentesque justo. Sed turpis sapien, mollis sed commodo vitae, consequat at orci. Quisque enim nisl, pretium sed blandit vitae, auctor sed tellus. Maecenas tellus nulla, fermentum non venenatis eu, sodales vel nibh. Quisque sagittis rhoncus metus eu vehicula. Aliquam erat volutpat. Vivamus semper suscipit ante et auctor. Aliquam erat volutpat. Aliquam sodales nibh ut urna accumsan sodales. Duis ultrices vulputate justo vitae gravida. Ut vehicula massa eu risus condimentum at vestibulum risus commodo. Nulla facilisi. Suspendisse ultrices neque nec nunc luctus sagittis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+		
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ullamcorper augue eget urna iaculis volutpat. Proin lacinia porta consequat. Morbi nec tellus sit amet nisl fermentum condimentum a non lorem. Ut nisi mi, malesuada at condimentum sit amet, placerat ac turpis. Aliquam justo lectus, fringilla non pretium sit amet, tincidunt id est. Fusce luctus velit feugiat ipsum aliquet aliquet. Cras semper dapibus purus, sed elementum metus euismod vel. Mauris bibendum, tellus vestibulum condimentum iaculis, neque mauris imperdiet tellus, quis elementum sapien velit in velit. Etiam tempus, augue adipiscing blandit condimentum, augue turpis imperdiet massa, rutrum pharetra dolor justo sed quam. Aenean volutpat eros sed libero iaculis cursus. Morbi mauris neque, tristique vel vulputate et, accumsan vel risus. Etiam dictum lobortis libero vel aliquam. Sed accumsan, turpis ac viverra ullamcorper, arcu purus feugiat ante, id dictum ante enim in mauris. Ut fermentum magna scelerisque ligula volutpat at aliquam nisl tincidunt. Proin eu nulla in libero bibendum hendrerit nec ut orci. Donec sed orci ipsum.
+		
+		Quisque ut libero ut augue cursus sollicitudin vel dapibus tellus. Duis accumsan varius molestie. Nunc tincidunt est eu massa lacinia tincidunt. Quisque porttitor risus ac diam ornare sit amet malesuada dolor placerat. Duis ornare porta leo sit amet blandit. Praesent nec tortor sed ante interdum pretium eu eget dui. Nulla euismod sagittis ipsum nec ultrices. Morbi auctor suscipit dolor sed tincidunt. Suspendisse hendrerit fringilla suscipit. Mauris blandit ante vel sem sagittis eu dapibus arcu euismod. Nulla nec ipsum est, semper blandit odio. Sed iaculis metus eget purus imperdiet lobortis.
+		
+		Morbi suscipit aliquam lacus tristique aliquam. Donec ultricies dui eu libero tincidunt viverra. Nunc quis urna arcu, ac pellentesque justo. Sed turpis sapien, mollis sed commodo vitae, consequat at orci. Quisque enim nisl, pretium sed blandit vitae, auctor sed tellus. Maecenas tellus nulla, fermentum non venenatis eu, sodales vel nibh. Quisque sagittis rhoncus metus eu vehicula. Aliquam erat volutpat. Vivamus semper suscipit ante et auctor. Aliquam erat volutpat. Aliquam sodales nibh ut urna accumsan sodales. Duis ultrices vulputate justo vitae gravida. Ut vehicula massa eu risus condimentum at vestibulum risus commodo. Nulla facilisi. Suspendisse ultrices neque nec nunc luctus sagittis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+	</div>
+	
+	<div class="sidebar_taches" id="sidebar_taches"></div>
+
+{% endblock %}
+
+{% block menu_action %}
+	<!-- pas de menu action ! -->
+{% endblock %}

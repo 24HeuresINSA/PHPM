@@ -5,7 +5,6 @@
 /*
  * Elements generaux
  */
-html {}
 body {
 	background: #eee;
 	color: #000;
@@ -13,12 +12,20 @@ body {
 	margin: 0;
 	height: 100%;
 	font-family: Arial, Helvetica, sans-serif;
+	z-index: 500;
 }
 a {
-	color: #000;
 	text-decoration: underline;
 }
 
+tr {
+	background: #ddd;	
+}
+
+tr:hover{
+	background: #dfdfdf;
+	
+}
 
 /*
  * Header

@@ -1,6 +1,6 @@
 {% extends "::base.html.twig"  %}
 {% block content %}
-<h1>PlageHoraire</h1>
+<h1>Affichage de la plage horaire</h1>
 
 <table class="record_properties">
     <tbody>
@@ -18,11 +18,13 @@
         </tr>
     </tbody>
 </table>
+{% endblock %}
 
+{% block menu_action %}
 <ul class="record_actions">
     <li>
         <a href="{{ path('plagehoraire') }}">
-            Back to the list
+            Revenir &agrave; la liste
         </a>
     </li>
     <li>

@@ -16,6 +16,24 @@ use PHPM\Bundle\Form\OrgaType;
  */
 class OrgaController extends Controller
 {
+	 /**
+     * Lists all Orga entities.
+     *
+     * @Route("/affectation", name="orga_affectation")
+     * @Template()
+     */
+    public function affectationAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entities = $em->getRepository('PHPMBundle:Orga')->findAll();
+
+        return array('entities' => $entities);
+      
+    }
+	
+	
+	
     /**
      * Lists all Orga entities.
      *
@@ -209,28 +227,85 @@ class OrgaController extends Controller
      */
 	public function importAction()	
 	{
-		
-					
+	
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entitiesOrga = $em->getRepository('PHPMBundle:Orga')->findAll();	
+	
 			$url = "inscriptionOrgas.json";			
 			$json = file_get_contents($url);
 			
 			$listeOrgaArray = json_decode($json,TRUE);
 			
+			
+
+			
+			
 			foreach($listeOrgaArray as $case => $inscriptionOrga)
 				{
 					//print_r($inscriptionOrga);
 					//$Nom = array_search('nom', $inscriptionOrga);			
-					
+					//$entities[$tache_en_traitement['id'];
 					
 					//$Nom = $inscriptionOrga['nom']; 
 					$inscriptionOrga['nom']=strtoupper($inscriptionOrga['nom']);
 					$inscriptionOrga['prenom']=strtoupper($inscriptionOrga['prenom']);	
+					
+					$i = 0;
+					foreach ($entitiesOrga as $key) 
+					{
+						$nomOrgaBDD = $entitiesOrga[$i]->getnom();
+						
+						if ($inscriptionOrga['nom'] == $nomOrgaBDD)
+						{
+							echo $nomOrgaBDD;
+							echo "trouve";
+						}
+						
+						
+						
+						
+						
+						
+						$i++;
+					}
+
+					//print($entitiesOrga[0]->getnom());
+					
+					//echo ("<pre>");
+					//echo $entitiesOrga;
+					//echo("</pre>");	
+					
+					
+												
+							;
+							/*
+							if ($OrgaBDD['nom'] == $inscriptionOrga['nom'])
+							{
+								echo "enorme tu ma trouve";
+							}
+							 */		
+						}
+						
+					/*
+					echo ("<pre>");
+					print_r($entitiesOrga);
+					echo("</pre>");
+					
 					//echo $Nom;
 					echo ("<pre>");
 					print_r($inscriptionOrga);
 					echo("</pre>");
-				}	
+					 */ 
+					
+		//		}
 			
+
+
+	
+			
+			
+			echo "<p>";
 			echo "plouf";
 			/*
 			echo ("<pre>");
@@ -257,7 +332,7 @@ class OrgaController extends Controller
   
      	
      	
-     	return $listeOrgaArray;
+     	return;
 		
 		
 	}

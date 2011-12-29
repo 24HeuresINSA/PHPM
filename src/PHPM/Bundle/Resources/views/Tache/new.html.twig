@@ -1,14 +1,16 @@
 {% extends "::base.html.twig"  %}
 {% block content %}
-<h1>Tache creation</h1>
+<h1>Cr&eacute;er une nouvelle t&acirc;che</h1>
 
 <form action="{{ path('tache_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
-        <button type="submit">Cr&eacute;une t&Acirc;che</button>
+        <button type="submit">Cr&eacute;er la t&acirc;che</button>
     </p>
 </form>
+{% endblock %}
 
+{% block menu_action %}
 <ul class="record_actions">
     <li>
         <a href="{{ path('tache') }}">
