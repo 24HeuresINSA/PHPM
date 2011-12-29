@@ -292,4 +292,24 @@ class Tache
     {
         return $this->materielNecessaire;
     }
+
+    /**
+     * Set importId
+     *
+     * @param integer $importId
+     */
+    public function setImportId($importId)
+    {
+        $this->importId = $importId;
+    }
+
+    /**
+     * Get importId
+     *
+     * @return integer 
+     */
+    public function getImportId()
+    {
+        return $this->importId;
+    }
 }
