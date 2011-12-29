@@ -238,8 +238,11 @@ class OrgaController extends Controller
      */
 	public function importAction()	
 	{
-		
-					
+	
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entitiesOrga = $em->getRepository('PHPMBundle:Orga')->findAll();	
+	
 			$url = "inscriptionOrgas.json";			
 			$json = file_get_contents($url);
 			
@@ -249,17 +252,49 @@ class OrgaController extends Controller
 				{
 					//print_r($inscriptionOrga);
 					//$Nom = array_search('nom', $inscriptionOrga);			
-					
+					//$entities[$tache_en_traitement['id'];
 					
 					//$Nom = $inscriptionOrga['nom']; 
 					$inscriptionOrga['nom']=strtoupper($inscriptionOrga['nom']);
 					$inscriptionOrga['prenom']=strtoupper($inscriptionOrga['prenom']);	
+					
+					foreach ($entitiesOrga as $case => $OrgaBDD)
+						{
+				//	echo $OrgaBDD->nom;	
+					echo ("<pre>");
+					//print_r($OrgaBDD);
+					echo("</pre>");	
+					
+					
+												
+							;
+							/*
+							if ($OrgaBDD['nom'] == $inscriptionOrga['nom'])
+							{
+								echo "enorme tu ma trouve";
+							}
+							 */		
+						}
+						
+					/*
+					echo ("<pre>");
+					print_r($entitiesOrga);
+					echo("</pre>");
+					
 					//echo $Nom;
 					echo ("<pre>");
 					print_r($inscriptionOrga);
 					echo("</pre>");
-				}	
+					 */ 
+					
+				}
 			
+
+
+	
+			
+			
+			echo "<p>";
 			echo "plouf";
 			/*
 			echo ("<pre>");
@@ -286,7 +321,7 @@ class OrgaController extends Controller
   
      	
      	
-     	return $listeOrgaArray;
+     	return;
 		
 		
 	}
