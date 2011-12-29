@@ -12,6 +12,7 @@ class OrgaType extends AbstractType
         $builder
             ->add('nom')
             ->add('prenom')
+            ->add('surnom')
             ->add('telephone')
             ->add('email')
             ->add('dateDeNaissance')
