@@ -222,17 +222,40 @@ class OrgaController extends Controller
         ;
     }
 	
+	 /**
+     * Import Orgas from website.
+     *
+     * @Route("/validation", name="orga_validation")
+     * 
+     */
+	public function validationAction()	
+	{
+		$em = $this->getDoctrine()->getEntityManager();	
+		$orgaAValider = $em->getRepository('PHPMBundle:Orga')->findByStatut(0);
+			
+			foreach ($orgaAValider as $orga) 
+			{
+			echo ("<pre>");
+			var_dump($orgaAValider);
+			echo("</pre>");		
+			}
+	
+		return array();
+	}
+
+
+
+
 	
 	 /**
      * Import Orgas from website.
      *
      * @Route("/import", name="orga_import")
-     * 
+     * @Template
      */
 	public function importAction()	
 	{
 		// Gerer l'import du json
-		//@Template
 		$em = $this->getDoctrine()->getEntityManager();
 		$url = "inscriptionOrgas.json";			
 		$json = file_get_contents($url);
@@ -281,11 +304,9 @@ class OrgaController extends Controller
 								$entitydisponibilite->setFin(new \DateTime("20$findispo"));
 								$em->persist($entitydisponibilite);
 								$em->flush();							
-							}
-								
+							}			
 				    } 
-				
-					
+			
 				}
 		
 		return array("errors" => $validationErrors);
