@@ -196,7 +196,7 @@ class TacheController extends Controller
      * Deletes a Tache entity.
      *
      * @Route("/{id}/delete", name="tache_delete")
-     * @Method("post")
+     * 
      */
     public function deleteAction($id)
     {

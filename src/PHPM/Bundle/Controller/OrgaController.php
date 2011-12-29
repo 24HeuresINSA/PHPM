@@ -190,7 +190,7 @@ class OrgaController extends Controller
      * Deletes a Orga entity.
      *
      * @Route("/{id}/delete", name="orga_delete")
-     * @Method("post")
+     * 
      */
     public function deleteAction($id)
     {
