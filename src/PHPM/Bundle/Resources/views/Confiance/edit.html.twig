@@ -21,10 +21,7 @@
         </a>
     </li>
     <li>
-        <form action="{{ path('confiance_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
+    	<a href="javascript:confirm_delete('{{ path('confiance_delete', { 'id': entity.id }) }}')">Supprimer</a>
     </li>
 </ul>
 {% endblock %}
