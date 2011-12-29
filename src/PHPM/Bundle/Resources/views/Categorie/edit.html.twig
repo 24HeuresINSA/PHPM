@@ -1,6 +1,8 @@
 {% extends "::base.html.twig"  %}
 {% block content %}
-<h1>Edition de la cat&eacute;gorie </h1>
+{% block title %}
+	Cat&eacute;gories -> Edition
+{% endblock %}
 
 <form action="{{ path('categorie_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     {{ form_widget(edit_form) }}

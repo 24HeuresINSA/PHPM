@@ -1,6 +1,8 @@
 {% extends "::base.html.twig"  %}
 {% block content %}
-<h1>Tache edit</h1>
+{% block title %}
+	T&acirc;ches -> Edition
+{% endblock %}
 
 <form action="{{ path('tache_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     {{ form_widget(edit_form) }}

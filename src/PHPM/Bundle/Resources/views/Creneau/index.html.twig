@@ -1,8 +1,9 @@
 {% extends "::base.html.twig"  %}
 {% block content %}
 {% import "::macro_bouton_edit.html.twig" as bouton_edit %}
-<h1>Liste des cr&eacute;neaux disponibles</h1>
-
+{% block title %}
+	cr&eacute;neaux -> Liste des cr&eacute;neaux disponibles
+{% endblock %}
 <table class="records_list">
     <thead>
         <tr>

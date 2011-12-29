@@ -1,6 +1,8 @@
 {% extends "::base.html.twig"  %}
 {% block content %}
-<h1>Cr&eacute;er une nouvelle t&acirc;che</h1>
+{% block title %}
+	T&acirc;ches -> Cr&eacute;er une nouvelle t&acirc;che
+{% endblock %}
 
 <form action="{{ path('tache_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
