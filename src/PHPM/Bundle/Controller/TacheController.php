@@ -2,6 +2,7 @@
 
 namespace PHPM\Bundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -27,8 +28,35 @@ class TacheController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $entities = $em->getRepository('PHPMBundle:Tache')->findAll();
+        
+        
 
         return array('entities' => $entities);
+    }
+    
+    /**
+    * Lists all Tache entities as JSON.
+    *
+    * @Route("/index.json", name="tache_json")
+    *
+    */
+    public function indexJsonAction()
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$entities = $em->getRepository('PHPMBundle:Tache')->findAll();
+    	 
+    	$a = array();
+    	 
+    	foreach ($entities as $entity){
+    		$a[$entity->getId()] = $entity->toArray();
+    
+    	}
+    	$response = new Response();
+    	$response->setContent(json_encode($a));
+    	$response->headers->set('Content-Type', 'application/json');
+    	 
+    
+    	return $response;
     }
 
     /**

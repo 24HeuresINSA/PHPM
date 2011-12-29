@@ -2,6 +2,7 @@
 
 namespace PHPM\Bundle\Entity;
 
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -209,12 +210,14 @@ class Tache
     	
     	
     	return array(
+    	"id" => $this->getId(),
     	"nom" => $this->getNom(),
     	"lieu" => $this->getLieu(),
+    	"materielNecessaire" => $this->getMaterielNecessaire(),
+    	"consignes" => $this->getConsignes(),
     	"confiance" => $this->getConfiance()->toArray(),
     	"categorie" => $this->getCategorie()->toArray(),
     	"permisNecessaire" => $this->getPermisNecessaire(),
-    	"nbOrgasNecessaires" => $this->getNbOrgasNecessaires(),
     	"plagesHoraire" => $a);
     	
     }
