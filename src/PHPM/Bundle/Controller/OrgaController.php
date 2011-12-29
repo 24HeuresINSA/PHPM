@@ -229,9 +229,66 @@ class OrgaController extends Controller
      */
 	public function importAction()	
 	{
-
-     	
+		// Gerer l'import du json
 		
+	/*
+		$url = "inscriptionOrgas.json";			
+		$json = file_get_contents($url);
+		
+		$listeOrgaArray = json_decode($json,TRUE);
+ 	
+		foreach($listeOrgaArray as $case => $inscriptionOrga)
+				{
+					$inscriptionOrga['nom']=strtoupper($inscriptionOrga['nom']);
+					$inscriptionOrga['prenom']=strtoupper($inscriptionOrga['prenom']);
+					
+					
+					$confiance = $entitiesOrga = $em->getRepository('PHPMBundle:Confiance')->findOneById(1);  // pour récupérer confiance
+						
+						$entity  = new orga();
+						$entity->setNom($inscriptionOrga['nom']);
+						$entity->setPrenom($inscriptionOrga['prenom']);
+						$entity->setConfiance($confiance);
+						$entity->settelephone($inscriptionOrga['telephone']);
+						$entity->setemail($inscriptionOrga['email']);
+						$entity->setdepartement($inscriptionOrga['departement']);
+						$entity->setcommentaire($inscriptionOrga['commentaire']);
+						$entity->setpermis($inscriptionOrga['permis']);
+						$entity->setDateDeNaissance(new \DateTime($inscriptionOrga['dateDeNaissance']));
+						$entity->setSurnom($inscriptionOrga['surnom']);	
+						$entity->setStatut(0);			
+						$em->persist($entity);
+	            		
+	            		
+						// ajout des disponibilite
+						
+
+				//		$em->flush();	
+						$idOrgaAjoute= $em->getRepository('PHPMBundle:Orga')->findOneByTelephone($inscriptionOrga['telephone']);	
+
+						
+						
+						foreach($inscriptionOrga['disponibilites'] as $dispoAAjoute)
+							{
+								$entitydisponibilite = new disponibilite();						
+								$entitydisponibilite->setOrga($idOrgaAjoute);
+								$debutdispo = date ('y-m-d', $dispoAAjoute[0]);
+								$entitydisponibilite->setDebut(new \DateTime("20$debutdispo"));
+								$findispo = date ('y-m-d', $dispoAAjoute[1]);
+								$entitydisponibilite->setFin(new \DateTime("20$findispo"));
+								$em->persist($entitydisponibilite);
+								
+								
+								//$em->flush();							
+							}
+
+						
+						
+					
+				}
+				
+		
+		*/
 		return array();
 	}
 	
