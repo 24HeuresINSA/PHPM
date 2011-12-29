@@ -50,6 +50,10 @@ $(document).ready(function() {
 	pmAffectation.controllers.parameter = new ParameterController();
 	pmAffectation.controllers.parameter.getData();
 	
-	// 2 : mettre en place les éléments
+	// 2 : setter le calendar
+	pmAffectation.controllers.calendar = new CalendarController();
+	pmAffectation.controllers.calendar.getData();
+	
+	// 3 : mettre en place les éléments
 });
 	
