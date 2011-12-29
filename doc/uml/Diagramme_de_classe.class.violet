@@ -8,7 +8,8 @@
       <string>nom
 consignes
 lieu
-matériel nécessaire</string> 
+materielNecessaire
+permisNecessaire</string> 
      </void> 
     </void> 
     <void property="name"> 
@@ -50,7 +51,8 @@ fin</string>
     <void property="attributes"> 
      <void property="text"> 
       <string>debut
-fin</string> 
+fin
+nbOrgasNecessaires</string> 
      </void> 
     </void> 
     <void property="name"> 
