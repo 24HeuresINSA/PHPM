@@ -237,6 +237,10 @@ class OrgaController extends Controller
 			
 			$listeOrgaArray = json_decode($json,TRUE);
 			
+			
+
+			
+			
 			foreach($listeOrgaArray as $case => $inscriptionOrga)
 				{
 					//print_r($inscriptionOrga);
@@ -247,12 +251,30 @@ class OrgaController extends Controller
 					$inscriptionOrga['nom']=strtoupper($inscriptionOrga['nom']);
 					$inscriptionOrga['prenom']=strtoupper($inscriptionOrga['prenom']);	
 					
-					foreach ($entitiesOrga as $case => $OrgaBDD)
+					$i = 0;
+					foreach ($entitiesOrga as $key) 
+					{
+						$nomOrgaBDD = $entitiesOrga[$i]->getnom();
+						
+						if ($inscriptionOrga['nom'] == $nomOrgaBDD)
 						{
-				//	echo $OrgaBDD->nom;	
-					echo ("<pre>");
-					//print_r($OrgaBDD);
-					echo("</pre>");	
+							echo $nomOrgaBDD;
+							echo "trouve";
+						}
+						
+						
+						
+						
+						
+						
+						$i++;
+					}
+
+					//print($entitiesOrga[0]->getnom());
+					
+					//echo ("<pre>");
+					//echo $entitiesOrga;
+					//echo("</pre>");	
 					
 					
 												
@@ -276,7 +298,7 @@ class OrgaController extends Controller
 					echo("</pre>");
 					 */ 
 					
-				}
+		//		}
 			
 
 
