@@ -33,9 +33,9 @@ class Config
     private $field;
 
     /**
-     * @var string $value
+     * @var text $value
      *
-     * @ORM\Column(name="value", type="string", length=255)
+     * @ORM\Column(name="value", type="text")
      * @Assert\NotBlank()
      */
     private $value;
@@ -71,10 +71,16 @@ class Config
         return $this->field;
     }
 
+    
+    public function toArray()
+    {
+    	return array("field" => $this->getField(),"value" => $this->getValue());
+    }
+
     /**
      * Set value
      *
-     * @param string $value
+     * @param text $value
      */
     public function setValue($value)
     {
@@ -84,7 +90,7 @@ class Config
     /**
      * Get value
      *
-     * @return string 
+     * @return text 
      */
     public function getValue()
     {

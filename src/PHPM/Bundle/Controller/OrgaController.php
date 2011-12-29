@@ -2,6 +2,8 @@
 
 namespace PHPM\Bundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -231,40 +233,55 @@ class OrgaController extends Controller
 	{
 		// Gerer l'import du json
 		
-	/*
+		$em = $this->getDoctrine()->getEntityManager();
 		$url = "inscriptionOrgas.json";			
 		$json = file_get_contents($url);
 		
 		$listeOrgaArray = json_decode($json,TRUE);
+		$validationErrors = array();
  	
-		foreach($listeOrgaArray as $case => $inscriptionOrga)
+		foreach($listeOrgaArray as  $inscriptionOrga)
 				{
-					$inscriptionOrga['nom']=strtoupper($inscriptionOrga['nom']);
-					$inscriptionOrga['prenom']=strtoupper($inscriptionOrga['prenom']);
+					
+					$confiance = $em->getRepository('PHPMBundle:Confiance')->findOneById(1);  // pour récupérer confiance
+					
+					$entity  = new orga();
+					$entity->setNom($inscriptionOrga['nom']);
+					$entity->setPrenom($inscriptionOrga['prenom']);
+					$entity->setConfiance($confiance);
+					$entity->settelephone($inscriptionOrga['telephone']);
+					$entity->setemail($inscriptionOrga['email']);
+					$entity->setdepartement($inscriptionOrga['departement']);
+					$entity->setcommentaire($inscriptionOrga['commentaire']);
+					$entity->setpermis($inscriptionOrga['permis']);
+					$entity->setDateDeNaissance(new \DateTime($inscriptionOrga['dateDeNaissance']));
+					$entity->setSurnom($inscriptionOrga['surnom']);	
+					$entity->setStatut(0);			
+					
+					$validator = $this->get('validator');
+    				$errors = $validator->validate($entity);
+
+				    if (count($errors) > 0) {
+				    	$err =$errors[0];
+				    	$simplifiedError = array($err->getMessageTemplate(),$err->getPropertyPath(), $err->getInvalidValue());
+				    	$validationErrors[$inscriptionOrga['prenom']." ".$inscriptionOrga['nom']]=$simplifiedError;
+				    	
+				    }else{
+				        $em->persist($entity);
+				        $em->flush();
+				    } 
 					
 					
-					$confiance = $entitiesOrga = $em->getRepository('PHPMBundle:Confiance')->findOneById(1);  // pour récupérer confiance
-						
-						$entity  = new orga();
-						$entity->setNom($inscriptionOrga['nom']);
-						$entity->setPrenom($inscriptionOrga['prenom']);
-						$entity->setConfiance($confiance);
-						$entity->settelephone($inscriptionOrga['telephone']);
-						$entity->setemail($inscriptionOrga['email']);
-						$entity->setdepartement($inscriptionOrga['departement']);
-						$entity->setcommentaire($inscriptionOrga['commentaire']);
-						$entity->setpermis($inscriptionOrga['permis']);
-						$entity->setDateDeNaissance(new \DateTime($inscriptionOrga['dateDeNaissance']));
-						$entity->setSurnom($inscriptionOrga['surnom']);	
-						$entity->setStatut(0);			
-						$em->persist($entity);
-	            		
+					
+					
+            		
 	            		
 						// ajout des disponibilite
-						
+						/*
 
-				//		$em->flush();	
-						$idOrgaAjoute= $em->getRepository('PHPMBundle:Orga')->findOneByTelephone($inscriptionOrga['telephone']);	
+						
+					
+					$idOrgaAjoute= $em->getRepository('PHPMBundle:Orga')->findOneByTelephone($inscriptionOrga['telephone']);	
 
 						
 						
@@ -279,16 +296,14 @@ class OrgaController extends Controller
 								$em->persist($entitydisponibilite);
 								
 								
-								//$em->flush();							
+								$em->flush();							
 							}
 
-						
+					*/	
 						
 					
 				}
-				
-		
-		*/
+		exit(var_dump($validationErrors));
 		return array();
 	}
 	
