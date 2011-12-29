@@ -32,17 +32,38 @@ body {
 .calendar {
 	float: left;
 	width: 60%;
-	height: 100%;
+	height: 990px;  /* peut être modifié par ailleurs - rajouter 30 pour le titre */
 }
 .jour {
-	height: 960px; /* peut être modifié par ailleurs */
+	height: 100%;
 	/* width setté dynamiquement */
-	background: url('../images/calendar_background.png') repeat top left;
 	float: left;
-	border-right: 1px solid #003366;
+	border-right: 1px solid #333;
 }
 .jour:first-of-type {
-	border-left: 1px solid #003366;
+	border-left: 1px solid #333;
+}
+.titre_date {
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	background: #BBB;
+}
+.quart_heure {
+	width: 100%;
+	height: 9px; /* fait 10 avec la bordure */
+}
+.quart_heure:nth-of-type(4n+2) {
+	border-top: 1px solid #333;
+}
+.quart_heure:nth-of-type(4n+4) {
+	border-top: 1px solid #AAA;
+}
+.quart_heure:nth-of-type(2n+1) {
+	border-top: 1px dashed #AAA;
+}
+.quart_heure:last-of-type {
+	border-bottom: 1px solid #333;	
 }
 
 /*

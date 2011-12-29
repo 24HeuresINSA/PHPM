@@ -23,14 +23,19 @@ CalendarView.prototype = {
 		
 		console.log(_nbJours);
 		
-		for (i=0;i<_nbJours;i++) {
+		for (var _i=0;_i<_nbJours;_i++) {
 			$('#calendar').append(this.makeADay("04/12/1990", _nbJours));
 		}
 	},
 	// fabrique un jour
 	makeADay: function(date, nbJours) {
-		var _html = '<div class="jour" id="jour" date="'+date+'" style="width: '+99/nbJours+'%;">'; // 99% because of borders
+		var _html = '<div class="jour" id="jour_'+date+'" date="'+date+'" style="width: '+99/nbJours+'%;">'; // 99% because of borders
 		_html += '<div class="titre_date">'+date+'</div>';
+		
+		for (var _i=0;_i<96;_i++) {
+			_html += '<div class="quart_heure" id="quart_heure_'+_i+'" heure="'+date+' '+Math.floor(_i/4)+':'+_i%4*15+'"></div>';
+		}
+		
 		_html += '</div>';
 		
 		return _html;
