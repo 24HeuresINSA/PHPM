@@ -38,7 +38,7 @@ class Tache
     /**
     * @var text $materielNecessaire
     *
-    * @ORM\Column(name="materielNecessaire", type="text")
+    * @ORM\Column(name="materielNecessaire", type="text", nullable=true)
     */
     private $materielNecessaire;
     

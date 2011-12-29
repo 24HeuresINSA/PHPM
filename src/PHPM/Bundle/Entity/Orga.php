@@ -38,7 +38,7 @@ class Orga
     /**
     * @var string $surnom
     *
-    * @ORM\Column(name="surnom", type="string", length=255)
+    * @ORM\Column(name="surnom", type="string", length=255, nullable=true)
     */
     private $surnom;
 
@@ -59,21 +59,21 @@ class Orga
     /**
      * @var date $dateDeNaissance
      *
-     * @ORM\Column(name="dateDeNaissance", type="date")
+     * @ORM\Column(name="dateDeNaissance", type="date", nullable=true)
      */
     private $dateDeNaissance;
 
     /**
      * @var string $departement
      *
-     * @ORM\Column(name="departement", type="string", length=255)
+     * @ORM\Column(name="departement", type="string", length=255, nullable=true)
      */
     private $departement;
 
     /**
      * @var text $commentaire
      *
-     * @ORM\Column(name="commentaire", type="text")
+     * @ORM\Column(name="commentaire", type="text", nullable=true)
      */
     private $commentaire;
 
