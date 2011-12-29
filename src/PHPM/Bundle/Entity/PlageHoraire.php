@@ -148,7 +148,15 @@ public function __toString()
     
     public function toArray()
     {
-    	return array("debut" => $this->getDebut(),"fin" => $this->getFin());
+    	foreach ($this->getCreneaux() as $entity){
+    		$a[$entity->getId()] = $entity->toArray();
+    		 
+    	}
+    	
+    	return array(
+    	"debut" => $this->getDebut(),
+    	"fin" => $this->getFin(),
+    	"creneaux" => $this->toArray());
     }
     
     

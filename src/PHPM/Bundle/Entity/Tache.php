@@ -198,4 +198,21 @@ class Tache
     {
     	return $this->getNom();
     }
+    
+    public function toArray()
+    {
+    	foreach ($this->getPlagesHoraire() as $entity){
+    		$a[$entity->getId()] = $entity->toArray();
+    	
+    	}
+    	
+    	return array(
+    	"nom" => $this->getDebut(),
+    	"lieu" => $this->getLieu(),
+    	"confiance" => $this->getConfiance()->toArray(),
+    	"categorie" => $this->getCategorie()->toArray(),
+    	"palgesHoraire" => $a);
+    	
+    }
+    
 }
