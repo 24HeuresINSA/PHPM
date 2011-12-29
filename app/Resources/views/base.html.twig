@@ -30,6 +30,7 @@
         		<ul>
         			<li><a href="{{ path('phpm__default_home') }}">Tableau de bord</a></li>
         			<li><a href="{{ path('orga') }}">Orga</a></li>
+        			<li><a href="{{ path('orga_affectation') }}">Affectation</a></li>
         			<li><a href="{{ path('categorie') }}">Categorie</a></li>
         			<li><a href="{{ path('confiance') }}">Confiance</a></li>
         			<li><a href="{{ path('disponibilite') }}">Disponibilité</a></li>
@@ -42,8 +43,8 @@
         	<br clear="all" />
        	</div>
        	
-		<div class="menu_actions">
-        	{% block menu_actions %}
+		<div class="menu_action">
+        	{% block menu_action %}
         		<p>Menu Actions non-implémenté !</p>
         	{% endblock %}
         </div> 

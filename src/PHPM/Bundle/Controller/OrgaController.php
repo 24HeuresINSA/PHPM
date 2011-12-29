@@ -19,27 +19,16 @@ class OrgaController extends Controller
 	 /**
      * Lists all Orga entities.
      *
-     * @Route("/{id}/affectation", name="orga_affectation")
+     * @Route("/affectation", name="orga_affectation")
      * @Template()
      */
-    public function affectationAction($id)
+    public function affectationAction()
     {
-    	$em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('PHPMBundle:Orga')->find($id);
+        $entities = $em->getRepository('PHPMBundle:Orga')->findAll();
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Orga entity.');
-        }
-
-        $editForm = $this->createForm(new OrgaType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return array('entities' => $entities);
       
     }
 	

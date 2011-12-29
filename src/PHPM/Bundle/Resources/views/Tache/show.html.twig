@@ -22,16 +22,18 @@
         </tr>
     </tbody>
 </table>
+{% endblock %}
 
+{% block menu_action %}
 <ul class="record_actions">
     <li>
         <a href="{{ path('tache') }}">
-            Back to the list
+            Revenir &agrave; la liste de t&acirc;ches
         </a>
     </li>
     <li>
         <a href="{{ path('tache_edit', { 'id': entity.id }) }}">
-            Edit
+            Editer la t&acirc;che
         </a>
     </li>
     <li>

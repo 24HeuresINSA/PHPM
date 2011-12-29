@@ -1,6 +1,6 @@
 {% extends "::base.html.twig"  %}
 {% block content %}
-<h1>Categorie list</h1>
+<h1>Cat&eacute;gories disponibles</h1>
 
 <table class="records_list">
     <thead>
@@ -29,11 +29,13 @@
     {% endfor %}
     </tbody>
 </table>
+{% endblock %}
 
+{% block menu_action %}
 <ul>
     <li>
         <a href="{{ path('categorie_new') }}">
-            Create a new entry
+            Cr&eacute;er une nouvelle cat&eacute;gorie
         </a>
     </li>
 </ul>
