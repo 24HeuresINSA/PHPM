@@ -3,6 +3,7 @@
 namespace PHPM\Bundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * PHPM\Bundle\Entity\Orga
@@ -25,6 +26,7 @@ class Orga
      * @var string $nom
      *
      * @ORM\Column(name="nom", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $nom;
 
@@ -32,6 +34,7 @@ class Orga
      * @var string $prenom
      *
      * @ORM\Column(name="prenom", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $prenom;
     
@@ -42,10 +45,16 @@ class Orga
     */
     private $surnom;
 
+    private $message="haah";
     /**
      * @var string $telephone
      *
      * @ORM\Column(name="telephone", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/[0-9]{10}/",
+     *     message="$this->message"
+     * )
      */
     private $telephone;
 
@@ -53,6 +62,10 @@ class Orga
      * @var string $email
      *
      * @ORM\Column(name="email", type="string", length=255)
+     * 
+     * @Assert\Email(     * 
+     *     checkMX = true
+     * )
      */
     private $email;
 
@@ -60,6 +73,8 @@ class Orga
      * @var date $dateDeNaissance
      *
      * @ORM\Column(name="dateDeNaissance", type="date", nullable=true)
+     * 
+     * @Assert\Date()
      */
     private $dateDeNaissance;
 
