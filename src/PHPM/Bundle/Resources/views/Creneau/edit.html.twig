@@ -21,10 +21,7 @@
         </a>
     </li>
     <li>
-        <form action="{{ path('creneau_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
+    	<a href="javascript:creneau_delete('{{ path('orga_delete', { 'id': entity.id }) }}')">Supprimer</a>
     </li>
 </ul>
 {% endblock %}
