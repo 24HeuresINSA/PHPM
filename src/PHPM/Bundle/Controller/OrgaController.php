@@ -190,7 +190,7 @@ class OrgaController extends Controller
      * Deletes a Orga entity.
      *
      * @Route("/{id}/delete", name="orga_delete")
-     * 
+     * @Method("post")
      */
     public function deleteAction($id)
     {
@@ -232,14 +232,14 @@ class OrgaController extends Controller
 	{
 		$em = $this->getDoctrine()->getEntityManager();	
 		$orgaAValider = $em->getRepository('PHPMBundle:Orga')->findByStatut(0);
-			
+			/*
 			foreach ($orgaAValider as $orga) 
 			{
 			echo ("<pre>");
 			var_dump($orgaAValider);
 			echo("</pre>");		
 			}
-	
+	*/
 		return array();
 	}
 
