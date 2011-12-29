@@ -5,6 +5,12 @@ function error(str) {
 	console.error(str);
 }
 
+function confirm_delete($lien)
+{
+	if (window.confirm("Etes vous sur de vouloir supprimer cet élèment ?")) 
+	window.location=$lien;
+}
+
 /*
  * Permet d'afficher des messages en haut
  * Singleton
