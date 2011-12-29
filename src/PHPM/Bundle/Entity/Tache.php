@@ -201,6 +201,7 @@ class Tache
     
     public function toArray()
     {
+    	$a = array();
     	foreach ($this->getPlagesHoraire() as $entity){
     		$a[$entity->getId()] = $entity->toArray();
     	}

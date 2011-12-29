@@ -366,6 +366,7 @@ class Orga
     
     public function toArray()
     {
+    	$a = array();
     	foreach ($this->getDisponibilites() as $entity){
     		$a[$entity->getId()] = $entity->toArray();
     	}
