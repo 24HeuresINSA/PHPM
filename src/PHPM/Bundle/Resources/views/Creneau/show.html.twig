@@ -1,6 +1,6 @@
 {% extends "::base.html.twig"  %}
 {% block content %}
-<h1>Creneau</h1>
+<h1>Afichage du cr&eacute;neau</h1>
 
 <table class="record_properties">
     <tbody>
@@ -24,12 +24,12 @@
 <ul class="record_actions">
     <li>
         <a href="{{ path('creneau') }}">
-            Back to the list
+            Retourner &agrave; la liste
         </a>
     </li>
     <li>
         <a href="{{ path('creneau_edit', { 'id': entity.id }) }}">
-            Edit
+            Editer le cr&eacute;neau
         </a>
     </li>
     <li>

@@ -1,6 +1,6 @@
 {% extends "::base.html.twig"  %}
 {% block content %}
-<h1>Categorie creation</h1>
+<h1>Cr&eacute;er une cat&eacute;gorie</h1>
 
 <form action="{{ path('categorie_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
@@ -14,7 +14,7 @@
 <ul class="record_actions">
     <li>
         <a href="{{ path('categorie') }}">
-            Back to the list
+            Revenir &agrave; la liste de cat&eacute;gories
         </a>
     </li>
 </ul>
