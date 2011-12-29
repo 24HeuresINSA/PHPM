@@ -34,7 +34,7 @@ $(function() {
 	
 	// infos courantes
 	pmAffectation.current = {};
-	pmAffectation.current.plage = 2; // par défaut on est sur la plage 0
+	pmAffectation.current.plage = 1; // par défaut on est sur la plage 0
 	
 	// les MVC
 	pmAffectation.models = {};
