@@ -363,4 +363,25 @@ class Orga
     {
         return $this->surnom;
     }
+    
+    public function toArray()
+    {
+    	foreach ($this->getDisponibilites() as $entity){
+    		$a[$entity->getId()] = $entity->toArray();
+    	}
+    	 
+    	 
+    	return array(
+        	"nom" => $this->getNom(),
+        	"prenom" => $this->getPrenom(),
+    		"surnom" => $this->getSurnom(),
+    		"telephone" => $this->getTelephone(),
+    		"email" => $this->getEmail(),
+    		"dateDeNaissance" => $this->getDateDeNaissance(),
+    		"departement" => $this->getDepartement(),
+    		"commentaire" => $this->getCommentaire(),
+        	"confiance" => $this->getConfiance()->toArray(),
+        	"disponibilites" => $a);
+    	 
+    }
 }

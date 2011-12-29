@@ -150,4 +150,20 @@ class Disponibilite
     	return array("debut" => $this->getDebut(),"fin" => $this->getFin());
     }
     
+    
+    public function toArray()
+    {
+    	foreach ($this->getCreneaux() as $entity){
+    		$a[$entity->getId()] = $entity->toArray();
+    
+    	}
+    	 
+    	return array(
+        	"debut" => $this->getDebut(),
+        	"fin" => $this->getFin(),
+        	"creneaux" => $a);
+    }
+    
+    
+    }
 }
