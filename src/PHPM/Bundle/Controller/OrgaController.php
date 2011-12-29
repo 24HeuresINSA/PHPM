@@ -64,7 +64,7 @@ class OrgaController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Orga entity.');
         }
-        var_dump($entity->toArray());
+        
 
         $deleteForm = $this->createDeleteForm($id);
 
