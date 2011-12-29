@@ -42,7 +42,7 @@ class Disponibilite
     protected $orga;
 
     /**
-    * @ORM\OneToMany(targetEntity="Creneau", mappedBy="plagesHoraire")
+    * @ORM\OneToMany(targetEntity="Creneau", mappedBy="disponibilite")
     */
     protected $creneaux;
 
@@ -145,9 +145,21 @@ class Disponibilite
     	return $this->getDebut()->format('D H:i')." - ".$this->getFin()->format('D H:i');
     }
     
+    
+    
     public function toArray()
     {
-    	return array("debut" => $this->getDebut(),"fin" => $this->getFin());
+    	foreach ($this->getCreneaux() as $entity){
+    		$a[$entity->getId()] = $entity->toArray();
+    
+    	}
+    	 
+    	return array(
+        	"debut" => $this->getDebut(),
+        	"fin" => $this->getFin(),
+        	"creneaux" => $a);
     }
+    
+    
     
 }

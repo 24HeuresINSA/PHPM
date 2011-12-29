@@ -17,6 +17,7 @@
 {% block script %}
 	{{ parent() }}
 	{% javascripts
+		'@PHPMBundle/Resources/public/js/lib/jquery.min.js'
 		'@PHPMBundle/Resources/public/js/lib/jquery-ui.min.js'
 	%}
 		<script src="{{ asset_url }}" type="text/javascript"></script>
@@ -24,7 +25,9 @@
 {% endblock %}
 
 {% block content %}
-	<div class="sidebar_orga" id ="sidebar_orga"></div>
+	<div class="sidebar_orga" id ="sidebar_orga">
+		Ici aussi on peut avoir du contenu
+	</div>
 	
 	<div class="calendar" id="calendar">
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ullamcorper augue eget urna iaculis volutpat. Proin lacinia porta consequat. Morbi nec tellus sit amet nisl fermentum condimentum a non lorem. Ut nisi mi, malesuada at condimentum sit amet, placerat ac turpis. Aliquam justo lectus, fringilla non pretium sit amet, tincidunt id est. Fusce luctus velit feugiat ipsum aliquet aliquet. Cras semper dapibus purus, sed elementum metus euismod vel. Mauris bibendum, tellus vestibulum condimentum iaculis, neque mauris imperdiet tellus, quis elementum sapien velit in velit. Etiam tempus, augue adipiscing blandit condimentum, augue turpis imperdiet massa, rutrum pharetra dolor justo sed quam. Aenean volutpat eros sed libero iaculis cursus. Morbi mauris neque, tristique vel vulputate et, accumsan vel risus. Etiam dictum lobortis libero vel aliquam. Sed accumsan, turpis ac viverra ullamcorper, arcu purus feugiat ante, id dictum ante enim in mauris. Ut fermentum magna scelerisque ligula volutpat at aliquam nisl tincidunt. Proin eu nulla in libero bibendum hendrerit nec ut orci. Donec sed orci ipsum.
@@ -46,7 +49,7 @@
 		Morbi suscipit aliquam lacus tristique aliquam. Donec ultricies dui eu libero tincidunt viverra. Nunc quis urna arcu, ac pellentesque justo. Sed turpis sapien, mollis sed commodo vitae, consequat at orci. Quisque enim nisl, pretium sed blandit vitae, auctor sed tellus. Maecenas tellus nulla, fermentum non venenatis eu, sodales vel nibh. Quisque sagittis rhoncus metus eu vehicula. Aliquam erat volutpat. Vivamus semper suscipit ante et auctor. Aliquam erat volutpat. Aliquam sodales nibh ut urna accumsan sodales. Duis ultrices vulputate justo vitae gravida. Ut vehicula massa eu risus condimentum at vestibulum risus commodo. Nulla facilisi. Suspendisse ultrices neque nec nunc luctus sagittis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
 	</div>
 	
-	<div class="sidebar_taches" id="sidebar_taches"></div>
+	<div class="sidebar_tache" id="sidebar_tache"></div>
 
 {% endblock %}
 

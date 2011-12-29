@@ -203,15 +203,15 @@ class Tache
     {
     	foreach ($this->getPlagesHoraire() as $entity){
     		$a[$entity->getId()] = $entity->toArray();
-    	
     	}
     	
+    	
     	return array(
-    	"nom" => $this->getDebut(),
+    	"nom" => $this->getNom(),
     	"lieu" => $this->getLieu(),
     	"confiance" => $this->getConfiance()->toArray(),
     	"categorie" => $this->getCategorie()->toArray(),
-    	"palgesHoraire" => $a);
+    	"plagesHoraire" => $a);
     	
     }
     
