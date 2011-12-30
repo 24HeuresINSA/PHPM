@@ -10,6 +10,9 @@
 /app/config/parameters.ini
 /bundles/
 
+
+src/PHPM/Bundle/Controller/TestController.php
+
 *~
 
 # Metadata
