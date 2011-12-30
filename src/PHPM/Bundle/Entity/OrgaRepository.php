@@ -12,21 +12,36 @@ use PHPM\Bundle\Entity\Orga;
  */
 class OrgaRepository extends EntityRepository
 {
-	public function getOrgasWithCriteria($permis)
+	public function getOrgasWithCriteria($permis, $age, $id_tache, $id_plage, $niveau_confiance)
 	{
 	
 		$qb = $this->getEntityManager()->createQueryBuilder()->select('o')->from('PHPMBundle:Orga','o');
 		
 		$query = $qb->getQuery();
-		
-		//exit(var_dump($qb->getQuery()->getResult()));
-		
-		
-		if(isset($permis))
-		{
-			$qb->where($qb->expr()->eq('o.permis',$permis));
-		}
 	
+		
+		if($permis!='')
+		{
+			$qb->where($qb->expr()->gte('o.permis',$permis));
+		}
+		if($age !='')
+		{
+			$qb->where($qb->expr()->gte('o.age',$age));
+		}
+		if($id_tache !='')
+		{
+			$qb->where($qb->expr()->eq('o.id_tache',$id_tache));
+		}
+		if($id_plage !='')
+		{
+			$qb->where($qb->expr()->eq('o.id_plage',$id_plage));
+		}
+		if($niveau_confiance !='')
+		{
+			$qb->where($qb->expr()->gte('o.niveau_confiance',$niveau_confiance));
+		}
+		
+		return $qb->getQuery()->getResult();
 		
 		
 	}

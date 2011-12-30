@@ -225,7 +225,22 @@ class OrgaController extends Controller
      */
 	public function validationAction()	
 	{
-		$em = $this->getDoctrine()->getEntityManager();	
+		
+		$em = $this->getDoctrine()->getEntityManager();
+				
+		if(!empty($_POST["Orga_Valid"])) {
+
+   		for ($i = 0; $i < count($_POST["Orga_Valid"]); $i++)
+			{
+				$orgaValide = $em->getRepository('PHPMBundle:Orga')->findOneById($_POST["Orga_Valid"][$i]);	
+				$orgaValide->setStatut(1);
+				$em->persist($orgaValide);
+				$em->flush();	
+			}
+    	//  	echo $_POST["Orga_Valid"][$i] ;
+		}
+
+	
 		$orgaAValider = $em->getRepository('PHPMBundle:Orga')->findByStatut(0);
 		
 		$listeOrgaARetourne = array();
@@ -241,9 +256,9 @@ class OrgaController extends Controller
 						$dispoFin = $orgaDispo->getfin()->getTimestamp();
 
 						$tempsDisponibiliteTotal += $dispoFin - $dispoDebut;
-						$dispoDebut = date ('D j H i s', $dispoDebut);						
-						$dispoFin = date ('D j H i s', $dispoFin);	
-						$dispoTemporaire = array($dispoDebut, $dispoFin);
+						$dispoDebut = date ('D j H i', $dispoDebut);						
+						$dispoFin = date ('D j H i', $dispoFin);	
+						$dispoTemporaire = array('debut'=> $dispoDebut,'fin'=> $dispoFin);
 									
 						array_push($dispoAAfficher, $dispoTemporaire);
 					}
@@ -258,12 +273,12 @@ class OrgaController extends Controller
 		 
 		// mettre array avec nom, prenom, email, nbheures, portable, checkbox 
 		
-			
+			/*
 			
 			echo ("<pre>");
 			var_dump($listeOrgaARetourne);
 			echo("</pre>");	
-			
+			*/
 			
 
 		$entities = $listeOrgaARetourne;	
@@ -364,19 +379,41 @@ class OrgaController extends Controller
 	/**
 	* Lists all Orga entities.
 	*
-	* @Route("/{permis}/query.json", name="orga_query_json")
-	* 
+	* @Route("/query.json", name="orga_query_json")
+	* @Method("post")
 	*/
-	public function queryJsonAction($permis)
+	public function queryJsonAction()
 	{
+		$request = $this->getRequest();
+		
+		$permis= $request->request->get('permis', '');
+		$age= $request->request->get('age', '');
+		$id_tache= $request->request->get('id_tache', '');
+		$id_plage= $request->request->get('id_plage', '');
+		$niveau_confiance= $request->request->get('niveau_confiance', '');
+		
+		//exit(var_dump($request));
+		
 		$em = $this->getDoctrine()->getEntityManager();
-	
-		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis);
+		
+		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $age, $id_tache, $id_plage, $niveau_confiance);
 	
 		//exit(var_dump($entities));
 		$response = new Response();
-		$orga=$entities[0];
-    	$response->setContent(json_encode($orga->toArray()));
+		
+		$a = array();
+		 
+		foreach ($entities as $entity){
+			$a[$entity->getId()] = $entity->toArray();
+		
+		}
+		
+		
+		
+			$response->setContent(json_encode($a));
+		
+		//$orga=$entities[0];
+    	
 		
     	
     

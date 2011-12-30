@@ -3,31 +3,13 @@
  * Script principal, lancé en 1er
  */
 
-// rend resizeable les blocs sur le côté
-/* faire fonction de calcul des tailles
-$(function() {
-	$("#sidebar_orga").resizable({
-							minWidth: 150,
-							maxWidth: 400,
-							alsoResize: '#calendar',
-							autoHide: true,
-							handles: 'e'
-							});
-	
-	$("#sidebar_tache").resizable({
-							minWidth: 150,
-							maxWidth: 400,
-							alsoResize: '#calendar',
-							autoHide: true,
-							handles: 'w'
-							});
-});
-*/
-
 /*
  * Globals
  */
 	pmAffectation = {}; // namespace
+	
+	// utilitaires
+	pmUtils = new PmUtils();
 	
 	// stockage des données
 	pmAffectation.data = {};
@@ -46,6 +28,9 @@ $(function() {
  * Effectif que quand le document est prêt
  */
 $(document).ready(function() {
+	// 0 : setter le layout, rendre les sidebars resizeables
+	pmUtils.setResizeableSidebars();
+	
 	// 1 : lancer les requêtes pour les paramètres
 	pmAffectation.controllers.parameter = new ParameterController();
 	pmAffectation.controllers.parameter.getData();
