@@ -68,6 +68,13 @@ PmUtils.prototype = {
 	},
 	
 	/*
+	 * Un bouton permettant de cacher le menu du haut
+	 */
+	hideTopMenu: function() {
+		$('.header').slideToggle(500, 'swing');
+	},
+	
+	/*
 	 * Retourne la taille de l'élément (jQuery) passé
 	 * en pourcentage %
 	 */
@@ -109,5 +116,5 @@ PmUtils.prototype = {
 		} catch(err) {
 			console.error("Impossible d'accéder à localStorage",err);
 		}
-	}
+	},
 };
