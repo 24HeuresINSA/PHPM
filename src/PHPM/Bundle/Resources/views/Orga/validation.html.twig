@@ -1,0 +1,45 @@
+{% extends "::base.html.twig"  %}
+
+{% block title %}
+	Orga -> Import
+{% endblock %}
+
+{% block menu_action %}
+{% endblock %}
+
+{% block content %}
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Telephone</th>
+            <th>Email</th>
+            <th>Datedenaissance</th>
+            <th>Commentaire</th>
+            <th>Nombre heures orga</th>
+            <th>Validation</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in errors %}
+        <tr>           
+            <td>{{ entity.orga.nom }}</td>
+            <td>{{ entity.orga.prenom }}</td>
+            <td>{{ entity.orga.telephone }}</td>
+            <td>{{ entity.orga.email }}</td>
+            <td>{{ entity.orga.commentaire }}</td>
+            <td>Nombre heures orga</td>
+            <td></td>
+
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<p>Les autres orgas ont &eacute;t&eacute; correctement import&eacute; dans la base <br />
+	Veuillez les valider pour pouvoir les affecter.
+</p>
+    
+{% endblock %}
