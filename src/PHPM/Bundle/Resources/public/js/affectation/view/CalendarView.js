@@ -22,7 +22,7 @@ CalendarView.prototype = {
 		$('#calendar').html('');
 		
 		// calcule le nombre de jours - il faut passer par les TS, +1
-		var _nbJours = (pmAffectation.data.calendar.plage[plage]['jour_fin'].getTime()-pmAffectation.data.calendar.plage[plage]['jour_debut'].getTime())/(24*60*60*1000)+1;
+		var _nbJours = (pmAffectation.data.calendar.plage[plage]['fin'].getTime()-pmAffectation.data.calendar.plage[plage]['debut'].getTime())/(24*60*60*1000)+1;
 		
 		/// 1ère colonne : les heures
 		var _hours = '<div class="hours" id="hours">';
@@ -34,7 +34,7 @@ CalendarView.prototype = {
 		$('#calendar').append(_hours);
 		
 		for (var _i=0;_i<_nbJours;_i++) {
-			var _date = new Date(pmAffectation.data.calendar.plage[plage]['jour_debut'].getTime()+_i*24*60*60*1000);
+			var _date = new Date(pmAffectation.data.calendar.plage[plage]['debut'].getTime()+_i*24*60*60*1000);
 			$('#calendar').append(this.makeADay(_date.getDate()+'/'+Number(_date.getMonth()+1), _date.getDay(), _nbJours));
 		}
 		

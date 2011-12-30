@@ -4,6 +4,7 @@ namespace PHPM\Bundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use PHPM\Bundle\Entity\Orga;
+
 /**
  * OrgaRepository
  *
@@ -15,11 +16,42 @@ class OrgaRepository extends EntityRepository
 	public function getOrgasWithCriteria($permis, $maxDateNaissance, $id_tache, $id_plage, $niveau_confiance)
 	{
 	
-		$qb = $this->getEntityManager()->createQueryBuilder()->select('o')->from('PHPMBundle:Orga','o');
+		$qb = $this->getEntityManager()->createQueryBuilder();
+		$qb
+		->select('o,ct')
 		
-		$query = $qb->getQuery();
-	
+		->from('PHPMBundle:Orga','o')
 		
+		
+		
+		->from('PHPMBundle:Disponibilite', 'd')
+		->from('PHPMBundle:Creneau', 'co')
+		->from('PHPMBundle:PlageHoraire', 'p')
+		->from('PHPMBundle:Tache', 't')
+		->from('PHPMBundle:Creneau', 'ct')
+		
+		->where($qb->expr()->andx(
+		
+		
+		
+		$qb->expr()->eq('t.id',$id_tache),
+		
+		$qb->expr()->eq('d.orga','o'),
+		$qb->expr()->eq('co.disponibilite','d'),
+		$qb->expr()->eq('ct.plageHoraire','p'),
+		$qb->expr()->eq('p.tache','t'),
+		
+		
+		$qb->expr()->eq('ct.disponibilite','0'),
+		$qb->expr()->lte('ct.debut','d.fin'),
+		$qb->expr()->gte('ct.fin','d.debut')
+				
+		//$qb->expr()->orx(		$qb->expr()->lte('ct.fin','co.debut'),		$qb->expr()->gte('ct.debut','co.fin'))
+		));
+		
+		//exit(var_dump($qb->getQuery()->getDQL()));
+		
+		/*
 		if($permis!='')
 		{
 			$qb->where($qb->expr()->gte('o.permis',$permis));
@@ -40,7 +72,7 @@ class OrgaRepository extends EntityRepository
 		{
 			$qb->where($qb->expr()->gte('o.confiance_id',$niveau_confiance));
 		}
-		
+		*/
 		//exit(var_dump($qb->getQuery()->getDQL()));
 		return $qb->getQuery()->getResult();
 		
