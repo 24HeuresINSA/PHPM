@@ -22,19 +22,19 @@
         </tr>
     </thead>
     <tbody>
-    {% for entity in errors %}
+    <form action="">
+    {% for entity in entities %}
         <tr>           
-            <td>{{ entity.orga.nom }}</td>
-            <td>{{ entity.orga.prenom }}</td>
-            <td>{{ entity.orga.telephone }}</td>
-            <td>{{ entity.orga.email }}</td>
-            <td>{{ entity.orga.commentaire }}</td>
+            <td>{{ entity.nom }}</td>
+            <td>{{ entity.prenom }}</td>
+            <td>{{ entity.telephone }}</td>
+            <td>{{ entity.email }}</td>
+            <td>{{ entity.commentaire }}</td>
             <td>Nombre heures orga</td>
-            <td></td>
-
-            </td>
+            <td> <input type="checkbox" name="vehicle" value="Car" checked/> I have a bike<br /> </td>
         </tr>
     {% endfor %}
+    </form> </td>
     </tbody>
 </table>
 
