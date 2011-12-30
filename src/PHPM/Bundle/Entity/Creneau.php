@@ -143,7 +143,7 @@ class Creneau
     
     public function toArray()
     {
-    	return array("debut" => $this->getDebut(),"fin" => $this->getFin());
+    	return array("id" => $this->getId(),"debut" => $this->getDebut(),"fin" => $this->getFin());
     }
     
 }

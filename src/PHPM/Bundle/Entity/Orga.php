@@ -382,6 +382,9 @@ class Orga
     	 
     	 
     	return array(
+    		"id" => $this->getId(),
+    	    "importid" => $this->getImportId(),
+    		"statut" => $this->getStatut(),
         	"nom" => $this->getNom(),
         	"prenom" => $this->getPrenom(),
     		"surnom" => $this->getSurnom(),
@@ -389,8 +392,8 @@ class Orga
     		"email" => $this->getEmail(),
     		"dateDeNaissance" => $this->getDateDeNaissance(),
     		"departement" => $this->getDepartement(),
-    		"permis"=>$this->getPermis(),
     		"commentaire" => $this->getCommentaire(),
+    		"permis"=>$this->getPermis(),
         	"confiance" => $this->getConfiance()->toArray(),
         	"disponibilites" => $a);
     	 

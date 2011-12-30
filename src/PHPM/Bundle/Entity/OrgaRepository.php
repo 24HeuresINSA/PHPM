@@ -17,6 +17,7 @@ class OrgaRepository extends EntityRepository
 	{
 	
 		$qb = $this->getEntityManager()->createQueryBuilder();
+		$expr = $qb->expr();
 		$qb
 		->select('o,ct')
 		
@@ -30,47 +31,108 @@ class OrgaRepository extends EntityRepository
 		->from('PHPMBundle:Tache', 't')
 		->from('PHPMBundle:Creneau', 'ct')
 		
-		->where($qb->expr()->andx(
+		
+		->where($expr->andx(
 		
 		
 		
-		$qb->expr()->eq('t.id',$id_tache),
+		$expr->eq('t.id',$id_tache),
 		
-		$qb->expr()->eq('d.orga','o'),
-		$qb->expr()->eq('co.disponibilite','d'),
-		$qb->expr()->eq('ct.plageHoraire','p'),
-		$qb->expr()->eq('p.tache','t'),
+		$expr->eq('d.orga','o'),
+		$expr->neq('d.orga','0'),
+		$expr->eq('co.disponibilite','d'),
+		$expr->eq('ct.plageHoraire','p'),
+		
+		$expr->eq('p.tache','t'),
 		
 		
-		$qb->expr()->eq('ct.disponibilite','0'),
-		$qb->expr()->lte('ct.debut','d.fin'),
-		$qb->expr()->gte('ct.fin','d.debut')
-				
-		//$qb->expr()->orx(		$qb->expr()->lte('ct.fin','co.debut'),		$qb->expr()->gte('ct.debut','co.fin'))
-		));
+		$expr->eq('ct.disponibilite','0'),
+		$expr->lte('ct.debut','d.fin'),
+		$expr->gte('ct.fin','d.debut'),
+		
+		
+		
+		
+		//'(((ci.debut<p.debut)OR(ci.fin > p.fin))OR((ci.debut >= p.fin)OR(ci.fin <= p.debut)))', //PLAGE
+		//'( (ci.debut < co.fin) AND (ci.fin > co.debut ) )',
+		'ct.id NOT IN (SELECT ci.id FROM PHPMBundle:Creneau ci 
+		WHERE 
+		
+		( (ci.debut < co.fin) AND (ci.fin > co.debut ) )
+		OR
+		(((ci.debut<p.debut)OR(ci.fin > p.fin))OR((ci.debut >= p.fin)OR(ci.fin <= p.debut)))
+		
+		)'
+
+		)
+		
+		/*
+		$qb
+		->select('ct,o')
+		
+		->from('PHPMBundle:Orga','o')
+		
+		
+		
+		->from('PHPMBundle:Disponibilite', 'd')
+		->from('PHPMBundle:Creneau', 'co')
+		->from('PHPMBundle:PlageHoraire', 'p')
+		->from('PHPMBundle:Tache', 't')
+		->from('PHPMBundle:Creneau', 'ct')
+		->from('PHPMBundle:Creneau', 'ci')
+		
+		->where($expr->andx(
+		
+		
+		
+		$expr->eq('t.id',$id_tache),
+		
+		$expr->eq('d.orga','o'),
+		$expr->neq('d.orga','0'),
+		$expr->eq('co.disponibilite','d'),
+		$expr->eq('ct.plageHoraire','p'),
+		
+		$expr->eq('p.tache','t'),
+		
+		
+		$expr->eq('ct.disponibilite','0'),
+		$expr->lte('ct.debut','d.fin'),
+		$expr->gte('ct.fin','d.debut'),
+		
+		$expr->eq('ci.disponibilite','d'),
+		
+		
+		'(((ci.debut<p.debut)OR(ci.fin > p.fin))OR((ci.debut >= p.fin)OR(ci.fin <= p.debut)))', //PLAGE
+		'( (ci.debut < co.fin) AND (ci.fin > co.debut ) )'
+
+		)
+		*/
+		
+		
+		);
 		
 		//exit(var_dump($qb->getQuery()->getDQL()));
 		
 		/*
 		if($permis!='')
 		{
-			$qb->where($qb->expr()->gte('o.permis',$permis));
+			$qb->where($expr->gte('o.permis',$permis));
 		}
 		if($maxDateNaissance !='')
 		{
-			$qb->where($qb->expr()->lte('o.dateDeNaissance','\''.$maxDateNaissance.'\''));
+			$qb->where($expr->lte('o.dateDeNaissance','\''.$maxDateNaissance.'\''));
 		}
 		if($id_tache !='')
 		{
-			$qb->where($qb->expr()->eq('o.id_tache',$id_tache));
+			$qb->where($expr->eq('o.id_tache',$id_tache));
 		}
 		if($id_plage !='')
 		{
-			$qb->where($qb->expr()->eq('o.id_plage',$id_plage));
+			$qb->where($expr->eq('o.id_plage',$id_plage));
 		}
 		if($niveau_confiance !='')
 		{
-			$qb->where($qb->expr()->gte('o.confiance_id',$niveau_confiance));
+			$qb->where($expr->gte('o.confiance_id',$niveau_confiance));
 		}
 		*/
 		//exit(var_dump($qb->getQuery()->getDQL()));

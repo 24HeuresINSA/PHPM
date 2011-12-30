@@ -168,6 +168,7 @@ class PlageHoraire
     	}
     	
     	return array(
+    	"id" => $this->getId(),
     	"debut" => $this->getDebut(),
     	"fin" => $this->getFin(),
     	"nbOrgasNecessaires" => $this->getNbOrgasNecessaires(),

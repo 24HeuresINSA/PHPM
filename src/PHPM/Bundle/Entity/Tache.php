@@ -228,6 +228,7 @@ class Tache
     	
     	return array(
     	"id" => $this->getId(),
+    	"importId" => $this->getImportId(),
     	"nom" => $this->getNom(),
     	"lieu" => $this->getLieu(),
     	"materielNecessaire" => $this->getMaterielNecessaire(),
@@ -235,6 +236,7 @@ class Tache
     	"confiance" => $this->getConfiance()->toArray(),
     	"categorie" => $this->getCategorie()->toArray(),
     	"permisNecessaire" => $this->getPermisNecessaire(),
+    	"ageNecessaire" => $this->getAgeNecessaire(),
     	"plagesHoraire" => $a);
     	
     }

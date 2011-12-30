@@ -19,6 +19,7 @@
 	
 	// infos courantes
 	pmAffectation.current = {};
+	// bien mettre des valeurs par défaut aux paramètres
 	pmAffectation.current.plage = 1; // par défaut on est sur la plage 0
 	
 	// les MVC
@@ -31,14 +32,16 @@
  */
 	// les urls sur lesquelles on fera les requêtes
 	pmAffectation.paths.plages = 'config/get/manifestation.plages';
+	pmAffectation.paths.orgas = 'orga/basicquery.json';
 	
 /*
  * Lancement
  * Effectif que quand le document est prêt
  */
 $(document).ready(function() {	
-	// 0 : setter le layout
+	// 0 : setter le layout et récupérer les paramètres dans l'Url'
 	pmUtils.setResizeableSidebars();
+	pmUtils.parseUrlParam();
 	
 	// 1 : lancer les requêtes pour les paramètres
 	pmAffectation.controllers.parameter = new ParameterController();
@@ -48,5 +51,7 @@ $(document).ready(function() {
 	pmAffectation.controllers.calendar = new CalendarController();
 	pmAffectation.controllers.calendar.getData();
 	
-	// 3 : mettre en place les éléments
+	// 3 : on va chercher pour la colonne orgas
+	pmAffectation.controllers.orga = new OrgaController();
+	pmAffectation.controllers.orga.getData();
 });

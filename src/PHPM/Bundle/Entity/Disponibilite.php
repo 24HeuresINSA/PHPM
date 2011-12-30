@@ -159,6 +159,7 @@ class Disponibilite
     	}
     	 
     	return array(
+    	    "id" => $this->getId(),
         	"debut" => $this->getDebut(),
         	"fin" => $this->getFin(),
         	"creneaux" => $a);

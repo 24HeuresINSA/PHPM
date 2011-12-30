@@ -74,7 +74,7 @@ class Config
     
     public function toArray()
     {
-    	return array("field" => $this->getField(),"value" => $this->getValue());
+    	return array("id" => $this->getId(),"field" => $this->getField(),"value" => $this->getValue());
     }
 
     /**
