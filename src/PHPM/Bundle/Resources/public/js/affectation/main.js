@@ -3,27 +3,6 @@
  * Script principal, lancé en 1er
  */
 
-// rend resizeable les blocs sur le côté
-/* faire fonction de calcul des tailles
-$(function() {
-	$("#sidebar_orga").resizable({
-							minWidth: 150,
-							maxWidth: 400,
-							alsoResize: '#calendar',
-							autoHide: true,
-							handles: 'e'
-							});
-	
-	$("#sidebar_tache").resizable({
-							minWidth: 150,
-							maxWidth: 400,
-							alsoResize: '#calendar',
-							autoHide: true,
-							handles: 'w'
-							});
-});
-*/
-
 /*
  * Globals
  */
