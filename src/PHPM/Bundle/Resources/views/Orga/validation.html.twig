@@ -32,7 +32,7 @@
             <td>
             	<ul>
             		{% for dispo in entity['disponibilite'] %}
-            			<li>{{ dispo[0] }} -- {{ dispo[1] }}</li>
+            			<li>{{ dispo['debut'] }} -- {{ dispo['fin'] }}</li>
             		{% endfor %}
             	</ul>
             </td>
