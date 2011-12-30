@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraint;
 *
 */
 
-class quartHeure extends Constraint
+class QuartHeure extends Constraint
 {
     public $message = 'L\heure ne peut qu\'être une unitié indivisible de quart d\'heure';
     public $entity;
@@ -30,7 +30,7 @@ class quartHeure extends Constraint
     }
 }
 
-class quartHeureValidator extends ConstraintValidator
+class QuartHeureValidator extends ConstraintValidator
 {
     /**
 * Configures the form field and options
