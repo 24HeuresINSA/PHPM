@@ -391,5 +391,35 @@ class TacheController extends Controller
 		return $response;
 	}
 	
+	/**
+	* Lists all Orga entities.
+	*
+	* @Route("/basicquery.json", name="tache_basic_query_json")
+	*
+	*/
+	public function basicQueryJsonAction()
+	{
+	
+		$em = $this->getDoctrine()->getEntityManager();
+		$entities = $em->getRepository('PHPMBundle:Tache')->findAll();
+	
+		$response = new Response();
+	
+		$a = array();
+			
+		foreach ($entities as $entity){
+			$a[$entity->getId()] = $entity->toArray();
+	
+		}
+		 
+		exit(var_dump($a));
+		$response = new Response();
+		$response->setContent(json_encode($a));
+		$response->headers->set('Content-Type', 'application/json');
+		 
+	
+		return $response;
+	}
+	
 
 }
