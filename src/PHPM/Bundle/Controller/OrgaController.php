@@ -449,7 +449,7 @@ class OrgaController extends Controller
     		
     	}
     	
-    	exit(var_dump($a));
+    	
     	$response = new Response();
     	$response->setContent(json_encode($a));
 		$response->headers->set('Content-Type', 'application/json');

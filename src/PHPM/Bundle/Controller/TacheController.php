@@ -392,7 +392,7 @@ class TacheController extends Controller
 	}
 	
 	/**
-	* Lists all Orga entities.
+	* Lists all Tache entities.
 	*
 	* @Route("/basicquery.json", name="tache_basic_query_json")
 	*
@@ -412,7 +412,7 @@ class TacheController extends Controller
 	
 		}
 		 
-		exit(var_dump($a));
+		
 		$response = new Response();
 		$response->setContent(json_encode($a));
 		$response->headers->set('Content-Type', 'application/json');
