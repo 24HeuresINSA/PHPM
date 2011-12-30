@@ -268,9 +268,9 @@ class OrgaController extends Controller
 			
 			
 
-			
-	
-		return $listeOrgaARetourne;
+		$entities = $listeOrgaARetourne;	
+		
+		return $entities;
 	}
 
 
