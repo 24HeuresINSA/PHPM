@@ -388,15 +388,16 @@ class OrgaController extends Controller
 		$age= $request->request->get('age', '');
 		$id_tache= $request->request->get('id_tache', '');
 		$id_plage= $request->request->get('id_plage', '');
-		$niveau_confiance= $request->request->get('niveau_confiance', '');
+		$niveau_confiance= $request->request->get('confiance_id', '');
+		$maxDateNaissance = new \DateTime();
 		
-		//exit(var_dump($request));
+		if($age!='')
+		$maxDateNaissance->modify('-'.$age.' year');
+
 		
 		$em = $this->getDoctrine()->getEntityManager();
-		
-		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $age, $id_tache, $id_plage, $niveau_confiance);
-	
-		//exit(var_dump($entities));
+		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $maxDateNaissance->format('Y-m-d'), $id_tache, $id_plage, $niveau_confiance);
+
 		$response = new Response();
 		
 		$a = array();
