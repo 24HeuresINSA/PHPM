@@ -22,6 +22,13 @@ class Tache
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+    * @var integer $importId
+    *
+    * @ORM\Column(name="importid", type="integer")
+    */
+    private $importId;
 
     /**
      * @var string $nom
@@ -80,16 +87,7 @@ class Tache
     */
     protected $plagesHoraire;
 
-    /**
-    * Set id
-    *
-    * @param string $id
-    */
-    public function setId($id)
-    {
-    	$this->id = $id;
-    }
-    
+
     
     /**
      * Get id
@@ -293,5 +291,25 @@ class Tache
     public function getMaterielNecessaire()
     {
         return $this->materielNecessaire;
+    }
+
+    /**
+     * Set importId
+     *
+     * @param integer $importId
+     */
+    public function setImportId($importId)
+    {
+        $this->importId = $importId;
+    }
+
+    /**
+     * Get importId
+     *
+     * @return integer 
+     */
+    public function getImportId()
+    {
+        return $this->importId;
     }
 }

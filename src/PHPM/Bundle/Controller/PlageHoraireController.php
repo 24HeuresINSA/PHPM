@@ -172,12 +172,7 @@ class PlageHoraireController extends Controller
      */
     public function deleteAction($id)
     {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
+       
             $em = $this->getDoctrine()->getEntityManager();
             $entity = $em->getRepository('PHPMBundle:PlageHoraire')->find($id);
 
@@ -187,7 +182,7 @@ class PlageHoraireController extends Controller
 
             $em->remove($entity);
             $em->flush();
-        }
+        
 
         return $this->redirect($this->generateUrl('plagehoraire'));
     }
