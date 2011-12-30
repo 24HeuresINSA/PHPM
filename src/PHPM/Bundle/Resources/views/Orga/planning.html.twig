@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+{% import "::macro_nbToDay.html.twig" as nbToDay %}
 
 <h2>Planning de l'orga :</h2>
 
@@ -34,11 +35,15 @@
     </tbody>
 </table>
 
-{% for jourCreneau in creneauxParJour %}
-	<h3>Jour : {{jourCreneau[2].plageHoraire}}</h3>
+{% for jour, jourCreneau in creneauxParJour %}
+	<h3>Jour : {{nbToDay.nbToDay(jour)}}</h3>
 	{%for creneau in jourCreneau %}
-	<h4>T&acirc;che : {{creneau.plageHoraire.tache}}</h4>
-	<p>{{creneau.plageHoraire.tache.consignes}}</p>
+	<ul>
+		<li>
+			<h4>T&acirc;che : {{creneau.plageHoraire.tache}}</h4>
+			<p>{{creneau.plageHoraire.tache.consignes}}</p>
+		</li>
+	</ul>
 
 	{% endfor %}
 {% endfor %}
