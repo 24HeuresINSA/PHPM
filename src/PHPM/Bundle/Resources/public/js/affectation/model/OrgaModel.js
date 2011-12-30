@@ -54,8 +54,10 @@ OrgaModel.prototype = {
 			}
 			
 			// re-traitement du niveau de confiance derrière
+			_orga['confiance'] = this.data[_iOrga]['confiance']['id'];
 			
 			// de la date de naissance
+			_orga['dateDeNaissance'] = new Date(this.data[_iOrga]['dateDeNaissance']['date']);
 			
 			// disponibilités, cela devient physique
 			for (var _iDispo in this.data[_iOrga]['disponibilites']) {

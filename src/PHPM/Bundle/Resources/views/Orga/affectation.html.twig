@@ -26,17 +26,19 @@
 
 {% block content %}
 	<script type="text/javascript">
-		// l'url
-		pmAffectation.url = "{{ url('phpm__default_home') }}";
+		pmAffectation.url = "{{ url('phpm__default_home') }}"; // l'url
 	</script>
 	<div class="menu_calendar" id ="menu_calendar">
 		<div class="boutons_plage" id="boutons_plage"></div>
-		
 		<div class="bouton_hide_menu" id="bouton_hide_menu" onclick="pmUtils.hideTopMenu()">^ Cacher ^</div>
 	</div>
 	
 	<div class="sidebar_orga" id ="sidebar_orga">
-		Ici aussi on peut avoir du contenu
+		<!-- boutons pour changer d'orga -->
+		
+		<div class="liste_orgas" id="liste_orgas">
+			<!-- liste des orgas -->
+		</div>
 	</div>
 	
 	<div class="calendar" id="calendar">
