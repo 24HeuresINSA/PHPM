@@ -125,4 +125,33 @@ PmUtils.prototype = {
 			console.error("Impossible d'accéder à localStorage",err);
 		}
 	},
+	
+	/*
+	 * Travail sur l'URL
+	 */
+	// regarde si on ne passe pas déjà des paramètres
+	parseUrlParam: function() {
+		// les paramètres vont dans pmAffectation.current
+		
+		if (window.location.hash.substr(0, 7) == '#param?') {
+			// parseur - on a reconnu notre format
+			var _hash = window.location.hash.substr(7, window.location.hash.length);
+			
+			var _params = _hash.split('&'); // on part de couple1&couple2&couple3...
+			
+			for (var _iParam in _params) {
+				var _paire = _params[_iParam].split('='); // on a des couples clé=valeur
+
+				pmAffectation.current[_paire[0]] = _paire[1]; // le stock
+			}
+		} else {
+			window.location.hash = '#param?'; // tant pis pour ce qu'il y avait avant
+		}
+	},
+	// update un paramètre et change l'url en fonction
+	setUrlParam: function(nomParam) {
+		pmAffectation.current[nomParam]; // récupère la valeur
+		
+		
+	}
 };

@@ -11,13 +11,18 @@
 			{% stylesheets '@PHPMBundle/Resources/public/css/style.css' %}
 				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
 			{% endstylesheets %}
+			
+			{# on inclue manuellement cette feuille de style qu'Assetic ne nous casse pas les liens des images #}
+			<link rel="stylesheet" href="{{ asset('bundles/phpm/css/jquery-ui/themes/smoothness/jquery-ui-1.8.16.custom.css') }}" type="text/css" />
 		{% endblock %}
 		
-		{# même chose pour Javascript #}
+		{# même chose pour Javascript, bien le mettre APRES à cause de LESS #}
         {% block javascript %}
 			{% javascripts
-				'@PHPMBundle/Resources/public/js/general.js'
 				'@PHPMBundle/Resources/public/js/lib/jquery.min.js'
+				'@PHPMBundle/Resources/public/js/lib/jquery-ui.min.js'
+				'@PHPMBundle/Resources/public/js/lib/less.min.js'
+				'@PHPMBundle/Resources/public/js/general.js'
 			%}
 				<script src="{{ asset_url }}" type="text/javascript"></script>
 			{% endjavascripts %}
