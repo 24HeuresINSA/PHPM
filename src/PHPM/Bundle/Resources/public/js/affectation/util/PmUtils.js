@@ -145,7 +145,7 @@ PmUtils.prototype = {
 				pmAffectation.current[_paire[0]] = _paire[1]; // le stock
 			}
 		} else {
-			window.location.hash = '#param&'; // tant pis pour ce qu'il y avait avant
+			window.location.hash = ''; // tant pis pour ce qu'il y avait avant
 		}
 	},
 	// update un paramètre et change l'url en fonction
