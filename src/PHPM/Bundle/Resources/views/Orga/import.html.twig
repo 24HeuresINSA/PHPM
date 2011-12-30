@@ -8,6 +8,19 @@
 {% endblock %}
 
 {% block content %}
+
+{% if not errors %}
+
+<form method="POST" >    
+<tr>
+<td>	 <input type="text" name="pathJson" value="http://127.0.0.1:8888/inscriptionOrgas.json" /> Adresse du fichiers des orgas à ajouter à la base </td>
+    	<input type="Submit" value="Valider">
+    	</tr>
+
+<p> </p>
+{% endif%}
+
+{% if errors %}
 <table class="records_list">
     <thead>
         <tr>
@@ -25,8 +38,19 @@
             <th>Permis</th>
         </tr>
     </thead>
+    
+    
+
+    
+    
     <tbody>
+    
+    
+
+    
+    
     {% for entity in errors %}
+    	
         <tr>
             <td>{{ entity.message }}</td>
             <td>{{ entity.champInvalide }}</td>
@@ -42,12 +66,16 @@
             <td>{{ entity.orga.permis }}</td>
             </td>
         </tr>
+        
+        <p>Les autres orgas ont &eacute;t&eacute; correctement import&eacute; dans la base <br />
+		Veuillez les valider pour pouvoir les affecter.<br />
+		Ci dessous les Orga qui n'ont pas pu &ecirc;tre ins&eacute;r&eacute;s : <br />
+		</p>
     {% endfor %}
     </tbody>
 </table>
+{% endif%}
 
-<p>Les autres orgas ont &eacute;t&eacute; correctement import&eacute; dans la base <br />
-	Veuillez les valider pour pouvoir les affecter.
-</p>
+
     
 {% endblock %}

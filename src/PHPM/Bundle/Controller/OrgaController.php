@@ -290,7 +290,17 @@ class OrgaController extends Controller
 		// Gerer l'import du json
 		$em = $this->getDoctrine()->getEntityManager();
 		//$url = "inscriptionOrgas.json";	
-		$url = 'http://127.0.0.1:8888/inscriptionOrgas.json';		
+		$url = 'http://127.0.0.1:8888/inscriptionOrgas.json';	
+		
+						
+		if(!empty($_POST["pathJson"]))
+		{
+			$url=$_POST["pathJson"];	
+
+		
+		
+		
+			
 		$json = file_get_contents($url);
 		
 		$listeOrgaArray = json_decode($json,TRUE);
@@ -343,6 +353,14 @@ class OrgaController extends Controller
 				}
 		
 		return array("errors" => $validationErrors);
+		}
+		else 
+		{
+		$validationErrors = array();
+		return array("errors"=> $validationErrors);
+	
+		}
+
 	}
 	
 
