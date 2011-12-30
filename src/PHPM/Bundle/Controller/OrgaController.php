@@ -295,8 +295,10 @@ class OrgaController extends Controller
 		{
 			$url=$_POST["pathJson"];	
 		
-		
+		$listeOrgaArray = array();
 		$listeOrgaArray = $traitementOrga->getFichier($url);	
+		
+
 			
 		$validationErrors = array();
  	
