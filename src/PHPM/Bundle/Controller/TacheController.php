@@ -200,22 +200,17 @@ class TacheController extends Controller
      */
     public function deleteAction($id)
     {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
+        
             $em = $this->getDoctrine()->getEntityManager();
             $entity = $em->getRepository('PHPMBundle:Tache')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Tache entity.');
             }
-
+			
             $em->remove($entity);
             $em->flush();
-        }
+        
 
         return $this->redirect($this->generateUrl('tache'));
     }

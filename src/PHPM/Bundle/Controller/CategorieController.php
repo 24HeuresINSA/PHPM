@@ -196,12 +196,7 @@ class CategorieController extends Controller
      */
     public function deleteAction($id)
     {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
+        
             $em = $this->getDoctrine()->getEntityManager();
             $entity = $em->getRepository('PHPMBundle:Categorie')->find($id);
 
@@ -211,7 +206,7 @@ class CategorieController extends Controller
 
             $em->remove($entity);
             $em->flush();
-        }
+        
 
         return $this->redirect($this->generateUrl('categorie'));
     }
