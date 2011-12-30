@@ -73,5 +73,9 @@ CalendarView.prototype = {
 		}
 	
 		_html += '</div></form>';
+		
+		$('#boutons_plage').html(_html);
+		
+		$("#radio").buttonset(); //jQuery goodness
 	}
 }
