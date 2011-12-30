@@ -233,9 +233,10 @@ class OrgaController extends Controller
    		for ($i = 0; $i < count($_POST["Orga_Valid"]); $i++)
 			{
 				$orgaValide = $em->getRepository('PHPMBundle:Orga')->findOneById($_POST["Orga_Valid"][$i]);	
-				$orgaValide->setStatut(1);	
+				$orgaValide->setStatut(1);
+				$em->persist($orgaValide);
+				$em->flush();	
 			}
-    	//  	echo $_POST["Orga_Valid"][$i] ;
 		}
 
 	
@@ -268,16 +269,6 @@ class OrgaController extends Controller
 				
 				array_push($listeOrgaARetourne,$orgaTemporaire);
 			}
-		 
-		// mettre array avec nom, prenom, email, nbheures, portable, checkbox 
-		
-			/*
-			
-			echo ("<pre>");
-			var_dump($listeOrgaARetourne);
-			echo("</pre>");	
-			*/
-			
 
 		$entities = $listeOrgaARetourne;	
 		
@@ -298,7 +289,18 @@ class OrgaController extends Controller
 	{
 		// Gerer l'import du json
 		$em = $this->getDoctrine()->getEntityManager();
-		$url = "inscriptionOrgas.json";			
+		//$url = "inscriptionOrgas.json";	
+		$url = 'http://127.0.0.1:8888/inscriptionOrgas.json';	
+		
+						
+		if(!empty($_POST["pathJson"]))
+		{
+			$url=$_POST["pathJson"];	
+
+		
+		
+		
+			
 		$json = file_get_contents($url);
 		
 		$listeOrgaArray = json_decode($json,TRUE);
@@ -351,6 +353,14 @@ class OrgaController extends Controller
 				}
 		
 		return array("errors" => $validationErrors);
+		}
+		else 
+		{
+		$validationErrors = array();
+		return array("errors"=> $validationErrors);
+	
+		}
+
 	}
 	
 
@@ -363,14 +373,15 @@ class OrgaController extends Controller
 	public function planningAction($id)	
 	{
 		$em = $this->getDoctrine()->getEntityManager();
-		$entity = $em->getRepository('PHPMBundle:Orga')->find($id);
 		
-		if (!$entity) {
+		$orga = $em->getRepository('PHPMBundle:Orga')->find($id);
+		$CreneauxParJour = $em->getRepository('PHPMBundle:Creneau')->getCreneauxParJour($orga);
+		exit(var_dump($CreneauxParJour));
+		if (!$orga) {
 			throw $this->createNotFoundException('Unable to find Orga entity.');
 		}
 		else {
-			/*$creneaux = $em->getRepository('PHPMBundle:Creneau')->findAllOrgaCreneaux($entity);*/
-       	 	return array('entity' => $entity);
+       	 	return array('orga' => $orga,'creneauxParJour' => $CreneauxParJour );
 			}
 	}
 	

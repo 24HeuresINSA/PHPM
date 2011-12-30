@@ -8,6 +8,8 @@
 {% endblock %}
 
 {% block content %}
+
+{% if entities%}
 <table class="records_list">
     <thead>
         <tr>
@@ -49,5 +51,11 @@
     </form> 
    
 	<p>	Veuillez les valider pour pouvoir les affecter. </p>
+{% else%}
+<p> Aucun orga &agrave; ajouter ! </p>
+
+	
+{% endif %}
+
     
 {% endblock %}
