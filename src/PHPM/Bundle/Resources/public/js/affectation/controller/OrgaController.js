@@ -38,9 +38,11 @@ OrgaController.prototype = {
 	 * Handlers
 	 */
 	// clic sur un orga
-	click: function(idOrga) {
-		console.log(idOrga);
+	click: function(obj) {
+		console.log(obj);
 
+		pmAffectation.current.orga = Object.data.id;
+		pmUtils.setUrlParam(); // maj de l'url
 	},
 
 }
