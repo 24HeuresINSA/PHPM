@@ -5,6 +5,11 @@ namespace PHPM\Bundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\Config\FileLocator;
+
 /**
  * This is the class that validates and merges configuration from your app/config files
  *
@@ -27,3 +32,18 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 }
+
+class quartHeureValidator extends Extension
+{
+    public function load(array $configs, ContainerBuilder $container) {
+        // create a yaml file loader in the Resources/config/ folder
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        // load the services.yml file
+        $loader->load('services.yml');
+    }
+
+    public function getAlias() {
+        return 'validator.quartHeure';
+    }
+}
+

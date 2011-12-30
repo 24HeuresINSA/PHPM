@@ -1,2 +1,9 @@
 parameters:
- 
+    my.validator.quartHeure.class:      MyApp\MyBundle\Validator\quartHeureValidator
+
+services:
+    my.validator.quartHeure:
+       class:      %my.validator.unique.class%
+       arguments: [@doctrine.orm.entity_manager]
+       tags:
+            - { name: validator.quartHeure_validator, alias: validator.quartHeure } 
