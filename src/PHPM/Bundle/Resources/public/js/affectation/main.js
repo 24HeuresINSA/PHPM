@@ -32,6 +32,7 @@
  */
 	// les urls sur lesquelles on fera les requêtes
 	pmAffectation.paths.plages = 'config/get/manifestation.plages';
+	pmAffectation.paths.orgas = 'orga/basicquery.json';
 	
 /*
  * Lancement
@@ -50,5 +51,7 @@ $(document).ready(function() {
 	pmAffectation.controllers.calendar = new CalendarController();
 	pmAffectation.controllers.calendar.getData();
 	
-	// 3 : mettre en place les éléments
+	// 3 : on va chercher pour la colonne orgas
+	pmAffectation.controllers.orga = new OrgaController();
+	pmAffectation.controllers.orga.getData();
 });
