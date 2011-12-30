@@ -12,4 +12,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class OrgaRepository extends EntityRepository
 {
+	public function getOrgasWithCriteria($string)
+	{
+	
+		$qb = $this->getEntityManager()->createQueryBuilder();
+		
+		$qb->select('Orga')
+		->from('PHPMBundle:Orga');
+		
+		if(isset($permis))
+		{
+			$qb->where($qb->expr()->eq($permis));
+		}
+		
+		
+		return $qb->getQuery()->getResult();
+		
+		
+	}
+	
 }
