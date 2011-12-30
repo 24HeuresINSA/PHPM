@@ -13,7 +13,19 @@ body {
 	padding: 0;
 	width: 100%;
 }
+.menu_action {
+	display: none;
+}
 
+/*
+ * Menu du haut
+ */
+.menu_calendar {
+	width: 100%;
+	padding: 10px 40px;
+	border-bottom: 1px solid #666;
+	margin: 0 0 20px 0;
+}
 
 /*
  * Barre latérale gauche
@@ -88,7 +100,7 @@ body {
 .heure:nth-of-type(1) {
 	margin-top: 30px;
 }
-.heure:nth-of-type(odd) {
+.heure:nth-of-type(even) {
 	background: #f6f6f6;
 }
 .heure:last-of-type {

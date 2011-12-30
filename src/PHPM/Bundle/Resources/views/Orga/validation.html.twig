@@ -15,26 +15,27 @@
             <th>Prenom</th>
             <th>Telephone</th>
             <th>Email</th>
-            <th>Datedenaissance</th>
+            <th>Disponibilit&eacute;</th>
+            <th>Temps dispo</th>
             <th>Commentaire</th>
-            <th>Nombre heures orga</th>
             <th>Validation</th>
         </tr>
     </thead>
     <tbody>
-    {% for entity in errors %}
+    <form action="">
+    {% for entity in entities %}
         <tr>           
-            <td>{{ entity.orga.nom }}</td>
-            <td>{{ entity.orga.prenom }}</td>
-            <td>{{ entity.orga.telephone }}</td>
-            <td>{{ entity.orga.email }}</td>
-            <td>{{ entity.orga.commentaire }}</td>
-            <td>Nombre heures orga</td>
-            <td></td>
-
-            </td>
+            <td>{{ entity['nom'] }}</td>
+            <td>{{ entity['prenom'] }}</td>
+            <td>{{ entity['telephone'] }}</td>
+            <td>{{ entity['email'] }}</td>
+            <td>{{ entity['disponibilite']}}</td>
+            <td>{{ entity['tempsDisponibleTotal']}}</td>
+            <td>{{ entity['commentaire']}}</td>
+            <td> <input type="checkbox" name="{{ entity['id']}}" value="{{ entity['id']}}" checked/> Valider </td>
         </tr>
     {% endfor %}
+    </form> </td>
     </tbody>
 </table>
 

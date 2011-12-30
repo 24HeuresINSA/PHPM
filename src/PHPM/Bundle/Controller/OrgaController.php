@@ -190,7 +190,7 @@ class OrgaController extends Controller
      * Deletes a Orga entity.
      *
      * @Route("/{id}/delete", name="orga_delete")
-     * @Method("post")
+     * 
      */
     public function deleteAction($id)
     {
@@ -221,7 +221,7 @@ class OrgaController extends Controller
      * Import Orgas from website.
      *
      * @Route("/validation", name="orga_validation")
-     * 
+     * @Template
      */
 	public function validationAction()	
 	{
@@ -230,19 +230,45 @@ class OrgaController extends Controller
 		
 		$listeOrgaARetourne = array();
 		
+		foreach ($orgaAValider as $key)
+			{
+				$tempsDisponibiliteTotal = 0;				
+				$dispoOrga = $em->getRepository('PHPMBundle:Disponibilite')->findByOrga($key->getId());
+				$dispoAAfficher = array();
+				foreach ($dispoOrga as $orgaDispo) 
+					{
+						$dispoDebut = $orgaDispo->getdebut()->getTimestamp();			
+						$dispoFin = $orgaDispo->getfin()->getTimestamp();
+
+						$tempsDisponibiliteTotal += $dispoFin - $dispoDebut;
+						$dispoDebut = date ('D j H i s', $dispoDebut);						
+						$dispoFin = date ('D j H i s', $dispoFin);	
+						$dispoTemporaire = array($dispoDebut, $dispoFin);
+									
+						array_push($dispoAAfficher, $dispoTemporaire);
+					}
+					
+				
+				 $tempsDisponibiliteTotal = $tempsDisponibiliteTotal/3600;
+				 
+				$orgaTemporaire = array('id'=> $key->getid(), 'nom' => $key->getnom(),'prenom' => $key->getprenom(), 'email'=> $key->getemail(),'telephone' => $key->gettelephone(), 'disponibilite' => $dispoAAfficher,'tempsDisponibleTotal' => $tempsDisponibiliteTotal, 'commentaire' => $key->getcommentaire() , 'checkbox'=>'checkbox');
+				
+				array_push($listeOrgaARetourne,$orgaTemporaire);
+			}
+		 
 		// mettre array avec nom, prenom, email, nbheures, portable, checkbox 
 		
-		
-		
-			/*
-			foreach ($orgaAValider as $orga) 
-			{
+			
+			
 			echo ("<pre>");
-			var_dump($orgaAValider);
-			echo("</pre>");		
-			}
-	*/
-		return array();
+			var_dump($listeOrgaARetourne);
+			echo("</pre>");	
+			
+			
+
+		$entities = $listeOrgaARetourne;	
+		
+		return array("entities" => $entities );
 	}
 
 
@@ -314,4 +340,47 @@ class OrgaController extends Controller
 		return array("errors" => $validationErrors);
 	}
 	
+
+	 /**
+     * Planning Orgas from website.
+     *
+     * @Route("/{id}/planning", name="orga_planning")
+     * @Template
+     */
+	public function planningAction($id)	
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$entity = $em->getRepository('PHPMBundle:Orga')->find($id);
+		
+		if (!$entity) {
+			throw $this->createNotFoundException('Unable to find Orga entity.');
+		}
+		else {
+			/*$creneaux = $em->getRepository('PHPMBundle:Creneau')->findAllOrgaCreneaux($entity);*/
+       	 	return array('entity' => $entity);
+			}
+	}
+	
+	/**
+	* Lists all Orga entities.
+	*
+	* @Route("/{permis}/query.json", name="orga_query_json")
+	* 
+	*/
+	public function queryJsonAction($permis)
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+	
+		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis);
+	
+		//exit(var_dump($entities));
+		$response = new Response();
+		$orga=$entities[0];
+    	$response->setContent(json_encode($orga->toArray()));
+		
+    	
+    
+    	return $response;
+	}
+		
 }

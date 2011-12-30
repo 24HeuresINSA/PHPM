@@ -6,19 +6,17 @@
 
 {% block style %}
 	{{ parent() }}
-	{% stylesheets 
-		'@PHPMBundle/Resources/public/css/affectation.css'
-		'@PHPMBundle/Resources/public/css/jquery-ui/themes/smoothness/jquery-ui-1.8.16.custom.css'
-		filter='cssrewrite'
-	 %}
-		<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-	{% endstylesheets %}
+
+	{# on inclue manuellement cette feuille de style qu'Assetic ne nous casse pas les liens des images #}
+	<link rel="stylesheet" href="{{ asset('bundles/phpm/css/jquery-ui/themes/smoothness/jquery-ui-1.8.16.custom.css') }}" type="text/css" />
+	<link rel="stylesheet/less" href="{{ asset('bundles/phpm/css/affectation.less') }}" type="text/css" />
 {% endblock %}
 
 {% block javascript %}
 	{{ parent() }}
 	{# attention dans les include Javascript l'ordre compte ! #}
 	{% javascripts
+		'@PHPMBundle/Resources/public/js/lib/less.min.js'
 		'@PHPMBundle/Resources/public/js/lib/jquery-ui.min.js'
 		'@PHPMBundle/Resources/public/js/affectation/util/*'
 		'@PHPMBundle/Resources/public/js/affectation/model/*'
@@ -31,6 +29,10 @@
 {% endblock %}
 
 {% block content %}
+	<div class="menu_calendar" id ="menu_calendar">
+		<div class="boutons_plage" id="boutons_plage"></div>
+	</div>
+	
 	<div class="sidebar_orga" id ="sidebar_orga">
 		Ici aussi on peut avoir du contenu
 	</div>
