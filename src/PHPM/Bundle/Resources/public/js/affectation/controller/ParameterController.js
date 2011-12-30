@@ -17,8 +17,7 @@ ParameterController.prototype = {
 		pmAffectation.models.parameter = new ParameterModel(); // création du modèle
 		
 		// récupère d'éventuels paramètres de localStorage et les applique
-		this.getLocalStorageParams();
-		
+		this.getLocalStorageParams();		
 	},
 	
 	/*
@@ -55,6 +54,8 @@ ParameterController.prototype = {
 			
 			$('#sidebar_tache').width(_ssTache);
 		}
+		
+		pmUtils.resizeTitres();
 	}
 	
 }

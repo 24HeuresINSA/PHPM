@@ -64,7 +64,12 @@ PmUtils.prototype = {
 		pmUtils.setPourcentWidth('#sidebar_orga');
 		pmUtils.setPourcentWidth('#sidebar_tache');
 		
-		$('.titre_date_fixed').width(pmUtils.getPourcentWidth('.titre_date')+'%');// synchro la taille des titres
+		// pour les titres des jours
+		pmUtils.resizeTitres();
+	},
+	//  synchro la taille des titres
+	resizeTitres: function() {
+		$('.titre_date_fixed').width(pmUtils.getPourcentWidth('.titre_date')+'%');
 	},
 	
 	/*
@@ -72,6 +77,9 @@ PmUtils.prototype = {
 	 */
 	hideTopMenu: function() {
 		$('.header').slideToggle(500, 'swing');
+		
+		// corrige le texte
+		($('#bouton_hide_menu').html()==='^ Cacher ^')?$('#bouton_hide_menu').html('&or; Menu &or;'):$('#bouton_hide_menu').html('^ Cacher ^');
 	},
 	
 	/*
