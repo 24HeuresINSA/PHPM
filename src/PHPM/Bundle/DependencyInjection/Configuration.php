@@ -33,13 +33,14 @@ class Configuration implements ConfigurationInterface
     }
 }
 
-class quartHeureValidator extends Extension
+class QuartHeureValidator extends Extension
 {
     public function load(array $configs, ContainerBuilder $container) {
         // create a yaml file loader in the Resources/config/ folder
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         // load the services.yml file
         $loader->load('services.yml');
+		
     }
 
     public function getAlias() {

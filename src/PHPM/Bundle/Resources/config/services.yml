@@ -1,9 +1,10 @@
 parameters:
-    quartHeureValidator.class:      PHPM\Validator\quartHeureValidator
+    my.validator.quartHeure.class:      PHPM\Bundle\Validator\QuartHeureValidator
 
 services:
-    quartHeure:
-       class:      %quartHeureValidator.class%
+    my.validator.quartHeure:
+       class:      %my.validator.quartHeure.class%
        arguments: [@doctrine.orm.entity_manager]
        tags:
             - { name: validator.constraint_validator,, alias: validator.quartHeure } 
+
