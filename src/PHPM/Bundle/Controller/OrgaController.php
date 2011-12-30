@@ -233,7 +233,9 @@ class OrgaController extends Controller
    		for ($i = 0; $i < count($_POST["Orga_Valid"]); $i++)
 			{
 				$orgaValide = $em->getRepository('PHPMBundle:Orga')->findOneById($_POST["Orga_Valid"][$i]);	
-				$orgaValide->setStatut(1);	
+				$orgaValide->setStatut(1);
+				$em->persist($orgaValide);
+				$em->flush();	
 			}
     	//  	echo $_POST["Orga_Valid"][$i] ;
 		}
