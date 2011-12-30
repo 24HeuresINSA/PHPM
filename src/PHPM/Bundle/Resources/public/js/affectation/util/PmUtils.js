@@ -117,7 +117,7 @@ PmUtils.prototype = {
 			var _value = localStorage[uneClef];
 			
 			if (_value !== undefined) {
-				return JSON.parse(_value);
+				return $.parseJSON(_value);
 			} else {
 				return undefined;
 			}

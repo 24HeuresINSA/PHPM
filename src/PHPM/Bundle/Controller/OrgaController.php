@@ -287,23 +287,19 @@ class OrgaController extends Controller
      */
 	public function importAction()	
 	{
-		// Gerer l'import du json
-		$em = $this->getDoctrine()->getEntityManager();
-		//$url = "inscriptionOrgas.json";	
-		$url = 'http://127.0.0.1:8888/inscriptionOrgas.json';	
+		$em = $this->getDoctrine()->getEntityManager();			
 		
-						
+		$traitementOrga = new Orga();
+		
 		if(!empty($_POST["pathJson"]))
 		{
 			$url=$_POST["pathJson"];	
+		
+		$listeOrgaArray = array();
+		$listeOrgaArray = $traitementOrga->getFichier($url);	
+		
 
-		
-		
-		
 			
-		$json = file_get_contents($url);
-		
-		$listeOrgaArray = json_decode($json,TRUE);
 		$validationErrors = array();
  	
 		foreach($listeOrgaArray as  $inscriptionOrga)
@@ -376,7 +372,7 @@ class OrgaController extends Controller
 		
 		$orga = $em->getRepository('PHPMBundle:Orga')->find($id);
 		$CreneauxParJour = $em->getRepository('PHPMBundle:Creneau')->getCreneauxParJour($orga);
-		exit(var_dump($CreneauxParJour));
+		
 		if (!$orga) {
 			throw $this->createNotFoundException('Unable to find Orga entity.');
 		}
