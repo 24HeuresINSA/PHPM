@@ -39,6 +39,9 @@
             
             <td>
             	{{ bouton_edit.bouton_edit( path('orga_edit', { 'id': entity.id }) ) }}
+            	{% image output="images/logo.png" '@PHPMBundle/Resources/public/images/icon_agenda.png' %}
+				<div class="bouton_planning"> <a href="{{path('orga_planning', { 'id': entity.id })}}"><img src="{{ asset_url }}" title="Planning"/></a></div>
+            	{% endimage %}
             </td>
         </tr>
     {% endfor %}
