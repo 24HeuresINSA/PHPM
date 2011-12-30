@@ -355,7 +355,9 @@ class OrgaController extends Controller
 	public function planningAction($id)	
 	{
 		$em = $this->getDoctrine()->getEntityManager();
-		$entity = $em->getRepository('PHPMBundle:Orga')->find($id);
+		$orga = $em->getRepository('PHPMBundle:Orga')->find($id);
+		
+		$entity = $em->getRepository('PHPMBundle:Creneau')->getCreneauxParJour($orga);
 		
 		if (!$entity) {
 			throw $this->createNotFoundException('Unable to find Orga entity.');
