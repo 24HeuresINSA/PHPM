@@ -221,7 +221,7 @@ class OrgaController extends Controller
      * Import Orgas from website.
      *
      * @Route("/validation", name="orga_validation")
-     * 
+     * @Template
      */
 	public function validationAction()	
 	{

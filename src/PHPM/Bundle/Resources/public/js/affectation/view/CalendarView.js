@@ -69,7 +69,8 @@ CalendarView.prototype = {
 		var _html = '<form><div id="radio">';
 		
 		for (unePlage in pmAffectation.data.calendar.plage) {
-			_html += '<input type="radio" id="radio_'+unePlage+'" name="radio" /><label for="radio_'+unePlage+'">'+pmAffectation.data.calendar.plage[unePlage]['nom']+'</label>';
+			_html += '<input type="radio" id="radio_'+unePlage+'" name="radio" onclick="pmAffectation.controllers.calendar.changePlage('+unePlage+')"" />';
+			_html += '<label for="radio_'+unePlage+'">'+pmAffectation.data.calendar.plage[unePlage]['nom']+'</label>';
 		}
 	
 		_html += '</div></form>';
