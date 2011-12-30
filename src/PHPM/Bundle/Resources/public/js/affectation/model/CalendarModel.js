@@ -18,12 +18,21 @@ CalendarModel.prototype = {
 	/*
 	 * Lance les requêtes
 	 */
-	getData: function() {
-		//  TODO lance les requêtes Ajax
+	getData: function(callBack) {
 		console.log('lance les requêtes... 2');
 		
-		// Mock code
-		pmAffectation.controllers.calendar.callbackPlages();
+		this.callBack = callBack;
+		
+		$.getJSON(pmAffectation.url+pmAffectation.paths.plages, this.requestSuccess);
+	},
+	
+	/*
+	 * Récup les résultats
+	 */
+	requestSuccess: function(data) {
+		console.log(data);
+		
+		this.callback();
 	},
 	
 	/*
