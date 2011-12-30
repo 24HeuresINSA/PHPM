@@ -22,25 +22,32 @@
         </tr>
     </thead>
     <tbody>
-    <form action="">
+    <form method="POST" >
     {% for entity in entities %}
         <tr>           
             <td>{{ entity['nom'] }}</td>
             <td>{{ entity['prenom'] }}</td>
             <td>{{ entity['telephone'] }}</td>
             <td>{{ entity['email'] }}</td>
-            <td>{{ entity['disponibilite']}}</td>
+            <td>
+            	<ul>
+            		{% for dispo in entity['disponibilite'] %}
+            			<li>{{ dispo[0] }} -- {{ dispo[1] }}</li>
+            		{% endfor %}
+            	</ul>
+            </td>
+
             <td>{{ entity['tempsDisponibleTotal']}}</td>
             <td>{{ entity['commentaire']}}</td>
-            <td> <input type="checkbox" name="{{ entity['id']}}" value="{{ entity['id']}}" checked/> Valider </td>
+            <td> <input type="checkbox" name="Orga_Valid[]" value="{{ entity['id']}}" checked/> Valider </td>
         </tr>
     {% endfor %}
-    </form> </td>
     </tbody>
 </table>
 
-<p>Les autres orgas ont &eacute;t&eacute; correctement import&eacute; dans la base <br />
-	Veuillez les valider pour pouvoir les affecter.
-</p>
+    <input type="Submit" value="Valider">
+    </form> 
+   
+	<p>	Veuillez les valider pour pouvoir les affecter. </p>
     
 {% endblock %}

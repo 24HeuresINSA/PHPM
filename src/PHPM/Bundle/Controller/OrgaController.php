@@ -225,6 +225,12 @@ class OrgaController extends Controller
      */
 	public function validationAction()	
 	{
+		if(!empty($_POST["Orga_Valid"])) {
+
+   		for ($i = 0; $i < count($_POST["Orga_Valid"]); $i++)
+    	  	echo $_POST["Orga_Valid"][$i] ;
+		}
+
 		$em = $this->getDoctrine()->getEntityManager();	
 		$orgaAValider = $em->getRepository('PHPMBundle:Orga')->findByStatut(0);
 		
@@ -258,12 +264,12 @@ class OrgaController extends Controller
 		 
 		// mettre array avec nom, prenom, email, nbheures, portable, checkbox 
 		
-			
+			/*
 			
 			echo ("<pre>");
 			var_dump($listeOrgaARetourne);
 			echo("</pre>");	
-			
+			*/
 			
 
 		$entities = $listeOrgaARetourne;	
