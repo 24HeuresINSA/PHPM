@@ -28,7 +28,7 @@
  * Effectif que quand le document est prêt
  */
 $(document).ready(function() {
-	// 0 : setter le layout, rendre les sidebars resizeables
+	// 0 : setter le layout
 	pmUtils.setResizeableSidebars();
 	
 	// 1 : lancer les requêtes pour les paramètres
@@ -41,4 +41,3 @@ $(document).ready(function() {
 	
 	// 3 : mettre en place les éléments
 });
-	
