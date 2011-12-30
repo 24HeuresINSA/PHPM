@@ -237,7 +237,6 @@ class OrgaController extends Controller
 				$em->persist($orgaValide);
 				$em->flush();	
 			}
-    	//  	echo $_POST["Orga_Valid"][$i] ;
 		}
 
 	
@@ -270,16 +269,6 @@ class OrgaController extends Controller
 				
 				array_push($listeOrgaARetourne,$orgaTemporaire);
 			}
-		 
-		// mettre array avec nom, prenom, email, nbheures, portable, checkbox 
-		
-			/*
-			
-			echo ("<pre>");
-			var_dump($listeOrgaARetourne);
-			echo("</pre>");	
-			*/
-			
 
 		$entities = $listeOrgaARetourne;	
 		
@@ -300,7 +289,8 @@ class OrgaController extends Controller
 	{
 		// Gerer l'import du json
 		$em = $this->getDoctrine()->getEntityManager();
-		$url = "inscriptionOrgas.json";			
+		//$url = "inscriptionOrgas.json";	
+		$url = 'http://127.0.0.1:8888/inscriptionOrgas.json';		
 		$json = file_get_contents($url);
 		
 		$listeOrgaArray = json_decode($json,TRUE);

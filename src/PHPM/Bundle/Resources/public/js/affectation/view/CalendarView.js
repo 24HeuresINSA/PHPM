@@ -38,6 +38,8 @@ CalendarView.prototype = {
 			$('#calendar').append(this.makeADay(_date.getDate()+'/'+Number(_date.getMonth()+1), _date.getDay(), _nbJours));
 		}
 		
+		pmUtils.resizeTitres(); // synchro la taille des titres
+		
 		if (Object.keys(pmAffectation.data.calendar.plage).length != 0) {
 			this.setBoutonsPlage();
 		}
@@ -45,7 +47,7 @@ CalendarView.prototype = {
 	// fabrique un jour
 	makeADay: function(date, day, nbJours) {
 		var _html = '<div class="jour" id="jour_'+date+'" date="'+date+'" style="width: '+94/nbJours+'%;">'; // -1% because of borders, -5% pour les heures
-		_html += '<div class="titre_date_fixed" style="width: '+0.6*94/nbJours+'%;">'+pmUtils.jours[day]+' '+date+'</div>';  // pour un positionnement fixe, la largeur se calcule par rapport à l'écran
+		_html += '<div class="titre_date_fixed">'+pmUtils.jours[day]+' '+date+'</div>';
 		_html += '<div class="titre_date">'+pmUtils.jours[day]+' '+date+'</div>'; // celui-ci reste toujours en haut
 		
 		// fixe la barre avec les dates en haut lors du scroll
