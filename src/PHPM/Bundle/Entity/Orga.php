@@ -382,6 +382,7 @@ class Orga
     	 
     	 
     	return array(
+    		"id" => $this->getId(),
     	    "importid" => $this->getImportId(),
     		"statut" => $this->getStatut(),
         	"nom" => $this->getNom(),

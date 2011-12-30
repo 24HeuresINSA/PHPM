@@ -19,7 +19,7 @@ class OrgaRepository extends EntityRepository
 		$qb = $this->getEntityManager()->createQueryBuilder();
 		$expr = $qb->expr();
 		$qb
-		->select('ct,o')
+		->select('o,ct')
 		
 		->from('PHPMBundle:Orga','o')
 		
@@ -55,11 +55,11 @@ class OrgaRepository extends EntityRepository
 		
 		//'(((ci.debut<p.debut)OR(ci.fin > p.fin))OR((ci.debut >= p.fin)OR(ci.fin <= p.debut)))', //PLAGE
 		//'( (ci.debut < co.fin) AND (ci.fin > co.debut ) )',
-		'ct.id NOT IN (SELECT ci.id FROM PHPMBundle:Creneau ci , PHPMBundle:Creneau co2
+		'ct.id NOT IN (SELECT ci.id FROM PHPMBundle:Creneau ci 
 		WHERE 
-		d.orga <> o AND
-		( (ci.debut < co2.fin) AND (ci.fin > co2.debut ) )
-		AND
+		
+		( (ci.debut < co.fin) AND (ci.fin > co.debut ) )
+		OR
 		(((ci.debut<p.debut)OR(ci.fin > p.fin))OR((ci.debut >= p.fin)OR(ci.fin <= p.debut)))
 		
 		)'

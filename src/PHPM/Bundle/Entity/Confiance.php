@@ -180,6 +180,6 @@ class Confiance
     
     public function toArray()
     {
-    	return array("nom" => $this->getNom(),"couleur" => $this->getCouleur());
+    	return array("id" => $this->getId(),"nom" => $this->getNom(),"couleur" => $this->getCouleur());
     }
 }

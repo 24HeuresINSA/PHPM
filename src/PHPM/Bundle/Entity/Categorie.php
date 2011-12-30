@@ -97,6 +97,6 @@ class Categorie
     
     public function toArray()
     {
-    	return array("nom" => $this->getNom());
+    	return array("id" => $this->getId(),"nom" => $this->getNom());
     }
 }
