@@ -341,4 +341,55 @@ class TacheController extends Controller
 	return array();
 	}
 	
+	/**
+	* Lists all Tache entities.
+	*
+	* @Route("/query.json", name="tache_query_json")
+	* @Method("post")
+	*/
+	public function queryJsonAction()
+	{
+		$request = $this->getRequest();
+		
+		
+		
+		
+		$duree= $request->request->get('duree', '');
+		$categorie= $request->request->get('categorie_id', '');
+		$permis= $request->request->get('permisNecessaire', '');
+		$age= $request->request->get('ageNecessaire', '');
+		$id_orga= $request->request->get('id_orga', '');
+		$id_plage= $request->request->get('id_plage', '');
+		$niveau_confiance= $request->request->get('confiance_id', '');
+	
+		
+		//exit(var_dump($request));
+	
+		$em = $this->getDoctrine()->getEntityManager();
+	
+		$entities = $em->getRepository('PHPMBundle:Tache')->getTacheWithCriteria($duree, $categorie, $permis, $age, $id_orga, $id_plage, $niveau_confiance);
+	
+		//exit(var_dump($entities));
+		$response = new Response();
+	
+		$a = array();
+			
+		foreach ($entities as $entity){
+			$a[$entity->getId()] = $entity->toArray();
+	
+		}
+	
+	
+	
+		$response->setContent(json_encode($a));
+	
+	
+		 
+	
+		 
+	
+		return $response;
 	}
+	
+
+}

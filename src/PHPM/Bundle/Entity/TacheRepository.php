@@ -12,4 +12,52 @@ use Doctrine\ORM\EntityRepository;
  */
 class TacheRepository extends EntityRepository
 {
+	
+	public function getTacheWithCriteria($duree, $categorie, $permis, $age, $id_orga, $id_plage, $niveau_confiance)
+	{
+	
+		$qb = $this->getEntityManager()->createQueryBuilder()->select('o')->from('PHPMBundle:Tache','o');
+	
+		$query = $qb->getQuery();
+	
+	
+		if($duree!='')
+		{
+			$qb->where($qb->expr()->lte('o.duree',$duree));
+		}
+		if($categorie !='')
+		{
+			$qb->where($qb->expr()->eq('o.categorie_id',$categorie));
+		}
+		if($permis!='')
+		{
+			$qb->where($qb->expr()->gte('o.permisNecessaire',$permis));
+		}
+		if($age !='')
+		{
+			$qb->where($qb->expr()->gte('o.ageNecessaire',$age));
+		}
+		
+		
+		
+		
+		if($id_orga !='')
+		{
+			$qb->where($qb->expr()->eq('o.id_orga',$id_orga));
+		}
+		if($id_plage !='')
+		{
+			$qb->where($qb->expr()->eq('o.id_plage',$id_plage));
+		}
+		if($niveau_confiance !='')
+		{
+			$qb->where($qb->expr()->gte('o.confiance_id',$niveau_confiance));
+		}
+	
+		return $qb->getQuery()->getResult();
+	
+	
+	}
+	
+	
 }
