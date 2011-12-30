@@ -39,9 +39,10 @@ OrgaController.prototype = {
 	 */
 	// clic sur un orga
 	click: function(obj) {
-		console.log(obj);
+		$("#orga_"+pmAffectation.current.orga).removeClass('current');
+		$("#orga_"+obj.data.id).addClass('current');
 
-		pmAffectation.current.orga = Object.data.id;
+		pmAffectation.current.orga = obj.data.id;
 		pmUtils.setUrlParam(); // maj de l'url
 	},
 

@@ -40,7 +40,7 @@
  * Effectif que quand le document est prêt
  */
 $(document).ready(function() {	
-	// 0 : setter le layout et récupérer les paramètres dans l'Url'
+	// 0 : setter le layout et récupérer les paramètres dans l'Url
 	pmUtils.setResizeableSidebars();
 	pmUtils.parseUrlParam();
 	

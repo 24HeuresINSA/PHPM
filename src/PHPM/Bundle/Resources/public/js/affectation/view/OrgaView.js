@@ -12,6 +12,15 @@ OrgaView.prototype = {
 	 * Constructeur
 	 */
 	initialize: function() {
+		// boutons pour changer d'orga
+		$('#boutons_orga_prev').button({
+			icons: {primary: 'ui-icon-triangle-1-w'},
+			text: false
+		}).click(function() { $('#orga_'+pmAffectation.current.orga).prev().click(); });
+		$('#boutons_orga_next').button({
+			icons: {primary: 'ui-icon-triangle-1-e'},
+			text: false
+		}).click(function() { $('#orga_'+pmAffectation.current.orga).next().click(); });
 	},
 	
 	/*
@@ -30,6 +39,8 @@ OrgaView.prototype = {
 			
 			$('#orga_'+_iOrga).bind('click', {id: _iOrga}, pmAffectation.controllers.orga.click); // handler de click
 		}
+		
+		$("#orga_"+pmAffectation.current.orga).addClass('current'); // met le focus là où il faut
 	}
 	
 }
