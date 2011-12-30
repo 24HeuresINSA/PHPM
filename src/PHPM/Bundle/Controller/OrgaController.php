@@ -397,7 +397,7 @@ class OrgaController extends Controller
 		
 		$permis= $request->request->get('permis', '');
 		$age= $request->request->get('age', '');
-		$id_tache= $request->request->get('id_tache', '');
+		$id_tache= $request->request->get('tache_id', '');
 		$id_plage= $request->request->get('id_plage', '');
 		$niveau_confiance= $request->request->get('confiance_id', '');
 		$maxDateNaissance = new \DateTime();
@@ -420,7 +420,7 @@ class OrgaController extends Controller
 		
 		
 		
-			$response->setContent(json_encode($a));
+			$response->setContent('<html><body>'.var_dump($a).'</body></html>');
 		
 		//$orga=$entities[0];
     	
