@@ -3,7 +3,7 @@
 namespace PHPM\Bundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-
+use PHPM\Bundle\Entity\Orga;
 /**
  * OrgaRepository
  *
@@ -12,21 +12,21 @@ use Doctrine\ORM\EntityRepository;
  */
 class OrgaRepository extends EntityRepository
 {
-	public function getOrgasWithCriteria($string)
+	public function getOrgasWithCriteria($permis)
 	{
 	
-		$qb = $this->getEntityManager()->createQueryBuilder();
+		$qb = $this->getEntityManager()->createQueryBuilder()->select('o')->from('PHPMBundle:Orga','o');
 		
-		$qb->select('Orga')
-		->from('PHPMBundle:Orga');
+		$query = $qb->getQuery();
+		
+		//exit(var_dump($qb->getQuery()->getResult()));
+		
 		
 		if(isset($permis))
 		{
-			$qb->where($qb->expr()->eq($permis));
+			$qb->where($qb->expr()->eq('o.permis',$permis));
 		}
-		
-		
-		return $qb->getQuery()->getResult();
+	
 		
 		
 	}

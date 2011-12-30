@@ -249,9 +249,9 @@ class OrgaController extends Controller
 					}
 					
 				
+				 $tempsDisponibiliteTotal = $tempsDisponibiliteTotal/3600;
 				 
-				 
-				$orgaTemporaire = array('idOrga'=> $key->getid(), 'nom' => $key->getnom(),'prenom' => $key->getprenom(), 'email'=> $key->getemail(), 					'telephone' => $key->gettelephone(), 'disponibilite' => $dispoAAfficher,'tempsDisponibleTotal' => 							$tempsDisponibiliteTotal, 'commentaire' => $key->getcommentaire() , 'checkbox'=>'checkbox');
+				$orgaTemporaire = array('id'=> $key->getid(), 'nom' => $key->getnom(),'prenom' => $key->getprenom(), 'email'=> $key->getemail(),'telephone' => $key->gettelephone(), 'disponibilite' => $dispoAAfficher,'tempsDisponibleTotal' => $tempsDisponibiliteTotal, 'commentaire' => $key->getcommentaire() , 'checkbox'=>'checkbox');
 				
 				array_push($listeOrgaARetourne,$orgaTemporaire);
 			}
@@ -359,6 +359,28 @@ class OrgaController extends Controller
 			/*$creneaux = $em->getRepository('PHPMBundle:Creneau')->findAllOrgaCreneaux($entity);*/
        	 	return array('entity' => $entity);
 			}
+	}
+	
+	/**
+	* Lists all Orga entities.
+	*
+	* @Route("/{permis}/query.json", name="orga_query_json")
+	* 
+	*/
+	public function queryJsonAction($permis)
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+	
+		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis);
+	
+		//exit(var_dump($entities));
+		$response = new Response();
+		$orga=$entities[0];
+    	$response->setContent(json_encode($orga->toArray()));
+		
+    	
+    
+    	return $response;
 	}
 		
 }
