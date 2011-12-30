@@ -35,6 +35,7 @@ class Creneau
      *
      * @ORM\Column(name="fin", type="datetime")
      * @Assert\DateTime()
+	 * @Assert\QuartHeure()
      */
     private $fin;
     

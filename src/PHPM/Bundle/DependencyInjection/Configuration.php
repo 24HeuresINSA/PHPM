@@ -43,7 +43,7 @@ class quartHeureValidator extends Extension
     }
 
     public function getAlias() {
-        return 'validator.quartHeure';
+        return 'validator.quartHeureValidator';
     }
 }
 

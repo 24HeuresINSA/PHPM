@@ -16,7 +16,7 @@ class quartHeure extends Constraint
    
     public function validatedBy()
     {
-        return 'validator.quartHeure';
+        return 'validator.quartHeureValidator';
     }
    
     public function requiredOptions()
