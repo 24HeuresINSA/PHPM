@@ -370,14 +370,24 @@ class OrgaController extends Controller
 	/**
 	* Lists all Orga entities.
 	*
-	* @Route("/{permis}/{age}/query.json", name="orga_query_json")
-	* 
+	* @Route("/query.json", name="orga_query_json")
+	* @Method("post")
 	*/
-	public function queryJsonAction($permis)
+	public function queryJsonAction()
 	{
+		$request = $this->getRequest();
+		
+		$permis= $request->request->get('permis', '');
+		$age= $request->request->get('age', '');
+		$id_tache= $request->request->get('id_tache', '');
+		$id_plage= $request->request->get('id_plage', '');
+		$niveau_confiance= $request->request->get('niveau_confiance', '');
+		
+		//exit(var_dump($request));
+		
 		$em = $this->getDoctrine()->getEntityManager();
-	
-		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis);
+		
+		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $age, $id_tache, $id_plage, $niveau_confiance);
 	
 		//exit(var_dump($entities));
 		$response = new Response();
