@@ -230,19 +230,47 @@ class OrgaController extends Controller
 		
 		$listeOrgaARetourne = array();
 		
+		foreach ($orgaAValider as $key)
+			{
+				$tempsDisponibiliteTotal = 0;				
+				$dispoOrga = $em->getRepository('PHPMBundle:Disponibilite')->findByOrga($key->getId());
+				$dispoAAfficher = array();
+				foreach ($dispoOrga as $orgaDispo) 
+					{
+						$dispoDebut = $orgaDispo->getdebut()->getTimestamp();			
+						$dispoFin = $orgaDispo->getfin()->getTimestamp();
+						$dispoTemporaire = array($dispoDebut, $dispoFin);
+						
+						$tempsDisponibiliteTotal += $dispoFin - $dispoDebut;
+						
+						echo ("<pre>");
+						var_dump($dispoTemporaire);
+						echo("</pre>");	
+									
+						array_push($dispoAAfficher, $dispoTemporaire);
+					}
+				
+
+				 
+				 
+				$orgaTemporaire = array($key->getnom(), $key->getprenom(), $key->getemail(), $key->gettelephone(), $dispoAAfficher, $tempsDisponibiliteTotal, 'checkbox');
+				
+				array_push($listeOrgaARetourne,$orgaTemporaire);
+			}
+		 
 		// mettre array avec nom, prenom, email, nbheures, portable, checkbox 
 		
-		
-		
-			/*
-			foreach ($orgaAValider as $orga) 
-			{
-			echo ("<pre>");
-			var_dump($orgaAValider);
-			echo("</pre>");		
-			}
-	*/
-		return array();
+			
+			
+						echo ("<pre>");
+			var_dump($listeOrgaARetourne);
+			echo("</pre>");	
+			
+			
+
+			
+	
+		return $listeOrgaARetourne;
 	}
 
 
