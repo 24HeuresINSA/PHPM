@@ -45,15 +45,26 @@ CalendarView.prototype = {
 	// fabrique un jour
 	makeADay: function(date, day, nbJours) {
 		var _html = '<div class="jour" id="jour_'+date+'" date="'+date+'" style="width: '+94/nbJours+'%;">'; // -1% because of borders, -5% pour les heures
-		_html += '<div class="titre_date_fixed" style="width: '+0.6*94/nbJours+'%;">'+jours[day]+' '+date+'</div>';  // pour un positionnement fixe, la largeur se calcule par rapport à l'écran
-		_html += '<div class="titre_date">'+jours[day]+' '+date+'</div>'; // celui-ci reste toujours en haut
+		_html += '<div class="titre_date_fixed" style="width: '+0.6*94/nbJours+'%;">'+pmUtils.jours[day]+' '+date+'</div>';  // pour un positionnement fixe, la largeur se calcule par rapport à l'écran
+		_html += '<div class="titre_date">'+pmUtils.jours[day]+' '+date+'</div>'; // celui-ci reste toujours en haut
+		
+		// fixe la barre avec les dates en haut lors du scroll
+		$(window).scroll(function() {
+			if ($(window).scrollTop() > 0 && $(window).scrollTop() > $('.titre_date').position().top) {
+				$('.titre_date_fixed').css('top', '0');
+			} else if ($(window).scrollTop() > 0) {
+				$('.titre_date_fixed').css('top', Number($('.titre_date').position().top-$(window).scrollTop())+'px');
+			} else {
+				$('.titre_date_fixed').css('top', '');
+			}
+		});
 		
 		for (var _i=0;_i<24;_i++) {
 			_html += '<div class="heure" id="heure_'+date+'_'+_i+'h">';
 			
 			for (var _j=0;_j<4;_j++) {
 				var _dts = date+' '+_i+':'+_j*15;
-				_html += '<div class="quart_heure" id="quart_heure_'+date+'_'+_i+'h'+_j*15+'" heure="'+_dts+'" ';
+				_html += '<div class="quart_heure" id="quart_heure_'+date+'_'+_i+'h'+_j*15+':00" heure="'+_dts+'" ';
 				_html += 'onclick="pmAffectation.controllers.calendar.click(\''+_dts+'\')"></div>';
 			}
 			

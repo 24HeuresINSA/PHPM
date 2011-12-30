@@ -17,7 +17,6 @@ CalendarController.prototype = {
 		pmAffectation.views.calendar = new CalendarView();
 	},
 	
-	
 	/*
 	 * Lancement des requêtes
 	 */

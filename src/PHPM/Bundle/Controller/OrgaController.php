@@ -370,7 +370,7 @@ class OrgaController extends Controller
 	/**
 	* Lists all Orga entities.
 	*
-	* @Route("/{permis}/query.json", name="orga_query_json")
+	* @Route("/{permis}/{age}/query.json", name="orga_query_json")
 	* 
 	*/
 	public function queryJsonAction($permis)
@@ -381,8 +381,20 @@ class OrgaController extends Controller
 	
 		//exit(var_dump($entities));
 		$response = new Response();
-		$orga=$entities[0];
-    	$response->setContent(json_encode($orga->toArray()));
+		
+		$a = array();
+		 
+		foreach ($entities as $entity){
+			$a[$entity->getId()] = $entity->toArray();
+		
+		}
+		
+		
+		
+			$response->setContent(json_encode($a));
+		
+		//$orga=$entities[0];
+    	
 		
     	
     
