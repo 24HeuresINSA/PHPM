@@ -19,6 +19,7 @@
 	
 	// infos courantes
 	pmAffectation.current = {};
+	// bien mettre des valeurs par défaut aux paramètres
 	pmAffectation.current.plage = 1; // par défaut on est sur la plage 0
 	
 	// les MVC
