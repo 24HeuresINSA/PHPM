@@ -22,7 +22,7 @@ CalendarView.prototype = {
 		$('#calendar').html('');
 		
 		// calcule le nombre de jours - il faut passer par les TS, +1
-		var _nbJours = (pmAffectation.data.calendar.plage[plage]['jour_fin'].getTime()-pmAffectation.data.calendar.plage[plage]['jour_debut'].getTime())/(24*60*60*1000)+1;
+		var _nbJours = (pmAffectation.data.calendar.plage[plage]['fin'].getTime()-pmAffectation.data.calendar.plage[plage]['debut'].getTime())/(24*60*60*1000)+1;
 		
 		/// 1ère colonne : les heures
 		var _hours = '<div class="hours" id="hours">';
@@ -34,7 +34,7 @@ CalendarView.prototype = {
 		$('#calendar').append(_hours);
 		
 		for (var _i=0;_i<_nbJours;_i++) {
-			var _date = new Date(pmAffectation.data.calendar.plage[plage]['jour_debut'].getTime()+_i*24*60*60*1000);
+			var _date = new Date(pmAffectation.data.calendar.plage[plage]['debut'].getTime()+_i*24*60*60*1000);
 			$('#calendar').append(this.makeADay(_date.getDate()+'/'+Number(_date.getMonth()+1), _date.getDay(), _nbJours));
 		}
 		
@@ -84,9 +84,9 @@ CalendarView.prototype = {
 	setBoutonsPlage: function() {
 		var _html = '<form><div id="radio">';
 		
-		for (unePlage in pmAffectation.data.calendar.plage) {
-			_html += '<input type="radio" id="radio_'+unePlage+'" name="radio" onclick="pmAffectation.controllers.calendar.changePlage('+unePlage+')"" />';
-			_html += '<label for="radio_'+unePlage+'">'+pmAffectation.data.calendar.plage[unePlage]['nom']+'</label>';
+		for (var _unePlage in pmAffectation.data.calendar.plage) {
+			_html += '<input type="radio" id="radio_'+_unePlage+'" name="radio" onclick="pmAffectation.controllers.calendar.changePlage('+_unePlage+')"" />';
+			_html += '<label for="radio_'+_unePlage+'">'+pmAffectation.data.calendar.plage[_unePlage]['nom']+'</label>';
 		}
 	
 		_html += '</div></form>';

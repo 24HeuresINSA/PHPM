@@ -19,33 +19,40 @@ CalendarModel.prototype = {
 	 * Lance les requêtes
 	 */
 	getData: function(callBack) {
-		console.log('lance les requêtes... 2');
+		pmAffectation.models.calendar.callBack = callBack;
 		
-		this.callBack = callBack;
-		
-		$.getJSON(pmAffectation.url+pmAffectation.paths.plages, this.requestSuccess);
+		$.getJSON(pmAffectation.url+pmAffectation.paths.plages, pmAffectation.models.calendar.requestSuccess);
 	},
 	
 	/*
 	 * Récup les résultats
 	 */
-	requestSuccess: function(data) {
-		console.log(data);
+	requestSuccess: function(data, statusText) {
+		if (statusText == "success") {
+			pmAffectation.models.calendar.data = data;
 		
-		this.callback();
+			pmAffectation.models.calendar.callBack();
+		} else {
+			console.error("Impossible de récupérer les plages : ", statusText);
+		}
 	},
 	
 	/*
 	 * Getters des résultats
 	 */
 	// récupère les plages (de jours) définies
-	getPlages: function() {
-		var tab = {
-					'1': {nom: 'pré-manif', jour_debut: new Date('2012-05-23'), jour_fin: new Date('2012-05-26')},
-					'2': {nom: 'manif', jour_debut: new Date('2012-05-27'), jour_fin: new Date('2012-05-28')},
-					'0': {nom: 'postmanif', jour_debut: new Date('2012-05-29'), jour_fin: new Date('2012-05-29')}
-					};
-				
-		return tab;
+	getPlages: function() {	
+		var _plages = {};
+		
+		// on fait des conversions vers des objets time javascript
+		for (unePlage in this.data) {
+			_plages[unePlage] = {
+									nom: this.data[unePlage]["nom"],
+									debut: new Date(this.data[unePlage]["debut"]),
+									fin: new Date(this.data[unePlage]["fin"])
+								};
+		}
+		
+		return _plages;
 	}
 }

@@ -10,7 +10,7 @@
 {% block content %}
 {% import "::macro_nbToDay.html.twig" as nbToDay %}
 
-<h2>Planning de l'orga :</h2>
+<h2>Planning de l'orga : {{ orga.prenom }} {{ orga.nom }}</h2>
 
 <table class="records_list">
     <thead>
@@ -19,7 +19,6 @@
             <th>Nom</th>
             <th>Telephone</th>
             <th>Email</th>
-            <th>Nombre heures orga</th>
         </tr>
     </thead>
     <tbody>
@@ -29,7 +28,6 @@
             <td>{{ orga.nom }}</td>
             <td>{{ orga.telephone }}</td>
             <td>{{ orga.email }}</td>
-            <td>{{ orga.email }}</td>
             </td>
         </tr>
     </tbody>
@@ -37,15 +35,32 @@
 
 {% for jour, jourCreneau in creneauxParJour %}
 	<h3>Jour : {{nbToDay.nbToDay(jour)}}</h3>
-	{%for creneau in jourCreneau %}
-	<ul>
-		<li>
-			<h4>T&acirc;che : {{creneau.plageHoraire.tache}}</h4>
-			<p>{{creneau.plageHoraire.tache.consignes}}</p>
-		</li>
-	</ul>
+
+ 	<table>
+ 		<thead>
+	      <tr>
+        	<th>Nom de la Tache</th>
+            <th>Plage horaire</th>
+            <th>Description</th>
+            <th>Lieu</th>
+            <th>Mat&eacute;riel necessaire</th>
+          </tr>
+        </thead>
+        
+         	{%for creneau in jourCreneau %}
+        <tbody>
+ 	        <tr>    
+            <td>{{ creneau.plageHoraire.tache }}</td>       
+            <td>{{ creneau.plageHoraire }}</td>
+            <td>{{ creneau.plageHoraire.tache.consignes }}</td>
+            <td>{{ creneau.plageHoraire.tache.lieu }}</td>
+            <td>{{ creneau.plageHoraire.tache.materielNecessaire }}</td>
+            </td>
+       	    </tr>
+     
 
 	{% endfor %}
+	</table>
 {% endfor %}
 
 
