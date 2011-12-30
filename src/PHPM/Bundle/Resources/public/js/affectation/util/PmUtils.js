@@ -133,7 +133,7 @@ PmUtils.prototype = {
 	parseUrlParam: function() {
 		// les paramètres vont dans pmAffectation.current
 		
-		if (window.location.hash.substr(0, 7) == '#param?') {
+		if (window.location.hash.substr(0, 7) == '#param&') {
 			// parseur - on a reconnu notre format
 			var _hash = window.location.hash.substr(7, window.location.hash.length);
 			
@@ -145,13 +145,42 @@ PmUtils.prototype = {
 				pmAffectation.current[_paire[0]] = _paire[1]; // le stock
 			}
 		} else {
-			window.location.hash = '#param?'; // tant pis pour ce qu'il y avait avant
+			window.location.hash = '#param&'; // tant pis pour ce qu'il y avait avant
 		}
 	},
 	// update un paramètre et change l'url en fonction
-	setUrlParam: function(nomParam) {
-		pmAffectation.current[nomParam]; // récupère la valeur
+	setUrlParam: function() {
+		// concrètement, pour ne pas avoir de problèmes, on reconstruit l'url entière
+		pmAffectation.current = pmUtils.sortObject(pmAffectation.current);
 		
+		window.location.hash = '#param';
 		
+		for (var _iPaire in pmAffectation.current) {
+			window.location.hash += '&'+_iPaire+'='+pmAffectation.current[_iPaire];
+		}
+	},
+	
+	/*
+	 * Tri un objet associatif - source :
+	 * http://www.latentmotion.com/how-to-sort-an-associative-array-object-in-javascript/
+	 */
+	sortObject: function(arr) {
+		// Setup Arrays
+		var sortedKeys = new Array();
+		var sortedObj = {};
+	
+		// Separate keys and sort them
+		for (var i in arr){
+			sortedKeys.push(i);
+		}
+		sortedKeys.sort();
+	
+		// Reconstruct sorted obj based on keys
+		for (var i in sortedKeys){
+			sortedObj[sortedKeys[i]] = arr[sortedKeys[i]];
+		}
+		
+		return sortedObj;
 	}
 };
+
