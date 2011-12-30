@@ -152,11 +152,16 @@ body {
     }
     
     /* heure */
-    .heure {
+    .heure {    
       /* quart d'heure */
       .quart_heure {
         width: 100%;
         height: @heightHeure / 4 - 1; // 1px de bordure
+
+        // quart d'heure disponible, clair
+        &.free {
+          background: #000;
+        }
       }
       // l'ordre des bordures comptes, la plus épaisse dessus
       .quart_heure:nth-of-type(2n+2) {
@@ -172,8 +177,11 @@ body {
     .heure:nth-of-type(1) {
       margin-top: 30px;
     }
+    .heure:nth-of-type(odd) {
+      background: rgba(0, 0, 0, 0.12);
+    }
     .heure:nth-of-type(even) {
-      background: #f6f6f6;
+      background: rgba(0, 0, 0, 0.2);
     }
     .heure:last-of-type {
       border-bottom: 1px solid #333;  

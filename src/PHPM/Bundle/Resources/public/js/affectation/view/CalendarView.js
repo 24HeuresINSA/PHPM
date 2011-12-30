@@ -35,7 +35,7 @@ CalendarView.prototype = {
 		
 		for (var _i=0;_i<_nbJours;_i++) {
 			var _date = new Date(pmAffectation.data.calendar.plage[plage]['debut'].getTime()+_i*24*60*60*1000);
-			$('#calendar').append(this.makeADay(_date.getDate()+'/'+Number(_date.getMonth()+1), _date.getDay(), _nbJours));
+			$('#calendar').append(this.makeADay(Number(_date.getMonth()+1)+'/'+_date.getDate(), _date.getDay(), _nbJours));
 		}
 		
 		pmUtils.resizeTitres(); // synchro la taille des titres
@@ -94,5 +94,33 @@ CalendarView.prototype = {
 		$('#boutons_plage').html(_html);
 		
 		$("#radio").buttonset(); // jQuery goodness
+	},
+	
+	/*
+	 * Va setter les quart d'heure "free" :
+	 * orga disponible sur ce créneau OU créneau de tâche à attribuer
+	 */
+	setFrees: function(obj) {
+		console.log('ici');
+		
+		if (obj.type === 'orga') {
+			for (var _iDispo in pmAffectation.data.orga[obj.id]['disponibilites']) {
+				var _debut = pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['debut'];
+				var _fin = pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['fin'];
+				
+				// TODO : vérifier si on est bien dans les bornes
+				
+				// on place les dispos, avec la classe et le click
+				for (_debut; _debut.getTime() < _fin.getTime(); _debut.setTime(_debut.getTime()+15*60*1000)) {
+					var _dts = Number(_debut.getMonth()+1)+'/'+_debut.getDate()+' '+_debut.getHours()+'h'+_debut.getMinutes();
+					console.log(_dts);
+				}
+				
+				// on place les créneaux (et retire le handler)
+
+			}
+		} else {
+			
+		}
 	}
 }

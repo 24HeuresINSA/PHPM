@@ -31,7 +31,7 @@ OrgaController.prototype = {
 		pmAffectation.data.orga = pmAffectation.models.orga.getOrgas();
 		
 		pmAffectation.views.orga.setOrgas(pmAffectation.current.orga);
-		//pmAffectation.views.calendar.setOrga(pmAffectation.current.orga);
+		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga});
 	},
 	
 	/*
