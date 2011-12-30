@@ -362,5 +362,27 @@ class OrgaController extends Controller
        	 	return array('entity' => $entity);
 			}
 	}
+	
+	/**
+	* Lists all Orga entities.
+	*
+	* @Route("/{permis}/query.json", name="orga_query_json")
+	* 
+	*/
+	public function queryJsonAction($permis)
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+	
+		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis);
+	
+		//exit(var_dump($entities));
+		$response = new Response();
+		$orga=$entities[0];
+    	$response->setContent(json_encode($orga->toArray()));
+		
+    	
+    
+    	return $response;
+	}
 		
 }
