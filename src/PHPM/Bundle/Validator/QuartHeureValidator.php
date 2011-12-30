@@ -1,26 +1,51 @@
 <?php
 
-namespace Symfony\Component\Validator\Constraints;
+namespace PHPM\Bundle\Validator;
 
 use Symfony\Component\Validator\Constraint;
 
 /**
 *
 */
-class quartHeuerValidator extends ConstraintValidator
+
+class quartHeure extends Constraint
+{
+    public $message = 'L\heure ne peut qu\'être une unitié indivisible de quart d\'heure';
+    public $entity;
+    public $timestamp;
+   
+    public function validatedBy()
+    {
+        return 'validator.quartHeure';
+    }
+   
+    public function requiredOptions()
+    {
+        return array('entity', 'timestamp');
+    }
+   
+    public function targets()
+    {
+        return self::PROPERTY_CONSTRAINT;
+    }
+}
+
+class quartHeureValidator extends ConstraintValidator
 {
     /**
 * Configures the form field and options
 */
-    public function isValid($creneauDebut, $creneauFin)
+    public function isValid($timestamp, Constraint $constraint)
     {
-		if (($creneauDebut % 900)==0 AND ($creneauDebut % 900) == 0)
+		if (($timestamp % 900)==0 )
 		{
 			return TRUE;
+			
 		}
 		else 
 		{
 			return FALSE;	
+			$this->setMessage($constraint->message);
 		}
     }
 }
