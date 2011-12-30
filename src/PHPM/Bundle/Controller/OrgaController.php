@@ -376,7 +376,7 @@ class OrgaController extends Controller
 		
 		$orga = $em->getRepository('PHPMBundle:Orga')->find($id);
 		$CreneauxParJour = $em->getRepository('PHPMBundle:Creneau')->getCreneauxParJour($orga);
-		exit(var_dump($CreneauxParJour));
+
 		if (!$orga) {
 			throw $this->createNotFoundException('Unable to find Orga entity.');
 		}

@@ -34,11 +34,12 @@
     </tbody>
 </table>
 
-	<h3>Jour : </h3>
-{%for jourCreneau in creneauxParJour %}
-	<h3>Jour : {% jourCreneau % }</h3>
+{% for jourCreneau in creneauxParJour %}
+	<h3>Jour : {{jourCreneau[2].plageHoraire}}</h3>
 	{%for creneau in jourCreneau %}
-		{{creneau.plageHoraire.tache.consignes}}	
+	<h4>T&acirc;che : {{creneau.plageHoraire.tache}}</h4>
+	<p>{{creneau.plageHoraire.tache.consignes}}</p>
+
 	{% endfor %}
 {% endfor %}
 
