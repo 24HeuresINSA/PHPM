@@ -239,21 +239,19 @@ class OrgaController extends Controller
 					{
 						$dispoDebut = $orgaDispo->getdebut()->getTimestamp();			
 						$dispoFin = $orgaDispo->getfin()->getTimestamp();
-						$dispoTemporaire = array($dispoDebut, $dispoFin);
-						
+
 						$tempsDisponibiliteTotal += $dispoFin - $dispoDebut;
-						
-						echo ("<pre>");
-						var_dump($dispoTemporaire);
-						echo("</pre>");	
+						$dispoDebut = date ('D j H i s', $dispoDebut);						
+						$dispoFin = date ('D j H i s', $dispoFin);	
+						$dispoTemporaire = array($dispoDebut, $dispoFin);
 									
 						array_push($dispoAAfficher, $dispoTemporaire);
 					}
+					
 				
-
 				 
 				 
-				$orgaTemporaire = array($key->getnom(), $key->getprenom(), $key->getemail(), $key->gettelephone(), $dispoAAfficher, $tempsDisponibiliteTotal, 'checkbox');
+				$orgaTemporaire = array('idOrga'=> $key->getid(), 'nom' => $key->getnom(),'prenom' => $key->getprenom(), 'email'=> $key->getemail(), 					'telephone' => $key->gettelephone(), 'disponibilite' => $dispoAAfficher,'tempsDisponibleTotal' => 							$tempsDisponibiliteTotal, 'commentaire' => $key->getcommentaire() , 'checkbox'=>'checkbox');
 				
 				array_push($listeOrgaARetourne,$orgaTemporaire);
 			}
@@ -262,7 +260,7 @@ class OrgaController extends Controller
 		
 			
 			
-						echo ("<pre>");
+			echo ("<pre>");
 			var_dump($listeOrgaARetourne);
 			echo("</pre>");	
 			

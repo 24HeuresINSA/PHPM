@@ -37,10 +37,18 @@ CalendarController.prototype = {
 	/*
 	 * Handlers
 	 */
-	// clic sur un quart d'heure'
+	// clic sur un quart d'heure
 	click: function(date_heure) {
 		console.log(date_heure);
 		
 		// TODO : passe la demande au controlleur tâche qu'il se mette à jour
+	},
+	// clic sur les boutons pour changer de plage
+	changePlage: function(plageId) {
+		console.log(plageId);
+		
+		pmAffectation.current.plage = plageId;
+		
+		pmAffectation.views.calendar.setPlage(plageId);
 	}
 }

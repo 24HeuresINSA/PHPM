@@ -18,6 +18,9 @@ CalendarView.prototype = {
 	 * Set la plage qu'il faut
 	 */
 	setPlage: function(plage) {
+		// on vide déjà la div
+		$('#calendar').html('');
+		
 		// calcule le nombre de jours - il faut passer par les TS, +1
 		var _nbJours = (pmAffectation.data.calendar.plage[plage]['jour_fin'].getTime()-pmAffectation.data.calendar.plage[plage]['jour_debut'].getTime())/(24*60*60*1000)+1;
 		
@@ -69,13 +72,14 @@ CalendarView.prototype = {
 		var _html = '<form><div id="radio">';
 		
 		for (unePlage in pmAffectation.data.calendar.plage) {
-			_html += '<input type="radio" id="radio_'+unePlage+'" name="radio" /><label for="radio_'+unePlage+'">'+pmAffectation.data.calendar.plage[unePlage]['nom']+'</label>';
+			_html += '<input type="radio" id="radio_'+unePlage+'" name="radio" onclick="pmAffectation.controllers.calendar.changePlage('+unePlage+')"" />';
+			_html += '<label for="radio_'+unePlage+'">'+pmAffectation.data.calendar.plage[unePlage]['nom']+'</label>';
 		}
 	
 		_html += '</div></form>';
 		
 		$('#boutons_plage').html(_html);
 		
-		$("#radio").buttonset(); //jQuery goodness
+		$("#radio").buttonset(); // jQuery goodness
 	}
 }
