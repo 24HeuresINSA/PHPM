@@ -1,0 +1,40 @@
+{% extends "::base.html.twig"  %}
+
+{% block title %}
+	Orga -> Planning -> {{ entity.prenom }} {{ entity.nom }}
+{% endblock %}
+
+{% block menu_action %}
+{% endblock %}
+
+{% block content %}
+
+<h2>Planning de l'orga :</h2>
+
+<table class="records_list">
+    <thead>
+        <tr>
+        	<th>Prenom</th>
+            <th>Nom</th>
+            <th>Telephone</th>
+            <th>Email</th>
+            <th>Nombre heures orga</th>
+        </tr>
+    </thead>
+    <tbody>
+  
+        <tr>    
+            <td>{{ entity.prenom }}</td>       
+            <td>{{ entity.nom }}</td>
+            <td>{{ entity.telephone }}</td>
+            <td>{{ entity.email }}</td>
+            <td>{{ entity.email }}</td>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+    
+{% endblock %}
