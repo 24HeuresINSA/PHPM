@@ -249,9 +249,9 @@ class OrgaController extends Controller
 					}
 					
 				
+				 $tempsDisponibiliteTotal = $tempsDisponibiliteTotal/3600;
 				 
-				 
-				$orgaTemporaire = array('idOrga'=> $key->getid(), 'nom' => $key->getnom(),'prenom' => $key->getprenom(), 'email'=> $key->getemail(), 					'telephone' => $key->gettelephone(), 'disponibilite' => $dispoAAfficher,'tempsDisponibleTotal' => 							$tempsDisponibiliteTotal, 'commentaire' => $key->getcommentaire() , 'checkbox'=>'checkbox');
+				$orgaTemporaire = array('id'=> $key->getid(), 'nom' => $key->getnom(),'prenom' => $key->getprenom(), 'email'=> $key->getemail(),'telephone' => $key->gettelephone(), 'disponibilite' => $dispoAAfficher,'tempsDisponibleTotal' => $tempsDisponibiliteTotal, 'commentaire' => $key->getcommentaire() , 'checkbox'=>'checkbox');
 				
 				array_push($listeOrgaARetourne,$orgaTemporaire);
 			}

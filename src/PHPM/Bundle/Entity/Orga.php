@@ -28,7 +28,7 @@ class Orga
     /**
     * @var integer $importId
     *
-    * @ORM\Column(name="importid", type="integer")
+    * @ORM\Column(name="importid", type="integer", nullable=true)
     */
     private $importId;
 

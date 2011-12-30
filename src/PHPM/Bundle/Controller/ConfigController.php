@@ -199,10 +199,10 @@ class ConfigController extends Controller
     /**
     * Renvoie la préférence "string" 
     *
-    * @Route("/getpref/{string}", name="config_getpref")
+    * @Route("/get/{string}", name="config_get")
     * @Template()
     */
-    public function getprefAction($string)
+    public function getAction($string)
     {
     	$em = $this->getDoctrine()->getEntityManager();
     
@@ -219,6 +219,45 @@ class ConfigController extends Controller
     
     	return $response;
     }
+    
+    /**
+    * 
+    *
+    * @Route("/initiale", name="config_initiale")
+    *
+    */
+    public function genAction()
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+
+    	$entity = $em->getRepository('PHPMBundle:Config')->findOneByField("phpm.config.initiale");
+    	
+    	if (!$entity) {
+    		$entity = new Config();
+    		$entity->setField("phpm.config.initiale");
+    		$entity->setValue("1");
+    		$em->persist($entity);
+    		$em->flush();
+    	}
+    	
+    	
+    	$entity = new Config();
+    	$form   = $this->createForm(new ConfigType(), $entity);
+    	
+    	
+    	
+    	
+    	//Config des plages de la manif 
+    	 $plage1 = array("nom" => "Prémanif", "debut" => "2012-05-16 00:00","fin" => "2012-05-23 00:00");
+    	 $plage2 = array("nom" => "Manif", "debut" => "2012-05-23 00:00","fin" => "2012-05-27 00:00");
+    	 $plage3 = array("nom" => "Postmanif", "debut" => "2012-05-28 00:00","fin" => "2012-06-01 00:00");
+    	 $a=array("1"=>$plage1,"2"=>$plage2, "3"=>$plage3);
+    	 
+    	 return array();
+    	
+    }
+    
+    
     
     
 }
