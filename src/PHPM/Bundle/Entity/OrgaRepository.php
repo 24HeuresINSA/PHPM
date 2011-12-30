@@ -21,12 +21,30 @@ class OrgaRepository extends EntityRepository
 		
 		//exit(var_dump($qb->getQuery()->getResult()));
 		
+
 		
 		if(isset($permis))
 		{
 			$qb->where($qb->expr()->eq('o.permis',$permis));
 		}
-	
+		if(isset($age))
+		{
+			$qb->where($qb->expr()->eq('o.age',$age));
+		}
+		if(isset($id_tache))
+		{
+			$qb->where($qb->expr()->eq('o.id_tache',$id_tache));
+		}
+		if(isset($id_plage))
+		{
+			$qb->where($qb->expr()->eq('o.id_plage',$id_plage));
+		}
+		if(isset($niveau_confiance))
+		{
+			$qb->where($qb->expr()->eq('o.niveau_confiance',$niveau_confiance));
+		}
+		
+		return $qb->getQuery()->getResult();
 		
 		
 	}
