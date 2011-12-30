@@ -270,7 +270,7 @@ class OrgaController extends Controller
 
 		$entities = $listeOrgaARetourne;	
 		
-		return $entities;
+		return array("entities" => $entities );
 	}
 
 
