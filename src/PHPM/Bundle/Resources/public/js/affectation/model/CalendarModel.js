@@ -27,10 +27,14 @@ CalendarModel.prototype = {
 	/*
 	 * Récup les résultats
 	 */
-	requestSuccess: function(data) {
-		pmAffectation.models.calendar.data = data;
+	requestSuccess: function(data, statusText) {
+		if (statusText == "success") {
+			pmAffectation.models.calendar.data = data;
 		
-		pmAffectation.models.calendar.callBack();
+			pmAffectation.models.calendar.callBack();
+		} else {
+			console.error("Impossible de récupérer les plages : ", statusText);
+		}
 	},
 	
 	/*
