@@ -23,6 +23,13 @@ class Orga
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+    * @var integer $importId
+    *
+    * @ORM\Column(name="importid", type="integer")
+    */
+    private $importId;
 
     /**
      * @var string $nom
@@ -406,5 +413,25 @@ class Orga
     public function getStatut()
     {
         return $this->statut;
+    }
+
+    /**
+     * Set importId
+     *
+     * @param integer $importId
+     */
+    public function setImportId($importId)
+    {
+        $this->importId = $importId;
+    }
+
+    /**
+     * Get importId
+     *
+     * @return integer 
+     */
+    public function getImportId()
+    {
+        return $this->importId;
     }
 }

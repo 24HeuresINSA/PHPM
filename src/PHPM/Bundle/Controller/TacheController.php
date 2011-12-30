@@ -2,6 +2,8 @@
 
 namespace PHPM\Bundle\Controller;
 
+use PHPM\Bundle\Entity\PlageHoraire;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -235,8 +237,7 @@ class TacheController extends Controller
 	public function importAction()
 	{
 		
-		$jason = "{\"1\":{\"id\":3,\"nom\":\"Tenir le bar\",\"lieu\":\"Bar AIP\",\"confiance\":{\"nom\":\"Soft\",\"couleur\":\"blue\"},\"categorie\":{\"nom\":\"Bar\"},\"permisNecessaire\":0,\"plagesHoraire\":{\"1\":{\"debut\":{\"date\":\"2011-12-01 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"fin\":{\"date\":\"2011-12-02 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"nbOrgasNecessaires\":10,\"creneaux\":[]},\"2\":{\"debut\":{\"date\":\"2011-12-02 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"fin\":{\"date\":\"2011-12-03 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"nbOrgasNecessaires\":1,\"creneaux\":[]}}},\"2\":{\"id\":2,\"nom\":\"Installer le PS1\",\"lieu\":\"Laurent Bonnevay\",\"confiance\":{\"nom\":\"Hard\",\"couleur\":\"orange\"},\"categorie\":{\"nom\":\"S\u00e9curit\u00e9\"},\"permisNecessaire\":0,\"plagesHoraire\":{\"3\":{\"debut\":{\"date\":\"2011-12-01 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"fin\":{\"date\":\"2011-12-06 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"nbOrgasNecessaires\":3,\"creneaux\":[]}}}}";
-	
+		$jason = "{\"1\":{\"id\":1,\"nom\":\"Tenir le bar\",\"lieu\":\"Bar AIP\",\"materielNecessaire\":\"Rien\",\"consignes\":\"C'est cool!\",\"confiance_id\":1,\"categorie_id\":1,\"permisNecessaire\":0,\"plagesHoraire\":{\"1\":{\"debut\":{\"date\":\"2011-12-01 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"fin\":{\"date\":\"2011-12-02 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"nbOrgasNecessaires\":10,\"creneaux\":[]},\"2\":{\"debut\":{\"date\":\"2011-12-02 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"fin\":{\"date\":\"2011-12-03 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"nbOrgasNecessaires\":1,\"creneaux\":[]}}},\"2\":{\"id\":2,\"nom\":\"Installer le PS1\",\"lieu\":\"Laurent Bonnevay\",\"materielNecessaire\":null,\"consignes\":\"Tu le met, profond.\",\"confiance_id\":1,\"categorie_id\":1,\"permisNecessaire\":0,\"plagesHoraire\":{\"3\":{\"debut\":{\"date\":\"2011-12-01 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"fin\":{\"date\":\"2011-12-06 00:00:00\",\"timezone_type\":3,\"timezone\":\"Europe\/Paris\"},\"nbOrgasNecessaires\":3,\"creneaux\":[]}}}}";
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$entities = $em->getRepository('PHPMBundle:Tache')->findAll();
@@ -244,7 +245,7 @@ class TacheController extends Controller
 		$tabArray = json_decode($jason, TRUE);
 		
 		//Affichage de l'import et de la db
-		//*
+		/*
 		print"<pre>";
 		var_dump($tabArray);
 		print"</pre>";
@@ -260,7 +261,7 @@ class TacheController extends Controller
 		foreach ($tabArray as $tache_en_traitement) {
 			$found = FALSE;
 			foreach ($entities as $elements){
-				if ($elements->getId() == $tache_en_traitement['id']){	
+				if ($elements->getImportId() == $tache_en_traitement['id']){	
 					$found = TRUE;
 					break;
 				}
@@ -272,17 +273,20 @@ class TacheController extends Controller
 				print $tache_en_traitement['id'];
 				print "<br />";
 				//*	
+				$confiance = $em->getRepository('PHPMBundle:Confiance')->findOneById($tache_en_traitement['confiance_id']);
+				$categorie = $em->getRepository('PHPMBundle:Categorie')->findOneById($tache_en_traitement['categorie_id']);
+				
+				
 				$entity  = new tache();
-				$entity->setId($tache_en_traitement['id']);
+				$entity->setImportId($tache_en_traitement['id']);
 				$entity->setNom($tache_en_traitement['nom']);
-				//$entity->setConsignes($tache_en_traitement['consignes']);
+				$entity->setConsignes($tache_en_traitement['consignes']);
 				$entity->setMaterielNecessaire($tache_en_traitement['materielNecessaire']);
 				$entity->setPermisNecessaire($tache_en_traitement['permisNecessaire']);
 				$entity->setLieu($tache_en_traitement['lieu']);
-				$entity->setCategorie( $tache_en_traitement['categorie']);
-				$entity->setConfiance( $tache_en_traitement['confiance']);
-				$entity->addPlageHoraire( $tache_en_traitement['plagesHoraire']);
-				$entity->setStatut(0);
+				$entity->setCategorie( $categorie);
+				$entity->setConfiance( $confiance);
+				
 					
 				$validator = $this->get('validator');
 				$errors = $validator->validate($entity);
@@ -295,7 +299,35 @@ class TacheController extends Controller
 				}else{
 					$em->persist($entity);
 					$em->flush();
+	
+					
 				}
+				
+				foreach ($tache_en_traitement['plagesHoraire'] as $plageHoraire){
+				$plageHoraireObject = new PlageHoraire();
+				$plageHoraireObject->setDebut(new \DateTime($plageHoraire['debut']['date']));
+				$plageHoraireObject->setFin(new \DateTime($plageHoraire['fin']['date']));
+				$plageHoraireObject->setNbOrgasNecessaires($plageHoraire['nbOrgasNecessaires']);
+					
+				$errors = $validator->validate($plageHoraireObject);
+				
+				if (count($errors) > 0) {
+					$err =$errors[0];
+					$simplifiedError = array($err->getMessageTemplate(),$err->getPropertyPath(), $err->getInvalidValue());
+					//$validationErrors[$tache_en_traitement['id']." ".$tache_en_traitement['nom']]=$simplifiedError;
+				
+				}else{
+					
+					$em->persist($plageHoraireObject);
+					$em->flush();
+					$entity->addPlageHoraire($plageHoraireObject );
+						
+				}
+				
+				}
+				
+				
+				
 				//*/
 			}else{
 				print "tache ";

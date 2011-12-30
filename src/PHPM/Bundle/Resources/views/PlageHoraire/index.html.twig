@@ -12,6 +12,7 @@
             <th>Id</th>
             <th>Debut</th>
             <th>Fin</th>
+            <th>NbOrgasNecessaires</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -21,6 +22,7 @@
             <td><a href="{{ path('plagehoraire_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td>{% if entity.debut %}{{ entity.debut|date('Y-m-d H:i:s') }}{% endif%}</td>
             <td>{% if entity.fin %}{{ entity.fin|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{{entity.nbOrgasNecessaires}}</td>
             <td>
 				{{ bouton_edit.bouton_edit( path('plagehoraire_edit', { 'id': entity.id }) ) }}
             </td>
