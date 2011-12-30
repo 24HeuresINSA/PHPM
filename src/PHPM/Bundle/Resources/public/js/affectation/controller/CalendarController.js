@@ -21,7 +21,7 @@ CalendarController.prototype = {
 	 * Lancement des requêtes
 	 */
 	getData: function() {
-		pmAffectation.models.calendar.getData(this.callbackPlages);
+		pmAffectation.models.calendar.getData(pmAffectation.controllers.calendar.callbackPlages);
 	},
 	
 	/*

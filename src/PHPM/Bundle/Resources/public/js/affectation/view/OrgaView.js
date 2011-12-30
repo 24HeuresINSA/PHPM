@@ -13,14 +13,19 @@ OrgaView.prototype = {
 	 */
 	initialize: function() {
 		// boutons pour changer d'orga
-		$('#boutons_orga_prev').button({
+		$('#bouton_orga_prev').button({
 			icons: {primary: 'ui-icon-triangle-1-w'},
 			text: false
 		}).click(function() { $('#orga_'+pmAffectation.current.orga).prev().click(); });
-		$('#boutons_orga_next').button({
+		$('#bouton_orga_next').button({
 			icons: {primary: 'ui-icon-triangle-1-e'},
 			text: false
 		}).click(function() { $('#orga_'+pmAffectation.current.orga).next().click(); });
+		
+		$('#bouton_refresh').button({
+			icons: {primary: 'ui-icon-refresh'},
+			text: false
+		}).click(function() { pmAffectation.controllers.orga.getData(); });
 	},
 	
 	/*

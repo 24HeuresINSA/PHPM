@@ -21,7 +21,7 @@ OrgaController.prototype = {
 	 * Lancement des requêtes
 	 */
 	getData: function() {
-		pmAffectation.models.orga.getData(this.callbackOrgas);
+		pmAffectation.models.orga.getData(pmAffectation.controllers.orga.callbackOrgas);
 	},
 	
 	/*
