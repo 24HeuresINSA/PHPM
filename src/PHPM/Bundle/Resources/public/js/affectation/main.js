@@ -29,6 +29,9 @@ $(function() {
  */
 	pmAffectation = {}; // namespace
 	
+	// utilitaires
+	pmUtils = new PmUtils();
+	
 	// stockage des données
 	pmAffectation.data = {};
 	
@@ -46,6 +49,9 @@ $(function() {
  * Effectif que quand le document est prêt
  */
 $(document).ready(function() {
+	// 0 : setter le layout, rendre les sidebars resizeables
+	pmUtils.setResizeableSidebars();
+	
 	// 1 : lancer les requêtes pour les paramètres
 	pmAffectation.controllers.parameter = new ParameterController();
 	pmAffectation.controllers.parameter.getData();
