@@ -15,9 +15,9 @@
             <th>Prenom</th>
             <th>Telephone</th>
             <th>Email</th>
-            <th>Datedenaissance</th>
+            <th>Disponibilit&eacute;</th>
+            <th>Temps dispo</th>
             <th>Commentaire</th>
-            <th>Nombre heures orga</th>
             <th>Validation</th>
         </tr>
     </thead>
@@ -25,13 +25,14 @@
     <form action="">
     {% for entity in entities %}
         <tr>           
-            <td>{{ entity.nom }}</td>
-            <td>{{ entity.prenom }}</td>
-            <td>{{ entity.telephone }}</td>
-            <td>{{ entity.email }}</td>
-            <td>{{ entity.commentaire }}</td>
-            <td>Nombre heures orga</td>
-            <td> <input type="checkbox" name="vehicle" value="Car" checked/> I have a bike<br /> </td>
+            <td>{{ entity['nom'] }}</td>
+            <td>{{ entity['prenom'] }}</td>
+            <td>{{ entity['telephone'] }}</td>
+            <td>{{ entity['email'] }}</td>
+            <td>{{ entity['disponibilite']}}</td>
+            <td>{{ entity['tempsDisponibleTotal']}}</td>
+            <td>{{ entity['commentaire']}}</td>
+            <td> <input type="checkbox" name="{{ entity['id']}}" value="Car" checked/> Valider </td>
         </tr>
     {% endfor %}
     </form> </td>

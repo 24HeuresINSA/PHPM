@@ -18,6 +18,9 @@ CalendarView.prototype = {
 	 * Set la plage qu'il faut
 	 */
 	setPlage: function(plage) {
+		// on vide déjà la div
+		$('#calendar').html('');
+		
 		// calcule le nombre de jours - il faut passer par les TS, +1
 		var _nbJours = (pmAffectation.data.calendar.plage[plage]['jour_fin'].getTime()-pmAffectation.data.calendar.plage[plage]['jour_debut'].getTime())/(24*60*60*1000)+1;
 		
@@ -77,6 +80,6 @@ CalendarView.prototype = {
 		
 		$('#boutons_plage').html(_html);
 		
-		$("#radio").buttonset(); //jQuery goodness
+		$("#radio").buttonset(); // jQuery goodness
 	}
 }

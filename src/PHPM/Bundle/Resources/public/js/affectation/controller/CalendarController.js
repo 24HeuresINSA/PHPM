@@ -45,6 +45,8 @@ CalendarController.prototype = {
 	},
 	// clic sur les boutons pour changer de plage
 	changePlage: function(plageId) {
+		console.log(plageId);
+		
 		pmAffectation.current.plage = plageId;
 		
 		pmAffectation.views.calendar.setPlage(plageId);
