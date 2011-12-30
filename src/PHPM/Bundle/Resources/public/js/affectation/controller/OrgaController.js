@@ -30,15 +30,16 @@ OrgaController.prototype = {
 	callbackOrgas: function() {
 		pmAffectation.data.orga = pmAffectation.models.orga.getOrgas();
 		
-		//pmAffectation.views.orga.setPlage(pmAffectation.current.plage);
+		pmAffectation.views.orga.setOrgas(pmAffectation.current.orga);
+		//pmAffectation.views.calendar.setOrga(pmAffectation.current.orga);
 	},
 	
 	/*
 	 * Handlers
 	 */
-	// clic sur un quart d'heure
-	click: function(date_heure) {
-		console.log(date_heure);
+	// clic sur un orga
+	click: function(idOrga) {
+		console.log(idOrga);
 
 	},
 

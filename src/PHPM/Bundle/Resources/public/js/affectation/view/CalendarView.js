@@ -19,7 +19,7 @@ CalendarView.prototype = {
 	 */
 	setPlage: function(plage) {
 		// on vide déjà la div
-		$('#calendar').html('');
+		$('#calendar').empty();
 		
 		// calcule le nombre de jours - il faut passer par les TS, +1
 		var _nbJours = (pmAffectation.data.calendar.plage[plage]['fin'].getTime()-pmAffectation.data.calendar.plage[plage]['debut'].getTime())/(24*60*60*1000)+1;
@@ -46,7 +46,7 @@ CalendarView.prototype = {
 	},
 	// fabrique un jour
 	makeADay: function(date, day, nbJours) {
-		var _html = '<div class="jour" id="jour_'+date+'" date="'+date+'" style="width: '+94/nbJours+'%;">'; // -1% because of borders, -5% pour les heures
+		var _html = '<div class="jour" id="jour_'+date+'" style="width: '+94/nbJours+'%;">'; // -1% because of borders, -5% pour les heures
 		_html += '<div class="titre_date_fixed">'+pmUtils.jours[day]+' '+date+'</div>';
 		_html += '<div class="titre_date">'+pmUtils.jours[day]+' '+date+'</div>'; // celui-ci reste toujours en haut
 		
@@ -66,8 +66,8 @@ CalendarView.prototype = {
 			
 			for (var _j=0;_j<4;_j++) {
 				var _dts = date+' '+_i+':'+_j*15;
-				_html += '<div class="quart_heure" id="quart_heure_'+date+'_'+_i+'h'+_j*15+':00" heure="'+_dts+'" ';
-				_html += 'onclick="pmAffectation.controllers.calendar.click(\''+_dts+'\')"></div>';
+				_html += '<div class="quart_heure" id="quart_heure_'+date+'_'+_i+'h'+_j*15+'" date="'+_dts+'"></div>';
+				//_html += 'onclick="pmAffectation.controllers.calendar.click(\''+_dts+'\')"></div>';
 			}
 			
 			_html += '</div>';
