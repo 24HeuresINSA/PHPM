@@ -76,5 +76,23 @@ PmUtils.prototype = {
 	 */
 	setPourcentWidth: function(unElement, elementRelatif) {
 		$(unElement).width(pmUtils.getPourcentWidth(unElement, elementRelatif)+'%');
+	},
+	
+	/*
+	 * Stockage et retrieve dans localStorage
+	 */
+	setLocalStorage: function(uneClef, unElement) {
+		try {
+			localStorage[uneClef] = JSON.stringify(unElement);
+		} catch(err) {
+			console.error("Impossible d'accéder à localStorage",err);
+		}
+	},
+	getLocalStorage: function(uneClef) {
+		try {
+			return JSON.parse(localStorage[uneClef]);
+		} catch(err) {
+			console.error("Impossible d'accéder à localStorage",err);
+		}
 	}
 };
