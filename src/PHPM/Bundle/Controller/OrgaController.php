@@ -225,13 +225,20 @@ class OrgaController extends Controller
      */
 	public function validationAction()	
 	{
+		
+		$em = $this->getDoctrine()->getEntityManager();
+				
 		if(!empty($_POST["Orga_Valid"])) {
 
    		for ($i = 0; $i < count($_POST["Orga_Valid"]); $i++)
-    	  	echo $_POST["Orga_Valid"][$i] ;
+			{
+				$orgaValide = $em->getRepository('PHPMBundle:Orga')->findOneById($_POST["Orga_Valid"][$i]);	
+				$orgaValide->setStatut(1);	
+			}
+    	//  	echo $_POST["Orga_Valid"][$i] ;
 		}
 
-		$em = $this->getDoctrine()->getEntityManager();	
+	
 		$orgaAValider = $em->getRepository('PHPMBundle:Orga')->findByStatut(0);
 		
 		$listeOrgaARetourne = array();
@@ -247,9 +254,9 @@ class OrgaController extends Controller
 						$dispoFin = $orgaDispo->getfin()->getTimestamp();
 
 						$tempsDisponibiliteTotal += $dispoFin - $dispoDebut;
-						$dispoDebut = date ('D j H i s', $dispoDebut);						
-						$dispoFin = date ('D j H i s', $dispoFin);	
-						$dispoTemporaire = array($dispoDebut, $dispoFin);
+						$dispoDebut = date ('D j H i', $dispoDebut);						
+						$dispoFin = date ('D j H i', $dispoFin);	
+						$dispoTemporaire = array('debut'=> $dispoDebut,'fin'=> $dispoFin);
 									
 						array_push($dispoAAfficher, $dispoTemporaire);
 					}
