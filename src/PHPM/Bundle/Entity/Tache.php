@@ -63,6 +63,15 @@ class Tache
     private $permisNecessaire;
 
     /**
+    * @var smallint $ageNecessaire
+    *
+    * @ORM\Column(name="ageNecessaire", type="smallint")
+    * @Assert\Min(limit = "0")
+    */
+    private $ageNecessaire;
+    
+    
+    /**
      * @var string $lieu
      *
      * @ORM\Column(name="lieu", type="string", length=255)
@@ -311,5 +320,25 @@ class Tache
     public function getImportId()
     {
         return $this->importId;
+    }
+
+    /**
+     * Set ageNecessaire
+     *
+     * @param smallint $ageNecessaire
+     */
+    public function setAgeNecessaire($ageNecessaire)
+    {
+        $this->ageNecessaire = $ageNecessaire;
+    }
+
+    /**
+     * Get ageNecessaire
+     *
+     * @return smallint 
+     */
+    public function getAgeNecessaire()
+    {
+        return $this->ageNecessaire;
     }
 }
