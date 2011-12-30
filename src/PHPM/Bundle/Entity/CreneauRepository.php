@@ -3,6 +3,8 @@
 namespace PHPM\Bundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
+
 
 /**
  * CreneauRepository
@@ -12,4 +14,100 @@ use Doctrine\ORM\EntityRepository;
  */
 class CreneauRepository extends EntityRepository
 {
+	
+	public function getCreneauxParJour($orga)
+	{
+	
+		$entities= $this->getEntityManager()
+		->createQuery("
+		SELECT c FROM PHPMBundle:Creneau c
+		JOIN c.disponibilite d
+		JOIN d.orga o
+		WHERE d.orga = :orga_id
+		 ")
+		 ->setParameter('orga_id', $orga->getId())
+		->getResult();
+		 
+		
+		
+		$result=array();
+		foreach ($entities as $entity){
+			$dow = $entity->getDebut()->format('w');
+			
+			$result[$dow][$entity->getId()] = $entity;
+		
+		}
+		
+		
+		return $result;
+		
+	}
+	
+	
+	public function getCreneauxParJour2($orga_id){
+		$conn = $this->_em->getConnection();
+		//$orga_id=$orga->getId();
+	
+		$sql = "SELECT c.id, WEEKDAY(c.debut) d FROM Creneau c LEFT JOIN Disponibilite d ON c.disponibilite_id=d.id LEFT JOIN Orga o ON d.orga_id=o.id ";
+	
+		$rows = $conn->fetchAll($sql);
+		
+		foreach ($rows as $row){
+			var_dump($c);
+			$co=$c[0];
+				
+			$a[$c['w']][$co->getId()]=$co;
+			//$a[$c['w'][($c[0])->getId()]]=$c;
+				
+		}
+		
+		//$rows = $conn->prepare($sql)->execute();
+	
+	
+		return $rows;
+	}
+	
+	public function getCreneauxParJourNative($orga_id){
+		
+		
+		$rsm = new ResultSetMapping;
+		$rsm->addEntityResult('PHPM\Bundle\Entity\Creneau', 'c');
+		$rsm->addFieldResult('c', 'id', 'id');
+		$rsm->addFieldResult('c', 'debut', 'debut');
+		$rsm->addFieldResult('c', 'fin', 'fin');
+		$rsm->addFieldResult('c', 'id', 'id');
+		$rsm->addJoinedEntityResult("PHPM\Bundle\Entity\PlageHoraire", "p", "c", "plageHoraire");
+		
+		
+		$rsm->addScalarResult('d', 'd');
+		
+		
+		$query = $this->_em->createNativeQuery(
+		'SELECT c.*, p.id as p_id, WEEKDAY(c.debut) d 
+		FROM Creneau c 
+		LEFT JOIN PlageHoraire p ON c.plageHoraire_id=p.id
+		ORDER BY d', $rsm);
+		
+		
+		$creneaux = $query->getResult();
+		var_dump($creneaux);
+		exit();
+		
+		foreach ($creneaux as $c){
+			var_dump($c);
+			$co=$c[0];
+			
+			$a[$c['w']][$co->getId()]=$co;
+			//$a[$c['w'][($c[0])->getId()]]=$c;
+			
+		}
+		var_dump($a);
+		exit();
+		
+		return $a;
+		
+		
+		
+		
+	}
 }
