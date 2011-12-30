@@ -1,7 +1,7 @@
 {% extends "::base.html.twig"  %}
 
 {% block title %}
-	Orga -> Planning -> {{ entity.prenom }} {{ entity.nom }}
+	Orga -> Planning -> {{ orga.prenom }} {{ orga.nom }}
 {% endblock %}
 
 {% block menu_action %}
@@ -24,22 +24,21 @@
     <tbody>
   
         <tr>    
-            <td>{{ entity.prenom }}</td>       
-            <td>{{ entity.nom }}</td>
-            <td>{{ entity.telephone }}</td>
-            <td>{{ entity.email }}</td>
-            <td>{{ entity.email }}</td>
+            <td>{{ orga.prenom }}</td>       
+            <td>{{ orga.nom }}</td>
+            <td>{{ orga.telephone }}</td>
+            <td>{{ orga.email }}</td>
+            <td>{{ orga.email }}</td>
             </td>
         </tr>
     </tbody>
 </table>
 
-{%for jourcreneau in jourscreneaux %}
-	<h3>Jour : {% jourcreneau.jour %}</h3>
-	{%for creneau in jourcreneau.creneaux %}
-		creneau.plageHoraire.tache.consignes
-		
-		
+	<h3>Jour : </h3>
+{%for jourCreneau in creneauxParJour %}
+	<h3>Jour : {% jourCreneau % }</h3>
+	{%for creneau in jourCreneau %}
+		{{creneau.plageHoraire.tache.consignes}}	
 	{% endfor %}
 {% endfor %}
 
