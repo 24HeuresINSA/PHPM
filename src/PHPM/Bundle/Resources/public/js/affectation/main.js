@@ -14,6 +14,9 @@
 	// stockage des données
 	pmAffectation.data = {};
 	
+	// les URLS
+	pmAffectation.paths = {};
+	
 	// infos courantes
 	pmAffectation.current = {};
 	pmAffectation.current.plage = 1; // par défaut on est sur la plage 0
@@ -24,10 +27,16 @@
 	pmAffectation.controllers = {};
 	
 /*
+ * CONSTANTES
+ */
+	// les urls sur lesquelles on fera les requêtes
+	pmAffectation.paths.plages = 'config/get/manifestation.plages';
+	
+/*
  * Lancement
  * Effectif que quand le document est prêt
  */
-$(document).ready(function() {
+$(document).ready(function() {	
 	// 0 : setter le layout
 	pmUtils.setResizeableSidebars();
 	
