@@ -32,7 +32,7 @@
             <td>{{ entity['disponibilite']}}</td>
             <td>{{ entity['tempsDisponibleTotal']}}</td>
             <td>{{ entity['commentaire']}}</td>
-            <td> <input type="checkbox" name="{{ entity['id']}}" value="Car" checked/> Valider </td>
+            <td> <input type="checkbox" name="{{ entity['id']}}" value="{{ entity['id']}}" checked/> Valider </td>
         </tr>
     {% endfor %}
     </form> </td>
