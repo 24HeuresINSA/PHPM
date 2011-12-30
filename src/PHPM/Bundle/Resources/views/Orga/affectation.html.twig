@@ -8,11 +8,13 @@
 	{{ parent() }}
 	{% stylesheets 
 		'@PHPMBundle/Resources/public/css/affectation.css'
-		'@PHPMBundle/Resources/public/css/jquery-ui/themes/smoothness/jquery-ui-1.8.16.custom.css'
 		filter='cssrewrite'
 	 %}
 		<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
 	{% endstylesheets %}
+	
+	{# on inclue manuellement cete feuille de style pour ne pas casser les bg #}
+	<link rel="stylesheet" href="{{ asset('bundles/phpm/css/jquery-ui/themes/smoothness/jquery-ui-1.8.16.custom.css') }}" type="text/css" />
 {% endblock %}
 
 {% block javascript %}

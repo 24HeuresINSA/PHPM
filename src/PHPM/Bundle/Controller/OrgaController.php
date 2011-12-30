@@ -190,7 +190,7 @@ class OrgaController extends Controller
      * Deletes a Orga entity.
      *
      * @Route("/{id}/delete", name="orga_delete")
-     * @Method("post")
+     * 
      */
     public function deleteAction($id)
     {
@@ -342,4 +342,25 @@ class OrgaController extends Controller
 		return array("errors" => $validationErrors);
 	}
 	
+
+	 /**
+     * Planning Orgas from website.
+     *
+     * @Route("/{id}/planning", name="orga_planning")
+     * @Template
+     */
+	public function planningAction($id)	
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$entity = $em->getRepository('PHPMBundle:Orga')->find($id);
+		
+		if (!$entity) {
+			throw $this->createNotFoundException('Unable to find Orga entity.');
+		}
+		else {
+			/*$creneaux = $em->getRepository('PHPMBundle:Creneau')->findAllOrgaCreneaux($entity);*/
+       	 	return array('entity' => $entity);
+			}
+	}
+		
 }
