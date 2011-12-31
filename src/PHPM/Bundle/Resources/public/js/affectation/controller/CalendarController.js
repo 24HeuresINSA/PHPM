@@ -42,6 +42,12 @@ CalendarController.prototype = {
 		
 		// TODO : passe la demande au controlleur tâche qu'il se mette à jour
 	},
+	// clic sur un créneau
+	clickCreneau: function(obj) {
+		console.log(obj.data.creneauId);
+		
+		// afficher le détail ?
+	},
 	// clic sur les boutons pour changer de plage
 	changePlage: function(plageId) {
 		pmAffectation.current.plage = plageId;

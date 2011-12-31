@@ -123,11 +123,26 @@ CalendarView.prototype = {
 					// sélection suivant les attributs de temps de plus en plus précis
 					$('.jour[jour="'+_iDts.getDate()+'/'+Number(_iDts.getMonth()+1)+'"] > .heure[heure="'
 					+_iDts.getHours()+'"] > .quart_heure[minute="'+_iDts.getMinutes()+'"]').addClass('free')
-					.bind('click', {date: _iDts.getMyDts()}, pmAffectation.controllers.calendar.clickHandler)
+					.bind('click', {date: _iDts.getMyDts()}, pmAffectation.controllers.calendar.clickHandler);
 				}
 				
 				// on place les créneaux (et retire le handler)
-
+				for (var _iCreneau in pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux']) {
+					var _hDebut = pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'];
+					
+					console.log(_iCreneau, _hDebut.getMyDts());
+					
+					_html = '<div id="creneau_'+_iCreneau+'" class="creneau" creneau="'+_iCreneau+'">Pris !</div>';
+					
+					// on le rajoute, supprime le handler précédent et en rajoute un
+					$('.jour[jour="'+_hDebut.getDate()+'/'+Number(_hDebut.getMonth()+1)+'"] > .heure[heure="'
+					+_hDebut.getHours()+'"] > .quart_heure[minute="'+_hDebut.getMinutes()+'"]').append(_html).off('click')
+					.bind('click', {creneauId: _iCreneau}, pmAffectation.controllers.calendar.clickCreneau);
+					
+					// set la taille
+					var _taille = Number(pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['duree']/60/60*40);
+					$('#creneau_'+_iCreneau).height(_taille+'px');
+				}
 			}
 		} else {
 			
