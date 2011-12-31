@@ -382,76 +382,68 @@ class OrgaController extends Controller
 	}
 	
 	/**
-	* Lists all Orga entities.
+	* Lists all Orga entities according to post criteria.
 	*
 	* @Route("/query.json", name="orga_query_json")
 	* @Method("post")
 	*/
 	public function queryJsonAction()
 	{
+		
 		$request = $this->getRequest();
 		
 		$permis= $request->request->get('permis', '');
 		$age= $request->request->get('age', '0');
-		$tache_id= $request->request->get('tache_id', '');
 		$plage_id= $request->request->get('plage_id', '');
 		$niveau_confiance= $request->request->get('confiance_id', '');
 		$maxDateNaissance = new \DateTime();
 		
 		if($age!='')
 		$maxDateNaissance->modify('-'.$age.' year');
-
+		
+		
 		
 		$em = $this->getDoctrine()->getEntityManager();
-		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $maxDateNaissance->format('Y-m-d'), $tache_id, $plage_id, $niveau_confiance);
+		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $maxDateNaissance->format('Y-m-d'), $plage_id, $niveau_confiance);
 
 		$response = new Response();
 		
-		$a = array();
-		 
-		foreach ($entities as $entity){
-			$a[$entity->getId()] = $entity->toArray();
 		
+		$orgaArray = array();
+		foreach ($entities as $orga){
+			
+			$a = array();
+			foreach ($orga->getDisponibilites() as $dispo){
+				$a[$dispo->getId()] = $dispo->toSimpleArray();
+			}
+			
+			
+			$orgaArray[$orga->getId()]= array(
+			    		
+			    	    
+			    		
+			        	"nom" => $orga->getNom(),
+			        	"prenom" => $orga->getPrenom(),
+			    		"surnom" => $orga->getSurnom(),
+			    		
+			    		
+			    		"dateDeNaissance" => $orga->getDateDeNaissance()->format('Y-m-d H:i:s'),
+			    		"departement" => $orga->getDepartement(),
+			    		"commentaire" => $orga->getCommentaire(),
+			    		"permis"=>$orga->getPermis(),
+			        	"confiance" => $orga->getConfiance()->getId(),
+			        	"disponibilites" => $a);
+			
+			
+			
+			
+			
 		}
-		
-		
-		
-			$response->setContent('<html><body>'.var_dump($a).'</body></html>');
-		
-		//$orga=$entities[0];
     	
-		
-    	
-    
-    	return $response;
-    	
-    	
-	}
-	
-	/**
-	* Lists all Orga entities.
-	*
-	* @Route("/basicquery.json", name="orga_basic_query_json")
-	* 
-	*/
-	public function basicQueryJsonAction()
-	{
-		
-		$em = $this->getDoctrine()->getEntityManager();
-		$entities = $em->getRepository('PHPMBundle:Orga')->findAll();
-
-		$response = new Response();
-		
-		$a = array();
-		 
-		foreach ($entities as $entity){
-    		$a[$entity->getId()] = $entity->toArray();
-    		
-    	}
-    	
+    	exit(var_dump($orgaArray));
     	
     	$response = new Response();
-    	$response->setContent(json_encode($a));
+    	$response->setContent(json_encode($orgaArray));
 		$response->headers->set('Content-Type', 'application/json');
     	
     
