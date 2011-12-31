@@ -37,7 +37,7 @@ CalendarController.prototype = {
 	 * Handlers
 	 */
 	// clic sur un quart d'heure
-	clickHandler: function(obj) {
+	clickQuartHeure: function(obj) {
 		console.log(obj.data.date);
 		
 		// TODO : passe la demande au controlleur tâche qu'il se mette à jour

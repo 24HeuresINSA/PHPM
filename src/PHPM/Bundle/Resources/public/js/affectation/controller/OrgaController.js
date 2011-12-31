@@ -44,6 +44,8 @@ OrgaController.prototype = {
 
 		pmAffectation.current.orga = obj.data.id;
 		pmUtils.setUrlParam(); // maj de l'url
+		
+		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga});
 	},
 
 }

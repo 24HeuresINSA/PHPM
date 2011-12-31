@@ -105,6 +105,11 @@ CalendarView.prototype = {
 	 * orga disponible sur ce créneau OU créneau de tâche à attribuer
 	 */
 	setFrees: function(obj) {
+		// on supprime tout
+		$('.quart_heure').removeClass('free');
+		$('.quart_heure').off(); // click handlers
+		$('.creneau').remove();
+		
 		if (obj.type === 'orga') {
 			for (var _iDispo in pmAffectation.data.orga[obj.id]['disponibilites']) {
 				var _debut = pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['debut'];
@@ -123,7 +128,7 @@ CalendarView.prototype = {
 					// sélection suivant les attributs de temps de plus en plus précis
 					$('.jour[jour="'+_iDts.getDate()+'/'+Number(_iDts.getMonth()+1)+'"] > .heure[heure="'
 					+_iDts.getHours()+'"] > .quart_heure[minute="'+_iDts.getMinutes()+'"]').addClass('free')
-					.bind('click', {date: _iDts.getMyDts()}, pmAffectation.controllers.calendar.clickHandler);
+					.bind('click', {date: _iDts.getMyDts()}, pmAffectation.controllers.calendar.clickQuartHeure);
 				}
 				
 				// on place les créneaux (et retire le handler)
@@ -147,7 +152,7 @@ CalendarView.prototype = {
 				}
 			}
 		} else {
-			
+			// à faire, pour la vue dans l'autre sens
 		}
 	}
 }
