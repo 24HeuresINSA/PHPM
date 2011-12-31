@@ -45,7 +45,7 @@ class OrgaRepository extends EntityRepository
 		}
 		if($niveau_confiance !='')
 		{
-			$andx->add($expr->gte('o.confiance_id',$niveau_confiance));
+			$andx->add($expr->gte('o.confiance',$niveau_confiance));
 		}
 	
 	
