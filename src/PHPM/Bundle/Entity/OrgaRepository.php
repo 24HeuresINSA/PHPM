@@ -4,6 +4,7 @@ namespace PHPM\Bundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use PHPM\Bundle\Entity\Orga;
+use PHPM\Bundle\Entity\Config;
 
 /**
  * OrgaRepository
@@ -13,30 +14,17 @@ use PHPM\Bundle\Entity\Orga;
  */
 class OrgaRepository extends EntityRepository
 {
-	public function getOrgasWithCriteria($permis, $maxDateNaissance, $id_tache, $id_plage, $niveau_confiance)
+	public function getOrgasWithCriteria($permis, $maxDateNaissance, $tache_id, $plage_id, $niveau_confiance)
 	{
-	
+		
 		$qb = $this->getEntityManager()->createQueryBuilder();
 		$expr = $qb->expr();
-		$qb
-		->select('o,ct')
-		
-		->from('PHPMBundle:Orga','o')
+	
+		$andx = $expr->andx(
 		
 		
 		
-		->from('PHPMBundle:Disponibilite', 'd')
-		->from('PHPMBundle:Creneau', 'co')
-		->from('PHPMBundle:PlageHoraire', 'p')
-		->from('PHPMBundle:Tache', 't')
-		->from('PHPMBundle:Creneau', 'ct')
-		
-		
-		->where($expr->andx(
-		
-		
-		
-		$expr->eq('t.id',$id_tache),
+		$expr->eq('t.id',$tache_id),
 		
 		$expr->eq('d.orga','o'),
 		$expr->neq('d.orga','0'),
@@ -50,21 +38,21 @@ class OrgaRepository extends EntityRepository
 		$expr->lte('ct.debut','d.fin'),
 		$expr->gte('ct.fin','d.debut'),
 		
+				'ct.id NOT IN (SELECT ci.id FROM PHPMBundle:Creneau ci 
+				WHERE 
+				
+				( (ci.debut < co.fin) AND (ci.fin > co.debut ) )
+				OR
+				(((ci.debut<p.debut)OR(ci.fin > p.fin))OR((ci.debut >= p.fin)OR(ci.fin <= p.debut)))
+				
+				)'
+		
+		);
 		
 		
 		
-		//'(((ci.debut<p.debut)OR(ci.fin > p.fin))OR((ci.debut >= p.fin)OR(ci.fin <= p.debut)))', //PLAGE
-		//'( (ci.debut < co.fin) AND (ci.fin > co.debut ) )',
-		'ct.id NOT IN (SELECT ci.id FROM PHPMBundle:Creneau ci 
-		WHERE 
 		
-		( (ci.debut < co.fin) AND (ci.fin > co.debut ) )
-		OR
-		(((ci.debut<p.debut)OR(ci.fin > p.fin))OR((ci.debut >= p.fin)OR(ci.fin <= p.debut)))
 		
-		)'
-
-		)
 		
 		/*
 		$qb
@@ -85,7 +73,7 @@ class OrgaRepository extends EntityRepository
 		
 		
 		
-		$expr->eq('t.id',$id_tache),
+		$expr->eq('t.id',$tache_id),
 		
 		$expr->eq('d.orga','o'),
 		$expr->neq('d.orga','0'),
@@ -109,33 +97,53 @@ class OrgaRepository extends EntityRepository
 		*/
 		
 		
-		);
 		
-		//exit(var_dump($qb->getQuery()->getDQL()));
 		
-		/*
+		
+		
+		if($plage_id !='')
+		{
+			$pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation.plages')->getValue(),TRUE);
+			$plage= $pref[$plage_id];
+			$andx->add('(d.debut < \''.$plage["fin"].'\' ) AND (d.fin >\''.$plage["debut"].'\' )');
+		}
 		if($permis!='')
 		{
-			$qb->where($expr->gte('o.permis',$permis));
+			$andx->add($expr->gte('o.permis',$permis));
 		}
 		if($maxDateNaissance !='')
 		{
-			$qb->where($expr->lte('o.dateDeNaissance','\''.$maxDateNaissance.'\''));
-		}
-		if($id_tache !='')
-		{
-			$qb->where($expr->eq('o.id_tache',$id_tache));
-		}
-		if($id_plage !='')
-		{
-			$qb->where($expr->eq('o.id_plage',$id_plage));
+			$andx->add($expr->lte('o.dateDeNaissance','\''.$maxDateNaissance.'\''));
 		}
 		if($niveau_confiance !='')
 		{
-			$qb->where($expr->gte('o.confiance_id',$niveau_confiance));
+			$andx->add($expr->gte('o.confiance_id',$niveau_confiance));
 		}
-		*/
-		//exit(var_dump($qb->getQuery()->getDQL()));
+		
+		
+		
+		
+		
+		$qb
+		->select('o,ct')
+		
+		->from('PHPMBundle:Orga','o')
+		
+		
+		
+		->from('PHPMBundle:Disponibilite', 'd')
+		->from('PHPMBundle:Creneau', 'co')
+		->from('PHPMBundle:PlageHoraire', 'p')
+		->from('PHPMBundle:Tache', 't')
+		->from('PHPMBundle:Creneau', 'ct')
+		
+		
+		->where($andx);
+		
+		exit(var_dump($qb->getQuery()->getDQL()));
+		
+		
+		
 		return $qb->getQuery()->getResult();
 		
 		

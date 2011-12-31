@@ -392,9 +392,9 @@ class OrgaController extends Controller
 		$request = $this->getRequest();
 		
 		$permis= $request->request->get('permis', '');
-		$age= $request->request->get('age', '');
-		$id_tache= $request->request->get('tache_id', '');
-		$id_plage= $request->request->get('id_plage', '');
+		$age= $request->request->get('age', '0');
+		$tache_id= $request->request->get('tache_id', '');
+		$plage_id= $request->request->get('plage_id', '');
 		$niveau_confiance= $request->request->get('confiance_id', '');
 		$maxDateNaissance = new \DateTime();
 		
@@ -403,7 +403,7 @@ class OrgaController extends Controller
 
 		
 		$em = $this->getDoctrine()->getEntityManager();
-		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $maxDateNaissance->format('Y-m-d'), $id_tache, $id_plage, $niveau_confiance);
+		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $maxDateNaissance->format('Y-m-d'), $tache_id, $plage_id, $niveau_confiance);
 
 		$response = new Response();
 		
