@@ -79,6 +79,14 @@ class Tache
      */
     private $lieu;
     
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="Orga", inversedBy="taches")
+    * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id")
+    * @Assert\Valid
+    */
+    private $responsable;
+    
     /**
     * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="taches")
     * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id")
@@ -345,5 +353,25 @@ class Tache
     public function getAgeNecessaire()
     {
         return $this->ageNecessaire;
+    }
+
+    /**
+     * Set responsable
+     *
+     * @param PHPM\Bundle\Entity\Orga $responsable
+     */
+    public function setResponsable(\PHPM\Bundle\Entity\Orga $responsable)
+    {
+        $this->responsable = $responsable;
+    }
+
+    /**
+     * Get responsable
+     *
+     * @return PHPM\Bundle\Entity\Orga 
+     */
+    public function getResponsable()
+    {
+        return $this->responsable;
     }
 }
