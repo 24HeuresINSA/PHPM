@@ -5,6 +5,7 @@ namespace PHPM\Bundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use PHPM\Bundle\Validator\QuartHeure;
+use PHPM\Bundle\Validator\Inclus;
 
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 /**
@@ -20,6 +21,10 @@ class Creneau
     {
         $metadata->addPropertyConstraint('debut', new QuartHeure());
 		$metadata->addPropertyConstraint('fin', new QuartHeure());
+		$metadata->addPropertyConstraint('debut', new Inclus());
+        $metadata->addPropertyConstraint('fin', new Inclus());
+		
+		
     }
 	
     /**
@@ -37,6 +42,7 @@ class Creneau
      * @ORM\Column(name="debut", type="datetime")
      * @Assert\DateTime()
 	 * @QuartHeure()
+	 * @Inclus()
      */
     private $debut;
 
@@ -46,8 +52,8 @@ class Creneau
      * @ORM\Column(name="fin", type="datetime")
      * 
 	 * @QuartHeure()
-	 * 
-	 *      */
+	 * @Inclus()
+	 */
     private $fin;
     
     /**

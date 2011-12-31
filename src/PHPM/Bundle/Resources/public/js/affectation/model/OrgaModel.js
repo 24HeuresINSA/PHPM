@@ -21,20 +21,26 @@ OrgaModel.prototype = {
 	getData: function(callBack) {
 		pmAffectation.models.orga.callBack = callBack;
 		
-		$.post(pmAffectation.url+pmAffectation.paths.orgas, pmAffectation.models.orga.requestSuccess, 'json');
+		//$.post(pmAffectation.url+pmAffectation.paths.orgas, pmAffectation.models.orga.requestSuccess, 'json');
+		$.ajax({
+			url: pmAffectation.url+pmAffectation.paths.orgas,
+			dataType: 'json',
+			success: pmAffectation.models.orga.requestSuccess,
+			error: pmAffectation.models.orga.requestError,
+			type: 'POST'
+		});
 	},
 	
 	/*
 	 * Récup les résultats
 	 */
-	requestSuccess: function(data, statusText) {
-		if (statusText == "success") {
-			pmAffectation.models.orga.data = data;
-		
-			pmAffectation.models.orga.callBack();
-		} else {
-			console.error("Impossible de récupérer les plages : ", statusText);
-		}
+	requestSuccess: function(data) {
+		pmAffectation.models.orga.data = data;
+	
+		pmAffectation.models.orga.callBack();
+	},
+	requestError: function(data, statusText) {
+		message.error("Impossible de récupérer les plages : " + statusText);
 	},
 	
 	/*

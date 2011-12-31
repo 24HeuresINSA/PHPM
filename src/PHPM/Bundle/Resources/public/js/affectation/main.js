@@ -45,10 +45,13 @@ $(document).ready(function() {
 	pmUtils.parseUrlParam();
 	
 	// 1 : lancer les requêtes pour les paramètres
+	// requêtes synchrones car nécessaire partout dans l'appli
 	pmAffectation.controllers.parameter = new ParameterController();
 	pmAffectation.controllers.parameter.getData();
 	
 	// 2 : setter le calendar
+	// on récupère lesp lages via une requête synchrone
+	// comme c'est les 1ères dates qu'on a, on check le fuseau horaire de l'utilisateur
 	pmAffectation.controllers.calendar = new CalendarController();
 	pmAffectation.controllers.calendar.getData();
 	

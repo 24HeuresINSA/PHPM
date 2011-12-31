@@ -1,10 +1,17 @@
 parameters:
     my.validator.quartHeure.class:      PHPM\Bundle\Validator\QuartHeureValidator
-
+    my.validator.inclus.class:      PHPM\Bundle\Validator\InclusValidator
 services:
     my.validator.quartHeure:
        class:      %my.validator.quartHeure.class%
        arguments: [@doctrine.orm.entity_manager]
        tags:
             - { name: validator.constraint_validator,, alias: validator.quartHeure } 
+
+    my.validator.inclus:
+       class:      %my.validator.inclus.class%
+       arguments: [@doctrine.orm.entity_manager]
+       tags:
+            - { name: validator.constraint_validator,, alias: validator.inclus } 
+
 

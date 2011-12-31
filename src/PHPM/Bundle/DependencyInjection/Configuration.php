@@ -32,7 +32,7 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 }
-
+/*  // semble inutile 
 class QuartHeureValidator extends Extension
 {
     public function load(array $configs, ContainerBuilder $container) {
@@ -48,3 +48,19 @@ class QuartHeureValidator extends Extension
     }
 }
 
+class InclusValidator extends Extension
+{
+    public function load(array $configs, ContainerBuilder $container) {
+        // create a yaml file loader in the Resources/config/ folder
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        // load the services.yml file
+        $loader->load('services.yml');
+		
+    }
+
+    public function getAlias() {
+        return 'validator.quartHeureValidator';
+    }
+ 
+}
+*/ 
