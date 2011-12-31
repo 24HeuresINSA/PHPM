@@ -13,7 +13,7 @@ Date.prototype.getMyDate = function() {
  * Retourne la date à un format "genre SQL" : YYYY/MM/DD hh:mm:ss
  */
 Date.prototype.getMyDts = function() {
-	return date('Y/m/d H:i:s', Number(this.getTime()/1000));
+	return date('Y/m/d H:I:s', Number(this.getTime()/1000));
 }
 
 /*

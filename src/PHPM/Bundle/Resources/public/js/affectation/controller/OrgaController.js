@@ -31,14 +31,15 @@ OrgaController.prototype = {
 		pmAffectation.data.orga = pmAffectation.models.orga.getOrgas();
 		
 		pmAffectation.views.orga.setOrgas(pmAffectation.current.orga);
-		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga});
+		// attendre la récup des plages
+		setTimeout("pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga})", 1000);
 	},
 	
 	/*
 	 * Handlers
 	 */
 	// clic sur un orga
-	click: function(obj) {
+	clickHandler: function(obj) {
 		$("#orga_"+pmAffectation.current.orga).removeClass('current');
 		$("#orga_"+obj.data.id).addClass('current');
 

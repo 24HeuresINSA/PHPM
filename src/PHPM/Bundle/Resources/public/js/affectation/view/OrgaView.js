@@ -42,7 +42,7 @@ OrgaView.prototype = {
 			
 			$('#liste_orgas').append(_html);
 			
-			$('#orga_'+_iOrga).bind('click', {id: _iOrga}, pmAffectation.controllers.orga.click); // handler de click
+			$('#orga_'+_iOrga).bind('click', {id: _iOrga}, pmAffectation.controllers.orga.clickHandler); // handler de click
 		}
 		
 		$("#orga_"+pmAffectation.current.orga).addClass('current'); // met le focus là où il faut

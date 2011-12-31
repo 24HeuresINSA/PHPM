@@ -175,8 +175,12 @@ function date (format, timestamp) {
         H: function () { // 24-Hours w/leading 0; 00..23
             return _pad(f.G(), 2);
         },
-        i: function () { // Minutes w/leading 0; 00..59
+        I: function () { // Minutes w/leading 0; 00..59
             return _pad(jsdate.getMinutes(), 2);
+        },
+        // Romaric : modif
+        i: function () { // Minutes without leading 0; 0..59
+            return jsdate.getMinutes();
         },
         s: function () { // Seconds w/leading 0; 00..59
             return _pad(jsdate.getSeconds(), 2);
@@ -193,7 +197,8 @@ function date (format, timestamp) {
 */
             throw 'Not supported (see source code of date() for timezone on how to add support)';
         },
-        I: function () { // DST observed?; 0 or 1
+        // Romaric : renamed I to S
+        S: function () { // DST observed?; 0 or 1
             // Compares Jan 1 minus Jan 1 UTC to Jul 1 minus Jul 1 UTC.
             // If they are not equal, then DST is observed.
             var a = new Date(f.Y(), 0),
