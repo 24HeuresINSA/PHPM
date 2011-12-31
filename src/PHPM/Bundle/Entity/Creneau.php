@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use PHPM\Bundle\Validator\QuartHeure;
 use PHPM\Bundle\Validator\Inclus;
-
+use PHPM\Bundle\Validator\DebutAvantFin;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 /**
  * PHPM\Bundle\Entity\Creneau
@@ -19,11 +19,11 @@ class Creneau
 	
 	public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
-        $metadata->addPropertyConstraint('debut', new QuartHeure());
+        $metadata->addPropertyConstraint('debut', new QuartHeure()); // quart d'heure indivisible pour créneau
 		$metadata->addPropertyConstraint('fin', new QuartHeure());
-		$metadata->addPropertyConstraint('debut', new Inclus());
+		$metadata->addPropertyConstraint('debut', new Inclus()); // inclusion du créneau dans une plage et dans une dispo orga
         $metadata->addPropertyConstraint('fin', new Inclus());
-		
+        $metadata->addPropertyConstraint('debut', new DebutAvantFin());	// le début est avant la fin			
 		
     }
 	
@@ -59,12 +59,14 @@ class Creneau
     /**
     * @ORM\ManyToOne(targetEntity="Disponibilite", inversedBy="creneaux")
     * @ORM\JoinColumn(name="disponibilite_id", referencedColumnName="id")
+    * @Assert\Valid
     */
     protected $disponibilite;
     
     /**
     * @ORM\ManyToOne(targetEntity="PlageHoraire", inversedBy="creneaux")
     * @ORM\JoinColumn(name="plageHoraire_id", referencedColumnName="id")
+    * @Assert\Valid
     */
     protected $plageHoraire;
 
@@ -166,7 +168,13 @@ class Creneau
     
     public function toArray()
     {
-    	return array("id" => $this->getId(),"debut" => $this->getDebut(),"fin" => $this->getFin(), "duree" => $this->getDuree());
+    	return array("id" => $this->getId(),"debut" => $this->getDebut(),"fin" => $this->getFin(), "duree" => $this->getDuree(), "plageHoraire" => $this->getPlageHoraire()->toArray(),"disponibilite" => $this->getDisponibilite()->toArray());
+    }
+    
+    
+    public function __toString()
+    {
+    return $this->getDebut()->format('D H:i')." - ".$this->getFin()->format('D H:i');
     }
         
 }

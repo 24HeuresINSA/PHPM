@@ -54,6 +54,7 @@ class PlageHoraire
     /**
     * @ORM\ManyToOne(targetEntity="Tache", inversedBy="PlagesHoraires")
     * @ORM\JoinColumn(name="tache_id", referencedColumnName="id")
+    * @Assert\Valid
     */
     protected $tache;
 
@@ -188,10 +189,11 @@ class PlageHoraire
     	return $this->getDebut()->format('D H:i')." - ".$this->getFin()->format('D H:i');
     }
     
-    public function toArray()
+    public function toArray($developCreneaux = NULL)
     {
     	
     	$a = array();
+    	if(isset($developCreneaux))
     	foreach ($this->getCreneaux() as $entity){
     		$a[$entity->getId()] = $entity->toArray();
     		
@@ -203,6 +205,7 @@ class PlageHoraire
     	"fin" => $this->getFin(),
     	"duree" => $this->getDuree(),
     	"nbOrgasNecessaires" => $this->getNbOrgasNecessaires(),
+    	"tache" => $this->getTache()->toArray(),
     	"creneaux" => $a);
     }
 }

@@ -9,7 +9,7 @@
         {# c'est pas très beau - on met un code 'générique' dans un block - mais à priori la seule méthode #}
         {% block style %}
 			{% stylesheets '@PHPMBundle/Resources/public/css/style.css' %}
-				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
 			{% endstylesheets %}
 			
 			{# on inclue manuellement cette feuille de style qu'Assetic ne nous casse pas les liens des images #}

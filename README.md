@@ -27,6 +27,12 @@ e) Links assets
 f) Add NodeJS and LESS on your webserver - tutorial:
 'http://www.dobervich.com/2011/05/10/less-css-assetic-configuration-in-a-symfony2-project/'
 
+*** Mac-specific instructions ***
+Install MacPort:
+'http://www.macports.org/install.php'
+
+Then follow this:
+'http://www.blogafab.com/installer-et-utiliser-nodejs-et-le-module-less-sur-mac-os-x/'
 
 
 

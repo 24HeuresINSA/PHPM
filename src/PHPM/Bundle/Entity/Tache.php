@@ -79,15 +79,25 @@ class Tache
      */
     private $lieu;
     
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="Orga", inversedBy="taches")
+    * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id")
+    * @Assert\Valid
+    */
+    private $responsable;
+    
     /**
     * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="taches")
     * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id")
+    * @Assert\Valid
     */
     protected $categorie;
     
     /**
     * @ORM\ManyToOne(targetEntity="Confiance", inversedBy="taches")
     * @ORM\JoinColumn(name="confiance_id", referencedColumnName="id")
+    * @Assert\Valid
     */
     protected $confiance;
     
@@ -218,11 +228,12 @@ class Tache
     	return $this->getNom();
     }
     
-    public function toArray()
+    public function toArray($developCreneaux = NULL)
     {
     	$a = array();
+    	if(isset($developCreneaux))
     	foreach ($this->getPlagesHoraire() as $entity){
-    		$a[$entity->getId()] = $entity->toArray();
+    		$a[$entity->getId()] = $entity->toArray(TRUE);
     	}
     	
     	
@@ -342,5 +353,25 @@ class Tache
     public function getAgeNecessaire()
     {
         return $this->ageNecessaire;
+    }
+
+    /**
+     * Set responsable
+     *
+     * @param PHPM\Bundle\Entity\Orga $responsable
+     */
+    public function setResponsable(\PHPM\Bundle\Entity\Orga $responsable)
+    {
+        $this->responsable = $responsable;
+    }
+
+    /**
+     * Get responsable
+     *
+     * @return PHPM\Bundle\Entity\Orga 
+     */
+    public function getResponsable()
+    {
+        return $this->responsable;
     }
 }

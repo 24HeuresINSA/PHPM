@@ -20,9 +20,7 @@ class InclusValidator extends ConstraintValidator  // vérifie si un créneau es
     	
     		if($dispoObject->getId()!=0){
     			
-    			
-    		
-    			
+    		    			
     			if ($value->getTimestamp() < $dispoObject->getDebut()->getTimestamp() OR
     			$value->getTimestamp() > $dispoObject->getFin()->getTimestamp())
     			{
@@ -30,9 +28,7 @@ class InclusValidator extends ConstraintValidator  // vérifie si un créneau es
     				$this->setMessage($constraint->messageDisponibilite);
     				return FALSE;
     			}
-    			
-    			
-    			
+
     		}	
     		
     		
@@ -44,12 +40,6 @@ class InclusValidator extends ConstraintValidator  // vérifie si un créneau es
     			return FALSE;
     		}
     		
-    		
-    		
-  
-    		
-    	
-		return TRUE;
-				
+		return TRUE;	
 	}			
 }

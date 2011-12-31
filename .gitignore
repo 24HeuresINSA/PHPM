@@ -2,6 +2,7 @@
 /web/bundles/
 /web/css
 /web/js
+/web/images
 
 /app/bootstrap*
 /app/cache/*

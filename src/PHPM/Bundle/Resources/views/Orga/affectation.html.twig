@@ -6,6 +6,13 @@
 
 {% block style %}
 	{{ parent() }}
+	
+	{% stylesheets
+		'@PHPMBundle/Resources/public/css/affectation.less'
+		filter='cssrewrite,less'
+	%}
+		<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
+	{% endstylesheets %}
 
 	<link rel="stylesheet/less" href="{{ asset('bundles/phpm/css/affectation.less') }}" type="text/css" />
 {% endblock %}
