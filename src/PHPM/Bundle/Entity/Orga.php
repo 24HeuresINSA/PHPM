@@ -119,6 +119,11 @@ class Orga
     protected $confiance;
     
     /**
+    * @ORM\OneToMany(targetEntity="Tache", mappedBy="responsable")
+    */
+    protected $taches;
+    
+    /**
     * @ORM\OneToMany(targetEntity="Disponibilite", mappedBy="orga")
     */
     protected $disponibilites;
@@ -459,4 +464,24 @@ class Orga
 	
 	
 	
+
+    /**
+     * Add taches
+     *
+     * @param PHPM\Bundle\Entity\Tache $taches
+     */
+    public function addTache(\PHPM\Bundle\Entity\Tache $taches)
+    {
+        $this->taches[] = $taches;
+    }
+
+    /**
+     * Get taches
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getTaches()
+    {
+        return $this->taches;
+    }
 }

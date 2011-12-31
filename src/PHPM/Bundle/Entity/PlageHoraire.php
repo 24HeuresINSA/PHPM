@@ -50,6 +50,22 @@ class PlageHoraire
     private $fin;
     
     /**
+    * @var smallint $dureeCreneau
+    *
+    * @ORM\Column(name="dureeCreneau", type="smallint")
+    * @Assert\NotBlank()
+    */
+    private $dureeCreneau;
+    
+    /**
+     * @var smallint $recoupementCreneau
+     *
+     * @ORM\Column(name="recoupementCreneau", type="smallint")
+     * @Assert\NotBlank()
+     */
+    private $recoupementCreneau;
+    
+    /**
     * @var smallint $nbOrgasNecessaires
     *
     * @ORM\Column(name="nbOrgasNecessaires", type="smallint")
@@ -218,5 +234,45 @@ class PlageHoraire
     	"nbOrgasNecessaires" => $this->getNbOrgasNecessaires(),
     	"tache" => $this->getTache()->toArray(),
     	"creneaux" => $a);
+    }
+
+    /**
+     * Set dureeCreneau
+     *
+     * @param smallint $dureeCreneau
+     */
+    public function setDureeCreneau($dureeCreneau)
+    {
+        $this->dureeCreneau = $dureeCreneau;
+    }
+
+    /**
+     * Get dureeCreneau
+     *
+     * @return smallint 
+     */
+    public function getDureeCreneau()
+    {
+        return $this->dureeCreneau;
+    }
+
+    /**
+     * Set recoupementCreneau
+     *
+     * @param smallint $recoupementCreneau
+     */
+    public function setRecoupementCreneau($recoupementCreneau)
+    {
+        $this->recoupementCreneau = $recoupementCreneau;
+    }
+
+    /**
+     * Get recoupementCreneau
+     *
+     * @return smallint 
+     */
+    public function getRecoupementCreneau()
+    {
+        return $this->recoupementCreneau;
     }
 }
