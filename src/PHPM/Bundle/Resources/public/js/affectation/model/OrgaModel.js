@@ -40,8 +40,7 @@ OrgaModel.prototype = {
 		pmAffectation.models.orga.callBack();
 	},
 	requestError: function(data, statusText) {
-		message.alert("Impossible de récupérer la liste d'orgas");
-		console.error("Impossible de récupérer la liste d'orgas : ", statusText);
+		message.error("Impossible de récupérer les plages : " + statusText);
 	},
 	
 	/*

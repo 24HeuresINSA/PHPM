@@ -40,8 +40,7 @@ CalendarModel.prototype = {
 		pmAffectation.models.calendar.callBack();
 	},
 	requestError: function(data, statusText) {
-		message.alert("Impossible de récupérer les plages");
-		console.error("Impossible de récupérer les plages : ", statusText);
+		message.error("Impossible de récupérer les plages : " + statusText);
 	},
 	
 	/*
