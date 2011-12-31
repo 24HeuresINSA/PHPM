@@ -35,7 +35,7 @@ CalendarView.prototype = {
 		
 		for (var _i=0;_i<_nbJours;_i++) {
 			var _date = new Date(pmAffectation.data.calendar.plage[plage]['debut'].getTime()+_i*24*60*60*1000);
-			$('#calendar').append(this.makeADay(Number(_date.getMonth()+1)+'/'+_date.getDate(), _date.getDay(), _nbJours));
+			$('#calendar').append(this.makeADay(_date.getThisFormat('d/m'), _date.getDay(), _nbJours));
 		}
 		
 		pmUtils.resizeTitres(); // synchro la taille des titres
@@ -43,14 +43,11 @@ CalendarView.prototype = {
 		if (Object.keys(pmAffectation.data.calendar.plage).length != 0) {
 			this.setBoutonsPlage();
 		}
-	},
-	// fabrique un jour
-	makeADay: function(date, day, nbJours) {
-		var _html = '<div class="jour" id="jour_'+date+'" style="width: '+94/nbJours+'%;">'; // -1% because of borders, -5% pour les heures
-		_html += '<div class="titre_date_fixed">'+pmUtils.jours[day]+' '+date+'</div>';
-		_html += '<div class="titre_date">'+pmUtils.jours[day]+' '+date+'</div>'; // celui-ci reste toujours en haut
 		
-		// fixe la barre avec les dates en haut lors du scroll
+		this.setTitreBarre();
+	},
+	// sette la barre du titre des jours en haut de la page lors du scroll
+	setTitreBarre: function() {
 		$(window).scroll(function() {
 			if ($(window).scrollTop() > 0 && $(window).scrollTop() > $('.titre_date').position().top) {
 				$('.titre_date_fixed').css('top', '0');
@@ -59,13 +56,20 @@ CalendarView.prototype = {
 			} else {
 				$('.titre_date_fixed').css('top', '');
 			}
-		});
+		});		
+	},
+	// fabrique un jour
+	makeADay: function(date, day, nbJours) {
+		var _html = '<div class="jour" id="jour_'+date+'" jour="'+date+'" style="width: '+94/nbJours+'%;">'; // -1% because of borders, -5% pour les heures
+		_html += '<div class="titre_date_fixed">'+pmUtils.jours[day]+' '+date+'</div>';
+		_html += '<div class="titre_date">'+pmUtils.jours[day]+' '+date+'</div>'; // celui-ci reste toujours en haut
 		
 		for (var _i=0;_i<24;_i++) {
 			_html += '<div class="heure" id="heure_'+date+'_'+_i+'h">';
 			
 			for (var _j=0;_j<4;_j++) {
 				var _dts = date+' '+_i+':'+_j*15;
+				
 				_html += '<div class="quart_heure" id="quart_heure_'+date+'_'+_i+'h'+_j*15+'" date="'+_dts+'"></div>';
 				//_html += 'onclick="pmAffectation.controllers.calendar.click(\''+_dts+'\')"></div>';
 			}
@@ -101,19 +105,24 @@ CalendarView.prototype = {
 	 * orga disponible sur ce créneau OU créneau de tâche à attribuer
 	 */
 	setFrees: function(obj) {
-		console.log('ici');
-		
 		if (obj.type === 'orga') {
 			for (var _iDispo in pmAffectation.data.orga[obj.id]['disponibilites']) {
 				var _debut = pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['debut'];
 				var _fin = pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['fin'];
 				
-				// TODO : vérifier si on est bien dans les bornes
+				// on vérifie si on est bien dans les bornes de la plage, trim au besoin
+				if (_debut.getTime() < pmAffectation.data.calendar.plage[pmAfffectation.current.plage]['debut'].getTime()) {
+					_debut.setTime(pmAffectation.data.calendar.plage[pmAfffectation.current.plage]['debut'].getTime());
+				}
+				if (_fin.getTime() > pmAffectation.data.calendar.plage[pmAfffectation.current.plage]['fin'].getTime()) {
+					_fin.setTime(pmAffectation.data.calendar.plage[pmAfffectation.current.plage]['fin'].getTime());
+				}
 				
 				// on place les dispos, avec la classe et le click
 				for (_debut; _debut.getTime() < _fin.getTime(); _debut.setTime(_debut.getTime()+15*60*1000)) {
 					var _dts = Number(_debut.getMonth()+1)+'/'+_debut.getDate()+' '+_debut.getHours()+'h'+_debut.getMinutes();
-					console.log(_dts);
+					
+					//$('#quart_heure_')
 				}
 				
 				// on place les créneaux (et retire le handler)

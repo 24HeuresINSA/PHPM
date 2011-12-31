@@ -153,27 +153,7 @@ class PlageHoraire
         return $this->tache;
     }
     
-	public function __toString()
-    {
-    	return $this->getDebut()->format('D H:i')." - ".$this->getFin()->format('D H:i');
-    }
-    
-    public function toArray()
-    {
-    	
-    	$a = array();
-    	foreach ($this->getCreneaux() as $entity){
-    		$a[$entity->getId()] = $entity->toArray();
-    		
-    	}
-    	
-    	return array(
-    	"id" => $this->getId(),
-    	"debut" => $this->getDebut(),
-    	"fin" => $this->getFin(),
-    	"nbOrgasNecessaires" => $this->getNbOrgasNecessaires(),
-    	"creneaux" => $a);
-    }
+
     
     
 
@@ -195,5 +175,34 @@ class PlageHoraire
     public function getNbOrgasNecessaires()
     {
         return $this->nbOrgasNecessaires;
+    }
+
+    public function getDuree()
+    {
+    	return ($this->getFin()->getTimestamp()-$this->getDebut()->getTimestamp());
+    }
+    
+    	
+    	public function __toString()
+    {
+    	return $this->getDebut()->format('D H:i')." - ".$this->getFin()->format('D H:i');
+    }
+    
+    public function toArray()
+    {
+    	
+    	$a = array();
+    	foreach ($this->getCreneaux() as $entity){
+    		$a[$entity->getId()] = $entity->toArray();
+    		
+    	}
+    	
+    	return array(
+    	"id" => $this->getId(),
+    	"debut" => $this->getDebut(),
+    	"fin" => $this->getFin(),
+    	"duree" => $this->getDuree(),
+    	"nbOrgasNecessaires" => $this->getNbOrgasNecessaires(),
+    	"creneaux" => $a);
     }
 }
