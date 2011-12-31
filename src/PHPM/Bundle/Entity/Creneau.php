@@ -153,9 +153,14 @@ class Creneau
         return $this->plageHoraire;
     }
     
-    public function toArray()
+    public function getDuree()
     {
-    	return array("id" => $this->getId(),"debut" => $this->getDebut(),"fin" => $this->getFin());
+    	return ($this->getFin()->getTimestamp()-$this->getDebut()->getTimestamp());
     }
     
+    public function toArray()
+    {
+    	return array("id" => $this->getId(),"debut" => $this->getDebut(),"fin" => $this->getFin(), "duree" => $this->getDuree());
+    }
+        
 }
