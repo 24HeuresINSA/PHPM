@@ -170,5 +170,11 @@ class Creneau
     {
     	return array("id" => $this->getId(),"debut" => $this->getDebut(),"fin" => $this->getFin(), "duree" => $this->getDuree(), "plageHoraire" => $this->getPlageHoraire()->toArray(),"disponibilite" => $this->getDisponibilite()->toArray());
     }
+    
+    
+    public function __toString()
+    {
+    return $this->getDebut()->format('D H:i')." - ".$this->getFin()->format('D H:i');
+    }
         
 }
