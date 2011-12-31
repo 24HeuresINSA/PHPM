@@ -24,27 +24,36 @@ CalendarView.prototype = {
 		// calcule le nombre de jours - il faut passer par les TS, +1
 		var _nbJours = (pmAffectation.data.calendar.plage[plage]['fin'].getTime()-pmAffectation.data.calendar.plage[plage]['debut'].getTime())/(24*60*60*1000)+1;
 		
-		/// 1ère colonne : les heures
-		var _hours = '<div class="hours" id="hours">';
-		for (var _j=0;_j<24;_j++) {
-			_hours += '<div class="hour">'+_j+'h</div>';
-		}
-		_hours += '</div>';
+		// on va tout mettre en attente dans des variables et appender comme on veut à la fin
+		var _htmlBarreDates = '<div id="titres" class="titres">';
+		var _htmlJours = '';
 		
-		$('#calendar').append(_hours);
+		// colonne des heures
+		var _htmlHours = '<div class="hours" id="hours">';
+		for (var _j=0;_j<24;_j++) {
+			_htmlHours += '<div class="hour">'+_j+'h</div>';
+		}
+		_htmlHours += '</div>';
 		
 		for (var _i=0;_i<_nbJours;_i++) {
 			var _date = new Date(pmAffectation.data.calendar.plage[plage]['debut'].getTime()+_i*24*60*60*1000);
-			$('#calendar').append(this.makeADay(_date.getThisFormat('d/n'), _date.getDay(), _nbJours));
+			var _jolieDate = _date.getThisFormat('d/n');
+			
+			// on fait déjà la barre de titre
+			_htmlBarreDates += '<div class="titre_date" style="width: '+94/_nbJours+'%;">'+pmUtils.jours[_date.getDay()]+' '+_jolieDate +'</div>';
+		
+			_htmlJours += this.makeADay(_jolieDate, _date.getDay(), _nbJours);
 		}
 		
-		pmUtils.resizeTitres(); // synchro la taille des titres
+		$('#calendar').append(_htmlBarreDates+'</div><div class="jours" id="jours">'+_htmlHours+_htmlJours+'</div><br clear="all" />');
+		
+		//pmUtils.resizeTitres(); // synchro la taille des titres
 		
 		if (Object.keys(pmAffectation.data.calendar.plage).length != 0) {
 			this.setBoutonsPlage();
 		}
 		
-		this.setTitreBarre();
+		//this.setTitreBarre();
 	},
 	// sette la barre du titre des jours en haut de la page lors du scroll
 	setTitreBarre: function() {
@@ -61,8 +70,6 @@ CalendarView.prototype = {
 	// fabrique un jour
 	makeADay: function(date, jourSemaine, nbJours) {
 		var _html = '<div class="jour" id="jour_'+date+'" jour="'+date+'" style="width: '+94/nbJours+'%;">'; // -1% because of borders, -5% pour les heures
-		_html += '<div class="titre_date_fixed">'+pmUtils.jours[jourSemaine]+' '+date+'</div>';
-		_html += '<div class="titre_date">'+pmUtils.jours[jourSemaine]+' '+date+'</div>'; // celui-ci reste toujours en haut
 		
 		for (var _i=0;_i<24;_i++) {
 			_html += '<div class="heure" id="heure_'+date+'_'+_i+'" heure="'+_i+'">';
