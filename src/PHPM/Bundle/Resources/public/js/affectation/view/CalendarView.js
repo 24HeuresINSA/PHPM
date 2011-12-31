@@ -47,25 +47,9 @@ CalendarView.prototype = {
 		
 		$('#calendar').append(_htmlBarreDates+'</div><div class="jours" id="jours">'+_htmlHours+_htmlJours+'</div><br clear="all" />');
 		
-		//pmUtils.resizeTitres(); // synchro la taille des titres
-		
 		if (Object.keys(pmAffectation.data.calendar.plage).length != 0) {
 			this.setBoutonsPlage();
 		}
-		
-		//this.setTitreBarre();
-	},
-	// sette la barre du titre des jours en haut de la page lors du scroll
-	setTitreBarre: function() {
-		$(window).scroll(function() {
-			if ($(window).scrollTop() > 0 && $(window).scrollTop() > $('.titre_date').position().top) {
-				$('.titre_date_fixed').css('top', '0');
-			} else if ($(window).scrollTop() > 0) {
-				$('.titre_date_fixed').css('top', Number($('.titre_date').position().top-$(window).scrollTop())+'px');
-			} else {
-				$('.titre_date_fixed').css('top', '');
-			}
-		});		
 	},
 	// fabrique un jour
 	makeADay: function(date, jourSemaine, nbJours) {
@@ -78,7 +62,6 @@ CalendarView.prototype = {
 				var _dts = date+' '+_i+':'+_j*15;
 				
 				_html += '<div class="quart_heure" id="quart_heure_'+date+'_'+_i+':'+_j*15+'" minute="'+_j*15+'"></div>';
-				//_html += 'onclick="pmAffectation.controllers.calendar.click(\''+_dts+'\')"></div>';
 			}
 			
 			_html += '</div>';
