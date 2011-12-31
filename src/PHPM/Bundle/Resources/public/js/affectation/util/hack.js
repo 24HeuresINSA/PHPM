@@ -20,5 +20,5 @@ Date.prototype.getMyDts = function() {
  * Renvoie la date sous le format demandé
  */
 Date.prototype.getThisFormat = function(leFormat) {
-	return date(leFormat, mktime(this.getUTCHours(), this.getUTCMinutes(), this.getUTCSeconds(), Number(this.getMonth()+1), this.getDate(), this.getUTCFullYear()));
+	return date(leFormat, mktime(this.getHours(), this.getMinutes(), this.getSeconds(), Number(this.getMonth()+1), this.getDate(), this.getUTCFullYear()));
 }

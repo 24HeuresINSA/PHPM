@@ -132,7 +132,9 @@ CalendarView.prototype = {
 					
 					console.log(_iCreneau, _hDebut.getMyDts());
 					
-					_html = '<div id="creneau_'+_iCreneau+'" class="creneau" creneau="'+_iCreneau+'">Pris !</div>';
+					_html = '<div id="creneau_'+_iCreneau+'" class="creneau" creneau="'+_iCreneau+'">';
+					_html += pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'].getThisFormat('H:I')+' - ';
+					_html += pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'].getThisFormat('H:I')+'</div>';
 					
 					// on le rajoute, supprime le handler précédent et en rajoute un
 					$('.jour[jour="'+_hDebut.getDate()+'/'+Number(_hDebut.getMonth()+1)+'"] > .heure[heure="'
