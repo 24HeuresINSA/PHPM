@@ -46,11 +46,11 @@ $(document).ready(function() {
 	
 	// 1 : lancer les requêtes pour les paramètres
 	pmAffectation.controllers.parameter = new ParameterController();
-	pmAffectation.controllers.parameter.getData();
+	pmAffectation.controllers.parameter.getData(); // requêtes synchrones
 	
 	// 2 : setter le calendar
 	pmAffectation.controllers.calendar = new CalendarController();
-	pmAffectation.controllers.calendar.getData();
+	pmAffectation.controllers.calendar.getData(); // les plages sont via une requête synchrone
 	
 	// 3 : on va chercher pour la colonne orgas
 	pmAffectation.controllers.orga = new OrgaController();

@@ -19,7 +19,7 @@ ParameterModel.prototype = {
 	 * Lance les requêtes
 	 */
 	getData: function() {
-		//  TODO lance les requêtes Ajax
+		//  TODO lance les requêtes Ajax - en synchrone
 		console.log('lance les requêtes...');
 		
 		// Mock code

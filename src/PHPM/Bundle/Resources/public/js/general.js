@@ -16,6 +16,16 @@ function confirm_delete($lien)
  * Singleton
  */
 message = {
+	error: function (str) {
+		$("#message").show();
+		
+		$('#message').html('<div class="alert">'+str+'</div>');
+		
+		$("#message").fadeOut(20000, 'linear'); // disparait après 10 secondes
+		
+		console.error(str);
+	},
+	
 	alert: function (str) {
 		$("#message").show();
 		

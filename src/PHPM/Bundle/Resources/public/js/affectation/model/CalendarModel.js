@@ -21,20 +21,26 @@ CalendarModel.prototype = {
 	getData: function(callBack) {
 		pmAffectation.models.calendar.callBack = callBack;
 		
-		$.getJSON(pmAffectation.url+pmAffectation.paths.plages, pmAffectation.models.calendar.requestSuccess);
+		$.ajax({
+			url: pmAffectation.url+pmAffectation.paths.plages,
+			dataType: 'json',
+			success: pmAffectation.models.calendar.requestSuccess,
+			error: pmAffectation.models.calendar.requestError,
+			type: 'GET',
+			async: false
+		});
 	},
 	
 	/*
 	 * Récup les résultats
 	 */
-	requestSuccess: function(data, statusText) {
-		if (statusText == "success") {
-			pmAffectation.models.calendar.data = data;
-		
-			pmAffectation.models.calendar.callBack();
-		} else {
-			console.error("Impossible de récupérer les plages : ", statusText);
-		}
+	requestSuccess: function(data) {
+		pmAffectation.models.calendar.data = data;
+	
+		pmAffectation.models.calendar.callBack();
+	},
+	requestError: function(data, statusText) {
+		message.error("Impossible de récupérer les plages : " + statusText);
 	},
 	
 	/*
