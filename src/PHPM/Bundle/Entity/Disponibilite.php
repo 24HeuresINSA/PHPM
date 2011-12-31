@@ -155,7 +155,7 @@ class Disponibilite
     
     public function __toString()
     {
-    	return $this->getDebut()->format('D H:i')." - ".$this->getFin()->format('D H:i');
+    	return $this->getOrga()->__toString()." - ".$this->getDebut()->format('D H:i')." - ".$this->getFin()->format('D H:i');
     }
     
     

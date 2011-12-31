@@ -174,7 +174,7 @@ class Creneau
     
     public function __toString()
     {
-    return $this->getDebut()->format('D H:i')." - ".$this->getFin()->format('D H:i');
+    return "$this->getDebut()->format('D d H:i') - $this->getFin()->format('D d H:i')";
     }
         
 }

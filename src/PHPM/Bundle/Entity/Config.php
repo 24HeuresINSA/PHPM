@@ -76,6 +76,11 @@ class Config
     {
     	return array("id" => $this->getId(),"field" => $this->getField(),"value" => $this->getValue());
     }
+    
+    public function __toString()
+    {
+    	return "$this->getField() : $this->getValue() ";
+    }
 
     /**
      * Set value

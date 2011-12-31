@@ -213,7 +213,7 @@ class PlageHoraire
     	
     	public function __toString()
     {
-    	return $this->getDebut()->format('D H:i')." - ".$this->getFin()->format('D H:i');
+    	return $this->getTache()->__toString()." - ".$this->getDebut()->format('D H:i')." - ".$this->getFin()->format('D H:i');
     }
     
     public function toArray($developCreneaux = NULL)

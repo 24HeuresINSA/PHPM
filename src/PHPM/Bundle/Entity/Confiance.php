@@ -175,7 +175,7 @@ class Confiance
     
     public function __toString()
     {
-	return $this->getNom();
+	return $this->getValeur().' - '.$this->getNom() ;
     }
     
     public function toArray()
