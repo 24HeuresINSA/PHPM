@@ -31,8 +31,7 @@ OrgaController.prototype = {
 		pmAffectation.data.orga = pmAffectation.models.orga.getOrgas();
 		
 		pmAffectation.views.orga.setOrgas(pmAffectation.current.orga);
-		// attendre la récup des plages
-		setTimeout("pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga})", 1000);
+		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga});
 	},
 	
 	/*
