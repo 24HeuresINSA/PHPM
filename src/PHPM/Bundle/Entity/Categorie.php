@@ -31,6 +31,14 @@ class Categorie
     private $nom;
     
     /**
+    * @var string $couleur
+    *
+    * @ORM\Column(name="couleur", type="string", length=255)
+    * @Assert\NotBlank()
+    */
+    private $couleur;
+    
+    /**
     * @ORM\OneToMany(targetEntity="Tache", mappedBy="categorie")
     */
     protected $taches;
@@ -98,5 +106,25 @@ class Categorie
     public function toArray()
     {
     	return array("id" => $this->getId(),"nom" => $this->getNom());
+    }
+
+    /**
+     * Set couleur
+     *
+     * @param string $couleur
+     */
+    public function setCouleur($couleur)
+    {
+        $this->couleur = $couleur;
+    }
+
+    /**
+     * Get couleur
+     *
+     * @return string 
+     */
+    public function getCouleur()
+    {
+        return $this->couleur;
     }
 }
