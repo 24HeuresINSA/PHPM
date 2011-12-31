@@ -114,6 +114,7 @@ class Orga
     /**
     * @ORM\ManyToOne(targetEntity="Confiance", inversedBy="orgas")
     * @ORM\JoinColumn(name="confiance_id", referencedColumnName="id")
+    * @Assert\Valid
     */
     protected $confiance;
     
@@ -373,11 +374,12 @@ class Orga
         return $this->surnom;
     }
     
-    public function toArray()
+    public function toArray($developCreneaux = NULL)
     {
     	$a = array();
+    	if(isset($developCreneaux))
     	foreach ($this->getDisponibilites() as $entity){
-    		$a[$entity->getId()] = $entity->toArray();
+    		$a[$entity->getId()] = $entity->toArray(TRUE);
     	}
     	 
     	 

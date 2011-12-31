@@ -13,45 +13,45 @@ use Doctrine\ORM\EntityRepository;
 class TacheRepository extends EntityRepository
 {
 	
-	public function getTacheWithCriteria($duree, $categorie, $permis, $age, $id_orga, $id_plage, $niveau_confiance)
+	public function getTacheWithCriteria($duree, $categorie, $permis, $age, $orga_id, $plage_id, $niveau_confiance)
 	{
 	
-		$qb = $this->getEntityManager()->createQueryBuilder()->select('o')->from('PHPMBundle:Tache','o');
+		$qb = $this->getEntityManager()->createQueryBuilder()->select('t')->from('PHPMBundle:Tache','t');
 	
 		$query = $qb->getQuery();
 	
 	
 		if($duree!='')
 		{
-			$qb->where($qb->expr()->lte('o.duree',$duree));
+			$qb->where($qb->expr()->lte('t.duree',$duree));
 		}
 		if($categorie !='')
 		{
-			$qb->where($qb->expr()->eq('o.categorie_id',$categorie));
+			$qb->where($qb->expr()->eq('t.categorie_id',$categorie));
 		}
 		if($permis!='')
 		{
-			$qb->where($qb->expr()->gte('o.permisNecessaire',$permis));
+			$qb->where($qb->expr()->gte('t.permisNecessaire',$permis));
 		}
 		if($age !='')
 		{
-			$qb->where($qb->expr()->gte('o.ageNecessaire',$age));
+			$qb->where($qb->expr()->gte('t.ageNecessaire',$age));
 		}
 		
 		
 		
 		
-		if($id_orga !='')
+		if($orga_id !='')
 		{
-			$qb->where($qb->expr()->eq('o.id_orga',$id_orga));
+			$qb->where($qb->expr()->eq('t.orga_id',$orga_id));
 		}
-		if($id_plage !='')
+		if($plage_id !='')
 		{
-			$qb->where($qb->expr()->eq('o.id_plage',$id_plage));
+			$qb->where($qb->expr()->eq('t.$lage_id',$plage_id));
 		}
 		if($niveau_confiance !='')
 		{
-			$qb->where($qb->expr()->gte('o.confiance_id',$niveau_confiance));
+			$qb->where($qb->expr()->gte('t.confiance_id',$niveau_confiance));
 		}
 	
 		return $qb->getQuery()->getResult();
