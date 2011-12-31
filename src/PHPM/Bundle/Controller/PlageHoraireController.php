@@ -194,4 +194,26 @@ class PlageHoraireController extends Controller
             ->getForm()
         ;
     }
+	
+		
+	public function creationCreneau()
+	{
+		$em = $this->getDoctrine()->getEntityManager();	
+
+		if (($this->dureeCreneau + $this->recoupementCreneau) > ($this->fin->getTimestamp() - $this->debut->getTimestamp()) )	
+		{
+			$nouveauCreneau = new Creneau();
+			
+			$nouveauCreneau->setPlageHoraireId($this->getId());			
+			$nouveauCreneau->setDisponibilite(0);
+			
+			$nouveauCreneau->setDebut($this->debut);
+			$nouveauCreneau->setFin($this->fin);
+			
+			$em->persist($nouveauCreneau);
+			$em->flush();
+		}
+		
+		return $listecreneautrouve;	// a faire
+	}
 }
