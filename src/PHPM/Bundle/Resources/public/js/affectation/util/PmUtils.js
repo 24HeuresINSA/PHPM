@@ -63,9 +63,6 @@ PmUtils.prototype = {
 		// même chose pour les sidebars
 		pmUtils.setPourcentWidth('#sidebar_orga');
 		pmUtils.setPourcentWidth('#sidebar_tache');
-		
-		// pour les titres des jours
-		pmUtils.resizeTitres();
 	},
 	
 	/*
