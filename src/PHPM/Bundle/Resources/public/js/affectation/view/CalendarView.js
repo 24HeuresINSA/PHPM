@@ -112,7 +112,7 @@ CalendarView.prototype = {
 		
 		if (obj.type === 'orga') {
 			for (var _iDispo in pmAffectation.data.orga[obj.id]['disponibilites']) {
-				var _debut = pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['debut'];
+				var _debut = new Date(pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['debut'].getTime()); // on en fait une copie
 				var _fin = pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['fin'];
 				
 				// on vérifie si on est bien dans les bornes de la plage, trim au besoin
@@ -134,8 +134,6 @@ CalendarView.prototype = {
 				// on place les créneaux (et retire le handler)
 				for (var _iCreneau in pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux']) {
 					var _hDebut = pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'];
-					
-					console.log(_iCreneau, _hDebut.getMyDts());
 					
 					_html = '<div id="creneau_'+_iCreneau+'" class="creneau" creneau="'+_iCreneau+'">';
 					_html += pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'].getThisFormat('H:I')+' - ';
