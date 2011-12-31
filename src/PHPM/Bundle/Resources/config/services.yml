@@ -1,6 +1,8 @@
 parameters:
     my.validator.quartHeure.class:      PHPM\Bundle\Validator\QuartHeureValidator
     my.validator.inclus.class:      PHPM\Bundle\Validator\InclusValidator
+    my.validator.debutAvantFin.class:      PHPM\Bundle\Validator\DebutAvantFinValidator
+
 services:
     my.validator.quartHeure:
        class:      %my.validator.quartHeure.class%
@@ -14,4 +16,8 @@ services:
        tags:
             - { name: validator.constraint_validator,, alias: validator.inclus } 
 
-
+    my.validator.debutAvantFin:
+       class:      %my.validator.debutAvantFin.class%
+       arguments: [@doctrine.orm.entity_manager]
+       tags:
+            - { name: validator.constraint_validator,, alias: validator.debutAvantFin } 
