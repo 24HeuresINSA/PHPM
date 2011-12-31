@@ -21,14 +21,9 @@ class Creneau
     {
         $metadata->addPropertyConstraint('debut', new QuartHeure());
 		$metadata->addPropertyConstraint('fin', new QuartHeure());
-		$metadata->addPropertyConstraint('debut', new Inclus(array(
-            'entity'  => "PHPMBundle:PlageHoraire",
-            'groups' => array('creation, affectation')
-        )));
-		$metadata->addPropertyConstraint('fin', new Inclus(array(
-            'entity'  => "PHPMBundle:PlageHoraire",
-            'groups' => array('creation, affectation')
-        )));
+		$metadata->addPropertyConstraint('debut', new Inclus());
+        $metadata->addPropertyConstraint('fin', new Inclus());
+		
 		
     }
 	

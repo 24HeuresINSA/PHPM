@@ -14,24 +14,42 @@ class InclusValidator extends ConstraintValidator  // vérifie si un créneau es
  
     public function isValid($value, Constraint $constraint)
     {
-    		$id=$this->context->getRoot()->get($constraint->field)->getData();
-			exit(var_dump($id));
-    	$plageObject = $this->entityManager->getRepository($constraint->entity)
-                ->findOneById($plage->id);
-				
-		
-		if ($value->getTimestamp() >= $plageObject->getDebut()->getTimestamp() AND
-			$value->getTimestamp() <= $plageObject->getFin()->getTImestamp())
-			{
-				return TRUE;
-			}		
-			
-		else {
-			$this->setMessage($constraint->message);
-			return FALSE;
-		}	
-		
-		
+    	$dispoObject = $this->context->getRoot()->get("disponibilite")->getData();
+    	$plageObject = $this->context->getRoot()->get("plageHoraire")->getData();
+    	
+    	
+    		if($dispoObject->getId()!=0){
+    			
+    			
+    		
+    			
+    			if ($value->getTimestamp() < $dispoObject->getDebut()->getTimestamp() OR
+    			$value->getTimestamp() > $dispoObject->getFin()->getTimestamp())
+    			{
+    				
+    				$this->setMessage($constraint->messageDisponibilite);
+    				return FALSE;
+    			}
+    			
+    			
+    			
+    		}	
+    		
+    		
+    		
+    		if ($value->getTimestamp() < $plageObject->getDebut()->getTimestamp() OR
+    		$value->getTimestamp() > $plageObject->getFin()->getTimestamp())
+    		{
+    			$this->setMessage($constraint->messagePlage);
+    			return FALSE;
+    		}
+    		
+    		
+    		
+  
+    		
+    	
+		return TRUE;
 				
 	}			
 }
