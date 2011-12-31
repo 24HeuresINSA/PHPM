@@ -149,6 +149,12 @@ class Disponibilite
     }
     
     
+    public function getDuree()
+    {
+    	return ($this->getFin()->getTimestamp()-$this->getDebut()->getTimestamp());
+    }
+       
+    
     
     public function toArray()
     {
@@ -162,6 +168,7 @@ class Disponibilite
     	    "id" => $this->getId(),
         	"debut" => $this->getDebut(),
         	"fin" => $this->getFin(),
+        	"duree" => $this->getDuree(),
         	"creneaux" => $a);
     }
     
