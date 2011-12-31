@@ -30,6 +30,9 @@ assetic:
     # java: /usr/bin/java
     filters:
         cssrewrite: ~
+        less:
+            node: /usr/local/bin/node
+            node_paths: [/usr/local/lib/node]
         # closure:
         #     jar: %kernel.root_dir%/java/compiler.jar
         # yui_css:
