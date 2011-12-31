@@ -54,8 +54,6 @@ ParameterController.prototype = {
 			
 			$('#sidebar_tache').width(_ssTache);
 		}
-		
-		pmUtils.resizeTitres();
 	}
 	
 }
