@@ -59,12 +59,14 @@ class Creneau
     /**
     * @ORM\ManyToOne(targetEntity="Disponibilite", inversedBy="creneaux")
     * @ORM\JoinColumn(name="disponibilite_id", referencedColumnName="id")
+    * @Assert\Valid
     */
     protected $disponibilite;
     
     /**
     * @ORM\ManyToOne(targetEntity="PlageHoraire", inversedBy="creneaux")
     * @ORM\JoinColumn(name="plageHoraire_id", referencedColumnName="id")
+    * @Assert\Valid
     */
     protected $plageHoraire;
 
@@ -166,7 +168,7 @@ class Creneau
     
     public function toArray()
     {
-    	return array("id" => $this->getId(),"debut" => $this->getDebut(),"fin" => $this->getFin(), "duree" => $this->getDuree());
+    	return array("id" => $this->getId(),"debut" => $this->getDebut(),"fin" => $this->getFin(), "duree" => $this->getDuree(), "plageHoraire" => $this->getPlageHoraire()->toArray(),"disponibilite" => $this->getDisponibilite()->toArray());
     }
         
 }

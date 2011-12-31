@@ -41,6 +41,7 @@ class Disponibilite
     /**
     * @ORM\ManyToOne(targetEntity="Orga", inversedBy="disponibilites")
     * @ORM\JoinColumn(name="orga_id", referencedColumnName="id")
+    * @Assert\Valid
     */
     protected $orga;
 
@@ -156,9 +157,11 @@ class Disponibilite
        
     
     
-    public function toArray()
+    public function toArray($developCreneaux = NULL)
     {
     	$a = array();
+    	var_dump($developCreneaux);
+    	if(isset($developCreneaux))
     	foreach ($this->getCreneaux() as $entity){
     		$a[$entity->getId()] = $entity->toArray();
     
