@@ -175,6 +175,15 @@ class Disponibilite
         	"creneaux" => $a);
     }
     
+    public function toSimpleArray()
+    {
+    
+    	return array(
+            	"debut" => $this->getDebut()->format('Y-m-d H:i:s'),
+            	"fin" => $this->getFin()->format('Y-m-d H:i:s')
+    	);
+    }
+    
     
     
 }
