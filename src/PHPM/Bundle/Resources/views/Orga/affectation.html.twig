@@ -1,18 +1,9 @@
 {% extends "::base.html.twig"  %}
 
-{% block title %}
-	Affectation T&acirc;ches -> Orga
-{% endblock %}
+{% block title %}Affectation T&acirc;ches -> Orga{% endblock %}
 
 {% block style %}
 	{{ parent() }}
-	
-	{% stylesheets
-		'@PHPMBundle/Resources/public/css/affectation.less'
-		filter='cssrewrite,less'
-	%}
-		<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
-	{% endstylesheets %}
 
 	<link rel="stylesheet/less" href="{{ asset('bundles/phpm/css/affectation.less') }}" type="text/css" />
 {% endblock %}
@@ -20,7 +11,7 @@
 {% block javascript %}
 	{{ parent() }}
 	{# attention dans les include Javascript l'ordre compte ! #}
-	{% javascripts
+	{% javascripts 
 		'@PHPMBundle/Resources/public/js/affectation/util/*'
 		'@PHPMBundle/Resources/public/js/affectation/model/*'
 		'@PHPMBundle/Resources/public/js/affectation/view/*'

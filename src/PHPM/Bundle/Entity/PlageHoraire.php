@@ -4,6 +4,8 @@ namespace PHPM\Bundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use PHPM\Bundle\Validator\DebutAvantFin;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * PHPM\Bundle\Entity\PlageHoraire
@@ -13,6 +15,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class PlageHoraire
 {
+	
+	public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('debut', new DebutAvantFin());	// le début est avant la fin			
+    }	
+	
+	
+	
+	
     /**
      * @var integer $id
      *
