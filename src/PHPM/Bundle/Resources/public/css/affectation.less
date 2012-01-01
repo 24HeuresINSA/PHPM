@@ -11,13 +11,18 @@
  */
 body {
 	background: #fff;
+  height: @clientheight;
 }
 .content {
 	padding: 0;
 	width: 100%;
+	height: auto; // 100% de ce qui est disponible
 }
 .menu_action {
 	display: none;
+}
+.footer {
+  display: none;
 }
 
 /*
@@ -29,7 +34,8 @@ body {
 	padding: 10px 0;
 	border-bottom: 1px solid #666;
 	margin: 0 0 20px 0;
-	height: 40px;
+	min-height: 40px;
+	height: 10%;
 	
 	div {
 	  height: 40px;
@@ -57,7 +63,7 @@ body {
 .sidebar_orga {
 	float: left;
 	width: 19%;
-	height: @clientheight;
+  min-height: 100%;
 	border-right: 1px solid #003366;
 	margin-right: 1%;
 	
@@ -106,7 +112,7 @@ body {
 .calendar {
   float: left;
   width: 60%;
-	height: @clientheight;
+  min-height: 100%;
 	
 	/* barre avec les dates */
 	.titres {
@@ -219,6 +225,6 @@ body {
 	right: 0 !important;
 	left: auto !important;
 	width: 19%;
-	height: @clientheight;
+  height: 100%;
 	border-left: 1px solid #003366;
 }

@@ -15,6 +15,27 @@ function PmUtils() {
  * Fonctions
  */
 PmUtils.prototype = {
+	/* ******************** */
+	/* ****** LAYOUT ****** */
+	/* ******************** */
+	
+	/*
+	 * Adapte la taille du layout
+	 */
+	setAppHeight: function() {
+		
+	},
+	
+	/*
+	 * Un bouton permettant de cacher le menu du haut
+	 */
+	hideTopMenu: function() {
+		$('.header').slideToggle(500, 'swing');
+		
+		// corrige le texte
+		($('#bouton_hide_menu').html()==='^ Cacher ^')?$('#bouton_hide_menu').html('&or; Menu &or;'):$('#bouton_hide_menu').html('^ Cacher ^');
+	},
+	
 	/*
 	 * Pour les sidebars redimensionnables
 	 */
@@ -65,17 +86,10 @@ PmUtils.prototype = {
 		pmUtils.setPourcentWidth('#sidebar_tache');
 	},
 	
-	/*
-	 * Un bouton permettant de cacher le menu du haut
-	 */
-	hideTopMenu: function() {
-		$('.header').slideToggle(500, 'swing');
-		$('.footer').slideToggle(500, 'swing');
-		
-		// corrige le texte
-		($('#bouton_hide_menu').html()==='^ Cacher ^')?$('#bouton_hide_menu').html('&or; Menu &or;'):$('#bouton_hide_menu').html('^ Cacher ^');
-	},
 	
+	/* ******************** */
+	/* *** UTILITAIRES **** */
+	/* ******************** */
 	/*
 	 * Retourne la taille de l'élément (jQuery) passé
 	 * en pourcentage %

@@ -191,9 +191,12 @@ td {
  * Footer
  */
 .footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 	clear: both;
 	margin-top: 50px;
-	padding: 20px;
+	padding: 20px 0;
 	border-top: 2px solid #555;
 	background: #cacaca;
 	text-align: center;
