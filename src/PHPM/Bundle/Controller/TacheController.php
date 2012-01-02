@@ -383,17 +383,16 @@ class TacheController extends Controller
 			}
 			
 			$tacheArray = array(
-    	"id" => $entity->getId(),
-    	"importId" => $entity->getImportId(),
-    	"nom" => $entity->getNom(),
-    	"lieu" => $entity->getLieu(),
-    	"materielNecessaire" => $entity->getMaterielNecessaire(),
-    	"consignes" => $entity->getConsignes(),
-    	"confiance" => $entity->getConfiance()->getId(),
-    	"categorie" => $entity->getCategorie()->getId(),
-    	"permisNecessaire" => $entity->getPermisNecessaire(),
-    	"ageNecessaire" => $entity->getAgeNecessaire(),
-    	"creneaux" => $a);
+				"nom" => $entity->getNom(),
+				"lieu" => $entity->getLieu(),
+				"confiance" => $entity->getConfiance()->getId(),
+				"categorie" => $entity->getCategorie()->getId(),
+				"creneaux" => $a,
+				"permisNecessaire" => $entity->getPermisNecessaire()); 
+		    	//TODO bloc
+		    	
+		    	
+		    	
 			$a[$entity->getId()] = $tacheArray;
 	
 		}

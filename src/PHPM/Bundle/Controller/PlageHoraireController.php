@@ -104,24 +104,18 @@ class PlageHoraireController extends Controller
     /**
      * Creates a new PlageHoraire entity assigned to a tache.
      *
-     * @Route("/create/{idtache}", name="plagehoraire_create_tache")
+     * @Route("/newTache/{idtache}", name="plagehoraire_tache_new")
      * @Template("PHPMBundle:PlageHoraire:new.html.twig")
      */
-    public function create_tacheAction($idtache)
+    public function newTacheAction($idtache)
     {
-    	$entity  = new PlageHoraire();
-        $request = $this->getRequest();
-        $form    = $this->createForm(new PlageHoraireType(), $entity);
-        $form->bindRequest($request);
+    	$em = $this->getDoctrine()->getEntityManager();
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('plagehoraire_show', array('id' => $entity->getId())));
-            
-        }
+        $tache = $em->getRepository('PHPMBundle:Tache')->find($idtache);
+				
+    	$entity = new PlageHoraire();
+		$entity->setTache($tache);
+        $form   = $this->createForm(new PlageHoraireType(), $entity);
 
         return array(
             'entity' => $entity,

@@ -31,7 +31,7 @@ PmUtils.prototype = {
 		$('#client').height(_clientHeight+'px');
 		$('#jours').height(_clientHeight-30+'px');
 	},
-	// fonction appelée au départ, qui en plus créé un handler sur l'event resize
+	// fonction appelée lorsqu'on touche au calendrier
 	setResizeableApp: function() {
 		window.onresize = pmUtils.setAppHeight;
 		
