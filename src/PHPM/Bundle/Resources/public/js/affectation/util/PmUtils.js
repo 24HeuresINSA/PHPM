@@ -22,18 +22,35 @@ PmUtils.prototype = {
 	/*
 	 * Adapte la taille du layout
 	 */
-	setAppHeight: function() {
+	setAppHeight: function(headerHeight) {
+		var _headerHeight = (isFinite(headerHeight))? headerHeight : $('#header').height();
+		var _contentHeight = $(window).height()-_headerHeight;
+		var _clientHeight = _contentHeight-$('#menu_calendar').outerHeight()-20-3; // 20 de padding du menu du haut en plus, 3 de border
 		
+		$('#content').height(_contentHeight+'px');
+		$('#client').height(_clientHeight+'px');
+		$('#jours').height(_clientHeight-30+'px');
+	},
+	// fonction appelée au départ, qui en plus créé un handler sur l'event resize
+	setResizeableApp: function() {
+		window.onresize = pmUtils.setAppHeight;
+		
+		pmUtils.setAppHeight();
 	},
 	
 	/*
 	 * Un bouton permettant de cacher le menu du haut
 	 */
 	hideTopMenu: function() {
-		$('.header').slideToggle(500, 'swing');
-		
-		// corrige le texte
-		($('#bouton_hide_menu').html()==='^ Cacher ^')?$('#bouton_hide_menu').html('&or; Menu &or;'):$('#bouton_hide_menu').html('^ Cacher ^');
+		if ($('.header').css('display') === 'none') {
+			$('.header').show(500, 'swing');
+			$('#bouton_hide_menu').html('^ Cacher ^');
+			pmUtils.setAppHeight(79);
+		} else {
+			$('.header').hide(500, 'swing');
+			$('#bouton_hide_menu').html('&or; Menu &or;');
+			pmUtils.setAppHeight(0);
+		}
 	},
 	
 	/*

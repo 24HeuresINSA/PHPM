@@ -1,6 +1,11 @@
 /*
  * Fonctions Js générales
  */
+// couillon et tellement utile
+function ici() {
+	console.log('ici');
+}
+
 function error(str) {
 	console.error(str);
 }

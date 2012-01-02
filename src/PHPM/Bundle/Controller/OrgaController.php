@@ -440,7 +440,7 @@ class OrgaController extends Controller
 			
 		}
     	
-    	exit(var_dump($orgaArray));
+    	//exit(var_dump($orgaArray));
     	
     	$response = new Response();
     	$response->setContent(json_encode($orgaArray));

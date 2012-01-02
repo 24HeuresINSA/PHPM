@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PHPM\Bundle\Entity\PlageHoraire;
 use PHPM\Bundle\Form\PlageHoraireType;
+use PHPM\Bundle\Entity\Creneau;
 
 /**
  * PlageHoraire controller.
@@ -208,6 +209,8 @@ class PlageHoraireController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:PlageHoraire')->find($id);
+		$nobody = $em->getRepository('PHPMBundle:Orga')->find(0);
+		$dispoNobody = $em->getRepository('PHPMBundle:Disponibilite')->findOneByOrga($nobody);
 
 		$arrayCreneauCree = array();
 		
@@ -218,14 +221,14 @@ class PlageHoraireController extends Controller
 		else
 		{	
 	
-			if (( $entity->dureeCreneau +  $entity->recoupementCreneau) > ( $entity->fin->getTimestamp() -  $entity->debut->getTimestamp()) )	
+			if (( $entity->getdureeCreneau() +  $entity->getrecoupementCreneau()) > ( $entity->getfin()->getTimestamp() -  $entity->getdebut()->getTimestamp()) )	
 			{
 				$nouveauCreneau = new Creneau();
 				
-				$nouveauCreneau->setPlageHoraireId($id);			
-				$nouveauCreneau->setDisponibilite(0);
+				$nouveauCreneau->setPlageHoraire($entity);			
+				$nouveauCreneau->setDisponibilite($nobody);
 				
-				$nouveauCreneau->setDebut( $entity->debut);
+				$nouveauCreneau->setDebut($entity->debut);
 				$nouveauCreneau->setFin($entity->fin);
 				
 				$em->persist($nouveauCreneau);
@@ -235,21 +238,21 @@ class PlageHoraireController extends Controller
 			
 			else 
 			{	
-				$tempsRestantAAffecter = ($entity->fin->getTimestamp() - $entity->debut->getTimestamp() );
-				$debutDesCreneaux = $entity->debut->getTimestamp();
-				while (($entity->dureeCreneau + $entity->recoupementCreneau) < $tempsRestantAAffecter)
+				$tempsRestantAAffecter = ($entity->getfin()->getTimestamp() - $entity->getdebut()->getTimestamp() );
+				$debutDesCreneaux = $entity->getdebut()->getTimestamp();
+				while ( ($entity->getdureeCreneau() + $entity->getrecoupementCreneau()) < $tempsRestantAAffecter)
 					{
 						$nouveauCreneau = new Creneau();
 						
-						$nouveauCreneau->setPlageHoraireId($id);			
-						$nouveauCreneau->setDisponibilite(0);
+						$nouveauCreneau->setPlageHoraire($entity);			
+						$nouveauCreneau->setDisponibilite($dispoNobody);
 						
 						$nouveauCreneau->setDebut((new \DateTime($debutDesCreneaux)));					
-						$nouveauCreneau->setFin((new \DateTime($debutDesCreneaux + $entity->dureeCreneau + $entity->recoupementCreneau)));
+						$nouveauCreneau->setFin((new \DateTime($debutDesCreneaux + $entity->getdureeCreneau() + $entity->getrecoupementCreneau())));
 						
 						
-						$tempsRestantAAffecter = $tempsRestantAAffecter- ($entity->dureeCreneau + $entity->recoupementCreneau);
-											
+						$tempsRestantAAffecter = ($tempsRestantAAffecter- ($entity->getdureeCreneau() + $entity->getrecoupementCreneau()));
+						$debutDesCreneaux += ($entity->getdureeCreneau() + $entity->getrecoupementCreneau());					
 						
 						$em->persist($nouveauCreneau);
 						$em->flush();						
@@ -259,11 +262,11 @@ class PlageHoraireController extends Controller
 					{
 						$nouveauCreneau = new Creneau();
 				
-						$nouveauCreneau->setPlageHoraireId($id);			
-						$nouveauCreneau->setDisponibilite(0);
+						$nouveauCreneau->setPlageHoraire($entity);			
+						$nouveauCreneau->setDisponibilite($dispoNobody);
 				
-						$nouveauCreneau->setDebut( (new \DateTime($entity->fin->getTimestamp() - $tempsRestantAAffecter)));
-						$nouveauCreneau->setFin($entity->fin);
+						$nouveauCreneau->setDebut( (new \DateTime($entity->getfin()->getTimestamp() - $tempsRestantAAffecter)));
+						$nouveauCreneau->setFin($entity->getfin());
 				
 						$em->persist($nouveauCreneau);
 						$em->flush();
@@ -272,8 +275,8 @@ class PlageHoraireController extends Controller
 			}
 			
 		}
-		var_dump($arrayCreneauCree);
-		return $arrayCreneauCree;	// a faire
+		//var_dump($arrayCreneauCree);
+		return $arrayCreneauCree;
 		
 		
 		
