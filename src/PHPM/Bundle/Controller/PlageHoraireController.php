@@ -195,25 +195,87 @@ class PlageHoraireController extends Controller
         ;
     }
 	
+    /**
+     * Create a creneau entity.
+     *
+     * @Route("/{id}/creationCreneau", name="plagehoraire_creationCreneau")
+     * 
+     */	
 		
-	public function creationCreneau()
+	public function creationCreneauAction($id)   // creation de créneau à partir de la duréer de la plage horaire et du recoupement
 	{
-		$em = $this->getDoctrine()->getEntityManager();	
-
-		if (($this->dureeCreneau + $this->recoupementCreneau) > ($this->fin->getTimestamp() - $this->debut->getTimestamp()) )	
-		{
-			$nouveauCreneau = new Creneau();
-			
-			$nouveauCreneau->setPlageHoraireId($this->getId());			
-			$nouveauCreneau->setDisponibilite(0);
-			
-			$nouveauCreneau->setDebut($this->debut);
-			$nouveauCreneau->setFin($this->fin);
-			
-			$em->persist($nouveauCreneau);
-			$em->flush();
-		}
 		
-		return $listecreneautrouve;	// a faire
+		$em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('PHPMBundle:PlageHoraire')->find($id);
+
+		$arrayCreneauCree = array();
+		
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find PlageHoraire entity.');
+        }
+		
+		else
+		{	
+	
+			if (( $entity->dureeCreneau +  $entity->recoupementCreneau) > ( $entity->fin->getTimestamp() -  $entity->debut->getTimestamp()) )	
+			{
+				$nouveauCreneau = new Creneau();
+				
+				$nouveauCreneau->setPlageHoraireId($id);			
+				$nouveauCreneau->setDisponibilite(0);
+				
+				$nouveauCreneau->setDebut( $entity->debut);
+				$nouveauCreneau->setFin($entity->fin);
+				
+				$em->persist($nouveauCreneau);
+				$em->flush();
+				array_push($arrayCreneauCree, $nouveauCreneau);
+			}
+			
+			else 
+			{	
+				$tempsRestantAAffecter = ($entity->fin->getTimestamp() - $entity->debut->getTimestamp() );
+				$debutDesCreneaux = $entity->debut->getTimestamp();
+				while (($entity->dureeCreneau + $entity->recoupementCreneau) < $tempsRestantAAffecter)
+					{
+						$nouveauCreneau = new Creneau();
+						
+						$nouveauCreneau->setPlageHoraireId($id);			
+						$nouveauCreneau->setDisponibilite(0);
+						
+						$nouveauCreneau->setDebut((new \DateTime($debutDesCreneaux)));					
+						$nouveauCreneau->setFin((new \DateTime($debutDesCreneaux + $entity->dureeCreneau + $entity->recoupementCreneau)));
+						
+						
+						$tempsRestantAAffecter = $tempsRestantAAffecter- ($entity->dureeCreneau + $entity->recoupementCreneau);
+											
+						
+						$em->persist($nouveauCreneau);
+						$em->flush();						
+						array_push($arrayCreneauCree, $nouveauCreneau);			
+					}
+				if ($tempsRestantAAffecter > 0)	
+					{
+						$nouveauCreneau = new Creneau();
+				
+						$nouveauCreneau->setPlageHoraireId($id);			
+						$nouveauCreneau->setDisponibilite(0);
+				
+						$nouveauCreneau->setDebut( (new \DateTime($entity->fin->getTimestamp() - $tempsRestantAAffecter)));
+						$nouveauCreneau->setFin($entity->fin);
+				
+						$em->persist($nouveauCreneau);
+						$em->flush();
+						array_push($arrayCreneauCree, $nouveauCreneau);
+					}
+			}
+			
+		}
+		var_dump($arrayCreneauCree);
+		return $arrayCreneauCree;	// a faire
+		
+		
+		
 	}
 }

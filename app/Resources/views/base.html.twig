@@ -31,7 +31,11 @@
     <body>
         <div class="header" >
         	<div class="title">
-        		<h1>PlanningMaker &gt; {{ block('title') }}</h1> <input id="autocomplete" />
+        		<h1>PlanningMaker &gt; {{ block('title') }}</h1> 
+        		<form method="post" action="{{ path('search') }}"><input id="search" />
+        		</form>
+        		
+        		
         	</div>
         	
         	<div class="menu">
