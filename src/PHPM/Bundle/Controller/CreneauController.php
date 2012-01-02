@@ -250,7 +250,7 @@ class CreneauController extends Controller
     			
     	}
     	 
-    	exit(var_dump($creneauArray));
+    	//exit(var_dump($creneauArray));
     	 
     	$response = new Response();
     	$response->setContent(json_encode($creneauArray));
