@@ -200,7 +200,7 @@ class PlageHoraireController extends Controller
      * Create a creneau entity.
      *
      * @Route("/{id}/creationCreneau", name="plagehoraire_creationCreneau")
-     * @Template
+     * 
      */	
 		
 	public function creationCreneauAction($id)   // creation de créneau à partir de la duréer de la plage horaire et du recoupement
@@ -218,21 +218,20 @@ class PlageHoraireController extends Controller
             throw $this->createNotFoundException('Unable to find PlageHoraire entity.');
         }
 		
-		else
-		{	
 			
 			// suppression des creneaux déjà  existant
 			
-			$creneauASupprimer = $em->getRepository('PHPMBundle:Creneau')->findOneByPlageHoraire($entity);
+			$creneauxASupprimer = $em->getRepository('PHPMBundle:Creneau')->findByPlageHoraire($entity->getId());
 			
-			while (!$creneauASupprimer)
-				{	
+			foreach ($creneauxASupprimer as $creneauASupprimer) {
+				
+			
 					$nouvelID = $creneauASupprimer->getId();
 					echo $nouvelID;
 					
 					$em->remove($creneauASupprimer);
            			$em->flush();
-					$creneauASupprimer = $em->getRepository('PHPMBundle:Creneau')->findOneByPlageHoraire($entity);
+					
 				}
 									
 			
@@ -251,7 +250,6 @@ class PlageHoraireController extends Controller
 				
 				$em->persist($nouveauCreneau);
 				$em->flush();
-				array_push($arrayCreneauCree, $nouveauCreneau);
 			}
 			
 			else 
@@ -277,8 +275,7 @@ class PlageHoraireController extends Controller
 						$debutDesCreneaux += ($entity->getdureeCreneau() + $entity->getrecoupementCreneau());					
 						
 						$em->persist($nouveauCreneau);
-						$em->flush();						
-						array_push($arrayCreneauCree, $nouveauCreneau);			
+						$em->flush();								
 					}
 				if ($tempsRestantAAffecter > 0)	
 					{
@@ -295,13 +292,12 @@ class PlageHoraireController extends Controller
 						
 						$em->persist($nouveauCreneau);
 						$em->flush();
-						array_push($arrayCreneauCree, $nouveauCreneau);
 					}
 			}
 			
-		}
-		
-		return array('entities' => $arrayCreneauCree);
+	//	  return array();
+	//  	 return $this->redirect($this->generateUrl('creneau_show', array('id' => $entity->getId())));
+            
 		
 		
 		
