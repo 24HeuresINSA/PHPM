@@ -78,7 +78,8 @@ class OrgaRepository extends EntityRepository
 	}
 	
 	
-	
+//	getOrgasWithCriteriaTache numéro 2 pour gérer le tache id
+/*
 public function getOrgasWithCriteriaTache($permis, $maxDateNaissance, $tache_id, $plage_id, $niveau_confiance)
 	{
 		
@@ -163,5 +164,5 @@ public function getOrgasWithCriteriaTache($permis, $maxDateNaissance, $tache_id,
 		
 		
 	}
-	
+*/	
 }
