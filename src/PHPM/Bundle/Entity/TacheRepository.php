@@ -53,5 +53,13 @@ class TacheRepository extends EntityRepository
 	
 	}
 	
+	public function search($s)
+	{
+		return $this->getEntityManager()
+		->createQuery("SELECT t FROM PHPMBundle:Tache c WHERE (t.nom LIKE :s OR t.consignes LIKE :s OR t.materielNecessaire LIKE :s OR t.lieu LIKE :s )")
+		->setParameter('s', "%".$s."%")
+		->getResult();
+	}
+	
 	
 }
