@@ -1,3 +1,4 @@
+{% if entities %}
 {% import "::macro_bouton_edit.html.twig" as bouton_edit %}
 <table class="records_list">
     <thead>
@@ -39,3 +40,4 @@
     {% endfor %}
     </tbody>
 </table>
+{% endif %}

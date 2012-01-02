@@ -1,0 +1,11 @@
+{% extends "::base.html.twig"  %}
+
+{% block title %}
+	Plage horaires -> Cr&eacute;ation cr&eacute;neaux
+{% endblock %}
+
+{% block content %}
+
+{% include 'PHPMBundle:Creneau:afficheListe.html.twig' with {'entities': entities} %}
+
+{% endblock %}

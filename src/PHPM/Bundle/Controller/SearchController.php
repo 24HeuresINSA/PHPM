@@ -19,7 +19,13 @@ class SearchController extends Controller
         $request = $this->getRequest();
 		
 		$searchString= $request->request->get('s', '');	
-		//var_dump($searchString);
-        return array('searchString' => $searchString);
+		
+		$em = $this->getDoctrine()->getEntityManager();
+
+        $orgas = $em->getRepository('PHPMBundle:Orga')->search($searchString);
+		$taches = $em->getRepository('PHPMBundle:Tache')->search($searchString);
+
+		
+        return array('searchString' => $searchString, 'orgas' => $orgas, 'taches' => $taches);
     }
 }

@@ -5,30 +5,11 @@
 {% endblock %}
 
 {% block content %}
-{% import "::macro_bouton_edit.html.twig" as bouton_edit %}
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Debut</th>
-            <th>Fin</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr style="cursor:pointer" onclick="window.location='{{ path('creneau_show', { 'id': entity.id }) }}'">
-            <td><a href="{{ path('creneau_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{% if entity.debut %}{{ entity.debut|date('Y-m-d H:i:s') }}{% endif%}</td>
-            <td>{% if entity.fin %}{{ entity.fin|date('Y-m-d H:i:s') }}{% endif%}</td>
-            <td>
-				{{ bouton_edit.bouton_edit( path('creneau_edit', { 'id': entity.id }) ) }}
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+
+{% include 'PHPMBundle:Creneau:afficheListe.html.twig' with {'entities': entities} %}
+
 {% endblock %}
+
 
 {% block menu_action %}
 <ul>
