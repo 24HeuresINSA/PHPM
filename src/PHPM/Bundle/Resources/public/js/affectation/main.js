@@ -33,7 +33,7 @@
  */
 	// les urls sur lesquelles on fera les requêtes
 	pmAffectation.paths.plages = 'config/get/manifestation.plages';
-	pmAffectation.paths.orgas = 'orga/basicquery.json';
+	pmAffectation.paths.orgas = 'orga/query.json';
 	
 /*
  * Lancement
