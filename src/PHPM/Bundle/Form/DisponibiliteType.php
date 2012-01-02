@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilder;
 
 class DisponibiliteType extends AbstractType
 {
-	
+
 	public $orgaOptions = array();
 	
     public function buildForm(FormBuilder $builder, array $options)
