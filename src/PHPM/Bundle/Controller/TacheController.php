@@ -357,9 +357,7 @@ class TacheController extends Controller
 		$duree= $request->request->get('duree', '');
 		$categorie= $request->request->get('categorie_id', '');
 		$permis= $request->request->get('permisNecessaire', '');
-		$age= $request->request->get('ageNecessaire', '');
-		$id_orga= $request->request->get('id_orga', '');
-		$id_plage= $request->request->get('id_plage', '');
+		$age= $request->request->get('ageNecessaire', '0');
 		$niveau_confiance= $request->request->get('confiance_id', '');
 	
 		
@@ -367,7 +365,7 @@ class TacheController extends Controller
 	
 		$em = $this->getDoctrine()->getEntityManager();
 	
-		$entities = $em->getRepository('PHPMBundle:Tache')->getTacheWithCriteria($duree, $categorie, $permis, $age, $id_orga, $id_plage, $niveau_confiance);
+		$entities = $em->getRepository('PHPMBundle:Tache')->getTacheWithCriteria($duree, $categorie, $permis, $age, $niveau_confiance);
 	
 		//exit(var_dump($entities));
 		$response = new Response();
@@ -383,10 +381,7 @@ class TacheController extends Controller
 	
 		$response->setContent(json_encode($a));
 	
-	
-		 
-	
-		 
+
 	
 		return $response;
 	}

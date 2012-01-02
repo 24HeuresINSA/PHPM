@@ -13,19 +13,22 @@ use Doctrine\ORM\EntityRepository;
 class TacheRepository extends EntityRepository
 {
 	
-	public function getTacheWithCriteria($duree, $categorie, $permis, $age, $orga_id, $plage_id, $niveau_confiance)
+	public function getTacheWithCriteria($duree, $categorie, $permis, $age, $niveau_confiance)
 	{
 	
 		$qb = $this->getEntityManager()->createQueryBuilder();
-	
-		$query = $qb->getQuery();
 		$expr = $qb->expr();
 		
-		$andx = $expr->andx('1<>0');
+		$andx = $expr->andx(
+		
+		$expr->eq('ct.plageHoraire', 'p'),
+		$expr->eq('p.tache','t')
+		
+		);
 	
 		if($duree!='')
 		{
-			$andx->add($qb->expr()->lte('t.duree',$duree));
+			$andx->add('(ct.fin - ct.debut < '.$duree.' )');
 		}
 		if($categorie !='')
 		{
@@ -44,12 +47,21 @@ class TacheRepository extends EntityRepository
 			$andx->add($qb->expr()->gte('t.confiance_id',$niveau_confiance));
 		}
 		
-		$qb->select('t')->from('PHPMBundle:Tache','t')
+		$qb
+		->select('t')
+		
+		->from('PHPMBundle:PlageHoraire', 'p')
+		->from('PHPMBundle:Tache', 't')
+		->from('PHPMBundle:Creneau', 'ct')
+		
 		->where($andx);
 		
-		exit(var_dump($qb->getQuery()->getDQL()));
+		
+		
+		//exit(var_dump($qb->getQuery()->getDQL()));
+		
+		
 		return $qb->getQuery()->getResult();
-	
 	
 	}
 	
