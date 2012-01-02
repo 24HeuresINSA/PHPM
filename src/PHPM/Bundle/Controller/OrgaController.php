@@ -337,9 +337,9 @@ class OrgaController extends Controller
 							{
 								$entitydisponibilite = new disponibilite();						
 								$entitydisponibilite->setOrga($idOrgaAjoute);
-								$debutdispo = date ('y-m-d', $dispoAAjoute[0]);
+								$debutdispo = date ('y-m-d H:i:s', $dispoAAjoute[0]);
 								$entitydisponibilite->setDebut(new \DateTime("20$debutdispo"));
-								$findispo = date ('y-m-d', $dispoAAjoute[1]);
+								$findispo = date ('y-m-d H:i:s', $dispoAAjoute[1]);
 								$entitydisponibilite->setFin(new \DateTime("20$findispo"));
 								$em->persist($entitydisponibilite);
 								$em->flush();							
