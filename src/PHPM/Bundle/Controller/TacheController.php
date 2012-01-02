@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PHPM\Bundle\Entity\Tache;
+use PHPM\Bundle\Entity\Confiance;
+use PHPM\Bundle\Entity\Categorie;
 use PHPM\Bundle\Form\TacheType;
 
 /**
@@ -370,21 +372,28 @@ class TacheController extends Controller
 		//exit(var_dump($entities));
 		$response = new Response();
 	
-		$a = array();
+		
 			
 		foreach ($entities as $entity){
+			$a = array();
+			
+			
+			foreach ($entity->getPlagesHoraire() as $creneau){
+			$a[$creneau->getId()] = $creneau->toArray();
+			}
+			
 			$tacheArray = array(
-    	"id" => $this->getId(),
-    	"importId" => $this->getImportId(),
-    	"nom" => $this->getNom(),
-    	"lieu" => $this->getLieu(),
-    	"materielNecessaire" => $this->getMaterielNecessaire(),
-    	"consignes" => $this->getConsignes(),
-    	"confiance" => $this->getConfiance()->getId(),
-    	"categorie" => $this->getCategorie()->getId(),
-    	"permisNecessaire" => $this->getPermisNecessaire(),
-    	"ageNecessaire" => $this->getAgeNecessaire(),
-    	"plagesHoraire" => $a);
+    	"id" => $entity->getId(),
+    	"importId" => $entity->getImportId(),
+    	"nom" => $entity->getNom(),
+    	"lieu" => $entity->getLieu(),
+    	"materielNecessaire" => $entity->getMaterielNecessaire(),
+    	"consignes" => $entity->getConsignes(),
+    	"confiance" => $entity->getConfiance()->getId(),
+    	"categorie" => $entity->getCategorie()->getId(),
+    	"permisNecessaire" => $entity->getPermisNecessaire(),
+    	"ageNecessaire" => $entity->getAgeNecessaire(),
+    	"creneaux" => $a);
 			$a[$entity->getId()] = $tacheArray;
 	
 		}
