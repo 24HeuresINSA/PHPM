@@ -194,4 +194,30 @@ class DisponibiliteController extends Controller
             ->getForm()
         ;
     }
+	
+	/**
+     * Displays a form to create a new Disponibilite entity, already assigned to an Orga.
+     *
+     * @Route("/neworga/{orgaid}", name="disponibilite_orga_new")
+     * @Template("PHPMBundle:Disponibilite:new.html.twig")
+     */
+    public function newOrgaAction($orgaid)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $orga = $em->getRepository('PHPMBundle:Orga')->find($orgaid);	
+			
+        $entity = new Disponibilite();
+		$entity->setOrga($orga);
+		$dispoform = new DisponibiliteType($orga);
+		$dispoform->disableOrga();
+        $form   = $this->createForm($dispoform, $entity );
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        );
+    }
+	
+	
 }
