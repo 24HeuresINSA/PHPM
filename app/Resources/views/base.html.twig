@@ -29,16 +29,16 @@
         {% endblock %}
     </head>
     <body>
-        <div class="header" >
-        	<div class="title">
-        		<h1>PlanningMaker &gt; {{ block('title') }}</h1> 
-        		<form method="post" action="{{ path('search') }}"><input id="search" />
-        		</form>
+        <div class="header" id="header" >
+        	<div class="title" id="title">
+        		<h1>PlanningMaker &gt; {{ block('title') }}</h1>
         		
-        		
+        		<form method="post" action="{{ path('search') }}">
+        			<input id="searchBox" name="s" />
+        		</form>        		
         	</div>
         	
-        	<div class="menu">
+        	<div class="menu" id="menu">
         		<ul>
         			<li><a href="{{ path('phpm__default_home') }}">Tableau de bord</a></li>
         			<li><a href="{{ path('orga') }}">Orga</a></li>
@@ -56,23 +56,21 @@
         	</div>
        	</div>
        	
-		<div class="menu_action">
+		<div class="menu_action" id="menu_action">
         	{% block menu_action %}
         		<p>Menu Actions non-implémenté !</p>
         	{% endblock %}
         </div> 
         
-        <div class="content">
+        <div class="content" id="content">
         	<div class="message" id="message"><!-- ici arriveront les messages, classes alert ou success --></div>
         	
         	{% block content %}
         		<p>Il y aura ici le contenu</p>
         	{% endblock %}
-        	
-        	<br clear="all" />
         </div> 
         
-        <div class="footer">
+        <div class="footer" id="footer">
         	&copy;2011 nous - PHPM
         </div>
     </body>

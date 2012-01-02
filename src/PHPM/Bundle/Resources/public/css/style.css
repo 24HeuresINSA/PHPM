@@ -5,12 +5,18 @@
 /*
  * Elements generaux
  */
-body {
-	background: #eee;
-	border: 0;
-	color: #000;
+html {
 	padding: 0;
-	margin: 0;
+	margin: 0;	
+	border: 0;
+	height: 100%;
+}
+body {
+	padding: 0;
+	margin: 0;	
+	border: 0;
+	background: #eee;
+	color: #000;
 	height: 100%;
 	font-family: Arial, Helvetica, sans-serif;
 	z-index: 500;
@@ -120,7 +126,7 @@ a {
 .message {
 	float: left;
 	width: 80%;
-	margin: -25px 10%;
+	margin: 35px 10%;
 	padding: 0;
 	z-index: 500;
 	position: fixed;

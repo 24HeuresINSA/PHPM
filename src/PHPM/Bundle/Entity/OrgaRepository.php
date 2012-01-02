@@ -76,6 +76,13 @@ class OrgaRepository extends EntityRepository
 	
 	}
 	
+	public function search($s)
+	{
+		return $this->getEntityManager()
+		->createQuery("SELECT o FROM PHPMBundle:Orga c WHERE (o.nom LIKE :s OR o.prenom LIKE :s OR o.surnom LIKE :s OR o.telephone LIKE :s OR o.email LIKE :s OR o.commentaire LIKE :s)")
+		->setParameter('s', "%".$s."%")
+		->getResult();	
+	}
 	
 //	getOrgasWithCriteriaTache numéro 2 pour gérer le tache id
 /*

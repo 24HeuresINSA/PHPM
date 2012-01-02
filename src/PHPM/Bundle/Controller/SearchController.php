@@ -19,6 +19,7 @@ class SearchController extends Controller
         $request = $this->getRequest();
 		
 		$searchString= $request->request->get('s', '');	
-        return array();
+		//var_dump($searchString);
+        return array('searchString' => $searchString);
     }
 }

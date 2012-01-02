@@ -55,6 +55,10 @@ $(document).ready(function() {
 	pmAffectation.controllers.calendar = new CalendarController();
 	pmAffectation.controllers.calendar.getData();
 	
+	// 2,5 : deuxième partie du layout
+	// il fallait attendre que le calendrier soit chargé pour
+	pmUtils.setAppHeight();
+	
 	// 3 : on va chercher pour la colonne orgas
 	pmAffectation.controllers.orga = new OrgaController();
 	pmAffectation.controllers.orga.getData();
