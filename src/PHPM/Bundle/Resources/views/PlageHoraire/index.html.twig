@@ -14,6 +14,7 @@
             <th>Fin</th>
             <th>T&acirc;che</th>
             <th>NbOrgasNecessaires</th>
+            <th>Recoupement</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -25,6 +26,7 @@
             <td>{% if entity.fin %}{{ entity.fin|date('Y-m-d H:i:s') }}{% endif%}</td>
             <td>{% if entity.tache %}{{ entity.tache }}{% endif%}</td>
             <td>{{entity.nbOrgasNecessaires}}</td>
+            <td>{{entity.recoupementCreneau}}</td>
             <td>
 				{{ bouton_edit.bouton_edit( path('plagehoraire_edit', { 'id': entity.id }) ) }}
             </td>

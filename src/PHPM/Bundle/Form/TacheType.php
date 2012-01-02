@@ -19,6 +19,7 @@ class TacheType extends AbstractType
 			->add('materielNecessaire')
 			->add('permisNecessaire')
 			->add('ageNecessaire')
+			->add('responsable')
         ;
     }
 

@@ -16,6 +16,7 @@
             <th>Mat&eacute;rielNecessaire</th>
             <th>permisNecessaire</th>
             <th>ageNecessaire</th>
+            <th>responsable</th>
             <th>Actions</th>
             
         </tr>
@@ -30,6 +31,7 @@
             <td>{{ entity.materielNecessaire }}</td>
             <td>{{ entity.permisNecessaire }}</td>
             <td>{{ entity.ageNecessaire }}</td>
+            <td>{{ entity.responsable }}</td>
             <td>
 					{{ bouton_edit.bouton_edit( path('tache_edit', { 'id': entity.id }) ) }}
             </td>

@@ -13,12 +13,11 @@
             <th>Debut</th>
             <th>Fin</th>
             <th>Actions</th>
-            <th>Orga resp et orga affect&eacute;s ????</th>
         </tr>
     </thead>
     <tbody>
     {% for entity in entities %}
-        <tr>
+        <tr style="cursor:pointer" onclick="window.location='{{ path('creneau_show', { 'id': entity.id }) }}'">
             <td><a href="{{ path('creneau_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td>{% if entity.debut %}{{ entity.debut|date('Y-m-d H:i:s') }}{% endif%}</td>
             <td>{% if entity.fin %}{{ entity.fin|date('Y-m-d H:i:s') }}{% endif%}</td>
