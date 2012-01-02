@@ -45,7 +45,7 @@ CalendarView.prototype = {
 			_htmlJours += this.makeADay(_jolieDate, _date.getDay(), _nbJours);
 		}
 		
-		$('#calendar').append(_htmlBarreDates+'</div><div class="jours" id="jours">'+_htmlHours+_htmlJours+'</div><br clear="all" />');
+		$('#calendar').append(_htmlBarreDates+'</div><div class="jours" id="jours">'+_htmlHours+_htmlJours+'</div>');
 		
 		if (Object.keys(pmAffectation.data.calendar.plage).length != 0) {
 			this.setBoutonsPlage();
