@@ -21,7 +21,6 @@ OrgaModel.prototype = {
 	getData: function(callBack) {
 		pmAffectation.models.orga.callBack = callBack;
 		
-		//$.post(pmAffectation.url+pmAffectation.paths.orgas, pmAffectation.models.orga.requestSuccess, 'json');
 		$.ajax({
 			url: pmAffectation.url+pmAffectation.paths.orgas,
 			dataType: 'json',
@@ -40,6 +39,8 @@ OrgaModel.prototype = {
 		pmAffectation.models.orga.callBack();
 	},
 	requestError: function(data, statusText) {
+		console.log(data);
+		
 		message.error("Impossible de récupérer les plages : " + statusText);
 	},
 	

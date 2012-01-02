@@ -200,7 +200,7 @@ class PlageHoraireController extends Controller
      * Create a creneau entity.
      *
      * @Route("/{id}/creationCreneau", name="plagehoraire_creationCreneau")
-     * 
+     * @Template
      */	
 		
 	public function creationCreneauAction($id)   // creation de créneau à partir de la duréer de la plage horaire et du recoupement
@@ -220,7 +220,22 @@ class PlageHoraireController extends Controller
 		
 		else
 		{	
-	
+			
+			// suppression des creneaux déjà  existant
+			
+			$creneauASupprimer = $em->getRepository('PHPMBundle:Creneau')->findOneByPlageHoraire($entity);
+			
+			while (!$creneauASupprimer)
+				{	
+					$nouvelID = $creneauASupprimer->getId();
+					echo $nouvelID;
+					
+					$em->remove($creneauASupprimer);
+           			$em->flush();
+					$creneauASupprimer = $em->getRepository('PHPMBundle:Creneau')->findOneByPlageHoraire($entity);
+				}
+									
+			
 			if (( $entity->getdureeCreneau() +  $entity->getrecoupementCreneau()) > ( $entity->getfin()->getTimestamp() -  $entity->getdebut()->getTimestamp()) )	
 			{
 				$nouveauCreneau = new Creneau();
@@ -228,8 +243,11 @@ class PlageHoraireController extends Controller
 				$nouveauCreneau->setPlageHoraire($entity);			
 				$nouveauCreneau->setDisponibilite($nobody);
 				
-				$nouveauCreneau->setDebut($entity->debut);
-				$nouveauCreneau->setFin($entity->fin);
+				$debutDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getdebut()->getTimestamp()) ); // permet d'avoir le bon format pour le stocker dans la BDD				
+				$finDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getfin()->getTimestamp()) ); // permet d'avoir le bon format pour le stocker dans la BDD				
+					
+				$nouveauCreneau->setDebut(new \DateTime("20$debutDesCreneauxDate"));
+				$nouveauCreneau->setFin(new \DateTime("20$finDesCreneaux"));
 				
 				$em->persist($nouveauCreneau);
 				$em->flush();
@@ -237,21 +255,25 @@ class PlageHoraireController extends Controller
 			}
 			
 			else 
-			{	
+			{
 				$tempsRestantAAffecter = ($entity->getfin()->getTimestamp() - $entity->getdebut()->getTimestamp() );
 				$debutDesCreneaux = $entity->getdebut()->getTimestamp();
 				while ( ($entity->getdureeCreneau() + $entity->getrecoupementCreneau()) < $tempsRestantAAffecter)
 					{
 						$nouveauCreneau = new Creneau();
-						
 						$nouveauCreneau->setPlageHoraire($entity);			
 						$nouveauCreneau->setDisponibilite($dispoNobody);
 						
-						$nouveauCreneau->setDebut((new \DateTime($debutDesCreneaux)));					
-						$nouveauCreneau->setFin((new \DateTime($debutDesCreneaux + $entity->getdureeCreneau() + $entity->getrecoupementCreneau())));
+						$debutDesCreneauxDate = date ('y-m-d H:i:s', $debutDesCreneaux); // permet d'avoir le bon format pour le stocker dans la BDD
+						$finDuCreneauDate = ($debutDesCreneaux + $entity->getdureeCreneau() + $entity->getrecoupementCreneau() );
+						$finDuCreneauDate = date ('y-m-d H:i:s', $finDuCreneauDate);
+					
+						
+						$nouveauCreneau->setDebut(new \DateTime("20$debutDesCreneauxDate"));					
+						$nouveauCreneau->setFin(new \DateTime("20$finDuCreneauDate"));
 						
 						
-						$tempsRestantAAffecter = ($tempsRestantAAffecter- ($entity->getdureeCreneau() + $entity->getrecoupementCreneau()));
+						$tempsRestantAAffecter = ($tempsRestantAAffecter- ($entity->getdureeCreneau()));
 						$debutDesCreneaux += ($entity->getdureeCreneau() + $entity->getrecoupementCreneau());					
 						
 						$em->persist($nouveauCreneau);
@@ -264,10 +286,13 @@ class PlageHoraireController extends Controller
 				
 						$nouveauCreneau->setPlageHoraire($entity);			
 						$nouveauCreneau->setDisponibilite($dispoNobody);
+						
+						$debutDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getfin()->getTimestamp() - $tempsRestantAAffecter) ); // permet d'avoir le bon format pour le stocker dans la BDD				
+						$finDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getfin()->getTimestamp()) ); // permet d'avoir le bon format pour le stocker dans la BDD									
 				
-						$nouveauCreneau->setDebut( (new \DateTime($entity->getfin()->getTimestamp() - $tempsRestantAAffecter)));
-						$nouveauCreneau->setFin($entity->getfin());
-				
+						$nouveauCreneau->setDebut(new \DateTime("20$debutDesCreneauxDate"));
+						$nouveauCreneau->setFin(new \DateTime("20$finDesCreneauxDate"));
+						
 						$em->persist($nouveauCreneau);
 						$em->flush();
 						array_push($arrayCreneauCree, $nouveauCreneau);
@@ -275,8 +300,8 @@ class PlageHoraireController extends Controller
 			}
 			
 		}
-		//var_dump($arrayCreneauCree);
-		return $arrayCreneauCree;
+		
+		return array('entities' => $arrayCreneauCree);
 		
 		
 		

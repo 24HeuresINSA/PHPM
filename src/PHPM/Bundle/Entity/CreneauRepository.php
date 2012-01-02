@@ -121,35 +121,12 @@ class CreneauRepository extends EntityRepository
 
 		$expr->eq('ct.plageHoraire', 'p'),
 		$expr->eq('p.tache','t'),
-		
 		$expr->eq('ct.disponibilite','0')
-		
-		
-		
-		
 
 		);
 
 		
 		
-		if($orga !='')
-		{
-			
-			
-			$andx->add(" ct.id NOT IN (SELECT ci.id FROM PHPMBundle:Creneau ci , PHPMBundle:Creneau co, PHPMBundle:Disponibilite do
-			WHERE 
-					(co.disponibilite= do.id AND do.orga = $orga )		AND
-			( (ci.debut < co.fin) AND (ci.fin > co.debut ) )
-			OR			(((ci.debut<p.debut)OR(ci.fin > p.fin))OR((ci.debut >= p.fin)OR(ci.fin <= p.debut)))
-			
-		)");
-		}
-		if($plage !='')
-		{
-			$pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation.plages')->getValue(),TRUE);
-			$plage= $pref[$plage_id];
-			$andx->add('(ct.debut < \''.$plage["fin"].'\' ) AND (ct.fin >\''.$plage["debut"].'\' )');
-		}
 		if($permis!='')
 		{
 			$andx->add($expr->gte('t.permisNecessaire',$permis));
@@ -163,25 +140,46 @@ class CreneauRepository extends EntityRepository
 			$andx->add($expr->gte('t.confiance',$niveau_confiance));
 		}
 		
+		if($categorie !='')
+		{
+			$andx->add($expr->gte('t.categorie',$categorie));
+		}
+		if($duree !='')
+		{
+		//TODO faire le calcul de la durée
+			
+			$andx->add($expr->gte('10',$duree));
+		}		
+		if($orga !='')
+		{
+			$andx->add(" ct.id NOT IN (SELECT ci.id FROM PHPMBundle:Creneau ci , PHPMBundle:Creneau co, PHPMBundle:Disponibilite do
+			WHERE (co.disponibilite= do.id AND do.orga = $orga ) AND ( (ci.debut < co.fin) AND (ci.fin > co.debut ) )
+			OR	(((ci.debut<p.debut)OR(ci.fin > p.fin))OR((ci.debut >= p.fin)OR(ci.fin <= p.debut)))
+			
+		)");
+		}
+		if($plage !='')
+		{
+			$pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation.plages')->getValue(),TRUE);
+			$plage= $pref[$plage];
+			$andx->add('(ct.debut < \''.$plage["fin"].'\' ) AND (ct.fin >\''.$plage["debut"].'\' )');
+		}
 		
 		
-		//(CURRENT_TIMESTAMP(ct.fin) - CURRENT_TIMESTAMP(ct.debut)) AS duree
 		
 		
 		$qb
 		->select('ct')
 		
-		
-		
-		
 		->from('PHPMBundle:PlageHoraire', 'p')
 		->from('PHPMBundle:Tache', 't')
 		->from('PHPMBundle:Creneau', 'ct')
 		
-		
 		->where($andx);
 		
-		//exit(var_dump($qb->getQuery()->getDQL()));
+		
+		
+		exit(var_dump($qb->getQuery()->getDQL()));
 		
 		
 		

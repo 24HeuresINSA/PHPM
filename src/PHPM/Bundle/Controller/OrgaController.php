@@ -263,7 +263,7 @@ class OrgaController extends Controller
 					}
 					
 				
-				 $tempsDisponibiliteTotal = $tempsDisponibiliteTotal/3600;
+				 $tempsDisponibiliteTotal = round($tempsDisponibiliteTotal/3600, 2);
 				 
 				$orgaTemporaire = array('id'=> $key->getid(), 'nom' => $key->getnom(),'prenom' => $key->getprenom(), 'email'=> $key->getemail(),'telephone' => $key->gettelephone(), 'disponibilite' => $dispoAAfficher,'tempsDisponibleTotal' => $tempsDisponibiliteTotal, 'commentaire' => $key->getcommentaire() , 'checkbox'=>'checkbox');
 				
@@ -316,6 +316,7 @@ class OrgaController extends Controller
 					$entity->setdepartement($inscriptionOrga['departement']);
 					$entity->setcommentaire($inscriptionOrga['commentaire']);
 					$entity->setpermis($inscriptionOrga['permis']);
+					
 					$entity->setDateDeNaissance(new \DateTime($inscriptionOrga['dateDeNaissance']));
 					$entity->setSurnom($inscriptionOrga['surnom']);	
 					$entity->setStatut(0);			
@@ -337,9 +338,9 @@ class OrgaController extends Controller
 							{
 								$entitydisponibilite = new disponibilite();						
 								$entitydisponibilite->setOrga($idOrgaAjoute);
-								$debutdispo = date ('y-m-d', $dispoAAjoute[0]);
+								$debutdispo = date ('y-m-d H:i:s', $dispoAAjoute[0]);
 								$entitydisponibilite->setDebut(new \DateTime("20$debutdispo"));
-								$findispo = date ('y-m-d', $dispoAAjoute[1]);
+								$findispo = date ('y-m-d H:i:s', $dispoAAjoute[1]);
 								$entitydisponibilite->setFin(new \DateTime("20$findispo"));
 								$em->persist($entitydisponibilite);
 								$em->flush();							
