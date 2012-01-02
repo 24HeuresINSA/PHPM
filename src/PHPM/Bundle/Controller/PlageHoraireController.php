@@ -102,6 +102,35 @@ class PlageHoraireController extends Controller
     }
 
     /**
+     * Creates a new PlageHoraire entity assigned to a tache.
+     *
+     * @Route("/create/{idtache}", name="plagehoraire_create_tache")
+     * @Template("PHPMBundle:PlageHoraire:new.html.twig")
+     */
+    public function create_tacheAction($idtache)
+    {
+    	$entity  = new PlageHoraire();
+        $request = $this->getRequest();
+        $form    = $this->createForm(new PlageHoraireType(), $entity);
+        $form->bindRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('plagehoraire_show', array('id' => $entity->getId())));
+            
+        }
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        );
+
+    }
+
+    /**
      * Displays a form to edit an existing PlageHoraire entity.
      *
      * @Route("/{id}/edit", name="plagehoraire_edit")
@@ -233,23 +262,24 @@ class PlageHoraireController extends Controller
            			$em->flush();
 					
 				}
-									
-			
-			if (( $entity->getdureeCreneau() +  $entity->getrecoupementCreneau()) > ( $entity->getfin()->getTimestamp() -  $entity->getdebut()->getTimestamp()) )	
+
+			if ( ( $entity->getdureeCreneau() +  $entity->getrecoupementCreneau()) > ( $entity->getfin()->getTimestamp() -  $entity->getdebut()->getTimestamp()) )	
 			{
+
 				$nouveauCreneau = new Creneau();
 				
 				$nouveauCreneau->setPlageHoraire($entity);			
-				$nouveauCreneau->setDisponibilite($nobody);
+				$nouveauCreneau->setDisponibilite($dispoNobody);
 				
 				$debutDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getdebut()->getTimestamp()) ); // permet d'avoir le bon format pour le stocker dans la BDD				
 				$finDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getfin()->getTimestamp()) ); // permet d'avoir le bon format pour le stocker dans la BDD				
 					
 				$nouveauCreneau->setDebut(new \DateTime("20$debutDesCreneauxDate"));
-				$nouveauCreneau->setFin(new \DateTime("20$finDesCreneaux"));
+				$nouveauCreneau->setFin(new \DateTime("20$finDesCreneauxDate"));
 				
 				$em->persist($nouveauCreneau);
 				$em->flush();
+            
 			}
 			
 			else 
@@ -272,7 +302,7 @@ class PlageHoraireController extends Controller
 						
 						
 						$tempsRestantAAffecter = ($tempsRestantAAffecter- ($entity->getdureeCreneau()));
-						$debutDesCreneaux += ($entity->getdureeCreneau() + $entity->getrecoupementCreneau());					
+						$debutDesCreneaux += $entity->getdureeCreneau();					
 						
 						$em->persist($nouveauCreneau);
 						$em->flush();								
