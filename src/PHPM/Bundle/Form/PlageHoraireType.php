@@ -14,6 +14,7 @@ class PlageHoraireType extends AbstractType
             ->add('fin')
             ->add('tache')
 			->add('nbOrgasNecessaires')
+			->add('recoupementCreneau')
 			
 			;
 
