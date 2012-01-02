@@ -32,12 +32,19 @@ a {
 	padding: 7px 2%;
 }
 .title h1 {
+	display: inline;
 	padding: 0;
 	margin: 0;
 	font-size: 1.6em;
 	font-family: Palatino Linotype;
 	font-weight: 500;
 	letter-spacing: 1px;
+}
+
+.title input {
+	  float: right;
+	
+	
 }
 
 
