@@ -112,7 +112,7 @@ class CreneauRepository extends EntityRepository
 	}
 	
 	
-	public function getCreneauxCompatibleWithCriteria($niveau_confiance, $categorie, $age, $permis, $duree, $orga_id)
+	public function getCreneauxCompatibleWithCriteria($niveau_confiance, $categorie, $age, $permis, $duree, $orga, $plage)
 	{
 		$qb = $this->getEntityManager()->createQueryBuilder();
 		$expr = $qb->expr();
@@ -122,34 +122,38 @@ class CreneauRepository extends EntityRepository
 		$expr->eq('ct.PlageHoraire', 'p'),
 		$expr->eq('p.tache','t'),
 		$expr->eq('co.disponibilite','d'),
-		$expr->eq('ct.disponibilite','0'),		
+		$expr->eq('ct.disponibilite','0')		
 		
-		'ct.id NOT IN (SELECT ci.id FROM PHPMBundle:Creneau ci 
-		WHERE 
-						
-		( (ci.debut < co.fin) AND (ci.fin > co.debut ) )
-		OR
-		(((ci.debut<p.debut)OR(ci.fin > p.fin))OR((ci.debut >= p.fin)OR(ci.fin <= p.debut)))
 		
-		)'
 
 		);
 
 		
 		
-		if($plage_id !='')
+		if($orga !='')
+		{
+			$andx->add('ct.id NOT IN (SELECT ci.id FROM PHPMBundle:Creneau ci 
+			WHERE 
+							
+			( (ci.debut < co.fin) AND (ci.fin > co.debut ) )
+			OR
+			(((ci.debut<p.debut)OR(ci.fin > p.fin))OR((ci.debut >= p.fin)OR(ci.fin <= p.debut)))
+			
+		)');
+		}
+		if($plage !='')
 		{
 			$pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation.plages')->getValue(),TRUE);
 			$plage= $pref[$plage_id];
-			$andx->add('(d.debut < \''.$plage["fin"].'\' ) AND (d.fin >\''.$plage["debut"].'\' )');
+			$andx->add('(ct.debut < \''.$plage["fin"].'\' ) AND (ct.fin >\''.$plage["debut"].'\' )');
 		}
 		if($permis!='')
 		{
 			$andx->add($expr->gte('t.permisNecessaire',$permis));
 		}
-		if($maxDateNaissance !='')
+		if($age !='')
 		{
-			$andx->add($expr->lte('t.ageNecessaire','\''.$age.'\''));
+			$andx->add($expr->gte('t.ageNecessaire','\''.$age.'\''));
 		}
 		if($niveau_confiance !='')
 		{
@@ -160,8 +164,9 @@ class CreneauRepository extends EntityRepository
 		
 		
 		
+		
 		$qb
-		->select('ct')
+		->select('ct, (CURRENT_TIMESTAMP(ct.fin) - CURRENT_TIMESTAMP(ct.debut)) duree')
 		
 		->from('PHPMBundle:Orga','o')
 		->from('PHPMBundle:Disponibilite', 'd')

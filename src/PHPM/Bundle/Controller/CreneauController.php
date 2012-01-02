@@ -196,4 +196,67 @@ class CreneauController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+    * Lists all Creneaux entities according to post criteria.
+    *
+    * @Route("/query.json", name="creneau_query_json")
+    * @Method("post")
+    */
+    public function queryJsonAction()
+    {
+    
+    	$request = $this->getRequest();
+    
+    	$permis= $request->request->get('permisNecessaire', '');
+    	$age= $request->request->get('age', '0');
+    	$plage_id= $request->request->get('plage_id', '');
+    	$niveau_confiance= $request->request->get('confiance_id', '');
+    	$categorie = $request->request->get('categorie_id', '');
+    	$duree = $request->request->get('duree', '');
+    	$orga = $request->request->get('orga_id', '');
+    	$plage = $request->request->get('plage_id', '');
+    
+    
+    
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$entities = $em->getRepository('PHPMBundle:Creneau')->getCreneauxCompatibleWithCriteria($niveau_confiance, $categorie, $age, $permis, $duree, $orga, $plage);
+    
+    	$response = new Response();
+    
+    
+    	$creneauArray = array();
+    	foreach ($entities as $creneau){
+	
+    			
+    		$creneauArray[$creneau->getId()]= array(
+    		 
+    
+    		 
+    			        	"nom" => $creneau->getPlageHoraire()->getTache()->getNom(),
+    						"lieu" => $creneau->getPlageHoraire()->getTache()->getLieu(),
+    						"confiance" => $creneau->getPlageHoraire()->getTache()->getConfiance()->getId(),
+    						"categorie" => $creneau->getPlageHoraire()->getTache()->getCategorie()->getId(),
+				    		"debut" => $creneau->getDebut,
+				    		"fin" => $creneau->getFin,
+    			        	"duree" => $creneau->getDuree(),
+    			    		"permis"=> $creneau->getPlageHoraire()->getTache()->getPermisNecessaire(),
+    			        	);
+    			
+    			
+    			
+    			
+    			
+    	}
+    	 
+    	exit(var_dump($orgaArray));
+    	 
+    	$response = new Response();
+    	$response->setContent(json_encode($orgaArray));
+    	$response->headers->set('Content-Type', 'application/json');
+    	 
+    
+    	return $response;
+    }
+
 }

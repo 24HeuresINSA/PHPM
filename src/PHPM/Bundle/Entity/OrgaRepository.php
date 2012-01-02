@@ -23,7 +23,6 @@ class OrgaRepository extends EntityRepository
 		$andx = $expr->andx(
 		$expr->eq('o.statut','1'),
 		$expr->eq('d.orga','o'),
-		
 		$expr->neq('d.orga','0')		
 		);
 	
