@@ -373,7 +373,19 @@ class TacheController extends Controller
 		$a = array();
 			
 		foreach ($entities as $entity){
-			$a[$entity->getId()] = $entity->toArray();
+			$tacheArray = array(
+    	"id" => $this->getId(),
+    	"importId" => $this->getImportId(),
+    	"nom" => $this->getNom(),
+    	"lieu" => $this->getLieu(),
+    	"materielNecessaire" => $this->getMaterielNecessaire(),
+    	"consignes" => $this->getConsignes(),
+    	"confiance" => $this->getConfiance()->getId(),
+    	"categorie" => $this->getCategorie()->getId(),
+    	"permisNecessaire" => $this->getPermisNecessaire(),
+    	"ageNecessaire" => $this->getAgeNecessaire(),
+    	"plagesHoraire" => $a);
+			$a[$entity->getId()] = $tacheArray;
 	
 		}
 	
