@@ -33,7 +33,7 @@ PmUtils.prototype = {
 	},
 	// fonction appelée au départ, qui en plus créé un handler sur l'event resize
 	setResizeableApp: function() {
-		$(window).resize(pmUtils.setAppHeight);
+		window.onresize = pmUtils.setAppHeight;
 		
 		pmUtils.setAppHeight();
 	},
