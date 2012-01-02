@@ -146,7 +146,6 @@ class CreneauRepository extends EntityRepository
 		}
 		if($duree !='')
 		{
-		//TODO faire le calcul de la durée
 			
 			$andx->add('(ct.fin - ct.debut < '.$duree.' )');
 		}		
@@ -179,7 +178,7 @@ class CreneauRepository extends EntityRepository
 		
 		
 		
-		exit(var_dump($qb->getQuery()->getDQL()));
+		//exit(var_dump($qb->getQuery()->getDQL()));
 		
 		
 		

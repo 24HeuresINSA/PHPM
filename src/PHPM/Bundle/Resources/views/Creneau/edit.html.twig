@@ -16,8 +16,8 @@
 {% block menu_action %}
 <ul class="record_actions">
     <li>
-        <a href="{{ path('creneau') }}">
-            Revenir &agrave; la liste de cr&eacute;neaux
+        <a href="{{ path('orga_show', { 'id': entity.disponibilite.orga.id }) }}">
+            Revenir &agrave; l'orga assign&eacute;
         </a>
     </li>
     <li>

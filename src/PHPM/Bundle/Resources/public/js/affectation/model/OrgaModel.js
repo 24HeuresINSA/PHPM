@@ -53,14 +53,10 @@ OrgaModel.prototype = {
 		for (var _iOrga in this.data) {
 			var _orga = {};
 			
-			log(this.data);
-			
 			// récupère toutes les données
 			for (var _iChamp in this.data[_iOrga]) {
 				_orga[_iChamp] = this.data[_iOrga][_iChamp];
 			}
-			
-			log(_orga);
 			
 			// re-traitement du niveau de confiance derrière
 			_orga['confiance'] = this.data[_iOrga]['confiance'];
