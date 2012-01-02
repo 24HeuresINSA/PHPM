@@ -238,8 +238,8 @@ class PlageHoraireController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:PlageHoraire')->find($id);
-		$nobody = $em->getRepository('PHPMBundle:Orga')->find(0);
-		$dispoNobody = $em->getRepository('PHPMBundle:Disponibilite')->findOneByOrga($nobody);
+		
+		$dispoNobody = $em->getRepository('PHPMBundle:Disponibilite')->findOneByOrga(0);
 
 		$arrayCreneauCree = array();
 		
@@ -264,6 +264,7 @@ class PlageHoraireController extends Controller
            			$em->flush();
 					
 				}
+            
             while (!$nbCreneauACreerPourOrga == 0)
             {
 			if ( ( $entity->getdureeCreneau() +  $entity->getrecoupementCreneau()) > ( $entity->getfin()->getTimestamp() -  $entity->getdebut()->getTimestamp()) )	
@@ -329,8 +330,8 @@ class PlageHoraireController extends Controller
 			}
         $nbCreneauACreerPourOrga --;
 		}	
-	//  	 return $this->redirect($this->generateUrl('creneau_show', array('id' => $entity->getId())));
-	
+             
+	 	 return $this->redirect($this->generateUrl('plagehoraire_show', array('id' => $entity->getId())));
 		
 	}
 }
