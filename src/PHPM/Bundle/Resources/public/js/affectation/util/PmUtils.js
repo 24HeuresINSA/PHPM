@@ -23,17 +23,20 @@ PmUtils.prototype = {
 	 * Adapte la taille du layout
 	 */
 	setAppHeight: function(headerHeight) {
-		var _headerHeight = (headerHeight === undefined)?  $('#header').height() : headerHeight;
+		var _headerHeight = (isFinite(headerHeight))? headerHeight : $('#header').height();
 		var _contentHeight = $(window).height()-_headerHeight;
 		var _clientHeight = _contentHeight-$('#menu_calendar').outerHeight()-20-3; // 20 de padding du menu du haut en plus, 3 de border
 		
 		$('#content').height(_contentHeight+'px');
 		$('#client').height(_clientHeight+'px');
 		$('#jours').height(_clientHeight-30+'px');
-		
-		console.log(_contentHeight, _clientHeight, _clientHeight-30+'px')
 	},
-	// handler lorsqu'on resize la fenêtre
+	// fonction appelée au départ, qui en plus créé un handler sur l'event resize
+	setResizeableApp: function() {
+		$(window).resize(pmUtils.setAppHeight);
+		
+		pmUtils.setAppHeight();
+	},
 	
 	/*
 	 * Un bouton permettant de cacher le menu du haut

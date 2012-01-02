@@ -57,7 +57,7 @@ $(document).ready(function() {
 	
 	// 2,5 : deuxième partie du layout
 	// il fallait attendre que le calendrier soit chargé pour
-	pmUtils.setAppHeight();
+	pmUtils.setResizeableApp();
 	
 	// 3 : on va chercher pour la colonne orgas
 	pmAffectation.controllers.orga = new OrgaController();
