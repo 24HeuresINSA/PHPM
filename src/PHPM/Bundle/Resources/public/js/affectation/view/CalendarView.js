@@ -51,7 +51,7 @@ CalendarView.prototype = {
 			this.setBoutonsPlage();
 		}
 		
-		// finalement, on redimensionne l'app comme il faut
+		// on redimensionne l'app comme il faut
 		pmUtils.setAppHeight();
 	},
 	// fabrique un jour

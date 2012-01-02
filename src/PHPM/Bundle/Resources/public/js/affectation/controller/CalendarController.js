@@ -53,6 +53,7 @@ CalendarController.prototype = {
 		pmAffectation.current.plage = plageId;
 		
 		pmAffectation.views.calendar.setPlage(plageId);
+		pmAffectation.controllers.orga.getData(); // mise à jour de l'orga également
 		
 		pmUtils.setUrlParam(); // maj de l'url
 	}
