@@ -40,8 +40,9 @@
  * Effectif que quand le document est prêt
  */
 $(document).ready(function() {	
-	// 0 : setter le layout et récupérer les paramètres dans l'Url
+	// 0 : setter le layout, initiliaser History.js, récupérer les paramètres dans l'Url
 	pmUtils.setResizeableSidebars();
+	pmUtils.initHistory();
 	pmUtils.parseUrlParam();
 	
 	// 1 : lancer les requêtes pour les paramètres
