@@ -1,0 +1,36 @@
+{% if entities %}
+{% import "::macro_bouton_edit.html.twig" as bouton_edit %}
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Consignes</th>
+            <th>Lieu</th>
+            <th>Mat&eacute;rielNecessaire</th>
+            <th>permisNecessaire</th>
+            <th>ageNecessaire</th>
+            <th>responsable</th>
+            <th>Actions</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr style="cursor:pointer" onclick="window.location='{{ path('tache_show', { 'id': entity.id }) }}'" >
+            <td><a href="{{ path('tache_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.nom }}</td>
+            <td>{{ entity.consignes }}</td>
+            <td>{{ entity.lieu }}</td>
+            <td>{{ entity.materielNecessaire }}</td>
+            <td>{{ entity.permisNecessaire }}</td>
+            <td>{{ entity.ageNecessaire }}</td>
+            <td>{{ entity.responsable }}</td>
+            <td>
+					{{ bouton_edit.bouton_edit( path('tache_edit', { 'id': entity.id }) ) }}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
