@@ -86,7 +86,6 @@ PmUtils.prototype = {
 		$('#calendar').css('visibility', 'visible'); // raffiche
 		
 		pmUtils.resizeCalendar(ui.originalSize.width-ui.size.width);
-		console.log(ui.originalSize.width-ui.size.width);
 		
 		// on stock ces tailles dans les paramètres de l'utilisateur
 		// volontairement on travaille en pixels
