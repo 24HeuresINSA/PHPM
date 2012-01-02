@@ -221,8 +221,20 @@ class PlageHoraireController extends Controller
 		else
 		{	
 			
+			// suppression des creneaux déjà  existant
 			
+			$creneauASupprimer = $em->getRepository('PHPMBundle:Creneau')->findOneByPlageHoraire($entity);
 			
+			while (!$creneauASupprimer)
+				{	
+					$nouvelID = $creneauASupprimer->getId();
+					echo $nouvelID;
+					
+					$em->remove($creneauASupprimer);
+           			$em->flush();
+					$creneauASupprimer = $em->getRepository('PHPMBundle:Creneau')->findOneByPlageHoraire($entity);
+				}
+									
 			
 			if (( $entity->getdureeCreneau() +  $entity->getrecoupementCreneau()) > ( $entity->getfin()->getTimestamp() -  $entity->getdebut()->getTimestamp()) )	
 			{

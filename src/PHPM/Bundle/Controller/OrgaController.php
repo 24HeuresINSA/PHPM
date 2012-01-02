@@ -263,7 +263,7 @@ class OrgaController extends Controller
 					}
 					
 				
-				 $tempsDisponibiliteTotal = $tempsDisponibiliteTotal/3600;
+				 $tempsDisponibiliteTotal = round($tempsDisponibiliteTotal/3600, 2);
 				 
 				$orgaTemporaire = array('id'=> $key->getid(), 'nom' => $key->getnom(),'prenom' => $key->getprenom(), 'email'=> $key->getemail(),'telephone' => $key->gettelephone(), 'disponibilite' => $dispoAAfficher,'tempsDisponibleTotal' => $tempsDisponibiliteTotal, 'commentaire' => $key->getcommentaire() , 'checkbox'=>'checkbox');
 				
@@ -316,6 +316,7 @@ class OrgaController extends Controller
 					$entity->setdepartement($inscriptionOrga['departement']);
 					$entity->setcommentaire($inscriptionOrga['commentaire']);
 					$entity->setpermis($inscriptionOrga['permis']);
+					
 					$entity->setDateDeNaissance(new \DateTime($inscriptionOrga['dateDeNaissance']));
 					$entity->setSurnom($inscriptionOrga['surnom']);	
 					$entity->setStatut(0);			

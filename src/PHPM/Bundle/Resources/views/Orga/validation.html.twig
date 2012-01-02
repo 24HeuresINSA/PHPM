@@ -10,44 +10,46 @@
 {% block content %}
 
 {% if entities%}
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Prenom</th>
-            <th>Telephone</th>
-            <th>Email</th>
-            <th>Disponibilit&eacute;</th>
-            <th>Temps dispo</th>
-            <th>Commentaire</th>
-            <th>Validation</th>
-        </tr>
-    </thead>
-    <tbody>
-    <form method="POST" >
-    {% for entity in entities %}
-        <tr>           
-            <td>{{ entity['nom'] }}</td>
-            <td>{{ entity['prenom'] }}</td>
-            <td>{{ entity['telephone'] }}</td>
-            <td>{{ entity['email'] }}</td>
-            <td>
-            	<ul>
-            		{% for dispo in entity['disponibilite'] %}
-            			<li>{{ dispo['debut'] }} -- {{ dispo['fin'] }}</li>
-            		{% endfor %}
-            	</ul>
-            </td>
 
-            <td>{{ entity['tempsDisponibleTotal']}}</td>
-            <td>{{ entity['commentaire']}}</td>
-            <td> <input type="checkbox" name="Orga_Valid[]" value="{{ entity['id']}}" checked/> Valider </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+<form method="POST" >
+    
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Telephone</th>
+                <th>Email</th>
+                <th>Disponibilit&eacute;</th>
+                <th>Temps dispo</th>
+                <th>Commentaire</th>
+                <th>Validation</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>           
+                <td>{{ entity['nom'] }}</td>
+                <td>{{ entity['prenom'] }}</td>
+                <td>{{ entity['telephone'] }}</td>
+                <td>{{ entity['email'] }}</td>
+                <td>
+                	<ul>
+                		{% for dispo in entity['disponibilite'] %}
+                			<li>{{ dispo['debut'] }} -- {{ dispo['fin'] }}</li>
+                		{% endfor %}
+                	</ul>
+                </td>
+    
+                <td>{{ entity['tempsDisponibleTotal']}}</td>
+                <td>{{ entity['commentaire']}}</td>
+                <td> <input type="checkbox" name="Orga_Valid[]" value="{{ entity['id']}}" checked/> Valider </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-    <input type="Submit" value="Valider">
+    <input type="Submit" value="Valider" />
     </form> 
    
 	<p>	Veuillez les valider pour pouvoir les affecter. </p>
