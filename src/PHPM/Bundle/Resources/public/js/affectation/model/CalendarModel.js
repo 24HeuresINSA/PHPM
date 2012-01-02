@@ -50,6 +50,11 @@ CalendarModel.prototype = {
 	getPlages: function() {	
 		var _plages = {};
 		
+		// cas où rien n'a été défini
+		if (Object.keys(this.data).length === 0) {
+			message.error("Aucune plage n'a été définie");
+		}
+		
 		// on fait des conversions vers des objets time javascript
 		for (unePlage in this.data) {
 			_plages[unePlage] = {

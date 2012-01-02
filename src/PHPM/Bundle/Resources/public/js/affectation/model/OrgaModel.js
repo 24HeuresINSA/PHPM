@@ -21,10 +21,13 @@ OrgaModel.prototype = {
 	getData: function(callBack) {
 		pmAffectation.models.orga.callBack = callBack;
 		
-		// construit les paramètres que l'on va envoyer
+		// construit les paramètres que l'on va envoyer, teste si déjà on a les filtres
 		var _params = {
-			plage_id: pmAffectation.current.plage
+			plage_id: pmAffectation.current.plage, // on fournit toujours la plage, la base
 		};
+		($.isNumeric(pmAffectation.current.confiance) === true) && (_params.confiance_id = pmAffectation.current.confiance);
+		($.isNumeric(pmAffectation.current.permis) === true) && (_params.permis = pmAffectation.current.permis);
+		// TODO : age ou date de naissance
 		
 		$.ajax({
 			url: pmAffectation.url+pmAffectation.paths.orgas,
