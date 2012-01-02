@@ -50,6 +50,9 @@ CalendarView.prototype = {
 		if (Object.keys(pmAffectation.data.calendar.plage).length != 0) {
 			this.setBoutonsPlage();
 		}
+		
+		// finalement, on redimensionne l'app comme il faut
+		pmUtils.setAppHeight();
 	},
 	// fabrique un jour
 	makeADay: function(date, jourSemaine, nbJours) {

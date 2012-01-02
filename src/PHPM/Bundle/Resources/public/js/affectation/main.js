@@ -54,10 +54,7 @@ $(document).ready(function() {
 	// comme c'est les 1ères dates qu'on a, on check le fuseau horaire de l'utilisateur
 	pmAffectation.controllers.calendar = new CalendarController();
 	pmAffectation.controllers.calendar.getData();
-	
-	// 2,5 : deuxième partie du layout
-	// il fallait attendre que le calendrier soit chargé pour
-	pmUtils.setResizeableApp();
+	// lorsque la vue calendier est settée, il va redimensionner l'appli
 	
 	// 3 : on va chercher pour la colonne orgas
 	pmAffectation.controllers.orga = new OrgaController();
