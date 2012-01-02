@@ -233,23 +233,24 @@ class PlageHoraireController extends Controller
            			$em->flush();
 					
 				}
-									
-			
-			if (( $entity->getdureeCreneau() +  $entity->getrecoupementCreneau()) > ( $entity->getfin()->getTimestamp() -  $entity->getdebut()->getTimestamp()) )	
+
+			if ( ( $entity->getdureeCreneau() +  $entity->getrecoupementCreneau()) > ( $entity->getfin()->getTimestamp() -  $entity->getdebut()->getTimestamp()) )	
 			{
+
 				$nouveauCreneau = new Creneau();
 				
 				$nouveauCreneau->setPlageHoraire($entity);			
-				$nouveauCreneau->setDisponibilite($nobody);
+				$nouveauCreneau->setDisponibilite($dispoNobody);
 				
 				$debutDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getdebut()->getTimestamp()) ); // permet d'avoir le bon format pour le stocker dans la BDD				
 				$finDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getfin()->getTimestamp()) ); // permet d'avoir le bon format pour le stocker dans la BDD				
 					
 				$nouveauCreneau->setDebut(new \DateTime("20$debutDesCreneauxDate"));
-				$nouveauCreneau->setFin(new \DateTime("20$finDesCreneaux"));
+				$nouveauCreneau->setFin(new \DateTime("20$finDesCreneauxDate"));
 				
 				$em->persist($nouveauCreneau);
 				$em->flush();
+            
 			}
 			
 			else 
@@ -272,7 +273,7 @@ class PlageHoraireController extends Controller
 						
 						
 						$tempsRestantAAffecter = ($tempsRestantAAffecter- ($entity->getdureeCreneau()));
-						$debutDesCreneaux += ($entity->getdureeCreneau() + $entity->getrecoupementCreneau());					
+						$debutDesCreneaux += $entity->getdureeCreneau();					
 						
 						$em->persist($nouveauCreneau);
 						$em->flush();								
