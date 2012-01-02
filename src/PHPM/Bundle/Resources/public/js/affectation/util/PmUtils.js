@@ -25,7 +25,7 @@ PmUtils.prototype = {
 	setAppHeight: function(headerHeight) {
 		var _headerHeight = (isFinite(headerHeight))? headerHeight : $('#header').height();
 		var _contentHeight = $(window).height()-_headerHeight;
-		var _clientHeight = _contentHeight-$('#menu_calendar').outerHeight()-20-3; // 20 de padding du menu du haut en plus, 3 de border
+		var _clientHeight = _contentHeight-$('#menu_calendar').outerHeight()-3; // 3 de border tout en bas
 		
 		$('#content').height(_contentHeight+'px');
 		$('#client').height(_clientHeight+'px');
@@ -86,6 +86,7 @@ PmUtils.prototype = {
 		$('#calendar').css('visibility', 'visible'); // raffiche
 		
 		pmUtils.resizeCalendar(ui.originalSize.width-ui.size.width);
+		console.log(ui.originalSize.width-ui.size.width);
 		
 		// on stock ces tailles dans les paramètres de l'utilisateur
 		// volontairement on travaille en pixels

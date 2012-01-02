@@ -39,8 +39,6 @@ OrgaModel.prototype = {
 		pmAffectation.models.orga.callBack();
 	},
 	requestError: function(data, statusText) {
-		console.log(data);
-		
 		message.error("Impossible de récupérer les plages : " + statusText);
 	},
 	
@@ -55,30 +53,33 @@ OrgaModel.prototype = {
 		for (var _iOrga in this.data) {
 			var _orga = {};
 			
+			log(this.data);
+			
 			// récupère toutes les données
 			for (var _iChamp in this.data[_iOrga]) {
 				_orga[_iChamp] = this.data[_iOrga][_iChamp];
 			}
 			
+			log(_orga);
+			
 			// re-traitement du niveau de confiance derrière
-			_orga['confiance'] = this.data[_iOrga]['confiance']['id'];
+			_orga['confiance'] = this.data[_iOrga]['confiance'];
 			
 			// de la date de naissance
-			_orga['dateDeNaissance'] = new Date(this.data[_iOrga]['dateDeNaissance']['date']);
+			_orga['dateDeNaissance'] = new Date(this.data[_iOrga]['dateDeNaissance']);
 			
 			// disponibilités, cela devient physique
 			for (var _iDispo in this.data[_iOrga]['disponibilites']) {
 				// créneaux, encore un niveau
 				for (var _iCreneau in this.data[_iOrga]['disponibilites'][_iDispo]['creneaux']) {
-					this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut']['date']);
-					this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin']['date']);
+					this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut']);
+					this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin']);
 				}
 				
-				this.data[_iOrga]['disponibilites'][_iDispo]['debut'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['debut']['date']);
-				this.data[_iOrga]['disponibilites'][_iDispo]['fin'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['fin']['date']);
+				this.data[_iOrga]['disponibilites'][_iDispo]['debut'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['debut']);
+				this.data[_iOrga]['disponibilites'][_iDispo]['fin'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['fin']);
 			}
 		
-			// sauvegarde (on ne reçoit que les orgas importés validés)
 			_orgas[_iOrga] = _orga;
 		}
 		

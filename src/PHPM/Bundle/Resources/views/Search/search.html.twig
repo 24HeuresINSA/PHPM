@@ -6,11 +6,17 @@
 
 {% block content %}
 
-   <h2>Orgas :</h2>
-   {% include 'PHPMBundle:Orga:afficheListe.html.twig' with {'entities': orgas} %}
-   <br />
-   <h2>Taches :</h2>
-   {% include 'PHPMBundle:Tache:afficheListe.html.twig' with {'entities': taches} %}
+	{% if orgas %}
+   		<h2>Orgas :</h2>
+  	 	{% include 'PHPMBundle:Orga:afficheListe.html.twig' with {'entities': orgas} %}
+   		<br />
+	{% endif %}
+
+	{% if taches %}
+   		<h2>Taches :</h2>
+   		{% include 'PHPMBundle:Tache:afficheListe.html.twig' with {'entities': taches} %}
+	{% endif %}
+
 {% endblock %}
 
 {% block menu_action %}
