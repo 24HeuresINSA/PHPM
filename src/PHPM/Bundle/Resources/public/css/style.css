@@ -120,7 +120,7 @@ a {
 .message {
 	float: left;
 	width: 80%;
-	margin: -25px 10%;
+	margin: 35px 10%;
 	padding: 0;
 	z-index: 500;
 	position: fixed;
