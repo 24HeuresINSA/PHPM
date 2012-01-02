@@ -5,9 +5,12 @@
 function ici() {
 	console.log('ici');
 }
-
+// alias & short-hands
 function error(str) {
 	console.error(str);
+}
+function log(str) {
+	console.log(str);
 }
 
 function confirm_delete($lien)
