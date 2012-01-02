@@ -145,11 +145,11 @@ class CreneauRepository extends EntityRepository
 		}
 		if($permis!='')
 		{
-			$andx->add($expr->gte('ct.permis',$permis));
+			$andx->add($expr->gte('t.permisNecessaire',$permis));
 		}
 		if($maxDateNaissance !='')
 		{
-			$andx->add($expr->lte('ct.dateDeNaissance','\''.$maxDateNaissance.'\''));
+			$andx->add($expr->lte('t.ageNecessaire','\''.$age.'\''));
 		}
 		if($niveau_confiance !='')
 		{
