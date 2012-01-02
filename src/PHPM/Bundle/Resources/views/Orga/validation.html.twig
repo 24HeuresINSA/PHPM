@@ -43,7 +43,9 @@
     
                 <td>{{ entity['tempsDisponibleTotal']}}</td>
                 <td>{{ entity['commentaire']}}</td>
-                <td> <input type="checkbox" name="Orga_Valid[]" value="{{ entity['id']}}" checked/> Valider </td>
+                <td> <input type="radio" name="{{ entity['id']}}" value="1" checked/> Valider </td>
+                <td> <input type="radio" name="{{ entity['id']}}" value="0"/> EnAttente </td>
+                <td> <input type="radio" name="{{ entity['id']}}" value="2"/> Supprimer </td>                                
             </tr>
         {% endfor %}
         </tbody>
