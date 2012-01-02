@@ -230,6 +230,14 @@ class OrgaController extends Controller
         
         $request = $this->get('request')->request;
         
+        /*
+         * chose à faire
+         * récupérer l'Arras associatif concernant les orga et traiter :
+if supprimer : alors supprimer l'orga et ses créneaux
+if en attente : ne rien faire
+if valider : laisser ce qu'il y avait avant.
+         * 
+         */
 
             
             
