@@ -241,7 +241,9 @@ class PlageHoraireController extends Controller
             throw $this->createNotFoundException('Unable to find PlageHoraire entity.');
         }
 		
-			
+		$nbCreneauACreerPourOrga = $entity->getnbOrgasNecessaires();
+        
+	
 			// suppression des creneaux déjà  existant
 			
 			$creneauxASupprimer = $em->getRepository('PHPMBundle:Creneau')->findByPlageHoraire($entity->getId());
@@ -256,7 +258,8 @@ class PlageHoraireController extends Controller
            			$em->flush();
 					
 				}
-
+            while (!$nbCreneauACreerPourOrga == 0)
+            {
 			if ( ( $entity->getdureeCreneau() +  $entity->getrecoupementCreneau()) > ( $entity->getfin()->getTimestamp() -  $entity->getdebut()->getTimestamp()) )	
 			{
 
@@ -318,12 +321,10 @@ class PlageHoraireController extends Controller
 						$em->flush();
 					}
 			}
-			
-	//	  return array();
+        $nbCreneauACreerPourOrga --;
+		}	
 	//  	 return $this->redirect($this->generateUrl('creneau_show', array('id' => $entity->getId())));
-            
-		
-		
+	
 		
 	}
 }

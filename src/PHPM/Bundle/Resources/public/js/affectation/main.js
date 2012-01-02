@@ -40,9 +40,8 @@
  * Effectif que quand le document est prêt
  */
 $(document).ready(function() {	
-	// 0 : setter le layout, initiliaser History.js, récupérer les paramètres dans l'Url
+	// 0 : setter le layout et récupérer les paramètres dans l'Url
 	pmUtils.setResizeableSidebars();
-	pmUtils.initHistory();
 	pmUtils.parseUrlParam();
 	
 	// 1 : lancer les requêtes pour les paramètres
@@ -55,10 +54,7 @@ $(document).ready(function() {
 	// comme c'est les 1ères dates qu'on a, on check le fuseau horaire de l'utilisateur
 	pmAffectation.controllers.calendar = new CalendarController();
 	pmAffectation.controllers.calendar.getData();
-	
-	// 2,5 : deuxième partie du layout
-	// il fallait attendre que le calendrier soit chargé pour
-	pmUtils.setResizeableApp();
+	// lorsque la vue calendier est settée, il va redimensionner l'appli
 	
 	// 3 : on va chercher pour la colonne orgas
 	pmAffectation.controllers.orga = new OrgaController();
