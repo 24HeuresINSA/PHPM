@@ -104,24 +104,18 @@ class PlageHoraireController extends Controller
     /**
      * Creates a new PlageHoraire entity assigned to a tache.
      *
-     * @Route("/create/{idtache}", name="plagehoraire_create_tache")
+     * @Route("/newTache/{idtache}", name="plagehoraire_tache_new")
      * @Template("PHPMBundle:PlageHoraire:new.html.twig")
      */
-    public function create_tacheAction($idtache)
+    public function newTacheAction($idtache)
     {
-    	$entity  = new PlageHoraire();
-        $request = $this->getRequest();
-        $form    = $this->createForm(new PlageHoraireType(), $entity);
-        $form->bindRequest($request);
+    	$em = $this->getDoctrine()->getEntityManager();
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('plagehoraire_show', array('id' => $entity->getId())));
-            
-        }
+        $tache = $em->getRepository('PHPMBundle:Tache')->find($idtache);
+				
+    	$entity = new PlageHoraire();
+		$entity->setTache($tache);
+        $form   = $this->createForm(new PlageHoraireType(), $entity);
 
         return array(
             'entity' => $entity,
@@ -238,8 +232,8 @@ class PlageHoraireController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:PlageHoraire')->find($id);
-		$nobody = $em->getRepository('PHPMBundle:Orga')->find(0);
-		$dispoNobody = $em->getRepository('PHPMBundle:Disponibilite')->findOneByOrga($nobody);
+		
+		$dispoNobody = $em->getRepository('PHPMBundle:Disponibilite')->findOneByOrga(0);
 
 		$arrayCreneauCree = array();
 		
@@ -264,6 +258,7 @@ class PlageHoraireController extends Controller
            			$em->flush();
 					
 				}
+            
             while (!$nbCreneauACreerPourOrga == 0)
             {
 			if ( ( $entity->getdureeCreneau() +  $entity->getrecoupementCreneau()) > ( $entity->getfin()->getTimestamp() -  $entity->getdebut()->getTimestamp()) )	
@@ -329,8 +324,8 @@ class PlageHoraireController extends Controller
 			}
         $nbCreneauACreerPourOrga --;
 		}	
-	//  	 return $this->redirect($this->generateUrl('creneau_show', array('id' => $entity->getId())));
-	
+             
+	 	 return $this->redirect($this->generateUrl('plagehoraire_show', array('id' => $entity->getId())));
 		
 	}
 }

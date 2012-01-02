@@ -3,6 +3,7 @@
 namespace PHPM\Bundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -226,10 +227,31 @@ class OrgaController extends Controller
 	public function validationAction()	
 	{
 		
+        
+        $request = $this->get('request')->request;
+        
+        /*
+         * chose à faire
+         * récupérer l'Arras associatif concernant les orga et traiter :
+if supprimer : alors supprimer l'orga et ses créneaux
+if en attente : ne rien faire
+if valider : laisser ce qu'il y avait avant.
+         * 
+         */
+
+            
+            
+        
+        
 		$em = $this->getDoctrine()->getEntityManager();
 				
-		if(!empty($_POST["Orga_Valid"])) {
+                //var_dump($valeurs);
+		if ($this->get('request')->getMethod() == 'POST') {
+           
 
+        $data = $request->all();
+        var_dump($data);
+        exit();
    		for ($i = 0; $i < count($_POST["Orga_Valid"]); $i++)
 			{
 				$orgaValide = $em->getRepository('PHPMBundle:Orga')->findOneById($_POST["Orga_Valid"][$i]);	
@@ -244,7 +266,7 @@ class OrgaController extends Controller
 		
 		$listeOrgaARetourne = array();
 		
-		foreach ($orgaAValider as $key)
+		foreach ($orgaAValider as $key)       
 			{
 				$tempsDisponibiliteTotal = 0;				
 				$dispoOrga = $em->getRepository('PHPMBundle:Disponibilite')->findByOrga($key->getId());
