@@ -2,6 +2,7 @@
 
 namespace PHPM\Bundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -237,8 +238,8 @@ class CreneauController extends Controller
     						"lieu" => $creneau->getPlageHoraire()->getTache()->getLieu(),
     						"confiance" => $creneau->getPlageHoraire()->getTache()->getConfiance()->getId(),
     						"categorie" => $creneau->getPlageHoraire()->getTache()->getCategorie()->getId(),
-				    		"debut" => $creneau->getDebut,
-				    		"fin" => $creneau->getFin,
+				    		"debut" => $creneau->getDebut(),
+				    		"fin" => $creneau->getFin(),
     			        	"duree" => $creneau->getDuree(),
     			    		"permis"=> $creneau->getPlageHoraire()->getTache()->getPermisNecessaire(),
     			        	);
@@ -249,10 +250,10 @@ class CreneauController extends Controller
     			
     	}
     	 
-    	exit(var_dump($orgaArray));
+    	exit(var_dump($creneauArray));
     	 
     	$response = new Response();
-    	$response->setContent(json_encode($orgaArray));
+    	$response->setContent(json_encode($creneauArray));
     	$response->headers->set('Content-Type', 'application/json');
     	 
     

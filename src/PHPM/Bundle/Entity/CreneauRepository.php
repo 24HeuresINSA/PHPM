@@ -118,11 +118,13 @@ class CreneauRepository extends EntityRepository
 		$expr = $qb->expr();
 		
 		$andx = $expr->andx(
-		$expr->eq('o.statut','1'),
-		$expr->eq('ct.PlageHoraire', 'p'),
+
+		$expr->eq('ct.plageHoraire', 'p'),
 		$expr->eq('p.tache','t'),
-		$expr->eq('co.disponibilite','d'),
-		$expr->eq('ct.disponibilite','0')		
+		
+		$expr->eq('ct.disponibilite','0')
+		
+		
 		
 		
 
@@ -132,14 +134,15 @@ class CreneauRepository extends EntityRepository
 		
 		if($orga !='')
 		{
-			$andx->add('ct.id NOT IN (SELECT ci.id FROM PHPMBundle:Creneau ci 
-			WHERE 
-							
-			( (ci.debut < co.fin) AND (ci.fin > co.debut ) )
-			OR
-			(((ci.debut<p.debut)OR(ci.fin > p.fin))OR((ci.debut >= p.fin)OR(ci.fin <= p.debut)))
 			
-		)');
+			
+			$andx->add(" ct.id NOT IN (SELECT ci.id FROM PHPMBundle:Creneau ci , PHPMBundle:Creneau co, PHPMBundle:Disponibilite do
+			WHERE 
+					(co.disponibilite= do.id AND do.orga = $orga )		AND
+			( (ci.debut < co.fin) AND (ci.fin > co.debut ) )
+			OR			(((ci.debut<p.debut)OR(ci.fin > p.fin))OR((ci.debut >= p.fin)OR(ci.fin <= p.debut)))
+			
+		)");
 		}
 		if($plage !='')
 		{
@@ -162,15 +165,15 @@ class CreneauRepository extends EntityRepository
 		
 		
 		
-		
+		//(CURRENT_TIMESTAMP(ct.fin) - CURRENT_TIMESTAMP(ct.debut)) AS duree
 		
 		
 		$qb
-		->select('ct, (CURRENT_TIMESTAMP(ct.fin) - CURRENT_TIMESTAMP(ct.debut)) duree')
+		->select('ct')
 		
-		->from('PHPMBundle:Orga','o')
-		->from('PHPMBundle:Disponibilite', 'd')
-		->from('PHPMBundle:Creneau', 'co')
+		
+		
+		
 		->from('PHPMBundle:PlageHoraire', 'p')
 		->from('PHPMBundle:Tache', 't')
 		->from('PHPMBundle:Creneau', 'ct')
