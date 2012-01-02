@@ -23,8 +23,12 @@ PmUtils.prototype = {
 	 * Adapte la taille du layout
 	 */
 	setAppHeight: function() {
+		ici();
 		
+		$('.content').height($('body').height()-79+'px');
+		$('#client')
 	},
+	// handler lorsqu'on resize la fenêtre
 	
 	/*
 	 * Un bouton permettant de cacher le menu du haut
