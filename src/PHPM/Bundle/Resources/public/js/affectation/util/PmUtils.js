@@ -25,7 +25,7 @@ PmUtils.prototype = {
 	setAppHeight: function(headerHeight) {
 		var _headerHeight = (isFinite(headerHeight))? headerHeight : $('#header').height();
 		var _contentHeight = $(window).height()-_headerHeight;
-		var _clientHeight = _contentHeight-$('#menu_calendar').outerHeight()-20-3; // 20 de padding du menu du haut en plus, 3 de border
+		var _clientHeight = _contentHeight-$('#menu_calendar').outerHeight()-3; // 3 de border tout en bas
 		
 		$('#content').height(_contentHeight+'px');
 		$('#client').height(_clientHeight+'px');
@@ -86,6 +86,7 @@ PmUtils.prototype = {
 		$('#calendar').css('visibility', 'visible'); // raffiche
 		
 		pmUtils.resizeCalendar(ui.originalSize.width-ui.size.width);
+		console.log(ui.originalSize.width-ui.size.width);
 		
 		// on stock ces tailles dans les paramètres de l'utilisateur
 		// volontairement on travaille en pixels
@@ -154,13 +155,24 @@ PmUtils.prototype = {
 	/*
 	 * Travail sur l'URL
 	 */
+	// init d'History.js
+	initHistory: function() {
+	    // Prepare
+	    pmAffectation.History = window.History; // Note: We are using a capital H instead of a lower h
+	
+	    // Bind to StateChange Event
+	    pmAffectation.History.Adapter.bind(window, 'statechange', function() { // Note: We are using statechange instead of popstate
+	        var State = pmAffectation.History.getState(); // Note: We are using History.getState() instead of event.state
+	        pmAffectation.History.log(State.data, State.title, State.url);
+	    });
+	},
 	// regarde si on ne passe pas déjà des paramètres
 	parseUrlParam: function() {
 		// les paramètres vont dans pmAffectation.current
 		
-		if (window.location.hash.substr(0, 7) == '#param&') {
+		if (History.getHash().substr(0, 6) == 'param&') {
 			// parseur - on a reconnu notre format
-			var _hash = window.location.hash.substr(7, window.location.hash.length);
+			var _hash = History.getHash().substr(7, History.getHash().length);
 			
 			var _params = _hash.split('&'); // on part de couple1&couple2&couple3...
 			
@@ -169,18 +181,18 @@ PmUtils.prototype = {
 
 				pmAffectation.current[_paire[0]] = _paire[1]; // le stock
 			}
-		} else {
-			window.location.hash = ''; // tant pis pour ce qu'il y avait avant
 		}
 	},
 	// update un paramètre et change l'url en fonction
 	setUrlParam: function() {
 		// concrètement, pour ne pas avoir de problèmes, on reconstruit l'url entière
-		window.location.hash = '#param';
+		var _urlStr = '#param';
 		
 		for (var _iPaire in pmAffectation.current) {
-			window.location.hash += '&'+_iPaire+'='+pmAffectation.current[_iPaire];
+			_urlStr += '&'+_iPaire+'='+pmAffectation.current[_iPaire];
 		}
+		
+		pmAffectation.History.pushState(pmAffectation.current, 'PlanningMaker - Affectation - '+_urlStr, _urlStr);
 	},
 	
 	/*
