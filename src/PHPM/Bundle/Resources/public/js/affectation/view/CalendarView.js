@@ -104,42 +104,44 @@ CalendarView.prototype = {
 		$('.creneau').remove();
 		
 		if (obj.type === 'orga') {
-			for (var _iDispo in pmAffectation.data.orga[obj.id]['disponibilites']) {
-				var _debut = new Date(pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['debut'].getTime()); // on en fait une copie
-				var _fin = pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['fin'];
-				
-				// on vérifie si on est bien dans les bornes de la plage, trim au besoin
-				if (_debut.getTime() < pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()) {
-					_debut.setTime(pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime());
-				}
-				if (_fin.getTime() > pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()) {
-					_fin.setTime(pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime());
-				}
-				
-				// on place les dispos, avec la classe et le click
-				for (var _iDts = _debut; _iDts.getTime() < _fin.getTime(); _iDts.setTime(_iDts.getTime()+15*60*1000)) {
-					// sélection suivant les attributs de temps de plus en plus précis
-					$('.jour[jour="'+_iDts.getDate()+'/'+Number(_iDts.getMonth()+1)+'"] > .heure[heure="'
-					+_iDts.getHours()+'"] > .quart_heure[minute="'+_iDts.getMinutes()+'"]').addClass('free')
-					.bind('click', {date: _iDts.getMyDts()}, pmAffectation.controllers.calendar.clickQuartHeure);
-				}
-				
-				// on place les créneaux (et retire le handler)
-				for (var _iCreneau in pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux']) {
-					var _hDebut = pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'];
+			if (pmAffectation.data.orga[obj.id] !== undefined) { // check si l'orga existe bien
+				for (var _iDispo in pmAffectation.data.orga[obj.id]['disponibilites']) {
+					var _debut = new Date(pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['debut'].getTime()); // on en fait une copie
+					var _fin = pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['fin'];
 					
-					_html = '<div id="creneau_'+_iCreneau+'" class="creneau" creneau="'+_iCreneau+'">';
-					_html += pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'].getThisFormat('H:I')+' - ';
-					_html += pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'].getThisFormat('H:I')+'</div>';
+					// on vérifie si on est bien dans les bornes de la plage, trim au besoin
+					if (_debut.getTime() < pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()) {
+						_debut.setTime(pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime());
+					}
+					if (_fin.getTime() > pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()) {
+						_fin.setTime(pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime());
+					}
 					
-					// on le rajoute, supprime le handler précédent et en rajoute un
-					$('.jour[jour="'+_hDebut.getDate()+'/'+Number(_hDebut.getMonth()+1)+'"] > .heure[heure="'
-					+_hDebut.getHours()+'"] > .quart_heure[minute="'+_hDebut.getMinutes()+'"]').append(_html).off('click')
-					.bind('click', {creneauId: _iCreneau}, pmAffectation.controllers.calendar.clickCreneau);
+					// on place les dispos, avec la classe et le click
+					for (var _iDts = _debut; _iDts.getTime() < _fin.getTime(); _iDts.setTime(_iDts.getTime()+15*60*1000)) {
+						// sélection suivant les attributs de temps de plus en plus précis
+						$('.jour[jour="'+_iDts.getDate()+'/'+Number(_iDts.getMonth()+1)+'"] > .heure[heure="'
+						+_iDts.getHours()+'"] > .quart_heure[minute="'+_iDts.getMinutes()+'"]').addClass('free')
+						.bind('click', {date: _iDts.getMyDts()}, pmAffectation.controllers.calendar.clickQuartHeure);
+					}
 					
-					// set la taille
-					var _taille = Number(pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['duree']/60/60*40);
-					$('#creneau_'+_iCreneau).height(_taille+'px');
+					// on place les créneaux (et retire le handler)
+					for (var _iCreneau in pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux']) {
+						var _hDebut = pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'];
+						
+						_html = '<div id="creneau_'+_iCreneau+'" class="creneau" creneau="'+_iCreneau+'">';
+						_html += pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'].getThisFormat('H:I')+' - ';
+						_html += pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'].getThisFormat('H:I')+'</div>';
+						
+						// on le rajoute, supprime le handler précédent et en rajoute un
+						$('.jour[jour="'+_hDebut.getDate()+'/'+Number(_hDebut.getMonth()+1)+'"] > .heure[heure="'
+						+_hDebut.getHours()+'"] > .quart_heure[minute="'+_hDebut.getMinutes()+'"]').append(_html).off('click')
+						.bind('click', {creneauId: _iCreneau}, pmAffectation.controllers.calendar.clickCreneau);
+						
+						// set la taille
+						var _taille = Number(pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['duree']/60/60*40);
+						$('#creneau_'+_iCreneau).height(_taille+'px');
+					}
 				}
 			}
 		} else {

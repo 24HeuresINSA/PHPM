@@ -21,9 +21,15 @@ OrgaModel.prototype = {
 	getData: function(callBack) {
 		pmAffectation.models.orga.callBack = callBack;
 		
+		// construit les paramètres que l'on va envoyer
+		var _params = {
+			plage_id: pmAffectation.current.plage
+		};
+		
 		$.ajax({
 			url: pmAffectation.url+pmAffectation.paths.orgas,
 			dataType: 'json',
+			data: _params,
 			success: pmAffectation.models.orga.requestSuccess,
 			error: pmAffectation.models.orga.requestError,
 			type: 'POST'
