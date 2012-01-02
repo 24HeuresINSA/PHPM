@@ -148,7 +148,7 @@ class CreneauRepository extends EntityRepository
 		{
 		//TODO faire le calcul de la durée
 			
-			$andx->add($expr->gte('10',$duree));
+			$andx->add('(ct.fin - ct.debut < '.$duree.' )');
 		}		
 		if($orga !='')
 		{
