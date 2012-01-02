@@ -110,4 +110,76 @@ class CreneauRepository extends EntityRepository
 		
 		
 	}
+	
+	
+	public function getCreneauxCompatibleWithCriteria($niveau_confiance, $categorie, $age, $permis, $duree, $orga_id)
+	{
+		$qb = $this->getEntityManager()->createQueryBuilder();
+		$expr = $qb->expr();
+		
+		$andx = $expr->andx(
+		$expr->eq('o.statut','1'),
+		$expr->eq('ct.PlageHoraire', 'p'),
+		$expr->eq('p.tache','t'),
+		$expr->eq('co.disponibilite','d'),
+		$expr->eq('ct.disponibilite','0'),		
+		
+		'ct.id NOT IN (SELECT ci.id FROM PHPMBundle:Creneau ci 
+		WHERE 
+						
+		( (ci.debut < co.fin) AND (ci.fin > co.debut ) )
+		OR
+		(((ci.debut<p.debut)OR(ci.fin > p.fin))OR((ci.debut >= p.fin)OR(ci.fin <= p.debut)))
+		
+		)'
+
+		);
+
+		
+		
+		if($plage_id !='')
+		{
+			$pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation.plages')->getValue(),TRUE);
+			$plage= $pref[$plage_id];
+			$andx->add('(d.debut < \''.$plage["fin"].'\' ) AND (d.fin >\''.$plage["debut"].'\' )');
+		}
+		if($permis!='')
+		{
+			$andx->add($expr->gte('t.permisNecessaire',$permis));
+		}
+		if($maxDateNaissance !='')
+		{
+			$andx->add($expr->lte('t.ageNecessaire','\''.$age.'\''));
+		}
+		if($niveau_confiance !='')
+		{
+			$andx->add($expr->gte('t.confiance',$niveau_confiance));
+		}
+		
+		
+		
+		
+		
+		$qb
+		->select('ct')
+		
+		->from('PHPMBundle:Orga','o')
+		->from('PHPMBundle:Disponibilite', 'd')
+		->from('PHPMBundle:Creneau', 'co')
+		->from('PHPMBundle:PlageHoraire', 'p')
+		->from('PHPMBundle:Tache', 't')
+		->from('PHPMBundle:Creneau', 'ct')
+		
+		
+		->where($andx);
+		
+		//exit(var_dump($qb->getQuery()->getDQL()));
+		
+		
+		
+		return $qb->getQuery()->getResult();
+		
+	}
+		
+	
 }

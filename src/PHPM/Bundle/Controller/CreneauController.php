@@ -43,13 +43,7 @@ class CreneauController extends Controller
 
         $entity = $em->getRepository('PHPMBundle:Creneau')->find($id);
 		
-		$emailConstraint = new QuartHeure();
-    // all constraint "options" can be set this way
-    $emailConstraint->message = 'Invalid email address';
 
-    // use the validator to validate the value
-  //  $errorList = $this->get('validator')->validateValue(901, $emailConstraint);
-		
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Creneau entity.');
