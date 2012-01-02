@@ -28,7 +28,7 @@
 	</script>
 	<div class="menu_calendar" id ="menu_calendar">
 		<div class="boutons_plage" id="boutons_plage"></div>
-		<div class="bouton_hide_menu" id="bouton_hide_menu" onclick="pmUtils.hideTopMenu()">^ Cacher ^</div>
+		<div class="bouton_hide_menu" id="bouton_hide_menu">^ Cacher ^</div>
 	</div>
 	
 	<div class="client" id="client">
@@ -45,7 +45,15 @@
 			</div>
 			
 			<div class="filtre_orga" id="filtre_orga">
-				
+				<select name="confiance">
+					<!-- sera mis en place dynamiquement -->
+				</select>
+
+				<select name="permis">
+					<option value="0">Pas de permis</option>
+					<option value="1">Permis</option>
+					<option value="2">Permis 2+ ans</option>
+				</select>
 			</div>
 		</div>
 		

@@ -41,6 +41,11 @@ PmUtils.prototype = {
 	/*
 	 * Un bouton permettant de cacher le menu du haut
 	 */
+	// set le bouton
+	setHideTopMenu: function() {
+		$('#bouton_hide_menu').click(pmUtils.hideTopMenu);
+	},
+	// handler
 	hideTopMenu: function() {
 		if ($('.header').css('display') === 'none') {
 			$('.header').show(500, 'swing');

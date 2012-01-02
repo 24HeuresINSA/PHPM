@@ -42,6 +42,7 @@
 $(document).ready(function() {	
 	// 0 : setter le layout et récupérer les paramètres dans l'Url
 	pmUtils.setResizeableSidebars();
+	pmUtils.setHideTopMenu();
 	pmUtils.parseUrlParam();
 	
 	// 1 : lancer les requêtes pour les paramètres
