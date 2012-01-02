@@ -59,4 +59,8 @@ $(document).ready(function() {
 	// 3 : on va chercher pour la colonne orgas
 	pmAffectation.controllers.orga = new OrgaController();
 	pmAffectation.controllers.orga.getData();
+	
+	// 4 : colonne tache - rien à afficher pour l'instant
+	pmAffectation.controllers.tache = new TacheController();
+	//pmAffectation.controllers.tache.getData();
 });

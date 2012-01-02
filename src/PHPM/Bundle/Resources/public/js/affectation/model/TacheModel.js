@@ -1,14 +1,14 @@
 /*
  * Page Affectation
- * Modèle Orga
+ * Modèle Tache
  */
 
-function OrgaModel() {
+function TacheModel() {
 	// on lance juste le constructeur
 	this.initialize();
 }
 
-OrgaModel.prototype = {
+TacheModel.prototype = {
 	/*
 	 * Constructeur
 	 */
@@ -19,35 +19,35 @@ OrgaModel.prototype = {
 	 * Lance les requêtes
 	 */
 	getData: function(callBack) {
-		pmAffectation.models.orga.callBack = callBack;
+		pmAffectation.models.tache.callBack = callBack;
 		
-		$.ajax({
+		/*$.ajax({
 			url: pmAffectation.url+pmAffectation.paths.orgas,
 			dataType: 'json',
 			success: pmAffectation.models.orga.requestSuccess,
 			error: pmAffectation.models.orga.requestError,
 			type: 'POST'
-		});
+		});*/
 	},
 	
 	/*
 	 * Récup les résultats
 	 */
 	requestSuccess: function(data) {
-		pmAffectation.models.orga.data = data;
+		pmAffectation.models.tache.data = data;
 	
-		pmAffectation.models.orga.callBack();
+		pmAffectation.models.tache.callBack();
 	},
 	requestError: function(data, statusText) {
-		message.error("Impossible de récupérer les orgas : " + statusText);
+		message.error("Impossible de récupérer les taches : " + statusText);
 	},
 	
 	/*
 	 * Getters des résultats
 	 */
-	// récupère la liste des orgas
-	getOrgas: function() {	
-		var _orgas = {};
+	// récupère la liste des taches
+	getTaches: function() {	
+		/*var _orgas = {};
 		
 		// traitement des orgas
 		for (var _iOrga in this.data) {
@@ -79,6 +79,6 @@ OrgaModel.prototype = {
 			_orgas[_iOrga] = _orga;
 		}
 		
-		return _orgas;
+		return _orgas;*/
 	}
 }
