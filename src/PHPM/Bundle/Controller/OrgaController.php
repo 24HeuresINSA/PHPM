@@ -428,8 +428,6 @@ if valider : laisser ce qu'il y avait avant.
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $maxDateNaissance->format('Y-m-d'), $plage_id, $niveau_confiance);
-
-		$response = new Response();
 		
 		
 		$orgaArray = array();
