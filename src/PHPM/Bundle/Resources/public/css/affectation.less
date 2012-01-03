@@ -96,7 +96,7 @@ body {
 	  margin: 10px 0;
 	  
 	  #bouton_refresh {
-	    margin-left: 45px;
+	    margin-left: 35px;
 	  }
 	}
 	
@@ -124,7 +124,7 @@ body {
 	
 	.filtre_orga {
 	  width: 100%;
-	  height: 30%;
+	  padding: 10px;
 	}
 }
 
@@ -173,6 +173,7 @@ body {
       overflow: hidden;
       height: @heightHeure * 24 + 1;
       border-right: 1px solid #333; // pour une raison X, pas possible de mettre la bordure sur le 1er jour
+      margin-bottom: 1px;
       
       .hour {
         width: 100%;
@@ -232,9 +233,6 @@ body {
       }
       .heure:nth-of-type(even) {
         background: rgba(0, 0, 0, 0.2);
-      }
-      .heure:last-of-type {
-        border-bottom: 1px solid #fff;  
       }
     }
   }
