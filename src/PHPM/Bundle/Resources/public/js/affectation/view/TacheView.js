@@ -29,7 +29,7 @@ TacheView.prototype = {
 	},
 	
 	/*
-	 * Charge la liste des orgas
+	 * Charge la liste des taches
 	 */
 	setTaches: function() {
 		$('#liste_taches').empty(); // reset la liste
