@@ -45,11 +45,13 @@
 			</div>
 			
 			<div class="filtre_orga" id="filtre_orga">
-				<select name="confiance">
-					<!-- sera mis en place dynamiquement -->
+				<select name="confiance" id="filtre_orga_confiance">
+					<option value="-1" selected>Tous les niveaux</option>
+					<!-- le reste sera mis en place dynamiquement -->
 				</select>
 
-				<select name="permis">
+				<select name="permis" id="filtre_orga_permis">
+					<option value="-1" selected>Tous</option>
 					<option value="0">Pas de permis</option>
 					<option value="1">Permis</option>
 					<option value="2">Permis 2+ ans</option>

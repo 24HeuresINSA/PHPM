@@ -32,6 +32,11 @@ ParameterController.prototype = {
 	 */
 	callbackNiveaux: function() {
 		pmAffectation.data.parameter.niveau = pmAffectation.models.parameter.getNiveaux();
+		
+		// ajoute les options correspondantes dans le menu déroulant
+		for (_iNiveau in pmAffectation.data.parameter.niveau) {
+			$('#filtre_orga_confiance').append('<option value="'+_iNiveau+'">Orga '+pmAffectation.data.parameter.niveau[_iNiveau]['nom']+'</option>');
+		}
 	},
 	callbackCategories: function() {
 		pmAffectation.data.parameter.categorie = pmAffectation.models.parameter.getCategories();

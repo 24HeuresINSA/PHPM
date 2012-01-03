@@ -47,5 +47,21 @@ OrgaController.prototype = {
 		
 		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga});
 	},
+	// clic sur le filtre niveau de confiance
+	clickFilterConfiance: function(idNiveau) {
+		pmAffectation.current.confiance = idNiveau;
+		
+		pmUtils.setUrlParam(); // maj de l'url
+		
+		pmAffectation.controllers.orga.getData();
+	},
+	// click sur le filtre permis
+	clickFilterPermis: function(idPermis) {
+		pmAffectation.current.permis = idPermis;
+		
+		pmUtils.setUrlParam(); // maj de l'url
+		
+		pmAffectation.controllers.orga.getData();
+	},	
 
 }

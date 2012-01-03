@@ -26,6 +26,12 @@ OrgaView.prototype = {
 			icons: {primary: 'ui-icon-refresh'},
 			text: false
 		}).click(function() { pmAffectation.controllers.orga.getData(); });
+		
+		this.setFilters();
+		
+		// filtres
+		$('#filtre_orga_confiance').change(function() {pmAffectation.controllers.orga.clickFilterConfiance($('#filtre_orga_confiance').val());});
+		$('#filtre_orga_permis').change(function() {pmAffectation.controllers.orga.clickFilterPermis($('#filtre_orga_permis').val());});
 	},
 	
 	/*
@@ -46,6 +52,13 @@ OrgaView.prototype = {
 		}
 		
 		$("#orga_"+pmAffectation.current.orga).addClass('current'); // met le focus là où il faut
-	}
+	},
 	
+	/*
+	 * Sélectionne les bons filtres
+	 */
+	setFilters: function() {
+		$('#filtre_orga_confiance').val(pmAffectation.current.confiance);
+		$('#filtre_orga_permis').val(pmAffectation.current.permis);
+	}
 }

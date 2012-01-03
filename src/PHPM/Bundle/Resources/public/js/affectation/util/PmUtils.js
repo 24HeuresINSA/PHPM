@@ -180,8 +180,14 @@ PmUtils.prototype = {
 	},
 	// update un paramètre et change l'url en fonction
 	setUrlParam: function() {
-		// concrètement, pour ne pas avoir de problèmes, on reconstruit l'url entière
-		window.location.hash = '#param&' + $.param(pmAffectation.current);
+		// concrètement, pour ne pas avoir de problèmes, on reconstruit l'url entière, mais avec seulement les params valides
+		window.location.hash = '#param';
+		
+         for (var _iPaire in pmAffectation.current) {
+         	if ($.isNumeric(pmAffectation.current[_iPaire]) === true) {
+				window.location.hash += '&'+_iPaire+'='+pmAffectation.current[_iPaire];
+			}
+         }
 	},
 	
 	/*
