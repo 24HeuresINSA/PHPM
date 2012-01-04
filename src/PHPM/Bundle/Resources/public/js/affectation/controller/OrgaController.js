@@ -21,6 +21,9 @@ OrgaController.prototype = {
 	 * Lancement des requêtes
 	 */
 	getData: function() {
+		$('#liste_orgas').empty();
+		$('#liste_orgas').addClass('spinner_medium');
+		
 		pmAffectation.models.orga.getData(pmAffectation.controllers.orga.callbackOrgas);
 	},
 	

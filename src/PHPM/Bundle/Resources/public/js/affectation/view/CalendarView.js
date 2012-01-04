@@ -20,6 +20,7 @@ CalendarView.prototype = {
 	setPlage: function(plage) {
 		// on vide déjà la div
 		$('#calendar').empty();
+		$('#client').removeClass('spinner_large');
 		
 		// calcule le nombre de jours - il faut passer par les TS, +1
 		var _nbJours = (pmAffectation.data.calendar.plage[plage]['fin'].getTime()-pmAffectation.data.calendar.plage[plage]['debut'].getTime())/(24*60*60*1000)+1;
@@ -129,8 +130,8 @@ CalendarView.prototype = {
 					for (var _iCreneau in pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux']) {
 						var _hDebut = pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'];
 						
-						_html = '<div id="creneau_'+_iCreneau+'" class="creneau" creneau="'+_iCreneau+'">';
-						_html += pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'].getThisFormat('H:I')+' - ';
+						_html = '<div id="creneau_'+_iCreneau+'" class="creneau" creneau="'+_iCreneau+'">'+pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['tache'];
+						_html += '<br />'+pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'].getThisFormat('H:I')+' - ';
 						_html += pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'].getThisFormat('H:I')+'</div>';
 						
 						// on le rajoute, supprime le handler précédent et en rajoute un

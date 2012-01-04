@@ -24,7 +24,12 @@ d) Generate database tables
 e) Links assets
 'app/console assets:install web --symlink'
 
-f) Add NodeJS and LESS on your webserver - tutorial:
+f) Dump assetc
+'app/console assetic:dump'
+
+
+
+DEPRECATED) Add NodeJS and LESS on your webserver - tutorial:
 'http://www.dobervich.com/2011/05/10/less-css-assetic-configuration-in-a-symfony2-project/'
 
 *** Mac-specific instructions ***
