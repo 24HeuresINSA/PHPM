@@ -1,0 +1,34 @@
+{% extends "::base.html.twig"  %}
+
+{% block title %}
+	Cr&eacute;neaux -> D&eacute;tails du cr&eacute;neau
+{% endblock %}
+
+{% block content %}
+
+
+<h1>Config Initiale</h1>
+	<script>
+	$(function() {
+		$( "#dialog" ).dialog({
+			
+			modal: true
+		});
+	
+	});
+	</script>
+<div id="dialog" title="Réinitialisation">
+<div class="alert">Attention : Toutes les données du logiciel seront perdues! </div>
+	<p class="validateTips">Veuillez taper #1337! dans le champ de confirmation</p>
+
+	<form  method="post">
+	<fieldset>
+		<label for="reinitconfirm">Confirmation</label>
+		<input type="text" name="reinitconfirm" id="confirm" class="text ui-widget-content ui-corner-all" />
+	</fieldset>
+	</form>
+</div>
+{% endblock %}
+
+{% block menu_action %}
+{% endblock %}
