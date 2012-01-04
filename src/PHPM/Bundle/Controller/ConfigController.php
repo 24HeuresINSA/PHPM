@@ -226,96 +226,143 @@ class ConfigController extends Controller {
 				throw new \Exception(
 						"Mot de passe de réinitialisation invalide");
 
-		
+			//Vidage des tables
 
-		//Vidage des tables
-		
-		
-		$conn=$em->getConnection();
-		
-		
-		
-		$sql = 'TRUNCATE TABLE `Creneau`;';
-		$stmt = $conn->prepare($sql);
-		$stmt->execute();
-		
-		
-		$sql = 'TRUNCATE TABLE `Disponibilite`;
+			$conn = $this->get('database_connection');
+
+			$sql = 'TRUNCATE TABLE `Creneau`;';
+			$stmt = $conn->prepare($sql);
+			$stmt->execute();
+
+			$sql = 'TRUNCATE TABLE `Disponibilite`;
 		TRUNCATE TABLE `PlageHoraire`;';
-		$stmt = $conn->prepare($sql);
-		$stmt->execute();
-		
-		$sql = 'TRUNCATE TABLE `Tache`;	';
-		$stmt = $conn->prepare($sql);
-		$stmt->execute();
-		
-		$sql = 'TRUNCATE TABLE `Orga`;';
-		$stmt = $conn->prepare($sql);
-		$stmt->execute();
-		
-		$sql = 'TRUNCATE TABLE `Categorie`;
+			$stmt = $conn->prepare($sql);
+			$stmt->execute();
+
+			$sql = 'TRUNCATE TABLE `Tache`;	';
+			$stmt = $conn->prepare($sql);
+			$stmt->execute();
+
+			$sql = 'TRUNCATE TABLE `Orga`;';
+			$stmt = $conn->prepare($sql);
+			$stmt->execute();
+
+			$sql = 'TRUNCATE TABLE `Categorie`;
 TRUNCATE TABLE `Confiance`;
 TRUNCATE TABLE `Config`;
 TRUNCATE TABLE `User`;';
-		$stmt = $conn->prepare($sql);
-		$stmt->execute();
-		
-		
+			$stmt = $conn->prepare($sql);
+			$stmt->execute();
+			$conn->close();
 
-		
-		//Config des credentials
-		
-		$entity = new User();
-		$entity->setUsername('orga');
-		$entity->setPass('orga');
-		$entity->setEmail('orga@24heures.org');
-		$em->persist($entity);
-		$em->flush();
+			//Config des credentials
 
-		exit();
-		//Config de l'organisation
-		
-		$entity = new Config();
-		$entity->setField("manifestation.organisation.nom");
-		$entity->setValue("24 Heures de l'INSA");
-		$em->persist($entity);
-		$em->flush();
-		
-		
-		 
-		//Config des plages de la manif
-		$plage1 = array("nom" => "Prémanif", "debut" => "2012-05-16 00:00","fin" => "2012-05-23 00:00");
-		$plage2 = array("nom" => "Manif", "debut" => "2012-05-23 00:00","fin" => "2012-05-27 00:00");
-		$plage3 = array("nom" => "Postmanif", "debut" => "2012-05-28 00:00","fin" => "2012-06-01 00:00");
-		$a=array("1"=>$plage1,"2"=>$plage2, "3"=>$plage3);
-		
-		$entity = new Config();
-		$entity->setField("manifestation.plages");
-		$entity->setValue(json_encode($a));
-		$em->persist($entity);
-		$em->flush();
-		 
+			$entity = new User();
+			$entity->setUsername('orga');
+			$entity->setPass('orga');
+			$entity->setEmail('orga@24heures.org');
+			$em->persist($entity);
+			$em->flush();
 
-		//Remettre config initiale à 1
+			//Config de l'organisation
 
-		$entity = $em->getRepository('PHPMBundle:Config')
-				->findOneByField("phpm.config.initiale");
+			$entity = new Config();
+			$entity->setField("manifestation.organisation.nom");
+			$entity->setValue("24 Heures de l'INSA");
+			$entity->setLabel("Nom de l'organisation");
+			$em->persist($entity);
+			$em->flush();
 
-		if (!$entity) {
+			//Config des plages de la manif
+			$plage1 = array("nom" => "Prémanif", "debut" => "2012-05-16 00:00",
+					"fin" => "2012-05-23 00:00");
+			$plage2 = array("nom" => "Manif", "debut" => "2012-05-23 00:00",
+					"fin" => "2012-05-27 00:00");
+			$plage3 = array("nom" => "Postmanif",
+					"debut" => "2012-05-28 00:00", "fin" => "2012-06-01 00:00");
+			$a = array("1" => $plage1, "2" => $plage2, "3" => $plage3);
+
+			$entity = new Config();
+			$entity->setField("manifestation.plages");
+			$entity->setValue(json_encode($a));
+			$entity->setLabel("Plages de la manifestation");
+			$em->persist($entity);
+			$em->flush();
+
+			//Remettre config initiale à 1
+
+			
+			
 			$entity = new Config();
 			$entity->setField("phpm.config.initiale");
+			$entity->setLabel("PHPM est configuré");
 			$entity->setValue("1");
 			$em->persist($entity);
 			$em->flush();
-		}
+			$initialized=true;
+			
 
-		$em->remove($entity);
-		$em->flush();
+			return $this->redirect($this->generateUrl('config_manif'));
+
+		}
 		
-		}
+	
 
-		return array("texte" => "ok");
+		return array("" => "");
 
 	}
+	
+	/**
+	 *
+	 *
+	 * @Route("/manif", name="config_manif")
+	 * @Template
+	 */
+	public function manifAction() {
+		$request = $this->get('request');
+		$em = $this->getDoctrine()->getEntityManager();
+		$orga = $em->getRepository('PHPMBundle:Config')->findOneByField('manifestation.organisation.nom');
+		$plages = $em->getRepository('PHPMBundle:Config')->findOneByField('manifestation.plages');
+		
+		
+		
+		//$form = $this->createFormBuilder(array('o'=> $orga, 'p' => $plages))>add('o',new ConfigType($orga), array('label' => $orga->getLabel()) )		->add('p',new ConfigType($plages),array('label' => $plages->getLabel()) )->getForm();
+		
+		
+		$builder = $this->createFormBuilder(array('items' => array($orga->getLabel()=>$orga,$plages->getLabel()=>$plages),array('label'=> 2)));
+		
+		$builder->add('items', 'collection', array('type'   => new ConfigType()));		
+		$form  = $builder->getForm();
+		
+		//var_dump($form);
+		
+		if ($this->get('request')->getMethod() == 'POST') {
+			$form->bindRequest($request);
+			$data = $form->getData();
+			foreach ($data['items'] as $item){
+			$validator = $this->get('validator');
+			$errors = $validator->validate($item);
+				
+			if (count($errors) > 0) {
+      		  return new Response(print_r($errors, true));
+   			 } else {
+   			 	$em->persist($item);
+   			 	$em->flush();
+   			 }
+			}
+			
+			
+		}
+
+		
+		
+		
+		
+		
+		
+		return array('form' => $form->createView());
+		
+	}
+	
 
 }

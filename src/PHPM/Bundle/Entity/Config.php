@@ -31,6 +31,14 @@ class Config
      * @Assert\NotBlank()
      */
     private $field;
+    
+    /**
+     * @var string $label
+     *
+     * @ORM\Column(name="label", type="string", length=255)
+     * @Assert\NotBlank()
+     */
+    private $label;
 
     /**
      * @var text $value
@@ -100,5 +108,25 @@ class Config
     public function getValue()
     {
         return $this->value;
+    }
+
+    /**
+     * Set label
+     *
+     * @param string $label
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
+    }
+
+    /**
+     * Get label
+     *
+     * @return string 
+     */
+    public function getLabel()
+    {
+        return $this->label;
     }
 }
