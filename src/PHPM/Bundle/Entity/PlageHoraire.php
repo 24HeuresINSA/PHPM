@@ -53,7 +53,7 @@ class PlageHoraire
     * @var smallint $dureeCreneau
     *
     * @ORM\Column(name="dureeCreneau", type="smallint")
-    * @Assert\NotBlank()
+    * @Assert\Min(limit = "0")
     */
     private $dureeCreneau;
     
@@ -61,7 +61,7 @@ class PlageHoraire
      * @var smallint $recoupementCreneau
      *
      * @ORM\Column(name="recoupementCreneau", type="smallint")
-     * @Assert\NotBlank()
+     * @Assert\Min(limit = "0")
      */
     private $recoupementCreneau;
     
