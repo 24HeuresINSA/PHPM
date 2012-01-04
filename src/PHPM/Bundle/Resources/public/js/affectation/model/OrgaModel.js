@@ -79,7 +79,7 @@ OrgaModel.prototype = {
 			for (var _iDispo in this.data[_iOrga]['disponibilites']) {
 				// TODO : hack à virer
 				if (this.data[_iOrga]['disponibilites'][_iDispo] === null) {
-					console.error('On a vu un null !');
+					console.error(this.data[_iOrga]['disponibilites'], 'On a vu un null !');
 					break;	
 				}
 				
