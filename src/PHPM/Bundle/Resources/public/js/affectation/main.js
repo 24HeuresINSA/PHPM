@@ -53,7 +53,7 @@ $(document).ready(function() {
 	pmAffectation.controllers.parameter.getData();
 	
 	// 2 : setter le calendar
-	// on récupère lesp lages via une requête synchrone
+	// on récupère les plages via une requête synchrone
 	// comme c'est les 1ères dates qu'on a, on check le fuseau horaire de l'utilisateur
 	pmAffectation.controllers.calendar = new CalendarController();
 	pmAffectation.controllers.calendar.getData();

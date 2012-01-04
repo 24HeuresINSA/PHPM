@@ -21,6 +21,9 @@ TacheController.prototype = {
 	 * Lancement des requêtes
 	 */
 	getData: function() {
+		$('#liste_taches').empty();
+		$('#liste_taches').addClass('spinner_medium');
+		
 		//pmAffectation.models.orga.getData(pmAffectation.controllers.orga.callbackOrgas);
 	},
 	

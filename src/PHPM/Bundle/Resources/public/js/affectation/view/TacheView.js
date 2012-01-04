@@ -33,6 +33,7 @@ TacheView.prototype = {
 	 */
 	setTaches: function() {
 		$('#liste_taches').empty(); // reset la liste
+		$('#liste_taches').removeClass('spinner_medium');
 		
 		/*for (_iOrga in pmAffectation.data.orga) {
 			var _html = '<div class="orga" id="orga_'+_iOrga+'" idOrga="'+_iOrga+'">';
