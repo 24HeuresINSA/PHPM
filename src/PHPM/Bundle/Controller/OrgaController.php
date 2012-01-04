@@ -435,7 +435,7 @@ if valider : laisser ce qu'il y avait avant.
 			
 			$a = array();
 			foreach ($orga->getDisponibilites() as $dispo){
-				$a[$dispo->getId()] = $dispo->toSimpleArray();
+				$a[$dispo->getId()] = $dispo->toArrayOrgaWebService();
 			}
 			
 			
@@ -445,14 +445,14 @@ if valider : laisser ce qu'il y avait avant.
 			    		
 			        	"nom" => $orga->getNom(),
 			        	"prenom" => $orga->getPrenom(),
-			    		"surnom" => $orga->getSurnom(),
-			    		
-			    		
+						"confiance" => $orga->getConfiance()->getId(),
+						"permis"=>$orga->getPermis(),
 			    		"dateDeNaissance" => $orga->getDateDeNaissance()->format('Y-m-d H:i:s'),
 			    		"departement" => $orga->getDepartement(),
 			    		"commentaire" => $orga->getCommentaire(),
-			    		"permis"=>$orga->getPermis(),
-			        	"confiance" => $orga->getConfiance()->getId(),
+			    		
+			    		//TODO Implémentation des blocs
+			    		
 			        	"disponibilites" => $a);
 			
 			

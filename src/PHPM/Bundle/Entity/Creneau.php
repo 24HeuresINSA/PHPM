@@ -170,7 +170,10 @@ class Creneau
     {
     	return array("id" => $this->getId(),"debut" => $this->getDebut(),"fin" => $this->getFin(), "duree" => $this->getDuree(), "plageHoraire" => $this->getPlageHoraire()->toArray(),"disponibilite" => $this->getDisponibilite()->toArray());
     }
-    
+    public function toArrayOrgaWebService()
+    {
+    	return array("debut" => $this->getDebut(),"fin" => $this->getFin(), "duree" => $this->getDuree(), "tache" => $this->getPlageHoraire()->getTache()->getNom());
+    }
     
     public function __toString()
     {

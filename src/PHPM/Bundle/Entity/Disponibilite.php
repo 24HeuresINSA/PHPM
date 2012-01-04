@@ -186,13 +186,24 @@ class Disponibilite
     
     public function toSimpleArray()
     {
-    
     	return array(
             	"debut" => $this->getDebut()->format('Y-m-d H:i:s'),
             	"fin" => $this->getFin()->format('Y-m-d H:i:s')
     	);
     }
     
+    public function toArrayOrgaWebService()
+    {
+    	$a = array();
+    	foreach ($this->getCreneaux() as $entity){
+    		$a[$entity->getId()] = $entity->toArrayOrgaWebService();
+    	
+    	return array(
+                	"debut" => $this->getDebut()->format('Y-m-d H:i:s'),
+                	"fin" => $this->getFin()->format('Y-m-d H:i:s'),
+                	"creneaux" => $a
+    	);
+    }
     
     
 }
