@@ -39,7 +39,9 @@
  * Lancement
  * Effectif que quand le document est prêt
  */
-$(document).ready(function() {	
+$(document).ready(function() {
+	$('#client').addClass('spinner_large'); // au cas où le chargement soit vraiment très très long
+	
 	// 0 : setter le layout et récupérer les paramètres dans l'Url
 	pmUtils.setResizeableSidebars();
 	pmUtils.setHideTopMenu();
@@ -55,7 +57,7 @@ $(document).ready(function() {
 	// comme c'est les 1ères dates qu'on a, on check le fuseau horaire de l'utilisateur
 	pmAffectation.controllers.calendar = new CalendarController();
 	pmAffectation.controllers.calendar.getData();
-	// lorsque la vue calendier est settée, il va redimensionner l'appli
+	// lorsque la vue calendier est settée, il va redimensionner l'appli et retirer le spinner
 	
 	// 3 : on va chercher pour la colonne orgas
 	pmAffectation.controllers.orga = new OrgaController();

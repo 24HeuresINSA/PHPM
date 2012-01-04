@@ -20,6 +20,7 @@ CalendarView.prototype = {
 	setPlage: function(plage) {
 		// on vide déjà la div
 		$('#calendar').empty();
+		$('#client').removeClass('spinner_large');
 		
 		// calcule le nombre de jours - il faut passer par les TS, +1
 		var _nbJours = (pmAffectation.data.calendar.plage[plage]['fin'].getTime()-pmAffectation.data.calendar.plage[plage]['debut'].getTime())/(24*60*60*1000)+1;
