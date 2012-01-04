@@ -174,7 +174,10 @@ class Creneau
     {
     	return array("debut" => $this->getDebut(),"fin" => $this->getFin(), "duree" => $this->getDuree(), "tache" => $this->getPlageHoraire()->getTache()->getNom());
     }
-    
+    public function toSimpleArray()
+    {
+    	return array("debut" => $this->getDebut(),"fin" => $this->getFin(), "duree" => $this->getDuree());
+    }
     public function __toString()
     {
     return $this->getDebut()->format('D d H:i').' - '.$this->getFin()->format('D d H:i');
