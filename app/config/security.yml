@@ -21,7 +21,7 @@ security:
             security: false
 
         secured_area:
-            pattern:    ^/
+            pattern:    ^/x/
             provider: db
             http_basic:
                 realm: "PHPLanningMaker"
