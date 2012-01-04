@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\UserRepository")
  * @UniqueEntity("email")
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface
 {
     /**
      * @var integer $id
@@ -26,9 +26,9 @@ class User implements UserInterface, \Serializable
     private $id;
 
     /**
-     * @var string $login
+     * @var string $username
      *
-     * @ORM\Column(name="login", type="string", length=255)
+     * @ORM\Column(name="username", type="string", length=255)
      * @Assert\NotBlank()
      */
     private $username;
@@ -107,8 +107,44 @@ class User implements UserInterface, \Serializable
     
     public function __toString()
     {
-    	return $this->getLogin();
+    	return $this->getUsername();
     }
+
+   
+    
+    
+    public function __construct()
+    {
+    	
+    }
+    
+    public function getRoles()
+    {
+    	return array('ROLE_ADMIN');
+    }
+    
+    public function equals(UserInterface $user)
+    {
+    	return $user->getUsername() === $this->username;
+    }
+    
+    public function eraseCredentials()
+    {
+    }
+    
+
+    
+    public function getSalt()
+    {
+    	return "";
+    }
+    
+    public function getPassword()
+    {
+    	return $this->pass;
+    }
+    
+    
 
     /**
      * Set username

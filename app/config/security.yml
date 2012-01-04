@@ -1,16 +1,15 @@
 security:
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        PHPM\Bundle\Entity\User: plaintext
+
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
-        in_memory:
-            users:
-                user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+        db:
+            entity: { class: PHPMBundle:User, property: username }
 
     firewalls:
         dev:
@@ -23,12 +22,14 @@ security:
 
         secured_area:
             pattern:    ^/
-            anonymous: ~
-
-            anonymous: ~
+            provider: db
             http_basic:
                 realm: "PHPLanningMaker"
-
+            logout:
+                path:   /logout
+                invalidate_session: true
+                
     access_control:
+            - { path: ^/, roles: ROLE_ADMIN }
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         #- { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
