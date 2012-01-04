@@ -453,15 +453,15 @@ if valider : laisser ce qu'il y avait avant.
 			    		
 			    		//TODO Implémentation des blocs
 			    		
-			        	"disponibilites" => $a);
-			
+			        	"disponibilites" => $a
+			);
 			
 			
 			
 			
 		}
     	
-    	//exit(var_dump($orgaArray));
+    	exit(var_dump($orgaArray));
     	
     	$response = new Response();
     	$response->setContent(json_encode($orgaArray));
