@@ -204,6 +204,6 @@ class Disponibilite
                 	"creneaux" => $a
     	);
     }
+    }
     
-    
-}
+}  
