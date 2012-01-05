@@ -37,7 +37,7 @@ class User implements UserInterface
      * @var string $pass
      * 
      * @Assert\MinLength(
-     *     limit=5
+     *     limit=4
      * )
      *
      * @ORM\Column(name="pass", type="string", length=255)

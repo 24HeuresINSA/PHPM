@@ -1,7 +1,10 @@
 <?php
 
 namespace PHPM\Bundle\Controller;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -9,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PHPM\Bundle\Entity\Config;
 use PHPM\Bundle\Entity\User;
 use PHPM\Bundle\Form\ConfigType;
+use PHPM\Bundle\Form\UserType;
 
 /**
  * Config controller.
@@ -218,13 +222,23 @@ class ConfigController extends Controller {
 	public function initialeAction() {
 		$request = $this->get('request')->request;
 		$em = $this->getDoctrine()->getEntityManager();
-
+		
+		$initiale = $em->getRepository('PHPMBundle:Config')->findOneByField('phpm.config.initiale');
+		
+		
+			
+		
+		if (!(!$initiale) & !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+			throw new AccessDeniedHttpException("PHPM a déjà été configuré, veuillez vous connecter pour réinitialiser la configuration.");
+		}
+		
+		
 		if ($this->get('request')->getMethod() == 'POST') {
 
 			$data = $request->all();
 			if ($request->get("reinitconfirm") != "#1337!")
 				throw new \Exception(
-						"Mot de passe de réinitialisation invalide");
+						"Mot de passe de réinitialisation invalide.");
 
 			//Vidage des tables
 
@@ -291,27 +305,22 @@ TRUNCATE TABLE `User`;';
 
 			//Remettre config initiale à 1
 
-			
-			
 			$entity = new Config();
 			$entity->setField("phpm.config.initiale");
 			$entity->setLabel("PHPM est configuré");
 			$entity->setValue("1");
 			$em->persist($entity);
 			$em->flush();
-			$initialized=true;
-			
+			$initialized = true;
 
 			return $this->redirect($this->generateUrl('config_manif'));
 
 		}
-		
-	
 
 		return array("" => "");
 
 	}
-	
+
 	/**
 	 *
 	 *
@@ -321,48 +330,62 @@ TRUNCATE TABLE `User`;';
 	public function manifAction() {
 		$request = $this->get('request');
 		$em = $this->getDoctrine()->getEntityManager();
-		$orga = $em->getRepository('PHPMBundle:Config')->findOneByField('manifestation.organisation.nom');
-		$plages = $em->getRepository('PHPMBundle:Config')->findOneByField('manifestation.plages');
-		
-		
-		
+		$orga = $em->getRepository('PHPMBundle:Config')
+				->findOneByField('manifestation.organisation.nom');
+		$plages = $em->getRepository('PHPMBundle:Config')
+				->findOneByField('manifestation.plages');
+		$user = $em->getRepository('PHPMBundle:User')->find(1);
+
 		//$form = $this->createFormBuilder(array('o'=> $orga, 'p' => $plages))>add('o',new ConfigType($orga), array('label' => $orga->getLabel()) )		->add('p',new ConfigType($plages),array('label' => $plages->getLabel()) )->getForm();
-		
-		
-		$builder = $this->createFormBuilder(array('items' => array($orga->getLabel()=>$orga,$plages->getLabel()=>$plages),array('label'=> 2)));
-		
-		$builder->add('items', 'collection', array('type'   => new ConfigType()));		
-		$form  = $builder->getForm();
-		
-		//var_dump($form);
-		
+
+		$builder = $this
+				->createFormBuilder(
+						array(
+								'configItems' => array($orga->getLabel() => $orga,
+										$plages->getLabel() => $plages),
+										"user" => array("Utilisateur" => $user)));
+
+		$builder->add('configItems', 'collection', array('type' => new ConfigType()));
+		$builder->add('user','collection', array('type' => new UserType()));
+		$form = $builder->getForm();
+
+		//var_dump($form->createView());
+
 		if ($this->get('request')->getMethod() == 'POST') {
 			$form->bindRequest($request);
 			$data = $form->getData();
-			foreach ($data['items'] as $item){
 			$validator = $this->get('validator');
-			$errors = $validator->validate($item);
+			foreach ($data['configItems'] as $item) {
 				
-			if (count($errors) > 0) {
-      		  return new Response(print_r($errors, true));
-   			 } else {
-   			 	$em->persist($item);
-   			 	$em->flush();
-   			 }
+				$errors = $validator->validate($item);
+
+				if (count($errors) > 0) {
+					return new Response(print_r($errors, true));
+				} else {
+					$em->persist($item);
+					$em->flush();
+				}
+			}
+			
+			foreach ($data['user'] as $item) {
+			
+				$errors = $validator->validate($item);
+			
+				if (count($errors) > 0) {
+					return new Response(print_r($errors, true));
+				} else {
+					$em->persist($item);
+					$em->flush();
+				}
 			}
 			
 			
+			
+
 		}
 
-		
-		
-		
-		
-		
-		
 		return array('form' => $form->createView());
-		
+
 	}
-	
 
 }
