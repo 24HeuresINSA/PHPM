@@ -242,49 +242,79 @@ class ConfigController extends Controller {
 
 			//Vidage des tables
 
+			
+			
+			
+        	
+			
+			
 			$conn = $this->get('database_connection');
 
 			$sql = 'TRUNCATE TABLE `Creneau`;';
-			$stmt = $conn->prepare($sql);
-			$stmt->execute();
+			$conn->query($sql);
 
-			$sql = 'TRUNCATE TABLE `Disponibilite`;
-		TRUNCATE TABLE `PlageHoraire`;';
-			$stmt = $conn->prepare($sql);
-			$stmt->execute();
+			$sql = 'TRUNCATE TABLE `Disponibilite`';
+			$conn->query($sql);
+			
+			$sql = 'TRUNCATE TABLE `PlageHoraire`';
+			$conn->query($sql);
 
 			$sql = 'TRUNCATE TABLE `Tache`;	';
-			$stmt = $conn->prepare($sql);
-			$stmt->execute();
+			$conn->query($sql);
 
 			$sql = 'TRUNCATE TABLE `Orga`;';
-			$stmt = $conn->prepare($sql);
-			$stmt->execute();
+			$conn->query($sql);
 
-			$sql = 'TRUNCATE TABLE `Categorie`;
-TRUNCATE TABLE `Confiance`;
-TRUNCATE TABLE `Config`;
-TRUNCATE TABLE `User`;';
-			$stmt = $conn->prepare($sql);
-			$stmt->execute();
+			$sql = 'TRUNCATE TABLE `Categorie`';
+			
+			$sql = 'TRUNCATE TABLE `Confiance`';
+			$conn->query($sql);
+			$sql = 'TRUNCATE TABLE `Config`';
+			$conn->query($sql);
+			$sql = 'TRUNCATE TABLE `User`';
+			$conn->query($sql);
+			
+			$conn->query($sql);
 			$conn->close();
 
+			
 			//Config des credentials
-
-			$entity = new User();
-			$entity->setUsername('orga');
-			$entity->setPass('orga');
-			$entity->setEmail('orga@24heures.org');
-			$em->persist($entity);
+			
+			
+			$entit = new User();
+			$entit->setUsername('orga');
+			$entit->setPass('orga');
+			$entit->setEmail('orga@24heures.org');
+			$em->persist($entit);
 			$em->flush();
-
+			var_dump('ff');
+			
+			//Config des plages de la manif
+			$plage1 = array("nom" => "Prémanif", "debut" => "2012-05-16 00:00",
+					"fin" => "2012-05-23 00:00");
+			$plage2 = array("nom" => "Manif", "debut" => "2012-05-23 00:00",
+					"fin" => "2012-05-27 00:00");
+			$plage3 = array("nom" => "Postmanif",
+					"debut" => "2012-05-28 00:00", "fin" => "2012-06-01 00:00");
+			$a = array("1" => $plage1, "2" => $plage2, "3" => $plage3);
+			
+			$entitye = new Config();
+			$entitye->setField("manifestation.plages");
+			$entitye->setValue(json_encode($a));
+			$entitye->setLabel("Plages de la manifestation");
+				
+				
+			$em->persist($entitye);
+			$em->flush();
+			
+			
 			//Config de l'organisation
 
-			$entity = new Config();
-			$entity->setField("manifestation.organisation.nom");
-			$entity->setValue("24 Heures de l'INSA");
-			$entity->setLabel("Nom de l'organisation");
-			$em->persist($entity);
+			$entityz = new Config();
+			$entityz->setField("manifestation.organisation.nom");
+			$entityz->setValue("24 Heures de l'INSA");
+			$entityz->setLabel("Nom de l'organisation");
+			$em->persist($entityz);
 			$em->flush();
 
 			//Config des plages de la manif
@@ -296,24 +326,26 @@ TRUNCATE TABLE `User`;';
 					"debut" => "2012-05-28 00:00", "fin" => "2012-06-01 00:00");
 			$a = array("1" => $plage1, "2" => $plage2, "3" => $plage3);
 
-			$entity = new Config();
-			$entity->setField("manifestation.plages");
-			$entity->setValue(json_encode($a));
-			$entity->setLabel("Plages de la manifestation");
-			$em->persist($entity);
+			$entityy = new Config();
+			$entityy->setField("manifestation.plages");
+			$entityy->setValue(json_encode($a));
+			$entityy->setLabel("Plages de la manifestation");
+			
+			
+			$em->persist($entityy);
 			$em->flush();
 
 			//Remettre config initiale à 1
 
-			$entity = new Config();
-			$entity->setField("phpm.config.initiale");
-			$entity->setLabel("PHPM est configuré");
-			$entity->setValue("1");
-			$em->persist($entity);
+			$entityo = new Config();
+			$entityo->setField("phpm.config.initiale");
+			$entityo->setLabel("PHPM est configuré");
+			$entityo->setValue("1");
+			$em->persist($entityo);
 			$em->flush();
-			$initialized = true;
-
-			return $this->redirect($this->generateUrl('config_manif'));
+			exit();
+			
+			//return $this->redirect($this->generateUrl('config_manif'));
 
 		}
 
