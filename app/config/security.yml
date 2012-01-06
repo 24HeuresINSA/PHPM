@@ -35,6 +35,6 @@ security:
             - { path: /_profiler/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: ^/config/initiale, roles: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-            - { path: ^/.*, roles: ROLE_ADMIN }            
+            - { path: ^/xxx.*, roles: ROLE_ADMIN }            
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         #- { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
