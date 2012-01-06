@@ -21,6 +21,8 @@ TacheModel.prototype = {
 	getData: function(callBack) {
 		pmAffectation.models.tache.callBack = callBack;
 		
+		// TODO ; à faire
+		
 		// suivant le mode dans le quel on est, soit des taches soit des créneaux
 
 		// TODO : compléter
@@ -46,8 +48,6 @@ TacheModel.prototype = {
 	 */
 	requestSuccess: function(data) {
 		pmAffectation.models.tache.data = data;
-		
-		console.log(data);
 	
 		pmAffectation.models.tache.callBack();
 	},
@@ -58,7 +58,6 @@ TacheModel.prototype = {
 	/*
 	 * Getters des résultats
 	 */
-	// récupère la liste des taches
 	getTaches: function() {	
 		/*var _orgas = {};
 		

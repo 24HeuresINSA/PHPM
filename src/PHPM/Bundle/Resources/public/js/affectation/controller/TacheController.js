@@ -13,7 +13,8 @@ TacheController.prototype = {
 	 */
 	initialize: function() {
 		pmAffectation.data.tache = {};
-		pmAffectation.models.tache = new TacheModel();
+		//pmAffectation.models.tache = new TacheModel(); // TODO : finir
+		pmAffectation.models.creneau = new CreneauModel();
 		pmAffectation.views.tache = new TacheView();
 	},
 	
@@ -24,14 +25,21 @@ TacheController.prototype = {
 		$('#liste_taches').empty();
 		$('#liste_taches').addClass('spinner_medium');
 		
-		pmAffectation.models.tache.getData(pmAffectation.controllers.tache.callbackTaches);
+		pmAffectation.models.tache.getData(pmAffectation.controllers.tache.callbackCreneaux);
 	},
 	
 	/*
 	 * Callbacks
 	 */
+	// pour les créneaux
+	callbackCreneaux: function() {
+		pmAffectation.data.creneaux = pmAffectation.models.creneau.getCreneaux();
+		
+		pmAffectation.views.taches.setCreneaux();
+	},
+	// pour les taches
 	callbackTaches: function() {
-		/*pmAffectation.data.orga = pmAffectation.models.orga.getOrgas();
+		/*pmAffectation.data.taches = pmAffectation.models.orga.getOrgas();
 		
 		pmAffectation.views.orga.setOrgas(pmAffectation.current.orga);
 		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga});*/
