@@ -1,0 +1,16 @@
+{% block actions %}
+{% block indexAction %}
+    <li>
+        <a href="{{ path(indexRoute) }}">
+            {{indexActionLabel }}
+        </a>
+    </li>
+{% endblock %}
+{% block newAction %}
+    <li>
+        <a href="{{ path(newRoute) }}">
+            {{newActionLabel }}
+        </a>
+    </li>
+{% endblock %}
+{% endblock %}

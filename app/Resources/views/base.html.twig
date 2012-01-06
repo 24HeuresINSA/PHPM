@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>{{ block('title') }} - PHPlanningMaker</title>
+        {% block head %}
+       
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>{{ pageTitle }} - PHPlanningMaker</title>
 
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
         
@@ -27,18 +29,22 @@
 				<script src="{{ asset_url }}" type="text/javascript"></script>
 			{% endjavascripts %}
         {% endblock %}
+        {% endblock %}
     </head>
     <body>
         <div class="header" id="header" >
+        	{% block header %}
         	<div class="title" id="title">
-        		<h1>PlanningMaker &gt; {{ block('title') }}</h1>
-        		
+        		{% block topHeader %}
+        		<h1>PlanningMaker &gt; {{ sectionTitle }} &gt;  {{ pageTitle }}</h1>
+        		{% endblock %}
         		<form method="post" action="{{ path('search') }}">
         			<input id="searchBox" name="s" />
         		</form>        		
         	</div>
         	
         	<div class="menu" id="menu">
+        		{% block menuheader %}
         		<ul>
         			<li><a href="{{ path('phpm__default_home') }}">Tableau de bord</a></li>
         			<li><a href="{{ path('orga') }}">Orga</a></li>
@@ -53,13 +59,18 @@
         			<!--<li><a href="/">T&acirc;ches</a></li>
         			<li><a href="/">Administration</a></li>-->
         		</ul>
+        		{% endblock %}
         	</div>
+        	
        	</div>
        	
 		<div class="menu_action" id="menu_action">
-        	{% block menu_action %}
-        		<p>Menu Actions non-implémenté !</p>
+		    <ul>
+
+        	{% block actions %}
         	{% endblock %}
+			</ul>
+			{% endblock %}
         </div> 
         
         <div class="content" id="content">
