@@ -216,11 +216,11 @@ class CreneauController extends Controller
     	$duree = $request->request->get('duree', '');
     	$orga = $request->request->get('orga_id', '');
     	$plage = $request->request->get('plage_id', '');
-    
+    	$bloc = $request->request->get('bloc', '0');
     
     
     	$em = $this->getDoctrine()->getEntityManager();
-    	$entities = $em->getRepository('PHPMBundle:Creneau')->getCreneauxCompatibleWithCriteria($niveau_confiance, $categorie, $age, $permis, $duree, $orga, $plage);
+    	$entities = $em->getRepository('PHPMBundle:Creneau')->getCreneauxCompatibleWithCriteria($niveau_confiance, $categorie, $age, $permis, $duree, $orga, $plage, $bloc);
     
 
     	$creneauArray = array();
@@ -239,7 +239,6 @@ class CreneauController extends Controller
 				    		"fin" => $creneau->getFin(),
     			        	"duree" => $creneau->getDuree(),
     			    		"permis_necessaire"=> $creneau->getPlageHoraire()->getTache()->getPermisNecessaire()
-    			    		//TODO Codage des blocs
     			        	);
     			
     			

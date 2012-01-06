@@ -112,7 +112,7 @@ class CreneauRepository extends EntityRepository
 	}
 	
 	
-	public function getCreneauxCompatibleWithCriteria($niveau_confiance, $categorie, $age, $permis, $duree, $orga, $plage)
+	public function getCreneauxCompatibleWithCriteria($niveau_confiance, $categorie, $age, $permis, $duree, $orga, $plage, $bloc)
 	{
 		$qb = $this->getEntityManager()->createQueryBuilder();
 		$expr = $qb->expr();
@@ -125,7 +125,8 @@ class CreneauRepository extends EntityRepository
 
 		);
 
-		
+		$offset = $bloc*50;
+		$limit = $offset+49;
 		
 		if($permis!='')
 		{
@@ -174,7 +175,9 @@ class CreneauRepository extends EntityRepository
 		->from('PHPMBundle:Tache', 't')
 		->from('PHPMBundle:Creneau', 'ct')
 		
-		->where($andx);
+		->where($andx)
+		->setFirstResult($offset)
+		->setMaxResults($limit);
 		
 		
 		

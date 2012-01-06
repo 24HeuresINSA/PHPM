@@ -14,7 +14,7 @@ use PHPM\Bundle\Entity\Config;
  */
 class OrgaRepository extends EntityRepository
 {
-	public function getOrgasWithCriteria($permis, $maxDateNaissance, $plage_id, $niveau_confiance)
+	public function getOrgasWithCriteria($permis, $maxDateNaissance, $plage_id, $niveau_confiance, $bloc)
 	{
 	
 		$qb = $this->getEntityManager()->createQueryBuilder();
@@ -26,7 +26,8 @@ class OrgaRepository extends EntityRepository
 		$expr->neq('d.orga','0')		
 		);
 	
-	
+		$offset = $bloc*50;
+		$limit = $offset+49;
 	
 		if($plage_id !='')
 		{
@@ -65,7 +66,9 @@ class OrgaRepository extends EntityRepository
 		->from('PHPMBundle:Creneau', 'ct')
 	
 	
-		->where($andx);
+		->where($andx)
+		->setFirstResult($offset)
+		->setMaxResults($limit);
 	
 		//exit(var_dump($qb->getQuery()->getDQL()));
 	

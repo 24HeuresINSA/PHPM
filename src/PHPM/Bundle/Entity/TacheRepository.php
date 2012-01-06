@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class TacheRepository extends EntityRepository
 {
 	
-	public function getTacheWithCriteria($duree, $categorie, $permis, $age, $niveau_confiance)
+	public function getTacheWithCriteria($duree, $categorie, $permis, $age, $niveau_confiance, $bloc)
 	{
 	
 		$qb = $this->getEntityManager()->createQueryBuilder();
@@ -25,6 +25,9 @@ class TacheRepository extends EntityRepository
 		$expr->eq('p.tache','t')
 		
 		);
+		
+		$offset = $bloc*50;
+		$limit = $offset+49;
 	
 		if($duree!='')
 		{
@@ -54,7 +57,9 @@ class TacheRepository extends EntityRepository
 		->from('PHPMBundle:Tache', 't')
 		->from('PHPMBundle:Creneau', 'ct')
 		
-		->where($andx);
+		->where($andx)
+		->setFirstResult($offset)
+		->setMaxResults($limit);;
 		
 		
 		

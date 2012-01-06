@@ -361,13 +361,13 @@ class TacheController extends Controller
 		$permis= $request->request->get('permisNecessaire', '');
 		$age= $request->request->get('ageNecessaire', '0');
 		$niveau_confiance= $request->request->get('confiance_id', '');
-	
+		$bloc = $request->request->get('bloc', '0');
 		
 		//exit(var_dump($request));
 	
 		$em = $this->getDoctrine()->getEntityManager();
 	
-		$entities = $em->getRepository('PHPMBundle:Tache')->getTacheWithCriteria($duree, $categorie, $permis, $age, $niveau_confiance);
+		$entities = $em->getRepository('PHPMBundle:Tache')->getTacheWithCriteria($duree, $categorie, $permis, $age, $niveau_confiance, $bloc);
 	
 		//exit(var_dump($entities));
 		$response = new Response();
@@ -388,11 +388,9 @@ class TacheController extends Controller
 				"confiance" => $entity->getConfiance()->getId(),
 				"categorie" => $entity->getCategorie()->getId(),
 				"creneaux" => $a,
-				"permisNecessaire" => $entity->getPermisNecessaire()); 
-		    	//TODO bloc
+				"permisNecessaire" => $entity->getPermisNecessaire());		    	
 		    	
-		    	
-		    	
+			
 			$a[$entity->getId()] = $tacheArray;
 	
 		}

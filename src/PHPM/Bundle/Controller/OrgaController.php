@@ -420,6 +420,7 @@ if valider : laisser ce qu'il y avait avant.
 		$plage_id= $request->request->get('plage_id', '');
 		$niveau_confiance= $request->request->get('confiance_id', '');
 		$maxDateNaissance = new \DateTime();
+		$bloc = $request->request->get('bloc', '0');
 		
 		if($age!='')
 		$maxDateNaissance->modify('-'.$age.' year');
@@ -427,7 +428,7 @@ if valider : laisser ce qu'il y avait avant.
 		
 		
 		$em = $this->getDoctrine()->getEntityManager();
-		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $maxDateNaissance->format('Y-m-d'), $plage_id, $niveau_confiance);
+		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $maxDateNaissance->format('Y-m-d'), $plage_id, $niveau_confiance, $bloc);
 		
 		
 		$orgaArray = array();
@@ -449,10 +450,7 @@ if valider : laisser ce qu'il y avait avant.
 						"permis"=>$orga->getPermis(),
 			    		"dateDeNaissance" => $orga->getDateDeNaissance()->format('Y-m-d H:i:s'),
 			    		"departement" => $orga->getDepartement(),
-			    		"commentaire" => $orga->getCommentaire(),
-			    		
-			    		//TODO Implémentation des blocs
-			    		
+			    		"commentaire" => $orga->getCommentaire(), 		
 			        	"disponibilites" => $a);
 			
 			
