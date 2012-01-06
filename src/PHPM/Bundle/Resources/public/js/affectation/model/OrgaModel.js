@@ -73,13 +73,12 @@ OrgaModel.prototype = {
 			// de la date de naissance
 			_orga['dateDeNaissance'] = new Date(this.data[_iOrga]['dateDeNaissance']);
 			
-			console.log(this.data);
-			
 			// disponibilités, cela devient physique
 			for (var _iDispo in this.data[_iOrga]['disponibilites']) {
 				// TODO : hack à virer
 				if (this.data[_iOrga]['disponibilites'][_iDispo] === null) {
 					console.error(this.data[_iOrga]['disponibilites'], 'On a vu un null !');
+					delete this.data[_iOrga]['disponibilites'][_iDispo];
 					break;	
 				}
 				

@@ -24,7 +24,7 @@ TacheController.prototype = {
 		$('#liste_taches').empty();
 		$('#liste_taches').addClass('spinner_medium');
 		
-		//pmAffectation.models.orga.getData(pmAffectation.controllers.orga.callbackOrgas);
+		pmAffectation.models.tache.getData(pmAffectation.controllers.tache.callbackTaches);
 	},
 	
 	/*
