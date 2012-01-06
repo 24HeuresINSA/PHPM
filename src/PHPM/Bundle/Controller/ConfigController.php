@@ -222,40 +222,33 @@ class ConfigController extends Controller {
 	public function initialeAction() {
 		$request = $this->get('request')->request;
 		$em = $this->getDoctrine()->getEntityManager();
-		
-		$initiale = $em->getRepository('PHPMBundle:Config')->findOneByField('phpm.config.initiale');
-		
-		
-			
-		
-		if (!(!$initiale) & !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
-			throw new AccessDeniedHttpException("PHPM a déjà été configuré, veuillez vous connecter pour réinitialiser la configuration.");
+
+		$initiale = $em->getRepository('PHPMBundle:Config')
+				->findOneByField('phpm.config.initiale');
+
+		if (!(!$initiale)
+				& !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+			throw new AccessDeniedHttpException(
+					"PHPM a déjà été configuré, veuillez vous connecter pour réinitialiser la configuration.");
 		}
-		
-		
+
 		if ($this->get('request')->getMethod() == 'POST') {
 
 			$data = $request->all();
 			if ($request->get("reinitconfirm") != "#1337!")
 				throw new \Exception(
-						"Mot de passe de réinitialisation invalide.");
+						"Code de réinitialisation invalide.");
 
 			//Vidage des tables
 
-			
-			
-			
-        	
-			
-			
-			$conn = $this->get('database_connection');
+			$conn = $em->getConnection();
 
 			$sql = 'TRUNCATE TABLE `Creneau`;';
 			$conn->query($sql);
 
 			$sql = 'TRUNCATE TABLE `Disponibilite`';
 			$conn->query($sql);
-			
+
 			$sql = 'TRUNCATE TABLE `PlageHoraire`';
 			$conn->query($sql);
 
@@ -266,86 +259,45 @@ class ConfigController extends Controller {
 			$conn->query($sql);
 
 			$sql = 'TRUNCATE TABLE `Categorie`';
-			
+			$conn->query($sql);
 			$sql = 'TRUNCATE TABLE `Confiance`';
 			$conn->query($sql);
 			$sql = 'TRUNCATE TABLE `Config`';
 			$conn->query($sql);
 			$sql = 'TRUNCATE TABLE `User`';
 			$conn->query($sql);
-			
+
+			$sql = "SET SQL_MODE=\"NO_AUTO_VALUE_ON_ZERO\";
+SET AUTOCOMMIT=0;
+START TRANSACTION;
+SET time_zone = \"+00:00\";
+
+--
+-- Database: `phpm`
+--
+
+--
+-- Dumping data for table `Config`
+--
+
+INSERT INTO `Config` (`id`, `field`, `value`, `label`) VALUES(1, 'manifestation.plages', '{\"1\":{\"nom\":\"Pr\\u00e9manif\",\"debut\":\"2012-05-16 00:00\",\"fin\":\"2012-05-23 00:00\"},\"2\":{\"nom\":\"Manif\",\"debut\":\"2012-05-23 00:00\",\"fin\":\"2012-05-27 00:00\"},\"3\":{\"nom\":\"Postmanif\",\"debut\":\"2012-05-28 00:00\",\"fin\":\"2012-06-01 00:00\"}}', 'Plages de la manifestation');
+INSERT INTO `Config` (`id`, `field`, `value`, `label`) VALUES(2, 'manifestation.organisation.nom', '24 Heures de l''INSA', 'Nom de l''organisation');
+INSERT INTO `Config` (`id`, `field`, `value`, `label`) VALUES(3, 'phpm.config.initiale', '1', 'PHPM configuré');
+
+--
+-- Dumping data for table `User`
+--
+
+INSERT INTO `User` (`id`, `username`, `pass`, `email`) VALUES(1, 'orga', 'orga', 'orga@24heures.org');
+COMMIT;
+			";
 			$conn->query($sql);
+
 			$conn->close();
 
 			
-			//Config des credentials
-			
-			
-			$entit = new User();
-			$entit->setUsername('orga');
-			$entit->setPass('orga');
-			$entit->setEmail('orga@24heures.org');
-			$em->persist($entit);
-			$em->flush();
-			var_dump('ff');
-			
-			//Config des plages de la manif
-			$plage1 = array("nom" => "Prémanif", "debut" => "2012-05-16 00:00",
-					"fin" => "2012-05-23 00:00");
-			$plage2 = array("nom" => "Manif", "debut" => "2012-05-23 00:00",
-					"fin" => "2012-05-27 00:00");
-			$plage3 = array("nom" => "Postmanif",
-					"debut" => "2012-05-28 00:00", "fin" => "2012-06-01 00:00");
-			$a = array("1" => $plage1, "2" => $plage2, "3" => $plage3);
-			
-			$entitye = new Config();
-			$entitye->setField("manifestation.plages");
-			$entitye->setValue(json_encode($a));
-			$entitye->setLabel("Plages de la manifestation");
-				
-				
-			$em->persist($entitye);
-			$em->flush();
-			
-			
-			//Config de l'organisation
 
-			$entityz = new Config();
-			$entityz->setField("manifestation.organisation.nom");
-			$entityz->setValue("24 Heures de l'INSA");
-			$entityz->setLabel("Nom de l'organisation");
-			$em->persist($entityz);
-			$em->flush();
-
-			//Config des plages de la manif
-			$plage1 = array("nom" => "Prémanif", "debut" => "2012-05-16 00:00",
-					"fin" => "2012-05-23 00:00");
-			$plage2 = array("nom" => "Manif", "debut" => "2012-05-23 00:00",
-					"fin" => "2012-05-27 00:00");
-			$plage3 = array("nom" => "Postmanif",
-					"debut" => "2012-05-28 00:00", "fin" => "2012-06-01 00:00");
-			$a = array("1" => $plage1, "2" => $plage2, "3" => $plage3);
-
-			$entityy = new Config();
-			$entityy->setField("manifestation.plages");
-			$entityy->setValue(json_encode($a));
-			$entityy->setLabel("Plages de la manifestation");
-			
-			
-			$em->persist($entityy);
-			$em->flush();
-
-			//Remettre config initiale à 1
-
-			$entityo = new Config();
-			$entityo->setField("phpm.config.initiale");
-			$entityo->setLabel("PHPM est configuré");
-			$entityo->setValue("1");
-			$em->persist($entityo);
-			$em->flush();
-			exit();
-			
-			//return $this->redirect($this->generateUrl('config_manif'));
+			return $this->redirect($this->generateUrl('config_manif'));
 
 		}
 
@@ -373,12 +325,15 @@ class ConfigController extends Controller {
 		$builder = $this
 				->createFormBuilder(
 						array(
-								'configItems' => array($orga->getLabel() => $orga,
+								'configItems' => array(
+										$orga->getLabel() => $orga,
 										$plages->getLabel() => $plages),
-										"user" => array("Utilisateur" => $user)));
+								"user" => array("Utilisateur" => $user)));
 
-		$builder->add('configItems', 'collection', array('type' => new ConfigType()));
-		$builder->add('user','collection', array('type' => new UserType()));
+		$builder
+				->add('configItems', 'collection',
+						array('type' => new ConfigType()));
+		$builder->add('user', 'collection', array('type' => new UserType(), 'label' =>' '));
 		$form = $builder->getForm();
 
 		//var_dump($form->createView());
@@ -388,7 +343,7 @@ class ConfigController extends Controller {
 			$data = $form->getData();
 			$validator = $this->get('validator');
 			foreach ($data['configItems'] as $item) {
-				
+
 				$errors = $validator->validate($item);
 
 				if (count($errors) > 0) {
@@ -398,11 +353,11 @@ class ConfigController extends Controller {
 					$em->flush();
 				}
 			}
-			
+
 			foreach ($data['user'] as $item) {
-			
+
 				$errors = $validator->validate($item);
-			
+
 				if (count($errors) > 0) {
 					return new Response(print_r($errors, true));
 				} else {
@@ -410,9 +365,6 @@ class ConfigController extends Controller {
 					$em->flush();
 				}
 			}
-			
-			
-			
 
 		}
 
