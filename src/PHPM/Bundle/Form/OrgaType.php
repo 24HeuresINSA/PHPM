@@ -9,13 +9,25 @@ class OrgaType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $builder
+    	$currentYear = date('Y');
+    	$years = array();
+    	var_dump($years,$currentYear);
+    	
+    	
+    	for ($i=($currentYear-27);$i<=($currentYear-16);$i++){
+    		array_push($years, $i);
+    	
+    	}
+    	
+   
+    	
+    	$builder
             ->add('nom')
             ->add('prenom')
             ->add('surnom')
             ->add('telephone')
             ->add('email')
-            ->add('dateDeNaissance')
+            ->add('dateDeNaissance', 'birthday', array('label'=>'Date de naissance','years'=>$years))
             ->add('departement')
             ->add('commentaire')
             ->add('permis')
@@ -28,4 +40,7 @@ class OrgaType extends AbstractType
     {
         return 'phpm_bundle_orgatype';
     }
+    
+ 
+    
 }
