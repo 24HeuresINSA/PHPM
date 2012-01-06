@@ -1,8 +1,7 @@
-{% extends "::base.html.twig"  %}
+{% extends "PHPMBundle:Orga:layout.html.twig"  %}
+{% set pageTitle = 'Détail d\'un Organisateur' %}
+{% use "PHPMBundle::show.html.twig" %}
 
-{% block title %}
-	Orgas -> D&eacute;tails Orga
-{% endblock %}
 
 {% block content %}
 <table class="record_properties">
@@ -52,21 +51,11 @@
 </table>
 {% endblock %}
 
-{% block menu_action %}
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('orga') }}">
-            Revenir &agrave; la liste
-        </a>
-    </li>
+{% block actions %}
+{{ parent() }}
     <li>
         <a href="{{ path('orga_planning', { 'id': entity.id }) }}">
             Voir le planning
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('orga_edit', { 'id': entity.id }) }}">
-            EditInfos
         </a>
     </li>
     <li>
@@ -74,8 +63,6 @@
             Creer des Disponibilit&eacute;s
         </a>
     </li>
-    <li>
-    	<a href="javascript:confirm_delete('{{ path('orga_delete', { 'id': entity.id }) }}')">Supprimer</a>
-    </li>
+
 </ul>
 {% endblock %}
