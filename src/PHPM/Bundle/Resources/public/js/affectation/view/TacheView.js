@@ -57,8 +57,9 @@ TacheView.prototype = {
 		$('#liste_taches').removeClass('spinner_medium');
 		
 		for (_iCreneau in pmAffectation.data.creneaux) {
-			var _html = '<div class="tache" id="tache_'+_iOrga+'" idCreneau="'+_iCreneau+'">';
-			_html += pmAffectation.data.creneaux[_iCreneau]['nom']+' - '+pmAffectation.data.orga[_iCreneau]['lieu'];
+			var _html = '<div class="tache" id="tache_'+_iCreneau+'" idCreneau="'+_iCreneau+'">';
+			_html += pmAffectation.data.creneaux[_iCreneau]['nom']+' - '+pmAffectation.data.creneaux[_iCreneau]['lieu']+' (';
+			_html += pmAffectation.data.creneaux[_iCreneau]['debut'].getThisFormat('H:I')+' - '+pmAffectation.data.creneaux[_iCreneau]['fin'].getThisFormat('H:I')+')';
 			_html += '</div>';
 			
 			$('#liste_taches').append(_html);

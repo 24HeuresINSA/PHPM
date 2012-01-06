@@ -33,8 +33,8 @@ CreneauModel.prototype = {
 			url: pmAffectation.url+pmAffectation.paths.creneaux,
 			dataType: 'json',
 			data: _params,
-			success: pmAffectation.models.tache.requestSuccess,
-			error: pmAffectation.models.tache.requestError,
+			success: pmAffectation.models.creneau.requestSuccess,
+			error: pmAffectation.models.creneau.requestError,
 			type: 'POST'
 		});
 	},
@@ -43,9 +43,7 @@ CreneauModel.prototype = {
 	 * Récup les résultats
 	 */
 	requestSuccess: function(data) {
-		pmAffectation.models.creneau.data = data;
-		
-		console.log(data);
+		pmAffectation.models.creneau.data = data;;
 	
 		pmAffectation.models.creneau.callBack();
 	},
@@ -69,8 +67,8 @@ CreneauModel.prototype = {
 			}
 			
 			// re-traitement des dates
-			_creneau['debut'] = new Datet(this.data[_iCreneau]['debut']);
-			_creneau['fin'] = new Datet(this.data[_iCreneau]['fin']);
+			_creneau['debut'] = new Date(_creneau['debut']['date']);
+			_creneau['fin'] = new Date(this.data[_iCreneau]['fin']['date']);
 			
 			_creneaux[_iCreneau] = _creneau;
 		}

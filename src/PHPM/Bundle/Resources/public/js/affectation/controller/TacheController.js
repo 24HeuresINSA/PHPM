@@ -25,7 +25,7 @@ TacheController.prototype = {
 		$('#liste_taches').empty();
 		$('#liste_taches').addClass('spinner_medium');
 		
-		pmAffectation.models.tache.getData(pmAffectation.controllers.tache.callbackCreneaux);
+		pmAffectation.models.creneau.getData(pmAffectation.controllers.tache.callbackCreneaux);
 	},
 	
 	/*
@@ -35,7 +35,7 @@ TacheController.prototype = {
 	callbackCreneaux: function() {
 		pmAffectation.data.creneaux = pmAffectation.models.creneau.getCreneaux();
 		
-		pmAffectation.views.taches.setCreneaux();
+		pmAffectation.views.tache.setCreneaux();
 	},
 	// pour les taches
 	callbackTaches: function() {

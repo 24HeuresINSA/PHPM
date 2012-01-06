@@ -252,6 +252,33 @@ body {
   height: 100%;
 	border-left: 1px solid #003366;
 	overflow-y: scroll;
+	
+  .liste_taches {
+    width: 100%;
+    height: 70%;
+    overflow-x: hidden; // normalement il n'y en a pas
+    overflow-y: scroll;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    
+    .tache {
+      border-top: 1px solid #888;
+      border-bottom: 1px solid #888;
+      width: 90%;
+      padding: 5px 5%;
+      cursor: pointer;
+      
+     &.current {
+        background: #333;
+        color: #fff;
+      }
+    }
+  }
+  
+  .filtre_tache {
+    width: 100%;
+    padding: 10px;
+  }
 }
 
 /*
