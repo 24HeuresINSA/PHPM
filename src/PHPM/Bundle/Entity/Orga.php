@@ -445,25 +445,6 @@ class Orga
     {
         return $this->importId;
     }
-	
-	 /**
-     * Get fichier
-     *
-     * @return array 
-     */
-	
-	public function getFichier($url)
-	{
-		$json = file_get_contents($url);
-		$listeOrgaArray = json_decode($json,TRUE);
-		return $listeOrgaArray;
-	}
-	
-
-	
-	
-	
-	
 
     /**
      * Add taches
