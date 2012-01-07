@@ -13,10 +13,9 @@ class DebutAvantFinValidator extends ConstraintValidator  // vérifie si le déb
 { 
     public function isValid($value, Constraint $constraint)
     {
-    	$debut = $this->context->getRoot()->get("debut")->getData();
-    	$fin = $this->context->getRoot()->get("fin")->getData();
-    	$debut = $debut->getTimestamp();
-		$fin=$fin->getTimestamp();
+    	$debut = $this->context->getRoot()->get("debut")->getData()->getTimestamp();
+    	$fin = $this->context->getRoot()->get("fin")->getData()->getTimestamp();
+    	
     	
     	
     	if ($debut < $fin)
