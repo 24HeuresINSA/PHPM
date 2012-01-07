@@ -1,15 +1,6 @@
 {% extends "PHPMBundle:Orga:layout.html.twig"  %}
-{% set pageTitle = 'Cr&eacute;ation d\'un Organisateur' %}
-
-{% block actions %}
-
-{{ parent() }}
-{% block newAction %}
-{% endblock %}
-{% block editAction %}
-{% endblock %}
-
-{% endblock %}
+{% set pageTitle = 'Création d\'un Organisateur' %}
+{% use "PHPMBundle::new.html.twig" %}
 
 {% block content %}
 <form action="{{ path('orga_create') }}" method="post" {{ form_enctype(form) }}>
@@ -18,14 +9,4 @@
         <button type="submit">Create</button>
     </p>
 </form>
-{% endblock %}
-
-{% block menu_action %}
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('orga') }}">
-            Revenir &agrave; la liste
-        </a>
-    </li>
-</ul>
 {% endblock %}

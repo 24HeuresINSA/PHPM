@@ -1,14 +1,16 @@
-{% extends "::base.html.twig"  %}
+{% extends "PHPMBundle:Orga:layout.html.twig"  %}
+{% set pageTitle = 'Import' %}
 
-{% block title %}
-	Orga -> Import
+{% block editAction %}
 {% endblock %}
 
-{% block menu_action %}
+{% block deleteAction %}
+{% endblock %}
+
+{% block newAction %}
 {% endblock %}
 
 {% block content %}
-
 {% if not errors %}
 
 <form method="POST" >    
@@ -75,7 +77,4 @@
     </tbody>
 </table>
 {% endif%}
-
-
-    
 {% endblock %}

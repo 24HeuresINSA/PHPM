@@ -1,15 +1,6 @@
 {% extends "PHPMBundle:Orga:layout.html.twig"  %}
 {% set pageTitle = 'Edition d\'un Organisateur' %}
-
-{% block actions %}
-
-{{ parent() }}
-{% block newAction %}
-{% endblock %}
-{% block editAction %}
-{% endblock %}
-
-{% endblock %}
+{% use "PHPMBundle::edit.html.twig" %}
 
 
 {% block content %}
