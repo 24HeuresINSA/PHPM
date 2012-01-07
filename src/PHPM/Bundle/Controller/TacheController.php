@@ -396,7 +396,7 @@ class TacheController extends Controller
 		}
 	
 	
-	
+		//exit(var_dump($tacheArray));
 		$response->setContent(json_encode($a));
 	
 
