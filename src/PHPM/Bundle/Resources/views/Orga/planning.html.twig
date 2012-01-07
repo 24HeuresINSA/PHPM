@@ -1,11 +1,6 @@
-{% extends "::base.html.twig"  %}
+{% extends "PHPMBundle:Orga:layout.html.twig"  %}
+{% set pageTitle = 'Détail d\'un Organisateur' %}
 
-{% block title %}
-	Orga -> Planning -> {{ orga.prenom }} {{ orga.nom }}
-{% endblock %}
-
-{% block menu_action %}
-{% endblock %}
 
 {% block content %}
 {% import "::macro_nbToDay.html.twig" as nbToDay %}
