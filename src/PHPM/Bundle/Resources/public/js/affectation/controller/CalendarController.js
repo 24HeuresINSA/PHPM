@@ -56,6 +56,7 @@ CalendarController.prototype = {
 		
 		pmAffectation.views.calendar.setPlage(plageId);
 		pmAffectation.controllers.orga.getData(); // mise à jour de l'orga également
+		pmAffectation.controllers.tache.empty(); // vide la colonne creneau
 		
 		pmUtils.setUrlParam(); // maj de l'url
 	}

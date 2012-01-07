@@ -58,5 +58,14 @@ TacheController.prototype = {
 		
 		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga});*/
 	},
+	
+	/*
+	 * Vide la colonne
+	 */
+	empty: function() {
+		pmAffectation.data.creneaux = {};
+		
+		$('#liste_taches').empty();
+	},
 
 }

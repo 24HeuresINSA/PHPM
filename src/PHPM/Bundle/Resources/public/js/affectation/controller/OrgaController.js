@@ -44,6 +44,8 @@ OrgaController.prototype = {
 	clickHandler: function(obj) {
 		$("#orga_"+pmAffectation.current.orga).removeClass('current');
 		$("#orga_"+obj.data.id).addClass('current');
+		
+		pmAffectation.controllers.tache.empty(); // vide la colonne creneau
 
 		pmAffectation.current.orga = obj.data.id;
 		pmUtils.setUrlParam(); // maj de l'url
