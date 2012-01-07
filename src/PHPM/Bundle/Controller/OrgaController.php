@@ -2,6 +2,10 @@
 
 namespace PHPM\Bundle\Controller;
 
+use Symfony\Component\Validator\Constraints\Url;
+
+use Symfony\Component\Security\Acl\Exception\Exception;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolation;
@@ -318,14 +322,25 @@ class OrgaController extends Controller
 	{
 		$em = $this->getDoctrine()->getEntityManager();			
 		
-		$traitementOrga = new Orga();
-		
-		if(!empty($_POST["pathJson"]))
-		{
+
+		if ($this->get('request')->getMethod() == 'GET') {
+			return array("errors"=> array());
+			
+		}else{
+			
+			$urlConstraint = new Url();
+			$urlConstraint->message = 'Adresse URL Invalide';
+			$errorList = $this->get('validator')->validateValue($_POST["pathJson"], $urlConstraint);
+			
+		if (count($errorList) != 0)       
+        throw new Exception($errorList[0]->getMessage());
+    	
 			$url=$_POST["pathJson"];	
 		
-		$listeOrgaArray = array();
-		$listeOrgaArray = $traitementOrga->getFichier($url);	
+		
+		$json = file_get_contents($url);
+		$listeOrgaArray = json_decode($json,TRUE);
+		
 		
 
 			
@@ -380,12 +395,7 @@ class OrgaController extends Controller
 		
 		return array("errors" => $validationErrors);
 		}
-		else 
-		{
-		$validationErrors = array();
-		return array("errors"=> $validationErrors);
-	
-		}
+		
 
 	}
 	
