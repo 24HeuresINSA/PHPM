@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PHPM\Bundle\Entity\Disponibilite;
 use PHPM\Bundle\Form\DisponibiliteType;
+use PHPM\Bundle\Validator\QuartHeure;
 
 /**
  * Disponibilite controller.
