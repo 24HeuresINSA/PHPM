@@ -400,7 +400,7 @@ if valider : laisser ce qu'il y avait avant.
 			throw $this->createNotFoundException('Unable to find Orga entity.');
 		}
 		else {
-       	 	return array('orga' => $orga,'creneauxParJour' => $CreneauxParJour );
+       	 	return array('entity' => $orga,'creneauxParJour' => $CreneauxParJour );
 			}
 	}
 	

@@ -1,11 +1,22 @@
 {% extends "PHPMBundle:Orga:layout.html.twig"  %}
 {% set pageTitle = 'Détail d\'un Organisateur' %}
 
+{% block actions %}
+{{ parent() }}
+
+{% block newAction %}
+{% endblock %}
+
+{% block indexAction %}
+{% endblock %}
+
+{% endblock %}
+
 
 {% block content %}
 {% import "::macro_nbToDay.html.twig" as nbToDay %}
 
-<h2>Planning de l'orga : {{ orga.prenom }} {{ orga.nom }}</h2>
+<h2>Planning de l'orga : {{ entity.prenom }} {{ entity.nom }}</h2>
 
 <table class="records_list">
     <thead>
@@ -19,10 +30,10 @@
     <tbody>
   
         <tr>    
-            <td>{{ orga.prenom }}</td>       
-            <td>{{ orga.nom }}</td>
-            <td>{{ orga.telephone }}</td>
-            <td>{{ orga.email }}</td>
+            <td>{{ entity.prenom }}</td>       
+            <td>{{ entity.nom }}</td>
+            <td>{{ entity.telephone }}</td>
+            <td>{{ entity.email }}</td>
             </td>
         </tr>
     </tbody>
