@@ -1,22 +1,7 @@
-{% extends "::base.html.twig"  %}
-
-{% block title %}
-	cr&eacute;neaux -> Liste des cr&eacute;neaux disponibles
-{% endblock %}
+{% extends "PHPMBundle:Creneau:layout.html.twig"  %}
+{% set pageTitle = 'Liste des Cr&eacute;neaux' %}
+{% use "PHPMBundle::index.html.twig" %}
 
 {% block content %}
-
-{% include 'PHPMBundle:Creneau:afficheListe.html.twig' with {'entities': entities} %}
-
-{% endblock %}
-
-
-{% block menu_action %}
-<ul>
-    <li>
-        <a href="{{ path('creneau_new') }}">
-            Cr&eacute;er un nouveau cr&eacute;neau
-        </a>
-    </li>
-</ul>
+   {% include 'PHPMBundle:Creneau:afficheListe.html.twig' with {'entities': entities} %}
 {% endblock %}

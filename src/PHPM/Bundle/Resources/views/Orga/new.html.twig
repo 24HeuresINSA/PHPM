@@ -1,7 +1,14 @@
-{% extends "::base.html.twig"  %}
+{% extends "PHPMBundle:Orga:layout.html.twig"  %}
+{% set pageTitle = 'Cr&eacute;ation d\'un Organisateur' %}
 
-{% block title %}
-	Orgas -> Cr&eacute;er un Orga
+{% block actions %}
+
+{{ parent() }}
+{% block newAction %}
+{% endblock %}
+{% block editAction %}
+{% endblock %}
+
 {% endblock %}
 
 {% block content %}
