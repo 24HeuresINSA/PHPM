@@ -9,22 +9,22 @@ services:
        class:      %my.validator.quartHeure.class%
        arguments: [@doctrine.orm.entity_manager]
        tags:
-            - { name: validator.constraint_validator,, alias: validator.quartHeure } 
+            - { name: validator.constraint_validator, alias: validator.quartHeure } 
 
     my.validator.inclus:
        class:      %my.validator.inclus.class%
        arguments: [@doctrine.orm.entity_manager]
        tags:
-            - { name: validator.constraint_validator,, alias: validator.inclus } 
+            - { name: validator.constraint_validator, alias: validator.inclus } 
 
     my.validator.debutAvantFin:
        class:      %my.validator.debutAvantFin.class%
        arguments: [@doctrine.orm.entity_manager]
        tags:
-            - { name: validator.constraint_validator,, alias: validator.debutAvantFin } 
+            - { name: validator.constraint_validator, alias: validator.debutAvantFin } 
             
     my.validator.plageHoraireRecoupe:
        class:      %my.validator.plageHoraireRecoupe.class%
        arguments: [@doctrine.orm.entity_manager]
        tags:
-            - { name: validator.constraint_validator,, alias: validator.plageHoraireRecoupe } 
+            - { name: validator.constraint_validator, alias: validator.plageHoraireRecoupe } 
