@@ -17,7 +17,6 @@ class Inclus extends Constraint
 	public $entity;
 	public $creneau;
 
-
     
     public function validatedBy()
     {
