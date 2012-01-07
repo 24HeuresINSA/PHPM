@@ -2,7 +2,9 @@
 
 namespace PHPM\Bundle\Validator;
 
+
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\ConstraintValidator;
 
 /**
 *
@@ -11,6 +13,7 @@ use Symfony\Component\Validator\Constraint;
 class PlageHoraireRecoupe extends Constraint
 {
     public $message = "La plage horaire se recoupe avec une déjà existante.";
+
 
     public function validatedBy()
     {

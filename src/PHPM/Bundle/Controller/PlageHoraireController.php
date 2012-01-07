@@ -10,6 +10,7 @@ use PHPM\Bundle\Entity\PlageHoraire;
 use PHPM\Bundle\Form\PlageHoraireType;
 use PHPM\Bundle\Entity\Creneau;
 use PHPM\Bundle\Validator\QuartHeure;
+use PHPM\Bundle\Validator\PlageHoraireRecoupe;
 
 /**
  * PlageHoraire controller.

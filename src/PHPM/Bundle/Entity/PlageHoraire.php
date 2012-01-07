@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use PHPM\Bundle\Validator\DebutAvantFin;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use PHPM\Bundle\Validator\QuartHeure;
+use PHPM\Bundle\Validator\PlageHoraireRecoupe;
 
 /**
  * PHPM\Bundle\Entity\PlageHoraire
@@ -23,8 +24,8 @@ class PlageHoraire
         $metadata->addPropertyConstraint('debut', new QuartHeure()); // quart d'heure indivisible pour plage horaire
         $metadata->addPropertyConstraint('fin', new QuartHeure());
         $metadata->addPropertyConstraint('dureeCreneau', new QuartHeure());	
-        $metadata->addPropertyConstraint('recoupementCreneau', new QuartHeure());        
-                     
+        $metadata->addPropertyConstraint('recoupementCreneau', new QuartHeure()); 
+  //    $metadata->addPropertyConstraint('debut', new PlageHoraireRecoupe());                                     
     }	
 	
 	
