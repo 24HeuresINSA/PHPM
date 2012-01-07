@@ -436,7 +436,11 @@ if valider : laisser ce qu'il y avait avant.
 			
 			$a = array();
 			foreach ($orga->getDisponibilites() as $dispo){
-				$a[$dispo->getId()] = $dispo->toArrayOrgaWebService();
+				if ($dispo->toArrayOrgaWebService() != null){
+					$a[$dispo->getId()] = $dispo->toArrayOrgaWebService();
+				}
+				
+				
 			}
 			
 			
@@ -450,14 +454,15 @@ if valider : laisser ce qu'il y avait avant.
 						"permis"=>$orga->getPermis(),
 			    		"dateDeNaissance" => $orga->getDateDeNaissance()->format('Y-m-d H:i:s'),
 			    		"departement" => $orga->getDepartement(),
-			    		"commentaire" => $orga->getCommentaire(), 		
+			    		"commentaire" => $orga->getCommentaire(), 	
 			        	"disponibilites" => $a);
 			
-			
-			
+		
 			
 			
 		}
+		
+		
     	
     	//exit(var_dump($orgaArray));
     	
