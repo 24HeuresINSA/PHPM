@@ -13,10 +13,7 @@ class QuartHeureValidator extends ConstraintValidator
 {
  
     public function isValid($value, Constraint $constraint)
-    {
-    //    var_dump(get_class($value));
-      //  if(get_class($value)=="DateTime")
-            
+    {            
           if($value instanceof \DateTime)         
             {
              $timestamp=$value->getTimestamp();  
