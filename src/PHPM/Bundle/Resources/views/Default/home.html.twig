@@ -1,6 +1,22 @@
 {% extends "PHPMBundle:Default:layout.html.twig"  %}
 {% set pageTitle = 'Accueil' %}
 
+{% block actions %}
+
+{{ parent() }}
+{% block newAction %}
+{% endblock %}
+{% block indexAction %}
+{% endblock %}
+{% block editAction %}
+{% endblock %}
+{% block deleteAction %}
+{% endblock %}
+{% block showAction %}
+{% endblock %}
+
+{% endblock %}
+
 
 {% block content %}
 

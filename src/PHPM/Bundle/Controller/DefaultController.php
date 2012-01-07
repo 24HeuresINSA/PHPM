@@ -10,7 +10,8 @@ use PHPM\Bundle\Entity\Config;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="accueil")
+	 * @Route("/")
      * @Template()
      */
     public function homeAction()
