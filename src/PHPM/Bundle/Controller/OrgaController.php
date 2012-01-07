@@ -443,7 +443,11 @@ class OrgaController extends Controller
 			
 			$a = array();
 			foreach ($orga->getDisponibilites() as $dispo){
-				$a[$dispo->getId()] = $dispo->toArrayOrgaWebService();
+				if ($dispo->toArrayOrgaWebService() != null){
+					$a[$dispo->getId()] = $dispo->toArrayOrgaWebService();
+				}
+				
+				
 			}
 			
 			
@@ -457,14 +461,15 @@ class OrgaController extends Controller
 						"permis"=>$orga->getPermis(),
 			    		"dateDeNaissance" => $orga->getDateDeNaissance()->format('Y-m-d H:i:s'),
 			    		"departement" => $orga->getDepartement(),
-			    		"commentaire" => $orga->getCommentaire(), 		
+			    		"commentaire" => $orga->getCommentaire(), 	
 			        	"disponibilites" => $a);
 			
-			
-			
+		
 			
 			
 		}
+		
+		
     	
     	//exit(var_dump($orgaArray));
     	
