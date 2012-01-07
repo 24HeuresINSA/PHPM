@@ -112,7 +112,7 @@ class CreneauRepository extends EntityRepository
 	}
 	
 	
-	public function getCreneauxCompatibleWithCriteria($niveau_confiance, $categorie, $age, $permis, $duree, $orga, $plage, $bloc)
+	public function getCreneauxCompatibleWithCriteria($niveau_confiance, $categorie, $age, $permis, $duree, $orga, $plage, $dispo, $bloc)
 	{
 		$qb = $this->getEntityManager()->createQueryBuilder();
 		$expr = $qb->expr();
@@ -164,7 +164,11 @@ class CreneauRepository extends EntityRepository
 			$plage= $pref[$plage];
 			$andx->add('(ct.debut < \''.$plage["fin"].'\' ) AND (ct.fin >\''.$plage["debut"].'\' )');
 		}
-		
+		if($dispo !='')
+		{
+				
+			$andx->add(($expr->eq('ct.disponibilite',$dispo)));
+		}
 		
 		
 		

@@ -241,7 +241,10 @@ class PlageHoraire
     	"tache" => $this->getTache()->toArray(),
     	"creneaux" => $a);
     }
-
+    public function toSimpleArray()
+    {
+    	return array("debut" => $this->getDebut(),"fin" => $this->getFin(), "duree" => $this->getDuree());
+    }
     /**
      * Set dureeCreneau
      *
