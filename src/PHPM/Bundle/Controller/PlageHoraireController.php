@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PHPM\Bundle\Entity\PlageHoraire;
 use PHPM\Bundle\Form\PlageHoraireType;
 use PHPM\Bundle\Entity\Creneau;
+use PHPM\Bundle\Validator\QuartHeure;
 
 /**
  * PlageHoraire controller.
@@ -230,6 +231,7 @@ class PlageHoraireController extends Controller
 	{
 		
 		$em = $this->getDoctrine()->getEntityManager();
+        
 
         $entity = $em->getRepository('PHPMBundle:PlageHoraire')->find($id);
 		
@@ -255,14 +257,13 @@ class PlageHoraireController extends Controller
 					echo $nouvelID;
 					
 					$em->remove($creneauASupprimer);
-           			$em->flush();
 					
 				}
             
             while (!$nbCreneauACreerPourOrga == 0)
             {
 			if ( ( $entity->getdureeCreneau() +  $entity->getrecoupementCreneau()) > ( $entity->getfin()->getTimestamp() -  $entity->getdebut()->getTimestamp()) )	
-			{
+			 {
 
 				$nouveauCreneau = new Creneau();
 				
@@ -274,14 +275,13 @@ class PlageHoraireController extends Controller
 					
 				$nouveauCreneau->setDebut(new \DateTime("20$debutDesCreneauxDate"));
 				$nouveauCreneau->setFin(new \DateTime("20$finDesCreneauxDate"));
-				
+                
 				$em->persist($nouveauCreneau);
-				$em->flush();
             
-			}
+			 }
 			
 			else 
-			{
+			 {
 				$tempsRestantAAffecter = ($entity->getfin()->getTimestamp() - $entity->getdebut()->getTimestamp() );
 				$debutDesCreneaux = $entity->getdebut()->getTimestamp();
 				while ( ($entity->getdureeCreneau() + $entity->getrecoupementCreneau()) < $tempsRestantAAffecter)
@@ -302,8 +302,7 @@ class PlageHoraireController extends Controller
 						$tempsRestantAAffecter = ($tempsRestantAAffecter- ($entity->getdureeCreneau()));
 						$debutDesCreneaux += $entity->getdureeCreneau();					
 						
-						$em->persist($nouveauCreneau);
-						$em->flush();								
+						$em->persist($nouveauCreneau);								
 					}
 				if ($tempsRestantAAffecter > 0)	
 					{
@@ -319,13 +318,13 @@ class PlageHoraireController extends Controller
 						$nouveauCreneau->setFin(new \DateTime("20$finDesCreneauxDate"));
 						
 						$em->persist($nouveauCreneau);
-						$em->flush();
+						
 					}
 			}
         $nbCreneauACreerPourOrga --;
 		}	
-             
-	 	 return $this->redirect($this->generateUrl('plagehoraire_show', array('id' => $entity->getId())));
-		
+         $em->flush();
+         return $this->redirect($this->generateUrl('plagehoraire_show', array('id' => $entity->getId())));
+	
 	}
 }
