@@ -40,7 +40,9 @@ CalendarController.prototype = {
 	clickQuartHeure: function(obj) {
 		console.log(obj.data.date);
 		
-		// TODO : passe la demande au controlleur tâche qu'il se mette à jour
+		// on lance le bouzin, va chercher les creneaux
+		// TODO : passer paramètre
+		pmAffectation.controllers.tache.getData();
 	},
 	// clic sur un créneau
 	clickCreneau: function(obj) {

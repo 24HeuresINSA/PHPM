@@ -229,39 +229,46 @@ class OrgaController extends Controller
 		
         
         $request = $this->get('request')->request;
-        
-        /*
-         * chose à faire
-         * récupérer l'Arras associatif concernant les orga et traiter :
-if supprimer : alors supprimer l'orga et ses créneaux
-if en attente : ne rien faire
-if valider : laisser ce qu'il y avait avant.
-         * 
-         */
-
-            
-            
-        
-        
+      
 		$em = $this->getDoctrine()->getEntityManager();
 				
-                //var_dump($valeurs);
-		if ($this->get('request')->getMethod() == 'POST') {
-           
+		if ($this->get('request')->getMethod() == 'POST') 
+		{
 
         $data = $request->all();
-        var_dump($data);
-        exit();
-   		for ($i = 0; $i < count($_POST["Orga_Valid"]); $i++)
-			{
-				$orgaValide = $em->getRepository('PHPMBundle:Orga')->findOneById($_POST["Orga_Valid"][$i]);	
-				$orgaValide->setStatut(1);
-				$em->persist($orgaValide);
-				$em->flush();	
+     	    foreach ($data as $idOrgaATraiter => $codeFormulaire) // code formulaire : 0 rien à faire, 1 validé, 2 supprimé
+       
+            {
+               echo $idOrgaATraiter;         
+			   echo $codeFormulaire;
+	                  
+               if ($codeFormulaire==1)
+               {
+                  $orgaValide = $em->getRepository('PHPMBundle:Orga')->findOneById($idOrgaATraiter);
+                  $orgaValide->setStatut(1); // validation de l'orga
+                $em->persist($orgaValide);
+                $em->flush();   
+               } 
+               
+               if ($codeFormulaire==2)
+               
+               {
+                   $orgaASupprimer = $em->getRepository('PHPMBundle:Orga')->findOneById($idOrgaATraiter);
+                   
+                   $dispoADesafecter = $em->getRepository('PHPMBundle:Disponibilite')->findByOrga($idOrgaATraiter);
+                   
+                   foreach ($dispoADesafecter as $dispoAVirer) 
+                     {
+                        $em->remove($dispoAVirer); // suppression des dispos de l'orga
+                     }                   
+                   $em->remove($orgaASupprimer);  
+                   $em->flush();  
+               } 
+           
+				
 			}
 		}
 
-	
 		$orgaAValider = $em->getRepository('PHPMBundle:Orga')->findByStatut(0);
 		
 		$listeOrgaARetourne = array();
@@ -420,6 +427,7 @@ if valider : laisser ce qu'il y avait avant.
 		$plage_id= $request->request->get('plage_id', '');
 		$niveau_confiance= $request->request->get('confiance_id', '');
 		$maxDateNaissance = new \DateTime();
+		$bloc = $request->request->get('bloc', '0');
 		
 		if($age!='')
 		$maxDateNaissance->modify('-'.$age.' year');
@@ -427,7 +435,7 @@ if valider : laisser ce qu'il y avait avant.
 		
 		
 		$em = $this->getDoctrine()->getEntityManager();
-		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $maxDateNaissance->format('Y-m-d'), $plage_id, $niveau_confiance);
+		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $maxDateNaissance->format('Y-m-d'), $plage_id, $niveau_confiance, $bloc);
 		
 		
 		$orgaArray = array();
@@ -435,7 +443,11 @@ if valider : laisser ce qu'il y avait avant.
 			
 			$a = array();
 			foreach ($orga->getDisponibilites() as $dispo){
-				$a[$dispo->getId()] = $dispo->toArrayOrgaWebService();
+				if ($dispo->toArrayOrgaWebService() != null){
+					$a[$dispo->getId()] = $dispo->toArrayOrgaWebService();
+				}
+				
+				
 			}
 			
 			
@@ -449,17 +461,15 @@ if valider : laisser ce qu'il y avait avant.
 						"permis"=>$orga->getPermis(),
 			    		"dateDeNaissance" => $orga->getDateDeNaissance()->format('Y-m-d H:i:s'),
 			    		"departement" => $orga->getDepartement(),
-			    		"commentaire" => $orga->getCommentaire(),
-			    		
-			    		//TODO Implémentation des blocs
-			    		
+			    		"commentaire" => $orga->getCommentaire(), 	
 			        	"disponibilites" => $a);
 			
-			
-			
+		
 			
 			
 		}
+		
+		
     	
     	//exit(var_dump($orgaArray));
     	
