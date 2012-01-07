@@ -1,8 +1,6 @@
-{% extends "::base.html.twig"  %}
-
-{% block title %}
-	Plages horaire -> D&eacute;tails de la plage horaire
-{% endblock %}
+{% extends "PHPMBundle:PlageHoraire:layout.html.twig"  %}
+{% set pageTitle = 'Détails de la plage horaire' %}
+{% use "PHPMBundle::show.html.twig" %}
 
 {% block content %}
 <table class="record_properties">
@@ -37,22 +35,4 @@
         </tr>
     </tbody>
 </table>
-{% endblock %}
-
-{% block menu_action %}
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('plagehoraire') }}">
-            Revenir &agrave; la liste
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('plagehoraire_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-    	<a href="javascript:confirm_delete('{{ path('plagehoraire_delete', { 'id': entity.id }) }}')">Supprimer</a>
-    </li>
-</ul>
 {% endblock %}

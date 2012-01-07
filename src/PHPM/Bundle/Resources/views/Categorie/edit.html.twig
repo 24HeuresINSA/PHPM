@@ -1,8 +1,6 @@
-{% extends "::base.html.twig"  %}
-
-{% block title %}
-	Cat&eacute;gories -> Edition
-{% endblock %}
+{% extends "PHPMBundle:Categorie:layout.html.twig"  %}
+{% set pageTitle = 'Edition de la Catégorie' %}
+{% use "PHPMBundle::edit.html.twig" %}
 
 {% block content %}
 
@@ -12,17 +10,4 @@
         <button type="submit">Edit</button>
     </p>
 </form>
-{% endblock %}
-
-{% block menu_action %}
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('categorie') }}">
-            Revenir &agrave; la liste de cat&eacute;gories
-        </a>
-    </li>
-    <li>
-    	<a href="javascript:confirm_delete('{{ path('categorie_delete', { 'id': entity.id }) }}')">Supprimer</a>
-    </li>
-</ul>
 {% endblock %}

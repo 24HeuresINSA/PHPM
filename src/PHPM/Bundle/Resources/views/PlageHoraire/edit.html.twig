@@ -1,8 +1,6 @@
-{% extends "::base.html.twig"  %}
-
-{% block title %}
-	Plage horaires -> Edition
-{% endblock %}
+{% extends "PHPMBundle:PlageHoraire:layout.html.twig"  %}
+{% set pageTitle = 'Edition de la plage horaire' %}
+{% use "PHPMBundle::index.html.twig" %}
 
 {% block content %}
 <form action="{{ path('plagehoraire_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
@@ -11,17 +9,4 @@
         <button type="submit">Edit</button>
     </p>
 </form>
-{% endblock %}
-
-{% block menu_action %}
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('plagehoraire') }}">
-            Revenir &agrave; la liste
-        </a>
-    </li>
-    <li>
-    	<a href="javascript:confirm_delete('{{ path('plagehoraire_delete', { 'id': entity.id }) }}')">Supprimer</a>
-    </li>
-</ul>
 {% endblock %}

@@ -1,8 +1,6 @@
-{% extends "::base.html.twig"  %}
-
-{% block title %}
-	Cat&eacute;gories -> D&eacute;tails cat&eacute;gorie
-{% endblock %}
+{% extends "PHPMBundle:Categorie:layout.html.twig"  %}
+{% set pageTitle = 'Edition de la Catégorie' %}
+{% use "PHPMBundle::show.html.twig" %}
 
 {% block content %}
 <table class="record_properties">
@@ -23,21 +21,3 @@
 </table>
 {% endblock %}
 
-{% block menu_action %}
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('categorie') }}">
-            Revenir &agrave; la liste de cat&eacute;gories
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('categorie_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-            	<a href="javascript:confirm_delete('{{ path('categorie_delete', { 'id': entity.id }) }}')">Supprimer</a>
-    </li>
-</ul>
-{% endblock %}

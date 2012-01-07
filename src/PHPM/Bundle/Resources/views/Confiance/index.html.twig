@@ -1,8 +1,6 @@
-{% extends "::base.html.twig"  %}
-
-{% block title %}
-	Confiance -> Liste des niveaux
-{% endblock %}
+{% extends "PHPMBundle:Confiance:layout.html.twig"  %}
+{% set pageTitle = 'Liste des Confiances' %}
+{% use "PHPMBundle::index.html.twig" %}
 
 {% block content %}
 {% import "::macro_bouton_edit.html.twig" as bouton_edit %}
@@ -30,14 +28,4 @@
     {% endfor %}
     </tbody>
 </table>
-{% endblock %}
-
-{% block menu_action %}
-<ul>
-    <li>
-        <a href="{{ path('confiance_new') }}">
-            Cr&eacute;er un nouveau niveau de confiance
-        </a>
-    </li>
-</ul>
 {% endblock %}

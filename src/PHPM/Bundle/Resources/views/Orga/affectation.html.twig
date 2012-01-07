@@ -1,10 +1,17 @@
-{% extends "::base.html.twig"  %}
+{% extends "PHPMBundle:Orga:layout.html.twig"  %}
+{% set pageTitle = 'Affectation' %}
 
-{% block title %}Affectation T&acirc;ches -> Orga{% endblock %}
+{% block editAction %}
+{% endblock %}
+
+{% block deleteAction %}
+{% endblock %}
+
+{% block newAction %}
+{% endblock %}
 
 {% block style %}
 	{{ parent() }}
-
 	<link rel="stylesheet/less" href="{{ asset('bundles/phpm/css/affectation.less') }}" type="text/css" />
 {% endblock %}
 

@@ -1,8 +1,6 @@
-{% extends "::base.html.twig"  %}
-
-{% block title %}
-	Confiance -> Edition
-{% endblock %}
+{% extends "PHPMBundle:Confiance:layout.html.twig"  %}
+{% set pageTitle = 'Edition Confiance' %}
+{% use "PHPMBundle::edit.html.twig" %}
 
 {% block content %}
 <form action="{{ path('confiance_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
@@ -11,17 +9,4 @@
         <button type="submit">Edit</button>
     </p>
 </form>
-{% endblock %}
-
-{% block menu_action %}
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('confiance') }}">
-            Revenir &agrave; la liste
-        </a>
-    </li>
-    <li>
-    	<a href="javascript:confirm_delete('{{ path('confiance_delete', { 'id': entity.id }) }}')">Supprimer</a>
-    </li>
-</ul>
 {% endblock %}

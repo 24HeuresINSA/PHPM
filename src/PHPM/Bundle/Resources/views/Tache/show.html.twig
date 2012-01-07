@@ -1,8 +1,6 @@
-{% extends "::base.html.twig"  %}
-
-{% block title %}
-	T&acirc;ches -> D&eacute;tails de la T&acirc;che
-{% endblock %}
+{% extends "PHPMBundle:Tache:layout.html.twig"  %}
+{% set pageTitle = 'Détails Tâche' %}
+{% use "PHPMBundle::show.html.twig" %}
 
 {% block content %}
 <table class="record_properties">
@@ -41,27 +39,4 @@
         </tr>
     </tbody>
 </table>
-{% endblock %}
-
-{% block menu_action %}
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('tache') }}">
-            Revenir &agrave; la liste de t&acirc;ches
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('plagehoraire_tache_new', { 'idtache': entity.id }) }}">
-            Ajouter des plages horaires
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('tache_edit', { 'id': entity.id }) }}">
-            Editer la t&acirc;che
-        </a>
-    </li>
-    <li>
-    	<a href="javascript:confirm_delete('{{ path('tache_delete', { 'id': entity.id }) }}')">Supprimer</a>
-    </li>
-</ul>
 {% endblock %}
