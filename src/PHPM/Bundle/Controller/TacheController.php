@@ -361,13 +361,14 @@ class TacheController extends Controller
 		$permis= $request->request->get('permisNecessaire', '');
 		$age= $request->request->get('ageNecessaire', '0');
 		$niveau_confiance= $request->request->get('confiance_id', '');
+		$plage = $request->request->get('plage_id', '');
 		$bloc = $request->request->get('bloc', '0');
 		
 		//exit(var_dump($request));
 	
 		$em = $this->getDoctrine()->getEntityManager();
 	
-		$entities = $em->getRepository('PHPMBundle:Tache')->getTacheWithCriteria($duree, $categorie, $permis, $age, $niveau_confiance, $bloc);
+		$entities = $em->getRepository('PHPMBundle:Tache')->getTacheWithCriteria($duree, $categorie, $permis, $age, $niveau_confiance, $plage, $bloc);
 	
 		//exit(var_dump($entities));
 		$response = new Response();
