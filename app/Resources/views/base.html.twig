@@ -36,7 +36,7 @@
         	{% block header %}
         	<div class="title" id="title">
         		{% block topHeader %}
-        		<h1>PlanningMaker &gt; {{ sectionTitle }} &gt;  {{ pageTitle }}</h1>
+        		<h1>PlanningMaker &gt; <a href="{{ path(indexRoute) }}"> {{ sectionTitle }}</a> &gt;  {{ pageTitle }}</h1>
         		{% endblock %}
         		<form method="post" action="{{ path('search') }}">
         			<input id="searchBox" name="s" />

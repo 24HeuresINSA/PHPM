@@ -1,16 +1,10 @@
+{% use "PHPMBundle::actions.html.twig"  %}
 {% block actions %}
+{{ parent() }}
 {% block indexAction %}
-    <li>
-        <a href="{{ path(indexRoute) }}">
-            {{indexActionLabel }}
-        </a>
-    </li>
 {% endblock %}
-{% block newAction %}
-    <li>
-        <a href="{{ path(newRoute) }}">
-            {{newActionLabel }}
-        </a>
-    </li>
+{% block editAction %}
+{% endblock %}
+{% block deleteAction %}
 {% endblock %}
 {% endblock %}
