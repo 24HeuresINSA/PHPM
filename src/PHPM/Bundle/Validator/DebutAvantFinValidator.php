@@ -19,7 +19,7 @@ class DebutAvantFinValidator extends ConstraintValidator  // vérifie si le déb
 		$fin=$fin->getTimestamp();
     	
     	
-    	if ($debut <= $fin)
+    	if ($debut < $fin)
 		{
 			return TRUE;
 		}
