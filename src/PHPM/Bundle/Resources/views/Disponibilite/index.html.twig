@@ -1,8 +1,6 @@
-{% extends "::base.html.twig"  %}
-
-{% block title %}
-	Disponibilit&eacute;s -> Liste des Disponibilit&eacute;s
-{% endblock %}
+{% extends "PHPMBundle:Disponibilite:layout.html.twig"  %}
+{% set pageTitle = 'Liste des disponibilités' %}
+{% use "PHPMBundle::index.html.twig" %}
 
 {% block content %}
 {% import "::macro_bouton_edit.html.twig" as bouton_edit %}
@@ -29,14 +27,4 @@
     {% endfor %}
     </tbody>
 </table>
-{% endblock %}
-
-{% block menu_action %}
-<ul>
-    <li>
-        <a href="{{ path('disponibilite_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
 {% endblock %}

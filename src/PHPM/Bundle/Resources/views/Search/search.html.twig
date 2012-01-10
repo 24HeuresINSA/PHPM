@@ -1,8 +1,6 @@
-{% extends "::base.html.twig"  %}
-
-{% block title %}
-	Recherche -> {{ searchString }}
-{% endblock %}
+{% extends "PHPMBundle:Search:layout.html.twig"  %}
+{% set pageTitle = searchString %}
+{% use "PHPMBundle::new.html.twig" %}
 
 {% block content %}
 

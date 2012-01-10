@@ -1,8 +1,6 @@
-{% extends "::base.html.twig"  %}
-
-{% block title %}
-	Disponibilit&eacute;s -> D&eacute;tails Disponibilite
-{% endblock %}
+{% extends "PHPMBundle:Disponibilite:layout.html.twig"  %}
+{% set pageTitle = 'Détails disponibilité' %}
+{% use "PHPMBundle::show.html.twig" %}
 
 {% block content %}
 <table class="record_properties">
@@ -21,22 +19,4 @@
         </tr>
     </tbody>
 </table>
-{% endblock %}
-
-{% block menu_action %}
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('disponibilite') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('disponibilite_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-    	<a href="javascript:confirm_delete('{{ path('disponibilite_delete', { 'id': entity.id }) }}')">Supprimer</a>
-    </li>
-</ul>
 {% endblock %}

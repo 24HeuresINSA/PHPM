@@ -1,8 +1,6 @@
-{% extends "::base.html.twig"  %}
-
-{% block title %}
-	Cr&eacute;neaux -> D&eacute;tails du cr&eacute;neau
-{% endblock %}
+{% extends "PHPMBundle:Creneau:layout.html.twig"  %}
+{% set pageTitle = 'Nouveau Créneau' %}
+{% use "PHPMBundle::show.html.twig" %}
 
 {% block content %}
 <table class="record_properties">
@@ -21,22 +19,4 @@
         </tr>
     </tbody>
 </table>
-{% endblock %}
-
-{% block menu_action %}
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('creneau') }}">
-            Retourner &agrave; la liste
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('creneau_edit', { 'id': entity.id }) }}">
-            Editer le cr&eacute;neau
-        </a>
-    </li>
-    <li>
-    	<a href="javascript:confirm_delete('{{ path('creneau_delete', { 'id': entity.id }) }}')">Supprimer</a>
-    </li>
-</ul>
 {% endblock %}

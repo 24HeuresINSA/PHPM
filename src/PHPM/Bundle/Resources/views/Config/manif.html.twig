@@ -1,9 +1,11 @@
+{% extends "PHPMBundle:Config:layout.html.twig"  %}
+{% set pageTitle = 'Configuration de la Manifestation' %}
+
+{% block content %}
+
+{% endblock %}
 
 {% extends "::base.html.twig"  %}
-
-{% block title %}
-	Configuration -> Configuration de la Manifestation
-{% endblock %}
 
 {% block content %}
 <form action="{{ path('config_manif') }}" method="post" {{ form_enctype(form) }}>
@@ -21,7 +23,4 @@
     </p>
 </form>
 
-{% endblock %}
-
-{% block menu_action %}
 {% endblock %}

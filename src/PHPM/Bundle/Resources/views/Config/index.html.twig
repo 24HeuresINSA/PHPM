@@ -1,24 +1,16 @@
-{% extends "::base.html.twig"  %}
+{% extends "PHPMBundle:Config:layout.html.twig"  %}
+{% set pageTitle = 'Configuration' %}
 
-{% block title %}
-	Configuration -> Accueil
+{% block editAction %}
+{% endblock %}
+
+{% block deleteAction %}
+{% endblock %}
+
+{% block newAction %}
 {% endblock %}
 
 {% block content %}
 
 {% endblock %}
 
-{% block menu_action %}
-<ul>
-    <li>
-        <a href="{{ path('orga_import') }}">
-            Import d'orgas
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('orga_validation') }}">
-            Validation d'orgas
-        </a>
-   </li>
-</ul>
-{% endblock %}

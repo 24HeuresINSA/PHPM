@@ -1,13 +1,9 @@
-{% extends "::base.html.twig"  %}
-
-{% block title %}
-	Cat&eacute;gories -> Cat&eacute;gories disponibles
-{% endblock %}
+{% extends "PHPMBundle:Categorie:layout.html.twig"  %}
+{% set pageTitle = 'Liste des Catégories' %}
+{% use "PHPMBundle::index.html.twig" %}
 
 {% block content %}
 {% import "::macro_bouton_edit.html.twig" as bouton_edit %}
-
-
 <table class="records_list">
     <thead>
         <tr>
@@ -30,14 +26,4 @@
     {% endfor %}
     </tbody>
 </table>
-{% endblock %}
-
-{% block menu_action %}
-<ul>
-    <li>
-        <a href="{{ path('categorie_new') }}">
-            Cr&eacute;er une nouvelle cat&eacute;gorie
-        </a>
-    </li>
-</ul>
 {% endblock %}

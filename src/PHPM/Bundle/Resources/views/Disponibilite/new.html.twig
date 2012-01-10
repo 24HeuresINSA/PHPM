@@ -1,8 +1,6 @@
-{% extends "::base.html.twig"  %}
-
-{% block title %}
-	Disponibilit&eacute;s -> Cr&eacute;er une Disponibilit&eacute;e
-{% endblock %}
+{% extends "PHPMBundle:Disponibilite:layout.html.twig"  %}
+{% set pageTitle = 'Créer une disponibilité' %}
+{% use "PHPMBundle::new.html.twig" %}
 
 {% block content %}
 <form action="{{ path('disponibilite_create') }}" method="post" {{ form_enctype(form) }}>
@@ -13,12 +11,3 @@
 </form>
 {% endblock %}
 
-{% block menu_action %}
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('disponibilite') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
-{% endblock %}

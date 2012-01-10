@@ -1,0 +1,38 @@
+{% block liste %}
+
+
+<table>
+{% block table %}
+	<thead>
+		<tr>
+		{% block head %}
+		{% for item in headItems %}
+		<th>{{ item }}</th>
+		{% endfor %}
+		</tr>
+		{% endblock %}
+	</thead>
+	
+	<tfoot>
+		<tr>
+		{% block foot %}
+		{% for item in footItems %}
+		<td>{{ item }}</td>
+		{% endfor %}
+		</tr>
+		{% endblock %}
+	</tfoot>
+	
+	<tfoot>
+		<tr>
+		{% block body %}
+		{% for item in bodyItems %}
+		<td>{{ item }}</td>
+		{% endfor %}
+		</tr>
+		{% endblock %}
+		</tfoot>
+{% endblock %}
+</table>
+
+{% block endblock %}

@@ -1,20 +1,11 @@
-{% extends "::base.html.twig"  %}
+{% extends "PHPMBundle:Orga:layout.html.twig"  %}
+{% set pageTitle = 'Liste des Organisateurs' %}
+{% use "PHPMBundle::index.html.twig" %}
 
-{% block title %}
-	Orgas -> Liste des orgas
-{% endblock %}
 
 {% block content %}
    {% include 'PHPMBundle:Orga:afficheListe.html.twig' with {'entities': entities} %}
 {% endblock %}
 
-{% block menu_action %}
-<ul>
-    <li>
-        <a href="{{ path('orga_new') }}">
-            Cr&eacute;er un nouvel orga
-        </a>
-    </li>
-</ul>
-{% endblock %}
+
 

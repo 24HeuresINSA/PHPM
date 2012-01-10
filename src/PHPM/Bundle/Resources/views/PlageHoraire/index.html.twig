@@ -1,11 +1,9 @@
-{% extends "::base.html.twig"  %}
-
-{% import "::macro_bouton_edit.html.twig" as bouton_edit %}
-{% block title %}
-	Plages horaires -> Liste des plages horaires
-{% endblock %}
+{% extends "PHPMBundle:PlageHoraire:layout.html.twig"  %}
+{% set pageTitle = 'Liste des plages horaires' %}
+{% use "PHPMBundle::index.html.twig" %}
 
 {% block content %}
+{% import "::macro_bouton_edit.html.twig" as bouton_edit %}
 <table class="records_list">
     <thead>
         <tr>
@@ -36,14 +34,4 @@
     {% endfor %}
     </tbody>
 </table>
-{% endblock %}
-
-{% block menu_action %}
-<ul>
-    <li>
-        <a href="{{ path('plagehoraire_new') }}">
-            Cr&eacute;er une nouvelle plage horaire
-        </a>
-    </li>
-</ul>
 {% endblock %}
