@@ -1,8 +1,6 @@
-{% extends "::base.html.twig"  %}
-
-{% block title %}
-	Confiance -> D&eacute;tails des niveaux
-{% endblock %}
+{% extends "PHPMBundle:Confiance:layout.html.twig"  %}
+{% set pageTitle = 'Détails des niveaux' %}
+{% use "PHPMBundle::show.html.twig" %}
 
 {% block content %}
 <table class="record_properties">
@@ -25,22 +23,4 @@
         </tr>
     </tbody>
 </table>
-{% endblock %}
-
-{% block menu_action %}
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('confiance') }}">
-              Revenir &agrave; la liste
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('confiance_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-    	<a href="javascript:confirm_delete('{{ path('confiance_delete', { 'id': entity.id }) }}')">Supprimer</a>
-    </li>
-</ul>
 {% endblock %}

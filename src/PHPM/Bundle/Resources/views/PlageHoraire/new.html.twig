@@ -1,8 +1,6 @@
-{% extends "::base.html.twig"  %}
-
-{% block title %}
-	Plages horaires -> Cr&eacute;er une plage horaire
-{% endblock %}
+{% extends "PHPMBundle:PlageHoraire:layout.html.twig"  %}
+{% set pageTitle = 'Nouvelle plage horaire' %}
+{% use "PHPMBundle::new.html.twig" %}
 
 {% block content %}
 <form action="{{ path('plagehoraire_create') }}" method="post" {{ form_enctype(form) }}>
@@ -11,14 +9,4 @@
         <button type="submit">Create</button>
     </p>
 </form>
-{% endblock %}
-
-{% block menu_action %}
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('plagehoraire') }}">
-            Revenir &agrave; la liste
-        </a>
-    </li>
-</ul>
 {% endblock %}

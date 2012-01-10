@@ -1,8 +1,6 @@
-{% extends "::base.html.twig"  %}
-
-{% block title %}
-	T&acirc;ches -> Cr&eacute;er une nouvelle t&acirc;che
-{% endblock %}
+{% extends "PHPMBundle:Tache:layout.html.twig"  %}
+{% set pageTitle = 'Nouvelle Tâche' %}
+{% use "PHPMBundle::new.html.twig" %}
 
 {% block content %}
 <form action="{{ path('tache_create') }}" method="post" {{ form_enctype(form) }}>
@@ -11,14 +9,4 @@
         <button type="submit">Cr&eacute;er la t&acirc;che</button>
     </p>
 </form>
-{% endblock %}
-
-{% block menu_action %}
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('tache') }}">
-            Revenir &agrave; la liste de t&acirc;ches
-        </a>
-    </li>
-</ul>
 {% endblock %}
