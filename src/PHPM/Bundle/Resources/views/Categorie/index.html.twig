@@ -3,7 +3,7 @@
 {% use "PHPMBundle::index.html.twig" %}
 
 {% block content %}
-{% import "::macro_bouton_edit.html.twig" as bouton_edit %}
+
 <table class="records_list">
     <thead>
         <tr>
@@ -20,7 +20,7 @@
             <td>{{ entity.nom }}</td>
             <td>{{ entity.couleur }}</td>
             <td>
-				{{ bouton_edit.bouton_edit( path('categorie_edit', { 'id': entity.id }) ) }}
+				{{ bouton.edit( path('categorie_edit', { 'id': entity.id }) ) }}
             </td>
         </tr>
     {% endfor %}

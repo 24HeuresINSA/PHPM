@@ -1,38 +1,33 @@
 {% block liste %}
-
-
 <table>
 {% block table %}
 	<thead>
 		<tr>
-		{% block head %}
-		{% for item in headItems %}
-		<th>{{ item }}</th>
-		{% endfor %}
-		</tr>
+		{% block thead %}
 		{% endblock %}
+		</tr>
+		
 	</thead>
 	
 	<tfoot>
 		<tr>
-		{% block foot %}
-		{% for item in footItems %}
-		<td>{{ item }}</td>
-		{% endfor %}
-		</tr>
+		{% block tfoot %}
+		{{ block('thead') }}
 		{% endblock %}
+		</tr>
 	</tfoot>
 	
-	<tfoot>
+	<tbody>
+		
+		{%  for entity in entities %}
 		<tr>
-		{% block body %}
-		{% for item in bodyItems %}
-		<td>{{ item }}</td>
-		{% endfor %}
-		</tr>
+		{% block tbody %}
 		{% endblock %}
-		</tfoot>
+		</tr>
+		{%   endfor %}
+		
+	</tbody>
 {% endblock %}
 </table>
 
-{% block endblock %}
+{% endblock %}

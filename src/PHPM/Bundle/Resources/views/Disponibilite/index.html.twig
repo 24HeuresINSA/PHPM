@@ -3,7 +3,7 @@
 {% use "PHPMBundle::index.html.twig" %}
 
 {% block content %}
-{% import "::macro_bouton_edit.html.twig" as bouton_edit %}
+
 
 <table class="records_list">
     <thead>
@@ -21,7 +21,7 @@
             <td>{% if entity.debut %}{{ entity.debut|date('Y-m-d H:i:s') }}{% endif%}</td>
             <td>{% if entity.fin %}{{ entity.fin|date('Y-m-d H:i:s') }}{% endif%}</td>
             <td>
-				{{ bouton_edit.bouton_edit( path('disponibilite_edit', { 'id': entity.id }) ) }}
+				{{ bouton.edit( path('disponibilite_edit', { 'id': entity.id }) ) }}
             </td>
         </tr>
     {% endfor %}

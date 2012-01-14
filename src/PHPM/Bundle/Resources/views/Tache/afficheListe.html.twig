@@ -1,5 +1,5 @@
 {% if entities %}
-{% import "::macro_bouton_edit.html.twig" as bouton_edit %}
+
 <table class="records_list">
     <thead>
         <tr>
@@ -27,7 +27,7 @@
             <td>{{ entity.ageNecessaire }}</td>
             <td>{{ entity.responsable }}</td>
             <td>
-					{{ bouton_edit.bouton_edit( path('tache_edit', { 'id': entity.id }) ) }}
+					{{ bouton.edit( path('tache_edit', { 'id': entity.id }) ) }}
             </td>
         </tr>
     {% endfor %}

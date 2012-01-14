@@ -1,0 +1,17 @@
+{% extends 'PHPMBundle:Orga:liste.html.twig' %}
+
+{% block thead %}
+{{ parent() }}
+<th>Actions</th>
+{% endblock %}
+{% block tbody %}
+{{ parent() }}
+                <td>
+                {{ bouton.edit( path('orga_edit', { 'id': entity.id }) ) }}
+                {{ bouton.planning( path('orga_planning', { 'id': entity.id }) ) }}
+                </td> 
+{% endblock %}
+
+
+
+            	
