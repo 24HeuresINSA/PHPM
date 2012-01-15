@@ -5,19 +5,20 @@ namespace PHPM\Bundle\Validator;
 use Symfony\Component\Validator\Constraint;
 
 /**
-*
+* @Annotation
 */
 
 class DebutAvantFin extends Constraint
 {
-    public $message = "Le début est après la fin... Try again";
+    public $message = "Veuillez indiquer une heure de fin postérieure à l'heure de début.";
+    
     
     public function validatedBy()
     {
         return 'validator.debutAvantFin';
     }
    
-    public function targets()
+    public function getTargets()
     {
         return self::CLASS_CONSTRAINT;
     }

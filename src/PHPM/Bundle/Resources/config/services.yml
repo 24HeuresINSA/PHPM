@@ -1,7 +1,7 @@
 parameters:
     my.validator.quartHeure.class:      PHPM\Bundle\Validator\QuartHeureValidator
     my.validator.inclus.class:      PHPM\Bundle\Validator\InclusValidator
-    my.validator.debutAvantFin.class:      PHPM\Bundle\Validator\DebutAvantfinValidator
+    my.validator.debutAvantFin.class:      PHPM\Bundle\Validator\DebutAvantFinValidator
     my.validator.plageHoraireRecoupe.class:      PHPM\Bundle\Validator\PlageHoraireRecoupeValidator
 
 services:

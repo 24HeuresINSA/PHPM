@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\CreneauRepository")
+ * @DebutAvantFin()
  */
 class Creneau
 {

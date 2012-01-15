@@ -14,6 +14,7 @@ use PHPM\Bundle\Validator\PlageHoraireRecoupe;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\PlageHoraireRepository")
+ * @DebutAvantFin()
  */
 class PlageHoraire
 {

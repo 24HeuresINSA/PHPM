@@ -14,6 +14,7 @@ use PHPM\Bundle\Validator\QuartHeure;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\DisponibiliteRepository")
+ * @DebutAvantFin()
  */
 class Disponibilite
 {
