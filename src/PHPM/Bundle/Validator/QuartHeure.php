@@ -5,7 +5,7 @@ namespace PHPM\Bundle\Validator;
 use Symfony\Component\Validator\Constraint;
 
 /**
-*
+ * @Annotation
 */
 
 class QuartHeure extends Constraint
