@@ -113,7 +113,7 @@ class Orga
 
     /**
     * @ORM\ManyToOne(targetEntity="Confiance", inversedBy="orgas")
-    * @ORM\JoinColumn(name="confiance_id", referencedColumnName="id")
+    * @ORM\JoinColumn(name="confiance_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
     * @Assert\Valid
     */
     protected $confiance;
@@ -342,6 +342,7 @@ class Orga
     public function addDisponibilite(\PHPM\Bundle\Entity\Disponibilite $disponibilites)
     {
         $this->disponibilites[] = $disponibilites;
+        $disponibilites->setOrga($this);
     }
 
     /**
@@ -404,6 +405,33 @@ class Orga
         	"confiance" => $this->getConfiance()->toArray(),
         	"disponibilites" => $a);
     	 
+    }
+    
+    public function toExportArray()
+    {
+    	$a = array();
+    	
+    		foreach ($this->getDisponibilites() as $entity){
+    		$a[$entity->getId()] = $entity->toSimpleArray();
+    		}
+    	
+    
+    
+    	return array(
+    			"id" => $this->getId(),
+    			"statut" => $this->getStatut(),
+    			"nom" => $this->getNom(),
+    			"prenom" => $this->getPrenom(),
+    			"surnom" => $this->getSurnom(),
+    			"telephone" => $this->getTelephone(),
+    			"email" => $this->getEmail(),
+    			"dateDeNaissance" => $this->getDateDeNaissance()->format('Y-m-d'),
+    			"departement" => $this->getDepartement(),
+    			"commentaire" => $this->getCommentaire(),
+    			"permis"=>$this->getPermis(),
+    			"confiance" => $this->getConfiance()->getId(),
+    			"disponibilites" => $a);
+    
     }
 
     /**

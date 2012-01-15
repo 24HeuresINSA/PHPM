@@ -72,7 +72,6 @@ class OrgaController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Orga entity.');
         }
-        
 
         $deleteForm = $this->createDeleteForm($id);
 
@@ -276,11 +275,10 @@ class OrgaController extends Controller
      */
 	public function importAction()	
 	{
-		$em = $this->getDoctrine()->getEntityManager();			
-		
-
+		$em = $this->getDoctrine()->getEntityManager();
 		if ($this->get('request')->getMethod() == 'GET') {
-			return array("errors"=> array());
+			
+			return array(""=> array());
 			
 		}else{
 			
@@ -290,16 +288,9 @@ class OrgaController extends Controller
 			
 		if (count($errorList) != 0)       
         throw new Exception($errorList[0]->getMessage());
-    	
-			$url=$_POST["pathJson"];	
-		
-		
+		$url=$_POST["pathJson"];	
 		$json = file_get_contents($url);
 		$listeOrgaArray = json_decode($json,TRUE);
-		
-		
-
-			
 		$validationErrors = array();
  	
 		foreach($listeOrgaArray as  $inscriptionOrga)
@@ -308,6 +299,7 @@ class OrgaController extends Controller
 					$confiance = $em->getRepository('PHPMBundle:Confiance')->findOneById(1);  // pour récupérer confiance
 					
 					$entity  = new orga();
+					$entity->setImportId($inscriptionOrga['id']);
 					$entity->setNom($inscriptionOrga['nom']);
 					$entity->setPrenom($inscriptionOrga['prenom']);
 					$entity->setConfiance($confiance);
@@ -322,33 +314,35 @@ class OrgaController extends Controller
 					$entity->setStatut(0);			
 					
 					$validator = $this->get('validator');
-    				$errors = $validator->validate($entity);
-
+					$errors = $validator->validate($entity);
+    				
     				
 				    if (count($errors) > 0) {
 				    	$err =$errors[0];
-				    	$simplifiedError = array("message" => $err->getMessageTemplate(), "champInvalide" => $err->getPropertyPath(), "valeurInvalide" => $err->getInvalidValue(), "orga" => $err->getRoot()->toArray());
+				    	$errorMessage = $err->getPropertyPath()." ( ".$err->getInvalidValue()." ) : ".    $err->getMessageTemplate();
+				    	$simplifiedError = array("erreur" => $errorMessage, "orga" => $err->getRoot()->toArray());
 				    	array_push($validationErrors,$simplifiedError);
 				    	
 				    }else{
-				        $em->persist($entity);
-				        $em->flush();
-						$idOrgaAjoute= $em->getRepository('PHPMBundle:Orga')->findOneByTelephone($inscriptionOrga['telephone']);
-						foreach($inscriptionOrga['disponibilites'] as $dispoAAjoute)
-							{
-								$entitydisponibilite = new disponibilite();						
-								$entitydisponibilite->setOrga($idOrgaAjoute);
-								$debutdispo = date ('y-m-d H:i:s', $dispoAAjoute[0]);
-								$entitydisponibilite->setDebut(new \DateTime("20$debutdispo"));
-								$findispo = date ('y-m-d H:i:s', $dispoAAjoute[1]);
-								$entitydisponibilite->setFin(new \DateTime("20$findispo"));
-								$em->persist($entitydisponibilite);
+				    	foreach($inscriptionOrga['disponibilites'] as $dispoAAjoute)
+				    	{
+				    		
+				    		$entitydisponibilite = new disponibilite();
+				    		$entity->addDisponibilite($entitydisponibilite);
+				    		$entitydisponibilite->setOrga($entity);
+				    		$entitydisponibilite->setDebut(new \DateTime($dispoAAjoute['debut']));
+				    		$entitydisponibilite->setFin(new \DateTime($dispoAAjoute['fin']));
+				    		var_dump($entitydisponibilite);
+				    			
+				    	}
+				    	$em->persist($entity);
 								$em->flush();							
-							}			
+										
 				    } 
-			
+				
 				}
-		var_dump($validationErrors);
+		
+		
 		return array("entities" => $validationErrors);
 		}
 		

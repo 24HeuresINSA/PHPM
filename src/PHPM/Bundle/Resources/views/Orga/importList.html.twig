@@ -1,15 +1,11 @@
 {% extends 'PHPMBundle:Orga:liste.html.twig' %}
 
 {% block thead %}
-<th>Message</th>
-<th>Champs invalide</th>
-<th>Valeur Invalide</th>
+<th>Erreur</th>
 {{ parent() }}
 {% endblock %}
 {% block tbody %}
-             <td>{{ entity.message }}</td>
-            <td>{{ entity.champInvalide }}</td>
-            <td>{{ entity.valeurInvalide }}</td> 
+             <td>{{ entity.erreur }}
             <td>{{ entity.orga.id }}</td>           
             <td>{{ entity.orga.nom }}</td>
             <td>{{ entity.orga.prenom }}</td>

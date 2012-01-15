@@ -82,21 +82,21 @@ class Tache
     
     /**
     * @ORM\ManyToOne(targetEntity="Orga", inversedBy="taches")
-    * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id")
+    * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
     * @Assert\Valid
     */
     private $responsable;
     
     /**
     * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="taches")
-    * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id")
+    * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
     * @Assert\Valid
     */
     protected $categorie;
     
     /**
     * @ORM\ManyToOne(targetEntity="Confiance", inversedBy="taches")
-    * @ORM\JoinColumn(name="confiance_id", referencedColumnName="id")
+    * @ORM\JoinColumn(name="confiance_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
     * @Assert\Valid
     */
     protected $confiance;

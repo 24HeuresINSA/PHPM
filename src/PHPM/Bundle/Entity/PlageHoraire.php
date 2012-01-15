@@ -20,11 +20,13 @@ class PlageHoraire
 	
 	public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
+    	/*
         $metadata->addPropertyConstraint('debut', new DebutAvantFin());	// le début est avant la fin		
         $metadata->addPropertyConstraint('debut', new QuartHeure()); // quart d'heure indivisible pour plage horaire
         $metadata->addPropertyConstraint('fin', new QuartHeure());
         $metadata->addPropertyConstraint('dureeCreneau', new QuartHeure());	
         $metadata->addPropertyConstraint('recoupementCreneau', new QuartHeure()); 
+        */
   //    $metadata->addPropertyConstraint('debut', new PlageHoraireRecoupe());                                     
     }	
 	
@@ -87,7 +89,7 @@ class PlageHoraire
     
     /**
     * @ORM\ManyToOne(targetEntity="Tache", inversedBy="PlagesHoraires")
-    * @ORM\JoinColumn(name="tache_id", referencedColumnName="id")
+    * @ORM\JoinColumn(name="tache_id", referencedColumnName="id",onDelete="CASCADE", onUpdate="CASCADE")
     * @Assert\Valid
     */
     protected $tache;

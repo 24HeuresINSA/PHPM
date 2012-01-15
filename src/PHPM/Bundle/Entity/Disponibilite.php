@@ -53,7 +53,7 @@ class Disponibilite
     
     /**
     * @ORM\ManyToOne(targetEntity="Orga", inversedBy="disponibilites")
-    * @ORM\JoinColumn(name="orga_id", referencedColumnName="id")
+    * @ORM\JoinColumn(name="orga_id", referencedColumnName="id",onDelete="CASCADE", onUpdate="CASCADE")
     * @Assert\Valid
     */
     protected $orga;
@@ -159,7 +159,7 @@ class Disponibilite
     
     public function __toString()
     {
-    	return $this->getOrga()->__toString()." - ".$this->getDebut()->format('D H:i')." - ".$this->getFin()->format('D H:i');
+    	return $this->getDebut()->format('D H:i')." - ".$this->getFin()->format('D H:i');
     }
     
     
@@ -173,21 +173,24 @@ class Disponibilite
     
     public function toArray($developCreneaux = NULL)
     {
-    	$a = array();
-    	var_dump($developCreneaux);
-    	if(isset($developCreneaux))
-    	foreach ($this->getCreneaux() as $entity){
-    		$a[$entity->getId()] = $entity->toArray();
-    
-    	}
-    	 
-    	return array(
+    	$a = array(
     	    "id" => $this->getId(),
         	"debut" => $this->getDebut(),
         	"fin" => $this->getFin(),
-        	"duree" => $this->getDuree(),
-        	"creneaux" => $a);
+        	"duree" => $this->getDuree()
+        	);
+    	
+    	
+    	if($developCreneaux == true)
+    	foreach ($this->getCreneaux() as $entity){
+    		$a["creneaux"][$entity->getId()] = $entity->toArray();
+    
+    	}
+    	 
+    	return $a;
     }
+    
+    
     
     public function toSimpleArray()
     {

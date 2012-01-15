@@ -19,11 +19,13 @@ class Creneau
 	
 	public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
-        $metadata->addPropertyConstraint('debut', new QuartHeure()); // quart d'heure indivisible pour créneau
+        /*
+    	$metadata->addPropertyConstraint('debut', new QuartHeure()); // quart d'heure indivisible pour créneau
 		$metadata->addPropertyConstraint('fin', new QuartHeure());
 		$metadata->addPropertyConstraint('debut', new Inclus()); // inclusion du créneau dans une plage et dans une dispo orga
         $metadata->addPropertyConstraint('fin', new Inclus());
-        $metadata->addPropertyConstraint('debut', new DebutAvantFin());	// le début est avant la fin			
+        $metadata->addPropertyConstraint('debut', new DebutAvantFin());	// le début est avant la fin		
+        */	
 		
     }
 	
@@ -58,14 +60,14 @@ class Creneau
     
     /**
     * @ORM\ManyToOne(targetEntity="Disponibilite", inversedBy="creneaux")
-    * @ORM\JoinColumn(name="disponibilite_id", referencedColumnName="id")
+    * @ORM\JoinColumn(name="disponibilite_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
     * @Assert\Valid
     */
     protected $disponibilite;
     
     /**
     * @ORM\ManyToOne(targetEntity="PlageHoraire", inversedBy="creneaux")
-    * @ORM\JoinColumn(name="plageHoraire_id", referencedColumnName="id")
+    * @ORM\JoinColumn(name="plageHoraire_id", referencedColumnName="id",onDelete="CASCADE", onUpdate="CASCADE")
     * @Assert\Valid
     */
     protected $plageHoraire;

@@ -11,10 +11,10 @@
 {% endblock %}
 
 {% block content %}
-{% if not entities %}
+{% if entities is not defined %}
 
 <form method="POST" >    
-<input type="text" name="pathJson" value="http://127.0.0.1:8888/inscriptionOrgas.json" /> Adresse du fichiers des orgas à ajouter à la base </td>
+<input type="text" name="pathJson" value="http://127.0.0.1:80/inscriptionOrgas.json" /> Adresse du fichiers des orgas à ajouter à la base </td>
 <input type="Submit" value="Valider">
 
 {% else %}
