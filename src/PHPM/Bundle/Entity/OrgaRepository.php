@@ -79,6 +79,17 @@ class OrgaRepository extends EntityRepository
 	
 	}
 	
+	public function getOrgasToValidate()
+	{
+	
+		return $this->getEntityManager()
+		->createQuery("SELECT o ,SUM(d.fin-d.debut)/3600 AS nbHeures FROM PHPMBundle:Orga o, PHPMBundle:Disponibilite d WHERE (d.orga = o AND o.statut=0 AND o.id !=0)")
+		
+		->getResult();	
+	
+	
+	}
+	
 	public function search($s)
 	{
 		return $this->getEntityManager()

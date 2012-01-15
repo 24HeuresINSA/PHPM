@@ -163,6 +163,7 @@ class Disponibilite
     }
     
     
+    
     public function getDuree()
     {
     	return ($this->getFin()->getTimestamp()-$this->getDebut()->getTimestamp());

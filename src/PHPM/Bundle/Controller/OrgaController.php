@@ -273,39 +273,15 @@ class OrgaController extends Controller
 			}
 		}
 
-		$orgaAValider = $em->getRepository('PHPMBundle:Orga')->findByStatut(0);
+		$orgaAValider = $em->getRepository('PHPMBundle:Orga')->getOrgasToValidate();
 		
-		$listeOrgaARetourne = array();
+		var_dump($orgaAValider);
 		
-		foreach ($orgaAValider as $key)       
-			{
-				$tempsDisponibiliteTotal = 0;				
-				$dispoOrga = $em->getRepository('PHPMBundle:Disponibilite')->findByOrga($key->getId());
-				$dispoAAfficher = array();
-				foreach ($dispoOrga as $orgaDispo) 
-					{
-						$dispoDebut = $orgaDispo->getdebut()->getTimestamp();			
-						$dispoFin = $orgaDispo->getfin()->getTimestamp();
 
-						$tempsDisponibiliteTotal += $dispoFin - $dispoDebut;
-						$dispoDebut = date ('D j H i', $dispoDebut);						
-						$dispoFin = date ('D j H i', $dispoFin);	
-						$dispoTemporaire = array('debut'=> $dispoDebut,'fin'=> $dispoFin);
-									
-						array_push($dispoAAfficher, $dispoTemporaire);
-					}
-					
-				
-				 $tempsDisponibiliteTotal = round($tempsDisponibiliteTotal/3600, 2);
-				 
-				$orgaTemporaire = array('id'=> $key->getid(), 'nom' => $key->getnom(),'prenom' => $key->getprenom(), 'email'=> $key->getemail(),'telephone' => $key->gettelephone(), 'disponibilite' => $dispoAAfficher,'tempsDisponibleTotal' => $tempsDisponibiliteTotal, 'commentaire' => $key->getcommentaire() , 'checkbox'=>'checkbox');
-				
-				array_push($listeOrgaARetourne,$orgaTemporaire);
-			}
-
-		$entities = $listeOrgaARetourne;	
+		$entities = $orgaAValider;	
 		
-		return array("entities" => $entities );
+		return array("entities" => $entities
+				);
 	}
 
 

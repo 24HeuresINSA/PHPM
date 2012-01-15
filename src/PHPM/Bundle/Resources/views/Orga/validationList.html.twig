@@ -11,25 +11,25 @@
                 <th>Validation</th>
 {% endblock %}
 {% block tbody %}
-        <td>{{ entity.nom }}</td>
-                <td>{{ entity.prenom }}</td>
-                <td>{{ entity.telephone }}</td>
-                <td>{{ entity.email }}</td>
+        <td>{{ entity.0.nom }}</td>
+                <td>{{ entity.0.prenom }}</td>
+                <td>{{ entity.0.telephone }}</td>
+                <td>{{ entity.0.email }}</td>
                 <td>
-                	<ul>
-                		{% for dispo in entity.disponibilite %}
-                			<li>{{ dispo.debut }} -- {{ dispo.fin }}</li>
+                	
+                		{% for dispo in entity.0.disponibilites %}
+                			{{ dispo.debut | date('D H:i')}} - {{ dispo.fin | date('D H:i')}}<br/>
                 		{% endfor %}
-                	</ul>
+                	
                 </td>
     
-                <td>{{ entity.tempsDisponibleTotal}}</td>
-                <td>{{ entity.commentaire}}</td>
+                <td>{{ entity.nbHeures | number_format()}}</td>
+                <td>{{ entity.0.commentaire}}</td>
                 <td>
                 
-                <label for="v{{ entity.id}}">Valider</label> <input type="radio" name="{{ entity.id}}" value="1" id="v{{ entity.id}}" checked/> <br/>
-                 <label for="a{{ entity.id}}">Attendre</label><input type="radio" name="{{ entity.id}}" value="0" id="a{{ entity.id}}"/> <br/>
-                 <label for="s{{ entity.id}}">Supprimer</label><input type="radio" name="{{ entity.id}}" value="2" id="s{{ entity.id}}" /><br/>
+                <label for="v{{ entity.0.id}}">Valider</label> <input type="radio" name="{{ entity.0.id}}" value="1" id="v{{ entity.0.id}}" checked/> <br/>
+                 <label for="a{{ entity.0.id}}">Attendre</label><input type="radio" name="{{ entity.0.id}}" value="0" id="a{{ entity.0.id}}"/> <br/>
+                 <label for="s{{ entity.0.id}}">Supprimer</label><input type="radio" name="{{ entity.0.id}}" value="2" id="s{{ entity.0.id}}" /><br/>
                  
                  
                  
