@@ -392,8 +392,8 @@ class OrgaController extends Controller
 				    } 
 			
 				}
-		
-		return array("errors" => $validationErrors);
+		var_dump($validationErrors);
+		return array("entities" => $validationErrors);
 		}
 		
 

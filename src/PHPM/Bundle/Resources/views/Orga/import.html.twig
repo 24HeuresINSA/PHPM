@@ -11,69 +11,19 @@
 {% endblock %}
 
 {% block content %}
-{% if not errors %}
+{% if not entities %}
 
 <form method="POST" >    
 <input type="text" name="pathJson" value="http://127.0.0.1:8888/inscriptionOrgas.json" /> Adresse du fichiers des orgas à ajouter à la base </td>
 <input type="Submit" value="Valider">
 
+{% else %}
+<p>Les autres orgas ont &eacute;t&eacute; correctement import&eacute; dans la base <br />
+Veuillez les valider pour pouvoir les affecter.<br />
+Ci dessous les Orga qui n'ont pas pu &ecirc;tre ins&eacute;r&eacute;s : <br />
+</p> 
 
-
+{% include 'PHPMBundle:Orga:importList.html.twig'  %}
 {% endif%}
 
-{% if errors %}
-<table class="records_list">
-    <thead>
-        <tr>
-        	<th>Message</th>
-        	<th>Champs invalide</th>
-        	<th>Valeur Invalide</th>
-            <th>Nom</th>
-            <th>Prenom</th>
-            <th>Surnom</th>
-            <th>Telephone</th>
-            <th>Email</th>
-            <th>Datedenaissance</th>
-            <th>Departement</th>
-            <th>Commentaire</th>
-            <th>Permis</th>
-        </tr>
-    </thead>
-    
-    
-
-    
-    
-    <tbody>
-    
-    
-
-         <p>Les autres orgas ont &eacute;t&eacute; correctement import&eacute; dans la base <br />
-		Veuillez les valider pour pouvoir les affecter.<br />
-		Ci dessous les Orga qui n'ont pas pu &ecirc;tre ins&eacute;r&eacute;s : <br />
-		</p> 
-    
-    {% for entity in errors %}
-    	
-        <tr>
-            <td>{{ entity.message }}</td>
-            <td>{{ entity.champInvalide }}</td>
-            <td>{{ entity.valeurInvalide }}</td>            
-            <td>{{ entity.orga.nom }}</td>
-            <td>{{ entity.orga.prenom }}</td>
-            <td>{{ entity.orga.surnom }}</td>
-            <td>{{ entity.orga.telephone }}</td>
-            <td>{{ entity.orga.email }}</td>
-            <td>{% if entity.orga.dateDeNaissance %}{{ entity.orga.dateDeNaissance|date('Y-m-d H:i:s') }}{% endif%}</td>
-            <td>{{ entity.orga.departement }}</td>
-            <td>{{ entity.orga.commentaire }}</td>
-            <td>{{ entity.orga.permis }}</td>
-            </td>
-        </tr>
-        
-
-    {% endfor %}
-    </tbody>
-</table>
-{% endif%}
 {% endblock %}
