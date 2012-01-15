@@ -124,7 +124,7 @@ class Orga
     protected $taches;
     
     /**
-    * @ORM\OneToMany(targetEntity="Disponibilite", mappedBy="orga")
+    * @ORM\OneToMany(targetEntity="Disponibilite", mappedBy="orga", cascade={"persist", "remove"})
     */
     protected $disponibilites;
     

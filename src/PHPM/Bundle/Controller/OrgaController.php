@@ -231,57 +231,37 @@ class OrgaController extends Controller
 	public function validationAction()	
 	{
 		
-        
-        $request = $this->get('request')->request;
-      
+        $request = $this->get('request')->request;      
 		$em = $this->getDoctrine()->getEntityManager();
-				
+						
 		if ($this->get('request')->getMethod() == 'POST') 
 		{
-
         $data = $request->all();
      	    foreach ($data as $idOrgaATraiter => $codeFormulaire) // code formulaire : 0 rien à faire, 1 validé, 2 supprimé
        
             {
-               echo $idOrgaATraiter;         
-			   echo $codeFormulaire;
+            	if($codeFormulaire == 0){
+            		continue;
+            	}
+            	
+            	$orga = $em->getRepository('PHPMBundle:Orga')->findOneById($idOrgaATraiter);
 	                  
                if ($codeFormulaire==1)
                {
-                  $orgaValide = $em->getRepository('PHPMBundle:Orga')->findOneById($idOrgaATraiter);
-                  $orgaValide->setStatut(1); // validation de l'orga
-                $em->persist($orgaValide);
-                $em->flush();   
+                  $orga->setStatut(1); // validation de l'orga
                } 
                
                if ($codeFormulaire==2)
-               
                {
-                   $orgaASupprimer = $em->getRepository('PHPMBundle:Orga')->findOneById($idOrgaATraiter);
-                   
-                   $dispoADesafecter = $em->getRepository('PHPMBundle:Disponibilite')->findByOrga($idOrgaATraiter);
-                   
-                   foreach ($dispoADesafecter as $dispoAVirer) 
-                     {
-                        $em->remove($dispoAVirer); // suppression des dispos de l'orga
-                     }                   
-                   $em->remove($orgaASupprimer);  
-                   $em->flush();  
+                   $em->remove($orga);  
                } 
            
-				
+               $em->persist($orga);
+               $em->flush();
 			}
 		}
-
-		$orgaAValider = $em->getRepository('PHPMBundle:Orga')->getOrgasToValidate();
-		
-		var_dump($orgaAValider);
-		
-
-		$entities = $orgaAValider;	
-		
-		return array("entities" => $entities
-				);
+		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasToValidate();
+		return array("entities" => $entities);
 	}
 
 

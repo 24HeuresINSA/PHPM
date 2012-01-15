@@ -12,7 +12,7 @@
 
 {% block content %}
 
-{% if entities%}
+{% if entities is null%}
 
 <form method="POST" >
     {% include 'PHPMBundle:Orga:validationList.html.twig'  %}
