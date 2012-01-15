@@ -222,22 +222,16 @@ class PlageHoraireController extends Controller
     }
 	
     /**
-     * Create a creneau entity.
+     * creation de créneau à partir de la duréer de la plage horaire et du recoupement
      *
      * @Route("/{id}/creationCreneau", name="plagehoraire_creationCreneau")
      * 
      */	
 		
-	public function creationCreneauAction($id)   // creation de créneau à partir de la duréer de la plage horaire et du recoupement
-	{
-		
-		$em = $this->getDoctrine()->getEntityManager();
-        
-
+	public function creationCreneauAction($id)   
+	{		
+		$em = $this->getDoctrine()->getEntityManager();  
         $entity = $em->getRepository('PHPMBundle:PlageHoraire')->find($id);
-		
-		$dispoNobody = $em->getRepository('PHPMBundle:Disponibilite')->findOneByOrga(0);
-
 		$arrayCreneauCree = array();
 		
         if (!$entity) {
@@ -246,10 +240,6 @@ class PlageHoraireController extends Controller
 		
 		$nbCreneauACreerPourOrga = $entity->getnbOrgasNecessaires();
         
-		
-		
-        
-	
 			// suppression des creneaux déjà  existant
 			
 			$creneauxASupprimer = $em->getRepository('PHPMBundle:Creneau')->findByPlageHoraire($entity->getId());
