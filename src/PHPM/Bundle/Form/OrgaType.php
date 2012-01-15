@@ -10,17 +10,12 @@ class OrgaType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
     	$currentYear = date('Y');
-    	$years = array();
-
-    	
+    	$years = array(); 	
     	
     	for ($i=($currentYear-27);$i<=($currentYear-16);$i++){
     		array_push($years, $i);
     	
     	}
-    	
-   
-    	
     	$builder
             ->add('nom')
             ->add('prenom')
@@ -41,6 +36,5 @@ class OrgaType extends AbstractType
         return 'phpm_bundle_orgatype';
     }
     
- 
     
 }
