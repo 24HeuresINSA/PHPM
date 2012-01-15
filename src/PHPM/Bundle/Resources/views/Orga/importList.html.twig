@@ -1,0 +1,29 @@
+{% extends 'PHPMBundle:Orga:liste.html.twig' %}
+
+{% block thead %}
+<th>Message</th>
+<th>Champs invalide</th>
+<th>Valeur Invalide</th>
+{{ parent() }}
+{% endblock %}
+{% block tbody %}
+             <td>{{ entity.message }}</td>
+            <td>{{ entity.champInvalide }}</td>
+            <td>{{ entity.valeurInvalide }}</td> 
+            <td>{{ entity.orga.id }}</td>           
+            <td>{{ entity.orga.nom }}</td>
+            <td>{{ entity.orga.prenom }}</td>
+            <td>{{ entity.orga.surnom }}</td>
+            <td>{{ entity.orga.telephone }}</td>
+            <td>{{ entity.orga.email }}</td>
+            <td>{% if entity.orga.dateDeNaissance %}{{ entity.orga.dateDeNaissance|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{{ entity.orga.departement }}</td>
+            <td>{{ entity.orga.commentaire }}</td>
+            <td>{{ entity.orga.permis }}</td>
+
+
+{% endblock %}
+
+
+
+            	
