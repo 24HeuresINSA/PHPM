@@ -21,8 +21,7 @@ class Disponibilite
 	public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         //$metadata->addPropertyConstraint('debut', new DebutAvantFin());	// le début est avant la fin	
-       // $metadata->addPropertyConstraint('debut', new QuartHeure()); // quart d'heure indivisible pour Dispo
-        //$metadata->addPropertyConstraint('fin', new QuartHeure()); 		
+		
     }	
 		
 	
@@ -40,6 +39,8 @@ class Disponibilite
      *
      * @ORM\Column(name="debut", type="datetime")
      * @Assert\DateTime()
+     * @QuartHeure()
+     * 
      */
     private $debut;
 
@@ -47,7 +48,8 @@ class Disponibilite
      * @var datetime $fin
      *
      * @ORM\Column(name="fin", type="datetime")
-     *  @Assert\DateTime()
+     * @Assert\DateTime()
+     * @QuartHeure()
      */
     private $fin;
     

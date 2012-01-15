@@ -43,8 +43,8 @@ class Creneau
      *
      * @ORM\Column(name="debut", type="datetime")
      * @Assert\DateTime()
-	 * @QuartHeure()
-	 * @Inclus()
+	 * 
+	 * 
      */
     private $debut;
 
@@ -54,7 +54,7 @@ class Creneau
      * @ORM\Column(name="fin", type="datetime")
      * 
 	 * @QuartHeure()
-	 * @Inclus()
+	 * 
 	 */
     private $fin;
     

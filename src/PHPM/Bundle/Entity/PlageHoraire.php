@@ -22,10 +22,7 @@ class PlageHoraire
     {
     	/*
         $metadata->addPropertyConstraint('debut', new DebutAvantFin());	// le début est avant la fin		
-        $metadata->addPropertyConstraint('debut', new QuartHeure()); // quart d'heure indivisible pour plage horaire
-        $metadata->addPropertyConstraint('fin', new QuartHeure());
-        $metadata->addPropertyConstraint('dureeCreneau', new QuartHeure());	
-        $metadata->addPropertyConstraint('recoupementCreneau', new QuartHeure()); 
+        
         */
   //    $metadata->addPropertyConstraint('debut', new PlageHoraireRecoupe());                                     
     }	
@@ -47,6 +44,7 @@ class PlageHoraire
      *
      * @ORM\Column(name="debut", type="datetime")
      * @Assert\DateTime()
+     * @QuartHeure()
      */
     private $debut;
 
@@ -55,6 +53,7 @@ class PlageHoraire
      *
      * @ORM\Column(name="fin", type="datetime")
      * @Assert\DateTime()
+     * @QuartHeure()
      */
     private $fin;
     
@@ -63,6 +62,7 @@ class PlageHoraire
     *
     * @ORM\Column(name="dureeCreneau", type="smallint")
     * @Assert\Min(limit = "0")
+    * @QuartHeure()
     */
     private $dureeCreneau;
     
@@ -71,6 +71,7 @@ class PlageHoraire
      *
      * @ORM\Column(name="recoupementCreneau", type="smallint")
      * @Assert\Min(limit = "0")
+     * @QuartHeure()
      */
     private $recoupementCreneau;
     
