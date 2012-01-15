@@ -15,7 +15,7 @@
     {% for entity in entities %}
         <tr style="cursor:pointer" onclick="window.location='{{ path('creneau_show', { 'id': entity.id }) }}'">
             <td><a href="{{ path('creneau_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td> {{ entity.disponibilite.orga }}</td>
+            <td> {% if entity.disponibilite is not null %} {{ entity.disponibilite.orga }}{% endif%}</td>
             <td> {{ entity.plageHoraire.tache }}</td>
             <td>{% if entity.debut %}{{ entity.debut|date('Y-m-d H:i:s') }}{% endif%}</td>
             <td>{% if entity.fin %}{{ entity.fin|date('Y-m-d H:i:s') }}{% endif%}</td>
