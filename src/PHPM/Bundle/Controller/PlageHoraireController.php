@@ -246,6 +246,9 @@ class PlageHoraireController extends Controller
 		
 		$nbCreneauACreerPourOrga = $entity->getnbOrgasNecessaires();
         
+		
+		
+        
 	
 			// suppression des creneaux déjà  existant
 			
@@ -269,7 +272,7 @@ class PlageHoraireController extends Controller
 				$nouveauCreneau = new Creneau();
 				
 				$nouveauCreneau->setPlageHoraire($entity);			
-				$nouveauCreneau->setDisponibilite($dispoNobody);
+				
 				
 				$debutDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getdebut()->getTimestamp()) ); // permet d'avoir le bon format pour le stocker dans la BDD				
 				$finDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getfin()->getTimestamp()) ); // permet d'avoir le bon format pour le stocker dans la BDD				
