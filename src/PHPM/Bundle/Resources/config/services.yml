@@ -2,7 +2,7 @@ parameters:
     my.validator.quartHeure.class:      PHPM\Bundle\Validator\QuartHeureValidator
     my.validator.inclus.class:      PHPM\Bundle\Validator\InclusValidator
     my.validator.debutAvantFin.class:      PHPM\Bundle\Validator\DebutAvantFinValidator
-    my.validator.plageHoraireRecoupe.class:      PHPM\Bundle\Validator\PlageHoraireRecoupeValidator
+    my.validator.recoupe.class:      PHPM\Bundle\Validator\RecoupeValidator
 
 services:
     my.validator.quartHeure:
@@ -24,7 +24,7 @@ services:
             - { name: validator.constraint_validator, alias: validator.debutAvantFin } 
             
     my.validator.plageHoraireRecoupe:
-       class:      %my.validator.plageHoraireRecoupe.class%
+       class:      %my.validator.recoupe.class%
        arguments: [@doctrine.orm.entity_manager]
        tags:
-            - { name: validator.constraint_validator, alias: validator.plageHoraireRecoupe } 
+            - { name: validator.constraint_validator, alias: validator.recoupe } 

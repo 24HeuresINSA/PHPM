@@ -12,17 +12,20 @@ use Symfony\Component\Validator\ConstraintValidator;
 class InclusValidator extends ConstraintValidator  // vérifie si un créneau est bien inclus dans une plage horaire ou dans une dispo
 {
  
-    public function isValid($value, Constraint $constraint)
+    public function isValid($entity, Constraint $constraint)
     {
-    	$dispoObject = $this->context->getRoot()->get("disponibilite")->getData();
-    	$plageObject = $this->context->getRoot()->get("plageHoraire")->getData();
+    	$disponibilite= $entity->getDisponibilite();
+    	$plageHoraire= $entity->getPlageHoraire();
+    	
+    	$debut=$entity->getDebut()->getTimestamp();
+    	$fin=$entity->getFin()->getTimestamp();
     	
     	
-    		if($dispoObject->getId()!=0){
+    		if($disponibilite!=null){
     			
     		    			
-    			if ($value->getTimestamp() < $dispoObject->getDebut()->getTimestamp() OR
-    			$value->getTimestamp() > $dispoObject->getFin()->getTimestamp())
+    			if ($debut < $disponibilite->getDebut()->getTimestamp() OR
+    			$fin > $disponibilite->getFin()->getTimestamp())
     			{
     				
     				$this->setMessage($constraint->messageDisponibilite);
@@ -32,13 +35,13 @@ class InclusValidator extends ConstraintValidator  // vérifie si un créneau es
     		}	
     		
     		
-    		
-    		if ($value->getTimestamp() < $plageObject->getDebut()->getTimestamp() OR
-    		$value->getTimestamp() > $plageObject->getFin()->getTimestamp())
-    		{
-    			$this->setMessage($constraint->messagePlage);
-    			return FALSE;
-    		}
+    			if ($debut < $plageHoraire->getDebut()->getTimestamp() OR
+    			$fin > $plageHoraire->getFin()->getTimestamp())
+    			{
+    				$this->setMessage($constraint->messagePlage);
+    				return FALSE;
+    			}
+    			
     		
 		return TRUE;	
 	}			

@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use PHPM\Bundle\Validator\DebutAvantFin;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use PHPM\Bundle\Validator\QuartHeure;
+use PHPM\Bundle\Validator\Recoupe;
 
 
 /**
@@ -15,17 +16,11 @@ use PHPM\Bundle\Validator\QuartHeure;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\DisponibiliteRepository")
  * @DebutAvantFin()
+ * @Recoupe()
  */
 class Disponibilite
 {
-    
-	public static function loadValidatorMetadata(ClassMetadata $metadata)
-    {
-        //$metadata->addPropertyConstraint('debut', new DebutAvantFin());	// le début est avant la fin	
-		
-    }	
-		
-	
+    	
     /**
      * @var integer $id
      *

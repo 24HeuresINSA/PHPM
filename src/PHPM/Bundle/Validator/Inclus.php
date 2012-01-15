@@ -5,7 +5,7 @@ namespace PHPM\Bundle\Validator;
 use Symfony\Component\Validator\Constraint;
 
 /**
-*
+* @Annotation
 */
 
 class Inclus extends Constraint
@@ -23,7 +23,7 @@ class Inclus extends Constraint
         return 'validator.inclus';
     }
    
-    public function targets()
+    public function getTargets()
     {
         return self::CLASS_CONSTRAINT;
     }

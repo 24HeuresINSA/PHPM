@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use PHPM\Bundle\Validator\DebutAvantFin;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use PHPM\Bundle\Validator\QuartHeure;
-use PHPM\Bundle\Validator\PlageHoraireRecoupe;
+use PHPM\Bundle\Validator\Recoupe;
 
 /**
  * PHPM\Bundle\Entity\PlageHoraire
@@ -15,21 +15,10 @@ use PHPM\Bundle\Validator\PlageHoraireRecoupe;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\PlageHoraireRepository")
  * @DebutAvantFin()
+ * @Recoupe
  */
 class PlageHoraire
 {
-	
-	public static function loadValidatorMetadata(ClassMetadata $metadata)
-    {
-    	/*
-        $metadata->addPropertyConstraint('debut', new DebutAvantFin());	// le début est avant la fin		
-        
-        */
-  //    $metadata->addPropertyConstraint('debut', new PlageHoraireRecoupe());                                     
-    }	
-	
-	
-	
 	
     /**
      * @var integer $id

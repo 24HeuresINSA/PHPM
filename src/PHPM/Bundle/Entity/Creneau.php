@@ -14,22 +14,11 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\CreneauRepository")
  * @DebutAvantFin()
+ * @Inclus()
  */
 class Creneau
 {
-	
-	public static function loadValidatorMetadata(ClassMetadata $metadata)
-    {
-        /*
-    	$metadata->addPropertyConstraint('debut', new QuartHeure()); // quart d'heure indivisible pour créneau
-		$metadata->addPropertyConstraint('fin', new QuartHeure());
-		$metadata->addPropertyConstraint('debut', new Inclus()); // inclusion du créneau dans une plage et dans une dispo orga
-        $metadata->addPropertyConstraint('fin', new Inclus());
-        $metadata->addPropertyConstraint('debut', new DebutAvantFin());	// le début est avant la fin		
-        */	
-		
-    }
-	
+
     /**
      * @var integer $id
      *
