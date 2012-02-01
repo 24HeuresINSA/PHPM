@@ -37,7 +37,7 @@ class CategorieController extends Controller
         if($format=='json'){
             $a = array();
             foreach ($entities as $entity){
-                $a[$entity->getId()] = $entity->toArray();
+                $a[$entity->getId()] = $entity->toSimpleArray();
             
             }
             return array('response'=>$a);
