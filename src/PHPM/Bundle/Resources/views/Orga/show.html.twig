@@ -53,16 +53,15 @@
 
 {% block actions %}
 {{ parent() }}
-    <li>
-        <a href="{{ path('orga_planning', { 'id': entity.id }) }}">
-            Voir le planning
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('disponibilite_orga_new', { 'orgaid': entity.id }) }}">
-            Creer des Disponibilit&eacute;s
-        </a>
-    </li>
+<li>
+    <a href="{{ path('orga_planning', { 'id': entity.id }) }}">
+        Voir le planning
+    </a>
+</li>
+<li>
+    <a href="{{ path('disponibilite_orga_new', { 'orgaid': entity.id }) }}">
+    Créer des Disponibilités
+    </a>
+</li>
 
-</ul>
 {% endblock %}

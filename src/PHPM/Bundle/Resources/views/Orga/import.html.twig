@@ -60,3 +60,11 @@ Ci dessous les Orga qui n'ont pas pu &ecirc;tre ins&eacute;r&eacute;s : <br />
 {% endif%}
 
 {% endblock %}
+{% block actions %}
+{{ parent() }}
+<li>
+    <a href="{{ path('orga_validation') }}">
+    Validation
+    </a>
+</li>
+{% endblock %}
