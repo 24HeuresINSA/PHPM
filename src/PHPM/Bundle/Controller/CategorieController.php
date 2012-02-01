@@ -20,40 +20,32 @@ class CategorieController extends Controller
     /**
      * Lists all Categorie entities.
      *
-     * @Route("/", name="categorie")
+     * @Route("/index.{_format}", defaults={"_format"="html"}, requirements={"_format"="html|json"}, name="categorie")
+     * 
      * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
-
         $entities = $em->getRepository('PHPMBundle:Categorie')->findAll();
-
-        return array('entities' => $entities);
+        $format = $this->get('request')->getRequestFormat();
+        if($format=='html'){
+            
+            return array('entities' => $entities);
+        }
+        
+        if($format=='json'){
+            $a = array();
+            foreach ($entities as $entity){
+                $a[$entity->getId()] = $entity->toArray();
+            
+            }
+            return array('response'=>$a);
+        }
+        
+        
     }
     
-    /**
-    * Lists all Categorie entities as JSON.
-    *
-    * @Route("/index.json", name="categorie_json")
-    *
-    */
-    public function indexJsonAction()
-    {
-    	$em = $this->getDoctrine()->getEntityManager();
-    	$entities = $em->getRepository('PHPMBundle:Categorie')->findAll();
-    	 
-    	foreach ($entities as $entity){
-    		$a[$entity->getId()] = $entity->toArray();
-    
-    	}
-    	$response = new Response();
-    	$response->setContent(json_encode($a));
-    	$response->headers->set('Content-Type', 'application/json');
-    	 
-    
-    	return $response;
-    }
 
     /**
      * Finds and displays a Categorie entity.

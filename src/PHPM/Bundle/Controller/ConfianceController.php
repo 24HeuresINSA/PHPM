@@ -21,44 +21,34 @@ class ConfianceController extends Controller
     /**
      * Lists all Confiance entities.
      *
-     * @Route("/", name="confiance")
+     * 
+     * @Route("/index.{_format}", defaults={"_format"="html"}, requirements={"_format"="html|json"}, name="confiance")
+     * 
      * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
-
         $entities = $em->getRepository('PHPMBundle:Confiance')->findAll();
-
-        return array('entities' => $entities);
+        $format = $this->get('request')->getRequestFormat();
+        if($format=='html'){
+            
+            return array('entities' => $entities);
+        }
+        
+        if($format=='json'){
+            $a = array();
+            foreach ($entities as $entity){
+                $a[$entity->getId()] = $entity->toArray();
+            
+            }
+            return array('response'=>$a);
+        }
+        
+        
     }
 
-    /**
-    * Lists all Confiance entities as JSON.
-    *
-    * @Route("/index.json", name="confiance_json")
-    * 
-    */
-    public function indexJsonAction()
-    {
-    	$em = $this->getDoctrine()->getEntityManager();
-    	$entities = $em->getRepository('PHPMBundle:Confiance')->findAll();
-    	
-    	$a = array();
-    	
-    	foreach ($entities as $entity){
-    		$a[$entity->getId()] = $entity->toArray();
-    		
-    	}
-    	$response = new Response();
-    	$response->setContent(json_encode($a));
-		$response->headers->set('Content-Type', 'application/json');
-    	
-    
-    	return $response;
-    }
-    
-    
+
     
     /**
      * Finds and displays a Confiance entity.

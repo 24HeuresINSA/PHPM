@@ -105,7 +105,12 @@ class Categorie
     
     public function toArray()
     {
-    	return array("id" => $this->getId(),"nom" => $this->getNom());
+    	return array("id" => $this->getId(),"nom" => $this->getNom(),"couleur" => $this->getCouleur());
+    }
+    
+    public function toSimpleArray()
+    {
+        return array("nom" => $this->getNom(),"couleur" => $this->getCouleur());
     }
 
     /**
