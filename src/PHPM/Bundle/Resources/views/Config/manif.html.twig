@@ -1,11 +1,6 @@
 {% extends "PHPMBundle:Config:layout.html.twig"  %}
 {% set pageTitle = 'Configuration de la Manifestation' %}
 
-{% block content %}
-
-{% endblock %}
-
-{% extends "::base.html.twig"  %}
 
 {% block content %}
 <form action="{{ path('config_manif') }}" method="post" {{ form_enctype(form) }}>
@@ -22,5 +17,17 @@
         <button type="submit">Enregistrer la configuration</button>
     </p>
 </form>
+
+{% endblock %}
+
+{% block actions %}
+
+{{ parent() }}
+{% block newAction %}
+{% endblock %}
+{% block editAction %}
+{% endblock %}
+{% block deleteAction %}
+{% endblock %}
 
 {% endblock %}

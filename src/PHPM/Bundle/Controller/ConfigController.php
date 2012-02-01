@@ -320,22 +320,19 @@ COMMIT;
 				->findOneByField('manifestation.plages');
 		$user = $em->getRepository('PHPMBundle:User')->find(1);
 
-		//$form = $this->createFormBuilder(array('o'=> $orga, 'p' => $plages))>add('o',new ConfigType($orga), array('label' => $orga->getLabel()) )		->add('p',new ConfigType($plages),array('label' => $plages->getLabel()) )->getForm();
 
-		$builder = $this
-				->createFormBuilder(
-						array(
-								'configItems' => array(
-										$orga->getLabel() => $orga,
-										$plages->getLabel() => $plages),
-								"user" => array("Utilisateur" => $user)));
-
-		$builder
-				->add('configItems', 'collection',
-						array('type' => new ConfigType()));
+		
+		$builder = $this->createFormBuilder(array(
+                                                    "user" => array("Utilisateur" => $user),
+		                                            "configItems"=>array("Nom de la manifestation"=>$orga,
+		                                                    "Plages de la manif"=>$plages)
+		                                                ));
+		
+		$builder->add('configItems', 'collection',array('type' => new ConfigType()));
 		$builder->add('user', 'collection', array('type' => new UserType(), 'label' =>' '));
+		
 		$form = $builder->getForm();
-
+		
 		//var_dump($form->createView());
 
 		if ($this->get('request')->getMethod() == 'POST') {
