@@ -159,6 +159,22 @@ PmUtils.prototype = {
 	/*
 	 * Travail sur l'URL
 	 */
+	// met en place l'écouteur
+	initHistoryListener: function() {
+	    var History = window.History; // Note: We are using a capital H instead of a lower h
+	    
+	    if (! History.enabled) {
+	         // History.js is disabled for this browser.
+	         // This is because we can optionally choose to support HTML4 browsers or not.
+	        return false;
+	    }
+	
+	    // Bind to StateChange Event
+	    History.Adapter.bind(window,'statechange',function() { // Note: We are using statechange instead of popstate
+	        var State = History.getState(); // Note: We are using History.getState() instead of event.state
+	        History.log(State.data, State.title, State.url);
+	    });
+	},
 	// regarde si on ne passe pas déjà des paramètres
 	parseUrlParam: function() {
 		// les paramètres vont dans pmAffectation.current

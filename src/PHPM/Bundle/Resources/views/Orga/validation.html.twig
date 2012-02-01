@@ -1,5 +1,5 @@
 {% extends "PHPMBundle:Orga:layout.html.twig"  %}
-{% set pageTitle = 'Import' %}
+{% set pageTitle = 'Validation' %}
 
 {% block editAction %}
 {% endblock %}
@@ -15,7 +15,43 @@
 {% if entities is null%}
 
 <form method="POST" >
-    {% include 'PHPMBundle:Orga:validationList.html.twig'  %}
+    <table>
+    	<thead>
+    		<tr>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Telephone</th>
+                <th>Email</th>
+                <th>Disponibilit&eacute;</th>
+                <th>Temps dispo (en h)</th>
+                <th>Commentaire</th>
+                <th>Validation</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    		{%  for entity in entities %}
+    		<tr>
+                <td>{{ entity.0.nom }}</td>
+                <td>{{ entity.0.prenom }}</td>
+                <td>{{ entity.0.telephone }}</td>
+                <td>{{ entity.0.email }}</td>
+                <td>           	
+                		{% for dispo in entity.0.disponibilites %}
+                			{{ dispo.debut | date('D H:i')}} - {{ dispo.fin | date('D H:i')}}<br/>
+                		{% endfor %}
+                </td>
+    
+                <td>{{ entity.nbHeures | number_format()}}</td>
+                <td>{{ entity.0.commentaire}}</td>
+                <td>                
+                    <label for="v{{ entity.0.id}}">Valider</label> <input type="radio" name="{{ entity.0.id}}" value="1" id="v{{ entity.0.id}}" /> <br/>
+                    <label for="a{{ entity.0.id}}">Attendre</label><input type="radio" name="{{ entity.0.id}}" value="0" id="a{{ entity.0.id}}" checked /> <br/>
+                    <label for="s{{ entity.0.id}}">Supprimer</label><input type="radio" name="{{ entity.0.id}}" value="2" id="s{{ entity.0.id}}" /><br/>
+                </td>
+    		</tr>
+    		{%   endfor %}
+    	</tbody>
+    </table>
     
 
     <input type="Submit" value="Valider" />

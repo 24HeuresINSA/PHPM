@@ -3,10 +3,9 @@
 <html>
     <head>
         {% block head %}
-       
- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      	
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>{{ pageTitle }} - PHPlanningMaker</title>
-
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
         
         {# c'est pas très beau - on met un code 'générique' dans un block - mais à priori la seule méthode #}
@@ -37,7 +36,7 @@
         	{% block header %}
         	<div class="title" id="title">
         		{% block topHeader %}
-        		<h1><a href="{{ path('accueil') }}"> PlanningMaker &gt; </a><a href="{{ path(indexRoute) }}"> {{ sectionTitle }}</a> &gt;  {{ pageTitle }}</h1>
+        		<h1><a href="{{ path('accueil') }}"> PlanningMaker</a> &gt; <a href="{{ path(indexRoute) }}"> {{ sectionTitle }}</a> &gt;  {{ pageTitle }}</h1>
         		{% endblock %}
         		<form method="post" action="{{ path('search') }}">
         			<input id="searchBox" name="s" />
