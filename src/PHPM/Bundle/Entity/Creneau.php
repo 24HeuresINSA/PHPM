@@ -8,6 +8,7 @@ use PHPM\Bundle\Validator\QuartHeure;
 use PHPM\Bundle\Validator\Inclus;
 use PHPM\Bundle\Validator\DebutAvantFin;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
+use PHPM\Bundle\Validator\Recoupe;
 /**
  * PHPM\Bundle\Entity\Creneau
  *
@@ -15,6 +16,7 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
  * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\CreneauRepository")
  * @DebutAvantFin()
  * @Inclus()
+ * @Recoupe()
  */
 class Creneau
 {

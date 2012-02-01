@@ -13,6 +13,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 class Recoupe extends Constraint
 {
     public $messagePlageHoraire = "Cette plage horaire se recoupe avec une déjà existante.";
+    public $messageCreneau = "Ce créneau se recoupe avec un créneau déja affecté";
     public $messageDisponibilite = "Cette disponibilite se recoupe avec une déjà existante.";
 
 
