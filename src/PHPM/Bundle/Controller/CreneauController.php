@@ -216,12 +216,12 @@ class CreneauController extends Controller
     	$duree = $request->request->get('duree', '');
     	$orga = $request->request->get('orga_id', '');
     	$plage = $request->request->get('plage_id', '');
-    	$dispo = $request->request->get('dispo_id', '');
+    	$date_time = $request->request->get('date_time', '');
     	$bloc = $request->request->get('bloc', '0');
     
     
     	$em = $this->getDoctrine()->getEntityManager();
-    	$entities = $em->getRepository('PHPMBundle:Creneau')->getCreneauxCompatibleWithCriteria($niveau_confiance, $categorie, $age, $permis, $duree, $orga, $plage, $dispo, $bloc);
+    	$entities = $em->getRepository('PHPMBundle:Creneau')->getCreneauxCompatibleWithCriteria($niveau_confiance, $categorie, $age, $permis, $duree, $orga, $plage, $date_time, $bloc);
     
 
     	$creneauArray = array();
