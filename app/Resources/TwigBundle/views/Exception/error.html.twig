@@ -2,16 +2,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>An Error Occurred: {{ status_text }}</title>
+        <title>{{ status_code }} {{ status_text }} - PHPlanningMaker</title>
     </head>
     <body>
-        <h1>Oops! An Error Occurred</h1>
-        <h2>The server returned a "{{ status_code }} {{ status_text }}".</h2>
+        <h1>Erreur</h1>
+        <h2>Le serveur a retourné une erreur "{{ status_code }} {{ status_text }}".</h2>
 
         <div>
-            Something is broken. Please e-mail us at [email] and let us know
-            what you were doing when this error occurred. We will fix it as soon
-            as possible. Sorry for any inconvenience caused.
+            Veuillez contacter l'équipe chargée du support.
         </div>
     </body>
 </html>
