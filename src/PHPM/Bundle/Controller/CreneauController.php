@@ -258,4 +258,35 @@ class CreneauController extends Controller
     	return $response;
     }
 
+    /**
+    * 
+    *
+    * @Route("/{cid}/affecter/{oid}", name="creneau_affecter")
+    * @Method("post")
+    */
+    
+    
+    public function affecterCreneau()
+    { 
+    	//affecter à l'unique dispo qui commence avant et qui fini après
+    	
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$creneau= $em->getRepository('PHPMBundle:Creneau')->find($cid);
+    	if (!$creneau) {
+    		throw $this->createNotFoundException('Unable to find Creneau entity.');
+    	}
+		
+    	$orga = $em->getRepository('PHPMBundle:Orga')->find($oid);
+    	$dispo = $em->getRepository('PHPMBundle:Disponibilite')->getContainingDisponibilite($orga, $creneau);
+    	if (!$dispo) {
+    		throw $this->createNotFoundException('Unable to find Dispo entity.');
+    	}
+    	
+    	
+    	$creneau.setDisponibilite($dispo.getId);
+    
+    }
 }
+
+
+

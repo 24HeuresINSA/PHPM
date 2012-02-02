@@ -387,6 +387,7 @@ class OrgaController extends Controller
 		$plage_id= $request->request->get('plage_id', '');
 		$niveau_confiance= $request->request->get('confiance_id', '');
 		$maxDateNaissance = new \DateTime();
+		$id_creaneau = $request->request->get('creneau_id', '');
 		$bloc = $request->request->get('bloc', '0');
 		
 		if($age!='')
@@ -395,8 +396,7 @@ class OrgaController extends Controller
 		
 		
 		$em = $this->getDoctrine()->getEntityManager();
-		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $maxDateNaissance->format('Y-m-d'), $plage_id, $niveau_confiance, $bloc);
-		
+		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $maxDateNaissance->format('Y-m-d'), $plage_id, $niveau_confiance, $id_creneau, $bloc);
 		
 		$orgaArray = array();
 		foreach ($entities as $orga){

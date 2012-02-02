@@ -14,7 +14,7 @@ use PHPM\Bundle\Entity\Config;
  */
 class OrgaRepository extends EntityRepository
 {
-	public function getOrgasWithCriteria($permis, $maxDateNaissance, $plage_id, $niveau_confiance, $bloc)
+	public function getOrgasWithCriteria($permis, $maxDateNaissance, $plage_id, $niveau_confiance,$creneau_id, $bloc)
 	{
 	
 		$qb = $this->getEntityManager()->createQueryBuilder();
@@ -47,7 +47,11 @@ class OrgaRepository extends EntityRepository
 		{
 			$andx->add($expr->gte('o.confiance',$niveau_confiance));
 		}
-	
+		if($creneau_id !='')
+		{
+			//TODO
+			//id_creneau : cet orga doit pouvoir etre affecté a ce créneau (dans les disponibilités et pas de créneau déja affecté)
+		}
 	
 	
 	
@@ -100,7 +104,7 @@ class OrgaRepository extends EntityRepository
 	
 //	getOrgasWithCriteriaTache numéro 2 pour gérer le tache id
 /*
-public function getOrgasWithCriteriaTache($permis, $maxDateNaissance, $tache_id, $plage_id, $niveau_confiance)
+public function getOrgasWithCompatibleTache($tache_id)
 	{
 		
 		$qb = $this->getEntityManager()->createQueryBuilder();
@@ -110,14 +114,14 @@ public function getOrgasWithCriteriaTache($permis, $maxDateNaissance, $tache_id,
 		
 		
 		
-		$expr->eq('t.id',$tache_id),
+		//$expr->eq('t.id',$tache_id),
+		$expr->neq('t.id',$tache_id),
 		
 		$expr->eq('d.orga','o'),
 		$expr->neq('d.orga','0'),
 		$expr->eq('co.disponibilite','d'),
 		$expr->eq('ct.plageHoraire','p'),
-		
-		$expr->eq('p.tache','t'),
+		$expr->eq('p.tache','t')
 		
 		
 		$expr->eq('ct.disponibilite','0'),
@@ -133,32 +137,8 @@ public function getOrgasWithCriteriaTache($permis, $maxDateNaissance, $tache_id,
 				
 				)'
 		
+		
 		);
-		
-		
-		
-		if($plage_id !='')
-		{
-			$pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation.plages')->getValue(),TRUE);
-			$plage= $pref[$plage_id];
-			$andx->add('(d.debut < \''.$plage["fin"].'\' ) AND (d.fin >\''.$plage["debut"].'\' )');
-		}
-		if($permis!='')
-		{
-			$andx->add($expr->gte('o.permis',$permis));
-		}
-		if($maxDateNaissance !='')
-		{
-			$andx->add($expr->lte('o.dateDeNaissance','\''.$maxDateNaissance.'\''));
-		}
-		if($niveau_confiance !='')
-		{
-			$andx->add($expr->gte('o.confiance_id',$niveau_confiance));
-		}
-		
-		
-		
-		
 		
 		$qb
 		->select('o,ct')
@@ -176,7 +156,7 @@ public function getOrgasWithCriteriaTache($permis, $maxDateNaissance, $tache_id,
 		
 		->where($andx);
 		
-		exit(var_dump($qb->getQuery()->getDQL()));
+		//exit(var_dump($qb->getQuery()->getDQL()));
 		
 		
 		
@@ -184,5 +164,5 @@ public function getOrgasWithCriteriaTache($permis, $maxDateNaissance, $tache_id,
 		
 		
 	}
-*/	
+//*/	
 }
