@@ -440,5 +440,21 @@ class OrgaController extends Controller
     
     	return $response;
 	}
+	
+	/**
+	 * Print all orga plannings.
+	 *
+	 * @Route("/plannings/print", name="orga_plannings_impression")
+	 * @Template()
+	 */
+	public function plannings_impressionAction()
+	{
+	    $em = $this->getDoctrine()->getEntityManager();
+	
+	    
+	    $entities = $em->getRepository('PHPMBundle:Orga')->findAll();
+	    
+	    return array('entities' => $entities);
+	}
 		
 }
