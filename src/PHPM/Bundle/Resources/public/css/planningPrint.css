@@ -1,0 +1,50 @@
+@media all {
+body{
+font-family:arial,sans-serif;
+	}
+div{
+	padding-left: 3pt;
+	padding-right: 3pt;
+	
+}
+.header {
+    width: 98%;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom:5pt;
+    border:solid 1pt black;
+
+    
+
+}
+
+.creneau{
+    width: 98%;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom:5pt;
+    border:solid 1pt black;
+    page-break-inside: avoid;
+    page-break-before:auto;
+    page-break-after: auto;
+}
+.break{
+	page-break-after: always;
+	display: block;
+
+}
+h1{
+font-size: 16pt;
+}
+h2{
+font-size: 12pt;
+
+}
+h3{
+font-size: 10pt;
+display: inline;
+}
+p{
+	font-size: 10pt;
+	display: inline;
+}
