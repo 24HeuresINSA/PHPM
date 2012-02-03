@@ -262,11 +262,11 @@ class CreneauController extends Controller
     * 
     *
     * @Route("/{cid}/affecter/{oid}", name="creneau_affecter")
-    * @Method("post")
+    * 
     */
     
     
-    public function affecterCreneau()
+    public function affecterCreneau($cid, $oid)
     { 
     	//affecter à l'unique dispo qui commence avant et qui fini après
     	
