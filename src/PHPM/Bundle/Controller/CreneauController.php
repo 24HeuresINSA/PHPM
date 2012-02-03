@@ -282,9 +282,8 @@ class CreneauController extends Controller
     		throw $this->createNotFoundException('Unable to find Dispo entity.');
     	}
     	
+    	$creneau.setDisponibilite($dispo);
     	
-    	$creneau.setDisponibilite($dispo.getId);
-    
     }
 }
 
