@@ -48,7 +48,8 @@ $(document).ready(function() {
 	pmUtils.setResizeableSidebars();
 	pmUtils.setHideTopMenu();
 	// 0.5 : travail sur l'historique
-	pmHistory.initHistoryListener(); // déclenchera lui parseUrlParam
+	pmHistory.initHistoryListener(); 
+	pmHistory.parseUrlParam();
 	
 	// 1 : lancer les requêtes pour les paramètres
 	// requêtes synchrones car nécessaire partout dans l'appli

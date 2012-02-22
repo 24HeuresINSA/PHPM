@@ -20,7 +20,7 @@ OrgaModel.prototype = {
 	 */
 	getData: function(callBack) {
 		pmAffectation.models.orga.callBack = callBack;
-		
+				
 		// construit les paramètres que l'on va envoyer, teste si déjà on a les filtres
 		var _params = {
 			plage_id: pmAffectation.current.plage, // on fournit toujours la plage, la base

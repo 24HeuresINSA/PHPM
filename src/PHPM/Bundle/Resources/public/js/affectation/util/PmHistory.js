@@ -51,6 +51,8 @@ PmHistory.prototype = {
 			var _params = _str.split('&'); // on part de couple1&couple2&couple3...
 			
 			for (var _iParam in _params) {
+				// TODO : log("découpage de la chaine");
+				
 				var _paire = _params[_iParam].split('='); // on a des couples clé=valeur
 				
 				// pour chaque couple, on va regarder ce qu'il faut faire
@@ -58,10 +60,12 @@ PmHistory.prototype = {
 					pmAffectation.current[_paire[0]] = _paire[1];
 				} else {
 					// sinon faut tester, voir si on met à jour la valeur
+					// TODO : console.log(_paire[0], _paire[1]);
 					switch (_paire[0]) {
 						case 'orga':
 							if (_paire[1] != pmAffectation.current['orga']) {
 								pmAffectation.current['orga'] = _paire[1];
+								console.log("ici on parse et récupère le truc");
 								(pmHistory.refreshData === true) && (pmAffectation.controllers.orga.getData());
 							}
 							break;
