@@ -59,5 +59,18 @@ CalendarController.prototype = {
 		pmAffectation.controllers.tache.empty(); // vide la colonne creneau - deviendra peut-être inutile si on prend un orga par défaut
 		
 		pmHistory.setUrlParam(); // maj de l'url
+	},
+	
+	/*
+	 * Affecter un orga et un créneau
+	 * (on ne sait pas dans quel sens exactement)
+	 */
+	affecterCreneau: function(obj) {
+		// pour l'instant, on appelle directement le modèle
+		pmAffectation.models.calendar.affecterCreneau(obj.data.idCreneau, obj.data.idOrga, pmAffectation.controllers.calendar.callbackAffectation);
+	},
+	// callback
+	callbackAffectation: function() {
+		log("success");
 	}
 }
