@@ -2,11 +2,14 @@
 
 namespace PHPM\Bundle\Controller;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 use Symfony\Component\Validator\Constraints\Url;
+use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\Security\Acl\Exception\Exception;
 
-use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -264,6 +267,54 @@ class OrgaController extends Controller
 		return array("entities" => $entities);
 	}
 
+	
+	/**
+	 * Import Orgas from website.
+	 *
+	 * @Route("/openid", name="orga_openid")
+	 * 
+	 */
+	public function openidAction()
+	{
+
+	    $message= "";
+	    
+	try {
+
+    $openid = new \LightOpenID('localhost');
+    if(!$openid->mode) {
+        if(isset($_GET['login'])) {
+            $openid->identity = 'https://www.google.com/accounts/o8/id';
+            $openid->required = array('namePerson/friendly', 'contact/email');
+            //header('Location: ' . $openid->authUrl());
+        
+            $response = new RedirectResponse($openid->authUrl());
+            //$response->headers->set('Location:' , $openid->authUrl());
+            
+            return $response;
+        
+        }
+        return new Response('<form action="?login" method="post">
+    <button>Login with Google</button>
+</form>');
+
+    } elseif($openid->mode == 'cancel') {
+        $message= 'User has canceled authentication!';
+        return new Response($message);
+    } else {
+        $message= 'User ' . ($openid->validate() ? $openid->identity . ' has ' : 'has not ') . 'logged in.';
+        var_dump($openid->getAttributes());
+        return new Response($message);
+    }
+} catch(ErrorException $e) {
+    return new Response($message);
+}
+	   
+	    
+
+	    
+	    
+	}
 
 
 

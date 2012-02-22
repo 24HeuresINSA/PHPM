@@ -136,7 +136,14 @@ class Orga
     private $statut;
     
     
-
+    /**
+     * @ORM\ManyToMany(targetEntity="DisponibiliteInscription")
+     *  
+     */
+    private $disponibilitesInscription;
+    
+    
+    
 
     /**
      * Get id
@@ -492,5 +499,25 @@ class Orga
     public function getTaches()
     {
         return $this->taches;
+    }
+
+    /**
+     * Add disponibilitesInscription
+     *
+     * @param PHPM\Bundle\Entity\DisponibiliteInscription $disponibilitesInscription
+     */
+    public function addDisponibiliteInscription(\PHPM\Bundle\Entity\DisponibiliteInscription $disponibilitesInscription)
+    {
+        $this->disponibilitesInscription[] = $disponibilitesInscription;
+    }
+
+    /**
+     * Get disponibilitesInscription
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getDisponibilitesInscription()
+    {
+        return $this->disponibilitesInscription;
     }
 }

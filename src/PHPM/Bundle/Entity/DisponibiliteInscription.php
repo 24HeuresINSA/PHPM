@@ -49,6 +49,12 @@ class DisponibiliteInscription
      */
     private $fin;
     
+    /**
+     * @ORM\ManyToMany(targetEntity="Orga")
+     *
+     */
+    private $orgas;
+    
 
     
 
@@ -100,5 +106,29 @@ class DisponibiliteInscription
     public function getFin()
     {
         return $this->fin;
+    }
+    public function __construct()
+    {
+        $this->orgas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add orgas
+     *
+     * @param PHPM\Bundle\Entity\Orga $orgas
+     */
+    public function addOrga(\PHPM\Bundle\Entity\Orga $orgas)
+    {
+        $this->orgas[] = $orgas;
+    }
+
+    /**
+     * Get orgas
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getOrgas()
+    {
+        return $this->orgas;
     }
 }
