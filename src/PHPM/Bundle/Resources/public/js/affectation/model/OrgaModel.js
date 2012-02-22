@@ -26,10 +26,9 @@ OrgaModel.prototype = {
 			plage_id: pmAffectation.current.plage, // on fournit toujours la plage, la base
 			bloc: 0 // et le bloc, par défaut le 1er
 		};
-		// -1 est le wildcart
+		// -1 est la wildcart, on ne l'envoie pas
 		(($.isNumeric(pmAffectation.current.orga.confiance) === true) && (pmAffectation.current.orga.confiance != -1)) && (_params.confiance_id = pmAffectation.current.orga.confiance);
 		(($.isNumeric(pmAffectation.current.orga.permis) === true) && (pmAffectation.current.orga.permis != -1)) && (_params.permis = pmAffectation.current.orga.permis);
-		// pour la date de naissance, on la calcule depuis l'age avec le 1er jour de la plage où on est
 		(($.isNumeric(pmAffectation.current.orga.age) === true) && (pmAffectation.current.orga.age != -1)) && (_params.age = pmAffectation.current.orga.age);
 		
 		$.ajax({
