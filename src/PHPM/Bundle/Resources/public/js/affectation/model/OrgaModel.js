@@ -24,7 +24,8 @@ OrgaModel.prototype = {
 		// construit les paramètres que l'on va envoyer, teste si déjà on a les filtres
 		var _params = {
 			plage_id: pmAffectation.current.plage, // on fournit toujours la plage, la base
-		}; // -1 est le wildcart
+		};
+		// -1 est le wildcart
 		(($.isNumeric(pmAffectation.current.confiance) === true) && (pmAffectation.current.confiance != -1)) && (_params.confiance_id = pmAffectation.current.confiance);
 		(($.isNumeric(pmAffectation.current.permis) === true) && (pmAffectation.current.permis != -1)) && (_params.permis = pmAffectation.current.permis);
 		// TODO : age ou date de naissance

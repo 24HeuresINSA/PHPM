@@ -21,7 +21,7 @@ PmHistory.prototype = {
 	 * Pas mal de code repris du Github officiel d'History.js (GH)
 	 */ 
 	initHistoryListener: function() {
-	    var History = window.History; // Note: We are using a capital H instead of a lower h
+	    History = window.History; // Note: We are using a capital H instead of a lower h
 	    
 	    if (! History.enabled) {
 	         // History.js is disabled for this browser.
@@ -30,9 +30,8 @@ PmHistory.prototype = {
 	    }
 	
 	    // on va écouter le changement d'adresse, dessus on reparse
-	    History.Adapter.bind(window, 'popstate', function() { // Adapté pour utiliser popstate au lieu de statechange
+	    History.Adapter.bind(window, 'anchorchange', function() { // Adapté pour utiliser anchorchange, sur le hash, au lieu de statechange (popstate marche aussi)
 	        pmHistory.parseUrlParam(true);
-	        //log("évènement popstate déclenché");
 	    });
 	},
 	
@@ -65,7 +64,6 @@ PmHistory.prototype = {
 						case 'orga':
 							if (_paire[1] != pmAffectation.current['orga']) {
 								pmAffectation.current['orga'] = _paire[1];
-								console.log("ici on parse et récupère le truc");
 								(pmHistory.refreshData === true) && (pmAffectation.controllers.orga.getData());
 							}
 							break;
@@ -93,8 +91,9 @@ PmHistory.prototype = {
 	setUrlParam: function() {
 		// concrètement, pour ne pas avoir de problèmes, on reconstruit l'url entière
 		// Jquery goodness for sérialiser rapidemment (et en profondeur)
+		// bien préciser 'data' et 'title' dans History.pushState, sinon elle peut bugguer
 		var _newHash = '#param&' + $.param(pmAffectation.current);
 		
-        History.replaceState(null, null, _newHash);
+        History.pushState({params: _newHash}, "Etat " + _newHash, _newHash);
 	},
 }
