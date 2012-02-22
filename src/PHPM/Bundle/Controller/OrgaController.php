@@ -358,8 +358,7 @@ class OrgaController extends Controller
 	        if ($form->isValid()) {
 	            // perform some action, such as saving the task to the database
 	            $datar = $form->getData();
-	            
-	            
+	            	            
 	            $user->getDisponibilitesInscription()->clear();
 	            
 	            foreach ($datar as $day)

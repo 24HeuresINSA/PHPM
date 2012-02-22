@@ -36,6 +36,6 @@ security:
              - { path: ^/config/initiale, roles: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/.*json, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-             - { path: ^/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }  
+             - { path: ^/.*, roles: ROLE_USER }  
              - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
              - { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
