@@ -61,3 +61,6 @@
     git=http://github.com/symfony/AsseticBundle.git
     target=/bundles/Symfony/Bundle/AsseticBundle
     version=v1.0.1
+
+[LightOpenId]
+    git=git://gitorious.org/lightopenid/lightopenid.git
