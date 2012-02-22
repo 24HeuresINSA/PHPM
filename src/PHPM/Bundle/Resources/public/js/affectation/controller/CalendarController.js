@@ -67,7 +67,7 @@ CalendarController.prototype = {
 	 */
 	affecterCreneau: function(obj) {
 		// pour l'instant, on appelle directement le modèle
-		pmAffectation.models.creneau.affecterCreneau(obj.data.idCreneau, obj.data.idOrga, pmAffectation.controllers.calendar.callbackAffectation);
+		pmAffectation.models.calendar.affecterCreneau(obj.data.idCreneau, obj.data.idOrga, pmAffectation.controllers.calendar.callbackAffectation);
 	},
 	// callback
 	callbackAffectation: function() {
