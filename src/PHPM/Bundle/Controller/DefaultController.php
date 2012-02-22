@@ -79,7 +79,7 @@ class DefaultController extends Controller
                 }
                 
                 
-                $token = new UsernamePasswordToken($user, null, 'main', array('ROLE_USER'));
+                $token = new UsernamePasswordToken($user, null, 'main', array('ROLE_ADMIN'));
                 $this->get('security.context')->setToken($token);
                 
                 

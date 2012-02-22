@@ -146,6 +146,12 @@ class Orga implements UserInterface
      */
     protected $disponibilitesInscription;
     
+    /**
+     * @ORM\Column(type="boolean", name="is_admin")
+     */
+    protected $isAdmin;
+    
+    
     
     
 
@@ -576,4 +582,24 @@ class Orga implements UserInterface
     }
     
     
+
+    /**
+     * Set isAdmin
+     *
+     * @param boolean $isAdmin
+     */
+    public function setIsAdmin($isAdmin)
+    {
+        $this->isAdmin = $isAdmin;
+    }
+
+    /**
+     * Get isAdmin
+     *
+     * @return boolean 
+     */
+    public function getIsAdmin()
+    {
+        return $this->isAdmin;
+    }
 }

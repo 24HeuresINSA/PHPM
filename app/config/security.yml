@@ -23,8 +23,7 @@ security:
         secured_area:
             pattern:    ^/
             provider: db
-            http_basic:
-                realm: "PHPLanningMaker"
+
             logout:
                 path:   /logout
                 invalidate_session: true
@@ -33,9 +32,9 @@ security:
     access_control:
              - { path: /_wdt/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: /_profiler/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+             - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
              - { path: ^/config/initiale, roles: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/.*json, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-             - { path: ^/.*, roles: ROLE_USER }  
-             - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+             - { path: ^/.*, roles: ROLE_USER }               
              - { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
