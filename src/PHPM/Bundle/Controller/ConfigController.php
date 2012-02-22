@@ -242,7 +242,6 @@ class ConfigController extends Controller {
 			//Vidage des tables
 
 			$conn = $em->getConnection();
-            /*
 
 			$sql = 'TRUNCATE TABLE `Creneau`;';
 			$conn->query($sql);
@@ -267,7 +266,7 @@ class ConfigController extends Controller {
 			$conn->query($sql);
 			$sql = 'TRUNCATE TABLE `User`';
 			$conn->query($sql);
-*/
+
 			$sql = "SET SQL_MODE=\"NO_AUTO_VALUE_ON_ZERO\";
 SET AUTOCOMMIT=0;
 START TRANSACTION;
