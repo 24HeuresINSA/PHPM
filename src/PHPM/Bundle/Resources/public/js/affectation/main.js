@@ -10,6 +10,7 @@
 	
 	// utilitaires
 	pmUtils = new PmUtils();
+	pmHistory = new PmHistory();
 	
 	// stockage des données
 	pmAffectation.data = {};
@@ -46,8 +47,9 @@ $(document).ready(function() {
 	// 0 : setter le layout et récupérer les paramètres dans l'Url
 	pmUtils.setResizeableSidebars();
 	pmUtils.setHideTopMenu();
-	pmUtils.parseUrlParam();
-	pmUtils.initHistoryListener();
+	// 0.5 : travail sur l'historique
+	pmHistory.parseUrlParam();
+	pmHistory.initHistoryListener();
 	
 	// 1 : lancer les requêtes pour les paramètres
 	// requêtes synchrones car nécessaire partout dans l'appli

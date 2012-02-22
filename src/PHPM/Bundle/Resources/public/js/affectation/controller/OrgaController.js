@@ -48,7 +48,7 @@ OrgaController.prototype = {
 		pmAffectation.controllers.tache.empty(); // vide la colonne creneau
 
 		pmAffectation.current.orga = obj.data.id;
-		pmUtils.setUrlParam(); // maj de l'url
+		pmHistory.setUrlParam(); // maj de l'url
 		
 		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga});
 	},
@@ -56,7 +56,7 @@ OrgaController.prototype = {
 	clickFilterConfiance: function(idNiveau) {
 		pmAffectation.current.confiance = idNiveau;
 		
-		pmUtils.setUrlParam(); // maj de l'url
+		pmHistory.setUrlParam(); // maj de l'url
 		
 		pmAffectation.controllers.orga.getData();
 	},
@@ -64,7 +64,7 @@ OrgaController.prototype = {
 	clickFilterPermis: function(idPermis) {
 		pmAffectation.current.permis = idPermis;
 		
-		pmUtils.setUrlParam(); // maj de l'url
+		pmHistory.setUrlParam(); // maj de l'url
 		
 		pmAffectation.controllers.orga.getData();
 	},	
