@@ -8,6 +8,7 @@
  * Création du namespace et utils
  */
 function PmHistory() {
+	this.refreshData = false;
 }
 	
 /*
@@ -20,57 +21,58 @@ PmHistory.prototype = {
 	 * Pas mal de code repris du Github officiel d'History.js (GH)
 	 */ 
 	initHistoryListener: function() {
-		//(function(window, undefined) {
-		    var History = window.History; // Note: We are using a capital H instead of a lower h
-		    
-		    if (! History.enabled) {
-		         // History.js is disabled for this browser.
-		         // This is because we can optionally choose to support HTML4 browsers or not.
-		        return false;
-		    }
-		
-		    // on va écouter le changement d'adresse, dessus on reparse
-		    History.Adapter.bind(window, 'popstate', function() { // Adapté pour utiliser popstate au lieu de statechange
-		        pmHistory.parseUrlParam(true);
-		    });
-		//})(window);
+	    History = window.History; // Note: We are using a capital H instead of a lower h
+	    
+	    if (! History.enabled) {
+	         // History.js is disabled for this browser.
+	         // This is because we can optionally choose to support HTML4 browsers or not.
+	        return false;
+	    }
+	
+	    // on va écouter le changement d'adresse, dessus on reparse
+	    History.Adapter.bind(window, 'anchorchange', function() { // Adapté pour utiliser anchorchange, sur le hash, au lieu de statechange (popstate marche aussi)
+	        pmHistory.parseUrlParam(true);
+	    });
 	},
 	
 	/*
 	 * Fonction de parsage des paramètres
 	 * On les prend, regarde s'ils sont différents des valeurs que l'on a déjà,
 	 * va les mettre au bon endroit & relance ce qu'il faut
-	 * @param :
-	 *  - doLaunch : si true, on lance les controlleurs que les données se mettent à jour
 	 */
-	parseUrlParam: function(doLaunch) {
+	parseUrlParam: function() {
 		var _hash = History.getHash(); // le hash est ce qui suit le # (non inclus)
 		
 		if (_hash.substr(0, 6) == 'param&') { // parseur - on a reconnu notre format
 			var _str = decodeURIComponent(_hash.substr(6, _hash.length)); // petite décodage du format URL nécessaire
 			
-			// on décode ça dans un tableau provisoire
-			var _params = _str.split('&'); // on part de couple1&couple2&couple3...
-			
+			// on décode ça (fonction cf hack.js)
+			var _params = $.deparam(_str);
+
 			for (var _iParam in _params) {
-				var _paire = _params[_iParam].split('='); // on a des couples clé=valeur
-				
-				// pour chaque couple, on va regarder ce qu'il faut faire
-				if (pmAffectation.current[_paire[0]] === undefined) {
-					// existe pas, on créé la valeur
-					pmAffectation.current[_paire[0]] = _paire[1];
+				// pour chaque ligne, on va regarder ce qu'il faut faire
+				if (pmAffectation.current[_iParam] === undefined) { // il n'existe pas, on créé la valeur
+					pmAffectation.current[_iParam] = _params[_iParam];
 				} else {
 					// sinon faut tester, voir si on met à jour la valeur
-					switch (_paire[0]) {
+					switch (_iParam) {
 						case 'orga':
-							if (_paire[1] !== pmAffectation.current['orga']) {
-								log("ici");
-								pmAffectation.current['orga'] = _paire[1];
-								log("done");
-								(doLaunch) && (pmAffectation.controllers.orga.getData());
+							if (pmUtils.areEquals(_params['orga'], pmAffectation.current['orga']) === false) {
+								pmAffectation.current['orga'] = _params['orga'];
+								(pmHistory.refreshData === true) && (pmAffectation.controllers.orga.getData());
+							}
+							break;
+						case 'plage':
+							if (pmUtils.areEquals(_params['plage'], pmAffectation.current['plage']) === false) {
+								pmAffectation.current['plage'] = _params['plage'];
+								(pmHistory.refreshData === true) && (pmAffectation.controllers.calendar.getData());
 							}
 							break;
 						default:
+							// autres cas, on a pas de refresh de donnée à lancer
+							if (_params[_iParam] != pmAffectation.current[_iParam]) {
+								pmAffectation.current[_iParam] = _params[_iParam];
+							}
 							break;
 					}
 				}
@@ -87,8 +89,9 @@ PmHistory.prototype = {
 	setUrlParam: function() {
 		// concrètement, pour ne pas avoir de problèmes, on reconstruit l'url entière
 		// Jquery goodness for sérialiser rapidemment (et en profondeur)
+		// bien préciser 'data' et 'title' dans History.pushState, sinon elle peut bugguer
 		var _newHash = '#param&' + $.param(pmAffectation.current);
 		
-        History.replaceState(null, null, _newHash);
+        History.pushState({params: _newHash}, "Etat " + _newHash, _newHash);
 	},
 }

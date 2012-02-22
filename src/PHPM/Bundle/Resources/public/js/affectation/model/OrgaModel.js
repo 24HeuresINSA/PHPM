@@ -20,14 +20,16 @@ OrgaModel.prototype = {
 	 */
 	getData: function(callBack) {
 		pmAffectation.models.orga.callBack = callBack;
-		
+				
 		// construit les paramètres que l'on va envoyer, teste si déjà on a les filtres
 		var _params = {
 			plage_id: pmAffectation.current.plage, // on fournit toujours la plage, la base
-		}; // -1 est le wildcart
-		(($.isNumeric(pmAffectation.current.confiance) === true) && (pmAffectation.current.confiance != -1)) && (_params.confiance_id = pmAffectation.current.confiance);
-		(($.isNumeric(pmAffectation.current.permis) === true) && (pmAffectation.current.permis != -1)) && (_params.permis = pmAffectation.current.permis);
-		// TODO : age ou date de naissance
+			bloc: 0 // et le bloc, par défaut le 1er
+		};
+		// -1 est la wildcart, on ne l'envoie pas
+		(($.isNumeric(pmAffectation.current.orga.confiance) === true) && (pmAffectation.current.orga.confiance != -1)) && (_params.confiance_id = pmAffectation.current.orga.confiance);
+		(($.isNumeric(pmAffectation.current.orga.permis) === true) && (pmAffectation.current.orga.permis != -1)) && (_params.permis = pmAffectation.current.orga.permis);
+		(($.isNumeric(pmAffectation.current.orga.age) === true) && (pmAffectation.current.orga.age != -1)) && (_params.age = pmAffectation.current.orga.age);
 		
 		$.ajax({
 			url: pmAffectation.url+pmAffectation.paths.orgas,

@@ -65,5 +65,27 @@ CalendarModel.prototype = {
 		}
 		
 		return _plages;
-	}
+	},
+	
+	/*
+	 * Réalise l'affectation entre un créneau et un orga
+	 */
+	affecterCreneau: function(idCreneau, idOrga, callBack) {
+		pmAffectation.models.calendar.callBackAffectation = callBack;
+		
+		$.ajax({
+			url: pmAffectation.url+'creneau/'+idCreneau+'/affecter/'+idOrga,
+			//dataType: 'json',
+			//data: _params,
+			success: pmAffectation.models.calendar.affectationSuccess,
+			error: pmAffectation.models.calendar.requestError,
+			type: 'POST'
+		});	
+	},
+	// les callbacks
+	affectationSuccess: function(data) {
+		console.log(data);
+		
+		pmAffectation.models.calendar.callBackAffectation();
+	},
 }

@@ -33,8 +33,8 @@ OrgaController.prototype = {
 	callbackOrgas: function() {
 		pmAffectation.data.orga = pmAffectation.models.orga.getOrgas();
 		
-		pmAffectation.views.orga.setOrgas(pmAffectation.current.orga);
-		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga});
+		pmAffectation.views.orga.setOrgas();
+		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga.id});
 	},
 	
 	/*
@@ -42,19 +42,19 @@ OrgaController.prototype = {
 	 */
 	// clic sur un orga
 	clickHandler: function(obj) {
-		$("#orga_"+pmAffectation.current.orga).removeClass('current');
+		$("#orga_"+pmAffectation.current.orga.id).removeClass('current');
 		$("#orga_"+obj.data.id).addClass('current');
 		
 		pmAffectation.controllers.tache.empty(); // vide la colonne creneau
 
-		pmAffectation.current.orga = obj.data.id;
+		pmAffectation.current.orga.id = obj.data.id;
 		pmHistory.setUrlParam(); // maj de l'url
 		
-		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga});
+		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga.id});
 	},
 	// clic sur le filtre niveau de confiance
 	clickFilterConfiance: function(idNiveau) {
-		pmAffectation.current.confiance = idNiveau;
+		pmAffectation.current.orga.confiance = idNiveau;
 		
 		pmHistory.setUrlParam(); // maj de l'url
 		
@@ -62,7 +62,15 @@ OrgaController.prototype = {
 	},
 	// click sur le filtre permis
 	clickFilterPermis: function(idPermis) {
-		pmAffectation.current.permis = idPermis;
+		pmAffectation.current.orga.permis = idPermis;
+		
+		pmHistory.setUrlParam(); // maj de l'url
+		
+		pmAffectation.controllers.orga.getData();
+	},
+	// click sur le filtre age
+	clickFilterAge: function(idAge) {
+		pmAffectation.current.orga.age = idAge;
 		
 		pmHistory.setUrlParam(); // maj de l'url
 		
