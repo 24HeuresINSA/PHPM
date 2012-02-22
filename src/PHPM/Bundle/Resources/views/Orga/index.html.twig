@@ -4,38 +4,7 @@
 
 
 {% block content %}
-<table>
-	<thead>
-		<tr>
-            <th>Id</th>
-            <th>Nom</th>
-            <th>Prenom</th>
-            <th>Surnom</th>
-            <th>Telephone</th>
-            <th>Email</th>
-            <th>Datedenaissance</th>
-            <th>Departement</th>
-            <th>Commentaire</th>
-            <th>Permis</th>
-		</tr>
-	</thead>
-	<tbody>
-		{%  for entity in entities %}
-		<tr>
-            <td><a href="{{ path('orga_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.nom }}</td>
-            <td>{{ entity.prenom }}</td>
-            <td>{{ entity.surnom }}</td>
-            <td>{{ entity.telephone }}</td>
-            <td>{{ entity.email }}</td>
-            <td>{% if entity.dateDeNaissance %}{{ entity.dateDeNaissance|date('Y-m-d H:i:s') }}{% endif%}</td>
-            <td>{{ entity.departement }}</td>
-            <td>{{ entity.commentaire }}</td>
-            <td>{{ entity.permis }}</td>
-		</tr>
-		{%   endfor %}
-	</tbody>
-</table>
+{% include 'PHPMBundle:Orga:afficheListe.html.twig' %}
 {% endblock %}
 
 {% block actions %}
