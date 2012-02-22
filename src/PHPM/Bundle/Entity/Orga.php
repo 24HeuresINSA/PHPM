@@ -2,6 +2,7 @@
 
 namespace PHPM\Bundle\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -14,7 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\OrgaRepository")
  * @UniqueEntity(fields={"email","telephone"})
  */
-class Orga
+class Orga implements UserInterface
 {
     /**
      * @var integer $id
@@ -23,14 +24,14 @@ class Orga
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
     
     /**
     * @var integer $importId
     *
     * @ORM\Column(name="importid", type="integer", nullable=true)
     */
-    private $importId;
+    protected $importId;
 
     /**
      * @var string $nom
@@ -38,7 +39,7 @@ class Orga
      * @ORM\Column(name="nom", type="string", length=255)
      * @Assert\NotBlank()
      */
-    private $nom;
+    protected $nom;
 
     /**
      * @var string $prenom
@@ -46,14 +47,14 @@ class Orga
      * @ORM\Column(name="prenom", type="string", length=255)
      * @Assert\NotBlank()
      */
-    private $prenom;
+    protected $prenom;
     
     /**
     * @var string $surnom
     *
     * @ORM\Column(name="surnom", type="string", length=255, nullable=true)
     */
-    private $surnom;
+    protected $surnom;
 
     
     /**
@@ -66,7 +67,7 @@ class Orga
      *     message="Veuillez renseigner un numéro de portable valide."
      * )
      */
-    private $telephone;
+    protected $telephone;
 
     /**
      * @var string $email
@@ -77,7 +78,7 @@ class Orga
      *     checkMX = true
      * )
      */
-    private $email;
+    protected $email;
 
     /**
      * @var date $dateDeNaissance
@@ -86,28 +87,28 @@ class Orga
      * 
      * @Assert\Date()
      */
-    private $dateDeNaissance;
+    protected $dateDeNaissance;
 
     /**
      * @var string $departement
      *
      * @ORM\Column(name="departement", type="string", length=255, nullable=true)
      */
-    private $departement;
+    protected $departement;
 
     /**
      * @var text $commentaire
      *
      * @ORM\Column(name="commentaire", type="text", nullable=true)
      */
-    private $commentaire;
+    protected $commentaire;
 
     /**
      * @var smallint $permis
      * @Assert\Choice(choices = {"0", "1", "2"})
      * @ORM\Column(name="permis", type="smallint")
      */
-    private $permis;
+    protected $permis;
     
 
 
@@ -133,14 +134,17 @@ class Orga
     * @Assert\Choice(choices = {"0", "1"})
     * @ORM\Column(name="statut", type="smallint")
     */
-    private $statut;
+    protected $statut;
     
     
     /**
      * @ORM\ManyToMany(targetEntity="DisponibiliteInscription")
-     *  
+     * @ORM\JoinTable(name="orga_disponibiliteinscription",
+     *      joinColumns={@ORM\JoinColumn(name="orga_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="disponibiliteinscription_id", referencedColumnName="id")}
+     *      )
      */
-    private $disponibilitesInscription;
+    protected $disponibilitesInscription;
     
     
     
@@ -520,4 +524,56 @@ class Orga
     {
         return $this->disponibilitesInscription;
     }
+    
+
+    
+
+    public function getRoles()
+    {
+    	return array('ROLE_ADMIN');
+    }
+    
+    public function equals(UserInterface $user)
+    {
+    	return $user->getEmail() === $this->email;
+    }
+    
+    public function eraseCredentials()
+    {
+    }
+    
+
+    
+    public function getSalt()
+    {
+    	return "";
+    }
+    
+    public function getPassword()
+    {
+    	return "";
+    }
+    
+    /**
+     * Get username
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->email;
+    }
+    
+    
+    public function serialize()
+    {
+        return serialize($this->email);
+    }
+    
+    public function unserialize($data)
+    {
+        $this->email = unserialize($data);
+    }
+    
+    
 }

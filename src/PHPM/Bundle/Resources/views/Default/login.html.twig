@@ -1,0 +1,22 @@
+{% extends "PHPMBundle:Default:layout.html.twig"  %}
+{% set pageTitle = 'Login' %}
+
+{% block actions %}
+
+{% endblock %}
+
+
+{% block content %}
+{% if m is not defined%}
+<form action="?login" method="post">
+                        <button>Login with Google</button>
+                        </form>
+{% endif %}
+{% if email is defined %}
+mail => {{ email}}
+{% endif %}
+{% if m is defined %}
+m =>{{ m}}
+{% endif %}
+{% endblock %}
+

@@ -20,7 +20,7 @@ class Confiance
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string $nom
@@ -28,7 +28,7 @@ class Confiance
      * @ORM\Column(name="nom", type="string", length=255)
      * @Assert\NotBlank()
      */
-    private $nom;
+    protected $nom;
 
     /**
      * @var smallint $valeur
@@ -36,7 +36,7 @@ class Confiance
      * @ORM\Column(name="valeur", type="smallint")
      * @Assert\NotBlank()
      */
-    private $valeur;
+    protected $valeur;
 
     /**
      * @var string $couleur
@@ -44,7 +44,7 @@ class Confiance
      * @ORM\Column(name="couleur", type="string", length=255)
      * @Assert\NotBlank()
      */
-    private $couleur;
+    protected $couleur;
     
     /**
     * @ORM\OneToMany(targetEntity="Tache", mappedBy="confiance")

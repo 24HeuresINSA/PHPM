@@ -23,7 +23,7 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string $username
@@ -31,7 +31,7 @@ class User implements UserInterface
      * @ORM\Column(name="username", type="string", length=255)
      * @Assert\NotBlank()
      */
-    private $username;
+    protected $username;
 
     /**
      * @var string $pass
@@ -42,7 +42,7 @@ class User implements UserInterface
      *
      * @ORM\Column(name="pass", type="string", length=255)
      */
-    private $pass;
+    protected $pass;
 
     /**
      * @var string $email
@@ -50,7 +50,7 @@ class User implements UserInterface
      * @ORM\Column(name="email", type="string", length=255, unique=true)
      * @Assert\Email()
      */
-    private $email;
+    protected $email;
 
 
     /**

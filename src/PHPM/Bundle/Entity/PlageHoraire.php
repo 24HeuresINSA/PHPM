@@ -27,7 +27,7 @@ class PlageHoraire
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var datetime $debut
@@ -36,7 +36,7 @@ class PlageHoraire
      * @Assert\DateTime()
      * @QuartHeure()
      */
-    private $debut;
+    protected $debut;
 
     /**
      * @var datetime $fin
@@ -45,7 +45,7 @@ class PlageHoraire
      * @Assert\DateTime()
      * @QuartHeure()
      */
-    private $fin;
+    protected $fin;
     
     /**
     * @var smallint $dureeCreneau
@@ -54,7 +54,7 @@ class PlageHoraire
     * @Assert\Min(limit = "0")
     * @QuartHeure()
     */
-    private $dureeCreneau;
+    protected $dureeCreneau;
     
     /**
      * @var smallint $recoupementCreneau
@@ -63,7 +63,7 @@ class PlageHoraire
      * @Assert\Min(limit = "0")
      * @QuartHeure()
      */
-    private $recoupementCreneau;
+    protected $recoupementCreneau;
     
     /**
     * @var smallint $nbOrgasNecessaires
@@ -71,7 +71,7 @@ class PlageHoraire
     * @ORM\Column(name="nbOrgasNecessaires", type="smallint")
     * @Assert\Min(limit = "0")
     */
-    private $nbOrgasNecessaires;
+    protected $nbOrgasNecessaires;
     
     /**
     * @ORM\OneToMany(targetEntity="Creneau", mappedBy="plageHoraire")

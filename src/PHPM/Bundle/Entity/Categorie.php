@@ -20,7 +20,7 @@ class Categorie
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string $nom
@@ -28,7 +28,7 @@ class Categorie
      * @ORM\Column(name="nom", type="string", length=255)
      * @Assert\NotBlank()
      */
-    private $nom;
+    protected $nom;
     
     /**
     * @var string $couleur
@@ -36,7 +36,7 @@ class Categorie
     * @ORM\Column(name="couleur", type="string", length=255)
     * @Assert\NotBlank()
     */
-    private $couleur;
+    protected $couleur;
     
     /**
     * @ORM\OneToMany(targetEntity="Tache", mappedBy="categorie")

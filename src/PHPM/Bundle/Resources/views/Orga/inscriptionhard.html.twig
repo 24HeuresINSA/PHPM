@@ -1,0 +1,22 @@
+{% extends "PHPMBundle:Orga:layout.html.twig"  %}
+{% set pageTitle = 'Hard' %}
+
+
+
+{% block content %}
+
+
+<form action="{{ path('orga_inscriptionhard') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Edit</button>
+    </p>
+</form>
+
+
+
+
+{% endblock %}
+
+{% block actions %}
+{% endblock %}

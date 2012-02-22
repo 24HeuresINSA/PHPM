@@ -49,11 +49,7 @@ class DisponibiliteInscription
      */
     private $fin;
     
-    /**
-     * @ORM\ManyToMany(targetEntity="Orga")
-     *
-     */
-    private $orgas;
+
     
 
     
@@ -130,5 +126,16 @@ class DisponibiliteInscription
     public function getOrgas()
     {
         return $this->orgas;
+    }
+    
+    public function getDebutDay()
+    {
+        return $this->getDebut()->format('z');
+    }
+    
+    public function __toString()
+    {
+        
+        return $this->getDebut()->format("G:i").' '.$this->getFin()->format("G:i");
     }
 }

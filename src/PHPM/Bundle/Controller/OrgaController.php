@@ -269,54 +269,123 @@ class OrgaController extends Controller
 
 	
 	/**
-	 * Import Orgas from website.
+	 * Inscription Hard
 	 *
-	 * @Route("/openid", name="orga_openid")
-	 * 
+	 * @Route("/inscriptionhard", name="orga_inscriptionhard")
+	 * @Template
 	 */
-	public function openidAction()
+	public function inscriptionhardAction()
 	{
-
-	    $message= "";
+	
 	    
-	try {
-
-    $openid = new \LightOpenID('localhost');
-    if(!$openid->mode) {
-        if(isset($_GET['login'])) {
-            $openid->identity = 'https://www.google.com/accounts/o8/id';
-            $openid->required = array('namePerson/friendly', 'contact/email');
-            //header('Location: ' . $openid->authUrl());
-        
-            $response = new RedirectResponse($openid->authUrl());
-            //$response->headers->set('Location:' , $openid->authUrl());
-            
-            return $response;
-        
-        }
-        return new Response('<form action="?login" method="post">
-    <button>Login with Google</button>
-</form>');
-
-    } elseif($openid->mode == 'cancel') {
-        $message= 'User has canceled authentication!';
-        return new Response($message);
-    } else {
-        $message= 'User ' . ($openid->validate() ? $openid->identity . ' has ' : 'has not ') . 'logged in.';
-        var_dump($openid->getAttributes());
-        return new Response($message);
-    }
-} catch(ErrorException $e) {
-    return new Response($message);
-}
-	   
+	    $request = $this->getRequest();
+	    $user = $this->get('security.context')->getToken()->getUser();
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    $em = $this->getDoctrine()->getEntityManager();
 	    
 
+	    
+	    
+	    $entities = $em->createQuery(
+	            'SELECT di FROM PHPMBundle:DisponibiliteInscription di ORDER BY di.debut' )->getResult();
+	     
+	    
+	    
+	   // ,$user->getDisponibilitesInscription()->contains($entity)
+	    
+	    $builder = $this->createFormBuilder();
+	    $lastday=-1;
+	    $daycollection = 0;
+	    //$builder->add('days', 'collection', array('type'   => 'collection'));
+	    $choices = array();
+	    $data=array();
+	    
+	    
+	    foreach ($entities as $entity)
+	    {
+	        
+	        $choices[$entity->getDebut()->format('l j')][$entity->getId()]=($entity->__toString());
+	        if($user->getDisponibilitesInscription()->contains($entity))
+	        {
+	            
+	        $data[$entity->getDebut()->format('l j')][$entity->getId()]=$entity->getId();
+	       	        
+	        }
+	       
+	    }
+	    
+	    foreach($choices as $key => $row)
+	    {
+	        $builder->add((string) $key, 'choice', array(
+	                'choices'   => $row,
+	                'multiple'  => true,'expanded'  => true,
+	        ));
+	        
+	    }
+	    $builder->setData($data);
+	     
+	        
+	    
+	    
+// 	    {% set lastday = '' %}
+// 	    {%  for entity in entities %}
+// 	    {% if lastday != entity.debutday %}
+// 	    <br/><b>{
+// 	        { entity.debut |date("l j F") }
+// 	    }</b>
+// 	    {
+// 	        % set lastday = entity.debutday %}
+// 	        {% endif %}
+	    
+// 	        {{ entity.debut |date("G:i") }
+// 	        }- {
+// 	            { entity.fin |date("G:i") }
+// 	        }  -
+	    
+	         
+	    
+	    $form = $builder->getForm();
+	    
+	    if ($request->getMethod() == 'POST') {
+	        $form->bindRequest($request);
+	    
+	        if ($form->isValid()) {
+	            // perform some action, such as saving the task to the database
+	            $datar = $form->getData();
+	            
+	            
+	            $user->getDisponibilitesInscription()->clear();
+	            
+	            foreach ($datar as $day)
+	            {
+	                foreach ($day as $di){
+	                    $diObject =  $em->getRepository('PHPMBundle:DisponibiliteInscription')->findOneByid($di);
+	                    $user->addDisponibiliteInscription($diObject);
+	                    //$diObject ->addOrga($user);
+	                }
+	            }
+	            $em->persist($user);
+	            
+	            $em->flush();
+	            
+	        }
+	    }
+	    
+	    
+	    
+	    return array( 'form' => $form->createView());
+	    
+	    
+	    
 	    
 	    
 	}
-
-
 
 	
 	 /**

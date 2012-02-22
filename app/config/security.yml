@@ -9,7 +9,7 @@ security:
 
     providers:
         db:
-            entity: { class: PHPMBundle:User, property: username }
+            entity: { class: PHPMBundle:Orga, property: email }
 
     firewalls:
         dev:
@@ -31,11 +31,11 @@ security:
             anonymous:  ~
                 
     access_control:
-            # - { path: /_wdt/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
-            # - { path: /_profiler/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
-            # - { path: ^/config/initiale, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-            # - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-            # - { path: ^/.*json, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-            - { path: ^/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }  
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        #- { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
+             - { path: /_wdt/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+             - { path: /_profiler/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+             - { path: ^/config/initiale, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+             - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+             - { path: ^/.*json, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+             - { path: ^/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }  
+             - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+             - { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
