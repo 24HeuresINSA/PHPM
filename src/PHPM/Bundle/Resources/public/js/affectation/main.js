@@ -48,8 +48,7 @@ $(document).ready(function() {
 	pmUtils.setResizeableSidebars();
 	pmUtils.setHideTopMenu();
 	// 0.5 : travail sur l'historique
-	pmHistory.parseUrlParam();
-	pmHistory.initHistoryListener();
+	pmHistory.initHistoryListener(); // déclenchera lui parseUrlParam
 	
 	// 1 : lancer les requêtes pour les paramètres
 	// requêtes synchrones car nécessaire partout dans l'appli
@@ -70,4 +69,7 @@ $(document).ready(function() {
 	// 4 : colonne tache - rien à afficher pour l'instant
 	pmAffectation.controllers.tache = new TacheController();
 	//pmAffectation.controllers.tache.getData();
+	
+	// last step : à partir de maintenant, les modifs du hash provoquent la mise à jour des données
+	pmHistory.refreshData = true;
 });

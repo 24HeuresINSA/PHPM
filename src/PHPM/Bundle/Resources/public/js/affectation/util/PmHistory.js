@@ -8,6 +8,7 @@
  * Création du namespace et utils
  */
 function PmHistory() {
+	this.refreshData = false;
 }
 	
 /*
@@ -20,30 +21,27 @@ PmHistory.prototype = {
 	 * Pas mal de code repris du Github officiel d'History.js (GH)
 	 */ 
 	initHistoryListener: function() {
-		//(function(window, undefined) {
-		    var History = window.History; // Note: We are using a capital H instead of a lower h
-		    
-		    if (! History.enabled) {
-		         // History.js is disabled for this browser.
-		         // This is because we can optionally choose to support HTML4 browsers or not.
-		        return false;
-		    }
-		
-		    // on va écouter le changement d'adresse, dessus on reparse
-		    History.Adapter.bind(window, 'popstate', function() { // Adapté pour utiliser popstate au lieu de statechange
-		        pmHistory.parseUrlParam(true);
-		    });
-		//})(window);
+	    var History = window.History; // Note: We are using a capital H instead of a lower h
+	    
+	    if (! History.enabled) {
+	         // History.js is disabled for this browser.
+	         // This is because we can optionally choose to support HTML4 browsers or not.
+	        return false;
+	    }
+	
+	    // on va écouter le changement d'adresse, dessus on reparse
+	    History.Adapter.bind(window, 'popstate', function() { // Adapté pour utiliser popstate au lieu de statechange
+	        pmHistory.parseUrlParam(true);
+	        //log("évènement popstate déclenché");
+	    });
 	},
 	
 	/*
 	 * Fonction de parsage des paramètres
 	 * On les prend, regarde s'ils sont différents des valeurs que l'on a déjà,
 	 * va les mettre au bon endroit & relance ce qu'il faut
-	 * @param :
-	 *  - doLaunch : si true, on lance les controlleurs que les données se mettent à jour
 	 */
-	parseUrlParam: function(doLaunch) {
+	parseUrlParam: function() {
 		var _hash = History.getHash(); // le hash est ce qui suit le # (non inclus)
 		
 		if (_hash.substr(0, 6) == 'param&') { // parseur - on a reconnu notre format
@@ -56,18 +54,17 @@ PmHistory.prototype = {
 				var _paire = _params[_iParam].split('='); // on a des couples clé=valeur
 				
 				// pour chaque couple, on va regarder ce qu'il faut faire
-				if (pmAffectation.current[_paire[0]] === undefined) {
-					// existe pas, on créé la valeur
+				if (pmAffectation.current[_paire[0]] === undefined) { // il n'existe pas, on créé la valeur
 					pmAffectation.current[_paire[0]] = _paire[1];
 				} else {
 					// sinon faut tester, voir si on met à jour la valeur
 					switch (_paire[0]) {
 						case 'orga':
-							if (_paire[1] !== pmAffectation.current['orga']) {
-								log("ici");
+							//console.log(_paire, pmAffectation.current['orga']);
+							if (_paire[1] != pmAffectation.current['orga']) {
 								pmAffectation.current['orga'] = _paire[1];
-								log("done");
-								(doLaunch) && (pmAffectation.controllers.orga.getData());
+								//log("done");
+								(pmHistory.refreshData === true) && (log("demande de mise à jour des données"));
 							}
 							break;
 						default:
