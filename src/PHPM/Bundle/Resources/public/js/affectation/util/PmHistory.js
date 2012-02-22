@@ -60,14 +60,19 @@ PmHistory.prototype = {
 					// sinon faut tester, voir si on met à jour la valeur
 					switch (_paire[0]) {
 						case 'orga':
-							//console.log(_paire, pmAffectation.current['orga']);
 							if (_paire[1] != pmAffectation.current['orga']) {
 								pmAffectation.current['orga'] = _paire[1];
-								//log("done");
-								(pmHistory.refreshData === true) && (log("demande de mise à jour des données"));
+								(pmHistory.refreshData === true) && (pmAffectation.controllers.orga.getData());
+							}
+							break;
+						case 'plage':
+							if (_paire[1] != pmAffectation.current['plage']) {
+								pmAffectation.current['plage'] = _paire[1];
+								(pmHistory.refreshData === true) && (pmAffectation.controllers.calendar.getData());
 							}
 							break;
 						default:
+							// là on ne sait pas quoi faire de particulier
 							break;
 					}
 				}
