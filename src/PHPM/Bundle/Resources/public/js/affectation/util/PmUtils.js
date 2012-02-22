@@ -50,10 +50,12 @@ PmUtils.prototype = {
 		if ($('.header').css('display') === 'none') {
 			$('.header').show(500, 'swing');
 			$('#bouton_hide_menu').html('^ Cacher ^');
+			
 			pmUtils.setAppHeight(79);
 		} else {
 			$('.header').hide(500, 'swing');
 			$('#bouton_hide_menu').html('&or; Menu &or;');
+			
 			pmUtils.setAppHeight(0);
 		}
 	},
@@ -154,61 +156,6 @@ PmUtils.prototype = {
 		} catch(err) {
 			console.error("Impossible d'accéder à localStorage",err);
 		}
-	},
-	
-	/*
-	 * Travail sur l'URL
-	 */
-	// met en place l'écouteur
-	initHistoryListener: function() {
-		// code d'intialisation d'History.js
-		// code repris de leur GitHub officiel
-		
-	    var History = window.History; // Note: We are using a capital H instead of a lower h
-	    
-	    if (! History.enabled) {
-	         // History.js is disabled for this browser.
-	         // This is because we can optionally choose to support HTML4 browsers or not.
-	        return false;
-	    }
-	
-	    // Bind to StateChange Event
-	    History.Adapter.bind(window,'statechange',function() { // Note: We are using statechange instead of popstate
-	        var State = History.getState(); // Note: We are using History.getState() instead of event.state
-	        History.log(State.data, State.title, State.url);
-	    });
-	},
-	// regarde si on ne passe pas déjà des paramètres
-	parseUrlParam: function() {
-		// les paramètres vont dans pmAffectation.current
-		var _hash = History.getHash(); // le hash est ce qui suit le # (non inclus)
-		
-		if (_hash.substr(0, 6) == 'param&') { // parseur - on a reconnu notre format
-			var _str = _hash.substr(6, _hash.length);
-			
-			var _params = _str.split('&'); // on part de couple1&couple2&couple3...
-			
-			for (var _iParam in _params) {
-				var _paire = _params[_iParam].split('='); // on a des couples clé=valeur
-
-				pmAffectation.current[_paire[0]] = _paire[1]; // le stock
-			}
-		} else {
-			window.location.hash = ''; // sinon tant pis pour ce qu'il y avait avant
-		}
-	},
-	// update un paramètre et change l'url en fonction
-	setUrlParam: function() {
-		// concrètement, pour ne pas avoir de problèmes, on reconstruit l'url entière, mais avec seulement les params valides
-		var _newHash = '#param';
-		
-         for (var _iPaire in pmAffectation.current) {
-         	if ($.isNumeric(pmAffectation.current[_iPaire]) === true) {
-				_newHash += '&'+_iPaire+'='+pmAffectation.current[_iPaire];
-			}
-         }
-         
-         History.pushState(null, null, _newHash);
 	},
 	
 	/*
