@@ -1,0 +1,16 @@
+{% macro edit(lien) %}
+{% image output="images/logo.png"
+            '@PHPMBundle/Resources/public/images/icon_configure.png'             
+%}
+<div class="bouton_edit"> <a href="{{ lien }}"><img src="{{ asset_url }}" title="Edit"/></a></div>
+{% endimage %} 
+
+{% endmacro %}
+{% macro planning(lien) %}
+{% image output="images/logo.png"
+            '@PHPMBundle/Resources/public/images/icon_agenda.png'             
+%}
+<div class="bouton_planning"> <a href="{{ lien }}"><img src="{{ asset_url }}" title="Planning"/></a></div>
+{% endimage %} 
+
+{% endmacro %}
