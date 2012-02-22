@@ -64,8 +64,8 @@ TacheView.prototype = {
 			
 			$('#liste_taches').append(_html);
 			
-			// TODO : handler de click
-			//$('#tache_'+_iOrga).bind('click', {id: _iOrga}, pmAffectation.controllers.tache.clickHandler); // handler de click
+			// handler de click, part dans Calendar (car générique)
+			$('#tache_'+_iCreneau).bind('click', {idCreneau: _iCreneau, idOrga: pmAffectation.current.orga.id}, pmAffectation.controllers.calendar.affecterCreneau); // handler de click
 		}
 	}
 	
