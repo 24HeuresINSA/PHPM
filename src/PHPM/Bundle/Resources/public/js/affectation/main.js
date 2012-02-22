@@ -21,7 +21,7 @@
 	// infos courantes
 	pmAffectation.current = {};
 	// bien mettre des valeurs par défaut aux paramètres
-	pmAffectation.current.orga = 1;
+	pmAffectation.current.orga = {id: 1};
 	pmAffectation.current.plage = 1; // par défaut on est sur la plage 0
 	
 	// les MVC
@@ -48,8 +48,8 @@ $(document).ready(function() {
 	pmUtils.setResizeableSidebars();
 	pmUtils.setHideTopMenu();
 	// 0.5 : travail sur l'historique
-	pmHistory.parseUrlParam();
-	pmHistory.initHistoryListener();
+	pmHistory.initHistoryListener(); 
+	pmHistory.parseUrlParam(); // un peu bizarre : parfois faut le faire, parfois pas
 	
 	// 1 : lancer les requêtes pour les paramètres
 	// requêtes synchrones car nécessaire partout dans l'appli
@@ -70,4 +70,7 @@ $(document).ready(function() {
 	// 4 : colonne tache - rien à afficher pour l'instant
 	pmAffectation.controllers.tache = new TacheController();
 	//pmAffectation.controllers.tache.getData();
+	
+	// last step : à partir de maintenant, les modifs du hash provoquent la mise à jour des données
+	pmHistory.refreshData = true;
 });

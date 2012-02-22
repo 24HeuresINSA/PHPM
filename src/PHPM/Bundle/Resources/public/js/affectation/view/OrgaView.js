@@ -16,11 +16,11 @@ OrgaView.prototype = {
 		$('#bouton_orga_prev').button({
 			icons: {primary: 'ui-icon-triangle-1-w'},
 			text: false
-		}).click(function() { $('#orga_'+pmAffectation.current.orga).prev().click(); });
+		}).click(function() { $('#orga_'+pmAffectation.current.orga.id).prev().click(); });
 		$('#bouton_orga_next').button({
 			icons: {primary: 'ui-icon-triangle-1-e'},
 			text: false
-		}).click(function() { $('#orga_'+pmAffectation.current.orga).next().click(); });
+		}).click(function() { $('#orga_'+pmAffectation.current.orga.id).next().click(); });
 		
 		$('#bouton_refresh').button({
 			icons: {primary: 'ui-icon-refresh'},
@@ -32,6 +32,7 @@ OrgaView.prototype = {
 		// filtres
 		$('#filtre_orga_confiance').change(function() {pmAffectation.controllers.orga.clickFilterConfiance($('#filtre_orga_confiance').val());});
 		$('#filtre_orga_permis').change(function() {pmAffectation.controllers.orga.clickFilterPermis($('#filtre_orga_permis').val());});
+		$('#filtre_orga_age').change(function() {pmAffectation.controllers.orga.clickFilterAge($('#filtre_orga_age').val());});
 	},
 	
 	/*
@@ -40,7 +41,7 @@ OrgaView.prototype = {
 	setOrgas: function() {
 		$('#liste_orgas').removeClass('spinner_medium');
 		
-		for (_iOrga in pmAffectation.data.orga) {
+		for (var _iOrga in pmAffectation.data.orga) {
 			var _html = '<div class="orga" id="orga_'+_iOrga+'" idOrga="'+_iOrga+'">';
 			_html += pmAffectation.data.orga[_iOrga]['prenom']+' '+pmAffectation.data.orga[_iOrga]['nom'];
 			(pmAffectation.data.orga[_iOrga]['surnom'] !== undefined) && (_html += ' ('+pmAffectation.data.orga[_iOrga]['surnom']+')')
@@ -51,7 +52,7 @@ OrgaView.prototype = {
 			$('#orga_'+_iOrga).bind('click', {id: _iOrga}, pmAffectation.controllers.orga.clickHandler); // handler de click
 		}
 		
-		$("#orga_"+pmAffectation.current.orga).addClass('current'); // met le focus là où il faut
+		$("#orga_"+pmAffectation.current.orga.id).addClass('current'); // met le focus là où il faut
 	},
 	
 	/*

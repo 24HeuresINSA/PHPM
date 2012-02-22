@@ -16,11 +16,11 @@ TacheView.prototype = {
 		/*$('#bouton_orga_prev').button({
 			icons: {primary: 'ui-icon-triangle-1-w'},
 			text: false
-		}).click(function() { $('#orga_'+pmAffectation.current.orga).prev().click(); });
+		}).click(function() { $('#orga_'+pmAffectation.current.orga.id).prev().click(); });
 		$('#bouton_orga_next').button({
 			icons: {primary: 'ui-icon-triangle-1-e'},
 			text: false
-		}).click(function() { $('#orga_'+pmAffectation.current.orga).next().click(); });
+		}).click(function() { $('#orga_'+pmAffectation.current.orga.id).next().click(); });
 		
 		$('#bouton_refresh').button({
 			icons: {primary: 'ui-icon-refresh'},
@@ -46,7 +46,7 @@ TacheView.prototype = {
 			$('#orga_'+_iOrga).bind('click', {id: _iOrga}, pmAffectation.controllers.orga.clickHandler); // handler de click
 		}
 		
-		$("#orga_"+pmAffectation.current.orga).addClass('current'); // met le focus là où il faut*/
+		$("#orga_"+pmAffectation.current.orga.id).addClass('current'); // met le focus là où il faut*/
 	},
 	
 	/*
@@ -64,8 +64,8 @@ TacheView.prototype = {
 			
 			$('#liste_taches').append(_html);
 			
-			// TODO : handler de click
-			//$('#tache_'+_iOrga).bind('click', {id: _iOrga}, pmAffectation.controllers.tache.clickHandler); // handler de click
+			// handler de click, part dans Calendar (car générique)
+			$('#tache_'+_iCreneau).bind('click', {idCreneau: _iCreneau, idOrga: pmAffectation.current.orga.id}, pmAffectation.controllers.calendar.affecterCreneau); // handler de click
 		}
 	}
 	
