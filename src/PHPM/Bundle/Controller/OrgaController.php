@@ -27,7 +27,8 @@ class OrgaController extends Controller
 	 /**
      * Lists all Orga entities.
      *
-     * @Route("/affectation", name="orga_affectation")
+	 * @Route("/affectation", name="orga_affectation")
+     * @Route("/affectation/", name="orga_affectation")
      * @Template()
      */
     public function affectationAction()

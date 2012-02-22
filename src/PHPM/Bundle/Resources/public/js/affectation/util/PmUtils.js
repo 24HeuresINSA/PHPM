@@ -161,6 +161,9 @@ PmUtils.prototype = {
 	 */
 	// met en place l'écouteur
 	initHistoryListener: function() {
+		// code d'intialisation d'History.js
+		// code repris de leur GitHub officiel
+		
 	    var History = window.History; // Note: We are using a capital H instead of a lower h
 	    
 	    if (! History.enabled) {
@@ -178,12 +181,12 @@ PmUtils.prototype = {
 	// regarde si on ne passe pas déjà des paramètres
 	parseUrlParam: function() {
 		// les paramètres vont dans pmAffectation.current
+		var _hash = History.getHash(); // le hash est ce qui suit le # (non inclus)
 		
-		if (window.location.hash.substr(0, 7) == '#param&') {
-			// parseur - on a reconnu notre format
-			var _hash = window.location.hash.substr(7, window.location.hash.length);
+		if (_hash.substr(0, 6) == 'param&') { // parseur - on a reconnu notre format
+			var _str = _hash.substr(6, _hash.length);
 			
-			var _params = _hash.split('&'); // on part de couple1&couple2&couple3...
+			var _params = _str.split('&'); // on part de couple1&couple2&couple3...
 			
 			for (var _iParam in _params) {
 				var _paire = _params[_iParam].split('='); // on a des couples clé=valeur
@@ -191,19 +194,21 @@ PmUtils.prototype = {
 				pmAffectation.current[_paire[0]] = _paire[1]; // le stock
 			}
 		} else {
-			window.location.hash = ''; // tant pis pour ce qu'il y avait avant
+			window.location.hash = ''; // sinon tant pis pour ce qu'il y avait avant
 		}
 	},
 	// update un paramètre et change l'url en fonction
 	setUrlParam: function() {
 		// concrètement, pour ne pas avoir de problèmes, on reconstruit l'url entière, mais avec seulement les params valides
-		window.location.hash = '#param';
+		var _newHash = '#param';
 		
          for (var _iPaire in pmAffectation.current) {
          	if ($.isNumeric(pmAffectation.current[_iPaire]) === true) {
-				window.location.hash += '&'+_iPaire+'='+pmAffectation.current[_iPaire];
+				_newHash += '&'+_iPaire+'='+pmAffectation.current[_iPaire];
 			}
          }
+         
+         History.pushState(null, null, _newHash);
 	},
 	
 	/*
