@@ -387,7 +387,7 @@ class OrgaController extends Controller
 		$plage_id= $request->request->get('plage_id', '');
 		$niveau_confiance= $request->request->get('confiance_id', '');
 		$maxDateNaissance = new \DateTime();
-		$id_creaneau = $request->request->get('creneau_id', '');
+		$id_creneau = $request->request->get('creneau_id', '');
 		$bloc = $request->request->get('bloc', '0');
 		
 		if($age!='')
