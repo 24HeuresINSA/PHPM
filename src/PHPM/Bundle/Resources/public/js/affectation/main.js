@@ -21,7 +21,7 @@
 	// infos courantes
 	pmAffectation.current = {};
 	// bien mettre des valeurs par défaut aux paramètres
-	pmAffectation.current.orga = 1;
+	pmAffectation.current.orga = {id: 1};
 	pmAffectation.current.plage = 1; // par défaut on est sur la plage 0
 	
 	// les MVC
@@ -49,7 +49,7 @@ $(document).ready(function() {
 	pmUtils.setHideTopMenu();
 	// 0.5 : travail sur l'historique
 	pmHistory.initHistoryListener(); 
-	pmHistory.parseUrlParam();
+	pmHistory.parseUrlParam(); // un peu bizarre : parfois faut le faire, parfois pas
 	
 	// 1 : lancer les requêtes pour les paramètres
 	// requêtes synchrones car nécessaire partout dans l'appli

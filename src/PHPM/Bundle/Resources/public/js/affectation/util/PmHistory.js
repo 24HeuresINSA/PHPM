@@ -46,35 +46,33 @@ PmHistory.prototype = {
 		if (_hash.substr(0, 6) == 'param&') { // parseur - on a reconnu notre format
 			var _str = decodeURIComponent(_hash.substr(6, _hash.length)); // petite décodage du format URL nécessaire
 			
-			// on décode ça dans un tableau provisoire
-			var _params = _str.split('&'); // on part de couple1&couple2&couple3...
-			
+			// on décode ça (fonction cf hack.js)
+			var _params = $.deparam(_str);
+
 			for (var _iParam in _params) {
-				// TODO : log("découpage de la chaine");
-				
-				var _paire = _params[_iParam].split('='); // on a des couples clé=valeur
-				
-				// pour chaque couple, on va regarder ce qu'il faut faire
-				if (pmAffectation.current[_paire[0]] === undefined) { // il n'existe pas, on créé la valeur
-					pmAffectation.current[_paire[0]] = _paire[1];
+				// pour chaque ligne, on va regarder ce qu'il faut faire
+				if (pmAffectation.current[_iParam] === undefined) { // il n'existe pas, on créé la valeur
+					pmAffectation.current[_iParam] = _params[_iParam];
 				} else {
 					// sinon faut tester, voir si on met à jour la valeur
-					// TODO : console.log(_paire[0], _paire[1]);
-					switch (_paire[0]) {
+					switch (_iParam) {
 						case 'orga':
-							if (_paire[1] != pmAffectation.current['orga']) {
-								pmAffectation.current['orga'] = _paire[1];
+							if (pmUtils.areEquals(_params['orga'], pmAffectation.current['orga']) === false) {
+								pmAffectation.current['orga'] = _params['orga'];
 								(pmHistory.refreshData === true) && (pmAffectation.controllers.orga.getData());
 							}
 							break;
 						case 'plage':
-							if (_paire[1] != pmAffectation.current['plage']) {
-								pmAffectation.current['plage'] = _paire[1];
+							if (pmUtils.areEquals(_params['plage'], pmAffectation.current['plage']) === false) {
+								pmAffectation.current['plage'] = _params['plage'];
 								(pmHistory.refreshData === true) && (pmAffectation.controllers.calendar.getData());
 							}
 							break;
 						default:
-							// là on ne sait pas quoi faire de particulier
+							// autres cas, on a pas de refresh de donnée à lancer
+							if (_params[_iParam] != pmAffectation.current[_iParam]) {
+								pmAffectation.current[_iParam] = _params[_iParam];
+							}
 							break;
 					}
 				}
