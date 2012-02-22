@@ -30,13 +30,7 @@ PmHistory.prototype = {
 		    }
 		
 		    // on va écouter le changement d'adresse, dessus on reparse
-		    History.Adapter.bind(window, 'statechange', function() { // Note: We are using statechange instead of popstate
-		        console.error("déclenché");
-		        
-		        var State = History.getState(); // Note: We are using History.getState() instead of event.state
-		        
-		        History.log(State.data, State.title, State.url); // log
-		        
+		    History.Adapter.bind(window, 'popstate', function() { // Adapté pour utiliser popstate au lieu de statechange
 		        pmHistory.parseUrlParam(true);
 		    });
 		//})(window);
@@ -70,7 +64,9 @@ PmHistory.prototype = {
 					switch (_paire[0]) {
 						case 'orga':
 							if (_paire[1] !== pmAffectation.current['orga']) {
+								log("ici");
 								pmAffectation.current['orga'] = _paire[1];
+								log("done");
 								(doLaunch) && (pmAffectation.controllers.orga.getData());
 							}
 							break;
@@ -93,6 +89,6 @@ PmHistory.prototype = {
 		// Jquery goodness for sérialiser rapidemment (et en profondeur)
 		var _newHash = '#param&' + $.param(pmAffectation.current);
 		
-        History.pushState(null, null, _newHash);
+        History.replaceState(null, null, _newHash);
 	},
 }
