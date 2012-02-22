@@ -28,7 +28,8 @@ OrgaModel.prototype = {
 		// -1 est le wildcart
 		(($.isNumeric(pmAffectation.current.confiance) === true) && (pmAffectation.current.confiance != -1)) && (_params.confiance_id = pmAffectation.current.confiance);
 		(($.isNumeric(pmAffectation.current.permis) === true) && (pmAffectation.current.permis != -1)) && (_params.permis = pmAffectation.current.permis);
-		// TODO : age ou date de naissance
+		// pour la date de naissance, on la calcule depuis l'age avec le 1er jour de la plage où on est
+		(($.isNumeric(pmAffectation.current.age) === true) && (pmAffectation.current.age != -1)) && (_params.age = pmAffectation.current.age);
 		
 		$.ajax({
 			url: pmAffectation.url+pmAffectation.paths.orgas,

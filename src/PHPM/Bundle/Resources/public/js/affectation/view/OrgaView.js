@@ -32,6 +32,7 @@ OrgaView.prototype = {
 		// filtres
 		$('#filtre_orga_confiance').change(function() {pmAffectation.controllers.orga.clickFilterConfiance($('#filtre_orga_confiance').val());});
 		$('#filtre_orga_permis').change(function() {pmAffectation.controllers.orga.clickFilterPermis($('#filtre_orga_permis').val());});
+		$('#filtre_orga_age').change(function() {pmAffectation.controllers.orga.clickFilterAge($('#filtre_orga_age').val());});
 	},
 	
 	/*

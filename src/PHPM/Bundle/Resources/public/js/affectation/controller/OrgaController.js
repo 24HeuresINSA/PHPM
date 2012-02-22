@@ -67,6 +67,14 @@ OrgaController.prototype = {
 		pmHistory.setUrlParam(); // maj de l'url
 		
 		pmAffectation.controllers.orga.getData();
+	},
+	// click sur le filtre age
+	clickFilterAge: function(idAge) {
+		pmAffectation.current.age = idAge;
+		
+		pmHistory.setUrlParam(); // maj de l'url
+		
+		pmAffectation.controllers.orga.getData();
 	},	
 
 }
