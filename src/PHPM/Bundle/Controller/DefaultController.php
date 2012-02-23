@@ -62,10 +62,9 @@ class DefaultController extends Controller
                 return array();
     
             } elseif($openid->mode == 'cancel') {
-                $message= 'User has canceled authentication!';
-                return array("m"=>$message);
+                return array("m"=>'error');
             } else {
-                $message= 'User ' . ($openid->validate() ? $openid->identity . ' has ' : 'has not ') . 'logged in.';
+//                 $message= 'User ' . ($openid->validate() ? $openid->identity . ' has ' : 'has not ') . 'logged in.';
                 $attrs = $openid->getAttributes();
                 
                 $email = $attrs['contact/email'];
@@ -75,7 +74,7 @@ class DefaultController extends Controller
                 $user = $em->getRepository('PHPMBundle:Orga')->findOneByEmail($email);
                 
                 if (!$user) {
-                    throw $this->createNotFoundException('Unable to find Orga entity.');
+                    return array('m'=>'notfound', 'email'=>$email);
                 }
                 
                 
@@ -96,14 +95,14 @@ class DefaultController extends Controller
                 
                 
 
-                return array("email"=>$email);
+                return array('m'=>'success', 'email'=>$email);
             }
         } catch(ErrorException $e) {
-            return array("m"=>$message);
+            return array("m"=>'error');
         }
     
          
-    return array("m"=>$message);
+    return array("m"=>'error');
          
          
     }

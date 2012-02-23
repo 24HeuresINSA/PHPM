@@ -107,15 +107,85 @@ class OrgaController extends Controller
             throw new AccessDeniedException();
         }
         $entity = new Orga();
-        $form   = $this->createForm(new OrgaType(), $entity);
+        $form   = $this->createForm(new OrgaType(true), $entity);
 
         return array(
             'entity' => $entity,
             'form'   => $form->createView()
         );
     }
-
+    
     /**
+     * Displays a form to create a new Orga Hard entity.
+     *
+     * @Route("/register", name="orga_register")
+     * @Method("post")
+     * @Template()
+     */
+    public function registerAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $request = $this->getRequest();
+        $confianceId= $request->request->get('confiance', '');
+        $email = $request->request->get('email', '');
+        
+        if ($confianceId=='' || $email=='') {
+            throw new AccessDeniedException();
+        }
+        
+        $entity = new Orga();
+        $entity->setEmail($email);
+        $entity->setStatut(0);
+        
+        $confianceObject = $em->getRepository('PHPMBundle:Confiance')->find($confianceId);
+        
+        if (!$confianceObject) {
+            throw $this->createNotFoundException('Unable to find Confiance entity.');
+        }
+        
+        $entity->setConfiance($confianceObject);
+        $form   = $this->createForm(new OrgaType(false), $entity);
+    
+        return array(
+                'entity' => $entity,
+                'form'   => $form->createView()
+        );
+    }
+    
+    /**
+     * Creates a new Orga entity.
+     *
+     * @Route("/registerprocess", name="orga_registerprocess")
+     * @Method("post")
+     * 
+     */
+    public function registerprocessAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $entity  = new Orga();
+        $request = $this->getRequest();
+        $entity->setStatut(0);
+        $entity->setConfiance($em->getRepository('PHPMBundle:Confiance')->find(3));
+        $entity->setIsAdmin(false);
+        $form    = $this->createForm(new OrgaType(false), $entity);
+        $form->bindRequest($request);
+    
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($entity);
+            $em->flush();
+    
+            return $this->redirect($this->generateUrl('login', array('m' => 'registered')));
+    
+        }
+    
+        return array(
+                'entity' => $entity,
+                'form'   => $form->createView()
+        );
+    }
+
+ /**
      * Creates a new Orga entity.
      *
      * @Route("/create", name="orga_create")
@@ -194,7 +264,7 @@ class OrgaController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Orga entity.');
         }
-        $protectedfields = array($entity->getIsAdmin(),$entity->getConfiance(),$entity->getStatut());
+        $protectedfields = array($entity->getIsAdmin(),$entity->getConfiance(),$entity->getStatut(), $entity->getEmail());
         
 
 
@@ -208,7 +278,7 @@ class OrgaController extends Controller
         
         
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') &&
-                 ($protectedfields!=array($entity->getIsAdmin(),$entity->getConfiance(),$entity->getStatut()))
+                 ($protectedfields!=array($entity->getIsAdmin(),$entity->getConfiance(),$entity->getStatut(), $entity->getEmail()))
                 
                 ) {
             throw new AccessDeniedException();

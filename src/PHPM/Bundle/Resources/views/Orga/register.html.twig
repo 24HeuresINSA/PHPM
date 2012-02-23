@@ -1,0 +1,16 @@
+{% extends "PHPMBundle:Orga:layout.html.twig"  %}
+{% set pageTitle = 'Inscription' %}
+
+
+{% block content %}
+<form action="{{ path('orga_registerprocess') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">S'inscrire</button>
+    </p>
+</form>
+{% endblock %}
+
+{% block actions %}
+
+{% endblock %}
