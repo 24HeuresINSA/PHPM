@@ -166,7 +166,7 @@ class Creneau
     }
     public function toArrayOrgaWebService()
     {
-    	return array("debut" => $this->getDebut(),"fin" => $this->getFin(), "duree" => $this->getDuree(), "tache" => $this->getPlageHoraire()->getTache()->getNom());
+    	return array("debut" => $this->getDebut()->format('Y-m-d H:i:s'),"fin" => $this->getFin()->format('Y-m-d H:i:s'), "duree" => $this->getDuree(), "tache" => $this->getPlageHoraire()->getTache()->getNom());
     }
     public function toSimpleArray()
     {
