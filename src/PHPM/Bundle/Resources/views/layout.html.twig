@@ -38,9 +38,11 @@
         		{% block topHeader %}
         		<h1><a href="{{ path('accueil') }}"> PlanningMaker</a> &gt; <a href="{{ path(indexRoute) }}"> {{ sectionTitle }}</a> &gt;  {{ pageTitle }}</h1>
         		{% endblock %}
+        		{% if is_granted('ROLE_ADMIN') %}
         		<form method="post" action="{{ path('search') }}">
         			<input id="searchBox" name="s" />
-        		</form>        		
+        		</form>   
+        		{% endif %}     		
         	</div>
         	
         	<div class="menu" id="menu">
