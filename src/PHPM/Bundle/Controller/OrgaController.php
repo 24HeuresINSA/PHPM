@@ -157,7 +157,7 @@ class OrgaController extends Controller
      *
      * @Route("/registerprocess", name="orga_registerprocess")
      * @Method("post")
-     * @Template()
+     * @Template("PHPMBundle:Orga:register.html.twig")
      */
     public function registerprocessAction()
     {
