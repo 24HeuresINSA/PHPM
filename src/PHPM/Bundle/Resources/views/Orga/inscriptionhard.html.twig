@@ -1,7 +1,12 @@
 {% extends "PHPMBundle:Orga:layout.html.twig"  %}
 {% set pageTitle = 'Hard' %}
 
-
+{% block style %}
+{{ parent() }}
+			{% stylesheets 'bundles/phpm/css/registerHard.css' filter='cssrewrite'  %}
+				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
+			{% endstylesheets %}
+{% endblock %}
 
 {% block content %}
 
