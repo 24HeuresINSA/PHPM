@@ -1,4 +1,8 @@
-<h1>DisponibiliteInscription list</h1>
+{% extends "PHPMBundle:DisponibiliteInscription:layout.html.twig"  %}
+{% set pageTitle = 'Liste des DI' %}
+{% use "PHPMBundle::index.html.twig" %}
+
+{% block content %}
 
 <table class="records_list">
     <thead>
@@ -6,34 +10,25 @@
             <th>Id</th>
             <th>Debut</th>
             <th>Fin</th>
-            <th>Actions</th>
+            <th></th>
+
         </tr>
     </thead>
     <tbody>
     {% for entity in entities %}
-        <tr>
+        
+        
+        <tr style="cursor:pointer" onclick="window.location='{{ path('disponibiliteinscription_show', { 'id': entity.id }) }}'">
             <td><a href="{{ path('disponibiliteinscription_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td>{% if entity.debut %}{{ entity.debut|date('Y-m-d H:i:s') }}{% endif%}</td>
             <td>{% if entity.fin %}{{ entity.fin|date('Y-m-d H:i:s') }}{% endif%}</td>
+            
+            
             <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('disponibiliteinscription_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('disponibiliteinscription_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+				{{ bouton.edit( path('disponibiliteinscription_edit', { 'id': entity.id }) ) }}
             </td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
-
-<ul>
-    <li>
-        <a href="{{ path('disponibiliteinscription_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+{% endblock %}
