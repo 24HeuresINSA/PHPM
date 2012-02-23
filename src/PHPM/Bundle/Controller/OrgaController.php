@@ -627,7 +627,7 @@ class OrgaController extends Controller
 		$niveau_confiance= $request->request->get('confiance_id', '');
 		$maxDateNaissance = new \DateTime();
 
-		$id_creneau = $request->request->get('creneau_id', '');
+		$creneau = $request->request->get('creneau_id', '');
 		$bloc = $request->request->get('bloc', '0');
 		
 		if($age!='')
