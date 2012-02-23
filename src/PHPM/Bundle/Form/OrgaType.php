@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilder;
 class OrgaType extends AbstractType
 {
     protected $admin;
-    function __construct($admin=false){
+    function __construct($admin){
         
         
             $this->admin =$admin;
@@ -36,13 +36,15 @@ class OrgaType extends AbstractType
                     'PC','GMC','GMD', 'GMPP', 'IF', 'SGM', 'GI', 'GE', 'TC', 'GCU', 'BIM', 'BIOCH', 'GEN', 'Autre' 
                     )))
             ->add('commentaire')
-            ->add('permis','checkbox',array('label'=>'Titulaire du permis B', 'required'=>false));
+            ->add('permis','choice',array('label'=>'Titulaire du permis B', 'choices'=>array(
+                    0=>'Non', 1=>'Permis de + de deux ans'
+                    )));
     	if($this->admin){
         $builder
 			->add('confiance', null,array('read_only'=>!$this->admin))
 			->add('statut', 'choice',array('choices'=>array('0'=>'Inscrit','1'=>'Validé'), 'read_only'=>!$this->admin))
 			->add('isAdmin',null,array('label'=>'Administrateur','read_only'=>!$this->admin));
-        ;
+        
     	}
     }
 
