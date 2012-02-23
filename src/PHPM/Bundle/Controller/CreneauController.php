@@ -262,11 +262,11 @@ class CreneauController extends Controller
     * 
     *
     * @Route("/{cid}/affecter/{oid}", name="creneau_affecter")
-    * @Method("post")
+    * 
     */
     
     
-    public function affecterCreneau()
+    public function affecterCreneau($cid, $oid)
     { 
     	//affecter à l'unique dispo qui commence avant et qui fini après
     	
@@ -277,14 +277,45 @@ class CreneauController extends Controller
     	}
 		
     	$orga = $em->getRepository('PHPMBundle:Orga')->find($oid);
+    	if (!$orga) {
+    		throw $this->createNotFoundException('Orga invalide.');
+    	}
     	$dispo = $em->getRepository('PHPMBundle:Disponibilite')->getContainingDisponibilite($orga, $creneau);
-    	if (!$dispo) {
-    		throw $this->createNotFoundException('Unable to find Dispo entity.');
+    	if (($dispo[0])==NULL) {
+    		throw $this->createNotFoundException('L\' orga n\'est pas disponible sur ce créneau.');
     	}
     	
-    	$creneau.setDisponibilite($dispo);
+    	
+    	
+    	$creneau->setDisponibilite($dispo[0]);
+    	$validator = $this->get('validator');
+    	$errors = $validator->validate($creneau);
+    	
+    	
+    	
+    	
+    	
+    	
+    	$response = new Response();
+    	$response->headers->set('Content-Type', 'application/json');
+    	
+    	
+    	
+    	
+    	if (count($errors) > 0) {
+    		
+    		$err =$errors[0];
+    		
+    		$response->setContent(json_encode($err->getMessageTemplate()));
+    	}else{
+    		$response->setContent(json_encode("OK"));
+    	}
+    	
+    	return $response;
+    	
     	
     }
+    
 }
 
 
