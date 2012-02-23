@@ -36,7 +36,7 @@ class OrgaType extends AbstractType
                     'PC','GMC','GMD', 'GMPP', 'IF', 'SGM', 'GI', 'GE', 'TC', 'GCU', 'BIM', 'BIOCH', 'GEN', 'Autre' 
                     )))
             ->add('commentaire')
-            ->add('permis','checkbox',array('label'=>'Titulaire du permis B'));
+            ->add('permis','checkbox',array('label'=>'Titulaire du permis B', 'required'=>false));
     	if($this->admin){
         $builder
 			->add('confiance', null,array('read_only'=>!$this->admin))
