@@ -42,11 +42,17 @@ class DefaultController extends Controller
     public function loginAction()
     {
     
-        $message= "";
+        $em = $this->getDoctrine()->getEntityManager();
+    	$pref = $em->getRepository('PHPMBundle:Config')->findOneByField('server.baseurl');
+    	if($pref)
+    	    $serverurl = $pref->getvalue();
+    	else 
+    	    $serverurl = 'localhost';
          
         try {
+            
     
-            $openid = new \LightOpenID($_SERVER['SERVER_NAME'].':'.$_SERVER['REMOTE_PORT']);
+            $openid = new \LightOpenID($serverurl);
             if(!$openid->mode) {
                 if(isset($_GET['login'])) {
                     $openid->identity = 'https://www.google.com/accounts/o8/id';
