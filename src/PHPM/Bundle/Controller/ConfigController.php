@@ -243,29 +243,29 @@ class ConfigController extends Controller {
 
 			$conn = $em->getConnection();
 
-			$sql = 'TRUNCATE TABLE `Creneau`;';
-			$conn->query($sql);
+// 			$sql = 'TRUNCATE TABLE `Creneau`;';
+// 			$conn->query($sql);
 
-			$sql = 'TRUNCATE TABLE `Disponibilite`';
-			$conn->query($sql);
+// 			$sql = 'TRUNCATE TABLE `Disponibilite`';
+// 			$conn->query($sql);
 
-			$sql = 'TRUNCATE TABLE `PlageHoraire`';
-			$conn->query($sql);
+// 			$sql = 'TRUNCATE TABLE `PlageHoraire`';
+// 			$conn->query($sql);
 
-			$sql = 'TRUNCATE TABLE `Tache`;	';
-			$conn->query($sql);
+// 			$sql = 'TRUNCATE TABLE `Tache`;	';
+// 			$conn->query($sql);
 
-			$sql = 'TRUNCATE TABLE `Orga`;';
-			$conn->query($sql);
+// 			$sql = 'TRUNCATE TABLE `Orga`;';
+// 			$conn->query($sql);
 
-			$sql = 'TRUNCATE TABLE `Categorie`';
-			$conn->query($sql);
-			$sql = 'TRUNCATE TABLE `Confiance`';
-			$conn->query($sql);
-			$sql = 'TRUNCATE TABLE `Config`';
-			$conn->query($sql);
-			$sql = 'TRUNCATE TABLE `User`';
-			$conn->query($sql);
+// 			$sql = 'TRUNCATE TABLE `Categorie`';
+// 			$conn->query($sql);
+// 			$sql = 'TRUNCATE TABLE `Confiance`';
+// 			$conn->query($sql);
+// 			$sql = 'TRUNCATE TABLE `Config`';
+// 			$conn->query($sql);
+// 			$sql = 'TRUNCATE TABLE `User`';
+// 			$conn->query($sql);
 
 			$sql = "SET SQL_MODE=\"NO_AUTO_VALUE_ON_ZERO\";
 SET AUTOCOMMIT=0;
