@@ -46,7 +46,7 @@ class DefaultController extends Controller
          
         try {
     
-            $openid = new \LightOpenID($_SERVER['SERVER_NAME']);
+            $openid = new \LightOpenID($_SERVER['SERVER_NAME'].':'.$_SERVER['REMOTE_PORT']);
             if(!$openid->mode) {
                 if(isset($_GET['login'])) {
                     $openid->identity = 'https://www.google.com/accounts/o8/id';
