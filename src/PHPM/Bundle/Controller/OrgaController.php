@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints\Url;
 use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\Security\Acl\Exception\Exception;
-
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolation;
@@ -36,6 +36,10 @@ class OrgaController extends Controller
      */
     public function affectationAction()
     {
+     if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        throw new AccessDeniedException();
+        }
+        
         $em = $this->getDoctrine()->getEntityManager();
 
         $entities = $em->getRepository('PHPMBundle:Orga')->findAll();
@@ -54,6 +58,9 @@ class OrgaController extends Controller
      */
     public function indexAction()
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
         $em = $this->getDoctrine()->getEntityManager();
 
         $entities = $em->getRepository('PHPMBundle:Orga')->findAll();
@@ -76,6 +83,10 @@ class OrgaController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Orga entity.');
         }
+        
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser() != $entity) {
+            throw new AccessDeniedException();
+        }
 
         $deleteForm = $this->createDeleteForm($id);
 
@@ -92,6 +103,9 @@ class OrgaController extends Controller
      */
     public function newAction()
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
         $entity = new Orga();
         $form   = $this->createForm(new OrgaType(), $entity);
 
@@ -110,9 +124,12 @@ class OrgaController extends Controller
      */
     public function createAction()
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
         $entity  = new Orga();
         $request = $this->getRequest();
-        $form    = $this->createForm(new OrgaType(), $entity);
+        $form    = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN')), $entity);
         $form->bindRequest($request);
 
         if ($form->isValid()) {
@@ -138,6 +155,7 @@ class OrgaController extends Controller
      */
     public function editAction($id)
     {
+
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:Orga')->find($id);
@@ -146,7 +164,11 @@ class OrgaController extends Controller
             throw $this->createNotFoundException('Unable to find Orga entity.');
         }
 
-        $editForm = $this->createForm(new OrgaType(), $entity);
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser() != $entity) {
+            throw new AccessDeniedException();
+        }
+
+        $editForm = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN')), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -165,13 +187,16 @@ class OrgaController extends Controller
      */
     public function updateAction($id)
     {
+
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:Orga')->find($id);
-
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Orga entity.');
         }
+        $protectedfields = array($entity->getIsAdmin(),$entity->getConfiance(),$entity->getStatut());
+        
+
 
         $editForm   = $this->createForm(new OrgaType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
@@ -179,7 +204,18 @@ class OrgaController extends Controller
         $request = $this->getRequest();
 
         $editForm->bindRequest($request);
-
+        
+        
+        
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') &&
+                 ($protectedfields!=array($entity->getIsAdmin(),$entity->getConfiance(),$entity->getStatut()))
+                
+                ) {
+            throw new AccessDeniedException();
+        }
+        
+        
+        
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
@@ -202,6 +238,9 @@ class OrgaController extends Controller
      */
     public function deleteAction($id)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
        
             $em = $this->getDoctrine()->getEntityManager();
             $entity = $em->getRepository('PHPMBundle:Orga')->find($id);
@@ -219,6 +258,7 @@ class OrgaController extends Controller
 
     private function createDeleteForm($id)
     {
+        
         return $this->createFormBuilder(array('id' => $id))
             ->add('id', 'hidden')
             ->getForm()
@@ -233,7 +273,10 @@ class OrgaController extends Controller
      */
 	public function validationAction()	
 	{
-		
+	    if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+	        throw new AccessDeniedException();
+	    }
+	    
         $request = $this->get('request')->request;      
 		$em = $this->getDoctrine()->getEntityManager();
 						
@@ -395,6 +438,9 @@ class OrgaController extends Controller
      */
 	public function importAction()	
 	{
+	    if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+	        throw new AccessDeniedException();
+	    }
 		$em = $this->getDoctrine()->getEntityManager();
 		if ($this->get('request')->getMethod() == 'GET') {
 			
@@ -478,6 +524,9 @@ class OrgaController extends Controller
      */
 	public function planningAction($id)	
 	{
+	    if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+	        throw new AccessDeniedException();
+	    }
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		$orga = $em->getRepository('PHPMBundle:Orga')->find($id);

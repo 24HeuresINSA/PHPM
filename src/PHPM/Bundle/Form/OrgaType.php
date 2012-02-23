@@ -7,8 +7,17 @@ use Symfony\Component\Form\FormBuilder;
 
 class OrgaType extends AbstractType
 {
+    protected $admin;
+    function __construct($admin=false){
+        
+        
+            $this->admin =$admin;
+    }
+    
+    
     public function buildForm(FormBuilder $builder, array $options)
     {
+             
     	$currentYear = date('Y');
     	$years = array(); 	
     	
@@ -26,8 +35,9 @@ class OrgaType extends AbstractType
             ->add('departement')
             ->add('commentaire')
             ->add('permis')
-			->add('confiance')
-			->add('statut')
+			->add('confiance', null,array('read_only'=>!$this->admin))
+			->add('statut', null,array('read_only'=>!$this->admin))
+			->add('isAdmin',null,array('label'=>'Administrateur','read_only'=>!$this->admin));
         ;
     }
 

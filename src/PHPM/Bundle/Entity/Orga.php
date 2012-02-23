@@ -147,7 +147,7 @@ class Orga implements UserInterface
     protected $disponibilitesInscription;
     
     /**
-     * @ORM\Column(type="boolean", name="is_admin")
+     * @ORM\Column(type="boolean", name="is_admin",nullable=true)
      */
     protected $isAdmin;
     

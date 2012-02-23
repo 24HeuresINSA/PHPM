@@ -46,7 +46,7 @@
         	<div class="menu" id="menu">
         		{% block menuheader %}
         		<ul>
-        		    {% if is_granted('ROLE_USER') %}
+        		    {% if is_granted('ROLE_ADMIN') %}
         			<li><a href="{{ path('phpm__default_home') }}">Accueil</a></li>
         			<li><a href="{{ path('orga') }}">Orga</a></li>
         			<li><a href="{{ path('orga_affectation') }}">Affectation</a></li>
@@ -59,6 +59,10 @@
          			<li><a href="{{ path('config') }}">Configuration</a></li>
         			<!--<li><a href="/">T&acirc;ches</a></li>
         			<li><a href="/">Administration</a></li>-->
+        			<li><a href="{{ path('logout') }}">Logout</a></li>
+        			{% elseif is_granted('ROLE_USER') %}
+        			<li><a href="{{ path('orga_show',{'id':app.user.id })}}">Mes Informations</a></li>
+        			<li><a href="{{ path('orga_inscriptionhard')}}">Mes Disponibilités</a></li>
         			<li><a href="{{ path('logout') }}">Logout</a></li>
         		    {% else %}
         		    <li><a href="{{ path('login') }}">Login</a></li>

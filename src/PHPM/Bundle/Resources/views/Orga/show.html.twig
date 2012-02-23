@@ -52,6 +52,7 @@
 {% endblock %}
 
 {% block actions %}
+{% if is_granted('ROLE_ADMIN') %}
 {{ parent() }}
 <li>
     <a href="{{ path('orga_planning', { 'id': entity.id }) }}">
@@ -64,4 +65,11 @@
     </a>
 </li>
 
+{% else %}
+<li>
+    <a href="{{ path('orga_edit', { 'id': entity.id }) }}">
+    Modifier mes Informations
+    </a>
+</li>
+{% endif %}
 {% endblock %}

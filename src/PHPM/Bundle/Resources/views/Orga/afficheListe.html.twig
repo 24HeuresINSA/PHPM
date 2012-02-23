@@ -12,6 +12,7 @@
             <th>Departement</th>
             <th>Commentaire</th>
             <th>Permis</th>
+            <th>Admin</th>
         </tr>
     </thead>
     <tbody>
@@ -27,6 +28,7 @@
             <td>{{ entity.departement }}</td>
             <td>{{ entity.commentaire }}</td>
             <td>{{ entity.permis }}</td>
+            <td>{{ entity.isAdmin }}</td>
         </tr>
         {%   endfor %}
     </tbody>

@@ -11,3 +11,10 @@
     </p>
 </form>
 {% endblock %}
+
+{% block actions %}
+{% if is_granted('ROLE_ADMIN') %}
+{{ parent() }}
+{% else %}
+{% endif %}
+{% endblock %}
