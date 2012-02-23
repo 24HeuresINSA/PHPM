@@ -297,7 +297,7 @@ COMMIT;
 
 			
 
-			return $this->redirect($this->generateUrl('config_manif'));
+			return $this->redirect($this->generateUrl('login'));
 
 		}
 
