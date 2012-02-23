@@ -168,7 +168,7 @@ class DisponibiliteInscriptionController extends Controller
      * Deletes a DisponibiliteInscription entity.
      *
      * @Route("/{id}/delete", name="disponibiliteinscription_delete")
-     * @Method("post")
+     * 
      */
     public function deleteAction($id)
     {
