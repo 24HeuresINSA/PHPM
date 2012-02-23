@@ -21,14 +21,14 @@ class Tache
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
     
     /**
     * @var integer $importId
     *
     * @ORM\Column(name="importid", type="integer", nullable=true)
     */
-    private $importId;
+    protected $importId;
 
     /**
      * @var string $nom
@@ -36,7 +36,7 @@ class Tache
      * @ORM\Column(name="nom", type="string", length=255)
      * @Assert\NotBlank()
      */
-    private $nom;
+    protected $nom;
 
     /**
      * @var text $consignes
@@ -44,14 +44,14 @@ class Tache
      * @ORM\Column(name="consignes", type="text")
      * @Assert\NotBlank()
      */
-    private $consignes;
+    protected $consignes;
     
     /**
     * @var text $materielNecessaire
     *
     * @ORM\Column(name="materielNecessaire", type="text", nullable=true)
     */
-    private $materielNecessaire;
+    protected $materielNecessaire;
     
     
     /**
@@ -60,7 +60,7 @@ class Tache
     * @ORM\Column(name="permisNecessaire", type="smallint")
     * @Assert\Min(limit = "0")
     */
-    private $permisNecessaire;
+    protected $permisNecessaire;
 
     /**
     * @var smallint $ageNecessaire
@@ -68,7 +68,7 @@ class Tache
     * @ORM\Column(name="ageNecessaire", type="smallint")
     * @Assert\Min(limit = "0")
     */
-    private $ageNecessaire;
+    protected $ageNecessaire;
     
     
     /**
@@ -77,7 +77,7 @@ class Tache
      * @ORM\Column(name="lieu", type="string", length=255)
      * @Assert\NotBlank()
      */
-    private $lieu;
+    protected $lieu;
     
     
     /**
@@ -85,7 +85,7 @@ class Tache
     * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
     * @Assert\Valid
     */
-    private $responsable;
+    protected $responsable;
     
     /**
     * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="taches")

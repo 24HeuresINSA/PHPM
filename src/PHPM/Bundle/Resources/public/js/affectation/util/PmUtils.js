@@ -50,10 +50,12 @@ PmUtils.prototype = {
 		if ($('.header').css('display') === 'none') {
 			$('.header').show(500, 'swing');
 			$('#bouton_hide_menu').html('^ Cacher ^');
+			
 			pmUtils.setAppHeight(79);
 		} else {
 			$('.header').hide(500, 'swing');
 			$('#bouton_hide_menu').html('&or; Menu &or;');
+			
 			pmUtils.setAppHeight(0);
 		}
 	},
@@ -157,56 +159,6 @@ PmUtils.prototype = {
 	},
 	
 	/*
-	 * Travail sur l'URL
-	 */
-	// met en place l'écouteur
-	initHistoryListener: function() {
-	    var History = window.History; // Note: We are using a capital H instead of a lower h
-	    
-	    if (! History.enabled) {
-	         // History.js is disabled for this browser.
-	         // This is because we can optionally choose to support HTML4 browsers or not.
-	        return false;
-	    }
-	
-	    // Bind to StateChange Event
-	    History.Adapter.bind(window,'statechange',function() { // Note: We are using statechange instead of popstate
-	        var State = History.getState(); // Note: We are using History.getState() instead of event.state
-	        History.log(State.data, State.title, State.url);
-	    });
-	},
-	// regarde si on ne passe pas déjà des paramètres
-	parseUrlParam: function() {
-		// les paramètres vont dans pmAffectation.current
-		
-		if (window.location.hash.substr(0, 7) == '#param&') {
-			// parseur - on a reconnu notre format
-			var _hash = window.location.hash.substr(7, window.location.hash.length);
-			
-			var _params = _hash.split('&'); // on part de couple1&couple2&couple3...
-			
-			for (var _iParam in _params) {
-				var _paire = _params[_iParam].split('='); // on a des couples clé=valeur
-
-				pmAffectation.current[_paire[0]] = _paire[1]; // le stock
-			}
-		} else {
-			window.location.hash = ''; // tant pis pour ce qu'il y avait avant
-		}
-	},
-	// update un paramètre et change l'url en fonction
-	setUrlParam: function() {
-		// concrètement, pour ne pas avoir de problèmes, on reconstruit l'url entière, mais avec seulement les params valides
-		window.location.hash = '#param';
-		
-         for (var _iPaire in pmAffectation.current) {
-         	if ($.isNumeric(pmAffectation.current[_iPaire]) === true) {
-				window.location.hash += '&'+_iPaire+'='+pmAffectation.current[_iPaire];
-			}
-         }
-	},
-	
-	/*
 	 * Tri un objet associatif - source :
 	 * http://www.latentmotion.com/how-to-sort-an-associative-array-object-in-javascript/
 	 */
@@ -227,6 +179,18 @@ PmUtils.prototype = {
 		}
 		
 		return sortedObj;
+	},
+	
+	/*
+	 * Permet de comparer 2 objects
+	 * Fonction perso, rapide se basant sur la représentation JSON
+	 */
+	areEquals: function(xObj, yObj) {
+		if (JSON.stringify(xObj) === JSON.stringify(yObj)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 };
 

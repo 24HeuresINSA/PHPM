@@ -28,7 +28,7 @@ class Creneau
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var datetime $debut
@@ -38,7 +38,7 @@ class Creneau
 	 * 
 	 * 
      */
-    private $debut;
+    protected $debut;
 
     /**
      * @var datetime $fin
@@ -48,7 +48,7 @@ class Creneau
 	 * @QuartHeure()
 	 * 
 	 */
-    private $fin;
+    protected $fin;
     
     /**
     * @ORM\ManyToOne(targetEntity="Disponibilite", inversedBy="creneaux")

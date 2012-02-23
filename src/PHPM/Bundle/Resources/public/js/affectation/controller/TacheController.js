@@ -41,8 +41,8 @@ TacheController.prototype = {
 	callbackTaches: function() {
 		/*pmAffectation.data.taches = pmAffectation.models.orga.getOrgas();
 		
-		pmAffectation.views.orga.setOrgas(pmAffectation.current.orga);
-		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga});*/
+		pmAffectation.views.orga.setOrgas();
+		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga.id});*/
 	},
 	
 	/*
@@ -54,7 +54,7 @@ TacheController.prototype = {
 		$("#orga_"+obj.data.id).addClass('current');
 
 		pmAffectation.current.orga = obj.data.id;
-		pmUtils.setUrlParam(); // maj de l'url
+		pmHistory.setUrlParam(); // maj de l'url
 		
 		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga});*/
 	},

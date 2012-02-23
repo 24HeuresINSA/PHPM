@@ -28,7 +28,7 @@ class Disponibilite
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var datetime $debut
@@ -38,7 +38,7 @@ class Disponibilite
      * @QuartHeure()
      * 
      */
-    private $debut;
+    protected $debut;
 
     /**
      * @var datetime $fin
@@ -47,7 +47,7 @@ class Disponibilite
      * @Assert\DateTime()
      * @QuartHeure()
      */
-    private $fin;
+    protected $fin;
     
     /**
     * @ORM\ManyToOne(targetEntity="Orga", inversedBy="disponibilites")

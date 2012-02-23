@@ -22,7 +22,7 @@ class Config
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string $field
@@ -30,7 +30,7 @@ class Config
      * @ORM\Column(name="field", type="string", length=255, unique=true)
      * @Assert\NotBlank()
      */
-    private $field;
+    protected $field;
     
     /**
      * @var string $label
@@ -38,7 +38,7 @@ class Config
      * @ORM\Column(name="label", type="string", length=255)
      * @Assert\NotBlank()
      */
-    private $label;
+    protected $label;
 
     /**
      * @var text $value
@@ -46,7 +46,7 @@ class Config
      * @ORM\Column(name="value", type="text")
      * @Assert\NotBlank()
      */
-    private $value;
+    protected $value;
 
 
     /**

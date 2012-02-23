@@ -1,0 +1,31 @@
+{% extends "PHPMBundle:Default:layout.html.twig"  %}
+{% set pageTitle = 'Login' %}
+
+{% block actions %}
+
+{% endblock %}
+
+
+{% block content %}
+{% if m is not defined%}
+
+<form action="?login" method="post">
+                        <button>Authentification</button>
+                        </form>
+                       
+                        
+{% elseif m=='error' %}
+Erreur lors de l'authentification.            
+{% elseif m=='success' %}
+Le compte {{ email }} à été authentifié avec succès.
+{% elseif m=='notfound' %}
+Bonjour, {{ email }} , vous n'êtes pas encore inscrit.
+<form action="{{ path('orga_register') }}" method="post">
+<input type="hidden" name="confiance" value="3">
+<input type="hidden" name="email" value="{{ email }}">
+<button>Procéder à l'inscription</button>
+</form>
+{% endif %}
+
+{% endblock %}
+
