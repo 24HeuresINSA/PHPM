@@ -78,7 +78,8 @@ PmHistory.prototype = {
 				}
 			}
 		} else {
-			window.location.hash = ''; // sinon on avait de la bullshit, on écrase
+			// sinon, soit c'était vide soit c'était de la bullshit, on écrase avec ce qu'il faut
+			pmHistory.setUrlParam();
 		}
 	},
 	
