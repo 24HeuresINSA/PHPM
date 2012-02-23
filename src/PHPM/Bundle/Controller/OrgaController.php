@@ -119,7 +119,7 @@ class OrgaController extends Controller
      * Displays a form to create a new Orga Hard entity.
      *
      * @Route("/register", name="orga_register")
-     * @Method("post")
+     * 
      * @Template()
      */
     public function registerAction()
