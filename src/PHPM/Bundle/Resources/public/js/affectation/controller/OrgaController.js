@@ -45,7 +45,7 @@ OrgaController.prototype = {
 		$("#orga_"+pmAffectation.current.orga.id).removeClass('current');
 		$("#orga_"+obj.data.id).addClass('current');
 		
-		pmAffectation.controllers.tache.empty(); // vide la colonne creneau
+		pmAffectation.controllers.creneau.empty(); // vide la colonne creneau
 
 		pmAffectation.current.orga.id = obj.data.id;
 		pmHistory.setUrlParam(); // maj de l'url
