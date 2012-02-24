@@ -75,8 +75,7 @@ class ConfigController extends Controller {
 	        return array('value' => $entity->getValue()	 );
 	    }else{
 	        $array = (array)json_decode($entity->getValue(),true);
-	        var_dump($array[$id]);
-	        return $array[$id];
+	        return array('value' => $array[$id]);
 	        
 	    }
 	

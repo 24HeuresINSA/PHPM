@@ -38,7 +38,7 @@
             <td>{{ entity.0.fin|date('Y-m-d H:i:s') }}</td>
             <td>
             {% if entity.permis is not null %}
-            {{ entity.permis }} :{{ entity.nborga }}
+            {% render "PHPMBundle:Config:display" with {'field': 'manifestation.permis.libelles', 'id':entity.permis} %} :{{ entity.nborga }}
             {% else %}
             0
             {% endif %}
