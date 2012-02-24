@@ -34,7 +34,7 @@
  * CONSTANTES
  */
 	// les urls sur lesquelles on fera les requêtes
-	pmAffectation.paths.plages = 'config/get/manifestation.plages';
+	pmAffectation.paths.plages = 'configv/get/manifestation.plages';
 	pmAffectation.paths.orgas = 'orga/query.json';
 	pmAffectation.paths.creneaux = 'creneau/query.json';
 	
