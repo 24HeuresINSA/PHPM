@@ -10,10 +10,11 @@
         
         {# c'est pas très beau - on met un code 'générique' dans un block - mais à priori la seule méthode #}
         {% block style %}
-			{% stylesheets 'bundles/phpm/css/style.css' filter='cssrewrite'  %}
-				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
-			{% endstylesheets %}
-				{% stylesheets 'bundles/phpm/css/forms.css' filter='cssrewrite'  %}
+			{% stylesheets
+				'bundles/phpm/css/style.css'
+				'bundles/phpm/css/forms.css'
+				filter='cssrewrite' 
+			%}
 				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
 			{% endstylesheets %}
 			
