@@ -16,7 +16,6 @@ class OrgaRepository extends EntityRepository
 {
 	public function getOrgasWithCriteria($permis, $maxDateNaissance, $plage_id, $niveau_confiance,$creneau, $bloc)
 	{
-	
 		$qb = $this->getEntityManager()->createQueryBuilder();
 		$expr = $qb->expr();
 	
@@ -49,16 +48,37 @@ class OrgaRepository extends EntityRepository
 		}
 		if($creneau !='')
 		{
+			/*
+			 * 
 			//TODO
 			//id_creneau : cet orga doit pouvoir etre affecté a ce créneau (dans les disponibilités et pas de créneau déja affecté)
-
 			
+			//créneau est disponible
+			$entity = $em->getRepository('PHPMBundle:Creneau')->find($creneau);
+			$andx->add($expr->eq($creneau->getDisponibilite(), 0));
 			
+			//on cherche les dispo de l'orga
+			$dispo = $em->getRepository('PHPMBundle:Disponibilité')->find('*')->where('orga_id = o');
+			//on vérifie que le créneau rentre dans les dispo et n'intérfère pas avec les autres créneaux. 
+			
+			*/
+			/*
+			$entity->getDebut() > $dispo->getDebut()
+			$entity->getFin() < $dispo->getFin()
+					$qb
+					->select('o')
+					->from('PHPMBundle:Orga','o')
+					->from('PHPMBundle:Disponibilite', 'd')
+					->from('PHPMBundle:Creneau', 'c')
+					->where('c.id = \''.$creneau.'\' AND d.orga = o AND d.debut < c.debut AND d.fin > c.fin')
+					
+				
+			*/
 		}
 		
 		
 		
-		
+		 
 		$qb
 		->select('o')
 	
@@ -67,16 +87,16 @@ class OrgaRepository extends EntityRepository
 	
 	
 		->from('PHPMBundle:Disponibilite', 'd')
-		->from('PHPMBundle:Creneau', 'co')
+		->from('PHPMBundle:Creneau', 'c')
 		->from('PHPMBundle:PlageHoraire', 'p')
 		->from('PHPMBundle:Tache', 't')
-		->from('PHPMBundle:Creneau', 'ct')
+
 	
 	
 		->where($andx)
-		->setFirstResult($offset)
-		->setMaxResults($limit);
-	
+		//->setFirstResult($offset)
+		//->setMaxResults($limit);
+		;
 		//exit(var_dump($qb->getQuery()->getDQL()));
 	
 	

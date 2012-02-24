@@ -637,7 +637,7 @@ class OrgaController extends Controller
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $maxDateNaissance->format('Y-m-d'), $plage_id, $niveau_confiance, $creneau, $bloc);
-		
+		;
 		$orgaArray = array();
 		foreach ($entities as $orga){
 			
