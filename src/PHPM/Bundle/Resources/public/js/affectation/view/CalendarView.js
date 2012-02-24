@@ -38,7 +38,7 @@ CalendarView.prototype = {
 		
 		for (var _i=0;_i<_nbJours;_i++) {
 			var _date = new Date(pmAffectation.data.calendar.plage[plage]['debut'].getTime()+_i*24*60*60*1000);
-			var _jolieDate = _date.getThisFormat('d/n');
+			var _jolieDate = _date.getThisFormat('d-n');
 			
 			// on fait déjà la barre de titre
 			_htmlBarreDates += '<div class="titre_date" style="width: '+94/_nbJours+'%;">'+pmUtils.jours[_date.getDay()]+' '+_jolieDate +'</div>';
@@ -60,12 +60,12 @@ CalendarView.prototype = {
 		var _html = '<div class="jour" id="jour_'+date+'" jour="'+date+'" style="width: '+94/nbJours+'%;">'; // -1% because of borders, -5% pour les heures
 		
 		for (var _i=0;_i<24;_i++) {
-			_html += '<div class="heure" id="heure_'+date+'_'+_i+'" heure="'+_i+'">';
+			_html += '<div class="heure" id="heure_'+date+'-'+_i+'" heure="'+_i+'">';
 			
 			for (var _j=0;_j<4;_j++) {
-				var _dts = date+' '+_i+':'+_j*15;
+				var _dts = date+' '+_i+'_'+_j*15;
 				
-				_html += '<div class="quart_heure" id="quart_heure_'+date+'_'+_i+':'+_j*15+'" minute="'+_j*15+'"></div>';
+				_html += '<div class="quart_heure" id="quart_heure_'+date+'-'+_i+'-'+_j*15+'" minute="'+_j*15+'"></div>';
 			}
 			
 			_html += '</div>';
@@ -85,6 +85,8 @@ CalendarView.prototype = {
 		for (var _unePlage in pmAffectation.data.calendar.plage) {
 			_html += '<input type="radio" id="radio_'+_unePlage+'" name="radio" onclick="pmAffectation.controllers.calendar.changePlage('+_unePlage+')"" />';
 			_html += '<label for="radio_'+_unePlage+'">'+pmAffectation.data.calendar.plage[_unePlage]['nom']+'</label>';
+			
+			// TODO : bind jQuery
 		}
 	
 		_html += '</div></form>';
@@ -121,7 +123,7 @@ CalendarView.prototype = {
 					// on place les dispos, avec la classe et le click
 					for (var _iDts = _debut; _iDts.getTime() < _fin.getTime(); _iDts.setTime(_iDts.getTime()+15*60*1000)) {
 						// sélection suivant les attributs de temps de plus en plus précis
-						$('.jour[jour="'+_iDts.getDate()+'/'+Number(_iDts.getMonth()+1)+'"] > .heure[heure="'
+						$('.jour[jour="'+_iDts.getDate()+'-'+Number(_iDts.getMonth()+1)+'"] > .heure[heure="'
 						+_iDts.getHours()+'"] > .quart_heure[minute="'+_iDts.getMinutes()+'"]').addClass('free')
 						.bind('click', {date: _iDts.getMyDts()}, pmAffectation.controllers.calendar.clickQuartHeure);
 					}
@@ -133,7 +135,7 @@ CalendarView.prototype = {
 						_html = '<div id="creneau_'+_iCreneau+'" class="creneau" creneau="'+_iCreneau+'">'+pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['tache']+'</div>';
 						
 						// on le rajoute, supprime le handler précédent et en rajoute un
-						$('.jour[jour="'+_hDebut.getDate()+'/'+Number(_hDebut.getMonth()+1)+'"] > .heure[heure="'
+						$('.jour[jour="'+_hDebut.getDate()+'-'+Number(_hDebut.getMonth()+1)+'"] > .heure[heure="'
 						+_hDebut.getHours()+'"] > .quart_heure[minute="'+_hDebut.getMinutes()+'"]').append(_html).off('click')
 						.bind('click', {creneauId: _iCreneau}, pmAffectation.controllers.calendar.clickCreneau);
 						

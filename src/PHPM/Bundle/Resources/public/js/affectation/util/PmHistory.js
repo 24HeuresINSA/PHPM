@@ -68,6 +68,7 @@ PmHistory.prototype = {
 								(pmHistory.refreshData === true) && (pmAffectation.controllers.calendar.getData());
 							}
 							break;
+						// TODO : cas quart d'heure
 						default:
 							// autres cas, on a pas de refresh de donnée à lancer
 							if (_params[_iParam] != pmAffectation.current[_iParam]) {

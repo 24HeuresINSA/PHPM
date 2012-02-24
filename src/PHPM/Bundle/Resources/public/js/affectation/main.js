@@ -19,10 +19,11 @@
 	pmAffectation.paths = {};
 	
 	// infos courantes
-	pmAffectation.current = {};
+	pmAffectation.current = {}; // sera stocké dans l'url
 	// bien mettre des valeurs par défaut aux paramètres
 	pmAffectation.current.orga = {id: 1};
 	pmAffectation.current.plage = 1; // par défaut on est sur la plage 0
+	// pmAffectation.current.quart_heure // pas (besoin) de valeurs par défaut TODO
 	
 	// les MVC
 	pmAffectation.models = {};
