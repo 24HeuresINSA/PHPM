@@ -23,6 +23,8 @@ security:
         secured_area:
             pattern:    ^/
             provider: db
+            form_login:
+                login_path:  /login
 
             logout:
                 path:   /logout
