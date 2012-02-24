@@ -15,8 +15,7 @@ TacheController.prototype = {
 		console.error("Ce Controller ne sert à rien normalement !");
 		
 		pmAffectation.data.tache = {};
-		//pmAffectation.models.tache = new TacheModel(); // TODO : finir
-		pmAffectation.models.creneau = new TacheModel();
+		pmAffectation.models.tache = new TacheModel();
 		pmAffectation.views.tache = new TacheView();
 	},
 	
