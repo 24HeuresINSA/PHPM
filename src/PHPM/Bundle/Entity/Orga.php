@@ -138,7 +138,7 @@ class Orga implements UserInterface
     
     
     /**
-     * @ORM\ManyToMany(targetEntity="DisponibiliteInscription")
+     * @ORM\ManyToMany(targetEntity="DisponibiliteInscription", inversedBy="orgas")
      * @ORM\JoinTable(name="orga_disponibiliteinscription",
      *      joinColumns={@ORM\JoinColumn(name="orga_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="disponibiliteinscription_id", referencedColumnName="id")}

@@ -50,7 +50,11 @@ class DisponibiliteInscription
     private $fin;
     
 
-    
+    /**
+     * 
+     * @ORM\ManyToMany(targetEntity="Orga", mappedBy="disponibilitesInscription")
+     */
+    private $orgas;
 
     
 
