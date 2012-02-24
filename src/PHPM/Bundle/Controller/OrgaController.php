@@ -654,10 +654,7 @@ public function validationAction()
 				    		$entitydisponibilite->setOrga($entity);
 				    		$entitydisponibilite->setDebut(new \DateTime($dispoAAjoute['debut']));
 				    		$entitydisponibilite->setFin(new \DateTime($dispoAAjoute['fin']));
-<<<<<<< HEAD
-=======
 				    		var_dump($entitydisponibilite);
->>>>>>> 710015dba2ba838fd39ff2ab094745d0bd19b450
 				    			
 				    	}
 				    	$em->persist($entity);
