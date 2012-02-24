@@ -11,11 +11,9 @@ using namespace std;
 string intToString (int unentier);
 string generer_ligne_orga(int id, string unNom, string unPrenom);
 string obtenir_nom();
-string obtenir_dispo();
-string generer_ligne_dispo(int iddispo,int idorga);
+string generer_ligne_dispo(int iddispo,int idorga, vector<string>& Disponibilites ,int numCreneau);
 int random(int i);
 const int NB_ORGAS = 50;
-const int NB_DISPOS = 5;
 const int Id_Debut_Orga = 12;
 const int Id_Debut_Dispo = 17;
 
@@ -28,6 +26,12 @@ int main()
   string tmp;
   int idCreationOrga = Id_Debut_Orga;
   
+  vector<string> Disponibilites;
+  Disponibilites.push_back("'2011-01-01 00:00:00', '2011-01-01 10:00:00'");
+  Disponibilites.push_back("'2011-01-01 16:00:00', '2011-01-01 20:00:00'");
+  Disponibilites.push_back("'2011-01-02 10:00:00', '2011-01-02 15:00:00'");
+  Disponibilites.push_back("'2011-01-02 16:00:00', '2011-01-02 20:00:00'");
+  Disponibilites.push_back("'2011-01-02 7:00:00', '2011-01-02 10:00:00'");
 
 
 
@@ -41,18 +45,30 @@ int main()
   {cout << generer_ligne_orga(idCreationOrga,obtenir_nom(),obtenir_nom()) +", "<< endl;   
   idCreationOrga++;
   }
-  cout << generer_ligne_orga(idCreationOrga,obtenir_nom(),obtenir_nom()) << endl; 
+  cout << generer_ligne_orga(idCreationOrga,obtenir_nom(),obtenir_nom()) +" ;"<< endl; 
 
   
   idCreationOrga = Id_Debut_Orga;
   int iddispo = Id_Debut_Dispo;
   cout << "INSERT IGNORE INTO `Disponibilite` (`id`, `orga_id`, `debut`, `fin`) VALUES"<<endl;
   for (int i=0;i<NB_ORGAS-1;i++)
-  {cout << generer_ligne_dispo(iddispo,idCreationOrga) +", "<< endl;  
-  iddispo++;
-  idCreationOrga++;
+  {
+      int num1 = rand() % Disponibilites.size() ;
+      int num2 = rand() % Disponibilites.size() ;
+    cout << generer_ligne_dispo(iddispo,idCreationOrga,Disponibilites,num1) +", "<< endl;  
+      iddispo++;
+
+          if (num1 != num2)
+	  {     cout << generer_ligne_dispo(iddispo,idCreationOrga,Disponibilites,num2) +", "<< endl;  
+	      iddispo++;
+	  }
+	    idCreationOrga++;
+
   }
-  cout << generer_ligne_dispo(iddispo,idCreationOrga) << endl; 
+        int num1 = rand() % Disponibilites.size() ;
+  cout << generer_ligne_dispo(iddispo,idCreationOrga,Disponibilites,num1) +" ;" << endl; 
+    iddispo++;
+  idCreationOrga++;
   
   
   return 0;
@@ -89,7 +105,7 @@ string generer_ligne_orga(int id, string unNom, string unPrenom)
   ligne+=", ";
   ligne+="' "+string("06789654")+intToString (id)+string(" '");
   ligne+=", ";
-  ligne+="' "+unNom+"."+unPrenom+"@insa-lyon.fr"+" '";
+  ligne+="'"+unNom+"."+unPrenom+"@insa-lyon.fr"+"'";
   ligne+=", ";
   ligne+="' "+string(intToString(1970+random(30))+"-02-15")+" '";
   ligne+=", ";
@@ -121,7 +137,7 @@ string intToString (int unentier)
   
 }
 
-string generer_ligne_dispo(int iddispo,int idorga)
+string generer_ligne_dispo(int iddispo,int idorga, vector<string>& Disponibilites ,int numCreneau)
 {
     string ligne;
   ligne+="(";
@@ -129,27 +145,13 @@ string generer_ligne_dispo(int iddispo,int idorga)
   ligne+=", ";
   ligne+=intToString(idorga);
   ligne+=", ";
-  ligne+=obtenir_dispo();
+  ligne+=Disponibilites[numCreneau];
   ligne+=") \n";
   
   return ligne;
   
-  
-  
 }
 
-string obtenir_dispo()
-{
-  vector<string> Disponibilites;
-  Disponibilites.push_back("'2011-01-01 00:00:00', '2011-01-01 10:00:00'");
-  Disponibilites.push_back("'2011-01-01 16:00:00', '2011-01-01 20:00:00'");
-  Disponibilites.push_back("'2011-01-02 10:00:00', '2011-01-02 15:00:00'");
-  Disponibilites.push_back("'2011-01-02 16:00:00', '2011-01-02 20:00:00'");
-  Disponibilites.push_back("'2011-01-02 7:00:00', '2011-01-02 10:00:00'");
-  int num = rand() % NB_DISPOS ;
-  return Disponibilites[num];
-  
-}
 
 int random(int i)
 {
