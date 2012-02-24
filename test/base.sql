@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le : Ven 24 Février 2012 à 10:34
+-- Généré le : Ven 24 Février 2012 à 12:35
 -- Version du serveur: 5.5.20
 -- Version de PHP: 5.3.10-1ubuntu1
 
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- Contenu de la table `Categorie`
 --
 
-INSERT IGNORE INTO `Categorie` (`id`, `nom`, `couleur`) VALUES
+INSERT INTO `Categorie` (`id`, `nom`, `couleur`) VALUES
 (1, 'Bar', 'Bleu'),
 (2, 'Bouffe', 'Bleu'),
 (3, 'Sécurité', 'Bleu');
@@ -33,7 +33,7 @@ INSERT IGNORE INTO `Categorie` (`id`, `nom`, `couleur`) VALUES
 -- Contenu de la table `Confiance`
 --
 
-INSERT IGNORE INTO `Confiance` (`id`, `nom`, `valeur`, `couleur`) VALUES
+INSERT INTO `Confiance` (`id`, `nom`, `valeur`, `couleur`) VALUES
 (2, 'Soft', 1, 'Bleu'),
 (3, 'Hard', 3, 'Bleu');
 
@@ -41,7 +41,7 @@ INSERT IGNORE INTO `Confiance` (`id`, `nom`, `valeur`, `couleur`) VALUES
 -- Contenu de la table `Config`
 --
 
-INSERT IGNORE INTO `Config` (`id`, `field`, `label`, `value`) VALUES
+INSERT INTO `Config` (`id`, `field`, `label`, `value`) VALUES
 (1, 'manifestation.plages', 'Plages de la manifestation', '{"1":{"nom":"Pru00e9manif","debut":"2012-05-16 00:00","fin":"2012-05-23 00:00"},"2":{"nom":"Manif","debut":"2012-05-23 00:00","fin":"2012-05-27 00:00"},"3":{"nom":"Postmanif","debut":"2012-05-28 00:00","fin":"2012-06-01 00:00"}}'),
 (2, 'manifestation.organisation.nom', 'Nom de l''organisation', '24 Heures de l''INSA'),
 (3, 'phpm.config.initiale', 'PHPM configuré', '1'),
@@ -51,7 +51,7 @@ INSERT IGNORE INTO `Config` (`id`, `field`, `label`, `value`) VALUES
 -- Contenu de la table `Creneau`
 --
 
-INSERT IGNORE INTO `Creneau` (`id`, `disponibilite_id`, `debut`, `fin`, `plageHoraire_id`) VALUES
+INSERT INTO `Creneau` (`id`, `disponibilite_id`, `debut`, `fin`, `plageHoraire_id`) VALUES
 (2, NULL, '2011-01-01 18:00:00', '2011-01-01 19:15:00', 1),
 (3, NULL, '2011-01-01 19:00:00', '2011-01-01 20:15:00', 1),
 (4, NULL, '2011-01-01 20:00:00', '2011-01-01 21:15:00', 1),
@@ -122,14 +122,75 @@ INSERT IGNORE INTO `Creneau` (`id`, `disponibilite_id`, `debut`, `fin`, `plageHo
 -- Contenu de la table `Disponibilite`
 --
 
-INSERT IGNORE INTO `Disponibilite` (`id`, `orga_id`, `debut`, `fin`) VALUES
-(1, 1, '2011-01-01 00:00:00', '2011-01-02 00:00:00');
+INSERT INTO `Disponibilite` (`id`, `orga_id`, `debut`, `fin`) VALUES
+(1, 1, '2011-01-01 00:00:00', '2011-01-02 00:00:00'),
+(2, 2, '2011-01-02 10:00:00', '2011-01-02 20:00:00'),
+(3, 3, '2011-01-01 14:00:00', '2011-01-01 20:00:00'),
+(4, 4, '2011-01-02 08:00:00', '2011-01-03 23:00:00'),
+(5, 5, '2011-01-01 13:00:00', '2011-01-01 19:00:00'),
+(10, 10, '2011-01-01 10:00:00', '2011-01-01 20:00:00'),
+(11, 9, '2011-01-02 14:00:00', '2011-01-02 20:00:00'),
+(12, 9, '2011-01-01 10:00:00', '2011-01-01 16:00:00'),
+(13, 8, '2011-01-01 14:00:00', '2011-01-01 20:00:00'),
+(14, 7, '2011-01-01 07:00:00', '2011-01-02 20:00:00'),
+(15, 6, '2011-01-01 07:00:00', '2011-01-02 13:00:00'),
+(16, 11, '2011-01-02 12:00:00', '2011-01-02 18:00:00'),
+(17, 12, '2011-01-02 10:00:00', '2011-01-02 15:00:00'),
+(18, 13, '2011-01-02 10:00:00', '2011-01-02 15:00:00'),
+(19, 14, '2011-01-01 16:00:00', '2011-01-01 20:00:00'),
+(20, 15, '2011-01-01 00:00:00', '2011-01-01 10:00:00'),
+(21, 16, '2011-01-02 10:00:00', '2011-01-02 15:00:00'),
+(22, 17, '2011-01-01 16:00:00', '2011-01-01 20:00:00'),
+(23, 18, '2011-01-02 10:00:00', '2011-01-02 15:00:00'),
+(24, 19, '2011-01-01 16:00:00', '2011-01-01 20:00:00'),
+(25, 20, '2011-01-02 10:00:00', '2011-01-02 15:00:00'),
+(26, 21, '2011-01-01 16:00:00', '2011-01-01 20:00:00'),
+(27, 22, '2011-01-01 16:00:00', '2011-01-01 20:00:00'),
+(28, 23, '2011-01-01 00:00:00', '2011-01-01 10:00:00'),
+(29, 24, '2011-01-01 16:00:00', '2011-01-01 20:00:00'),
+(30, 25, '2011-01-01 16:00:00', '2011-01-01 20:00:00'),
+(31, 26, '2011-01-01 00:00:00', '2011-01-01 10:00:00'),
+(32, 27, '2011-01-01 16:00:00', '2011-01-01 20:00:00'),
+(33, 28, '2011-01-02 16:00:00', '2011-01-02 20:00:00'),
+(34, 29, '2011-01-02 07:00:00', '2011-01-02 10:00:00'),
+(35, 30, '2011-01-02 16:00:00', '2011-01-02 20:00:00'),
+(36, 31, '2011-01-01 00:00:00', '2011-01-01 10:00:00'),
+(37, 32, '2011-01-02 07:00:00', '2011-01-02 10:00:00'),
+(38, 33, '2011-01-01 00:00:00', '2011-01-01 10:00:00'),
+(39, 34, '2011-01-01 16:00:00', '2011-01-01 20:00:00'),
+(40, 35, '2011-01-02 07:00:00', '2011-01-02 10:00:00'),
+(41, 36, '2011-01-02 16:00:00', '2011-01-02 20:00:00'),
+(42, 37, '2011-01-02 10:00:00', '2011-01-02 15:00:00'),
+(43, 38, '2011-01-02 16:00:00', '2011-01-02 20:00:00'),
+(44, 39, '2011-01-02 10:00:00', '2011-01-02 15:00:00'),
+(45, 40, '2011-01-02 07:00:00', '2011-01-02 10:00:00'),
+(46, 41, '2011-01-01 00:00:00', '2011-01-01 10:00:00'),
+(47, 42, '2011-01-02 16:00:00', '2011-01-02 20:00:00'),
+(48, 43, '2011-01-01 16:00:00', '2011-01-01 20:00:00'),
+(49, 44, '2011-01-01 00:00:00', '2011-01-01 10:00:00'),
+(50, 45, '2011-01-02 10:00:00', '2011-01-02 15:00:00'),
+(51, 46, '2011-01-02 07:00:00', '2011-01-02 10:00:00'),
+(52, 47, '2011-01-02 10:00:00', '2011-01-02 15:00:00'),
+(53, 48, '2011-01-01 00:00:00', '2011-01-01 10:00:00'),
+(54, 49, '2011-01-02 16:00:00', '2011-01-02 20:00:00'),
+(55, 50, '2011-01-02 16:00:00', '2011-01-02 20:00:00'),
+(56, 51, '2011-01-02 10:00:00', '2011-01-02 15:00:00'),
+(57, 52, '2011-01-01 00:00:00', '2011-01-01 10:00:00'),
+(58, 53, '2011-01-01 00:00:00', '2011-01-01 10:00:00'),
+(59, 54, '2011-01-02 10:00:00', '2011-01-02 15:00:00'),
+(60, 55, '2011-01-01 16:00:00', '2011-01-01 20:00:00'),
+(61, 56, '2011-01-02 16:00:00', '2011-01-02 20:00:00'),
+(62, 57, '2011-01-02 10:00:00', '2011-01-02 15:00:00'),
+(63, 58, '2011-01-02 07:00:00', '2011-01-02 10:00:00'),
+(64, 59, '2011-01-01 16:00:00', '2011-01-01 20:00:00'),
+(65, 60, '2011-01-02 16:00:00', '2011-01-02 20:00:00'),
+(66, 61, '2011-01-02 10:00:00', '2011-01-02 15:00:00');
 
 --
 -- Contenu de la table `Orga`
 --
 
-INSERT IGNORE INTO `Orga` (`id`, `confiance_id`, `importid`, `nom`, `prenom`, `surnom`, `telephone`, `email`, `dateDeNaissance`, `departement`, `commentaire`, `permis`, `statut`, `is_admin`) VALUES
+INSERT INTO `Orga` (`id`, `confiance_id`, `importid`, `nom`, `prenom`, `surnom`, `telephone`, `email`, `dateDeNaissance`, `departement`, `commentaire`, `permis`, `statut`, `is_admin`) VALUES
 (1, 3, NULL, 'Tournier', 'Mathieu', 'Samt', '0643548131', 'mathieutournier@gmail.com', '1991-03-30', '4', NULL, 1, 0, 1),
 (2, 3, NULL, 'Cashman', 'Nathan', 'Nath''', '0678543131', 'Nathan.Cashman@insa-lyon.fr', '1992-07-17', '0', NULL, 1, 1, 0),
 (3, 3, NULL, 'Dupond', 'Manon', 'Manon', '0656784312', 'Manon.Dupond@insa-lyon.fr', '1993-06-18', '0', NULL, 1, 1, 0),
@@ -139,13 +200,64 @@ INSERT IGNORE INTO `Orga` (`id`, `confiance_id`, `importid`, `nom`, `prenom`, `s
 (7, 2, NULL, 'Lelouche', 'Marc', 'Marc', '0675431234', 'Marc.L@google.com', '1994-01-01', '13', NULL, 1, 1, 0),
 (8, 2, NULL, 'V', 'Jean Marc', 'Jj', '0678542341', 'jj@gmail.com', '1991-01-01', '11', NULL, 1, 1, 0),
 (9, 2, NULL, 'Marché', 'Camille', 'Camille', '0656789054', 'Camille.Marche@yahoo.fr', '1985-01-01', '3', NULL, 1, 1, 0),
-(10, 2, NULL, 'Dujean', 'Janot', 'Janot', '0643521345', 'Janot.Dujean@gmail.com', '1995-01-01', '13', NULL, 1, 1, 0);
+(10, 2, NULL, 'Dujean', 'Janot', 'Janot', '0643521345', 'Janot.Dujean@gmail.com', '1995-01-01', '13', NULL, 1, 1, 0),
+(11, 2, NULL, 'Dujardin', 'Jean', 'Dudu', '0786235621', 'Jean.Dujardin@gmail.com', '1985-01-01', '13', NULL, 0, 1, 0),
+(12, 3, NULL, ' MARTIN ', ' MARIE ', ' Pseudo ', ' 0678965412 ', ' MARTIN.MARIE@insa-lyon.fr ', '1988-02-15', ' 64 ', NULL, 1, 0, 0),
+(13, 3, NULL, ' JEANNE ', ' DUVAL ', ' Pseudo ', ' 0678965413 ', ' JEANNE.DUVAL@insa-lyon.fr ', '1989-02-15', ' 61 ', NULL, 0, 0, 0),
+(14, 3, NULL, ' HEBERT ', ' LEFEVRE ', ' Pseudo ', ' 0678965414 ', ' HEBERT.LEFEVRE@insa-lyon.fr ', '1999-02-15', ' 8 ', NULL, 1, 0, 0),
+(15, 3, NULL, ' GAUTIER ', ' LEROY ', ' Pseudo ', ' 0678965415 ', ' GAUTIER.LEROY@insa-lyon.fr ', '1985-02-15', ' 60 ', NULL, 2, 0, 0),
+(16, 2, NULL, ' HAMEL ', ' GUERIN ', ' Pseudo ', ' 0678965416 ', ' HAMEL.GUERIN@insa-lyon.fr ', '1986-02-15', ' 80 ', NULL, 2, 0, 0),
+(17, 2, NULL, ' LECONTE ', ' SIMON ', ' Pseudo ', ' 0678965417 ', ' LECONTE.SIMON@insa-lyon.fr ', '1993-02-15', ' 80 ', NULL, 2, 0, 0),
+(18, 2, NULL, ' DURAND ', ' LEMONNIER ', ' Pseudo ', ' 0678965418 ', ' DURAND.LEMONNIER@insa-lyon.fr ', '1976-02-15', ' 16 ', NULL, 0, 0, 0),
+(19, 3, NULL, ' LEROUX ', ' LELIEVRE ', ' Pseudo ', ' 0678965419 ', ' LEROUX.LELIEVRE@insa-lyon.fr ', '1971-02-15', ' 18 ', NULL, 1, 0, 0),
+(20, 3, NULL, ' MORIN ', ' LANGLOIS ', ' Pseudo ', ' 0678965420 ', ' MORIN.LANGLOIS@insa-lyon.fr ', '1997-02-15', ' 2 ', NULL, 0, 0, 0),
+(21, 2, NULL, ' MOREL ', ' DUPONT ', ' Pseudo ', ' 0678965421 ', ' MOREL.DUPONT@insa-lyon.fr ', '1998-02-15', ' 32 ', NULL, 1, 0, 0),
+(22, 3, NULL, ' ANNE ', ' MICHEL ', ' Pseudo ', ' 0678965422 ', ' ANNE.MICHEL@insa-lyon.fr ', '1993-02-15', ' 65 ', NULL, 2, 0, 0),
+(23, 3, NULL, ' DUBOIS ', ' JEAN ', ' Pseudo ', ' 0678965423 ', ' DUBOIS.JEAN@insa-lyon.fr ', '1998-02-15', ' 73 ', NULL, 2, 0, 0),
+(24, 2, NULL, ' FONTAINE ', ' DELAUNAY ', ' Pseudo ', ' 0678965424 ', ' FONTAINE.DELAUNAY@insa-lyon.fr ', '1980-02-15', ' 41 ', NULL, 0, 0, 0),
+(25, 3, NULL, ' GOSSELIN ', ' HUET ', ' Pseudo ', ' 0678965425 ', ' GOSSELIN.HUET@insa-lyon.fr ', '1997-02-15', ' 34 ', NULL, 0, 0, 0),
+(26, 2, NULL, ' LETELLIER ', ' MAUGER ', ' Pseudo ', ' 0678965426 ', ' LETELLIER.MAUGER@insa-lyon.fr ', '1984-02-15', ' 64 ', NULL, 1, 0, 0),
+(27, 3, NULL, ' LECLERC ', ' FLEURY ', ' Pseudo ', ' 0678965427 ', ' LECLERC.FLEURY@insa-lyon.fr ', '1993-02-15', ' 16 ', NULL, 1, 0, 0),
+(28, 3, NULL, ' ROUSSEL ', ' LAURENT ', ' Pseudo ', ' 0678965428 ', ' ROUSSEL.LAURENT@insa-lyon.fr ', '1991-02-15', ' 47 ', NULL, 2, 0, 0),
+(29, 3, NULL, ' LAUNAY ', ' RICHARD ', ' Pseudo ', ' 0678965429 ', ' LAUNAY.RICHARD@insa-lyon.fr ', '1997-02-15', ' 3 ', NULL, 2, 0, 0),
+(30, 3, NULL, ' GARNIER ', ' LEGRAND ', ' Pseudo ', ' 0678965430 ', ' GARNIER.LEGRAND@insa-lyon.fr ', '1990-02-15', ' 32 ', NULL, 2, 0, 0),
+(31, 3, NULL, ' AUVRAY ', ' LEMOINE ', ' Pseudo ', ' 0678965431 ', ' AUVRAY.LEMOINE@insa-lyon.fr ', '1974-02-15', ' 28 ', NULL, 1, 0, 0),
+(32, 3, NULL, ' ROGER ', ' THOMAS ', ' Pseudo ', ' 0678965432 ', ' ROGER.THOMAS@insa-lyon.fr ', '1989-02-15', ' 90 ', NULL, 0, 0, 0),
+(33, 3, NULL, ' AUBERT ', ' LEFRANCOIS ', ' Pseudo ', ' 0678965433 ', ' AUBERT.LEFRANCOIS@insa-lyon.fr ', '1974-02-15', ' 64 ', NULL, 2, 0, 0),
+(34, 2, NULL, ' DAVID ', ' BISSON ', ' Pseudo ', ' 0678965434 ', ' DAVID.BISSON@insa-lyon.fr ', '1981-02-15', ' 81 ', NULL, 0, 0, 0),
+(35, 3, NULL, ' CATHERINE ', ' ADAM ', ' Pseudo ', ' 0678965435 ', ' CATHERINE.ADAM@insa-lyon.fr ', '1975-02-15', ' 85 ', NULL, 2, 0, 0),
+(36, 2, NULL, ' LEMARCHAND ', ' VOISIN ', ' Pseudo ', ' 0678965436 ', ' LEMARCHAND.VOISIN@insa-lyon.fr ', '1996-02-15', ' 23 ', NULL, 2, 0, 0),
+(37, 3, NULL, ' HUBERT ', ' DENIS ', ' Pseudo ', ' 0678965437 ', ' HUBERT.DENIS@insa-lyon.fr ', '1970-02-15', ' 60 ', NULL, 1, 0, 0),
+(38, 3, NULL, ' NOEL ', ' POTTIER ', ' Pseudo ', ' 0678965438 ', ' NOEL.POTTIER@insa-lyon.fr ', '1984-02-15', ' 65 ', NULL, 0, 0, 0),
+(39, 3, NULL, ' PHILIPPE ', ' RENAULT ', ' Pseudo ', ' 0678965439 ', ' PHILIPPE.RENAULT@insa-lyon.fr ', '2000-02-15', ' 64 ', NULL, 0, 0, 0),
+(40, 3, NULL, ' LEPETIT ', ' OLIVIER ', ' Pseudo ', ' 0678965440 ', ' LEPETIT.OLIVIER@insa-lyon.fr ', '1998-02-15', ' 14 ', NULL, 2, 0, 0),
+(41, 3, NULL, ' LEBRETON ', ' BESNARD ', ' Pseudo ', ' 0678965441 ', ' LEBRETON.BESNARD@insa-lyon.fr ', '1981-02-15', ' 28 ', NULL, 2, 0, 0),
+(42, 2, NULL, ' HUE ', ' MOULIN ', ' Pseudo ', ' 0678965442 ', ' HUE.MOULIN@insa-lyon.fr ', '1972-02-15', ' 58 ', NULL, 0, 0, 0),
+(43, 3, NULL, ' LETOURNEUR ', ' LEMAITRE ', ' Pseudo ', ' 0678965443 ', ' LETOURNEUR.LEMAITRE@insa-lyon.fr ', '1987-02-15', ' 19 ', NULL, 0, 0, 0),
+(44, 2, NULL, ' JAMES ', ' LAINE ', ' Pseudo ', ' 0678965444 ', ' JAMES.LAINE@insa-lyon.fr ', '2000-02-15', ' 82 ', NULL, 0, 0, 0),
+(45, 2, NULL, ' RENOUF ', ' LUCAS ', ' Pseudo ', ' 0678965445 ', ' RENOUF.LUCAS@insa-lyon.fr ', '1971-02-15', ' 16 ', NULL, 1, 0, 0),
+(46, 2, NULL, ' PICOT ', ' GIRARD ', ' Pseudo ', ' 0678965446 ', ' PICOT.GIRARD@insa-lyon.fr ', '1982-02-15', ' 33 ', NULL, 1, 0, 0),
+(47, 2, NULL, ' VALLEE ', ' DUCHEMIN ', ' Pseudo ', ' 0678965447 ', ' VALLEE.DUCHEMIN@insa-lyon.fr ', '1978-02-15', ' 46 ', NULL, 1, 0, 0),
+(48, 2, NULL, ' MENARD ', ' VAUTIER ', ' Pseudo ', ' 0678965448 ', ' MENARD.VAUTIER@insa-lyon.fr ', '1970-02-15', ' 16 ', NULL, 2, 0, 0),
+(49, 2, NULL, ' BAZIN ', ' LEMIERE ', ' Pseudo ', ' 0678965449 ', ' BAZIN.LEMIERE@insa-lyon.fr ', '1973-02-15', ' 11 ', NULL, 2, 0, 0),
+(50, 2, NULL, ' RIVIERE ', ' FRANCOIS ', ' Pseudo ', ' 0678965450 ', ' RIVIERE.FRANCOIS@insa-lyon.fr ', '1977-02-15', ' 82 ', NULL, 0, 0, 0),
+(51, 2, NULL, ' HARDY ', ' PARIS ', ' Pseudo ', ' 0678965451 ', ' HARDY.PARIS@insa-lyon.fr ', '1972-02-15', ' 30 ', NULL, 0, 0, 0),
+(52, 3, NULL, ' LECARPENTIER ', ' RENARD ', ' Pseudo ', ' 0678965452 ', ' LECARPENTIER.RENARD@insa-lyon.fr ', '1989-02-15', ' 83 ', NULL, 1, 0, 0),
+(53, 2, NULL, ' DUFOUR ', ' LEBRUN ', ' Pseudo ', ' 0678965453 ', ' DUFOUR.LEBRUN@insa-lyon.fr ', '1988-02-15', ' 31 ', NULL, 1, 0, 0),
+(54, 2, NULL, ' LAMY ', ' ANDRE ', ' Pseudo ', ' 0678965454 ', ' LAMY.ANDRE@insa-lyon.fr ', '1990-02-15', ' 23 ', NULL, 2, 0, 0),
+(55, 3, NULL, ' BERNARD ', ' POULAIN ', ' Pseudo ', ' 0678965455 ', ' BERNARD.POULAIN@insa-lyon.fr ', '1993-02-15', ' 18 ', NULL, 2, 0, 0),
+(56, 2, NULL, ' MARY ', ' POISSON ', ' Pseudo ', ' 0678965456 ', ' MARY.POISSON@insa-lyon.fr ', '1990-02-15', ' 25 ', NULL, 1, 0, 0),
+(57, 3, NULL, ' BERTRAND ', ' GODEFROY ', ' Pseudo ', ' 0678965457 ', ' BERTRAND.GODEFROY@insa-lyon.fr ', '1995-02-15', ' 64 ', NULL, 1, 0, 0),
+(58, 2, NULL, ' PETIT ', ' FAUVEL ', ' Pseudo ', ' 0678965458 ', ' PETIT.FAUVEL@insa-lyon.fr ', '1995-02-15', ' 32 ', NULL, 0, 0, 0),
+(59, 2, NULL, ' LECOQ ', ' LEFEBVRE ', ' Pseudo ', ' 0678965459 ', ' LECOQ.LEFEBVRE@insa-lyon.fr ', '1981-02-15', ' 6 ', NULL, 2, 0, 0),
+(60, 2, NULL, ' MOUCHEL ', ' HENRY ', ' Pseudo ', ' 0678965460 ', ' MOUCHEL.HENRY@insa-lyon.fr ', '1976-02-15', ' 59 ', NULL, 0, 0, 0),
+(61, 3, NULL, ' LEGENDRE ', ' FRANCOISE ', ' Pseudo ', ' 0678965461 ', ' LEGENDRE.FRANCOISE@insa-lyon.fr ', '1993-02-15', ' 2 ', NULL, 0, 0, 0);
 
 --
 -- Contenu de la table `PlageHoraire`
 --
 
-INSERT IGNORE INTO `PlageHoraire` (`id`, `tache_id`, `debut`, `fin`, `dureeCreneau`, `recoupementCreneau`, `nbOrgasNecessaires`) VALUES
+INSERT INTO `PlageHoraire` (`id`, `tache_id`, `debut`, `fin`, `dureeCreneau`, `recoupementCreneau`, `nbOrgasNecessaires`) VALUES
 (1, 3, '2011-01-01 18:00:00', '2011-01-01 22:00:00', 3600, 900, 5),
 (2, 2, '2011-01-01 12:00:00', '2011-01-01 14:00:00', 3600, 0, 5),
 (3, 5, '2011-01-02 07:00:00', '2011-01-02 09:00:00', 7200, 0, 5),
@@ -157,7 +269,7 @@ INSERT IGNORE INTO `PlageHoraire` (`id`, `tache_id`, `debut`, `fin`, `dureeCrene
 -- Contenu de la table `Tache`
 --
 
-INSERT IGNORE INTO `Tache` (`id`, `responsable_id`, `categorie_id`, `confiance_id`, `importid`, `nom`, `consignes`, `materielNecessaire`, `permisNecessaire`, `ageNecessaire`, `lieu`) VALUES
+INSERT INTO `Tache` (`id`, `responsable_id`, `categorie_id`, `confiance_id`, `importid`, `nom`, `consignes`, `materielNecessaire`, `permisNecessaire`, `ageNecessaire`, `lieu`) VALUES
 (1, 1, 1, 3, NULL, 'Charchage barrières', 'RDV au QG orga, apporter le papier de prêt', 'Des mains', 0, 18, 'Grand Lyon'),
 (2, NULL, 3, 2, NULL, 'Extincteurs', 'Rapporter les extincteurs à la DirPa...', NULL, 0, 15, 'BDE'),
 (3, NULL, 2, 2, NULL, 'Bouffe artiste', 'Bouffe artiste en semaine', '...', 0, 18, 'INSA'),
@@ -169,7 +281,7 @@ INSERT IGNORE INTO `Tache` (`id`, `responsable_id`, `categorie_id`, `confiance_i
 -- Contenu de la table `User`
 --
 
-INSERT IGNORE INTO `User` (`id`, `username`, `pass`, `email`) VALUES
+INSERT INTO `User` (`id`, `username`, `pass`, `email`) VALUES
 (1, 'orga', 'orga', 'orga@24heures.org');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
