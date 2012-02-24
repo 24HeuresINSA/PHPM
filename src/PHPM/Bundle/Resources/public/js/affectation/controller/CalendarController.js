@@ -48,7 +48,8 @@ CalendarController.prototype = {
 	clickCreneau: function(obj) {
 		console.log(obj.data.creneauId);
 		
-		// afficher le détail ?
+		// on demande un joli popup pour afficher les détails
+		
 	},
 	// clic sur les boutons pour changer de plage
 	changePlage: function(plageId) {

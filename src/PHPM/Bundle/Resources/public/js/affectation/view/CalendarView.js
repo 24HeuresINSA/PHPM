@@ -130,9 +130,7 @@ CalendarView.prototype = {
 					for (var _iCreneau in pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux']) {
 						var _hDebut = pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'];
 						
-						_html = '<div id="creneau_'+_iCreneau+'" class="creneau" creneau="'+_iCreneau+'">'+pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['tache'];
-						_html += '<br />'+pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'].getThisFormat('H:I')+' - ';
-						_html += pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'].getThisFormat('H:I')+'</div>';
+						_html = '<div id="creneau_'+_iCreneau+'" class="creneau" creneau="'+_iCreneau+'">'+pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['tache']+'</div>';
 						
 						// on le rajoute, supprime le handler précédent et en rajoute un
 						$('.jour[jour="'+_hDebut.getDate()+'/'+Number(_hDebut.getMonth()+1)+'"] > .heure[heure="'
