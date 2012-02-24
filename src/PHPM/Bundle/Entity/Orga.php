@@ -602,4 +602,28 @@ class Orga implements UserInterface
     {
         return $this->isAdmin;
     }
+    
+    public function getnbHeuresInscription()
+    
+    {
+        
+        $disponibiliteInscriptionOrga = $this->getDisponibilitesInscription();    
+        
+        $nbHeures = 0;
+        
+        foreach($disponibiliteInscriptionOrga as $di)
+        {
+            $nbHeures += $di->getfin()->getTimestamp() - $di->getdebut()->getTimestamp() ;
+        }
+        
+        $nbHeures /=3600; // On récupère le nombre d'heures
+        $nbHeures = number_format($nbHeures, 1); // on ne récupère qu'un nombre après la virgule    
+        
+        return $nbHeures;    
+            
+        
+    }
+    
+    
+    
 }

@@ -67,9 +67,9 @@ $(document).ready(function() {
 	pmAffectation.controllers.orga = new OrgaController();
 	pmAffectation.controllers.orga.getData();
 	
-	// 4 : colonne tache - rien à afficher pour l'instant
-	pmAffectation.controllers.tache = new TacheController();
-	//pmAffectation.controllers.tache.getData();
+	// 4 : colonne tache - dedans on met des créneaux
+	pmAffectation.controllers.creneau = new CreneauController();
+	//pmAffectation.controllers.creneau.getData(); // pas besoin de donner pour l'instant
 	
 	// last step : à partir de maintenant, les modifs du hash provoquent la mise à jour des données
 	pmHistory.refreshData = true;

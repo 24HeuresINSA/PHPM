@@ -42,7 +42,7 @@ CalendarController.prototype = {
 		
 		// on lance le bouzin, va chercher les creneaux
 		// TODO : passer paramètre
-		pmAffectation.controllers.tache.getData();
+		pmAffectation.controllers.creneau.getData();
 	},
 	// clic sur un créneau
 	clickCreneau: function(obj) {

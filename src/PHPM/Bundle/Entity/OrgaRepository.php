@@ -90,13 +90,61 @@ class OrgaRepository extends EntityRepository
 	{
 	
 		return $this->getEntityManager()
-		->createQuery("SELECT o ,SUM(d.fin-d.debut)/3600 AS nbHeures FROM PHPMBundle:Orga o, PHPMBundle:Disponibilite d WHERE (d.orga = o AND o.statut=0 AND o.id !=0)")
+		->createQuery("SELECT o ,SUM(d.fin-d.debut)/3600 AS nbHeures FROM PHPMBundle:Orga o, PHPMBundle:Disponibilite d WHERE (d.orga = o AND o.statut=0)")
 		
 		->getResult();	
 	
 	
 	}
 	
+        public function getOrgasFromRegistration()
+    {
+    
+        return $this->getEntityManager()
+        ->createQuery("SELECT o FROM PHPMBundle:Orga o WHERE (o.statut=0)")
+        
+        ->getResult();  
+    
+    
+    }
+    
+            public function getNombreOrgas() 
+    {
+        return $this->getEntityManager()
+        ->createQuery("SELECT COUNT (o.id) AS nbOrgas FROM PHPMBundle:Orga o WHERE (o.statut=1)")   
+        ->getResult();
+    }
+    
+            public function getNombreHeureDesCreneauNonAffecte() 
+    {
+        return $this->getEntityManager()
+        ->createQuery("SELECT SUM(c.fin-c.debut)/3600 AS nbHeures FROM PHPMBundle:Creneau c  WHERE (c.disponibilite is NULL)")   
+        ->getResult();
+    }
+   
+   
+    /*    Voir comment on peut récupérer le résultat d'une requête SQL en natif
+           public function getTacheSansCreneau() 
+    {
+        
+        /*
+        return $this->getEntityManager()
+        ->createQuery("SELECT t FROM PHPMBundle:Tache t WHERE (t.id = (SELECT p.tache FROM PHPMBundle:PlageHoraire WHERE (p.id NOT IN (SELECT c.plageHoraire FROM PHPMBundle:Creneau))")   
+        ->getResult();
+    
+         
+         
+         $conn = $em->getConnection();
+         
+         $sql = "SELECT t FROM PHPMBundle:Tache t WHERE (t.id = (SELECT p.tache FROM PHPMBundle:PlageHoraire WHERE (p.id NOT IN (SELECT c.plageHoraire FROM PHPMBundle:Creneau))";
+         
+         $conn->query($sql);
+
+         $conn->close();
+    }
+    
+    */
+    
 	public function search($s)
 	{
 		return $this->getEntityManager()

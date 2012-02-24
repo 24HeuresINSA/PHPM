@@ -10,10 +10,11 @@
         
         {# c'est pas très beau - on met un code 'générique' dans un block - mais à priori la seule méthode #}
         {% block style %}
-			{% stylesheets 'bundles/phpm/css/style.css' filter='cssrewrite'  %}
-				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
-			{% endstylesheets %}
-				{% stylesheets 'bundles/phpm/css/forms.css' filter='cssrewrite'  %}
+			{% stylesheets
+				'bundles/phpm/css/style.css'
+				'bundles/phpm/css/forms.css'
+				filter='cssrewrite' 
+			%}
 				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
 			{% endstylesheets %}
 			
@@ -40,9 +41,9 @@
         	<div class="title" id="title">
         		{% block topHeader %}
         		{% if is_granted('ROLE_ADMIN') %}
-        		<h1><a href="{{ path('accueil') }}"> PlanningMaker</a> &gt; <a href="{{ path(indexRoute) }}"> {{ sectionTitle }}</a> &gt;  {{ pageTitle }}</h1>
+        		<h1>{% render "PHPMBundle:Config:display" with {'field': 'manifestation.nom'} %} - <a href="{{ path('accueil') }}"> PlanningMaker</a> &gt; <a href="{{ path(indexRoute) }}"> {{ sectionTitle }}</a> &gt;  {{ pageTitle }}</h1>
         		{% else %}
-        		    <h1>{{ pageTitle }}</h1>
+        		    <h1>{% render "PHPMBundle:Config:display" with {'field': 'manifestation.nom'} %} - {{ pageTitle }}</h1>
         		{% endif %}
         		{% endblock %}
         		{% if is_granted('ROLE_ADMIN') %}
