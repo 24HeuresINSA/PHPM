@@ -20,14 +20,14 @@
     {% for entity in entities %}
         
         
-        <tr style="cursor:pointer" onclick="window.location='{{ path('disponibiliteinscription_show', { 'id': entity.id }) }}'">
-            <td><a href="{{ path('disponibiliteinscription_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{% if entity.debut %}{{ entity.debut|date('Y-m-d H:i:s') }}{% endif%}</td>
-            <td>{% if entity.fin %}{{ entity.fin|date('Y-m-d H:i:s') }}{% endif%}</td>
-            <td>{{ entity.nbOrga}} </td>
-            <td>{{ entity.nbOrgaAvecPermisLongueDuree}} </td>
+        <tr style="cursor:pointer" onclick="window.location='{{ path('disponibiliteinscription_show', { 'id': entity.0.id }) }}'">
+            <td><a href="{{ path('disponibiliteinscription_show', { 'id': entity.0.id }) }}">{{ entity.0.id }}</a></td>
+            <td>{% if entity.0.debut %}{{ entity.0.debut|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{% if entity.0.fin %}{{ entity.0.fin|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{{ entity.nborga}} </td>
+            <td>{{ entity.nborga}} </td>
             <td>
-				{{ bouton.edit( path('disponibiliteinscription_edit', { 'id': entity.id }) ) }}
+				{{ bouton.edit( path('disponibiliteinscription_edit', { 'id': entity.0.id }) ) }}
             </td>
         </tr>
     {% endfor %}
