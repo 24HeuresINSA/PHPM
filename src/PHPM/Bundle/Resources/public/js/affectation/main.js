@@ -23,7 +23,7 @@
 	// bien mettre des valeurs par défaut aux paramètres
 	pmAffectation.current.orga = {id: 1};
 	pmAffectation.current.plage = 1; // par défaut on est sur la plage 0
-	// pmAffectation.current.quart_heure // pas (besoin) de valeurs par défaut TODO
+	pmAffectation.current.quart_heure = -1; // wildcart
 	
 	// les MVC
 	pmAffectation.models = {};
@@ -74,4 +74,5 @@ $(document).ready(function() {
 	
 	// last step : à partir de maintenant, les modifs du hash provoquent la mise à jour des données
 	pmHistory.refreshData = true;
+	pmHistory.parseUrlParam(); // il faut le relancer, juste pour le quart d'heure
 });
