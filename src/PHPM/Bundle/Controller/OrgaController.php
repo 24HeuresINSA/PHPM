@@ -268,7 +268,7 @@ class OrgaController extends Controller
         
 
 
-        $editForm   = $this->createForm(new OrgaType(), $entity);
+        $editForm   = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN')), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
