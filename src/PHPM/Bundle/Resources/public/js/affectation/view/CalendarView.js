@@ -83,10 +83,9 @@ CalendarView.prototype = {
 		var _html = '<form><div id="radio">';
 		
 		for (var _unePlage in pmAffectation.data.calendar.plage) {
+			// utiliser un onClick est sale, mais force la recopie de _unePlage sinon cela plante
 			_html += '<input type="radio" id="radio_'+_unePlage+'" name="radio" onclick="pmAffectation.controllers.calendar.changePlage('+_unePlage+')"" />';
 			_html += '<label for="radio_'+_unePlage+'">'+pmAffectation.data.calendar.plage[_unePlage]['nom']+'</label>';
-			
-			// TODO : bind jQuery
 		}
 	
 		_html += '</div></form>';
