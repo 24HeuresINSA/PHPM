@@ -1,23 +1,23 @@
 /*
  * Page Affectation
- * Controlleur pour les tâches
+ * Controlleur pour les créneaux
+ * 
+ * Une chsoe à savoir : on bosse dans un colonne qui s'appelle "liste_taches"
  */
-function TacheController() {
+function CreneauController() {
 	// on lance juste le constructeur
 	this.initialize();
 }
 
-TacheController.prototype = {
+CreneauController.prototype = {
 	/*
 	 * Constructeur
 	 */
 	initialize: function() {
-		console.error("Ce Controller ne sert à rien normalement !");
-		
-		pmAffectation.data.tache = {};
-		//pmAffectation.models.tache = new TacheModel(); // TODO : finir
-		pmAffectation.models.creneau = new TacheModel();
-		pmAffectation.views.tache = new TacheView();
+		pmAffectation.data.creneau = {};
+
+		pmAffectation.models.creneau = new CreneauModel();
+		pmAffectation.views.creneau = new CreneauView();
 	},
 	
 	/*
@@ -27,7 +27,7 @@ TacheController.prototype = {
 		$('#liste_taches').empty();
 		$('#liste_taches').addClass('spinner_medium');
 		
-		pmAffectation.models.creneau.getData(pmAffectation.controllers.tache.callbackCreneaux);
+		pmAffectation.models.creneau.getData(pmAffectation.controllers.creneau.callbackCreneaux);
 	},
 	
 	/*
@@ -37,20 +37,13 @@ TacheController.prototype = {
 	callbackCreneaux: function() {
 		pmAffectation.data.creneaux = pmAffectation.models.creneau.getCreneaux();
 		
-		pmAffectation.views.tache.setCreneaux();
-	},
-	// pour les taches
-	callbackTaches: function() {
-		/*pmAffectation.data.taches = pmAffectation.models.orga.getOrgas();
-		
-		pmAffectation.views.orga.setOrgas();
-		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga.id});*/
+		pmAffectation.views.creneau.setCreneaux();
 	},
 	
 	/*
 	 * Handlers
 	 */
-	// clic sur une tache
+	// clic sur un creneau
 	clickHandler: function(obj) {
 		/*$("#orga_"+pmAffectation.current.orga).removeClass('current');
 		$("#orga_"+obj.data.id).addClass('current');
