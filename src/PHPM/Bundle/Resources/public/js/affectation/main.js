@@ -19,10 +19,11 @@
 	pmAffectation.paths = {};
 	
 	// infos courantes
-	pmAffectation.current = {};
+	pmAffectation.current = {}; // sera stocké dans l'url
 	// bien mettre des valeurs par défaut aux paramètres
 	pmAffectation.current.orga = {id: 1};
 	pmAffectation.current.plage = 1; // par défaut on est sur la plage 0
+	pmAffectation.current.quart_heure = -1; // wildcart
 	
 	// les MVC
 	pmAffectation.models = {};
@@ -33,7 +34,7 @@
  * CONSTANTES
  */
 	// les urls sur lesquelles on fera les requêtes
-	pmAffectation.paths.plages = 'config/get/manifestation.plages';
+	pmAffectation.paths.plages = 'configv/get/manifestation.plages';
 	pmAffectation.paths.orgas = 'orga/query.json';
 	pmAffectation.paths.creneaux = 'creneau/query.json';
 	
@@ -67,10 +68,11 @@ $(document).ready(function() {
 	pmAffectation.controllers.orga = new OrgaController();
 	pmAffectation.controllers.orga.getData();
 	
-	// 4 : colonne tache - rien à afficher pour l'instant
-	pmAffectation.controllers.tache = new TacheController();
-	//pmAffectation.controllers.tache.getData();
+	// 4 : colonne tache - dedans on met des créneaux
+	pmAffectation.controllers.creneau = new CreneauController();
+	//pmAffectation.controllers.creneau.getData(); // pas besoin de donner pour l'instant
 	
 	// last step : à partir de maintenant, les modifs du hash provoquent la mise à jour des données
 	pmHistory.refreshData = true;
+	pmHistory.parseUrlParam(); // il faut le relancer, juste pour le quart d'heure
 });

@@ -37,7 +37,7 @@ class OrgaType extends AbstractType
                     )))
             ->add('commentaire')
             ->add('permis','choice',array('label'=>'Titulaire du permis B', 'choices'=>array(
-                    0=>'Non', 1=>'Permis de + de deux ans'
+                    0=>'Non',1=>'Permis depuis - de 2ans', 2=>'Permis de + de deux ans'
                     )));
     	if($this->admin){
         $builder

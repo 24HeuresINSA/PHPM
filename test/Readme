@@ -1,0 +1,2 @@
+To import the database, remove all the orgas others than admin (it's normally done automaticaly)
+The admin id must be 1

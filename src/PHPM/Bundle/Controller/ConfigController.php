@@ -17,7 +17,7 @@ use PHPM\Bundle\Form\UserType;
 /**
  * Config controller.
  *
- * @Route("/config")
+ * @Route("/configv")
  */
 class ConfigController extends Controller {
 	/**
@@ -54,6 +54,34 @@ class ConfigController extends Controller {
 
 		return array('entity' => $entity,
 				'delete_form' => $deleteForm->createView(),);
+	}
+	
+	/**
+	 * Displays a Config field.
+	 *
+	 * @Route("/{field}/display/{id}",defaults={"id"=""}, name="config_display")
+	 * @Template()
+	 */
+	public function displayAction($field,$id="") {
+	    $em = $this->getDoctrine()->getEntityManager();
+	
+	    $entity = $em->getRepository('PHPMBundle:Config')->findOneByField($field);
+	
+	    if (!$entity) {
+	        throw $this
+	        ->createNotFoundException('Unable to find Config entity.');
+	    }
+	    if($id==""){
+	        return array('value' => $entity->getValue()	 );
+	    }else{
+	        $array = (array)json_decode($entity->getValue(),true);
+	        return array('value' => $array[$id]);
+	        
+	    }
+	
+	    
+	
+	    
 	}
 
 	/**
@@ -318,26 +346,58 @@ COMMIT;
 				->findOneByField('manifestation.organisation.nom');
 		$plages = $em->getRepository('PHPMBundle:Config')
 				->findOneByField('manifestation.plages');
-		$user = $em->getRepository('PHPMBundle:User')->find(1);
-
-
 		
+
+
+	
+		$entities = $em->getRepository('PHPMBundle:Config')->findAll();
+		$data = array();
+		foreach ($entities as $entity)
+		{
+		    $data[$entity->getLabel()]=$entity;
+		}
+		
+// 		$data = array("Plages de la manif"=>$plages);
 		$builder = $this->createFormBuilder(array(
-                                                    "user" => array("Utilisateur" => $user),
-		                                            "configItems"=>array("Nom de la manifestation"=>$orga,
-		                                                    "Plages de la manif"=>$plages)
-		                                                ));
+		        
+		        "configItems"=>$data
+		));
 		
 		$builder->add('configItems', 'collection',array('type' => new ConfigType()));
 		$builder->add('user', 'collection', array('type' => new UserType(), 'label' =>' '));
 		
 		$form = $builder->getForm();
 		
+// 		$configItems = array();
+// 		$data = array();
+		
+// 		foreach ($entities as $entity)
+// 		{
+// 		    $configItems[$entity->getLabel()]=array($entity->getId()=>$entity);
+//  		   // $data["configItems"][$entity->getLabel()][$entity->getId()]=$entity;
+// 		}
+// 		    $configItems = array("configItems"=>array("Nom de la manifestation"=>$orga,
+// 		                                                    "Plages de la manif"=>$plages)
+// 		                                                );
+		
+// 		$builder = $this->createFormBuilder(array("configItems"=>$configItems));
+// // 		var_dump($configItems);
+		
+		
+		
+//  		$builder->add('configItems', 'collection',array('type' => new ConfigType()));
+		
+// // $builder->setData($data);
+// 		$form = $builder->getForm();
+		
 		//var_dump($form->createView());
 
 		if ($this->get('request')->getMethod() == 'POST') {
+
 			$form->bindRequest($request);
-			$data = $form->getData();
+			$datar = $form->getData();
+			var_dump($datar);
+			exit;
 			$validator = $this->get('validator');
 			foreach ($data['configItems'] as $item) {
 

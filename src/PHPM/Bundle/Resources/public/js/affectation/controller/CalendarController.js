@@ -38,17 +38,22 @@ CalendarController.prototype = {
 	 */
 	// clic sur un quart d'heure
 	clickQuartHeure: function(obj) {
-		console.log(obj.data.date);
+		// on met une petite classe current, qui indique où on se trouve
+		(pmAffectation.current.quart_heure != -1) && ($('#'+pmAffectation.current.quart_heure).removeClass('current')); // si existe bien
+		$('#'+obj.currentTarget.id).addClass('current');
+		pmAffectation.current.quart_heure = obj.currentTarget.id;
+		pmHistory.setUrlParam(); // maj de l'url
 		
 		// on lance le bouzin, va chercher les creneaux
 		// TODO : passer paramètre
-		pmAffectation.controllers.tache.getData();
+		pmAffectation.controllers.creneau.getData();
 	},
 	// clic sur un créneau
 	clickCreneau: function(obj) {
 		console.log(obj.data.creneauId);
 		
-		// afficher le détail ?
+		// on demande un joli popup pour afficher les détails
+		
 	},
 	// clic sur les boutons pour changer de plage
 	changePlage: function(plageId) {
@@ -56,21 +61,8 @@ CalendarController.prototype = {
 		
 		pmAffectation.views.calendar.setPlage(plageId);
 		pmAffectation.controllers.orga.getData(); // mise à jour de l'orga également
-		pmAffectation.controllers.tache.empty(); // vide la colonne creneau - deviendra peut-être inutile si on prend un orga par défaut
+		pmAffectation.controllers.creneau.empty(); // vide la colonne creneau - deviendra peut-être inutile si on prend un orga par défaut
 		
 		pmHistory.setUrlParam(); // maj de l'url
 	},
-	
-	/*
-	 * Affecter un orga et un créneau
-	 * (on ne sait pas dans quel sens exactement)
-	 */
-	affecterCreneau: function(obj) {
-		// pour l'instant, on appelle directement le modèle
-		pmAffectation.models.calendar.affecterCreneau(obj.data.idCreneau, obj.data.idOrga, pmAffectation.controllers.calendar.callbackAffectation);
-	},
-	// callback
-	callbackAffectation: function() {
-		log("success");
-	}
 }

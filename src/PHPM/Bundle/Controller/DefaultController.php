@@ -35,11 +35,11 @@ class DefaultController extends Controller
     /**
      * OpenId login
      *
-     * @Route("/login", name="login")
+     * @Route("/login/{registered}",defaults={"registered"=""}, name="login")
      * @Template()
      *
      */
-    public function loginAction()
+    public function loginAction($registered)
     {
     
         $em = $this->getDoctrine()->getEntityManager();
@@ -65,7 +65,7 @@ class DefaultController extends Controller
                     return $response;
     
                 }
-                return array();
+                return array("registered"=>$registered);
     
             } elseif($openid->mode == 'cancel') {
                 return array("m"=>'error');

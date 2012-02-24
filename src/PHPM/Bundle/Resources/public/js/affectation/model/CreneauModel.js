@@ -76,4 +76,23 @@ CreneauModel.prototype = {
 		return _creneaux;
 	},
 
+	/*
+	 * Réalise l'affectation entre un créneau et un orga
+	 */
+	affecterCreneau: function(idCreneau, idOrga, callBack) {
+		pmAffectation.models.creneau.callBackAffectation = callBack;
+		
+		$.ajax({
+			url: pmAffectation.url+'creneau/'+idCreneau+'/affecter/'+idOrga,
+			//dataType: 'json',
+			//data: _params,
+			success: pmAffectation.models.creneau.affectationSuccess,
+			error: pmAffectation.models.creneau.requestError, // générique
+			type: 'POST'
+		});	
+	},
+	// les callbacks
+	affectationSuccess: function(data) {
+		pmAffectation.models.creneau.callBackAffectation();
+	},
 }

@@ -1,5 +1,5 @@
 {% extends "PHPMBundle:Orga:layout.html.twig"  %}
-{% set pageTitle = 'Hard' %}
+{% set pageTitle = 'Mes Disponibilités' %}
 
 {% block style %}
 {{ parent() }}
@@ -10,9 +10,13 @@
 
 {% block content %}
 
-
 <form action="{{ path('orga_inscriptionhard') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
+{% for f in form.children %}
+{{ form_row(f) }}
+{% endfor %}
+
+
+{{ form_rest(form) }}
     <p>
         <button type="submit">Edit</button>
     </p>

@@ -12,9 +12,10 @@ TacheController.prototype = {
 	 * Constructeur
 	 */
 	initialize: function() {
+		console.error("Ce Controller ne sert à rien normalement !");
+		
 		pmAffectation.data.tache = {};
-		//pmAffectation.models.tache = new TacheModel(); // TODO : finir
-		pmAffectation.models.creneau = new CreneauModel();
+		pmAffectation.models.tache = new TacheModel();
 		pmAffectation.views.tache = new TacheView();
 	},
 	

@@ -8,7 +8,9 @@
 
 {% block content %}
 {% if m is not defined%}
-
+{% if registered and registered==1 %}
+Votre inscription a bien été prise en compte, veuillez cliquer sur le bouton ci-dessous pour vous connecter.
+{% endif %}
 <form action="?login" method="post">
                         <button>Authentification</button>
                         </form>
@@ -17,7 +19,16 @@
 {% elseif m=='error' %}
 Erreur lors de l'authentification.            
 {% elseif m=='success' %}
-Le compte {{ email }} à été authentifié avec succès.
+<p>Le compte {{ email }} a été authentifié avec succès.</p>
+<p>Veuillez procéder aux étapes suivantes : 
+
+<ol>
+    <ul>Vérifier l'exactitude des informations vous conçernant sur la page "Mes Informations", et les modifier le cas échéant.</ul>
+    <ul>Renseigner vos disponibilités sur la page "Mes Disponibilités"</ul>
+</ol>
+</p>
+
+
 {% elseif m=='notfound' %}
 Bonjour, {{ email }} , vous n'êtes pas encore inscrit.
 <form action="{{ path('orga_register') }}" method="post">

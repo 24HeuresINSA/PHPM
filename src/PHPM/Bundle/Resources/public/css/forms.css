@@ -13,6 +13,13 @@ input,textarea {
 -moz-border-radius: 5px;
 border-radius: 5px;
 	text-shadow: 0px 1px 0px #fff;
+
+}
+
+textarea {
+
+	width:95%;
+	height:3em;
 }
 input:focus {
 	-webkit-box-shadow: 0px 0px 5px #007eff;
@@ -22,3 +29,4 @@ input:focus {
 .form_row {
 margin-bottom: .5em;
 }
+

@@ -68,6 +68,16 @@ PmHistory.prototype = {
 								(pmHistory.refreshData === true) && (pmAffectation.controllers.calendar.getData());
 							}
 							break;
+						case 'quart_heure':
+							if (pmUtils.areEquals(_params['quart_heure'], pmAffectation.current['quart_heure']) === false) {
+								// synchro un peu différente : à faire en dernier (tous les controllers doivent être construits)
+								// et on simule un click, bien plus simple
+								if (pmHistory.refreshData === true) {
+									pmAffectation.current['quart_heure'] = _params['quart_heure'];
+									pmAffectation.controllers.calendar.clickQuartHeure({currentTarget: {id: pmAffectation.current['quart_heure']}});
+								}
+							}
+							break;
 						default:
 							// autres cas, on a pas de refresh de donnée à lancer
 							if (_params[_iParam] != pmAffectation.current[_iParam]) {

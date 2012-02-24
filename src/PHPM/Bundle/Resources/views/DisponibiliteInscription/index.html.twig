@@ -10,24 +10,60 @@
             <th>Id</th>
             <th>Debut</th>
             <th>Fin</th>
-            <th></th>
+            <th>Orgas Inscrits</th>
+            
+
 
         </tr>
     </thead>
     <tbody>
+{#     {% for entity in entities %}#}
+{#     <tr style="cursor:pointer" onclick="window.location='{{ path('disponibiliteinscription_show', { 'id': entity.id }) }}'">#}
+{#             <td><a href="{{ path('disponibiliteinscription_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>#}
+{#             <td>{{ entity.debut|date('Y-m-d H:i:s') }}</td>#}
+{#             <td>{{ entity.fin|date('Y-m-d H:i:s') }}</td>#}
+{#         </tr>#}
+{#         {% endfor %}#}
+    
+    {% set previous = -1 %}
     {% for entity in entities %}
-        
-        
-        <tr style="cursor:pointer" onclick="window.location='{{ path('disponibiliteinscription_show', { 'id': entity.id }) }}'">
-            <td><a href="{{ path('disponibiliteinscription_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{% if entity.debut %}{{ entity.debut|date('Y-m-d H:i:s') }}{% endif%}</td>
-            <td>{% if entity.fin %}{{ entity.fin|date('Y-m-d H:i:s') }}{% endif%}</td>
-            
-            
+       {%  if previous == entity.0.id%}
+        <br/>{% if entity.permis is not null %}
+            {% render "PHPMBundle:Config:display" with {'field': 'manifestation.permis.libelles', 'id':entity.permis} %} :{{ entity.nborga }}
+            {% else %}
+            0
+            {% endif %}
+       {% else %}
+       {% set previous = entity.0.id %}
+       </td><tr/>
+       <tr style="cursor:pointer" onclick="window.location='{{ path('disponibiliteinscription_show', { 'id': entity.0.id }) }}'">
+       <td><a href="{{ path('disponibiliteinscription_show', { 'id': entity.0.id }) }}">{{ entity.0.id }}</a></td>
+       <td>{{ entity.0.debut|date('Y-m-d H:i:s') }}</td>
+            <td>{{ entity.0.fin|date('Y-m-d H:i:s') }}</td>
             <td>
-				{{ bouton.edit( path('disponibiliteinscription_edit', { 'id': entity.id }) ) }}
-            </td>
-        </tr>
+            {% if entity.permis is not null %}
+            {% render "PHPMBundle:Config:display" with {'field': 'manifestation.permis.libelles', 'id':entity.permis} %} :{{ entity.nborga }}
+            {% else %}
+            0
+            {% endif %}
+       {% endif %}
+        
+{#         <tr style="cursor:pointer" onclick="window.location='{{ path('disponibiliteinscription_show', { 'id': entity.0.id }) }}'">#}
+{#             <td><a href="{{ path('disponibiliteinscription_show', { 'id': entity.0.id }) }}">{{ entity.0.id }}</a></td>#}
+{#             <td>{{ entity.0.debut|date('Y-m-d H:i:s') }}</td>#}
+{#             <td>{{ entity.0.fin|date('Y-m-d H:i:s') }}</td>#}
+{#             <td> #}
+{#                  {% for e in entity %}#}
+{#                      {{ entity.0.nborga }} <br/>#}
+{#                  {% endfor %}#}
+                
+                
+{#                 </td>#}
+{#             <td>{{ entity.nborga}} </td>#}
+{#             <td>#}
+{# 				{{ bouton.edit( path('disponibiliteinscription_edit', { 'id': entity.0.id }) ) }}#}
+{#             </td>#}
+        
     {% endfor %}
     </tbody>
 </table>

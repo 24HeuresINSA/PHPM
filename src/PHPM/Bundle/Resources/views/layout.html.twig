@@ -10,10 +10,11 @@
         
         {# c'est pas très beau - on met un code 'générique' dans un block - mais à priori la seule méthode #}
         {% block style %}
-			{% stylesheets 'bundles/phpm/css/style.css' filter='cssrewrite'  %}
-				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
-			{% endstylesheets %}
-				{% stylesheets 'bundles/phpm/css/forms.css' filter='cssrewrite'  %}
+			{% stylesheets
+				'bundles/phpm/css/style.css'
+				'bundles/phpm/css/forms.css'
+				filter='cssrewrite' 
+			%}
 				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
 			{% endstylesheets %}
 			
@@ -40,9 +41,9 @@
         	<div class="title" id="title">
         		{% block topHeader %}
         		{% if is_granted('ROLE_ADMIN') %}
-        		<h1><a href="{{ path('accueil') }}"> PlanningMaker</a> &gt; <a href="{{ path(indexRoute) }}"> {{ sectionTitle }}</a> &gt;  {{ pageTitle }}</h1>
+        		<h1>{% render "PHPMBundle:Config:display" with {'field': 'manifestation.nom'} %} - <a href="{{ path('accueil') }}"> PlanningMaker</a> &gt; <a href="{{ path(indexRoute) }}"> {{ sectionTitle }}</a> &gt;  {{ pageTitle }}</h1>
         		{% else %}
-        		    <h1>{{ pageTitle }}</h1>
+        		    <h1>{% render "PHPMBundle:Config:display" with {'field': 'manifestation.nom'} %} - {{ pageTitle }}</h1>
         		{% endif %}
         		{% endblock %}
         		{% if is_granted('ROLE_ADMIN') %}
@@ -57,14 +58,16 @@
         		<ul>
         		    {% if is_granted('ROLE_ADMIN') %}
         			<li><a href="{{ path('phpm__default_home') }}">Accueil</a></li>
+        			<li><a href="{{ path('orga_inscriptionhard')}}">Mes Disponibilités</a></li>
         			<li><a href="{{ path('orga') }}">Orga</a></li>
+        			<li><a href="{{ path('disponibiliteinscription') }}">Inscriptions</a></li>
         			<li><a href="{{ path('orga_affectation') }}">Affectation</a></li>
-        			<li><a href="{{ path('categorie') }}">Categorie</a></li>
-        			<li><a href="{{ path('confiance') }}">Confiance</a></li>
-        			<li><a href="{{ path('disponibilite') }}">Disponibilité</a></li>
+        			<li><a href="{{ path('tache') }}">T&acirc;che</a></li>
         			<li><a href="{{ path('plagehoraire') }}">Plage Horaire</a></li>
-         			<li><a href="{{ path('tache') }}">T&acirc;che</a></li>
-         			<li><a href="{{ path('creneau') }}">Cr&eacute;neaux</a></li>
+         			<li><a href="{{ path('categorie') }}">Categories</a></li>
+        			<li><a href="{{ path('confiance') }}">Confiance</a></li>
+        			<li><a href="{{ path('creneau') }}">Cr&eacute;neaux</a></li>         			
+        			<li><a href="{{ path('disponibilite') }}">Disponibilité</a></li>
          			<li><a href="{{ path('config') }}">Configuration</a></li>
         			<!--<li><a href="/">T&acirc;ches</a></li>
         			<li><a href="/">Administration</a></li>-->
@@ -100,7 +103,9 @@
         </div> 
         
         <div class="footer" id="footer">
-        	&copy;2011 nous - PHPM
+        	&copy;2011 nous - PHPM <br/>
+Si vous rencontrez un bug dans ce logiciel, veuillez contacter <a href="mailto:DSI@24heures.org">DSI@24heures.org</a>. Merci.
+
         </div>
     </body>
 </html>

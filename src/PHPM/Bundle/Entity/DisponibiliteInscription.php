@@ -50,7 +50,11 @@ class DisponibiliteInscription
     private $fin;
     
 
-    
+    /**
+     * 
+     * @ORM\ManyToMany(targetEntity="Orga", mappedBy="disponibilitesInscription")
+     */
+    private $orgas;
 
     
 
@@ -138,4 +142,8 @@ class DisponibiliteInscription
         
         return $this->getDebut()->format("G:i").' '.$this->getFin()->format("G:i");
     }
+    
+
+    
+    
 }
