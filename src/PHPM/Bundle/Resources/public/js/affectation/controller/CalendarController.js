@@ -38,7 +38,13 @@ CalendarController.prototype = {
 	 */
 	// clic sur un quart d'heure
 	clickQuartHeure: function(obj) {
-		console.log(obj.data.date);
+		console.log(pmAffectation.current.quart_heure);
+		
+		// on met une petite classe current, qui indique où on se trouve
+		(pmAffectation.current.quart_heure !== undefined) && ($('#'+pmAffectation.current.quart_heure).removeClass('current')); // si existe bien
+		$(obj.currentTarget).addClass('current');
+		pmAffectation.current.quart_heure = obj.currentTarget.id;
+		pmHistory.setUrlParam(); // maj de l'url
 		
 		// on lance le bouzin, va chercher les creneaux
 		// TODO : passer paramètre
