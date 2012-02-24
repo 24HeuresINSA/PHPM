@@ -55,6 +55,28 @@ class ConfigController extends Controller {
 		return array('entity' => $entity,
 				'delete_form' => $deleteForm->createView(),);
 	}
+	
+	/**
+	 * Displays a Config field.
+	 *
+	 * @Route("/{field}/display", name="config_display")
+	 * @Template()
+	 */
+	public function displayAction($field) {
+	    $em = $this->getDoctrine()->getEntityManager();
+	
+	    $entity = $em->getRepository('PHPMBundle:Config')->findOneByField($field);
+	
+	    if (!$entity) {
+	        throw $this
+	        ->createNotFoundException('Unable to find Config entity.');
+	    }
+	
+	    
+	
+	    return array('value' => $entity->getValue(),
+	            );
+	}
 
 	/**
 	 * Displays a form to create a new Config entity.

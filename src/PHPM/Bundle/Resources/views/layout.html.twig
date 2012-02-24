@@ -40,9 +40,9 @@
         	<div class="title" id="title">
         		{% block topHeader %}
         		{% if is_granted('ROLE_ADMIN') %}
-        		<h1><a href="{{ path('accueil') }}"> PlanningMaker</a> &gt; <a href="{{ path(indexRoute) }}"> {{ sectionTitle }}</a> &gt;  {{ pageTitle }}</h1>
+        		<h1>{% render "PHPMBundle:Config:display" with {'field': 'manifestation.nom'} %} - <a href="{{ path('accueil') }}"> PlanningMaker</a> &gt; <a href="{{ path(indexRoute) }}"> {{ sectionTitle }}</a> &gt;  {{ pageTitle }}</h1>
         		{% else %}
-        		    <h1>{{ pageTitle }}</h1>
+        		    <h1>{% render "PHPMBundle:Config:display" with {'field': 'manifestation.nom'} %} - {{ pageTitle }}</h1>
         		{% endif %}
         		{% endblock %}
         		{% if is_granted('ROLE_ADMIN') %}
