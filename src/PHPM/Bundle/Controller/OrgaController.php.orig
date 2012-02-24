@@ -650,11 +650,13 @@ public function validationAction()
 				    	{
 				    		
 				    		$entitydisponibilite = new disponibilite();
+
 				    		$entity->addDisponibilite($entitydisponibilite);
 				    		$entitydisponibilite->setOrga($entity);
 				    		$entitydisponibilite->setDebut(new \DateTime($dispoAAjoute['debut']));
 				    		$entitydisponibilite->setFin(new \DateTime($dispoAAjoute['fin']));
 				    			
+
 				    	}
 				    	$em->persist($entity);
 								$em->flush();							

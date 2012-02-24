@@ -14,7 +14,7 @@ use PHPM\Bundle\Entity\Config;
  */
 class OrgaRepository extends EntityRepository
 {
-	public function getOrgasWithCriteria($permis, $maxDateNaissance, $plage_id, $niveau_confiance,$creneau_id, $bloc)
+	public function getOrgasWithCriteria($permis, $maxDateNaissance, $plage_id, $niveau_confiance,$creneau, $bloc)
 	{
 	
 		$qb = $this->getEntityManager()->createQueryBuilder();
@@ -47,15 +47,18 @@ class OrgaRepository extends EntityRepository
 		{
 			$andx->add($expr->gte('o.confiance',$niveau_confiance));
 		}
-		if($creneau_id !='')
+		if($creneau !='')
 		{
 			//TODO
 			//id_creneau : cet orga doit pouvoir etre affecté a ce créneau (dans les disponibilités et pas de créneau déja affecté)
+
+			
+			
 		}
-	
-	
-	
-	
+		
+		
+		
+		
 		$qb
 		->select('o')
 	

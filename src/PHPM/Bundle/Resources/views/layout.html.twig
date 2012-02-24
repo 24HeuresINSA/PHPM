@@ -13,6 +13,9 @@
 			{% stylesheets 'bundles/phpm/css/style.css' filter='cssrewrite'  %}
 				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
 			{% endstylesheets %}
+				{% stylesheets 'bundles/phpm/css/forms.css' filter='cssrewrite'  %}
+				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
+			{% endstylesheets %}
 			
 			{# on inclue manuellement cette feuille de style qu'Assetic ne nous casse pas les liens des images #}
 			<link rel="stylesheet" href="{{ asset('bundles/phpm/css/jquery-ui/themes/smoothness/jquery-ui-1.8.16.custom.css') }}" type="text/css" />
@@ -36,7 +39,11 @@
         	{% block header %}
         	<div class="title" id="title">
         		{% block topHeader %}
+        		{% if is_granted('ROLE_ADMIN') %}
         		<h1><a href="{{ path('accueil') }}"> PlanningMaker</a> &gt; <a href="{{ path(indexRoute) }}"> {{ sectionTitle }}</a> &gt;  {{ pageTitle }}</h1>
+        		{% else %}
+        		    <h1>{{ pageTitle }}</h1>
+        		{% endif %}
         		{% endblock %}
         		{% if is_granted('ROLE_ADMIN') %}
         		<form method="post" action="{{ path('search') }}">

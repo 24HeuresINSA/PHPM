@@ -20,7 +20,7 @@ class DisponibiliteRepository extends EntityRepository
 		->createQuery("SELECT d FROM PHPMBundle:Disponibilite d , PHPMBundle:Creneau c 		
 		WHERE d.orga = :orga_id AND c.debut > d.debut AND c.fin < d.fin
 		")
-		->setParameter('orga_id', $oid)
+		->setParameter('orga_id', $orga->getId())
 	
 		->getResult();
 	

@@ -35,10 +35,12 @@ public function isValid($entity, Constraint $constraint)
     	$debut=$entity->getDebut()->format('Y-m-d H:i:s');
     	$fin=$entity->getFin()->format('Y-m-d H:i:s');
     	$id = $entity->getId();
-        
+    	if(!isset($id))
+    	$id=0;
     	if($entity instanceof Disponibilite){
+    	    
     		$pid=$entity->getOrga()->getId();
-    		$dql = 'SELECT (count(d)) FROM PHPMBundle:Disponibilite d WHERE d.orga = :pid AND (d.debut <= :fin ) AND (d.fin >= :debut) AND d.id!=:id ';
+    		$dql = 'SELECT (count(d)) FROM PHPMBundle:Disponibilite d WHERE (d.orga = :pid) AND (d.debut <= :fin ) AND (d.fin >= :debut) AND (d.id!=:id )';
     		$message= $constraint->messageDisponibilite;
             $result = $this->em
                 ->createQuery($dql)
@@ -48,6 +50,9 @@ public function isValid($entity, Constraint $constraint)
                 ->setParameter('debut', $debut)
                 ->setParameter('fin', $debut)
                 ->getSingleScalarResult();
+            
+            
+            
     	
     	}elseif ($entity instanceof PlageHoraire){
     		
@@ -65,6 +70,9 @@ public function isValid($entity, Constraint $constraint)
                 ->setParameter('debut', $debut)
                 ->setParameter('fin', $debut)
                 ->getSingleScalarResult();
+            
+            
+            
             
     	}elseif ($entity instanceof Creneau){
     	    $pid=$entity->getDisponibilite()->getOrga()->getId();

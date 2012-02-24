@@ -262,11 +262,11 @@ class CreneauController extends Controller
     * 
     *
     * @Route("/{cid}/affecter/{oid}", name="creneau_affecter")
-    * @Method("post")
+    * 
     */
     
     
-    public function affecterCreneau()
+    public function affecterCreneau($cid, $oid)
     { 
     	//affecter à l'unique dispo qui commence avant et qui fini après
     	
@@ -277,14 +277,99 @@ class CreneauController extends Controller
     	}
 		
     	$orga = $em->getRepository('PHPMBundle:Orga')->find($oid);
+    	if (!$orga) {
+    		throw $this->createNotFoundException('Orga invalide.');
+    	}
     	$dispo = $em->getRepository('PHPMBundle:Disponibilite')->getContainingDisponibilite($orga, $creneau);
-    	if (!$dispo) {
-    		throw $this->createNotFoundException('Unable to find Dispo entity.');
+    	if (($dispo[0])==NULL) {
+    		throw $this->createNotFoundException('L\' orga n\'est pas disponible sur ce créneau.');
     	}
     	
-    	$creneau.setDisponibilite($dispo);
+    	
+    	
+    	$creneau->setDisponibilite($dispo[0]);
+    	$validator = $this->get('validator');
+    	$errors = $validator->validate($creneau);
+    	
+    	
+    	
+    	
+    	
+    	
+    	$response = new Response();
+    	$response->headers->set('Content-Type', 'application/json');
+    	
+    	
+    	
+    	
+    	if (count($errors) > 0) {
+    		
+    		$err =$errors[0];
+    		
+    		$response->setContent(json_encode($err->getMessageTemplate()));
+    	}else{
+    		$response->setContent(json_encode("OK"));
+    	}
+    	
+    	return $response;
+    	
     	
     }
+    
+    /**
+    *
+    *
+    * @Route("/{cid}/desaffecter/{oid}", name="creneau_desaffecter")
+    *
+    */
+    
+    
+    public function desaffecterCreneau($cid, $oid)
+    {
+    	//on desaffecte un creneau à un orga
+    	//à ne pas utiliser, on ne va quand même pas enlever du boulot à quelqu'un.
+    	 
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$creneau= $em->getRepository('PHPMBundle:Creneau')->find($cid);
+    	if (!$creneau) {
+    		throw $this->createNotFoundException('Unable to find Creneau entity.');
+    	}
+    
+    	$orga = $em->getRepository('PHPMBundle:Orga')->find($oid);
+    	if (!$orga) {
+    		throw $this->createNotFoundException('Orga invalide.');
+    	}
+    	$dispo = $em->getRepository('PHPMBundle:Disponibilite')->find($cid->getDisponibilite());
+    	if (($dispo->getOrga) != $oid) {
+    		throw $this->createNotFoundException('Le creneau n\'appartient pas à cet orga.');
+    	}
+    	
+    	
+    	$creneau->setDisponibilite(NULL);
+
+    	$validator = $this->get('validator');
+    	$errors = $validator->validate($creneau);
+    	  
+    	 
+    	$response = new Response();
+    	$response->headers->set('Content-Type', 'application/json');
+    	  	 
+    	 
+    	if (count($errors) > 0) {
+    
+    		$err =$errors[0];
+    
+    		$response->setContent(json_encode($err->getMessageTemplate()));
+    	}else{
+    		$response->setContent(json_encode("OK"));
+    	}
+    	 
+    	return $response;
+    	 
+    	 
+    }
+    
+    
 }
 
 
