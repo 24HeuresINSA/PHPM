@@ -5,7 +5,7 @@
 {% block content %}
 <form action="{{ path('config_manif') }}" method="post" {{ form_enctype(form) }}>
                 {% for tag in form.configItems %}
-        <li>{{ form_row(tag) }}</li>
+        {{ form_row(tag) }}
          
         
                 {% endfor %}

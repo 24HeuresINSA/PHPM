@@ -352,34 +352,52 @@ COMMIT;
 
 	
 		$entities = $em->getRepository('PHPMBundle:Config')->findAll();
-		$configItems = array();
 		$data = array();
-		
 		foreach ($entities as $entity)
 		{
-		    $configItems[$entity->getLabel()]=array($entity->getLabel()=>$entity);
-		    $data["configItems"][$entity->getLabel()]=$entity->getId();
+		    $data[$entity->getLabel()]=$entity;
 		}
-		    
 		
-		$builder = $this->createFormBuilder(array("configItems"=>$configItems));
-// 		var_dump($configItems);
+// 		$data = array("Plages de la manif"=>$plages);
+		$builder = $this->createFormBuilder(array(
+		        
+		        "configItems"=>$data
+		));
 		
+		$builder->add('configItems', 'collection',array('type' => new ConfigType()));
+		$builder->add('user', 'collection', array('type' => new UserType(), 'label' =>' '));
 		
-		
- 		$builder->add('configItems', 'collection',array('type' => new ConfigType()));
-		
-//  		$builder->setData($data);
 		$form = $builder->getForm();
+		
+// 		$configItems = array();
+// 		$data = array();
+		
+// 		foreach ($entities as $entity)
+// 		{
+// 		    $configItems[$entity->getLabel()]=array($entity->getId()=>$entity);
+//  		   // $data["configItems"][$entity->getLabel()][$entity->getId()]=$entity;
+// 		}
+// 		    $configItems = array("configItems"=>array("Nom de la manifestation"=>$orga,
+// 		                                                    "Plages de la manif"=>$plages)
+// 		                                                );
+		
+// 		$builder = $this->createFormBuilder(array("configItems"=>$configItems));
+// // 		var_dump($configItems);
+		
+		
+		
+//  		$builder->add('configItems', 'collection',array('type' => new ConfigType()));
+		
+// // $builder->setData($data);
+// 		$form = $builder->getForm();
 		
 		//var_dump($form->createView());
 
 		if ($this->get('request')->getMethod() == 'POST') {
-		    var_dump($form->getErrors());
-		    exit;
+
 			$form->bindRequest($request);
-			$data = $form->getData();
-			var_dump($data);
+			$datar = $form->getData();
+			var_dump($datar);
 			exit;
 			$validator = $this->get('validator');
 			foreach ($data['configItems'] as $item) {
