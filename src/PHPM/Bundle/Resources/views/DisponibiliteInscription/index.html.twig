@@ -18,13 +18,19 @@
     </thead>
     <tbody>
     {% for entity in entities %}
-        
+       
         
         <tr style="cursor:pointer" onclick="window.location='{{ path('disponibiliteinscription_show', { 'id': entity.0.id }) }}'">
             <td><a href="{{ path('disponibiliteinscription_show', { 'id': entity.0.id }) }}">{{ entity.0.id }}</a></td>
-            <td>{% if entity.0.debut %}{{ entity.0.debut|date('Y-m-d H:i:s') }}{% endif%}</td>
-            <td>{% if entity.0.fin %}{{ entity.0.fin|date('Y-m-d H:i:s') }}{% endif%}</td>
-            <td>{{ entity.nborga}} </td>
+            <td>{{ entity.0.debut|date('Y-m-d H:i:s') }}</td>
+            <td>{{ entity.0.fin|date('Y-m-d H:i:s') }}</td>
+            <td>{% set previous = -1 %} 
+                 {% for e in entity %}
+                     {{ 0.nborga }} <br/>
+                 {% endfor %}
+                
+                
+                </td>
             <td>{{ entity.nborga}} </td>
             <td>
 				{{ bouton.edit( path('disponibiliteinscription_edit', { 'id': entity.0.id }) ) }}
