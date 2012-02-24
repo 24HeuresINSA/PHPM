@@ -17,7 +17,7 @@ use PHPM\Bundle\Form\UserType;
 /**
  * Config controller.
  *
- * @Route("/config")
+ * @Route("/configv")
  */
 class ConfigController extends Controller {
 	/**
