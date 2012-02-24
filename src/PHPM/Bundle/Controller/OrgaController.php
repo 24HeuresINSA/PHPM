@@ -175,7 +175,7 @@ class OrgaController extends Controller
             $em->persist($entity);
             $em->flush();
     
-            return $this->redirect($this->generateUrl('login', array('m' => 'registered')));
+            return $this->redirect($this->generateUrl('login', array('registered' => 1)));
     
         }
     
@@ -557,8 +557,7 @@ public function validationAction()
 	        if ($form->isValid()) {
 	            // perform some action, such as saving the task to the database
 	            $datar = $form->getData();
-	            var_dump($datar);
-	            exit;	            
+	            	            
 	            $user->getDisponibilitesInscription()->clear();
 	            
 	            foreach ($datar as $day)
