@@ -17,7 +17,7 @@ use PHPM\Bundle\Form\UserType;
 /**
  * Config controller.
  *
- * @Route("/config")
+ * @Route("/configv")
  */
 class ConfigController extends Controller {
 	/**
@@ -59,10 +59,10 @@ class ConfigController extends Controller {
 	/**
 	 * Displays a Config field.
 	 *
-	 * @Route("/{field}/display", name="config_display")
+	 * @Route("/{field}/display/{id}",defaults={"id"=""}, name="config_display")
 	 * @Template()
 	 */
-	public function displayAction($field) {
+	public function displayAction($field,$id="") {
 	    $em = $this->getDoctrine()->getEntityManager();
 	
 	    $entity = $em->getRepository('PHPMBundle:Config')->findOneByField($field);
@@ -71,11 +71,18 @@ class ConfigController extends Controller {
 	        throw $this
 	        ->createNotFoundException('Unable to find Config entity.');
 	    }
+	    if($id==""){
+	        return array('value' => $entity->getValue()	 );
+	    }else{
+	        $array = (array)json_decode($entity->getValue(),true);
+	        var_dump($array[$id]);
+	        return $array[$id];
+	        
+	    }
 	
 	    
 	
-	    return array('value' => $entity->getValue(),
-	            );
+	    
 	}
 
 	/**

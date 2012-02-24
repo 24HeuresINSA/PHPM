@@ -143,22 +143,7 @@ class DisponibiliteInscription
         return $this->getDebut()->format("G:i").' '.$this->getFin()->format("G:i");
     }
     
-    
 
-    
-        public function getnbOrgaAvecPermisLongueDuree()
-    {
-        $ArrayOrga = $this->getOrgas();
-        $compteur = 0;
-        foreach ($ArrayOrga as $orga )
-        {
-            if ($orga->getPermis() == 2)
-            {
-            $compteur++ ;
-            }
-        }       
-        return $compteur;
-    }
     
     
 }
