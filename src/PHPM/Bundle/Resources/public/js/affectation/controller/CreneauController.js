@@ -43,15 +43,16 @@ CreneauController.prototype = {
 	/*
 	 * Handlers
 	 */
-	// clic sur un creneau
+	// clic sur un creneau : on fait l'affectation
 	clickHandler: function(obj) {
-		/*$("#orga_"+pmAffectation.current.orga).removeClass('current');
-		$("#orga_"+obj.data.id).addClass('current');
-
-		pmAffectation.current.orga = obj.data.id;
-		pmHistory.setUrlParam(); // maj de l'url
+		// on appelle le webservice
+		pmAffectation.models.creneau.affecterCreneau(obj.data.idCreneau, obj.data.idOrga, pmAffectation.controllers.creneau.callbackAffectation);
+	},
+	// callback
+	callbackAffectation: function() {
+		log("success");
 		
-		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga});*/
+		// traitement visuel à faire
 	},
 	
 	/*
@@ -62,5 +63,7 @@ CreneauController.prototype = {
 		
 		$('#liste_taches').empty();
 	},
+	
+
 
 }
