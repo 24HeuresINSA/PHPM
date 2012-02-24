@@ -52,7 +52,7 @@ INSERT INTO `Confiance` (`id`, `nom`, `valeur`, `couleur`) VALUES
 --
 
 INSERT INTO `Config` (`id`, `field`, `label`, `value`) VALUES
-(1, 'manifestation.plages', 'Plages de la manifestation', '{"1":{"nom":"Pru00e9manif","debut":"2010-12-24 00:00","fin":"2010-12-31 00:00"},"2":{"nom":"Manif","debut":"2011-01-01 00:00","fin":"2011-01-04 00:00"},"3":{"nom":"Postmanif","debut":"2011-01-05 00:00","fin":"2011-01-08 00:00"}}'),
+(1, 'manifestation.plages', 'Plages de la manifestation', '{"1":{"nom":"Pru00e9manif","debut":"2010-12-24 00:00","fin":"2010-12-31 23:50"},"2":{"nom":"Manif","debut":"2011-01-01 00:00","fin":"2011-01-04 23:50"},"3":{"nom":"Postmanif","debut":"2011-01-05 00:00","fin":"2011-01-08 23:50"}}'),
 (2, 'manifestation.organisation.nom', 'Nom de l''organisation', '24 Heures de l''INSA'),
 (3, 'phpm.config.initiale', 'PHPM configuré', '1'),
 (4, 'manifestation.nom', '', '24 Heures de l''INSA');
