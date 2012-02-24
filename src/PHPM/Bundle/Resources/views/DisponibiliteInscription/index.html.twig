@@ -28,10 +28,14 @@
     {% set previous = -1 %}
     {% for entity in entities %}
        {%  if previous == entity.0.id%}
-       <br/>{{ entity.permis }} :{{ entity.nborga }}
+        <br/>{% if entity.permis is not null %}
+            {% render "PHPMBundle:Config:display" with {'field': 'manifestation.permis.libelles', 'id':entity.permis} %} :{{ entity.nborga }}
+            {% else %}
+            0
+            {% endif %}
        {% else %}
        {% set previous = entity.0.id %}
-       <tr/>
+       </td><tr/>
        <tr style="cursor:pointer" onclick="window.location='{{ path('disponibiliteinscription_show', { 'id': entity.0.id }) }}'">
        <td><a href="{{ path('disponibiliteinscription_show', { 'id': entity.0.id }) }}">{{ entity.0.id }}</a></td>
        <td>{{ entity.0.debut|date('Y-m-d H:i:s') }}</td>
@@ -59,7 +63,7 @@
 {#             <td>#}
 {# 				{{ bouton.edit( path('disponibiliteinscription_edit', { 'id': entity.0.id }) ) }}#}
 {#             </td>#}
-        </tr>
+        
     {% endfor %}
     </tbody>
 </table>
