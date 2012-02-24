@@ -58,6 +58,7 @@
         		<ul>
         		    {% if is_granted('ROLE_ADMIN') %}
         			<li><a href="{{ path('phpm__default_home') }}">Accueil</a></li>
+        			<li><a href="{{ path('orga_inscriptionhard')}}">Mes Disponibilités</a></li>
         			<li><a href="{{ path('orga') }}">Orga</a></li>
         			<li><a href="{{ path('disponibiliteinscription') }}">Inscriptions</a></li>
         			<li><a href="{{ path('orga_affectation') }}">Affectation</a></li>
