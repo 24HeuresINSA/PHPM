@@ -99,7 +99,7 @@ string generer_ligne_orga(int id, string unNom, string unPrenom)
   ligne+=", ";
   ligne+=intToString(random(2)); //permis
   ligne+=", ";
-  ligne+="0"; // statut
+  ligne+="1"; // statut
   ligne+=", ";
   ligne+="0 "; // admin
   ligne+=") \n";
