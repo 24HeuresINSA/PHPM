@@ -341,6 +341,7 @@ class OrgaController extends Controller
      * @Route("/validation", name="orga_validation")
      * @Template
      */
+    /*
 	public function validationAction()	
 	{
 	    if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
@@ -376,9 +377,94 @@ class OrgaController extends Controller
                $em->flush();
 			}
 		}
+        
 		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasToValidate();
 		return array("entities" => $entities);
 	}
+
+*/
+
+     /**
+     * Import Orgas from website.
+     *
+     * @Route("/validation", name="orga_validation")
+     * @Template
+     */
+public function validationAction()  
+    {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+        
+        $request = $this->get('request')->request;      
+        $em = $this->getDoctrine()->getEntityManager();              
+        if ($this->get('request')->getMethod() == 'POST') 
+        {
+        $data = $request->all();
+            foreach ($data as $idOrgaATraiter => $codeFormulaire) // code formulaire : 0 rien à faire, 1 validé, 2 supprimé
+       
+            {
+                if($codeFormulaire == 0){
+                    continue;
+                }
+                
+                $orga = $em->getRepository('PHPMBundle:Orga')->findOneById($idOrgaATraiter);
+                      
+               if ($codeFormulaire==1)
+               {
+                  $orga->setStatut(1); // validation de l'orga
+                  
+                  $disponibiliteInscription = $orga->getDisponibilitesInscription();
+                 
+                  if ($disponibiliteInscription[0] != NULL) // l'orga n'a pas de disponibilite
+                  {
+                          $entitydisponibilite = new disponibilite();
+                          $orga->addDisponibilite($entitydisponibilite);
+                          $entitydisponibilite->setOrga($orga);
+                          
+                          $entitydisponibilite->setDebut(new \DateTime(date('Y-m-d H:i:s',$disponibiliteInscription[0]->getDebut()->getTimestamp())));
+                          $entitydisponibilite->setFin(new \DateTime(date('Y-m-d H:i:s',$disponibiliteInscription[0]->getFin()->getTimestamp())));
+                                            
+                      foreach ($disponibiliteInscription as $di)
+                      {
+                          
+                          $debutDI = $di->getDebut()->getTimestamp();
+                          $finDI = $di->getFin()->getTimestamp();
+                          
+                          if ($entitydisponibilite->getFin()->getTimestamp() == $debutDI)
+                          {
+                             $entitydisponibilite->setFin(new \DateTime(date('Y-m-d H:i:s',$finDI))); 
+                          }
+                          else if ($entitydisponibilite->getDebut()->getTimestamp() != $debutDI)
+                          {
+                              $entitydisponibilite = new disponibilite();
+                              $orga->addDisponibilite($entitydisponibilite);
+                              $entitydisponibilite->setOrga($orga);
+                              $entitydisponibilite->setDebut(new \DateTime(date('Y-m-d H:i:s',$debutDI)));
+                              $entitydisponibilite->setFin(new \DateTime(date('Y-m-d H:i:s',$finDI)));
+                          }    
+                                                          
+                          
+                      }
+                  
+                  } 
+               }
+               if ($codeFormulaire==2)
+               {
+                   $em->remove($orga);  
+               } 
+           
+               $em->persist($orga);
+               $em->flush();
+            }
+        }
+       
+        $entities = $em->getRepository('PHPMBundle:Orga')->getOrgasFromRegistration();
+                
+        return array("entities" => $entities);
+    }
+
+
 
 	
 	/**
