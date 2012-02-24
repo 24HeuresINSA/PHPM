@@ -27,10 +27,10 @@ int main()
   int idCreationOrga = Id_Debut_Orga;
   
   vector<string> Disponibilites;
-  Disponibilites.push_back("'2011-01-01 00:00:00', '2011-01-01 10:00:00'");
-  Disponibilites.push_back("'2011-01-01 16:00:00', '2011-01-01 20:00:00'");
-  Disponibilites.push_back("'2011-01-02 10:00:00', '2011-01-02 15:00:00'");
-  Disponibilites.push_back("'2011-01-02 16:00:00', '2011-01-02 20:00:00'");
+  Disponibilites.push_back("'2011-01-01 00:00:00', '2011-01-01 16:00:00'");
+  Disponibilites.push_back("'2011-01-01 16:00:00', '2011-01-01 23:00:00'");
+  Disponibilites.push_back("'2011-01-02 10:00:00', '2011-01-02 16:00:00'");
+  Disponibilites.push_back("'2011-01-02 16:00:00', '2011-01-02 23:00:00'");
   Disponibilites.push_back("'2011-01-02 7:00:00', '2011-01-02 10:00:00'");
 
 
