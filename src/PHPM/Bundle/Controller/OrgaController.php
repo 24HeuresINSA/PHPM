@@ -557,7 +557,8 @@ public function validationAction()
 	        if ($form->isValid()) {
 	            // perform some action, such as saving the task to the database
 	            $datar = $form->getData();
-	            	            
+	            var_dump($datar);
+	            exit;	            
 	            $user->getDisponibilitesInscription()->clear();
 	            
 	            foreach ($datar as $day)
