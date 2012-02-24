@@ -368,7 +368,8 @@ COMMIT;
 		//var_dump($form->createView());
 
 		if ($this->get('request')->getMethod() == 'POST') {
-		    
+		    var_dump($form->getErrors());
+		    exit;
 			$form->bindRequest($request);
 			$data = $form->getData();
 			var_dump($data);
