@@ -413,7 +413,7 @@ public function validationAction()
                if ($codeFormulaire==1)
                {
                   $orga->setStatut(1); // validation de l'orga
-                  
+                  $em->persist($orga);
                   $disponibiliteInscription = $orga->getDisponibilitesInscription();
                  
                   if ($disponibiliteInscription[0] != NULL) // l'orga n'a pas de disponibilite
@@ -454,7 +454,7 @@ public function validationAction()
                    $em->remove($orga);  
                } 
            
-               $em->persist($orga);
+               
                $em->flush();
             }
         }
