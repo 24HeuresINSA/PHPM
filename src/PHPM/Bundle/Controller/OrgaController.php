@@ -175,7 +175,7 @@ class OrgaController extends Controller
             $em->persist($entity);
             $em->flush();
     
-            return $this->redirect($this->generateUrl('login', array('m' => 'registered')));
+            return $this->redirect($this->generateUrl('login', array('registered' => 1)));
     
         }
     

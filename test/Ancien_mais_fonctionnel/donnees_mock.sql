@@ -20,6 +20,17 @@ SET time_zone = "+00:00";
 -- Database: `phpm`
 --
 
+-- On detruit les données précdentes
+DELETE from Orga where is_admin<>1;
+DELETE from Disponibilite;
+DELETE from Categorie;
+DELETE from Confiance;
+DELETE from Config;
+DELETE from Creneau;
+DELETE from PlageHoraire;
+DELETE from Tache;
+DELETE from User;
+
 --
 -- Dumping data for table `Categorie`
 --
@@ -45,7 +56,7 @@ INSERT INTO `Confiance` (`id`, `nom`, `valeur`, `couleur`) VALUES
 INSERT INTO `Config` (`id`, `field`, `value`) VALUES
 (1, 'manifestation.plages', '{"1":{"nom":"Prémanif","debut":"2012-05-16 00:00","fin":"2012-05-24 00:00"},"2":{"nom":"Manif","debut":"2012-05-24 00:00","fin":"2012-05-27 00:00"},"3":{"nom":"Postmanif","debut":"2012-05-28 00:00","fin":"2012-06-01 00:00"}}'),
 (2, 'manifestation.organisation.nom', '24 Heures de l''INSA'),
-(3, 'phpm.config.initiale', '1')
+(3, 'phpm.config.initiale', '1'),
 (4, 'manifestation.nom', '24 Heures');
 
 

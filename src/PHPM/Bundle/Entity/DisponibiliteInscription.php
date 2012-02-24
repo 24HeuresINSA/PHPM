@@ -144,16 +144,7 @@ class DisponibiliteInscription
     }
     
     
-    public function getnbOrga()
-    {
-        $ArrayOrga = $this->getOrgas();
-        $compteur = 0;
-        foreach ($ArrayOrga as $orga )
-        {
-            $compteur++ ;
-        }       
-        return $compteur;
-    }
+
     
         public function getnbOrgaAvecPermisLongueDuree()
     {

@@ -44,7 +44,7 @@ CreneauView.prototype = {
 			$('#liste_taches').append(_html);
 			
 			// handler de click, part dans Calendar (car générique)
-			$('#tache_'+_iCreneau).bind('click', {idCreneau: _iCreneau, idOrga: pmAffectation.current.orga.id}, pmAffectation.controllers.calendar.affecterCreneau); // handler de click
+			$('#tache_'+_iCreneau).bind('click', {idCreneau: _iCreneau, idOrga: pmAffectation.current.orga.id}, pmAffectation.controllers.creneau.clickHandler); // handler de click
 		}
 	}
 	

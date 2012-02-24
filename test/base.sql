@@ -20,7 +20,7 @@ SET time_zone = "+00:00";
 -- Base de données: `phpm`
 --
 -- On detruit les données précdentes
-DELETE from Orga where is_admin=0;
+DELETE from Orga where is_admin<>1;
 DELETE from Disponibilite;
 DELETE from Categorie;
 DELETE from Confiance;

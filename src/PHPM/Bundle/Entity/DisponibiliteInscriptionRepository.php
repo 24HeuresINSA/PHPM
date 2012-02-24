@@ -12,4 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class DisponibiliteInscriptionRepository extends EntityRepository
 {
+    
+    public function findAllWithOrgacount()
+    {
+    
+        return $this->getEntityManager()
+        ->createQuery("SELECT d, count(o) as nborga, o.permis FROM PHPMBundle:DisponibiliteInscription d JOIN d.orgas o GROUP BY d.id, o.permis")
+
+        ->getArrayResult();
+    
+    
+    }
 }

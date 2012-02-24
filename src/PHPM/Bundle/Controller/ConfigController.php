@@ -340,26 +340,40 @@ COMMIT;
 				->findOneByField('manifestation.organisation.nom');
 		$plages = $em->getRepository('PHPMBundle:Config')
 				->findOneByField('manifestation.plages');
-		$user = $em->getRepository('PHPMBundle:User')->find(1);
+		
 
 
+	
+		$entities = $em->getRepository('PHPMBundle:Config')->findAll();
+		$configItems = array();
+		$data = array();
 		
-		$builder = $this->createFormBuilder(array(
-                                                    "user" => array("Utilisateur" => $user),
-		                                            "configItems"=>array("Nom de la manifestation"=>$orga,
-		                                                    "Plages de la manif"=>$plages)
-		                                                ));
+		foreach ($entities as $entity)
+		{
+		    $configItems[$entity->getLabel()]=array($entity->getLabel()=>$entity);
+		    $data["configItems"][$entity->getLabel()]=$entity->getId();
+		}
+		    
 		
-		$builder->add('configItems', 'collection',array('type' => new ConfigType()));
-		$builder->add('user', 'collection', array('type' => new UserType(), 'label' =>' '));
+		$builder = $this->createFormBuilder(array("configItems"=>$configItems));
+// 		var_dump($configItems);
 		
+		
+		
+ 		$builder->add('configItems', 'collection',array('type' => new ConfigType()));
+		
+//  		$builder->setData($data);
 		$form = $builder->getForm();
 		
 		//var_dump($form->createView());
 
 		if ($this->get('request')->getMethod() == 'POST') {
+		    var_dump($form->getErrors());
+		    exit;
 			$form->bindRequest($request);
 			$data = $form->getData();
+			var_dump($data);
+			exit;
 			$validator = $this->get('validator');
 			foreach ($data['configItems'] as $item) {
 

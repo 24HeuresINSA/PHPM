@@ -121,6 +121,13 @@ class OrgaRepository extends EntityRepository
         ->createQuery("SELECT SUM(c.fin-c.debut)/3600 AS nbHeures FROM PHPMBundle:Creneau c  WHERE (c.disponibilite is NULL)")   
         ->getResult();
     }
+    
+    public function getNombreHeureInscription($oid)
+    {
+        return number_format($this->getEntityManager()
+        ->createQuery("SELECT SUM(d.fin-d.debut)/3600 AS nbHeures FROM PHPMBundle:Orga o JOIN o.disponibilitesInscription d")
+        ->getSingleScalarResult(),1);
+    }
    
    
     /*    Voir comment on peut récupérer le résultat d'une requête SQL en natif

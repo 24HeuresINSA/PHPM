@@ -58,6 +58,7 @@
         		<ul>
         		    {% if is_granted('ROLE_ADMIN') %}
         			<li><a href="{{ path('phpm__default_home') }}">Accueil</a></li>
+        			<li><a href="{{ path('orga_inscriptionhard')}}">Mes Disponibilités</a></li>
         			<li><a href="{{ path('orga') }}">Orga</a></li>
         			<li><a href="{{ path('disponibiliteinscription') }}">Inscriptions</a></li>
         			<li><a href="{{ path('orga_affectation') }}">Affectation</a></li>
@@ -102,7 +103,9 @@
         </div> 
         
         <div class="footer" id="footer">
-        	&copy;2011 nous - PHPM
+        	&copy;2011 nous - PHPM <br/>
+Si vous rencontrez un bug dans ce logiciel, veuillez contacter <a href="mailto:DSI@24heures.org">DSI@24heures.org</a>. Merci.
+
         </div>
     </body>
 </html>
