@@ -156,11 +156,11 @@ CalendarView.prototype = {
 	showDetails: function(obj) {
 		log(obj);
 		
-		$('<div>Ici on va mettre plus dinfos sur les créneau où vous venez de cliquer').dialog({
+		$('<div>Ici on va mettre plus dinfos sur les créneau où vous venez de cliquer</div>').dialog({
 			closeText: 'fermer',
 			dialogClass: 'creneau_details',
 			draggable: false,
-			position: [obj.pageX, obj.pageY],
+			position: [obj.pageX-150, obj.pageY],
 			resizable: false,
 			title: 'Détails créneau '
 		})
