@@ -286,7 +286,8 @@ class CreneauController extends Controller
     	}
     	
     	
-    	
+    	$dispo->addCreneau($creneau);
+    	$em->flush();
     	
     	$validator = $this->get('validator');
     	$errors = $validator->validate($creneau);
@@ -296,8 +297,8 @@ class CreneauController extends Controller
     	
     	
     	
-    	$response = new Response();
-    	$response->headers->set('Content-Type', 'application/json');
+    	//$response = new Response();
+    	//$response->headers->set('Content-Type', 'application/json');
     	
     	
     	
