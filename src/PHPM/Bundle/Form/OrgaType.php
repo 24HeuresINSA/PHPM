@@ -35,7 +35,8 @@ class OrgaType extends AbstractType
             ->add('email',null,array('label'=>'Adresse email'))
             ->add('dateDeNaissance', 'birthday', array('label'=>'Date de naissance','years'=>$years))
             ->add('departement','choice',array('label'=>'Département INSA', 'choices'=>array(
-                    'PC','GMC','GMD', 'GMPP', 'IF', 'SGM', 'GI', 'GE', 'TC', 'GCU', 'BIM', 'BIOCH', 'GEN', 'Autre' 
+                    'PC'=>'PC','GMC'=>'GMC','GMD'=>'GMD', 'GMPP'=>'GMPP', 'IF'=>'IF', 'SGM'=>'SGM',
+                    'GI'=>'GI', 'GE'=>'GE', 'TC'=>'TC', 'GCU'=>'GCU', 'BIM'=>'BIM', 'BIOCH'=>'BIOCH', 'GEN'=>'GEN', 'Autre'=>'Autre' 
                     )))
             ->add('commentaire')
             ->add('permis','choice',array('label'=>'Titulaire du permis B', 'choices'=>$libellesPermis));

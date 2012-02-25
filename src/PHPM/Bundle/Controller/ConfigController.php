@@ -20,19 +20,19 @@ use PHPM\Bundle\Form\UserType;
  * @Route("/configv")
  */
 class ConfigController extends Controller {
-	/**
-	 * Lists all Config entities.
-	 *
-	 * @Route("/", name="config")
-	 * @Template()
-	 */
-	public function indexAction() {
-		$em = $this->getDoctrine()->getEntityManager();
+// 	/**
+// 	 * Lists all Config entities.
+// 	 *
+// 	 * @Route("/", name="config")
+// 	 * @Template()
+// 	 */
+// 	public function indexAction() {
+// 		$em = $this->getDoctrine()->getEntityManager();
 
-		$entities = $em->getRepository('PHPMBundle:Config')->findAll();
+// 		$entities = $em->getRepository('PHPMBundle:Config')->findAll();
 
-		return array('entities' => $entities);
-	}
+// 		return array('entities' => $entities);
+// 	}
 
 	/**
 	 * Finds and displays a Config entity.
@@ -337,7 +337,8 @@ COMMIT;
 	/**
 	 *
 	 *
-	 * @Route("/manif", name="config_manif")
+	 * @Route("/", name="config_manif")
+	 * @Route("/", name="config")
 	 * @Template
 	 */
 	public function manifAction() {

@@ -1,0 +1,32 @@
+/*
+ * Tableaux
+ */
+
+table {
+	border-collapse:collapse;
+	
+}
+
+th, td{
+	padding-left:.5em;
+	padding-right:.5em;
+}
+
+table.records_list th {
+	background: #ccc;
+	}
+
+
+table.records_list tr {
+	background: #ddd;
+}
+
+
+table.record_properties th,table.record_properties tr,table.record_properties td { 
+border : none;
+background: inherit;
+}
+table.records_list th,table.records_list tr,table.records_list td { 
+border: thin solid black;
+
+}

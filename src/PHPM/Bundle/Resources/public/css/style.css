@@ -166,40 +166,6 @@ h1 a {
 	margin-top: 0;
 }
 
-/*
- * Tableaux
- */
-
-table {
-	border-collapse:collapse;
-	width: 90%;
-	text-align: center;
-}
-
-th {
-	background: #ccc;	
-	border: thin solid black;
-	margin: 0;
-}
-
-
-tr {
-	background: #ddd;	
-	margin: 0;
-}
-
-tr:hover{
-	background: #d0d0d0;
-	
-}
-
-td {
-	font-family: sans-serif;
-	border: thin solid black;
-	text-align: center;
-}
-
-
 
 
 /*
