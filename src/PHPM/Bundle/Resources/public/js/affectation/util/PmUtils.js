@@ -191,6 +191,22 @@ PmUtils.prototype = {
 		} else {
 			return false;
 		}
+	},
+	
+	/*
+	 * Petite fonction permettant de retourner une string 'myDts'
+	 * A partir d'une date hashée (comme dans les paramètres de l'url)
+	 * Ne pas chercher à faire autrement, trop de chars spéciaux pour passer la date dans l'url !
+	 */
+	getDateBack: function(str) {
+		if (str == -1) {
+			return -1; // rien à parser, c'est le wildcart
+		}
+		
+		var _tab = str.split('-');
+		
+		log(_tab);
 	}
+	
 };
 
