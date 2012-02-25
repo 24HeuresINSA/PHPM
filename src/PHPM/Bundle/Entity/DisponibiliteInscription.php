@@ -8,6 +8,7 @@ use PHPM\Bundle\Validator\DebutAvantFin;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use PHPM\Bundle\Validator\QuartHeure;
 use PHPM\Bundle\Validator\Recoupe;
+use Sonata\IntlBundle\Templating\Helper;
 
 
 /**
@@ -140,8 +141,12 @@ class DisponibiliteInscription
     public function __toString()
     {
         
+        return 
+        \IntlDateFormatter::create(null, \IntlDateFormatter::MEDIUM, \IntlDateFormatter::SHORT,null,null,'EEEE dd  HH:mm')->format($this->getDebut())
+        .'-'.
+        \IntlDateFormatter::create(null, \IntlDateFormatter::MEDIUM, \IntlDateFormatter::SHORT,null,null,'HH:mm')->format($this->getFin())
         
-        return $this->getDebut()->format("l G:i").' '.$this->getFin()->format("G:i");
+        ;
     }
     
 
