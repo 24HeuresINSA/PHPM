@@ -206,7 +206,7 @@ PmUtils.prototype = {
 		var _tab = str.split('_'); // pour récupérer le hash de fin
 		var _date = _tab[2].split('-');
 		
-		// on construit et retourne le tout sous forme d'un str
+		// on construit et retourne le tout sous forme d'un string
 		return _date[0]+'/'+pmUtils.pad2(_date[1])+'/'+pmUtils.pad2(_date[2])+' '+pmUtils.pad2(_date[3])+':'+pmUtils.pad2(_date[4])+':00';
 	},
 	
