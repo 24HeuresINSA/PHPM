@@ -281,13 +281,13 @@ class CreneauController extends Controller
     		throw $this->createNotFoundException('Orga invalide.');
     	}
     	$dispo = $em->getRepository('PHPMBundle:Disponibilite')->getContainingDisponibilite($orga, $creneau);
-    	if (($dispo[0])==NULL) {
+    	if (($dispo)==NULL) {
     		throw $this->createNotFoundException('L\' orga n\'est pas disponible sur ce créneau.');
     	}
     	
     	
     	
-    	$creneau->setDisponibilite($dispo[0]);
+    	
     	$validator = $this->get('validator');
     	$errors = $validator->validate($creneau);
     	
@@ -309,6 +309,8 @@ class CreneauController extends Controller
     		$response->setContent(json_encode($err->getMessageTemplate()));
     	}else{
     		$response->setContent(json_encode("OK"));
+    		$dispo->addCreneau($creneau);
+    		$em->flush();
     	}
     	
     	return $response;
