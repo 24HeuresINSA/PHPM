@@ -342,7 +342,7 @@ class CreneauController extends Controller
     		throw $this->createNotFoundException('Orga invalide.');
     	}
     	$dispo = $em->getRepository('PHPMBundle:Disponibilite')->find($cid->getDisponibilite());
-    	if (($dispo->getOrga) != $oid) {
+    	if (($dispo->getOrga()) != $oid) {
     		throw $this->createNotFoundException('Le creneau n\'appartient pas à cet orga.');
     	}
     	
