@@ -281,13 +281,14 @@ class CreneauController extends Controller
     		throw $this->createNotFoundException('Orga invalide.');
     	}
     	$dispo = $em->getRepository('PHPMBundle:Disponibilite')->getContainingDisponibilite($orga, $creneau);
-    	if (($dispo[0])==NULL) {
+    	if (($dispo)==NULL) {
     		throw $this->createNotFoundException('L\' orga n\'est pas disponible sur ce créneau.');
     	}
     	
     	
-    	
-    	$creneau->setDisponibilite($dispo[0]);
+    	$dispo->addCreneau($creneau);
+    	$em->flush();
+    	exit;
     	$validator = $this->get('validator');
     	$errors = $validator->validate($creneau);
     	
@@ -296,8 +297,8 @@ class CreneauController extends Controller
     	
     	
     	
-    	$response = new Response();
-    	$response->headers->set('Content-Type', 'application/json');
+    	//$response = new Response();
+    	//$response->headers->set('Content-Type', 'application/json');
     	
     	
     	
@@ -309,6 +310,8 @@ class CreneauController extends Controller
     		$response->setContent(json_encode($err->getMessageTemplate()));
     	}else{
     		$response->setContent(json_encode("OK"));
+    		$dispo->addCreneau($creneau);
+    		$em->flush();
     	}
     	
     	return $response;
@@ -340,7 +343,7 @@ class CreneauController extends Controller
     		throw $this->createNotFoundException('Orga invalide.');
     	}
     	$dispo = $em->getRepository('PHPMBundle:Disponibilite')->find($cid->getDisponibilite());
-    	if (($dispo->getOrga) != $oid) {
+    	if (($dispo->getOrga()) != $oid) {
     		throw $this->createNotFoundException('Le creneau n\'appartient pas à cet orga.');
     	}
     	

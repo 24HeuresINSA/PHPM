@@ -52,11 +52,9 @@ CalendarController.prototype = {
 		pmAffectation.controllers.creneau.getData();
 	},
 	// clic sur un créneau
-	clickCreneau: function(obj) {
-		console.log(obj.data.creneauId);
-		
-		// on demande un joli popup pour afficher les détails
-		
+	clickCreneau: function(obj) {		
+		// on demande à la vue un joli popup avec les détails
+		pmAffectation.views.calendar.showDetails(obj);
 	},
 	// clic sur les boutons pour changer de plage
 	changePlage: function(plageId) {

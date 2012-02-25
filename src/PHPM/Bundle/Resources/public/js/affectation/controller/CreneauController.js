@@ -50,7 +50,7 @@ CreneauController.prototype = {
 	},
 	// callback
 	callbackAffectation: function() {
-		message.success("Affectation réaliséee");
+		message.success("Affectation réalisée");
 		
 		// on recharge le planning de cet orga (et du coup la liste des tous les orgas)
 		pmAffectation.controllers.orga.getData();
