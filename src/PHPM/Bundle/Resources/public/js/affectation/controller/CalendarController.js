@@ -42,8 +42,10 @@ CalendarController.prototype = {
 		(pmAffectation.current.quart_heure != -1) && ($('#'+pmAffectation.current.quart_heure).removeClass('current')); // si existe bien
 		$('#'+obj.currentTarget.id).addClass('current');
 		pmAffectation.current.quart_heure = obj.currentTarget.id;
-		//pmAffectation.current.quart_heure.date = obj.data.date;
 		pmHistory.setUrlParam(); // maj de l'url
+		
+		// on calcule la durée maximal du créneau que l'on peut mettre
+		//pmAffectation.current.creneau.duree = 
 		
 		// on va chercher les creneaux
 		pmAffectation.controllers.creneau.getData();

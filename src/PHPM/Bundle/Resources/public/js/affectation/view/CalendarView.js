@@ -124,7 +124,7 @@ CalendarView.prototype = {
 						// sélection suivant les attributs de temps de plus en plus précis
 						$('.jour[jour="'+_iDts.getFullYear()+'-'+Number(_iDts.getMonth()+1)+'-'+_iDts.getDate()+'"] > .heure[heure="'
 						+_iDts.getHours()+'"] > .quart_heure[minute="'+_iDts.getMinutes()+'"]').addClass('free')
-						.bind('click', {date: _iDts.getMyDts()}, pmAffectation.controllers.calendar.clickQuartHeure);
+						.bind('click', {}, pmAffectation.controllers.calendar.clickQuartHeure);
 					}
 					
 					// on place les créneaux (et retire le handler)

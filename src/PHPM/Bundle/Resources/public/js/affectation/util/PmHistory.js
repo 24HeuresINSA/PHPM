@@ -76,7 +76,6 @@ PmHistory.prototype = {
 									pmAffectation.current['quart_heure'] = _params['quart_heure'];
 									
 									pmAffectation.controllers.calendar.clickQuartHeure({
-										data: {date:  pmUtils.getDateBack(pmAffectation.current['quart_heure'])},
 										currentTarget: {id: pmAffectation.current['quart_heure']}
 									});
 								}
