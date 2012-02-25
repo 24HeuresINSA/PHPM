@@ -209,7 +209,7 @@ class CreneauController extends Controller
     
     	$request = $this->getRequest();
     
-    	$permis= $request->request->get('permisNecessaire', '');
+    	$permis= $request->request->get('permis', '');
     	$age= $request->request->get('age', '0');
     	$niveau_confiance= $request->request->get('confiance_id', '');
     	$categorie = $request->request->get('categorie_id', '');

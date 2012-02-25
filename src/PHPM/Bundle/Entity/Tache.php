@@ -252,7 +252,16 @@ class Tache
     	
     }
     
-
+    public function toArrayOrgaWebService($developCreneaux = NULL)
+    {
+ 
+    	return array(
+        	"id" => $this->getId(),
+        	"nom" => $this->getNom(),
+        	"lieu" => $this->getLieu(),
+        	);
+    	 
+    }
 
 
     /**
