@@ -288,7 +288,7 @@ class CreneauController extends Controller
     	
     	$dispo->addCreneau($creneau);
     	$em->flush();
-    	
+    	exit;
     	$validator = $this->get('validator');
     	$errors = $validator->validate($creneau);
     	
