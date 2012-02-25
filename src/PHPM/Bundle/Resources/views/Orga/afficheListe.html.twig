@@ -27,7 +27,7 @@
             <td>{% if entity.dateDeNaissance %}{{ entity.dateDeNaissance|date('Y-m-d H:i:s') }}{% endif%}</td>
             <td>{{ entity.departement }}</td>
             <td>{{ entity.commentaire }}</td>
-            <td>{{ entity.permis }}</td>
+            <td>{% render "PHPMBundle:Config:display" with {'field': 'manifestation.permis.libelles', 'key':entity.permis} %}</td>
             <td>{{ entity.isAdmin }}</td>
         </tr>
         {%   endfor %}

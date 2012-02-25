@@ -8,16 +8,18 @@ use Symfony\Component\Form\FormBuilder;
 class OrgaType extends AbstractType
 {
     protected $admin;
-    function __construct($admin){
+    protected $em;
+    function __construct($admin,$em){
         
-        
+            $this->em =$em;
             $this->admin =$admin;
     }
     
     
     public function buildForm(FormBuilder $builder, array $options)
     {
-             
+        $libellesPermis =  json_decode($this->em->getRepository('PHPMBundle:Config')->findOneByField('manifestation.permis.libelles')->getValue(),true);
+        
     	$currentYear = date('Y');
     	$years = array(); 	
     	
@@ -36,9 +38,7 @@ class OrgaType extends AbstractType
                     'PC','GMC','GMD', 'GMPP', 'IF', 'SGM', 'GI', 'GE', 'TC', 'GCU', 'BIM', 'BIOCH', 'GEN', 'Autre' 
                     )))
             ->add('commentaire')
-            ->add('permis','choice',array('label'=>'Titulaire du permis B', 'choices'=>array(
-                    0=>'Non',1=>'Permis depuis - de 2ans', 2=>'Permis de + de deux ans'
-                    )));
+            ->add('permis','choice',array('label'=>'Titulaire du permis B', 'choices'=>$libellesPermis));
     	if($this->admin){
         $builder
 			->add('confiance', null,array('read_only'=>!$this->admin))

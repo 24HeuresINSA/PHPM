@@ -3,6 +3,7 @@ parameters:
     my.validator.inclus.class:      PHPM\Bundle\Validator\InclusValidator
     my.validator.debutAvantFin.class:      PHPM\Bundle\Validator\DebutAvantFinValidator
     my.validator.recoupe.class:      PHPM\Bundle\Validator\RecoupeValidator
+    configController.class:      PHPM\Bundle\Controller\ConfigController
 
 services:
     my.validator.quartHeure:
@@ -27,4 +28,8 @@ services:
        class:      %my.validator.recoupe.class%
        arguments: [@doctrine.orm.entity_manager]
        tags:
-            - { name: validator.constraint_validator, alias: validator.recoupe } 
+            - { name: validator.constraint_validator, alias: validator.recoupe }
+    configController:
+       class:      %configController.class%
+       arguments: []
+      
