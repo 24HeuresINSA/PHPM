@@ -159,12 +159,15 @@ CalendarView.prototype = {
 		
 		// on prépare le contenu du pop-up
 		var _html = '<ul>' +
-					'<li>Tâche n°</li>'+
+					'<li><a href="'+pmAffectation.url+'tache/'+1+'/show" target="_blank">Tâche n°</a></li>'+
 					'<li>Nom de la tâche</li>'+
 					'<li>Lieu de la tâche</li>'+
-					'<li><span id="unaffect_'+_tache+'">Désaffecter</a></li>'+
+					'<li><button id="desaffect_'+_tache+'">Désaffecter</button></li>'+
 					'</ul>';
-		// TODO : lien pour désaffecter
+		
+		// bouton, lien pour la désaffectation
+		$('#desaffect_'+_tache).button();
+		$('#desaffect_'+_tache).click(function() {pmAffectation.controllers.creneau.desAffectation(obj.data.idOrga, obj.data.idCreneau)})
 		
 		// on l'ouvre
 		$('<div>'+_html+'</div>').dialog({

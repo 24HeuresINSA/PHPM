@@ -45,6 +45,9 @@ CreneauController.prototype = {
 	 */
 	// clic sur un creneau : on fait l'affectation
 	clickHandler: function(obj) {
+		// on log l'action
+		pmUtils.logAction('affectation', obj.data.idCreneau, obj.data.idOrga);
+		
 		// on appelle le webservice
 		pmAffectation.models.creneau.affecterCreneau(obj.data.idCreneau, obj.data.idOrga, pmAffectation.controllers.creneau.callbackAffectation);
 	},
@@ -54,6 +57,17 @@ CreneauController.prototype = {
 		
 		// on recharge le planning de cet orga (et du coup la liste des tous les orgas)
 		pmAffectation.controllers.orga.getData();
+	},
+	
+	/*
+	 * Gère la désaffectation
+	 * (clic sur le bouton correspondant)
+	 */
+	desAffectation: function(idOrga, idCreneau) {
+		// on log l'action
+		pmUtils.logAction('desaffectation', obj.data.idCreneau, obj.data.idOrga);
+		
+		// on appelle le webservice
 	},
 	
 	/*
