@@ -25,8 +25,8 @@ class OrgaRepository extends EntityRepository
 		$expr->neq('d.orga','0')		
 		);
 	
-		$offset = $bloc*50;
-		$limit = $offset+49;
+		$offset = (int)($bloc*50);
+		$limit = (int)(50);
 	
 		if($plage_id !='')
 		{
@@ -74,10 +74,10 @@ class OrgaRepository extends EntityRepository
 					
 				
 			*/
+			
 		}
 		
-		
-		
+		//$andx()->add('LIMIT\''.$limit.'\' \''.$offset.'\'');
 		 
 		$qb
 		->select('o')
@@ -96,10 +96,10 @@ class OrgaRepository extends EntityRepository
 		->where($andx)
 		//->setFirstResult($offset)
 		//->setMaxResults($limit);
+		
 		;
-		//exit(var_dump($qb->getQuery()->getDQL()));
-	
-	
+		exit(var_dump($qb->getQuery()->getDQL()));
+		
 	
 		return $qb->getQuery()->getResult();
 	
