@@ -74,7 +74,11 @@ PmHistory.prototype = {
 								// et on simule un click, bien plus simple
 								if (pmHistory.refreshData === true) {
 									pmAffectation.current['quart_heure'] = _params['quart_heure'];
-									pmAffectation.controllers.calendar.clickQuartHeure({currentTarget: {id: pmAffectation.current['quart_heure']}});
+									
+									pmAffectation.controllers.calendar.clickQuartHeure({
+										data: {date:  pmUtils.getDateBack(pmAffectation.current['quart_heure'])},
+										currentTarget: {id: pmAffectation.current['quart_heure']}
+									});
 								}
 							}
 							break;
@@ -103,6 +107,7 @@ PmHistory.prototype = {
 		// bien préciser 'data' et 'title' dans History.pushState, sinon elle peut bugguer
 		var _newHash = '#param&' + $.param(pmAffectation.current);
 		
+		// à savoir : History.js unescape le hash
         History.pushState({params: _newHash}, "Etat " + _newHash, _newHash);
 	},
 }
