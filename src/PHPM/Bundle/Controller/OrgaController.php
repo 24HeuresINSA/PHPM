@@ -103,11 +103,12 @@ class OrgaController extends Controller
      */
     public function newAction()
     {
+        $em = $this->getDoctrine()->getEntityManager();
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
         $entity = new Orga();
-        $form   = $this->createForm(new OrgaType(true), $entity);
+        $form   = $this->createForm(new OrgaType(true, $em), $entity);
 
         return array(
             'entity' => $entity,
@@ -144,7 +145,7 @@ class OrgaController extends Controller
         }
         
         $entity->setConfiance($confianceObject);
-        $form   = $this->createForm(new OrgaType(false), $entity);
+        $form   = $this->createForm(new OrgaType(false,$em), $entity);
     
         return array(
                 'entity' => $entity,
@@ -167,7 +168,7 @@ class OrgaController extends Controller
         $entity->setStatut(0);
         $entity->setConfiance($em->getRepository('PHPMBundle:Confiance')->find(3));
         $entity->setIsAdmin(false);
-        $form    = $this->createForm(new OrgaType(false), $entity);
+        $form    = $this->createForm(new OrgaType(false,$em), $entity);
         $form->bindRequest($request);
     
         if ($form->isValid()) {
@@ -199,7 +200,7 @@ class OrgaController extends Controller
         }
         $entity  = new Orga();
         $request = $this->getRequest();
-        $form    = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN')), $entity);
+        $form    = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN'),$em), $entity);
         $form->bindRequest($request);
 
         if ($form->isValid()) {
@@ -238,7 +239,7 @@ class OrgaController extends Controller
             throw new AccessDeniedException();
         }
 
-        $editForm = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN')), $entity);
+        $editForm = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN'),$em), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -268,7 +269,7 @@ class OrgaController extends Controller
         
 
 
-        $editForm   = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN')), $entity);
+        $editForm   = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN'),$em), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();

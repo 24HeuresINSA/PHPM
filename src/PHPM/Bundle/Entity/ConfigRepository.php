@@ -23,4 +23,5 @@ class ConfigRepository extends EntityRepository
 		 	->getResult();
 	}
 	
+	
 }

@@ -94,8 +94,9 @@ class TacheController extends Controller
      */
     public function newAction()
     {
+        $em = $this->getDoctrine()->getEntityManager();
         $entity = new Tache();
-        $form   = $this->createForm(new TacheType(), $entity);
+        $form   = $this->createForm(new TacheType($em), $entity);
 
         return array(
             'entity' => $entity,
@@ -112,9 +113,10 @@ class TacheController extends Controller
      */
     public function createAction()
     {
+        $em = $this->getDoctrine()->getEntityManager();
         $entity  = new Tache();
         $request = $this->getRequest();
-        $form    = $this->createForm(new TacheType(), $entity);
+        $form    = $this->createForm(new TacheType($em), $entity);
         $form->bindRequest($request);
 
         if ($form->isValid()) {
@@ -148,7 +150,7 @@ class TacheController extends Controller
             throw $this->createNotFoundException('Unable to find Tache entity.');
         }
 
-        $editForm = $this->createForm(new TacheType(), $entity);
+        $editForm = $this->createForm(new TacheType($em), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -175,7 +177,7 @@ class TacheController extends Controller
             throw $this->createNotFoundException('Unable to find Tache entity.');
         }
 
-        $editForm   = $this->createForm(new TacheType(), $entity);
+        $editForm   = $this->createForm(new TacheType($em), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();

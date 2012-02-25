@@ -27,7 +27,7 @@
         </tr>
         <tr>
             <th>Permis Necessaire</th>
-            <td>{{ entity.permisNecessaire }}</td>
+            <td>{% render "PHPMBundle:Config:display" with {'field': 'manifestation.permis.libelles', 'key':entity.permisnecessaire} %}</td>
         </tr>
         <tr>
             <th>ageNecessaire</th>

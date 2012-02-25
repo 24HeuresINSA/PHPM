@@ -59,10 +59,10 @@ class ConfigController extends Controller {
 	/**
 	 * Displays a Config field.
 	 *
-	 * @Route("/{field}/display/{id}",defaults={"id"=""}, name="config_display")
+	 * @Route("/{field}/display/{key}",defaults={"key"=""}, name="config_display")
 	 * @Template()
 	 */
-	public function displayAction($field,$id="") {
+	public function displayAction($field,$key="") {
 	    $em = $this->getDoctrine()->getEntityManager();
 	
 	    $entity = $em->getRepository('PHPMBundle:Config')->findOneByField($field);
@@ -71,13 +71,14 @@ class ConfigController extends Controller {
 	        throw $this
 	        ->createNotFoundException('Unable to find Config entity.');
 	    }
-	    if($id==""){
+	    $array = (array)json_decode($entity->getValue(),true);
+	    if(array_key_exists($key, $array))
+	        return array('value' => $array[$key]);
+	        else
 	        return array('value' => $entity->getValue()	 );
-	    }else{
-	        $array = (array)json_decode($entity->getValue(),true);
-	        return array('value' => $array[$id]);
 	        
-	    }
+	        
+	    
 	
 	    
 	
@@ -395,9 +396,8 @@ COMMIT;
 		if ($this->get('request')->getMethod() == 'POST') {
 
 			$form->bindRequest($request);
-			$datar = $form->getData();
-			var_dump($datar);
-			exit;
+			$data = $form->getData();
+
 			$validator = $this->get('validator');
 			foreach ($data['configItems'] as $item) {
 
