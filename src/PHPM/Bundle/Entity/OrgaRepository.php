@@ -77,7 +77,7 @@ class OrgaRepository extends EntityRepository
 			
 		}
 		
-		//$andx()->add('LIMIT\''.$limit.'\' \''.$offset.'\'');
+		//$andx()->add(" LIMIT $limit $offset");
 		 
 		$qb
 		->select('o')

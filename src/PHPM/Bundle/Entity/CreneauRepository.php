@@ -166,8 +166,7 @@ class CreneauRepository extends EntityRepository
 		}
 		if($date_time!='')
 		{
-				
-			$andx->add(($expr->gte('ct.debut',$date_time)));
+			$andx->add(($expr->gte('ct.debut',"'$date_time'")));
 		}
 		
 		
