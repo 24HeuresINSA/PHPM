@@ -1,6 +1,8 @@
 {% extends "PHPMBundle:Orga:layout.html.twig"  %}
 {% set pageTitle = 'Mes Disponibilités' %}
 
+{% form_theme form _self %}
+
 {% block style %}
 {{ parent() }}
 			{% stylesheets 'bundles/phpm/css/registerHard.css' filter='cssrewrite'  %}
@@ -8,15 +10,18 @@
 			{% endstylesheets %}
 {% endblock %}
 
+
+{% block checkbox_widget %}
+{% spaceless %}
+<br/><input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+{% endspaceless %}
+{% endblock checkbox_widget %}
+
+
+
 {% block content %}
-
 <form action="{{ path('orga_inscriptionhard') }}" method="post" {{ form_enctype(form) }}>
-{% for f in form.children %}
-{{ form_row(f) }}
-{% endfor %}
-
-
-{{ form_rest(form) }}
+{{ form_widget(form) }}
     <p>
         <button type="submit">Edit</button>
     </p>

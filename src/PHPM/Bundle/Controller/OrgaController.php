@@ -2,6 +2,10 @@
 
 namespace PHPM\Bundle\Controller;
 
+use PHPM\Bundle\Entity\DisponibiliteInscription;
+
+use PHPM\Bundle\Form\InscriptionHardType;
+
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Symfony\Component\Validator\Constraints\Url;
@@ -476,99 +480,32 @@ public function validationAction()
 	 */
 	public function inscriptionhardAction()
 	{
-	
-	    
 	    $request = $this->getRequest();
+	    $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
 	    $user = $this->get('security.context')->getToken()->getUser();
-	    
-	    
-	    
-	    
-	    
-	    
-	    
 	    $em = $this->getDoctrine()->getEntityManager();
 	    
 
+        
+	    $data= array('Disponibilités'=>$user->getDisponibilitesInscription());
+	    
+	    $form = $this->createForm(new InscriptionHardType($admin,$em),(array)$data);
 	    
 	    
-	    $entities = $em->createQuery(
-	            'SELECT di FROM PHPMBundle:DisponibiliteInscription di ORDER BY di.debut' )->getResult();
-	     
-	    
-	    
-	   // ,$user->getDisponibilitesInscription()->contains($entity)
-	    
-	    $builder = $this->createFormBuilder();
-	    $lastday=-1;
-	    $daycollection = 0;
-	    //$builder->add('days', 'collection', array('type'   => 'collection'));
-	    $choices = array();
-	    $data=array();
-	    
-	    
-	    foreach ($entities as $entity)
-	    {
-	        
-	        $choices[$entity->getDebut()->format('l j')][$entity->getId()]=($entity->__toString());
-	        if($user->getDisponibilitesInscription()->contains($entity))
-	        {
-	            
-	        $data[$entity->getDebut()->format('l j')][$entity->getId()]=$entity->getId();
-	       	        
-	        }
-	       
-	    }
-	    
-	    foreach($choices as $key => $row)
-	    {
-	        $builder->add((string) $key, 'choice', array(
-	                'choices'   => $row,
-	                'multiple'  => true,'expanded'  => true,
-	        ));
-	        
-	    }
-	    $builder->setData($data);
-	     
-	        
-	    
-	    
-// 	    {% set lastday = '' %}
-// 	    {%  for entity in entities %}
-// 	    {% if lastday != entity.debutday %}
-// 	    <br/><b>{
-// 	        { entity.debut |date("l j F") }
-// 	    }</b>
-// 	    {
-// 	        % set lastday = entity.debutday %}
-// 	        {% endif %}
-	    
-// 	        {{ entity.debut |date("G:i") }
-// 	        }- {
-// 	            { entity.fin |date("G:i") }
-// 	        }  -
-	    
-	         
-	    
-	    $form = $builder->getForm();
 	    
 	    if ($request->getMethod() == 'POST') {
 	        $form->bindRequest($request);
-	    
+	        $data=$form->getData();
+
 	        if ($form->isValid()) {
-	            // perform some action, such as saving the task to the database
+
 	            $datar = $form->getData();
 	            	            
-	            $user->getDisponibilitesInscription()->clear();
+	            $di = $user->getDisponibilitesInscription();
 	            
-	            foreach ($datar as $day)
-	            {
-	                foreach ($day as $di){
-	                    $diObject =  $em->getRepository('PHPMBundle:DisponibiliteInscription')->findOneByid($di);
-	                    $user->addDisponibiliteInscription($diObject);
-	                    //$diObject ->addOrga($user);
-	                }
-	            }
+	            $di=$data['di'];
+	            
+	            
 	            $em->persist($user);
 	            
 	            $em->flush();

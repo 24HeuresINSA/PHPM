@@ -32,4 +32,9 @@ services:
     configController:
        class:      %configController.class%
        arguments: []
+    form.type.di:
+      class: PHPM\Bundle\Form\DisponibiliteInscriptionType
+      tags:
+        - { name: form.type, alias: disponibiliteinscription}
+
       
