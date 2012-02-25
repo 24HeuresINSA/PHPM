@@ -26,8 +26,8 @@ Timeslot list
     {% for entity in entities %}
         <tr>
             <td><a href="{{ path('timeslot_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.begintime|date('Y-m-d H:i:s') }}</td>
-            <td>{{ entity.endtime|date('Y-m-d H:i:s') }}</td>
+            <td>{{ entity.begintime|format_datetime('dd MMM Y HH:mm') }}</td>
+            <td>{{ entity.endtime|format_datetime('dd MMM Y HH:mm') }}</td>
             <td>
                 <ul>
                     <li>

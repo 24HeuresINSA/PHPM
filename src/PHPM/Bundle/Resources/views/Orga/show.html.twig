@@ -32,7 +32,7 @@
         </tr>
         <tr>
             <th>Datedenaissance</th>
-            <td>{{ entity.dateDeNaissance|date('Y-m-d H:i:s') }}</td>
+            <td>{{ entity.dateDeNaissance|format_date('dd MMM Y') }}</td>
         </tr>
         <tr>
             <th>Departement</th>

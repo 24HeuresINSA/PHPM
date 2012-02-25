@@ -18,8 +18,8 @@
     {% for entity in entities %}
         <tr style="cursor:pointer" onclick="window.location='{{ path('disponibilite_show', { 'id': entity.id }) }}'">
             <td><a href="{{ path('disponibilite_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{% if entity.debut %}{{ entity.debut|date('Y-m-d H:i:s') }}{% endif%}</td>
-            <td>{% if entity.fin %}{{ entity.fin|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{% if entity.debut %}{{ entity.debut|format_datetime('dd MMM Y HH:mm') }}{% endif%}</td>
+            <td>{% if entity.fin %}{{ entity.fin|format_datetime('dd MMM Y HH:mm') }}{% endif%}</td>
             <td>
 				{{ bouton.edit( path('disponibilite_edit', { 'id': entity.id }) ) }}
             </td>

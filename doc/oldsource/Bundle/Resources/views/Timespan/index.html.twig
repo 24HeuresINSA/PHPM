@@ -14,8 +14,8 @@
     {% for entity in entities %}
         <tr>
             <td><a href="{{ path('timespan_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{% if entity.begintime %}{{ entity.begintime|date('Y-m-d H:i:s') }}{% endif%}</td>
-            <td>{% if entity.endtime %}{{ entity.endtime|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{% if entity.begintime %}{{ entity.begintime|format_datetime('dd MMM Y HH:mm') }}{% endif%}</td>
+            <td>{% if entity.endtime %}{{ entity.endtime|format_datetime('dd MMM Y HH:mm') }}{% endif%}</td>
             <td>{{ entity.orgasneeded }}</td>
             <td>
                 <ul>
