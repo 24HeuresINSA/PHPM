@@ -131,12 +131,12 @@ CalendarView.prototype = {
 					for (var _iCreneau in pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux']) {
 						var _hDebut = pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'];
 						
-						_html = '<div id="creneau_'+_iCreneau+'" class="creneau" creneau="'+_iCreneau+'">'+pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['tache']+'</div>';
+						_html = '<div id="creneau_'+_iCreneau+'" class="creneau" orga="'+obj.id+'" disponibilite="'+_iDispo+'" creneau="'+_iCreneau+'">'+pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['tache']+'</div>';
 						
 						// on le rajoute, supprime le handler précédent et en rajoute un
 						$('.jour[jour="'+_iDts.getFullYear()+'-'+Number(_iDts.getMonth()+1)+'-'+_iDts.getDate()+'"] > .heure[heure="'
 						+_hDebut.getHours()+'"] > .quart_heure[minute="'+_hDebut.getMinutes()+'"]').append(_html).off('click')
-						.bind('click', {creneauId: _iCreneau}, pmAffectation.controllers.calendar.clickCreneau);
+						.bind('click', {idOrga: obj.id, idDispo: _iDispo, idCreneau: _iCreneau}, pmAffectation.controllers.calendar.clickCreneau);
 						
 						// set la taille
 						var _taille = Number(pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['duree']/60/60*40);
@@ -154,15 +154,26 @@ CalendarView.prototype = {
 	 * sur lequel on vient de cliquer
 	 */
 	showDetails: function(obj) {
-		log(obj);
+		var _tache = pmAffectation.data.orga[obj.data.idOrga]['disponibilites'][obj.data.idDispo]['creneaux'][obj.data.idCreneau];
+		log(_tache);
 		
-		$('<div>Ici on va mettre plus dinfos sur les créneau où vous venez de cliquer</div>').dialog({
+		// on prépare le contenu du pop-up
+		var _html = '<ul>' +
+					'<li>Tâche n°</li>'+
+					'<li>Nom de la tâche</li>'+
+					'<li>Lieu de la tâche</li>'+
+					'<li><span id="unaffect_'+_tache+'">Désaffecter</a></li>'+
+					'</ul>';
+		// TODO : lien pour désaffecter
+		
+		// on l'ouvre
+		$('<div>'+_html+'</div>').dialog({
 			closeText: 'fermer',
 			dialogClass: 'creneau_details',
 			draggable: false,
 			position: [obj.pageX-150, obj.pageY],
 			resizable: false,
-			title: 'Détails créneau '
+			title: 'Créneau n°'+obj.data.idCreneau
 		})
 	},
 }
