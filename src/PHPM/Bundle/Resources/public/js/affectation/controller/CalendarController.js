@@ -44,6 +44,8 @@ CalendarController.prototype = {
 		pmAffectation.current.quart_heure = obj.currentTarget.id;
 		pmHistory.setUrlParam(); // maj de l'url
 		
+		log(Object.data.date);
+		
 		// on lance le bouzin, va chercher les creneaux
 		// TODO : passer paramètre
 		pmAffectation.controllers.creneau.getData();
