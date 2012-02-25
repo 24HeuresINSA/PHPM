@@ -33,9 +33,7 @@ CreneauModel.prototype = {
 		// filtre catégorie
 		// filtre age minimal
 		// filtre permis
-		
-		log(_params);
-		
+				
 		$.ajax({
 			url: pmAffectation.url+pmAffectation.paths.creneaux,
 			dataType: 'json',
@@ -100,6 +98,11 @@ CreneauModel.prototype = {
 	},
 	// les callbacks
 	affectationSuccess: function(data) {
-		pmAffectation.models.creneau.callBackAffectation();
+		// on test ce qui le serveur nous a retourné
+		if (data == "OK") {
+			pmAffectation.models.creneau.callBackAffectation();
+		} else {
+			message.error("Impossible de réaliser l'affectation : "+data);
+		}
 	},
 }
