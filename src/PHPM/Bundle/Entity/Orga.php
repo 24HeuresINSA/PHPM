@@ -520,6 +520,16 @@ class Orga implements UserInterface
     {
         $this->disponibilitesInscription[] = $disponibilitesInscription;
     }
+    
+    /**
+     * Set disponibilitesInscription
+     *
+     * 
+     */
+    public function setDisponibilitesInscription($disponibilitesInscription)
+    {
+        $this->disponibilitesInscription = $disponibilitesInscription;
+    }
 
     /**
      * Get disponibilitesInscription

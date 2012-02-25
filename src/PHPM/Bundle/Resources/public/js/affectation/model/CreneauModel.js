@@ -25,19 +25,15 @@ CreneauModel.prototype = {
 		var _params = {
 			plage_id: pmAffectation.current.plage, // on fournit toujours la plage, la base
 		}; // -1 est le wildcart
-		//(($.isNumeric(pmAffectation.current.confiance) === true) && (pmAffectation.current.confiance != -1)) && (_params.confiance_id = pmAffectation.current.confiance);
 		(pmAffectation.current.quart_heure != -1) && (_params.date_time = pmUtils.getDateBack(pmAffectation.current['quart_heure']));
-		(pmAffectation.current.creneau.duree !== undefined) && (_params.duree = pmAffectation.current.creneau.duree);
-		
+		(($.isNumeric(pmAffectation.current.orga.id) === true) && (pmAffectation.current.orga.id != -1)) && (_params.orga_id = pmAffectation.current.orga.id);
+
 		// filtre confiance
-		// durée
+		// filtre durée
 		// filtre catégorie
 		// filtre age minimal
 		// filtre permis
-		// orga_id : plus tard
-		
-		log(_params);
-		
+				
 		$.ajax({
 			url: pmAffectation.url+pmAffectation.paths.creneaux,
 			dataType: 'json',
@@ -102,6 +98,11 @@ CreneauModel.prototype = {
 	},
 	// les callbacks
 	affectationSuccess: function(data) {
-		pmAffectation.models.creneau.callBackAffectation();
+		// on test ce qui le serveur nous a retourné
+		if (data == "OK") {
+			pmAffectation.models.creneau.callBackAffectation();
+		} else {
+			message.error("Impossible de réaliser l'affectation : "+data);
+		}
 	},
 }

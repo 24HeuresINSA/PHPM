@@ -19,9 +19,9 @@ Timeslot
         <tr>
             <th>Id</th>                <td>{{ entity.id }}</td>        </tr>
         <tr>
-            <th>Begintime</th>                <td>{{ entity.begintime|date('Y-m-d H:i:s') }}</td>        </tr>
+            <th>Begintime</th>                <td>{{ entity.begintime|format_datetime('dd MMM Y HH:mm') }}</td>        </tr>
         <tr>
-            <th>Endtime</th>                <td>{{ entity.endtime|date('Y-m-d H:i:s') }}</td>        </tr>
+            <th>Endtime</th>                <td>{{ entity.endtime|format_datetime('dd MMM Y HH:mm') }}</td>        </tr>
     </tbody>
 </table>
 

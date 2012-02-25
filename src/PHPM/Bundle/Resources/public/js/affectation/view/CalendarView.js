@@ -147,5 +147,22 @@ CalendarView.prototype = {
 		} else {
 			// à faire, pour la vue dans l'autre sens
 		}
-	}
+	},
+	
+	/*
+	 * Ouvre un tooltip avec le détails du créneau
+	 * sur lequel on vient de cliquer
+	 */
+	showDetails: function(obj) {
+		log(obj);
+		
+		$('<div>Ici on va mettre plus dinfos sur les créneau où vous venez de cliquer').dialog({
+			closeText: 'fermer',
+			dialogClass: 'creneau_details',
+			draggable: false,
+			position: [obj.pageX, obj.pageY],
+			resizable: false,
+			title: 'Détails créneau '
+		})
+	},
 }

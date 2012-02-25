@@ -49,7 +49,7 @@ Ci dessous les Orga qui n'ont pas pu &ecirc;tre ins&eacute;r&eacute;s : <br />
             <td>{{ entity.orga.surnom }}</td>
             <td>{{ entity.orga.telephone }}</td>
             <td>{{ entity.orga.email }}</td>
-            <td>{% if entity.orga.dateDeNaissance %}{{ entity.orga.dateDeNaissance|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{% if entity.orga.dateDeNaissance %}{{ entity.orga.dateDeNaissance|format_date('dd MMM Y') }}{% endif%}</td>
             <td>{{ entity.orga.departement }}</td>
             <td>{{ entity.orga.commentaire }}</td>
             <td>{{ entity.orga.permis }}</td>

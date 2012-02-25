@@ -12,6 +12,7 @@ class DisponibiliteInscriptionType extends AbstractType
         $builder
             ->add('debut')
             ->add('fin')
+            
         ;
     }
 
@@ -19,4 +20,9 @@ class DisponibiliteInscriptionType extends AbstractType
     {
         return 'phpm_bundle_disponibiliteinscriptiontype';
     }
+    
+    public function getDefaultOptions(array $options){
+        return array('data_class' => 'PHPM\Bundle\Entity\DisponibiliteInscription');
+    }
+    
 }

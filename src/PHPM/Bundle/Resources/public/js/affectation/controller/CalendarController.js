@@ -45,17 +45,16 @@ CalendarController.prototype = {
 		pmHistory.setUrlParam(); // maj de l'url
 		
 		// on calcule la durée maximal du créneau que l'on peut mettre
+		// il est beaucoup plus simple de procéder "graphiquement" pour rechercher la prochaine non dispo
 		//pmAffectation.current.creneau.duree = 
 		
 		// on va chercher les creneaux
 		pmAffectation.controllers.creneau.getData();
 	},
 	// clic sur un créneau
-	clickCreneau: function(obj) {
-		console.log(obj.data.creneauId);
-		
-		// on demande un joli popup pour afficher les détails
-		
+	clickCreneau: function(obj) {		
+		// on demande à la vue un joli popup avec les détails
+		pmAffectation.views.calendar.showDetails(obj);
 	},
 	// clic sur les boutons pour changer de plage
 	changePlage: function(plageId) {

@@ -11,11 +11,11 @@
         </tr>
         <tr>
             <th>Debut</th>
-            <td>{{ entity.debut|date('Y-m-d H:i:s') }}</td>
+            <td>{{ entity.debut|format_datetime('dd MMM Y HH:mm') }}</td>
         </tr>
         <tr>
             <th>Fin</th>
-            <td>{{ entity.fin|date('Y-m-d H:i:s') }}</td>
+            <td>{{ entity.fin|format_datetime('dd MMM Y HH:mm') }}</td>
         </tr>
          <tr>
             <th>T&acirc;che</th>

@@ -21,8 +21,8 @@
     {% for entity in entities %}
         <tr style="cursor:pointer" onclick="window.location='{{ path('plagehoraire_show', { 'id': entity.id }) }}'">
             <td><a href="{{ path('plagehoraire_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{% if entity.debut %}{{ entity.debut|date('Y-m-d H:i:s') }}{% endif%}</td>
-            <td>{% if entity.fin %}{{ entity.fin|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{% if entity.debut %}{{ entity.debut|format_datetime('dd MMM Y HH:mm') }}{% endif%}</td>
+            <td>{% if entity.fin %}{{ entity.fin|format_datetime('dd MMM Y HH:mm') }}{% endif%}</td>
             <td>{% if entity.tache %}{{ entity.tache }}{% endif%}</td>
             <td>{{entity.nbOrgasNecessaires}}</td>
             <td>{{ entity.dureeCreneau }}</td>
