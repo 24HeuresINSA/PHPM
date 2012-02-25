@@ -499,11 +499,11 @@ public function validationAction()
 
 	        if ($form->isValid()) {
 
-	            $datar = $form->getData();
+	            
 	            	            
 	            $di = $user->getDisponibilitesInscription();
 	            
-	            $di=$data['di'];
+	            $di=$data['Disponibilités'];
 	            
 	            
 	            $em->persist($user);

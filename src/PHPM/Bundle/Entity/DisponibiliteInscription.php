@@ -140,6 +140,7 @@ class DisponibiliteInscription
     public function __toString()
     {
         
+        
         return $this->getDebut()->format("l G:i").' '.$this->getFin()->format("G:i");
     }
     
