@@ -121,12 +121,12 @@ class CreneauRepository extends EntityRepository
 
 		$expr->eq('ct.plageHoraire', 'p'),
 		$expr->eq('p.tache','t'),
-		$expr->eq('ct.disponibilite','0')
+		$expr->isNull('ct.disponibilite')
 
 		);
 
-		$offset = $bloc*50;
-		$limit = $offset+49;
+		//$offset = $bloc*50;
+		//$limit = 50;
 		
 		if($permis!='')
 		{
@@ -166,8 +166,7 @@ class CreneauRepository extends EntityRepository
 		}
 		if($date_time!='')
 		{
-				
-			$andx->add(($expr->gte('ct.debut',$date_time)));
+			$andx->add(($expr->gte('ct.debut',"'$date_time'")));
 		}
 		
 		
@@ -179,9 +178,7 @@ class CreneauRepository extends EntityRepository
 		->from('PHPMBundle:Tache', 't')
 		->from('PHPMBundle:Creneau', 'ct')
 		
-		->where($andx)
-		->setFirstResult($offset)
-		->setMaxResults($limit);
+		->where($andx);
 		
 		
 		

@@ -27,6 +27,7 @@ CreneauView.prototype = {
 			text: false
 		}).click(function() { pmAffectation.controllers.orga.getData(); });*/
 	},
+	
 	/*
 	 * Charge la liste des créneaux
 	 * Seul truc un peu tordu : on évolue dans une colonne appelée "liste_taches"
@@ -43,9 +44,9 @@ CreneauView.prototype = {
 			
 			$('#liste_taches').append(_html);
 			
-			// handler de click, part dans Calendar (car générique)
+			// handler de click
 			$('#tache_'+_iCreneau).bind('click', {idCreneau: _iCreneau, idOrga: pmAffectation.current.orga.id}, pmAffectation.controllers.creneau.clickHandler); // handler de click
 		}
-	}
+	},
 	
 }

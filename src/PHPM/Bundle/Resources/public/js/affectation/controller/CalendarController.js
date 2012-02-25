@@ -44,8 +44,10 @@ CalendarController.prototype = {
 		pmAffectation.current.quart_heure = obj.currentTarget.id;
 		pmHistory.setUrlParam(); // maj de l'url
 		
-		// on lance le bouzin, va chercher les creneaux
-		// TODO : passer paramètre
+		// on calcule la durée maximal du créneau que l'on peut mettre
+		//pmAffectation.current.creneau.duree = 
+		
+		// on va chercher les creneaux
 		pmAffectation.controllers.creneau.getData();
 	},
 	// clic sur un créneau

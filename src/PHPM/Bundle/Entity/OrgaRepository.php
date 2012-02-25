@@ -77,28 +77,21 @@ class OrgaRepository extends EntityRepository
 			
 		}
 		
-		//$andx()->add('LIMIT\''.$limit.'\' \''.$offset.'\'');
+		//$andx()->add(" LIMIT $limit $offset");
 		 
 		$qb
 		->select('o')
 	
 		->from('PHPMBundle:Orga','o')
-	
-	
-	
 		->from('PHPMBundle:Disponibilite', 'd')
 		->from('PHPMBundle:Creneau', 'c')
-		->from('PHPMBundle:PlageHoraire', 'p')
-		->from('PHPMBundle:Tache', 't')
-
-	
 	
 		->where($andx)
 		//->setFirstResult($offset)
 		//->setMaxResults($limit);
 		
 		;
-		exit(var_dump($qb->getQuery()->getDQL()));
+		//exit(var_dump($qb->getQuery()->getDQL()));
 		
 	
 		return $qb->getQuery()->getResult();

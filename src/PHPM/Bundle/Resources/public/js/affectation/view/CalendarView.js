@@ -38,7 +38,7 @@ CalendarView.prototype = {
 		
 		for (var _i=0;_i<_nbJours;_i++) {
 			var _date = new Date(pmAffectation.data.calendar.plage[plage]['debut'].getTime()+_i*24*60*60*1000);
-			var _jolieDate = _date.getThisFormat('d-n');
+			var _jolieDate = _date.getThisFormat('Y-n-d');
 			
 			// on fait déjà la barre de titre
 			_htmlBarreDates += '<div class="titre_date" style="width: '+94/_nbJours+'%;">'+pmUtils.jours[_date.getDay()]+' '+_jolieDate +'</div>';
@@ -122,9 +122,9 @@ CalendarView.prototype = {
 					// on place les dispos, avec la classe et le click
 					for (var _iDts = _debut; _iDts.getTime() < _fin.getTime(); _iDts.setTime(_iDts.getTime()+15*60*1000)) {
 						// sélection suivant les attributs de temps de plus en plus précis
-						$('.jour[jour="'+_iDts.getDate()+'-'+Number(_iDts.getMonth()+1)+'"] > .heure[heure="'
+						$('.jour[jour="'+_iDts.getFullYear()+'-'+Number(_iDts.getMonth()+1)+'-'+_iDts.getDate()+'"] > .heure[heure="'
 						+_iDts.getHours()+'"] > .quart_heure[minute="'+_iDts.getMinutes()+'"]').addClass('free')
-						.bind('click', {date: _iDts.getMyDts()}, pmAffectation.controllers.calendar.clickQuartHeure);
+						.bind('click', {}, pmAffectation.controllers.calendar.clickQuartHeure);
 					}
 					
 					// on place les créneaux (et retire le handler)
@@ -134,7 +134,7 @@ CalendarView.prototype = {
 						_html = '<div id="creneau_'+_iCreneau+'" class="creneau" creneau="'+_iCreneau+'">'+pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['tache']+'</div>';
 						
 						// on le rajoute, supprime le handler précédent et en rajoute un
-						$('.jour[jour="'+_hDebut.getDate()+'-'+Number(_hDebut.getMonth()+1)+'"] > .heure[heure="'
+						$('.jour[jour="'+_iDts.getFullYear()+'-'+Number(_iDts.getMonth()+1)+'-'+_iDts.getDate()+'"] > .heure[heure="'
 						+_hDebut.getHours()+'"] > .quart_heure[minute="'+_hDebut.getMinutes()+'"]').append(_html).off('click')
 						.bind('click', {creneauId: _iCreneau}, pmAffectation.controllers.calendar.clickCreneau);
 						

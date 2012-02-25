@@ -191,6 +191,33 @@ PmUtils.prototype = {
 		} else {
 			return false;
 		}
-	}
+	},
+	
+	/*
+	 * Petite fonction permettant de retourner une string 'myDts'
+	 * A partir d'une date hashée (comme dans les paramètres de l'url)
+	 * Ne pas chercher à faire autrement, trop de chars spéciaux pour passer la date dans l'url !
+	 */
+	getDateBack: function(str) {
+		if (str == -1) {
+			return -1; // rien à parser, c'est le wildcart
+		}
+		
+		var _tab = str.split('_'); // pour récupérer le hash de fin
+		var _date = _tab[2].split('-');
+		
+		// on construit et retourne le tout sous forme d'un str
+		return _date[0]+'/'+pmUtils.pad2(_date[1])+'/'+pmUtils.pad2(_date[2])+' '+pmUtils.pad2(_date[3])+':'+pmUtils.pad2(_date[4])+':00';
+	},
+	
+	/*
+	 * S'assurer qu'un nombre est bien sur 2 chiffres,
+	 * Rajoutant un 0 au besoin
+	 * Source : http://www.electrictoolbox.com/pad-number-two-digits-javascript/
+	 */
+	pad2: function(number) {
+		return (number < 10 ? '0' : '') + number;
+	},
+	
 };
 
