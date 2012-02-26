@@ -38,6 +38,14 @@ class OrgaRepository extends EntityRepository
 			$debut=$plage["debut"];
 			$dql.=" AND d.debut < '$fin' AND d.fin > '$debut'";
 		}
+		if($creneau !='')
+		{
+			
+			
+			
+			
+		}
+		
 		
 		$q = $this->getEntityManager()->createQuery($dql);
 		return $q->execute();
@@ -58,41 +66,16 @@ class OrgaRepository extends EntityRepository
 			$dispo = $em->getRepository('PHPMBundle:Disponibilité')->find('*')->where('orga_id = o');
 			//on vérifie que le créneau rentre dans les dispo et n'intérfère pas avec les autres créneaux. 
 			
-			*/
-			/*
+			$creanau not in (select creneau.id where creneau dans les dispo)
+		
+		
 			$entity->getDebut() > $dispo->getDebut()
 			$entity->getFin() < $dispo->getFin()
-					$qb
-					->select('o')
-					->from('PHPMBundle:Orga','o')
-					->from('PHPMBundle:Disponibilite', 'd')
-					->from('PHPMBundle:Creneau', 'c')
-					->where('c.id = \''.$creneau.'\' AND d.orga = o AND d.debut < c.debut AND d.fin > c.fin')
+					->where('c.id = \''.$creneau.'\' AND d.orga = o AND d.debut < c.debut AND d.fin > c.fin')		
 					
-				
-			*/
 			
+			*/		
 		}
-		
-		//$andx()->add(" LIMIT $limit $offset");
-		 
-		$qb
-		->select('o')
-	
-		->from('PHPMBundle:Orga','o')
-		->from('PHPMBundle:Disponibilite', 'd')
-		->from('PHPMBundle:Creneau', 'c')
-	
-		->where($andx)
-		//->setFirstResult($offset)
-		//->setMaxResults($limit);
-		
-		;
-		//exit(var_dump($qb->getQuery()->getDQL()));
-		
-	
-		return $qb->getQuery()->getResult();
-	
 	
 	}
 	
