@@ -17,12 +17,13 @@ class DisponibiliteRepository extends EntityRepository
 	{
 	
 		return $this->getEntityManager()
-		->createQuery("SELECT d FROM PHPMBundle:Disponibilite d , PHPMBundle:Creneau c 		
-		WHERE d.orga = :orga_id AND c.debut > d.debut AND c.fin < d.fin
+		->createQuery("SELECT d FROM PHPMBundle:Disponibilite d JOIN d.orga o, PHPMBundle:Creneau c
+		WHERE d.orga = :orga_id AND c.id = :creneau_id AND c.debut >= d.debut AND c.fin <= d.fin
 		")
 		->setParameter('orga_id', $orga->getId())
+		->setParameter('creneau_id', $creneau->getId())
 	
-		->getResult();
+		->getSingleResult();
 	
 	
 	}

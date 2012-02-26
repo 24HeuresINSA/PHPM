@@ -285,28 +285,13 @@ class CreneauController extends Controller
     		throw $this->createNotFoundException('L\' orga n\'est pas disponible sur ce créneau.');
     	}
     	
-    	
-    	$dispo->addCreneau($creneau);
-    	$em->flush();
-    	exit;
     	$validator = $this->get('validator');
     	$errors = $validator->validate($creneau);
     	
-    	
-    	
-    	
-    	
-    	
-    	//$response = new Response();
-    	//$response->headers->set('Content-Type', 'application/json');
-    	
-    	
-    	
-    	
+    	$response = new Response();
     	if (count($errors) > 0) {
     		
-    		$err =$errors[0];
-    		
+    		$err =$errors;
     		$response->setContent(json_encode($err->getMessageTemplate()));
     	}else{
     		$response->setContent(json_encode("OK"));
