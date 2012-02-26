@@ -13,18 +13,52 @@ ParameterModel.prototype = {
 	 * Constructeur
 	 */
 	initialize: function() {
+		this.data = {};
 	},
 	
 	/*
 	 * Lance les requêtes
 	 */
-	getData: function() {
-		//  TODO lance les requêtes Ajax - en synchrone
-		console.log('lance les requêtes...');
+	getData: function(callbackCategories, callbackNiveaux) {
+		pmAffectation.models.parameter.callbackCategories = callbackCategories;
+		pmAffectation.models.parameter.callbackNiveaux = callbackNiveaux;
 		
-		// Mock code
-		pmAffectation.controllers.parameter.callbackNiveaux();
-		pmAffectation.controllers.parameter.callbackCategories();
+		// pour les catégories
+		$.ajax({
+			url: pmAffectation.url+pmAffectation.paths.categories,
+			dataType: 'json',
+			success: pmAffectation.models.parameter.requestSuccessCategories,
+			error: pmAffectation.models.parameter.requestError,
+			type: 'GET',
+			async: false
+		});
+		
+		// pour les niveaux de confiance
+		$.ajax({
+			url: pmAffectation.url+pmAffectation.paths.niveaux,
+			dataType: 'json',
+			success: pmAffectation.models.parameter.requestSuccessNiveaux,
+			error: pmAffectation.models.parameter.requestError,
+			type: 'GET',
+			async: false
+		});
+	},
+	
+	/*
+	 * Récup les résultats
+	 */
+	requestSuccessCategories: function(data) {
+		pmAffectation.models.parameter.data.categories = data;
+	
+		pmAffectation.models.parameter.callbackCategories();
+	},
+	requestSuccessNiveaux: function(data) {
+		pmAffectation.models.parameter.data.niveaux = data;
+	
+		pmAffectation.models.parameter.callbackNiveaux();
+	},
+	requestError: function(data, statusText) {
+		message.error("Impossible de récupérer les paramètres : " + statusText);
 	},
 	
 	/*

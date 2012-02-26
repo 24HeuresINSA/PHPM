@@ -181,12 +181,8 @@ CalendarView.prototype = {
 					'<li>'+_creneau.tache.nom+'</li>'+
 					'<li>'+_creneau.tache.lieu+'</li>'+
 					'<li>'+_creneau.debut.getMyTime()+' - '+_creneau.fin.getMyTime()+'</li>'+
-					'<li><button id="desaffect_'+_creneau+'">Désaffecter</button></li>'+
+					'<li><button id="desaffect_'+obj.data.idCreneau+'">Désaffecter</button></li>'+
 					'</ul>';
-		
-		// bouton, lien pour la désaffectation
-		$('#desaffect_'+_creneau).button();
-		$('#desaffect_'+_creneau).click(function() {pmAffectation.controllers.creneau.desAffectation(obj.data.idOrga, obj.data.idCreneau)})
 		
 		// on l'ouvre
 		$('<div id="popup">'+_html+'</div>').dialog({
@@ -198,6 +194,9 @@ CalendarView.prototype = {
 			resizable: false,
 			title: 'Créneau n°'+obj.data.idCreneau
 		});
+		
+		// bouton, lien pour la désaffectation - setter quand le popup est visible
+		$('#desaffect_'+obj.data.idCreneau).button().click(function() {	pmAffectation.controllers.creneau.desAffectation(obj.data.idCreneau, obj.data.idOrga) });
 		
 		pmUtils.setPopupClose(); // pour sa fermeture, un seul popup à la fois
 	},

@@ -53,7 +53,7 @@ CreneauModel.prototype = {
 		pmAffectation.models.creneau.callBack();
 	},
 	requestError: function(data, statusText) {
-		message.error("Impossible de récupérer les créneaux : " + statusText);
+		message.error("Impossible de faire l'opération : " + statusText);
 	},
 	
 	/*
@@ -82,27 +82,32 @@ CreneauModel.prototype = {
 	},
 
 	/*
-	 * Réalise l'affectation entre un créneau et un orga
+	 * Réalise la (dés)affectation entre un créneau et un orga
+	 * @param 'sens' : 'affecter' ou 'desaffecter'
+	 * On gère 2 callbacks différents, c'est plus robuste
 	 */
-	affecterCreneau: function(idCreneau, idOrga, callBack) {
-		pmAffectation.models.creneau.callBackAffectation = callBack;
+	affecterCreneau: function(sens, idCreneau, idOrga, callBack) {
+		if (sens === 'affecter') {
+			pmAffectation.models.creneau.callBackAffectation = callBack;
+		} else {
+			pmAffectation.models.creneau.callBackDesaffectation = callBack;
+		}
 		
 		$.ajax({
-			url: pmAffectation.url+'creneau/'+idCreneau+'/affecter/'+idOrga,
-			//dataType: 'json',
-			//data: _params,
-			success: pmAffectation.models.creneau.affectationSuccess,
-			error: pmAffectation.models.creneau.requestError, // générique
+			url: pmAffectation.url+pmAffectation.paths.affecter+idCreneau+'/'+sens+'/'+idOrga,
+			dataType: 'text',
+			success: function(data) {pmAffectation.models.creneau.affectationSuccess(data, sens)},
+			error: pmAffectation.models.creneau.requestError,
 			type: 'POST'
 		});	
 	},
 	// les callbacks
-	affectationSuccess: function(data) {
+	affectationSuccess: function(data, sens) {
 		// on test ce qui le serveur nous a retourné
 		if (data == "OK") {
-			pmAffectation.models.creneau.callBackAffectation();
+			(sens === 'affecter') ? pmAffectation.models.creneau.callBackAffectation() : pmAffectation.models.creneau.callBackDesaffectation();
 		} else {
-			message.error("Impossible de réaliser l'affectation : "+data);
+			message.error("Impossible de réaliser l'opération : "+data);
 		}
 	},
 }

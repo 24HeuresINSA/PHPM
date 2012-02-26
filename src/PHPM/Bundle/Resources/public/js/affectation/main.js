@@ -21,7 +21,7 @@
 	// infos courantes
 	pmAffectation.current = {}; // sera stocké dans l'url
 	// bien mettre des valeurs par défaut aux paramètres
-	pmAffectation.current.orga = {id: 1};
+	pmAffectation.current.orga = {id: -1};
 	pmAffectation.current.plage = 1; // par défaut on est sur la plage 0
 	pmAffectation.current.quart_heure = -1; // wildcart
 	pmAffectation.current.creneau = {};
@@ -41,6 +41,9 @@
 	pmAffectation.paths.plages = 'configv/get/manifestation.plages';
 	pmAffectation.paths.orgas = 'orga/query.json';
 	pmAffectation.paths.creneaux = 'creneau/query.json';
+	pmAffectation.paths.affecter = 'creneau/';
+	pmAffectation.paths.categories = 'categorie/index.json';
+	pmAffectation.paths.niveaux = 'confiance/index.json';
 	
 /*
  * Lancement
