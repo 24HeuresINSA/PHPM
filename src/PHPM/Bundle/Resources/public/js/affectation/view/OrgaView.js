@@ -40,6 +40,7 @@ OrgaView.prototype = {
 	 */
 	setOrgas: function() {
 		$('#liste_orgas').removeClass('spinner_medium');
+		$('#liste_orgas').empty(); // au cas où
 		
 		for (var _iOrga in pmAffectation.data.orga) {
 			var _html = '<div class="orga" id="orga_'+_iOrga+'" idOrga="'+_iOrga+'">';

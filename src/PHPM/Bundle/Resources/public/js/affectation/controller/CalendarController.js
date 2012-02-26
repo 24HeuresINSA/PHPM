@@ -44,10 +44,6 @@ CalendarController.prototype = {
 		pmAffectation.current.quart_heure = obj.currentTarget.id;
 		pmHistory.setUrlParam(); // maj de l'url
 		
-		// on calcule la durée maximal du créneau que l'on peut mettre
-		// il est beaucoup plus simple de procéder "graphiquement" pour rechercher la prochaine non dispo
-		//pmAffectation.current.creneau.duree = 
-		
 		// on va chercher les creneaux
 		pmAffectation.controllers.creneau.getData();
 	},

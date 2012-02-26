@@ -44,6 +44,7 @@
 	pmAffectation.paths.affecter = 'creneau/';
 	pmAffectation.paths.categories = 'categorie/index.json';
 	pmAffectation.paths.niveaux = 'confiance/index.json';
+	pmAffectation.paths.permis = 'configv/get/manifestation.permis.libelles';
 	
 /*
  * Lancement

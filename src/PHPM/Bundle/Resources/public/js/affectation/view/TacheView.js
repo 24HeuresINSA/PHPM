@@ -32,8 +32,8 @@ TacheView.prototype = {
 	 * Charge la liste des taches
 	 */
 	setTaches: function() {
-		$('#liste_taches').empty(); // reset la liste
 		$('#liste_taches').removeClass('spinner_medium');
+		$('#liste_taches').empty(); // reset la liste
 		
 		/*for (_iOrga in pmAffectation.data.orga) {
 			var _html = '<div class="orga" id="orga_'+_iOrga+'" idOrga="'+_iOrga+'">';
