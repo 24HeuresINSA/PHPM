@@ -145,35 +145,30 @@ class CreneauRepository extends EntityRepository
 	    if($date_time!='')
 	    $dql.= "AND (c.debut <= '$date_time' ) AND (c.fin >= '$date_time' ) ";
 	    
-	      
-	    
-	    
-//         TODO : Inclus dans disp
+
 	    if($orga !='')
 	    {
-	    $dql.='AND (c.id NOT IN 
+	    //Conflcts With creneaux
+	    $dql.="AND (c.id NOT IN 
 	    (SELECT ci.id FROM PHPMBundle:Creneau ci, PHPMBundle:Orga o JOIN o.disponibilites do JOIN do.creneaux co
-	    WHERE ( (ci.debut < co.fin) AND (ci.fin > co.debut ) )
+	    WHERE o =$orga AND ( (ci.debut < co.fin) AND (ci.fin > co.debut ) )   ))";
 	    
+        //Not in Orga dispo
+	    $dql.="AND (c.id IN 
+	    (SELECT cin.id FROM PHPMBundle:Creneau cin, PHPMBundle:Orga oin JOIN oin.disponibilites doin
+	    WHERE oin =$orga AND ( (cin.debut >= doin.debut) AND (cin.fin <= doin.fin ) )   ))";
 	    
-	    ))'   ;
-	    
-	    
-// 	        $andx->add(" ct.id NOT IN (SELECT ci.id FROM PHPMBundle:Creneau ci , PHPMBundle:Creneau co, PHPMBundle:Disponibilite do
-// 	                WHERE (co.disponibilite= do.id AND do.orga = $orga ) AND ( (ci.debut < co.fin) AND (ci.fin > co.debut ) )
-// 	                OR	(((ci.debut<p.debut)OR(ci.fin > p.fin))OR((ci.debut >= p.fin)OR(ci.fin <= p.debut)))
-	                	
-// 	                )");
+	    //Compatible with orga attributes
+	    $dql.="AND (c.id IN
+	    (SELECT ca.id FROM PHPMBundle:Creneau ca JOIN ca.plageHoraire pa JOIN pa.tache ta JOIN ta.confiance confca,
+	    PHPMBundle:Orga oa JOIN oa.confiance confoa
+        WHERE oa =$orga AND oa.permis >= ta.permisNecessaire AND confoa.valeur >= confca.valeur
+	    ))";
+
 	    }
 
 	
-	
-	
-			//exit(var_dump($qb->getQuery()->getDQL()));
-	
-	
 	    $query = $this->getEntityManager()->createQuery($dql);
-	    var_dump($query->getSQL());
 	    return $query->getResult();
 	
 		}
