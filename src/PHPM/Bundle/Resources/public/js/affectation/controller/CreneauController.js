@@ -74,12 +74,12 @@ CreneauController.prototype = {
 	callbackDesaffectation: function() {
 		message.success("Désaffectation réalisée");
 		
-		// on recharge le planning de cet orga (et du coup la liste des tous les orgas)
-		pmAffectation.controllers.orga.getData();
-		
 		// ferme l'éventuel popup
 		$('#popup').dialog('close');
 		$('#popup').remove();
+
+		// on recharge le planning de cet orga (et du coup la liste des tous les orgas)
+		pmAffectation.controllers.orga.getData();
 	},
 	
 	/*
