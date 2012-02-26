@@ -297,7 +297,7 @@ class CreneauController extends Controller
     		
     		$creneau->setDisponibilite($dispo);
     		$em->flush();
-    		$response->setContent(json_encode("OK"));
+    		$response->setContent('OK');
     	
     	
     	return $response;
@@ -330,7 +330,7 @@ class CreneauController extends Controller
     
     	$creneau->setDisponibilite(null);
     	$em->flush();
-    	$response->setContent(json_encode("OK"));
+    	$response->setContent('OK');
     	return $response;
     	 
     
