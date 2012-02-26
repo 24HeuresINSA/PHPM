@@ -118,11 +118,12 @@ CalendarView.prototype = {
 					// on place les créneaux - j'ai passé 4 heures à optimiser le truc, gaffe à la modificaton
 					for (var _iCreneau in pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux']) {
 						// on récupère les dates trimmées par rapport à la plage
+						// _1 sur la date de fin pour ne pas avoir de problèmes quand un créneau finit à minuit
 						var _debutCreneau = new Date(Math.max(pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'].getTime(), pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()));
 						var _finCreneau = new Date(Math.min(pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'].getTime(), pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime())-1);	
 						
 						var _nbJour = 0; // compteur du nombre de jours
-						var _todayMidnight = new Date(_debutCreneau);
+						var _todayMidnight = new Date(_debutCreneau); // bien forcer la recopie
 						_todayMidnight.setHours(0, 0, 0, 0);
 						
 						do {
