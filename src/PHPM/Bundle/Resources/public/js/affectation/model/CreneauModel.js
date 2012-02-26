@@ -84,23 +84,28 @@ CreneauModel.prototype = {
 	/*
 	 * Réalise la (dés)affectation entre un créneau et un orga
 	 * @param 'sens' : 'affecter' ou 'desaffecter'
+	 * On gère 2 callbacks différents, c'est plus robuste
 	 */
 	affecterCreneau: function(sens, idCreneau, idOrga, callBack) {
-		pmAffectation.models.creneau.callBackAffectation = callBack;
+		if (sens === 'affecter') {
+			pmAffectation.models.creneau.callBackAffectation = callBack;
+		} else {
+			pmAffectation.models.creneau.callBackDesaffectation = callBack;
+		}
 		
 		$.ajax({
-			url: pmAffectation.url+'creneau/'+idCreneau+'/'+sens+'/'+idOrga,
+			url: pmAffectation.url+pmAffectation.paths.affecter+idCreneau+'/'+sens+'/'+idOrga,
 			dataType: 'text',
-			success: pmAffectation.models.creneau.affectationSuccess,
+			success: function(data) {pmAffectation.models.creneau.affectationSuccess(data, sens)},
 			error: pmAffectation.models.creneau.requestError,
 			type: 'POST'
 		});	
 	},
 	// les callbacks
-	affectationSuccess: function(data) {
+	affectationSuccess: function(data, sens) {
 		// on test ce qui le serveur nous a retourné
 		if (data == "OK") {
-			pmAffectation.models.creneau.callBackAffectation();
+			(sens === 'affecter') ? pmAffectation.models.creneau.callBackAffectation() : pmAffectation.models.creneau.callBackDesaffectation();
 		} else {
 			message.error("Impossible de réaliser l'opération : "+data);
 		}
