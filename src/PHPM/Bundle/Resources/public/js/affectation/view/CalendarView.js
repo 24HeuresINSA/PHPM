@@ -119,7 +119,7 @@ CalendarView.prototype = {
 					for (var _iCreneau in pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux']) {
 						// on récupère les dates trimmées par rapport à la plage
 						var _debutCreneau = new Date(Math.max(pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'].getTime(), pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()));
-						var _finCreneau = new Date(Math.min(pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'].getTime(), pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()));
+						var _finCreneau = new Date(Math.min(pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'].getTime(), pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime())-1);
 						var _nbJour = 0; // compteur du nombre de jours
 						
 						var _todayMidnight = new Date(_debutCreneau);
@@ -130,7 +130,7 @@ CalendarView.prototype = {
 						
 						pmAffectation.views.calendar.placeCreneau(obj.id, _iDispo, _iCreneau, _debutCreneau, (_finJourCreneau-_debutCreneau.getTime())/1000, _nbJour);
 											
-						// on s'occupe des créneaux suivants	
+						// on s'occupe des créneaux suivants
 						while (_debutCreneau.getDate() !== _finCreneau.getDate()) {
 							_nbJour++;
 							_debutCreneau = new Date(_todayMidnight); // bien forcer la recopie
