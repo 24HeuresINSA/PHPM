@@ -30,7 +30,7 @@ class InscriptionHardType extends AbstractType
        foreach ($entities as $key =>$e)
         {
             if($e->getDebut()->format('z')!=$prevday ){
-                $label =\IntlDateFormatter::create(null, null, null,null,null,'EEEE d MMMM')->format($e->getDebut());
+                $label =\IntlDateFormatter::create("fr_FR", null, null,null,null,'EEEE d MMMM')->format($e->getDebut());
                 $c=$builder->create($e->getDebut()->format('z'),'form',array('label'=>$label, 'required'=>false));
                 $builder->add($c);
                            }
