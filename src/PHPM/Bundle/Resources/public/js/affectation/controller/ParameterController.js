@@ -24,7 +24,11 @@ ParameterController.prototype = {
 	 * Lancement des requêtes
 	 */
 	getData: function() {
-		pmAffectation.models.parameter.getData(pmAffectation.controllers.parameter.callbackCategories, pmAffectation.controllers.parameter.callbackNiveaux);
+		pmAffectation.models.parameter.getData(
+			pmAffectation.controllers.parameter.callbackCategories,
+			pmAffectation.controllers.parameter.callbackNiveaux,
+			pmAffectation.controllers.parameter.callbackPermis
+			);
 	},
 	
 	/*
@@ -36,6 +40,14 @@ ParameterController.prototype = {
 		// ajoute les options correspondantes dans le menu déroulant
 		for (_iNiveau in pmAffectation.data.parameter.niveau) {
 			$('#filtre_orga_confiance').append('<option value="'+_iNiveau+'">Orga '+pmAffectation.data.parameter.niveau[_iNiveau]['nom']+'</option>');
+		}
+	},
+	callbackPermis: function() {
+		pmAffectation.data.parameter.permis = pmAffectation.models.parameter.getPermis();
+		
+		// ajoute les options correspondantes dans le menu déroulant
+		for (_iPermis in pmAffectation.data.parameter.permis) {
+			$('#filtre_orga_permis').append('<option value="'+_iPermis+'">'+pmAffectation.data.parameter.permis[_iPermis]+'</option>');
 		}
 	},
 	callbackCategories: function() {

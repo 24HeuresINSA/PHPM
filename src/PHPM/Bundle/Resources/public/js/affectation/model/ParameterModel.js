@@ -19,9 +19,10 @@ ParameterModel.prototype = {
 	/*
 	 * Lance les requêtes
 	 */
-	getData: function(callbackCategories, callbackNiveaux) {
+	getData: function(callbackCategories, callbackNiveaux, callbackPermis) {
 		pmAffectation.models.parameter.callbackCategories = callbackCategories;
 		pmAffectation.models.parameter.callbackNiveaux = callbackNiveaux;
+		pmAffectation.models.parameter.callbackPermis = callbackPermis;
 		
 		// pour les catégories
 		$.ajax({
@@ -42,6 +43,16 @@ ParameterModel.prototype = {
 			type: 'GET',
 			async: false
 		});
+		
+		// pour les niveaux de permis
+		$.ajax({
+			url: pmAffectation.url+pmAffectation.paths.permis,
+			dataType: 'json',
+			success: pmAffectation.models.parameter.requestSuccessPermis,
+			error: pmAffectation.models.parameter.requestError,
+			type: 'GET',
+			async: false
+		});
 	},
 	
 	/*
@@ -57,6 +68,11 @@ ParameterModel.prototype = {
 	
 		pmAffectation.models.parameter.callbackNiveaux();
 	},
+	requestSuccessPermis: function(data) {
+		pmAffectation.models.parameter.data.permis = data;
+	
+		pmAffectation.models.parameter.callbackPermis();
+	},
 	requestError: function(data, statusText) {
 		message.error("Impossible de récupérer les paramètres : " + statusText);
 	},
@@ -66,20 +82,14 @@ ParameterModel.prototype = {
 	 */
 	// récupère les catégories des tâches
 	getCategories: function() {
-		var tab = {
-					'12': {nom: 'securité'},
-					'23': {nom: 'culture'}
-					};
-				
-		return tab;
+		return pmAffectation.models.parameter.data.categories;
  	},
 	// récupère les niveaux de confiance des orgas
 	getNiveaux: function() {
-		var tab = {
-					'1': {nom: 'hard', couleur: '#333'},
-					'2': {nom: 'soft', couleur: '#888'}
-					};
-				
-		return tab;
+		return pmAffectation.models.parameter.data.niveaux;
+	},
+	// récupère les permis
+	getPermis: function() {
+		return pmAffectation.models.parameter.data.permis;
 	}
 }
