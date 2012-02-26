@@ -41,6 +41,9 @@ DEPRECATED) Add NodeJS and LESS on your webserver - tutorial:
 Install MacPort:
 'http://www.macports.org/install.php'
 
+How to install intl on MAMP
+http://blog.geertvd.be/2011/05/18/installing-the-intl-extension-on-mamp/
+
 Then follow this:
 'http://www.blogafab.com/installer-et-utiliser-nodejs-et-le-module-less-sur-mac-os-x/'
 
