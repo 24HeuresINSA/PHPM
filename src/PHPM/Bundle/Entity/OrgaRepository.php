@@ -16,36 +16,55 @@ class OrgaRepository extends EntityRepository
 {
 	public function getOrgasWithCriteria($permis, $maxDateNaissance, $plage_id, $niveau_confiance,$creneau, $bloc)
 	{
-		$qb = $this->getEntityManager()->createQueryBuilder();
-		$expr = $qb->expr();
-	
-		$andx = $expr->andx(
-		$expr->eq('o.statut','1'),
-		$expr->eq('d.orga','o'),
-		$expr->neq('d.orga','0')		
-		);
-	
-		$offset = (int)($bloc*50);
-		$limit = (int)(50);
-	
+		$dql = "Select o From PHPMBundle:Orga as o, PHPMBundle:Disponibilite as d, PHPMBundle:Creneau as c Where o.statut=1 AND d.orga != 0";
+		
+		if($permis!='')
+		{
+			$dql.=" AND o.permis >= '$permis'";
+		}
+		if($maxDateNaissance !='')
+		{
+			$dql.=" AND o.dateDeNaissance <= '$maxDateNaissance'";
+		}
+		if($niveau_confiance !='')
+		{
+			$dql.=" AND o.confiance >= '$niveau_confiance'";
+		}
 		if($plage_id !='')
 		{
 			$pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation.plages')->getValue(),TRUE);
 			$plage= $pref[$plage_id];
-			$andx->add('(d.debut < \''.$plage["fin"].'\' ) AND (d.fin >\''.$plage["debut"].'\' )');
+			$fin=$plage["fin"];
+			$debut=$plage["debut"];
+			$dql.=" AND d.debut < '$fin' AND d.fin > '$debut'";
 		}
-		if($permis!='')
-		{
-			$andx->add($expr->gte('o.permis',$permis));
-		}
-		if($maxDateNaissance !='')
-		{
-			$andx->add($expr->lte('o.dateDeNaissance','\''.$maxDateNaissance.'\''));
-		}
-		if($niveau_confiance !='')
-		{
-			$andx->add($expr->gte('o.confiance',$niveau_confiance));
-		}
+		
+		$q = $this->getEntityManager()->createQuery($dql);
+		printf($dql); 
+		printf("						");
+		return $q->execute();
+
+	
+// 		$qb = $this->getEntityManager()->createQueryBuilder();
+// 		$expr = $qb->expr();
+	
+// 		$andx = $expr->andx(
+// 		$expr->eq('o.statut','1'),
+// 		$expr->eq('d.orga','o'),
+// 		$expr->neq('d.orga','0')		
+// 		);
+	
+// 		$offset = (int)($bloc*50);
+// 		$limit = (int)(50);
+	
+// 		if($plage_id !='')
+// 		{
+// 			$pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation.plages')->getValue(),TRUE);
+// 			$plage= $pref[$plage_id];
+// 			$andx->add('(d.debut < \''.$plage["fin"].'\' ) AND (d.fin >\''.$plage["debut"].'\' )');
+// 		}
+		
+		
 		if($creneau !='')
 		{
 			/*
