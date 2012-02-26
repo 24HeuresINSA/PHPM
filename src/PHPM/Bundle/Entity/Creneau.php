@@ -120,7 +120,7 @@ class Creneau
      *
      * @param PHPM\Bundle\Entity\Disponibilite $disponibilite
      */
-    public function setDisponibilite(\PHPM\Bundle\Entity\Disponibilite $disponibilite)
+    public function setDisponibilite(\PHPM\Bundle\Entity\Disponibilite $disponibilite = null)
     {
         $this->disponibilite = $disponibilite;
     }
