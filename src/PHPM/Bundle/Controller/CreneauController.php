@@ -308,7 +308,7 @@ class CreneauController extends Controller
     /**
     *
     *
-    * @Route("/{cid}/desaffecter", name="creneau_desaffecter")
+    * @Route("/{cid}/desaffecter/{oid}", name="creneau_desaffecter")
     *
     */
     
