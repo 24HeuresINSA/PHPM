@@ -120,7 +120,6 @@ PmUtils.prototype = {
 		    
 		    // et comme on est pas sale, on va le virer du DOM également
 		    $('#popup').remove();
-		    
 		});
 	},
 	
