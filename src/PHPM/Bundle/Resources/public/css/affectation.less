@@ -11,7 +11,7 @@
 @contentHeight: @htmlHeight - 79px; // taille du reste du contenu
 @menuHeight: 81px; // ne pas oublier la margin et le padding
 @clientHeight: @contentHeight - @menuHeight - 3px; // le restant de la page
-@joursHeight: @clientHeight - 30px;
+@joursHeight: 24 * @heightHeure;
 
 /*
  * Override
@@ -174,7 +174,7 @@ body {
   
   /* le bloc des jours, et aussi avec les heures */
   .jours {
-    height: @joursHeight;
+    height: @joursHeight; // sera redimensionné on-the-fly
     width: 100%;
     overflow-y: scroll;
     
@@ -204,7 +204,7 @@ body {
   
     /* chaque jour */
     .jour {
-      height: 100%;
+      height: @joursHeight !important;
       // width setté dynamiquement
       float: left;
       border-right: 1px solid #333;
