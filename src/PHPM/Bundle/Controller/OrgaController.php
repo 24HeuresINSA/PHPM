@@ -642,9 +642,7 @@ public function validationAction()
 		$plage_id= $request->request->get('plage_id', '');
 		$niveau_confiance= $request->request->get('confiance_id', '');
 		$maxDateNaissance = new \DateTime();
-
 		$creneau = $request->request->get('creneau_id', '');
-		$bloc = $request->request->get('bloc', '0');
 		
 		if($age!='')
 		$maxDateNaissance->modify('-'.$age.' year');
@@ -652,7 +650,7 @@ public function validationAction()
 		
 		
 		$em = $this->getDoctrine()->getEntityManager();
-		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $maxDateNaissance->format('Y-m-d'), $plage_id, $niveau_confiance, $creneau, $bloc);
+		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $maxDateNaissance->format('Y-m-d'), $plage_id, $niveau_confiance, $creneau);
 		;
 		$orgaArray = array();
 		foreach ($entities as $orga){
