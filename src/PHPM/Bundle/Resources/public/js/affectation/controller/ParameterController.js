@@ -24,7 +24,7 @@ ParameterController.prototype = {
 	 * Lancement des requêtes
 	 */
 	getData: function() {
-		pmAffectation.models.parameter.getData();
+		pmAffectation.models.parameter.getData(pmAffectation.controllers.parameter.callbackCategories, pmAffectation.controllers.parameter.callbackNiveaux);
 	},
 	
 	/*
@@ -40,6 +40,8 @@ ParameterController.prototype = {
 	},
 	callbackCategories: function() {
 		pmAffectation.data.parameter.categorie = pmAffectation.models.parameter.getCategories();
+		
+		// TODO : filtre dans la colonne créneaux
 	},
 	
 	/*

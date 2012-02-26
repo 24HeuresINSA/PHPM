@@ -53,7 +53,7 @@ CreneauModel.prototype = {
 		pmAffectation.models.creneau.callBack();
 	},
 	requestError: function(data, statusText) {
-		message.error("Impossible de récupérer les créneaux : " + statusText);
+		message.error("Impossible de faire l'opération : " + statusText);
 	},
 	
 	/*
@@ -90,10 +90,9 @@ CreneauModel.prototype = {
 		
 		$.ajax({
 			url: pmAffectation.url+'creneau/'+idCreneau+'/'+sens+'/'+idOrga,
-			//dataType: 'json',
-			//data: _params,
+			dataType: 'text',
 			success: pmAffectation.models.creneau.affectationSuccess,
-			error: pmAffectation.models.creneau.requestError, // générique
+			error: pmAffectation.models.creneau.requestError,
 			type: 'POST'
 		});	
 	},
