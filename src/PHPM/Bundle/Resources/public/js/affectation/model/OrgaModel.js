@@ -81,6 +81,10 @@ OrgaModel.prototype = {
 				for (var _iCreneau in this.data[_iOrga]['disponibilites'][_iDispo]['creneaux']) {
 					this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut']);
 					this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin']);
+				
+					// on lui affecte également une couleur
+					var _id = this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['tache']['id'];
+					this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['tache']['couleur'] = 'rgba('+_id*1000%255+','+_id*3000%255+','+_id*5000%255+',0.7)';
 				}
 				
 				this.data[_iOrga]['disponibilites'][_iDispo]['debut'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['debut']);

@@ -165,8 +165,7 @@ CalendarView.prototype = {
 		$('#creneau_'+idCreneau+'_'+nbJour).height(duree/60/60*40-10+'px');
 		
 		// on lui met une couleur fonction du n° de la tâche
-		var _id = pmAffectation.data.orga[idOrga].disponibilites[idDispo].creneaux[idCreneau].tache.id;
-		$('#creneau_'+idCreneau+'_'+nbJour).css('background', 'rgba('+_id*1000%255+','+_id*3000%255+','+_id*5000%255+',0.7)');
+		$('#creneau_'+idCreneau+'_'+nbJour).css('background', pmAffectation.data.orga[idOrga]['disponibilites'][idDispo]['creneaux'][idCreneau]['tache']['couleur']);
 	},
 	
 	/*
