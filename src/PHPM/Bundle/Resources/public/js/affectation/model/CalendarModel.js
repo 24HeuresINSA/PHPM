@@ -40,7 +40,7 @@ CalendarModel.prototype = {
 		pmAffectation.models.calendar.callBack();
 	},
 	requestError: function(data, statusText) {
-		message.error("Impossible de récupérer les plages : " + statusText);
+		pmMessage.alert("Impossible de récupérer les plages : " + statusText);
 	},
 	
 	/*
@@ -52,7 +52,7 @@ CalendarModel.prototype = {
 		
 		// cas où rien n'a été défini
 		if (Object.keys(this.data).length === 0) {
-			message.error("Aucune plage n'a été définie");
+			pmMessage.alert("Aucune plage n'a été définie");
 		}
 		
 		// on fait des conversions vers des objets time javascript

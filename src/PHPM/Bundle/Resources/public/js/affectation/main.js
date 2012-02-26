@@ -11,6 +11,7 @@
 	// utilitaires
 	pmUtils = new PmUtils();
 	pmHistory = new PmHistory();
+	pmMessage = new PmMessage();
 	
 	// stockage des données
 	pmAffectation.data = {};
@@ -38,13 +39,13 @@
  * CONSTANTES
  */
 	// les urls sur lesquelles on fera les requêtes
-	pmAffectation.paths.plages = 'configv/get/manifestation.plages';
+	pmAffectation.paths.plages = 'configv/get/manifestation_plages';
 	pmAffectation.paths.orgas = 'orga/query.json';
 	pmAffectation.paths.creneaux = 'creneau/query.json';
 	pmAffectation.paths.affecter = 'creneau/';
 	pmAffectation.paths.categories = 'categorie/index.json';
 	pmAffectation.paths.niveaux = 'confiance/index.json';
-	pmAffectation.paths.permis = 'configv/get/manifestation.permis.libelles';
+	pmAffectation.paths.permis = 'configv/get/manifestation_permis_libelles';
 	
 /*
  * Lancement
