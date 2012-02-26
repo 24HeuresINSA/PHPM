@@ -57,6 +57,7 @@ CreneauController.prototype = {
 		
 		// on recharge le planning de cet orga (et du coup la liste des tous les orgas)
 		pmAffectation.controllers.orga.getData();
+		pmAffectation.controllers.creneau.getData(); // et aussi les créneaux dispos
 	},
 	
 	/*
