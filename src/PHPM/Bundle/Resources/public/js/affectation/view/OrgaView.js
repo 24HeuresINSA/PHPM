@@ -52,13 +52,6 @@ OrgaView.prototype = {
 			$('#orga_'+_iOrga).bind('click', {id: _iOrga}, pmAffectation.controllers.orga.clickHandler); // handler de click
 		}
 		
-		// si aucun orga n'est sélectionné, on choisit le 1er
-		if (pmAffectation.current.orga.id === -1) {
-			ici();
-			log(pmAffectation.current.orga.id, pmAffectation.data.orga);
-			pmAffectation.current.orga.id = Object.keys(pmAffectation.data.orga)[0];
-		}
-		
 		$("#orga_"+pmAffectation.current.orga.id).addClass('current'); // met le focus là où il faut
 	},
 	
