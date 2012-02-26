@@ -171,6 +171,7 @@ CalendarView.prototype = {
 	 */
 	showDetails: function(obj) {
 		var _tache = pmAffectation.data.orga[obj.data.idOrga]['disponibilites'][obj.data.idDispo]['creneaux'][obj.data.idCreneau];
+		
 		log(_tache);
 		
 		// on prépare le contenu du pop-up
@@ -178,6 +179,7 @@ CalendarView.prototype = {
 					'<li><a href="'+pmAffectation.url+'tache/'+1+'/show" target="_blank">Tâche n°</a></li>'+
 					'<li>Nom de la tâche</li>'+
 					'<li>Lieu de la tâche</li>'+
+					'<li>'+_tache.debut.getMyTime()+' - '+_tache.fin.getMyTime()+'</li>'+
 					'<li><button id="desaffect_'+_tache+'">Désaffecter</button></li>'+
 					'</ul>';
 		

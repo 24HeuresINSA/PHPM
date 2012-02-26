@@ -28,6 +28,13 @@ Date.prototype.getMyDts = function() {
 }
 
 /*
+ * Retourne que la partie time à un format "joli" : hh:mm
+ */
+Date.prototype.getMyTime = function() {
+	return date('H:I', Number(this.getTime()/1000));
+}
+
+/*
  * Renvoie la date sous le format demandé
  */
 Date.prototype.getThisFormat = function(leFormat) {
