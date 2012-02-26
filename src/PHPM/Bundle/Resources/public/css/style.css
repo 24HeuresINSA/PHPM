@@ -205,3 +205,8 @@ h1 a {
   .spinner;
   background: url('../images/loader_small.gif') center center no-repeat;
 }
+
+/* Divers */
+.clear{
+	clear: both;
+}

@@ -484,42 +484,34 @@ public function validationAction()
 	    $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
 	    $user = $this->get('security.context')->getToken()->getUser();
 	    $em = $this->getDoctrine()->getEntityManager();
-	    
-
-        
-	    $data= array('Disponibilités'=>$user->getDisponibilitesInscription());
-	    
-	    $form = $this->createForm(new InscriptionHardType($admin,$em),(array)$data);
-	    
-	    
-	    
+	    $entities = $em->getRepository('PHPMBundle:DisponibiliteInscription')->findAll();
+	    $form = $this->createForm(new InscriptionHardType($admin,$em,$user));
+	
 	    if ($request->getMethod() == 'POST') {
 	        $form->bindRequest($request);
 	        $data=$form->getData();
 
+	        
 	        if ($form->isValid()) {
-
-	            
-	            	            
+       
 	            $di = $user->getDisponibilitesInscription();
-	            
-	            $di=$data['Disponibilités'];
-	            
-	            
-	            $em->persist($user);
-	            
+	            foreach ($data as $group)
+	            foreach ($group as $key=>$value){
+	                
+	                $di = $entities[$key];
+	                
+	                if($value && !$user->getDisponibilitesInscription()->contains($di)){
+	                $user->addDisponibiliteInscription($di);
+	                }
+	            }
+	           
 	            $em->flush();
+	            $form = $this->createForm(new InscriptionHardType($admin,$em,$user));
 	            
 	        }
 	    }
 	    
-	    
-	    
 	    return array( 'form' => $form->createView());
-	    
-	    
-	    
-	    
 	    
 	}
 
