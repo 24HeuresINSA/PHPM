@@ -160,8 +160,10 @@ CalendarView.prototype = {
 	},
 	// place un créneau
 	placeCreneau: function(idOrga, idDispo, idCreneau, dateDebut, duree, nbJour) {
-		_html = '<div id="creneau_'+idCreneau+'_'+nbJour+'" class="creneau" orga="'+idOrga+
-				'" disponibilite="'+idDispo+'" creneau="'+idCreneau+'_+'+nbJour+'">'+
+		var _titre = (nbJour !== 0) ? '>> ' : '';
+		
+		var _html = '<div id="creneau_'+idCreneau+'_'+nbJour+'" class="creneau" orga="'+idOrga+
+				'" disponibilite="'+idDispo+'" creneau="'+idCreneau+'_+'+nbJour+'">'+_titre+
 				pmAffectation.data.orga[idOrga]['disponibilites'][idDispo]['creneaux'][idCreneau]['tache']+'</div>';
 		
 		// on le rajoute, supprime le handler précédent et en rajoute un
