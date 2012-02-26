@@ -32,7 +32,7 @@ class OrgaRepository extends EntityRepository
 		}
 		if($plage_id !='')
 		{
-			$pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation.plages')->getValue(),TRUE);
+			$pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation_plages')->getValue(),TRUE);
 			$plage= $pref[$plage_id];
 			$fin=$plage["fin"];
 			$debut=$plage["debut"];

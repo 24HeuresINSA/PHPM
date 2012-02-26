@@ -23,7 +23,7 @@
             <td>{{ entity.consignes }}</td>
             <td>{{ entity.lieu }}</td>
             <td>{{ entity.materielNecessaire }}</td>
-            <td>{% render "PHPMBundle:Config:display" with {'field': 'manifestation.permis.libelles', 'key':entity.permisnecessaire} %}</td>
+            <td>{{entity.permisnecessaire|permis}}</td>
             <td>{{ entity.ageNecessaire }}</td>
             <td>{{ entity.responsable }}</td>
             <td>

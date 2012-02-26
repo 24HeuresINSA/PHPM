@@ -23,5 +23,20 @@ class ConfigRepository extends EntityRepository
 		 	->getResult();
 	}
 	
+	public function findAllAsArray()
+	{
+	
+	    $result = $this->getEntityManager()
+	    ->createQuery("SELECT c.field, c.value FROM PHPMBundle:Config c ")->getArrayResult();
+	    
+	    $a = array();
+	    foreach ($result as $row)
+	    {
+	        $a[$row['field']] = $row['value'];
+	    }
+	    return $a;
+	        
+	}
+	
 	
 }

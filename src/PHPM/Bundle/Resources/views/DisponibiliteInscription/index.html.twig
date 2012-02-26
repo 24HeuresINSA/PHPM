@@ -29,7 +29,7 @@
     {% for entity in entities %}
        {%  if previous == entity.0.id%}
         <br/>{% if entity.permis is not null %}
-            {% render "PHPMBundle:Config:display" with {'field': 'manifestation.permis.libelles', 'key':entity.permis} %} :{{ entity.nborga }}
+           {{entity.permis|permis}} :{{ entity.nborga }}
             {% else %}
             0
             {% endif %}
@@ -42,7 +42,7 @@
             <td>{{ entity.0.fin|format_datetime('dd MMM Y HH:mm') }}</td>
             <td>
             {% if entity.permis is not null %}
-            {% render "PHPMBundle:Config:display" with {'field': 'manifestation.permis.libelles', 'key':entity.permis} %} :{{ entity.nborga }}
+            {{entity.permis|permis}} :{{ entity.nborga }}
             {% else %}
             0
             {% endif %}

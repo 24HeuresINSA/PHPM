@@ -18,7 +18,7 @@ class OrgaType extends AbstractType
     
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $libellesPermis =  json_decode($this->em->getRepository('PHPMBundle:Config')->findOneByField('manifestation.permis.libelles')->getValue(),true);
+        $libellesPermis =  json_decode($this->em->getRepository('PHPMBundle:Config')->findOneByField('manifestation_permis_libelles')->getValue(),true);
         
     	$currentYear = date('Y');
     	$years = array(); 	

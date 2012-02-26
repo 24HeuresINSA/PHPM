@@ -3,7 +3,7 @@ parameters:
     my.validator.inclus.class:      PHPM\Bundle\Validator\InclusValidator
     my.validator.debutAvantFin.class:      PHPM\Bundle\Validator\DebutAvantFinValidator
     my.validator.recoupe.class:      PHPM\Bundle\Validator\RecoupeValidator
-    configController.class:      PHPM\Bundle\Controller\ConfigController
+    config.extension.class:      PHPM\Bundle\Extension\ConfigExtension
 
 services:
     my.validator.quartHeure:
@@ -29,12 +29,11 @@ services:
        arguments: [@doctrine.orm.entity_manager]
        tags:
             - { name: validator.constraint_validator, alias: validator.recoupe }
-    configController:
-       class:      %configController.class%
-       arguments: []
-    form.type.di:
-      class: PHPM\Bundle\Form\DisponibiliteInscriptionType
-      tags:
-        - { name: form.type, alias: disponibiliteinscription}
+    config.extension:
+       class:      %config.extension.class%
+       arguments: [@doctrine]
+       tags:
+            -  { name: twig.extension }
+
 
       

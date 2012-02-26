@@ -44,7 +44,7 @@
         </tr>
         <tr>
             <th>Permis</th>
-            <td>{% render "PHPMBundle:Config:display" with {'field': 'manifestation.permis.libelles', 'key':entity.permis} %}</td>
+            <td>{{entity.permis|permis}}</td>
         </tr>
 
     </tbody>

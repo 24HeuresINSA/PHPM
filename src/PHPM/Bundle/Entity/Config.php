@@ -87,7 +87,7 @@ class Config
     
     public function __toString()
     {
-    	return "$this->getField() : $this->getValue() ";
+    	return "";
     }
 
     /**

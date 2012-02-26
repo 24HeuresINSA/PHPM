@@ -253,7 +253,7 @@ class ConfigController extends Controller {
 		$em = $this->getDoctrine()->getEntityManager();
 
 		$initiale = $em->getRepository('PHPMBundle:Config')
-				->findOneByField('phpm.config.initiale');
+				->findOneByField('phpm_config_initiale');
 
 		if (!(!$initiale)
 				& !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
@@ -309,10 +309,6 @@ SET time_zone = \"+00:00\";
 -- Dumping data for table `Config`
 --
 
-INSERT INTO `Config` (`id`, `field`, `value`, `label`) VALUES(1, 'manifestation.plages', '{\"1\":{\"nom\":\"Pr\\u00e9manif\",\"debut\":\"2012-05-16 00:00\",\"fin\":\"2012-05-23 00:00\"},\"2\":{\"nom\":\"Manif\",\"debut\":\"2012-05-23 00:00\",\"fin\":\"2012-05-27 00:00\"},\"3\":{\"nom\":\"Postmanif\",\"debut\":\"2012-05-28 00:00\",\"fin\":\"2012-06-01 00:00\"}}', 'Plages de la manifestation');
-INSERT INTO `Config` (`id`, `field`, `value`, `label`) VALUES(2, 'manifestation.organisation.nom', '24 Heures de l''INSA', 'Nom de l''organisation');
-INSERT INTO `Config` (`id`, `field`, `value`, `label`) VALUES(3, 'phpm.config.initiale', '1', 'PHPM configuré');
-
 --
 -- Dumping data for table `User`
 --
@@ -344,13 +340,6 @@ COMMIT;
 	public function manifAction() {
 		$request = $this->get('request');
 		$em = $this->getDoctrine()->getEntityManager();
-		$orga = $em->getRepository('PHPMBundle:Config')
-				->findOneByField('manifestation.organisation.nom');
-		$plages = $em->getRepository('PHPMBundle:Config')
-				->findOneByField('manifestation.plages');
-		
-
-
 	
 		$entities = $em->getRepository('PHPMBundle:Config')->findAll();
 		$data = array();

@@ -21,7 +21,7 @@ class DefaultController extends Controller
     public function homeAction()
     {
     	$em = $this->getDoctrine()->getEntityManager();
-    	$pref = $em->getRepository('PHPMBundle:Config')->findOneByField('phpm.config.initiale');
+    	$pref = $em->getRepository('PHPMBundle:Config')->findOneByField('phpm_config_initiale');
     	
     	
     	if (!$pref)
@@ -43,7 +43,7 @@ class DefaultController extends Controller
     {
     
         $em = $this->getDoctrine()->getEntityManager();
-    	$pref = $em->getRepository('PHPMBundle:Config')->findOneByField('server.baseurl');
+    	$pref = $em->getRepository('PHPMBundle:Config')->findOneByField('server_baseurl');
     	if($pref)
     	    $serverurl = $pref->getvalue();
     	else 
