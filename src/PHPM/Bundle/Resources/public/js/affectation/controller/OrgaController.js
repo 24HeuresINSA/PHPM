@@ -34,8 +34,10 @@ OrgaController.prototype = {
 		pmAffectation.data.orga = pmAffectation.models.orga.getOrgas();
 		
 		// si aucun orga n'est sélectionné, on choisit le 1er
-		if (pmAffectation.current.orga.id === -1) {
+		if (pmAffectation.current.orga.id == -1 && Object.keys(pmAffectation.data.orga)[0]  !== undefined) {
 			pmAffectation.current.orga.id = Object.keys(pmAffectation.data.orga)[0];
+			
+			pmHistory.setUrlParam(); // maj de l'url
 		}
 		
 		pmAffectation.views.orga.setOrgas();
