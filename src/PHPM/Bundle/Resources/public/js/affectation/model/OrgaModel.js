@@ -50,7 +50,7 @@ OrgaModel.prototype = {
 		pmAffectation.models.orga.callBack();
 	},
 	requestError: function(data, statusText) {
-		message.error("Impossible de récupérer les orgas : " + statusText);
+		pmMessage.alert("Impossible de récupérer les orgas : " + statusText);
 	},
 	
 	/*

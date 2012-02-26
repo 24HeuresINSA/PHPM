@@ -52,7 +52,7 @@ TacheModel.prototype = {
 		pmAffectation.models.tache.callBack();
 	},
 	requestError: function(data, statusText) {
-		message.error("Impossible de récupérer les taches : " + statusText);
+		pmMessage.alert("Impossible de récupérer les taches : " + statusText);
 	},
 	
 	/*

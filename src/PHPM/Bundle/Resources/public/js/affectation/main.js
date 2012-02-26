@@ -11,6 +11,7 @@
 	// utilitaires
 	pmUtils = new PmUtils();
 	pmHistory = new PmHistory();
+	pmMessage = new PmMessage();
 	
 	// stockage des données
 	pmAffectation.data = {};

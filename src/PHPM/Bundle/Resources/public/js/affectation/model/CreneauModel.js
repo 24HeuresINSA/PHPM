@@ -53,7 +53,7 @@ CreneauModel.prototype = {
 		pmAffectation.models.creneau.callBack();
 	},
 	requestError: function(data, statusText) {
-		message.error("Impossible de faire l'opération : " + statusText);
+		pmMessage.alert("Impossible de faire l'opération : " + statusText);
 	},
 	
 	/*
@@ -107,7 +107,7 @@ CreneauModel.prototype = {
 		if (data == "OK") {
 			(sens === 'affecter') ? pmAffectation.models.creneau.callBackAffectation() : pmAffectation.models.creneau.callBackDesaffectation();
 		} else {
-			message.error("Impossible de réaliser l'opération : "+data);
+			pmMessage.alert("Impossible de réaliser l'opération : "+data);
 		}
 	},
 }
