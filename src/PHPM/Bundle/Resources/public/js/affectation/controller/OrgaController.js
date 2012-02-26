@@ -33,6 +33,11 @@ OrgaController.prototype = {
 	callbackOrgas: function() {
 		pmAffectation.data.orga = pmAffectation.models.orga.getOrgas();
 		
+		// si aucun orga n'est sélectionné, on choisit le 1er
+		if (pmAffectation.current.orga.id === -1) {
+			pmAffectation.current.orga.id = Object.keys(pmAffectation.data.orga)[0];
+		}
+		
 		pmAffectation.views.orga.setOrgas();
 		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga.id});
 	},
