@@ -1,0 +1,51 @@
+/*
+ * Tableaux
+ */
+
+table {
+	border-collapse:collapse;
+	
+	
+}
+
+th, td{
+	padding-top: .1em;
+	padding-left:.5em;
+	padding-right:.5em;
+}
+
+table.record_properties th{
+	
+	background:#ccc;
+}
+table.record_properties td{
+	
+	
+}
+table.record_properties {
+	border-radius : 5px;
+	background:#eaeaea;
+}
+table.record_properties  tr:first-child th { border-top-left-radius : 5px; }
+table.record_properties  tr:last-child th { border-bottom-left-radius : 5px; }
+
+
+
+
+
+
+table.records_list th {
+	background: #ccc;
+	}
+
+
+table.records_list tr {
+	background: #ddd;
+}
+
+
+
+table.records_list th,table.records_list tr,table.records_list td { 
+border: thin solid black;
+
+}

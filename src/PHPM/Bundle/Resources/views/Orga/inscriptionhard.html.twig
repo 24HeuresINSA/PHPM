@@ -10,20 +10,34 @@
 			{% endstylesheets %}
 {% endblock %}
 
+{% block field_row %}
+<div>
+{% spaceless %}
+         {{ form_label(form) }}
+         {{ form_widget(form) }}
+        {{ form_errors(form) }}
+{% endspaceless %}
+</div>
+{% endblock field_row %}
 
 {% block checkbox_widget %}
 {% spaceless %}
-<br/><input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+    <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
 {% endspaceless %}
 {% endblock checkbox_widget %}
+
 
 
 
 {% block content %}
 <form action="{{ path('orga_inscriptionhard') }}" method="post" {{ form_enctype(form) }}>
 {{ form_widget(form) }}
-    <p>
-        <button type="submit">Edit</button>
+    <p class="clear">
+        <em>Attention : Une fois que vous avez validé vos disponibilités, il n'est plus possible 
+        de supprimer des créneaux. Il est néanmoins toujours possible d'en ajouter de nouveaux.<br/>
+        Si vous avez fait une erreur, veuillez contacter par mail l'orga humain : 
+        <a href="mailto:orga@24heures.org" >orga@24heures.org</a> </em><br/>
+        <button type="submit" id="submit_button" >Valider</button>
     </p>
 </form>
 

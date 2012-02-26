@@ -1,7 +1,12 @@
 PHPlanningMaker
 ===============
 
-1) Deployment
+1) Required Configuration
+-------------------------
+Apache 2 w/mod_rewrite
+PHP5.3 w/ php5-intl
+
+2) Deployment
 -------------
 
 a) First, get all the files from the repositor
@@ -21,7 +26,7 @@ c) Retreive all symfony bundles files
 d) Generate database tables 
 './app/console doctrine:schema:update --force'
 
-e) Links assets
+e) Link assets
 'app/console assets:install web --symlink'
 
 f) Dump assetc
@@ -35,6 +40,9 @@ DEPRECATED) Add NodeJS and LESS on your webserver - tutorial:
 *** Mac-specific instructions ***
 Install MacPort:
 'http://www.macports.org/install.php'
+
+How to install intl on MAMP
+http://blog.geertvd.be/2011/05/18/installing-the-intl-extension-on-mamp/
 
 Then follow this:
 'http://www.blogafab.com/installer-et-utiliser-nodejs-et-le-module-less-sur-mac-os-x/'

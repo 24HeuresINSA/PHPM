@@ -195,7 +195,7 @@ body {
       // width setté dynamiquement
       float: left;
       border-right: 1px solid #333;
-      
+            
       /* heure */
       .heure {    
         /* quart d'heure */
@@ -218,8 +218,9 @@ body {
             opacity: 0.9;
             float: left;
             width: 100%;
-            padding: 5px 0;
+            padding: 5px 0; // attention si la valeur est changée, aller répercuter dans CalendarView.js -> placeCreneau
             text-indent: 5px; // on contourne le fait qu'on ne puisse pas mettre de padding
+            overflow: hidden;
           }
           
         }
@@ -243,7 +244,10 @@ body {
     }
   }
 }
-
+// le pop-up avec les détails d'un créneau
+.creneau_details ul {
+  list-style-type: none;
+}
 
 /*
  * Barre latérale droite

@@ -1,7 +1,32 @@
 @media all {
 
-label{
-	display:block
-width: 120px;
+#phpm_bundle_inscriptionhardtype > div{
+	
+	float:left;
+	margin-right: 1em;
+	
+	
 }
+
+#submit_button{
+	
+	margin-top: 1em;
+}
+#phpm_bundle_inscriptionhardtype > div:last-child{
+	
+	float:none;
+	clear:both;
+	
+	
+}
+#phpm_bundle_inscriptionhardtype{
+	float: left;
+	border-radius : 5px;
+	background:#eaeaea;
+	padding:.5em;
+	margin-bottom: 1em;
+}
+
+
+
 }
