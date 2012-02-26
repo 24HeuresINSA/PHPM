@@ -49,7 +49,7 @@ CreneauController.prototype = {
 		pmUtils.logAction('affectation', obj.data.idCreneau, obj.data.idOrga);
 		
 		// on appelle le webservice
-		pmAffectation.models.creneau.affecterCreneau(obj.data.idCreneau, obj.data.idOrga, pmAffectation.controllers.creneau.callbackAffectation);
+		pmAffectation.models.creneau.affecterCreneau('affecter', obj.data.idCreneau, obj.data.idOrga, pmAffectation.controllers.creneau.callbackAffectation);
 	},
 	// callback
 	callbackAffectation: function() {
@@ -63,11 +63,19 @@ CreneauController.prototype = {
 	 * Gère la désaffectation
 	 * (clic sur le bouton correspondant)
 	 */
-	desAffectation: function(idOrga, idCreneau) {
+	desAffectation: function(idCreneau, idOrga) {
 		// on log l'action
-		pmUtils.logAction('desaffectation', obj.data.idCreneau, obj.data.idOrga);
+		pmUtils.logAction('desaffectation', idCreneau, idOrga);
 		
 		// on appelle le webservice
+		pmAffectation.models.creneau.affecterCreneau('desaffecter', idCreneau, idOrga, pmAffectation.controllers.creneau.callbackDesaffectation);
+	},
+	// callback
+	callbackDesffectation: function() {
+		message.success("Désaffectation réalisée");
+		
+		// on recharge le planning de cet orga (et du coup la liste des tous les orgas)
+		pmAffectation.controllers.orga.getData();
 	},
 	
 	/*

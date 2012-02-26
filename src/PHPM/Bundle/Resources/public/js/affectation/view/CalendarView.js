@@ -173,29 +173,31 @@ CalendarView.prototype = {
 	 * sur lequel on vient de cliquer
 	 */
 	showDetails: function(obj) {
-		var _tache = pmAffectation.data.orga[obj.data.idOrga]['disponibilites'][obj.data.idDispo]['creneaux'][obj.data.idCreneau];
+		var _creneau = pmAffectation.data.orga[obj.data.idOrga]['disponibilites'][obj.data.idDispo]['creneaux'][obj.data.idCreneau];
 		
 		// on prépare le contenu du pop-up
 		var _html = '<ul>' +
-					'<li><a href="'+pmAffectation.url+'tache/'+1+'/show" target="_blank">Tâche n°</a></li>'+
-					'<li>Nom de la tâche</li>'+
-					'<li>Lieu de la tâche</li>'+
-					'<li>'+_tache.debut.getMyTime()+' - '+_tache.fin.getMyTime()+'</li>'+
-					'<li><button id="desaffect_'+_tache+'">Désaffecter</button></li>'+
+					'<li><a href="'+pmAffectation.url+'tache/'+_creneau.tache.id+'/show" target="_blank">Tâche n°'+_creneau.tache.id+'</a></li>'+
+					'<li>'+_creneau.tache.nom+'</li>'+
+					'<li>'+_creneau.tache.lieu+'</li>'+
+					'<li>'+_creneau.debut.getMyTime()+' - '+_creneau.fin.getMyTime()+'</li>'+
+					'<li><button id="desaffect_'+obj.data.idCreneau+'">Désaffecter</button></li>'+
 					'</ul>';
 		
-		// bouton, lien pour la désaffectation
-		$('#desaffect_'+_tache).button();
-		$('#desaffect_'+_tache).click(function() {pmAffectation.controllers.creneau.desAffectation(obj.data.idOrga, obj.data.idCreneau)})
-		
 		// on l'ouvre
-		$('<div>'+_html+'</div>').dialog({
+		$('<div id="popup">'+_html+'</div>').dialog({
 			closeText: 'fermer',
-			dialogClass: 'creneau_details',
+			dialogClass: 'creneau_details popup',
 			draggable: false,
+			modal: true, // certes, mais on a un handler qui le ferme si on clique ailleurs
 			position: [obj.pageX-150, obj.pageY],
 			resizable: false,
 			title: 'Créneau n°'+obj.data.idCreneau
-		})
+		});
+		
+		// bouton, lien pour la désaffectation - setter quand le popup est visible
+		$('#desaffect_'+obj.data.idCreneau).button().click(function() {	pmAffectation.controllers.creneau.desAffectation(obj.data.idCreneau, obj.data.idOrga) });
+		
+		pmUtils.setPopupClose(); // pour sa fermeture, un seul popup à la fois
 	},
 }

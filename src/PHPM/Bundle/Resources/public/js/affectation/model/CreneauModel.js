@@ -82,13 +82,14 @@ CreneauModel.prototype = {
 	},
 
 	/*
-	 * Réalise l'affectation entre un créneau et un orga
+	 * Réalise la (dés)affectation entre un créneau et un orga
+	 * @param 'sens' : 'affecter' ou 'desaffecter'
 	 */
-	affecterCreneau: function(idCreneau, idOrga, callBack) {
+	affecterCreneau: function(sens, idCreneau, idOrga, callBack) {
 		pmAffectation.models.creneau.callBackAffectation = callBack;
 		
 		$.ajax({
-			url: pmAffectation.url+'creneau/'+idCreneau+'/affecter/'+idOrga,
+			url: pmAffectation.url+'creneau/'+idCreneau+'/'+sens+'/'+idOrga,
 			//dataType: 'json',
 			//data: _params,
 			success: pmAffectation.models.creneau.affectationSuccess,
@@ -102,7 +103,7 @@ CreneauModel.prototype = {
 		if (data == "OK") {
 			pmAffectation.models.creneau.callBackAffectation();
 		} else {
-			message.error("Impossible de réaliser l'affectation : "+data);
+			message.error("Impossible de réaliser l'opération : "+data);
 		}
 	},
 }
