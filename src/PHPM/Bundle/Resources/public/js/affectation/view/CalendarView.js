@@ -38,12 +38,12 @@ CalendarView.prototype = {
 		
 		for (var _i=0;_i<_nbJours;_i++) {
 			var _date = new Date(pmAffectation.data.calendar.plage[plage]['debut'].getTime()+_i*24*60*60*1000);
-			var _jolieDate = _date.getThisFormat('Y-n-d');
-			
+
 			// on fait déjà la barre de titre
-			_htmlBarreDates += '<div class="titre_date" style="width: '+94/_nbJours+'%;">'+pmUtils.jours[_date.getDay()]+' '+_jolieDate +'</div>';
+			_htmlBarreDates += '<div class="titre_date" style="width: '+94/_nbJours+'%;">'+pmUtils.jours[_date.getDay()]+' '+_date.getThisFormat('d/m') +'</div>';
 		
-			_htmlJours += this.makeADay(_jolieDate, _date.getDay(), _nbJours);
+			var _dateComplete = _date.getThisFormat('Y-n-d');
+			_htmlJours += this.makeADay(_dateComplete, _date.getDay(), _nbJours);
 		}
 		
 		$('#calendar').append(_htmlBarreDates+'</div><div class="jours" id="jours">'+_htmlHours+_htmlJours+'</div>');
@@ -108,45 +108,69 @@ CalendarView.prototype = {
 		if (obj.type === 'orga') {
 			if (pmAffectation.data.orga[obj.id] !== undefined) { // check si l'orga existe bien
 				for (var _iDispo in pmAffectation.data.orga[obj.id]['disponibilites']) {
-					var _debut = new Date(pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['debut'].getTime()); // on en fait une copie
+					// astcue importante : on force la copie en re-créant un objet Date
+					var _debut = new Date(pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['debut'].getTime());
 					var _fin = pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['fin'];
 					
-					// on vérifie si on est bien dans les bornes de la plage, trim au besoin
-					if (_debut.getTime() < pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()) {
-						_debut.setTime(pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime());
-					}
-					if (_fin.getTime() > pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()) {
-						_fin.setTime(pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime());
-					}
-					
-					// on place les dispos, avec la classe et le click
-					for (var _iDts = _debut; _iDts.getTime() < _fin.getTime(); _iDts.setTime(_iDts.getTime()+15*60*1000)) {
-						// sélection suivant les attributs de temps de plus en plus précis
-						$('.jour[jour="'+_iDts.getFullYear()+'-'+Number(_iDts.getMonth()+1)+'-'+_iDts.getDate()+'"] > .heure[heure="'
-						+_iDts.getHours()+'"] > .quart_heure[minute="'+_iDts.getMinutes()+'"]').addClass('free')
-						.bind('click', {}, pmAffectation.controllers.calendar.clickQuartHeure);
-					}
-					
-					// on place les créneaux (et retire le handler)
+					// on appelle une fonction qui va placer les disponibilités
+					pmAffectation.views.calendar.placeDisponibilites(_debut, _fin);
+
+					// on place les créneaux
 					for (var _iCreneau in pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux']) {
-						var _hDebut = pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'];
+						// on récupère les dates trimmées par rapport à la plage
+						var _debutCreneau = new Date(Math.max(pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'].getTime(), pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()));
+						var _finCreneau = new Date(Math.min(pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'].getTime(), pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()));
+						var _nbJour = 0; // compteur du nombre de jours
 						
-						_html = '<div id="creneau_'+_iCreneau+'" class="creneau" orga="'+obj.id+'" disponibilite="'+_iDispo+'" creneau="'+_iCreneau+'">'+pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['tache']+'</div>';
+						var _todayMidnight = new Date(_debutCreneau);
+						_todayMidnight.setDate(_todayMidnight.getDate()+1);
+						_todayMidnight.setHours(0, 0, 0, 0);
 						
-						// on le rajoute, supprime le handler précédent et en rajoute un
-						$('.jour[jour="'+_iDts.getFullYear()+'-'+Number(_iDts.getMonth()+1)+'-'+_iDts.getDate()+'"] > .heure[heure="'
-						+_hDebut.getHours()+'"] > .quart_heure[minute="'+_hDebut.getMinutes()+'"]').append(_html).off('click')
-						.bind('click', {idOrga: obj.id, idDispo: _iDispo, idCreneau: _iCreneau}, pmAffectation.controllers.calendar.clickCreneau);
+						var _finJourCreneau = Math.min(_todayMidnight, _finCreneau);
 						
-						// set la taille
-						var _taille = Number(pmAffectation.data.orga[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['duree']/60/60*40);
-						$('#creneau_'+_iCreneau).height(_taille+'px');
+						pmAffectation.views.calendar.placeCreneau(obj.id, _iDispo, _iCreneau, _debutCreneau, (_finJourCreneau-_debutCreneau.getTime())/1000, _nbJour);
+											
+						// on s'occupe des créneaux suivants	
+						while (_debutCreneau.getDate() !== _finCreneau.getDate()) {
+							_nbJour++;
+							_debutCreneau = new Date(_todayMidnight); // bien forcer la recopie
+							
+							_todayMidnight.setDate(_debutCreneau.getDate()+1);
+							var _finJourCreneau = Math.min(_todayMidnight, _finCreneau);
+							
+							
+							pmAffectation.views.calendar.placeCreneau(obj.id, _iDispo, _iCreneau, _debutCreneau, (_finJourCreneau-_debutCreneau.getTime())/1000, _nbJour);
+						}
 					}
 				}
 			}
 		} else {
 			// à faire, pour la vue dans l'autre sens
 		}
+	},
+	// place une disponibilite
+	placeDisponibilites: function(dateDebut, dateFin) {		
+		// on place les dispos, avec la classe et le click
+		for (var _iDts = dateDebut; _iDts.getTime() < dateFin.getTime(); _iDts.setTime(_iDts.getTime()+15*60*1000)) {
+			// sélection des quarts d'heure suivant les attributs de temps de plus en plus précis
+			$('.jour[jour="'+_iDts.getFullYear()+'-'+Number(_iDts.getMonth()+1)+'-'+_iDts.getDate()+'"] > .heure[heure="'+
+			_iDts.getHours()+'"] > .quart_heure[minute="'+_iDts.getMinutes()+'"]').addClass('free')
+			.bind('click', {}, pmAffectation.controllers.calendar.clickQuartHeure);
+		}
+	},
+	// place un créneau
+	placeCreneau: function(idOrga, idDispo, idCreneau, dateDebut, duree, nbJour) {
+		_html = '<div id="creneau_'+idCreneau+'_'+nbJour+'" class="creneau" orga="'+idOrga+
+				'" disponibilite="'+idDispo+'" creneau="'+idCreneau+'_+'+nbJour+'">'+
+				pmAffectation.data.orga[idOrga]['disponibilites'][idDispo]['creneaux'][idCreneau]['tache']+'</div>';
+		
+		// on le rajoute, supprime le handler précédent et en rajoute un
+		$('.jour[jour="'+dateDebut.getFullYear()+'-'+Number(dateDebut.getMonth()+1)+'-'+dateDebut.getDate()+'"] > .heure[heure="'+
+		dateDebut.getHours()+'"] > .quart_heure[minute="'+dateDebut.getMinutes()+'"]').append(_html).off('click')
+		.bind('click', {idOrga: idOrga, idDispo: idDispo, idCreneau: idCreneau}, pmAffectation.controllers.calendar.clickCreneau);
+		
+		// set la taille - et -10px à cause du padding vertical de 5px
+		$('#creneau_'+idCreneau+'_'+nbJour).height(duree/60/60*40-10+'px');
 	},
 	
 	/*
