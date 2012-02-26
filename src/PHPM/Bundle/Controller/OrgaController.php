@@ -107,12 +107,12 @@ class OrgaController extends Controller
      */
     public function newAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $config = $this->get('config.extension');
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
         $entity = new Orga();
-        $form   = $this->createForm(new OrgaType(true, $em), $entity);
+        $form   = $this->createForm(new OrgaType(true, $config), $entity);
 
         return array(
             'entity' => $entity,
@@ -130,6 +130,7 @@ class OrgaController extends Controller
     public function registerAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
+        $config = $e=$this->get('config.extension');
         $request = $this->getRequest();
         $confianceId= $request->request->get('confiance', '');
         $email = $request->request->get('email', '');
@@ -149,7 +150,7 @@ class OrgaController extends Controller
         }
         
         $entity->setConfiance($confianceObject);
-        $form   = $this->createForm(new OrgaType(false,$em), $entity);
+        $form   = $this->createForm(new OrgaType(false,$config), $entity);
     
         return array(
                 'entity' => $entity,
@@ -167,12 +168,13 @@ class OrgaController extends Controller
     public function registerprocessAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
+        $config  =$e=$this->get('config.extension');
         $entity  = new Orga();
         $request = $this->getRequest();
         $entity->setStatut(0);
         $entity->setConfiance($em->getRepository('PHPMBundle:Confiance')->find(3));
         $entity->setIsAdmin(false);
-        $form    = $this->createForm(new OrgaType(false,$em), $entity);
+        $form    = $this->createForm(new OrgaType(false,$config), $entity);
         $form->bindRequest($request);
     
         if ($form->isValid()) {
@@ -202,9 +204,11 @@ class OrgaController extends Controller
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
+        $config = $e=$this->get('config.extension');
+        
         $entity  = new Orga();
         $request = $this->getRequest();
-        $form    = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN'),$em), $entity);
+        $form    = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN'),$config), $entity);
         $form->bindRequest($request);
 
         if ($form->isValid()) {
@@ -232,7 +236,7 @@ class OrgaController extends Controller
     {
 
         $em = $this->getDoctrine()->getEntityManager();
-
+        $config = $e=$this->get('config.extension');
         $entity = $em->getRepository('PHPMBundle:Orga')->find($id);
 
         if (!$entity) {
@@ -243,7 +247,7 @@ class OrgaController extends Controller
             throw new AccessDeniedException();
         }
 
-        $editForm = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN'),$em), $entity);
+        $editForm = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN'),$config), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -272,8 +276,8 @@ class OrgaController extends Controller
         $protectedfields = array($entity->getIsAdmin(),$entity->getConfiance(),$entity->getStatut(), $entity->getEmail());
         
 
-
-        $editForm   = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN'),$em), $entity);
+        $config = $e=$this->get('config.extension');
+        $editForm   = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN'),$config), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();

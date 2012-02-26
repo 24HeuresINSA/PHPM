@@ -37,6 +37,11 @@ class ConfigExtension extends \Twig_Extension {
         return $libelles[$key];
     }
 
+    public function getValue($field)
+    {
+        return $this->configs[$field];
+    }
+    
     public function getName()
     {
         return 'phpm_config_extension';

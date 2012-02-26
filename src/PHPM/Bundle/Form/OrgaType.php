@@ -8,17 +8,17 @@ use Symfony\Component\Form\FormBuilder;
 class OrgaType extends AbstractType
 {
     protected $admin;
-    protected $em;
-    function __construct($admin,$em){
+    protected $config;
+    function __construct($admin,$config){
         
-            $this->em =$em;
+            $this->config =$config;
             $this->admin =$admin;
     }
     
     
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $libellesPermis =  json_decode($this->em->getRepository('PHPMBundle:Config')->findOneByField('manifestation_permis_libelles')->getValue(),true);
+        $libellesPermis =  json_decode($this->config->getValue('manifestation_permis_libelles'),true);
         
     	$currentYear = date('Y');
     	$years = array(); 	
