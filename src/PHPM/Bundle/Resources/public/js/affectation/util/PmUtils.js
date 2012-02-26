@@ -110,6 +110,18 @@ PmUtils.prototype = {
 		pmUtils.setPourcentWidth('#sidebar_tache');
 	},
 	
+
+	/* ******************** */
+	/* ***** JOURNAL ****** */
+	/* ******************** */
+	/*
+	 * "Log" dans le journal une affectation
+	 * ou une désaffectation
+	 */
+	logAction: function(typeAction, idCreneau, idOrga) {
+		pmAffectation.journal.push({type: typeAction, idCreneau: idCreneau, idOrga: idOrga});
+	},
+	
 	
 	/* ******************** */
 	/* *** UTILITAIRES **** */

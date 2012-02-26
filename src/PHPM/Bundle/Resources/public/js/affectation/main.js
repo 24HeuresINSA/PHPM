@@ -26,6 +26,9 @@
 	pmAffectation.current.quart_heure = -1; // wildcart
 	pmAffectation.current.creneau = {};
 	
+	// log de toutes les affectations/désaffectations réalisées
+	pmAffectation.journal = [];
+	
 	// les MVC
 	pmAffectation.models = {};
 	pmAffectation.views = {};
