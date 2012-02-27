@@ -57,7 +57,7 @@ CalendarView.prototype = {
 	},
 	// fabrique un jour
 	makeADay: function(date, jourSemaine, nbJours) {
-		var _html = '<div class="jour" id="jour_'+date+'" jour="'+date+'" style="width: '+94/nbJours+'%;">'; // -1% because of borders, -5% pour les heures
+		var _html = '<div class="jour" id="jour_'+date+'" jour="'+date+'" style="width: '+94.4/nbJours+'%;">'; // -0.7% because of borders, -5% pour les heures
 		
 		for (var _i=0;_i<24;_i++) {
 			_html += '<div class="heure" id="heure_'+date+'-'+_i+'" heure="'+_i+'">';
