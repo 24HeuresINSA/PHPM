@@ -14,6 +14,17 @@
 @joursHeight: 24 * @heightHeure;
 
 /*
+ * Mixins
+ */
+// magie qui permet de changer le modèle de boîte standart
+// le padding et la border sont inclus DANS la boîte (width x height)
+.border-box {
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box; /* Opera/IE 8+ */
+}
+
+/*
  * Override
  */
 html {
@@ -22,11 +33,13 @@ html {
 body {
 	background: #fff;
 	height: 100%; // normalement déjà mis dans la feuille de style générale
+	overflow-x: hidden; // alors là, comme des bourrins
 }
 .content {
 	padding: 0;
 	width: 100%;
 	height: @contentHeight; // 100% de ce qui est disponible
+	font-size: 14px; // on la veut un peu plus grosse qu'ailleurs
 }
 .menu_action {
 	display: none;
@@ -46,7 +59,7 @@ body {
   padding: 0;
 }
 ::-webkit-scrollbar-track {
-  visibility: hidden; // présent mais invisible
+  display: none; // affiche pas, pas gênant
 }
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 8px;
@@ -54,7 +67,7 @@ body {
   background: rgba(100, 100, 100, 0.5); 
 }
 ::-webkit-scrollbar-thumb:window-inactive {
-  visibility: hidden; // présent mais invisible
+  display: none;
 }
 ::-webkit-scrollbar-button {
   display: none; // on ne peut pas de boutons d'ascenseur
@@ -113,59 +126,6 @@ body {
   border-bottom: 3px solid #333;
 }
 
-/*
- * Barre latérale gauche
- * Avec la liste des orgas
- */
-.sidebar_orga {
-	float: left;
-	width: 19.7%;
-  height: 100%;
-	border-right: 1px solid #003366;
-	margin-right: 0.3%;
-	
-	button {
-	  height: 30px;
-	  width: 30px;
-	}
-	.boutons_orga {
-	  width: 100%;
-	  text-align: center;
-	  margin: 10px 0;
-	  
-	  #bouton_refresh {
-	    margin-left: 35px;
-	  }
-	}
-	
-	.liste_orgas {
-	  width: 100%;
-	  height: 70%;
-	  overflow-x: hidden; // normalement il n'y en a pas
-	  overflow-y: scroll;
-    border-top: 1px solid #333;
-    border-bottom: 1px solid #333;
-	  
-	  .orga {
-	    border-top: 1px solid #888;
-	    border-bottom: 1px solid #888;
-	    width: 90%;
-	    padding: 5px 5%;
-	    cursor: pointer;
-	    
-     &.current {
-        background: #333;
-        color: #fff;
-      }
-	  }
-	}
-	
-	.filtre_orga {
-	  width: 100%;
-	  padding: 10px;
-	}
-}
-
 
 /*
  * Vue agenda
@@ -175,12 +135,16 @@ body {
   float: left;
   width: 60%;
   height: 100%;
+  .border-box();
 	
 	/* barre avec les dates */
 	.titres {
     height: 30px;
     line-height: 30px;
     width: 100%;
+    padding-left: 40px;
+    padding-right: 8px; // pour récupérer l'espace pour la scrollbar de jours
+    .border-box();
 	  
     .titre_date {
       float: left;
@@ -189,12 +153,12 @@ body {
       text-align: center;
       background: #BBB;
       overflow: hidden;
-    }
-    
-    &:first-of-type {
-      margin-left: 5%;
-      border-left: 1px solid #333;
-    }
+      .border-box();
+      
+      &:last-of-type {
+        border-right: none;
+      }
+    } 
 	}
   
   /* le bloc des jours, et aussi avec les heures */
@@ -203,40 +167,54 @@ body {
     width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
+    padding-left: 40px;
+    position: relative; // replace le référentiel
+    .border-box();
     
     /* barre des heures */
     .hours {
       float: left;
-      width: 5%;
-      max-width: 5%;
+      position: absolute;
+      left: 0;
+      width: 40px;
       overflow: hidden;
       height: @heightHeure * 24 + 1;
       border-right: 1px solid #333; // pour une raison X, pas possible de mettre la bordure sur le 1er jour
       margin-bottom: 1px;
+      .border-box();
       
       .hour {
         width: 100%;
         height: @heightHeure;
         line-height: @heightHeure;
         text-align: center;
-      }
-      .hour:nth-of-type(even) {
-        background: #BBB;
-      }
-      .hour:nth-of-type(odd) {
-        background: #DDD;
+        
+        &:nth-of-type(even) {
+          background: #BBB;
+        }
+        &:nth-of-type(odd) {
+          background: #DDD;
+        }
       }
     }
   
     /* chaque jour */
     .jour {
-      height: @joursHeight !important;
+      height: @joursHeight;
       // width setté dynamiquement
       float: left;
       border-right: 1px solid #333;
+      .border-box();
             
       /* heure */
-      .heure {    
+      .heure {
+        &:nth-of-type(odd) {
+          background: rgba(0, 0, 0, 0.12);
+        }
+        &:nth-of-type(even) {
+          background: rgba(0, 0, 0, 0.2);
+        }
+       
         /* quart d'heure */
         .quart_heure {
           width: 100%;
@@ -251,9 +229,21 @@ body {
             border-top: 1px solid red !important;
           }
           
+          // l'ordre des bordures comptes, la plus épaisse dessus
+          &:nth-of-type(2n+2) {
+            border-top: 1px dashed #AAA;
+          }
+          &:nth-of-type(2n+1) {
+            border-top: 1px solid #AAA;
+          }
+          &:first-of-type {
+            border-top: 1px solid #333;
+          }
+          
           // un creneau, bloc venant au-dessus
           .creneau {
             // le background est setté en fonction de l'id de la tache
+            font-weight: 600;
             opacity: 0.9;
             float: left;
             width: 100%;
@@ -261,24 +251,7 @@ body {
             text-indent: 5px; // on contourne le fait qu'on ne puisse pas mettre de padding
             overflow: hidden;
           }
-          
         }
-        // l'ordre des bordures comptes, la plus épaisse dessus
-        .quart_heure:nth-of-type(2n+2) {
-          border-top: 1px dashed #AAA;
-        }
-        .quart_heure:nth-of-type(2n+1) {
-          border-top: 1px solid #AAA;
-        }
-        .quart_heure:first-of-type {
-          border-top: 1px solid #333;
-        }
-      }
-      .heure:nth-of-type(odd) {
-        background: rgba(0, 0, 0, 0.12);
-      }
-      .heure:nth-of-type(even) {
-        background: rgba(0, 0, 0, 0.2);
       }
     }
   }
@@ -289,33 +262,33 @@ body {
 }
 
 /*
- * Barre latérale droite
- * Avec la liste des tâches
+ * Barres latérales
  */
-.sidebar_tache {
-	float: right;
-	position: absolute; // rajouter ces important pour bien se comporter lors du resize de la fenêtre
-	right: 0 !important;
-	left: auto !important;
-	width: 19.8%;
+.sidebar {
+  width: 20%;
   height: 100%;
-	border-left: 1px solid #003366;
-	overflow-y: scroll;
-	
-  .liste_taches {
+  .border-box();
+  
+  button {
+    height: 30px;
+    width: 30px;
+  }
+  
+  .liste {
     width: 100%;
     height: 70%;
     overflow-x: hidden; // normalement il n'y en a pas
-    overflow-y: scroll;
+    overflow-y: auto;
     border-top: 1px solid #333;
     border-bottom: 1px solid #333;
     
-    .tache {
+    .item {
       border-top: 1px solid #888;
       border-bottom: 1px solid #888;
-      width: 90%;
-      padding: 5px 5%;
+      width: 100%;
+      padding: 5px;
       cursor: pointer;
+      .border-box();
       
      &.current {
         background: #333;
@@ -324,8 +297,52 @@ body {
     }
   }
   
-  .filtre_tache {
+  .filtre {
     width: 100%;
     padding: 10px;
   }
+}
+
+/*
+ * Barre latérale gauche
+ * Avec la liste des orgas
+ */
+.sidebar_orga {
+  float: left;
+  border-right: 1px solid #003366;
+  
+  .boutons_orga {
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
+    
+    #bouton_refresh {
+      margin-left: 35px;
+    }
+  }
+  
+  .liste_orgas {
+    .orga {}
+  }
+  
+  .filtre_orga {}
+}
+
+/*
+ * Barre latérale droite
+ * Avec la liste des tâches
+ */
+.sidebar_tache {
+	float: right;
+	position: absolute; // rajouter, important pour bien se comporter lors du resize de la fenêtre
+	right: 0 !important;
+	border-left: 1px solid #003366;
+	overflow-y: scroll;
+	.border-box();
+	
+  .liste_taches {
+    .tache {}
+  }
+  
+  .filtre_tache {}
 }

@@ -3,7 +3,4 @@ $(window).load(function() {
 });
 
 $(function() {
-    
-	});
-    
 });
