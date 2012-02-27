@@ -4,16 +4,6 @@
 
 {% block javascript %}
 {{ parent() }}
-<script>
-
-$(function() {
-	$.datepicker.setDefaults($.datepicker.regional['fr']);
-    $( ".datep" ).datepicker({
-		changeMonth: true,
-		changeYear: true
-	});
-});
-</script>
 {% endblock %}
 
 {% block content %}
