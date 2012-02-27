@@ -117,8 +117,6 @@ PmUtils.prototype = {
 	setPopupClose: function() {
 		$(".ui-widget-overlay").click (function () {
 		    $('#popup').dialog('close');
-		    
-		    // le DOM sera enlevé alors
 		});
 	},
 	
