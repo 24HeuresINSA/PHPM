@@ -57,17 +57,17 @@
 			</div>
 			
 			<div class="filtre filtre_orga" id="filtre_orga">
-				<select name="confiance" id="filtre_orga_confiance">
+				<select name="orga_confiance" id="filtre_orga_confiance">
 					<option value="-1" selected>Tous les niveaux</option>
 					<!-- le reste sera mis en place dynamiquement -->
 				</select>
 
-				<select name="permis" id="filtre_orga_permis">
+				<select name="orga_permis" id="filtre_orga_permis">
 					<option value="-1" selected>Permis ou pas</option>
 					<!-- le reste sera mis en place dynamiquement -->
 				</select>
 				
-				<select name="age" id="filtre_orga_age">
+				<select name="orga_age" id="filtre_orga_age">
 					<option value="-1" selected>Tous</option>
 					<option value="18">au moins 18</option>
 					<option value="19">au moins 19</option>
@@ -95,6 +95,47 @@
 			
 			<div class="liste liste_taches" id="liste_taches">
 				<!-- liste des taches -->
+			</div>
+			
+			<div class="filtre filtre_tache" id="filtre_tache">
+				<select name="tache_confiance" id="filtre_tache_confiance">
+					<option value="-1" selected>Tous les niveaux</option>
+					<!-- le reste sera mis en place dynamiquement -->
+				</select>
+
+				<select name="tache_categorie" id="filtre_tache_categorie">
+					<option value="-1" selected>Toutes les catégories</option>
+					<!-- le reste sera mis en place dynamiquement -->
+				</select>
+				
+				<select name="tache_permis" id="filtre_tache_permis">
+					<option value="-1" selected>Permis ou pas</option>
+					<!-- le reste sera mis en place dynamiquement -->
+				</select>
+				
+				<select name="tache_age" id="filtre_tache_age">
+					<option value="-1" selected>Tous</option>
+					<option value="18">au moins 18</option>
+					<option value="19">au moins 19</option>
+					<option value="20">au moins 20</option>
+					<option value="21">au moins 21</option>
+					<option value="22">au moins 22</option>
+					<option value="23">au moins 23</option>
+					<option value="24">au moins 24</option>
+					<option value="25">25 et plus</option>
+				</select>
+				
+				<select name="tache_duree" id="filtre_tache_duree">
+					<option value="-1" selected>Toutes</option>
+					<option value="900">Max. 15 mn</option>
+					<option value="1800">30 mn</option>
+					<option value="2700">45 mn</option>
+					<option value="3600">1 heure</option>
+					<option value="5400">1 heure 30</option>
+					<option value="7200">2 heures</option>
+					<option value="14400">4 heures</option>
+				</select>
+				-->
 			</div>
 		</div>
 	</div>
