@@ -258,7 +258,14 @@ body {
       .border-box();
             
       /* heure */
-      .heure {    
+      .heure {
+        &:nth-of-type(odd) {
+          background: rgba(0, 0, 0, 0.12);
+        }
+        &:nth-of-type(even) {
+          background: rgba(0, 0, 0, 0.2);
+        }
+       
         /* quart d'heure */
         .quart_heure {
           width: 100%;
@@ -273,6 +280,17 @@ body {
             border-top: 1px solid red !important;
           }
           
+          // l'ordre des bordures comptes, la plus épaisse dessus
+          &:nth-of-type(2n+2) {
+            border-top: 1px dashed #AAA;
+          }
+          &:nth-of-type(2n+1) {
+            border-top: 1px solid #AAA;
+          }
+          &:first-of-type {
+            border-top: 1px solid #333;
+          }
+          
           // un creneau, bloc venant au-dessus
           .creneau {
             // le background est setté en fonction de l'id de la tache
@@ -283,24 +301,7 @@ body {
             text-indent: 5px; // on contourne le fait qu'on ne puisse pas mettre de padding
             overflow: hidden;
           }
-          
         }
-        // l'ordre des bordures comptes, la plus épaisse dessus
-        .quart_heure:nth-of-type(2n+2) {
-          border-top: 1px dashed #AAA;
-        }
-        .quart_heure:nth-of-type(2n+1) {
-          border-top: 1px solid #AAA;
-        }
-        .quart_heure:first-of-type {
-          border-top: 1px solid #333;
-        }
-      }
-      .heure:nth-of-type(odd) {
-        background: rgba(0, 0, 0, 0.12);
-      }
-      .heure:nth-of-type(even) {
-        background: rgba(0, 0, 0, 0.2);
       }
     }
   }
