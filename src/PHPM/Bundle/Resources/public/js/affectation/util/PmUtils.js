@@ -118,8 +118,7 @@ PmUtils.prototype = {
 		$(".ui-widget-overlay").click (function () {
 		    $('#popup').dialog('close');
 		    
-		    // et comme on est pas sale, on va le virer du DOM également
-		    $('#popup').remove();
+		    // le DOM sera enlevé alors
 		});
 	},
 	

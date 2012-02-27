@@ -187,6 +187,7 @@ CalendarView.prototype = {
 		// on l'ouvre
 		$('<div id="popup">'+_html+'</div>').dialog({
 			closeText: 'fermer',
+			close: function() {$('#popup').remove();}, // sur le close, on détruit le DOM, évite certains bugs
 			dialogClass: 'creneau_details popup',
 			draggable: false,
 			modal: true, // certes, mais on a un handler qui le ferme si on clique ailleurs
