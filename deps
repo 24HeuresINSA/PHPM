@@ -68,3 +68,8 @@
 [SonataIntlBundle]
     git=https://github.com/sonata-project/SonataIntlBundle
     target=/bundles/Sonata/IntlBundle
+    
+[DataTables]
+    git=https://github.com/DataTables/DataTables.git
+    version=RELEASE_1_9_0
+    
