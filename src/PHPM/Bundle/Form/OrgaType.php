@@ -33,7 +33,11 @@ class OrgaType extends AbstractType
             ->add('surnom',null,array('label'=>'Surnom'))
             ->add('telephone',null,array('label'=>'Téléphone portable'))
             ->add('email',null,array('label'=>'Adresse email'))
-            ->add('dateDeNaissance', 'birthday', array('label'=>'Date de naissance','years'=>$years))
+            ->add('dateDeNaissance', 'birthday', array(
+                    'label'=>'Date de naissance',
+                    'years'=>$years,
+                    'widget' => 'single_text',
+                    'attr'=>array('class'=>'datep')))
             ->add('departement','choice',array('label'=>'Département INSA', 'choices'=>array(
                     'PC'=>'PC','GMC'=>'GMC','GMD'=>'GMD', 'GMPP'=>'GMPP', 'IF'=>'IF', 'SGM'=>'SGM',
                     'GI'=>'GI', 'GE'=>'GE', 'TC'=>'TC', 'GCU'=>'GCU', 'BIM'=>'BIM', 'BIOCH'=>'BIOCH', 'GEN'=>'GEN', 'Autre'=>'Autre' 

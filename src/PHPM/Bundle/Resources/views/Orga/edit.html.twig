@@ -2,6 +2,19 @@
 {% set pageTitle = 'Edition d\'un Organisateur' %}
 {% use "PHPMBundle::edit.html.twig" %}
 
+{% block javascript %}
+{{ parent() }}
+<script>
+
+$(function() {
+	$.datepicker.setDefaults($.datepicker.regional['fr']);
+    $( ".datep" ).datepicker({
+		changeMonth: true,
+		changeYear: true
+	});
+});
+</script>
+{% endblock %}
 
 {% block content %}
 <form action="{{ path('orga_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
