@@ -36,6 +36,31 @@ body {
 }
 
 /*
+ * On customize un peu les scrollbars,
+ * qu'elles soient moins intrusives et surtout
+ * qu'elles soient les mêmes sous tous les navigateurs webkits
+ */
+::-webkit-scrollbar {
+  width: 8px;
+  margin: 0;
+  padding: 0;
+}
+::-webkit-scrollbar-track {
+  visibility: hidden; // présent mais invisible
+}
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  background: rgba(100, 100, 100, 0.5); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+  visibility: hidden; // présent mais invisible
+}
+::-webkit-scrollbar-button {
+  display: none; // on ne peut pas de boutons d'ascenseur
+}
+
+/*
  * Bloc collé en haut, 
  * recevant les messages à afficher
  */
@@ -177,6 +202,7 @@ body {
     height: @joursHeight; // sera redimensionné on-the-fly
     width: 100%;
     overflow-y: scroll;
+    overflow-x: hidden;
     
     /* barre des heures */
     .hours {
