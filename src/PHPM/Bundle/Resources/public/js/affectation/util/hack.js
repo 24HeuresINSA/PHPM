@@ -45,5 +45,5 @@ Date.prototype.getMyTime = function() {
  * Renvoie la date sous le format demandé
  */
 Date.prototype.getThisFormat = function(leFormat) {
-	return date(leFormat, mktime(this.getHours(), this.getMinutes(), this.getSeconds(), Number(this.getMonth()+1), this.getDate(), this.getUTCFullYear()));
+	return date(leFormat, mktime(this.getHours(), this.getMinutes(), this.getSeconds(), Number(this.getMonth()+1), this.getDate(), this.getFullYear()));
 }
