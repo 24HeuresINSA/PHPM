@@ -125,59 +125,6 @@ body {
   border-bottom: 3px solid #333;
 }
 
-/*
- * Barre latérale gauche
- * Avec la liste des orgas
- */
-.sidebar_orga {
-	float: left;
-	width: 19.7%;
-  height: 100%;
-	border-right: 1px solid #003366;
-	margin-right: 0.3%;
-	
-	button {
-	  height: 30px;
-	  width: 30px;
-	}
-	.boutons_orga {
-	  width: 100%;
-	  text-align: center;
-	  margin: 10px 0;
-	  
-	  #bouton_refresh {
-	    margin-left: 35px;
-	  }
-	}
-	
-	.liste_orgas {
-	  width: 100%;
-	  height: 70%;
-	  overflow-x: hidden; // normalement il n'y en a pas
-	  overflow-y: scroll;
-    border-top: 1px solid #333;
-    border-bottom: 1px solid #333;
-	  
-	  .orga {
-	    border-top: 1px solid #888;
-	    border-bottom: 1px solid #888;
-	    width: 90%;
-	    padding: 5px 5%;
-	    cursor: pointer;
-	    
-     &.current {
-        background: #333;
-        color: #fff;
-      }
-	  }
-	}
-	
-	.filtre_orga {
-	  width: 100%;
-	  padding: 10px;
-	}
-}
-
 
 /*
  * Vue agenda
@@ -295,6 +242,7 @@ body {
           // un creneau, bloc venant au-dessus
           .creneau {
             // le background est setté en fonction de l'id de la tache
+            font-weight: 600;
             opacity: 0.9;
             float: left;
             width: 100%;
@@ -313,20 +261,19 @@ body {
 }
 
 /*
- * Barre latérale droite
- * Avec la liste des tâches
+ * Barres latérales
  */
-.sidebar_tache {
-	float: right;
-	position: absolute; // rajouter ces important pour bien se comporter lors du resize de la fenêtre
-	right: 0 !important;
-	left: auto !important;
-	width: 19.8%;
+.sidebar {
+  width: 20%;
   height: 100%;
-	border-left: 1px solid #003366;
-	overflow-y: scroll;
-	
-  .liste_taches {
+  .border-box();
+  
+  button {
+    height: 30px;
+    width: 30px;
+  }
+  
+  .liste {
     width: 100%;
     height: 70%;
     overflow-x: hidden; // normalement il n'y en a pas
@@ -334,7 +281,7 @@ body {
     border-top: 1px solid #333;
     border-bottom: 1px solid #333;
     
-    .tache {
+    .item {
       border-top: 1px solid #888;
       border-bottom: 1px solid #888;
       width: 90%;
@@ -348,8 +295,53 @@ body {
     }
   }
   
-  .filtre_tache {
+  .filtre {
     width: 100%;
     padding: 10px;
   }
+}
+
+/*
+ * Barre latérale gauche
+ * Avec la liste des orgas
+ */
+.sidebar_orga {
+  float: left;
+  border-right: 1px solid #003366;
+  
+  .boutons_orga {
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
+    
+    #bouton_refresh {
+      margin-left: 35px;
+    }
+  }
+  
+  .liste_orgas {
+    .orga {}
+  }
+  
+  .filtre_orga {}
+}
+
+/*
+ * Barre latérale droite
+ * Avec la liste des tâches
+ */
+.sidebar_tache {
+	float: right;
+	position: absolute; // rajouter ces important pour bien se comporter lors du resize de la fenêtre
+	right: 0 !important;
+	left: auto !important;
+	border-left: 1px solid #003366;
+	overflow-y: scroll;
+	.border-box();
+	
+  .liste_taches {
+    .tache {}
+  }
+  
+  .filtre_tache {}
 }

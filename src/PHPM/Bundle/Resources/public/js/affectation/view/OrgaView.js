@@ -43,7 +43,7 @@ OrgaView.prototype = {
 		$('#liste_orgas').empty(); // au cas où
 		
 		for (var _iOrga in pmAffectation.data.orga) {
-			var _html = '<div class="orga" id="orga_'+_iOrga+'" idOrga="'+_iOrga+'">';
+			var _html = '<div class="item orga" id="orga_'+_iOrga+'" idOrga="'+_iOrga+'">';
 			_html += pmAffectation.data.orga[_iOrga]['prenom']+' '+pmAffectation.data.orga[_iOrga]['nom'];
 			(pmAffectation.data.orga[_iOrga]['surnom'] !== undefined) && (_html += ' ('+pmAffectation.data.orga[_iOrga]['surnom']+')')
 			_html += '</div>';
