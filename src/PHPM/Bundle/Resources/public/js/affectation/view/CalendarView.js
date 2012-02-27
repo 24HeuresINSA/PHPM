@@ -40,7 +40,7 @@ CalendarView.prototype = {
 			var _date = new Date(pmAffectation.data.calendar.plage[plage]['debut'].getTime()+_i*24*60*60*1000);
 
 			// on fait déjà la barre de titre
-			_htmlBarreDates += '<div class="titre_date" style="width: '+94/_nbJours+'%;">'+pmUtils.jours[_date.getDay()]+' '+_date.getThisFormat('d/m') +'</div>';
+			_htmlBarreDates += '<div class="titre_date" style="width: '+100/_nbJours+'%;">'+pmUtils.jours[_date.getDay()]+' '+_date.getThisFormat('d/m') +'</div>';
 		
 			var _dateComplete = _date.getThisFormat('Y-n-d');
 			_htmlJours += this.makeADay(_dateComplete, _date.getDay(), _nbJours);
@@ -57,7 +57,7 @@ CalendarView.prototype = {
 	},
 	// fabrique un jour
 	makeADay: function(date, jourSemaine, nbJours) {
-		var _html = '<div class="jour" id="jour_'+date+'" jour="'+date+'" style="width: '+94.4/nbJours+'%;">'; // -0.7% because of borders, -5% pour les heures
+		var _html = '<div class="jour" id="jour_'+date+'" jour="'+date+'" style="width: '+100/nbJours+'%;">';
 		
 		for (var _i=0;_i<24;_i++) {
 			_html += '<div class="heure" id="heure_'+date+'-'+_i+'" heure="'+_i+'">';

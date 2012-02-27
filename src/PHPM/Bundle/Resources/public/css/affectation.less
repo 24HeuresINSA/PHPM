@@ -14,6 +14,17 @@
 @joursHeight: 24 * @heightHeure;
 
 /*
+ * Mixins
+ */
+// magie qui permet de changer le modèle de boîte standart
+// le padding et la border sont inclus DANS la boîte (width x height)
+.border-box {
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box; /* Opera/IE 8+ */
+}
+
+/*
  * Override
  */
 html {
@@ -175,12 +186,16 @@ body {
   float: left;
   width: 60%;
   height: 100%;
+  .border-box();
 	
 	/* barre avec les dates */
 	.titres {
     height: 30px;
     line-height: 30px;
     width: 100%;
+    padding-left: 40px;
+    padding-right: 8px; // pour récupérer l'espace pour la scrollbar de jours
+    .border-box();
 	  
     .titre_date {
       float: left;
@@ -189,12 +204,12 @@ body {
       text-align: center;
       background: #BBB;
       overflow: hidden;
-    }
-    
-    &:first-of-type {
-      margin-left: 5%;
-      border-left: 1px solid #333;
-    }
+      .border-box();
+      
+      &:last-of-type {
+        border-right: none;
+      }
+    } 
 	}
   
   /* le bloc des jours, et aussi avec les heures */
@@ -203,37 +218,44 @@ body {
     width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
+    padding-left: 40px;
+    position: relative; // replace le référentiel
+    .border-box();
     
     /* barre des heures */
     .hours {
       float: left;
-      width: 5%;
-      max-width: 5%;
+      position: absolute;
+      left: 0;
+      width: 40px;
       overflow: hidden;
       height: @heightHeure * 24 + 1;
       border-right: 1px solid #333; // pour une raison X, pas possible de mettre la bordure sur le 1er jour
       margin-bottom: 1px;
+      .border-box();
       
       .hour {
         width: 100%;
         height: @heightHeure;
         line-height: @heightHeure;
         text-align: center;
-      }
-      .hour:nth-of-type(even) {
-        background: #BBB;
-      }
-      .hour:nth-of-type(odd) {
-        background: #DDD;
+        
+        &:nth-of-type(even) {
+          background: #BBB;
+        }
+        &:nth-of-type(odd) {
+          background: #DDD;
+        }
       }
     }
   
     /* chaque jour */
     .jour {
-      height: @joursHeight !important;
+      height: @joursHeight;
       // width setté dynamiquement
       float: left;
       border-right: 1px solid #333;
+      .border-box();
             
       /* heure */
       .heure {    
