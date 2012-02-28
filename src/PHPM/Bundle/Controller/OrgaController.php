@@ -755,10 +755,7 @@ public function validationAction()
 	public function charismeAction()
 	{
 	    
-	    if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-	        throw new AccessDeniedException();
-	    }
-	    
+
 	    $em = $this->getDoctrine()->getEntityManager();
 	
 	
