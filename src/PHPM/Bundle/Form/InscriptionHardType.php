@@ -24,7 +24,7 @@ class InscriptionHardType extends AbstractType
     
     public function buildForm(FormBuilder $builder, array $options)
     {
-       $entities = $this->em->getRepository('PHPMBundle:DisponibiliteInscription')->findAll();
+       $entities = $this->em->createQuery("SELECT d FROM PHPMBundle:DisponibiliteInscription d ORDER BY d.debut ")->getResult();
        $prevday= -1;
        $child = 0;
        foreach ($entities as $key =>$e)
