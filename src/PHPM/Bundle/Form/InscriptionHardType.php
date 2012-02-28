@@ -13,13 +13,13 @@ class InscriptionHardType extends AbstractType
     
     protected $admin;
     protected $em;
-    protected $user;
+    protected $orga;
 
-    function __construct($admin,$em,$user){
+    function __construct($admin,$em,$orga){
         
             $this->em = $em;
             $this->admin =$admin;
-            $this->user = $user;
+            $this->orga = $orga;
     }
     
     public function buildForm(FormBuilder $builder, array $options)
@@ -36,11 +36,12 @@ class InscriptionHardType extends AbstractType
                            }
             
             
-            $checked = $this->user->getDisponibilitesInscription()->contains($e);
+            $checked = $this->orga->getDisponibilitesInscription()->contains($e);
+            $read_only = $checked  && !$this->admin;
             $options = array(
                     'data'=>$checked,
                    
-                    'read_only'=>$checked,
+                    'read_only'=>$read_only,
                     'label'     => $e->__toString(),
                     'required'  => false,
                     'attr'=> array('class'=>'q')

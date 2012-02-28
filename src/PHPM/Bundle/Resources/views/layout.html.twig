@@ -64,7 +64,7 @@
         		<ul>
         		    {% if is_granted('ROLE_ADMIN') %}
         			<li><a href="{{ path('phpm__default_home') }}">Accueil</a></li>
-        			<li><a href="{{ path('orga_inscriptionhard')}}">Mes Disponibilités</a></li>
+        			<li><a href="{{ path('orga_inscriptionhard',{'id':app.user.id })}}">Mes Disponibilités</a></li>
         			<li><a href="{{ path('orga') }}">Orga</a></li>
         			<li><a href="{{ path('disponibiliteinscription') }}">Inscriptions</a></li>
         			<li><a href="{{ path('orga_affectation') }}">Affectation</a></li>
@@ -80,7 +80,7 @@
         			<li><a href="{{ path('logout') }}">Logout</a></li>
         			{% elseif is_granted('ROLE_USER') %}
         			<li><a href="{{ path('orga_show',{'id':app.user.id })}}">Mes Informations</a></li>
-        			<li><a href="{{ path('orga_inscriptionhard')}}">Mes Disponibilités</a></li>
+        			<li><a href="{{ path('orga_inscriptionhard',{'id':app.user.id })}}">Mes Disponibilités</a></li>
         			<li><a href="{{ path('orga_charisme')}}">Classement Charisme</a></li>
         			<li><a href="{{ path('logout') }}">Logout</a></li>
         		    {% else %}

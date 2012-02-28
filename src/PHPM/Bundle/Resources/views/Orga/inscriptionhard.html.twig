@@ -30,7 +30,7 @@
 
 
 {% block content %}
-<form action="{{ path('orga_inscriptionhard') }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('orga_inscriptionhard',{'id':orga.id }) }}" method="post" {{ form_enctype(form) }}>
 {{ form_widget(form) }}
     <p class="clear">
         <em>Attention : Une fois que vous avez validé vos disponibilités, il n'est plus possible 
