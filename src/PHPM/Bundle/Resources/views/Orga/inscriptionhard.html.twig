@@ -37,15 +37,23 @@
 
 <form action="{{ path('orga_inscriptionhard',{'id':orga.id }) }}" method="post" {{ form_enctype(form) }}>
 {{ form_widget(form) }}
+
+
+
     <p class="clear">
+    {% if not is_granted('ROLE_ADMIN') %}
         <em>Attention : Une fois que vous avez validé vos disponibilités, il n'est plus possible 
         de supprimer des créneaux. Il est néanmoins toujours possible d'en ajouter de nouveaux.<br/>
         Si vous avez fait une erreur, veuillez contacter par mail l'orga humain : 
         <a href="mailto:orga@24heures.org" >orga@24heures.org</a> </em><br/>
-        <button type="submit" id="submit_button" >Valider</button>
+    {% endif %}    
     </p>
-</form>
 
+
+<button type="submit" id="submit_button" >Valider</button>
+
+
+</form>
 
 
 
