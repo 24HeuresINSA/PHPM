@@ -488,7 +488,7 @@ public function validationAction()
 	    $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
 	    $user = $this->get('security.context')->getToken()->getUser();
 	    $em = $this->getDoctrine()->getEntityManager();
-	    $entities = $em->getRepository('PHPMBundle:DisponibiliteInscription')->findAll();
+	    $entities = $this->getDoctrine()->getEntityManager()->createQuery("SELECT d FROM PHPMBundle:DisponibiliteInscription d ORDER BY d.debut")->getResult();
 	    $form = $this->createForm(new InscriptionHardType($admin,$em,$user));
 	
 	    if ($request->getMethod() == 'POST') {
@@ -497,7 +497,7 @@ public function validationAction()
 
 	        
 	        if ($form->isValid()) {
-       
+               var_dump($data);
 	            $di = $user->getDisponibilitesInscription();
 	            foreach ($data as $group)
 	            foreach ($group as $key=>$value){
