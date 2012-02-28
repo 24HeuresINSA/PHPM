@@ -17,7 +17,7 @@ class DisponibiliteInscriptionRepository extends EntityRepository
     {
     
         $entities = $this->getEntityManager()
-        ->createQuery("SELECT d, o FROM PHPMBundle:DisponibiliteInscription d LEFT OUTER JOIN d.orgas o GROUP BY d.id, o.permis")
+        ->createQuery("SELECT d, o FROM PHPMBundle:DisponibiliteInscription d LEFT OUTER JOIN d.orgas o ")
         ->getResult();
 
 
