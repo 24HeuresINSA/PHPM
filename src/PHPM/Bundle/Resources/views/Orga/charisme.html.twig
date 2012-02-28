@@ -4,9 +4,10 @@
 
 {% block content %}
 
-<table >
+<table style="float:left; margin-right:2em;">
     <thead>
-        <tr>
+    <tr><th colspan="3"><h2>Orgas</h2></th></tr>
+        <tr> 
             <th>Charisme</th>
             <th>Orga</th>
             <th>Départ'</th>
@@ -18,7 +19,7 @@
     </thead>
     <tbody>
    
-        {%  for entity in entities %}
+        {%  for entity in orgas %}
         <tr 
         {% if app.security.getToken().getUser() == entity.0 %}
         style = "color:red;"
@@ -36,5 +37,29 @@
     </tbody>
 </table>
 
+<table >
+    <thead>
+    <tr><th colspan="2"><h2>Départs'</h2></th></tr>
+        <tr>
+            <th>Départ'</th>
+            <th>Charisme</th>            
+            
+                
+              
+        </tr>
+        
+
+    </thead>
+    <tbody>
+   
+        {%  for entity in departs %}<tr>
+        <td>{{ entity.departement }} </td> 
+        <td>{{ entity.nbc * 10 }}</td>
+            
+        </tr>
+        {%   endfor %}
+    
+    </tbody>
+</table>
 
 {% endblock %}

@@ -764,12 +764,17 @@ public function validationAction()
 	
 	    $data = $em->getRepository('PHPMBundle:Orga')->findAll();
 	
+	    $departs = $em
+	    ->createQuery("SELECT o.departement, count(d) as nbc FROM PHPMBundle:Orga o LEFT OUTER  JOIN o.disponibilitesInscription d GROUP BY o.departement ORDER BY nbc DESC  ")
+	    ->getResult();
+	    
 	
-	    $entities = $em
+	    $orgas = $em
 	    ->createQuery("SELECT o, count(d) as nbc FROM PHPMBundle:Orga o JOIN o.disponibilitesInscription d GROUP BY o.id ORDER BY nbc DESC")
 	    ->getResult();
 	
-	    return array('entities' => $entities);
+	    return array('orgas' => $orgas,
+	                 'departs'=>$departs);
 	}
 	
 	
