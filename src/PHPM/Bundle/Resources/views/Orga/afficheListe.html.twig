@@ -30,11 +30,7 @@
             <td>{{ entity.commentaire }}</td>
             <td>{{entity.permis|permis}}</td>
             <td>{{ entity.isAdmin }}</td>
-            <td>
-            <ul>
-            <li><a href="{{ path('orga_show', { 'id': entity.id }) }}">Détails</a></li>
-            <li><a href="{{ path('orga_edit', { 'id': entity.id }) }}">Éditer</a></li>
-            <li><a href="{{ path('orga_inscriptionhard', { 'id': entity.id }) }}">Dispos</a></li>
+            <td><span><a href="{{ path('orga_show', { 'id': entity.id }) }}">Détails</a> - <a href="{{ path('orga_edit', { 'id': entity.id }) }}">Éditer</a> - <a href="{{ path('orga_inscriptionhard', { 'id': entity.id }) }}">Dispos</a></span>
             </ul>
             
             </td>
