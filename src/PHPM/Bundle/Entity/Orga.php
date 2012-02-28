@@ -97,6 +97,15 @@ class Orga implements UserInterface
     protected $departement;
 
     /**
+     * @var string $equipe
+     *
+     * @ORM\Column(name="equipe", type="string", length=255, nullable=true)
+     */
+    protected $equipe;
+    
+    
+    
+    /**
      * @var text $commentaire
      *
      * @ORM\Column(name="commentaire", type="text", nullable=true)
@@ -616,4 +625,24 @@ class Orga implements UserInterface
 
     
     
+
+    /**
+     * Set equipe
+     *
+     * @param string $equipe
+     */
+    public function setEquipe($equipe)
+    {
+        $this->equipe = $equipe;
+    }
+
+    /**
+     * Get equipe
+     *
+     * @return string 
+     */
+    public function getEquipe()
+    {
+        return $this->equipe;
+    }
 }

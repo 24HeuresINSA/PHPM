@@ -772,9 +772,14 @@ public function validationAction()
 	    $orgas = $em
 	    ->createQuery("SELECT o, count(d) as nbc FROM PHPMBundle:Orga o JOIN o.disponibilitesInscription d GROUP BY o.id ORDER BY nbc DESC")
 	    ->getResult();
+	    
+	    $coms = $em
+	    ->createQuery("SELECT o.equipe, count(d) as nbc FROM PHPMBundle:Orga o LEFT OUTER  JOIN o.disponibilitesInscription d GROUP BY o.equipe ORDER BY nbc DESC  ")
+	    ->getResult();
 	
 	    return array('orgas' => $orgas,
-	                 'departs'=>$departs);
+	                 'departs'=>$departs,
+	                 'coms'=>$coms);
 	}
 	
 	

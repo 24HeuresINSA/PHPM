@@ -9,6 +9,7 @@
             <th>Telephone</th>
             <th>Email</th>
             <th>Datedenaissance</th>
+            <th>Com'</th>
             <th>Departement</th>
             <th>Commentaire</th>
             <th>Permis</th>
@@ -26,6 +27,7 @@
             <td>{{ entity.telephone }}</td>
             <td>{{ entity.email }}</td>
             <td>{% if entity.dateDeNaissance %}{{ entity.dateDeNaissance|format_date('dd MMM Y') }}{% endif%}</td>
+            <td>{{ entity.equipe }}</td>
             <td>{{ entity.departement }}</td>
             <td>{{ entity.commentaire }}</td>
             <td>{{entity.permis|permis}}</td>

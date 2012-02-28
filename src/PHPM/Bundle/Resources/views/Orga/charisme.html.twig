@@ -37,7 +37,7 @@
     </tbody>
 </table>
 
-<table >
+<table style="float:left; margin-right:2em;" >
     <thead>
     <tr><th colspan="2"><h2>Départs'</h2></th></tr>
         <tr>
@@ -54,6 +54,31 @@
    
         {%  for entity in departs %}<tr>
         <td>{{ entity.departement }} </td> 
+        <td>{{ entity.nbc * 10 }}</td>
+            
+        </tr>
+        {%   endfor %}
+    
+    </tbody>
+</table>
+
+<table >
+    <thead>
+    <tr><th colspan="2"><h2>Coms'</h2></th></tr>
+        <tr>
+            <th>Com'</th>
+            <th>Charisme</th>            
+            
+                
+              
+        </tr>
+        
+
+    </thead>
+    <tbody>
+   
+        {%  for entity in coms %}<tr>
+        <td>{{ entity.equipe }} </td> 
         <td>{{ entity.nbc * 10 }}</td>
             
         </tr>
