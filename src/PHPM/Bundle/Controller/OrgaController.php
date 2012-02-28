@@ -707,6 +707,10 @@ public function validationAction()
 	 */
 	public function plannings_impressionAction()
 	{
+	    if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+	        throw new AccessDeniedException();
+	    }
+	    
 	    $em = $this->getDoctrine()->getEntityManager();
 	
 	    
@@ -714,5 +718,34 @@ public function validationAction()
 	    
 	    return array('entities' => $entities);
 	}
+	
+	
+	/**
+	 * Charisme .
+	 *
+	 * @Route("/charisme", name="orga_charisme")
+	 * @Template()
+	 */
+	public function charismeAction()
+	{
+	    
+	    if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+	        throw new AccessDeniedException();
+	    }
+	    
+	    $em = $this->getDoctrine()->getEntityManager();
+	
+	
+	    $data = $em->getRepository('PHPMBundle:Orga')->findAll();
+	
+	
+	    $entities = $em
+	    ->createQuery("SELECT o, count(d) as nbc FROM PHPMBundle:Orga o JOIN o.disponibilitesInscription d GROUP BY o.id ORDER BY nbc DESC")
+	    ->getResult();
+	
+	    return array('entities' => $entities);
+	}
+	
+	
 		
 }

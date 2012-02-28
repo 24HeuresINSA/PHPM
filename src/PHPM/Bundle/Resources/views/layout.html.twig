@@ -81,6 +81,7 @@
         			{% elseif is_granted('ROLE_USER') %}
         			<li><a href="{{ path('orga_show',{'id':app.user.id })}}">Mes Informations</a></li>
         			<li><a href="{{ path('orga_inscriptionhard')}}">Mes Disponibilités</a></li>
+        			<li><a href="{{ path('orga_charisme')}}">Classement Charisme</a></li>
         			<li><a href="{{ path('logout') }}">Logout</a></li>
         		    {% else %}
         		    <li><a href="{{ path('login') }}">Login</a></li>

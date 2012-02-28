@@ -1,0 +1,39 @@
+{% extends "PHPMBundle:DisponibiliteInscription:layout.html.twig"  %}
+{% set pageTitle = 'Classement Charisme' %}
+
+
+{% block content %}
+
+<table >
+    <thead>
+        <tr>
+            <th>Charisme</th>
+            <th>Orga</th>
+                
+              
+        </tr>
+        
+
+    </thead>
+    <tbody>
+   
+        {%  for entity in entities %}
+        <tr 
+        {% if app.security.getToken().getUser() == entity.0 %}
+        style = "color:red;"
+        {% endif %}
+        
+        
+         >
+        <td>{{ entity.nbc * 10 }}</td>
+        <td>{{ entity.0.prenom }}{% if entity.0.surnom  %} ({{ entity.0.surnom }}) {% endif %} </td>
+            
+            
+        </tr>
+        {%   endfor %}
+    
+    </tbody>
+</table>
+
+
+{% endblock %}
