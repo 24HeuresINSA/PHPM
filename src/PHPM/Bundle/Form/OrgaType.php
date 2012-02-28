@@ -37,7 +37,8 @@ class OrgaType extends AbstractType
                     'label'=>'Date de naissance',
                     'years'=>$years,
                     'widget' => 'single_text',
-                    'attr'=>array('class'=>'datep')))
+                    'attr'=>array('class'=>'birthdaydp'),
+                    'format' => 'yyyy-MM-dd'))
             ->add('departement','choice',array('label'=>'Département INSA', 'choices'=>array(
                     'PC'=>'PC','GMC'=>'GMC','GMD'=>'GMD', 'GMPP'=>'GMPP', 'IF'=>'IF', 'SGM'=>'SGM',
                     'GI'=>'GI', 'GE'=>'GE', 'TC'=>'TC', 'GCU'=>'GCU', 'BIM'=>'BIM', 'BIOCH'=>'BIOCH', 'GEN'=>'GEN', 'Autre'=>'Autre' 
