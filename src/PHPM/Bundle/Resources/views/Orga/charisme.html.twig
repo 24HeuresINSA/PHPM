@@ -9,6 +9,7 @@
         <tr>
             <th>Charisme</th>
             <th>Orga</th>
+            <th>Départ'</th>
                 
               
         </tr>
@@ -26,8 +27,8 @@
         
          >
         <td>{{ entity.nbc * 10 }}</td>
-        <td>{{ entity.0.prenom }}{% if entity.0.surnom  %} ({{ entity.0.surnom }}) {% endif %} </td>
-            
+        <td>{{ entity.0.prenom }}{% if entity.0.surnom  %} ({{ entity.0.surnom }}){% endif %}  </td>
+        <td>{{ entity.0.departement }} </td>    
             
         </tr>
         {%   endfor %}
