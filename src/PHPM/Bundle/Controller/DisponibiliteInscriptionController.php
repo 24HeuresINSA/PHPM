@@ -26,8 +26,8 @@ class DisponibiliteInscriptionController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('PHPMBundle:DisponibiliteInscription')->findAllWithOrgacount();
-//         $entities = $em->getRepository('PHPMBundle:DisponibiliteInscription')->findAll();
+//         $entities = $em->getRepository('PHPMBundle:DisponibiliteInscription')->findAllWithOrgacount();
+        $entities = $em->getRepository('PHPMBundle:DisponibiliteInscription')->findAll();
 
         
         return array('entities' => $entities);
