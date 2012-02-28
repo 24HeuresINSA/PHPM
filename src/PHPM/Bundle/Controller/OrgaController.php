@@ -497,7 +497,7 @@ public function validationAction()
 
 	        
 	        if ($form->isValid()) {
-               var_dump($data);
+
 	            $di = $user->getDisponibilitesInscription();
 	            foreach ($data as $group)
 	            foreach ($group as $key=>$value){
