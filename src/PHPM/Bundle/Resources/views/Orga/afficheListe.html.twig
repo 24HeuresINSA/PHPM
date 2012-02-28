@@ -13,12 +13,13 @@
             <th>Commentaire</th>
             <th>Permis</th>
             <th>Admin</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         {%  for entity in entities %}
         <tr>
-            <td><a href="{{ path('orga_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.id }}</td>
             <td>{{ entity.nom }}</td>
             <td>{{ entity.prenom }}</td>
             <td>{{ entity.surnom }}</td>
@@ -29,6 +30,14 @@
             <td>{{ entity.commentaire }}</td>
             <td>{{entity.permis|permis}}</td>
             <td>{{ entity.isAdmin }}</td>
+            <td>
+            <ul>
+            <li><a href="{{ path('orga_show', { 'id': entity.id }) }}">Détails</a></li>
+            <li><a href="{{ path('orga_edit', { 'id': entity.id }) }}">Éditer</a></li>
+            <li><a href="{{ path('orga_inscriptionhard', { 'id': entity.id }) }}">Dispos</a></li>
+            </ul>
+            
+            </td>
         </tr>
         {%   endfor %}
     </tbody>

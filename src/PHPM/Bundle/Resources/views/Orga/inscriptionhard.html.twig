@@ -1,5 +1,5 @@
 {% extends "PHPMBundle:Orga:layout.html.twig"  %}
-{% set pageTitle = 'Mes Disponibilités' %}
+{% set pageTitle = 'Disponibilités' %}
 
 {% form_theme form _self %}
 
@@ -30,6 +30,11 @@
 
 
 {% block content %}
+
+{% if is_granted('ROLE_ADMIN') %}
+<h3>Disponibilités de {{ orga.prenom }} {{ orga.nom }}</h3>
+{% endif %}
+
 <form action="{{ path('orga_inscriptionhard',{'id':orga.id }) }}" method="post" {{ form_enctype(form) }}>
 {{ form_widget(form) }}
     <p class="clear">

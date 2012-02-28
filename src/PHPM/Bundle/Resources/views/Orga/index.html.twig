@@ -9,11 +9,13 @@
 
 {% block actions %}
 {{ parent() }}
+{% if is_granted('ROLE_ADMIN') %}
 <li>
-    <a href="{{ path('orga_import') }}">
-    Importation
+    <a href="{{ path('orga_charisme') }}">
+    Classement Charisme
     </a>
 </li>
+{% endif %}
 <li>
     <a href="{{ path('orga_validation') }}">
     Validation
