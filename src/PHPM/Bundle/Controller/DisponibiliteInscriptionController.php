@@ -25,11 +25,10 @@ class DisponibiliteInscriptionController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
+        $config=$this->get('config.extension');
+        $entities = $em->getRepository('PHPMBundle:DisponibiliteInscription')->findAllWithOrgacount($config);
 
-//         $entities = $em->getRepository('PHPMBundle:DisponibiliteInscription')->findAllWithOrgacount();
-        $entities = $em->getRepository('PHPMBundle:DisponibiliteInscription')->findAll();
 
-        
         return array('entities' => $entities);
     }
 
@@ -201,4 +200,24 @@ class DisponibiliteInscriptionController extends Controller
             ->getForm()
         ;
     }
+    
+    
+    /**
+     * Stat DisponibiliteInscription entities.
+     *
+     * @Route("/stats/{permis}", name="disponibiliteinscription_stats")
+     * @Template()
+     */
+    public function statsAction($permis)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+    
+        //         $entities = $em->getRepository('PHPMBundle:DisponibiliteInscription')->findAllWithOrgacount();
+        $data = $em->getRepository('PHPMBundle:DisponibiliteInscription')->getStats($permis);
+    
+    
+        return array('data' => $data);
+    }
+    
+    
 }

@@ -4,10 +4,18 @@ $(window).load(function() {
 
 $(function() {
 	 $('.records_list').dataTable( {
-		 	"bInfo": false,
-		    "bPaginate": false,
-	        "bJQueryUI": true,
-	        "bLengthChange": false
-	    } );
+		"bInfo": false,
+		"bPaginate": false,
+		"bJQueryUI": true
+	    
+	} );
+	 
+
+	$( ".datep" ).datepicker({
+		changeMonth: true,
+		changeYear: true
+	});
+
+	   
 	   
 });

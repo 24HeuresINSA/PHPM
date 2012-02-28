@@ -13,13 +13,77 @@ use Doctrine\ORM\EntityRepository;
 class DisponibiliteInscriptionRepository extends EntityRepository
 {
     
-    public function findAllWithOrgacount()
+    public function findAllWithOrgacount($config)
     {
     
-        return $this->getEntityManager()
-        ->createQuery("SELECT d, count(o) as nborga, o.permis FROM PHPMBundle:DisponibiliteInscription d LEFT OUTER JOIN d.orgas o GROUP BY d.id, o.permis")
-        ->getArrayResult();
+        $entities = $this->getEntityManager()
+        ->createQuery("SELECT d, o FROM PHPMBundle:DisponibiliteInscription d LEFT OUTER JOIN d.orgas o GROUP BY d.id, o.permis")
+        ->getResult();
+
+
+        $permis=json_decode($config->getValue('manifestation_permis_libelles'),true);
+
+        
+        $a = array();
+        foreach ($entities as $dispo)
+        {
+            $a[$dispo->getId()]['id']= $dispo->getId();
+            $a[$dispo->getId()]['debut']= $dispo->getDebut();
+            $a[$dispo->getId()]['fin']= $dispo->getFin();
+            $a[$dispo->getId()]['permis']= array_fill(0,count($permis) , 0);
+            $a[$dispo->getId()]['totalPermis']=0;
+            foreach ($dispo->getOrgas() as $orga){
+                $a[$dispo->getId()]['permis'][$orga->getPermis()]++;
+                $a[$dispo->getId()]['totalPermis']++;
+            }
+            
+            
+        }
+        return $a;
     
+    }
+    
+    public function getStats($permis)
+    {
+    
+        $em = $this->getEntityManager();
+        $entities = $em->getRepository('PHPMBundle:DisponibiliteInscription')->findAll();
+        
+        $rowlabels = array();
+        $columnlabels = array();
+        foreach($entities as $dispo)
+        {
+            $debut = $dispo->getDebut();
+            $fin = $dispo->getFin();
+            $columnlabels[]=$debut->format('l');
+            $rowlabels[]=$debut->format('H:i').' - '.$fin->format('H:i');
+        }
+        $columnlabels=array_unique($columnlabels);
+        $rowlabels=array_unique($rowlabels);
+        
+        foreach ($rowlabels as $rl)
+            foreach ($columnlabels as $cl)
+            {
+                $a[$rl][$cl]=0;
+        
+            }
+        
+            $entities = $this->getEntityManager()
+        ->createQuery("SELECT d, o FROM PHPMBundle:DisponibiliteInscription d LEFT OUTER JOIN d.orgas o")
+        ->getArrayResult();
+            
+            
+            foreach($entities as $dispo)
+            {
+        
+                $debut = $dispo['debut'];
+                $fin= $dispo['fin'];
+        
+                $a[$debut->format('H:i').' - '.$fin->format('H:i')][$debut->format('l')]= count($dispo['orgas']);
+            }
+            
+            var_dump($a);
+            return $a;
     
     }
     

@@ -7,21 +7,29 @@
 <table class="records_list">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Debut</th>
-            <th>Fin</th>
-{#             <th>Orgas Inscrits</th>#}
-            
-
-
+            <th>Debut</th><th>Fin</th>
+                
+                {% for p in entities.1.permis %}
+                <th>{{ p|permis }}</th>
+                {% endfor %}
+                <th>Total</th>
         </tr>
+        
+
     </thead>
     <tbody>
     {% for entity in entities %}
-    <tr style="cursor:pointer" onclick="window.location='{{ path('disponibiliteinscription_show', { 'id': entity.id }) }}'">
-            <td><a href="{{ path('disponibiliteinscription_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.debut|date('Y-m-d H:i:s') }}</td>
-            <td>{{ entity.fin|date('Y-m-d H:i:s') }}</td>
+           <tr>
+           
+                <td> <a href="{{ path('disponibiliteinscription_edit', { 'id': entity.id }) }}">
+                
+    {{ entity.debut |format_datetime('dd MMM Y HH:mm')}}</a></td>
+                <td> {{ entity.fin |format_datetime('HH:mm')}}</td>
+                
+                {% for permis in entity.permis %}
+                <td> {{ permis }}</td>
+                {% endfor %}
+               <td> {{ entity.totalPermis }}</td>
         </tr>
         {% endfor %}
     
