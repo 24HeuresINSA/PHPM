@@ -47,3 +47,25 @@ Date.prototype.getMyTime = function() {
 Date.prototype.getThisFormat = function(leFormat) {
 	return date(leFormat, mktime(this.getHours(), this.getMinutes(), this.getSeconds(), Number(this.getMonth()+1), this.getDate(), this.getFullYear()));
 }
+
+/*
+ * Fonctions renvoyant la même chose que la date Javascript
+ * mais bien sur 2 caratères (01 pour Janvier au lieu de 1 par ex.)
+ * On n'utilise pas pmUtils.pad2, peut-être spécifique à PHPM
+ */
+Date.prototype.getPMonth = function() {
+	var _mois = this.getMonth()+1; // on rajoute 1 pour coller à ce que fait PHP
+	return (_mois < 10 ? '0' : '') + _mois;
+}
+Date.prototype.getPDate = function() {
+	var _jour = this.getDate();
+	return (_jour < 10 ? '0' : '') + _jour;
+}
+Date.prototype.getPHours = function() {
+	var _heure = this.getHours();
+	return (_heure < 10 ? '0' : '') + _heure;
+}
+Date.prototype.getPMinutes = function() {
+	var _minute = this.getMinutes();
+	return (_minute < 10 ? '0' : '') + _minute;
+}
