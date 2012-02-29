@@ -139,11 +139,11 @@ CalendarView.prototype = {
 		}
 	},
 	// place une disponibilite
-	placeDisponibilites: function(dateDebut, dateFin) {		
+	placeDisponibilites: function(dateDebut, dateFin) {
 		// on place les dispos, avec la classe et le click
-		for (var _iDts = dateDebut; _iDts.getTime() < dateFin.getTime(); _iDts.setTime(_iDts.getTime()+15*60*1000)) {
+		for (var _iDts = dateDebut; _iDts.getTime() < dateFin.getTime(); _iDts.setTime(_iDts.getTime()+15*60*1000)) {		
 			// sélection des quarts d'heure suivant les attributs de temps de plus en plus précis
-			$('.jour[jour="'+_iDts.getFullYear()+'-'+Number(_iDts.getMonth()+1)+'-'+_iDts.getDate()+'"] > .heure[heure="'+
+			$('.jour[jour="'+_iDts.getFullYear()+'-'+_iDts.getPMonth()+'-'+_iDts.getPDate()+'"] > .heure[heure="'+
 			_iDts.getHours()+'"] > .quart_heure[minute="'+_iDts.getMinutes()+'"]').addClass('free')
 			.bind('click', {}, pmAffectation.controllers.calendar.clickQuartHeure);
 		}
@@ -157,7 +157,7 @@ CalendarView.prototype = {
 				pmAffectation.data.orga[idOrga]['disponibilites'][idDispo]['creneaux'][idCreneau]['tache']['nom']+'</div>';
 		
 		// on le rajoute, supprime le handler précédent et en rajoute un
-		$('.jour[jour="'+dateDebut.getFullYear()+'-'+Number(dateDebut.getMonth()+1)+'-'+dateDebut.getDate()+'"] > .heure[heure="'+
+		$('.jour[jour="'+dateDebut.getFullYear()+'-'+dateDebut.getPMonth()+'-'+dateDebut.getPDate()+'"] > .heure[heure="'+
 		dateDebut.getHours()+'"] > .quart_heure[minute="'+dateDebut.getMinutes()+'"]').append(_html).off('click')
 		.bind('click', {idOrga: idOrga, idDispo: idDispo, idCreneau: idCreneau}, pmAffectation.controllers.calendar.clickCreneau);
 		

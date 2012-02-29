@@ -76,3 +76,13 @@
     </tbody>
 </table>
 {% endblock %}
+{% block actions %}
+{{ parent() }}
+<li>
+    <a href="{{ path('disponibiliteinscription_array') }}" target="_blank">
+    Export en tableau
+    </a>
+</li>
+{% endblock %}
+
+

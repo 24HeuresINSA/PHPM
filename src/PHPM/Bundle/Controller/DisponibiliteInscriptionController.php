@@ -220,6 +220,43 @@ class DisponibiliteInscriptionController extends Controller
     }
     
 
+    /**
+     * Export as array
+     *
+     * @Route("/array", name="disponibiliteinscription_array")
+     * @Template()
+     */
+    public function arrayAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        
+        $a = array();
+        $dispos = $em
+        ->createQuery("SELECT d FROM PHPMBundle:DisponibiliteInscription d")
+        ->getResult();
+        
+        $orgas = $em
+        ->createQuery("SELECT o FROM PHPMBundle:Orga o ORDER BY o.nom")
+        ->getResult();
+        
+        foreach ($orgas as $orga){
+            $a[$orga->getPrenom().' '.$orga->getNom()]=array();
+            foreach ($dispos as $dispo)
+            {
+                $value = 'x';
+                if($orga->getDisponibilitesInscription()->contains($dispo))
+                    $value = $orga->getPermis();
+                    
+                
+                $a[$orga->getPrenom().' '.$orga->getNom()][$dispo->getDebut()->format('l H:i')] = $value;
+        
+            }
+        }
+        
+
+        return array('data' => $a, 'dispos'=>$dispos);
+    }
     
     
   

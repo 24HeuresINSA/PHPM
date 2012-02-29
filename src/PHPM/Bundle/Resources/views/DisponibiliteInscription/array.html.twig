@@ -1,0 +1,21 @@
+{% block content %}
+<table>
+<thead>
+<td></td>
+{% for dispo in dispos %}
+<td>{{ dispo.debut |format_datetime('EEEE dd HH:mm')  }} - {{ dispo.fin |format_datetime('HH:mm')  }}</td>
+{% endfor %}
+</thead>
+ <tbody>
+
+   {% for o,orga in data %}
+   <tr>
+       <td>{{ o }}</td>
+   {% for d, dispo in orga %}
+       <td> {{ dispo  }}</td>
+       {% endfor %}
+   </tr>
+   {% endfor %}
+     </tbody>
+</table>
+{% endblock %}
