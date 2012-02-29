@@ -16,8 +16,8 @@ class OrgaRepository extends EntityRepository
 {
 	public function getOrgasWithCriteria($permis, $maxDateNaissance, $plage_id, $niveau_confiance,$creneau)
 	{
-		$dql = "Select o From PHPMBundle:Orga as o JOIN o.disponibilites d Where o.statut=1 AND d.orga != 0";
-		
+		$dql = "Select Distinct o From PHPMBundle:Orga as o JOIN o.disponibilites d JOIN d.creneaux c Where o.statut=1";
+		//le distinct est là à cause du creneau_id, en attendant qu'il soit mieux codé ^ ^
 		if($permis!='')
 		{
 			$dql.=" AND o.permis >= '$permis'";
@@ -40,43 +40,22 @@ class OrgaRepository extends EntityRepository
 		}
 		if($creneau !='')
 		{
-			
-			
-			
-			
+			//test sur l'overlap des créneaux
+			$dql.=" AND (o.id NOT IN (SELECT oi.id FROM PHPMBundle:Orga as oi JOIN oi.disponibilites di JOIN di.creneaux ci, PHPMBundle:Creneau cref where cref.id = '$creneau' AND (ci.debut < cref.fin) AND (ci.fin > cref.debut ) ))";
+			//test sur la dispo qui est pas nul
+			$dql.=" AND (c.disponibilite IS NULL)";
 		}
 		
+		
+// 		printf($dql);
+// 		printf("                                                          ");
+		
+// 		$q = $this->getEntityManager()->createQuery($dql);
+//  		var_dump($q->getArrayResult());
+//  		exit();
 		
 		$q = $this->getEntityManager()->createQuery($dql);
 		return $q->execute();
-		
-		
-		if($creneau !='')
-		{
-			/*
-			 * 
-			//TODO
-			//id_creneau : cet orga doit pouvoir etre affecté a ce créneau (dans les disponibilités et pas de créneau déja affecté)
-			
-			//créneau est disponible
-			$entity = $em->getRepository('PHPMBundle:Creneau')->find($creneau);
-			$andx->add($expr->eq($creneau->getDisponibilite(), 0));
-			
-			//on cherche les dispo de l'orga
-			$dispo = $em->getRepository('PHPMBundle:Disponibilité')->find('*')->where('orga_id = o');
-			//on vérifie que le créneau rentre dans les dispo et n'intérfère pas avec les autres créneaux. 
-			
-			$creanau not in (select creneau.id where creneau dans les dispo)
-		
-		
-			$entity->getDebut() > $dispo->getDebut()
-			$entity->getFin() < $dispo->getFin()
-					->where('c.id = \''.$creneau.'\' AND d.orga = o AND d.debut < c.debut AND d.fin > c.fin')		
-					
-			
-			*/		
-		}
-	
 	}
 	
 	public function getOrgasToValidate()
