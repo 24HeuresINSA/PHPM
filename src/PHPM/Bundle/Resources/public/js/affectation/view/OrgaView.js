@@ -30,9 +30,9 @@ OrgaView.prototype = {
 		this.setFilters(); // met les bonnes valeurs dans les filtres
 		
 		// filtres : bind les events
-		$('#filtre_orga_confiance').change(function() {pmAffectation.controllers.orga.clickFilterConfiance($('#filtre_orga_confiance').val());});
-		$('#filtre_orga_permis').change(function() {pmAffectation.controllers.orga.clickFilterPermis($('#filtre_orga_permis').val());});
-		$('#filtre_orga_age').change(function() {pmAffectation.controllers.orga.clickFilterAge($('#filtre_orga_age').val());});
+		$('#filtre_orga_confiance').change(function() {pmAffectation.controllers.orga.clickFilter('confiance', $('#filtre_orga_confiance').val());});
+		$('#filtre_orga_permis').change(function() {pmAffectation.controllers.orga.clickFilter('permis', $('#filtre_orga_permis').val());});
+		$('#filtre_orga_age').change(function() {pmAffectation.controllers.orga.clickFilter('age', $('#filtre_orga_age').val());});
 	},
 	
 	/*

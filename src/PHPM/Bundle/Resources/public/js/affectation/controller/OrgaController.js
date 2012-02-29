@@ -66,29 +66,13 @@ OrgaController.prototype = {
 		
 		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga.id});
 	},
-	// clic sur le filtre niveau de confiance
-	clickFilterConfiance: function(idNiveau) {
-		pmAffectation.current.orga.confiance = idNiveau;
+	// changement de la valeur d'un filtre
+	clickFilter: function(nomFiltre, valeurFiltre) {
+		pmAffectation.current.orga[nomFiltre] = valeurFiltre;
 		
 		pmHistory.setUrlParam(); // maj de l'url
 		
 		pmAffectation.controllers.orga.getData();
 	},
-	// click sur le filtre permis
-	clickFilterPermis: function(idPermis) {
-		pmAffectation.current.orga.permis = idPermis;
-		
-		pmHistory.setUrlParam(); // maj de l'url
-		
-		pmAffectation.controllers.orga.getData();
-	},
-	// click sur le filtre age
-	clickFilterAge: function(idAge) {
-		pmAffectation.current.orga.age = idAge;
-		
-		pmHistory.setUrlParam(); // maj de l'url
-		
-		pmAffectation.controllers.orga.getData();
-	},	
 
 }
