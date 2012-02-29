@@ -42,7 +42,7 @@ CalendarView.prototype = {
 			// on fait déjà la barre de titre
 			_htmlBarreDates += '<div class="titre_date" style="width: '+100/_nbJours+'%;">'+pmUtils.jours[_date.getDay()]+' '+_date.getThisFormat('d/m') +'</div>';
 		
-			var _dateComplete = _date.getThisFormat('Y-m-d');
+			var _dateComplete = _date.getThisFormat('Y-n-d');
 			_htmlJours += this.makeADay(_dateComplete, _date.getDay(), _nbJours);
 		}
 		
