@@ -233,7 +233,7 @@ class DisponibiliteInscriptionController extends Controller
         
         $a = array();
         $dispos = $em
-        ->createQuery("SELECT d FROM PHPMBundle:DisponibiliteInscription d")
+        ->createQuery("SELECT d FROM PHPMBundle:DisponibiliteInscription d ORDER BY d.debut")
         ->getResult();
         
         $orgas = $em
