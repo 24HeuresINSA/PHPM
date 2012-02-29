@@ -4,8 +4,7 @@
         <tr>
             <th>Id</th>
             <th>Nom</th>
-            <th>Prenom</th>
-            <th>Surnom</th>
+            
             <th>Telephone</th>
             <th>Email</th>
             <th>Datedenaissance</th>
@@ -21,9 +20,7 @@
         {%  for entity in entities %}
         <tr>
             <td>{{ entity.id }}</td>
-            <td>{{ entity.nom }}</td>
-            <td>{{ entity.prenom }}</td>
-            <td>{{ entity.surnom }}</td>
+            <td>{{ entity.prenom }} {{ entity.nom }}{% if entity.surnom  %} ({{ entity.surnom }}){% endif %}</td>
             <td>{{ entity.telephone }}</td>
             <td>{{ entity.email }}</td>
             <td>{% if entity.dateDeNaissance %}{{ entity.dateDeNaissance|format_date('dd MMM Y') }}{% endif%}</td>

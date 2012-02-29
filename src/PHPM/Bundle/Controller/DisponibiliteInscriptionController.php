@@ -244,7 +244,12 @@ class DisponibiliteInscriptionController extends Controller
             $a[$orga->getPrenom().' '.$orga->getNom()]=array();
             foreach ($dispos as $dispo)
             {
-                $a[$orga->getPrenom().' '.$orga->getNom()][$dispo->getDebut()->format('l H:i')] = $orga->getDisponibilitesInscription()->contains($dispo);
+                $value = 'x';
+                if($orga->getDisponibilitesInscription()->contains($dispo))
+                    $value = $orga->getPermis();
+                    
+                
+                $a[$orga->getPrenom().' '.$orga->getNom()][$dispo->getDebut()->format('l H:i')] = $value;
         
             }
         }
