@@ -72,4 +72,10 @@
 [DataTables]
     git=https://github.com/DataTables/DataTables.git
     version=RELEASE_1_9_0
+   
+[Timepicker]
+    git=https://github.com/trentrichardson/jQuery-Timepicker-Addon.git
+    version=v1.0.0
     
+   
+ 

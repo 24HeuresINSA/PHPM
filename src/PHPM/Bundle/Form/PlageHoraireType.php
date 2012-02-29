@@ -10,8 +10,14 @@ class PlageHoraireType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('debut')
-            ->add('fin')
+            ->add('debut',null,array(
+                    'label'=>'Début',
+                    'widget' => 'single_text',
+                    'attr'=>array('class'=>'debutdp')))
+            ->add('fin',null,array(
+                    'label'=>'Fin',
+                    'widget' => 'single_text',
+                    'attr'=>array('class'=>'findp')))
             ->add('tache')
 			->add('nbOrgasNecessaires')
 			->add('dureeCreneau')
