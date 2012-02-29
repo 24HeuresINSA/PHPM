@@ -22,12 +22,16 @@ body {
 	z-index: 500;
 	font-size: small;
 }
-a {
-	text-decoration: underline;
-}
-h1 a {
+
+h1 a, h1 a:link, h1 a:visited {
 	color: #fff;
 }
+
+a, a:link , a:visited {
+	text-decoration: underline;
+	color : black;
+}
+
 
 
 /*

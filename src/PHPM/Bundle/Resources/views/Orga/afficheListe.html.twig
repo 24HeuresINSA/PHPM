@@ -1,15 +1,16 @@
 {% if entities %}
+<a href="javascript:void(0);" onclick="fnShowHide(7);">Afficher/masquer les commentaires<br></a>
+
 <table class="records_list">
     <thead>
         <tr>
             <th>Id</th>
             <th>Nom</th>
-            
             <th>Telephone</th>
             <th>Email</th>
             <th>Datedenaissance</th>
             <th>Com'</th>
-            <th>Departement</th>
+            <th width="10em">Départ</th>
             <th>Commentaire</th>
             <th>Permis</th>
             <th>Admin</th>
@@ -27,9 +28,11 @@
             <td>{{ entity.equipe }}</td>
             <td>{{ entity.departement }}</td>
             <td>{{ entity.commentaire }}</td>
-            <td>{{entity.permis|permis}}</td>
+            <td>{{entity.permis}}</td>
             <td>{{ entity.isAdmin }}</td>
-            <td><span><a href="{{ path('orga_show', { 'id': entity.id }) }}">Détails</a> - <a href="{{ path('orga_edit', { 'id': entity.id }) }}">Éditer</a> - <a href="{{ path('orga_inscriptionhard', { 'id': entity.id }) }}">Dispos</a></span>
+            <td><span><a href="{{ path('orga_show', { 'id': entity.id }) }}">Détails</a>
+            <a href="{{ path('orga_edit', { 'id': entity.id }) }}">Éditer</a>
+            <a href="{{ path('orga_inscriptionhard', { 'id': entity.id }) }}">Dispos</a></span>
             </ul>
             
             </td>

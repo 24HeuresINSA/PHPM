@@ -3,6 +3,17 @@
 {% use "PHPMBundle::index.html.twig" %}
 
 
+        {% block javascript %}
+            {{ parent() }}
+            <script>
+            $(function() {
+            	fnShowHide(7);
+	    });
+	</script>
+        {% endblock %}
+
+
+
 {% block content %}
 {% include 'PHPMBundle:Orga:afficheListe.html.twig' %}
 {% endblock %}
