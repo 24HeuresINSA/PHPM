@@ -21,19 +21,18 @@ CreneauModel.prototype = {
 	getData: function(callBack) {
 		pmAffectation.models.creneau.callBack = callBack;
 		
-		// construit les paramètres que l'on va envoyer, -1 est le wildcart
+		// construit les paramètres que l'on va envoyer, teste si déjà on a les filtres
 		var _params = {
 			plage_id: pmAffectation.current.plage, // on fournit toujours la plage, la base
-		};
-		($.isNumeric(pmAffectation.current.quart_heure) === true) && (pmAffectation.current.quart_heure != -1) && (_params.date_time = pmUtils.getDateBack(pmAffectation.current['quart_heure']));
-		($.isNumeric(pmAffectation.current.orga.id) === true) && (pmAffectation.current.orga.id != -1) && (_params.orga_id = pmAffectation.current.orga.id);
-		
-		// filtres
-		($.isNumeric(pmAffectation.current.creneau.confiance) === true) && (pmAffectation.current.creneau.confiance != -1) && (_params.confiance_id = pmAffectation.current.creneau.confiance);
-		($.isNumeric(pmAffectation.current.creneau.duree) === true) && (pmAffectation.current.creneau.duree != -1) && (_params.duree = pmAffectation.current.creneau.duree);
-		($.isNumeric(pmAffectation.current.creneau.categorie) === true) && (pmAffectation.current.creneau.categorie != -1) && (_params.categorie_id = pmAffectation.current.creneau.categorie);
-		($.isNumeric(pmAffectation.current.creneau.age) === true) && (pmAffectation.current.creneau.age != -1) && (_params.age = pmAffectation.current.creneau.age);
-		($.isNumeric(pmAffectation.current.creneau.permis) === true) && (pmAffectation.current.creneau.permis != -1) && (_params.permis = pmAffectation.current.creneau.permis);
+		}; // -1 est le wildcart
+		(pmAffectation.current.quart_heure != -1) && (_params.date_time = pmUtils.getDateBack(pmAffectation.current['quart_heure']));
+		(($.isNumeric(pmAffectation.current.orga.id) === true) && (pmAffectation.current.orga.id != -1)) && (_params.orga_id = pmAffectation.current.orga.id);
+
+		// filtre confiance
+		// filtre durée
+		// filtre catégorie
+		// filtre age minimal
+		// filtre permis
 				
 		$.ajax({
 			url: pmAffectation.url+pmAffectation.paths.creneaux,

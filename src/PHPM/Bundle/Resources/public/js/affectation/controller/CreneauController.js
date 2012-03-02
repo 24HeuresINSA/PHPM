@@ -59,14 +59,6 @@ CreneauController.prototype = {
 		pmAffectation.controllers.orga.getData();
 		pmAffectation.controllers.creneau.getData(); // et aussi les créneaux dispos
 	},
-	// changement de la valeur d'un filtre
-	clickFilter: function(nomFiltre, valeurFiltre) {
-		pmAffectation.current.creneau[nomFiltre] = valeurFiltre;
-		
-		pmHistory.setUrlParam(); // maj de l'url
-		
-		pmAffectation.controllers.creneau.getData();
-	},
 	
 	/*
 	 * Gère la désaffectation

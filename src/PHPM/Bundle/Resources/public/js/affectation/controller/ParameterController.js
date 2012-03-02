@@ -37,28 +37,23 @@ ParameterController.prototype = {
 	callbackNiveaux: function() {
 		pmAffectation.data.parameter.niveau = pmAffectation.models.parameter.getNiveaux();
 		
-		// ajoute les options correspondantes dans les menus déroulants
+		// ajoute les options correspondantes dans le menu déroulant
 		for (_iNiveau in pmAffectation.data.parameter.niveau) {
 			$('#filtre_orga_confiance').append('<option value="'+_iNiveau+'">Orga '+pmAffectation.data.parameter.niveau[_iNiveau]['nom']+'</option>');
-			$('#filtre_tache_confiance').append('<option value="'+_iNiveau+'">Orga '+pmAffectation.data.parameter.niveau[_iNiveau]['nom']+'</option>');
 		}
 	},
 	callbackPermis: function() {
 		pmAffectation.data.parameter.permis = pmAffectation.models.parameter.getPermis();
 		
-		// ajoute les options correspondantes dans les menu déroulants
+		// ajoute les options correspondantes dans le menu déroulant
 		for (_iPermis in pmAffectation.data.parameter.permis) {
 			$('#filtre_orga_permis').append('<option value="'+_iPermis+'">'+pmAffectation.data.parameter.permis[_iPermis]+'</option>');
-			$('#filtre_tache_permis').append('<option value="'+_iPermis+'">'+pmAffectation.data.parameter.permis[_iPermis]+'</option>');
 		}
 	},
 	callbackCategories: function() {
 		pmAffectation.data.parameter.categorie = pmAffectation.models.parameter.getCategories();
 		
-		// ajoute les options correspondantes dans le menu déroulant
-		for (_iCategorie in pmAffectation.data.parameter.categorie) {
-			$('#filtre_tache_categorie').append('<option value="'+_iCategorie+'">'+pmAffectation.data.parameter.categorie[_iCategorie].nom+'</option>');
-		}
+		// TODO : filtre dans la colonne créneaux
 	},
 	
 	/*
