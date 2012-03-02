@@ -12,20 +12,28 @@ CreneauView.prototype = {
 	 * Constructeur
 	 */
 	initialize: function() {
-		// boutons pour changer d'orga
-		/*$('#bouton_orga_prev').button({
-			icons: {primary: 'ui-icon-triangle-1-w'},
-			text: false
-		}).click(function() { $('#orga_'+pmAffectation.current.orga.id).prev().click(); });
-		$('#bouton_orga_next').button({
-			icons: {primary: 'ui-icon-triangle-1-e'},
-			text: false
-		}).click(function() { $('#orga_'+pmAffectation.current.orga.id).next().click(); });
+		// on a pas de boutons pour changer de creneau et toussa :
+		// inutile, et le refresh des orgas provoque un refresh des créneaux
 		
-		$('#bouton_refresh').button({
-			icons: {primary: 'ui-icon-refresh'},
-			text: false
-		}).click(function() { pmAffectation.controllers.orga.getData(); });*/
+		this.setFilters(); // met les bonnes valeurs dans les filtres
+		
+		// filtres : bind les events
+		$('#filtre_tache_confiance').change(function() {pmAffectation.controllers.creneau.clickFilter('confiance', $('#filtre_tache_confiance').val());});
+		$('#filtre_tache_permis').change(function() {pmAffectation.controllers.creneau.clickFilter('permis', $('#filtre_tache_permis').val());});
+		$('#filtre_tache_age').change(function() {pmAffectation.controllers.creneau.clickFilter('age', $('#filtre_tache_age').val());});
+		$('#filtre_tache_categorie').change(function() {pmAffectation.controllers.creneau.clickFilter('categorie', $('#filtre_tache_categorie').val());});
+		$('#filtre_tache_duree').change(function() {pmAffectation.controllers.creneau.clickFilter('duree', $('#filtre_tache_duree').val());});
+	},
+	
+	/*
+	 * Sélectionne les bons filtres
+	 */
+	setFilters: function() {
+		(pmAffectation.current.creneau.confiance !== undefined) && ($('#filtre_tache_confiance').val(pmAffectation.current.creneau.confiance));
+		(pmAffectation.current.creneau.permis !== undefined) && ($('#filtre_tache_permis').val(pmAffectation.current.creneau.permis));
+		(pmAffectation.current.creneau.age !== undefined) && ($('#filtre_tache_age').val(pmAffectation.current.creneau.age));
+		(pmAffectation.current.creneau.categorie !== undefined) && ($('#filtre_tache_categorie').val(pmAffectation.current.creneau.categorie));
+		(pmAffectation.current.creneau.duree !== undefined) && ($('#filtre_tache_duree').val(pmAffectation.current.creneau.duree));
 	},
 	
 	/*
