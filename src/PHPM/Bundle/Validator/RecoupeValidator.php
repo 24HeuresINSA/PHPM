@@ -59,7 +59,7 @@ public function isValid($entity, Constraint $constraint)
     		
     		$pid=$entity->getTache()->getId();
     		
-    		$dql = 'SELECT (count(p)) FROM PHPMBundle:PlageHoraire p WHERE p.tache = :pid AND (p.debut < :fin ) AND (p.fin >mm :debut) AND p.id!=:id';
+    		$dql = 'SELECT (count(p)) FROM PHPMBundle:PlageHoraire p WHERE p.tache = :pid AND (p.debut < :fin ) AND (p.fin > :debut) AND p.id!=:id';
     		$message= $constraint->messagePlageHoraire;
             
             $result = $this->em
