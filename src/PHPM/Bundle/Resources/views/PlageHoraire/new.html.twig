@@ -6,7 +6,8 @@
 <form action="{{ path('plagehoraire_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
-        <button type="submit">Valider</button>
+        <button type="submit", name="action" value="validate">Valider</button>
+        <button type="submit", name="action" value="validate_new">Valider et Créer une nouvelle plage</button>
     </p>
 </form>
 {% endblock %}

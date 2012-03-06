@@ -60,14 +60,29 @@ class PlageHoraireController extends Controller
     /**
      * Displays a form to create a new PlageHoraire entity.
      *
-     * @Route("/new", name="plagehoraire_new")
+     * @Route("/new/{id}", defaults={"id"=""},name="plagehoraire_new")
      * @Template()
      */
-    public function newAction()
+    public function newAction($id)
     {
+        
         $entity = new PlageHoraire();
-        $form   = $this->createForm(new PlageHoraireType(), $entity);
+        
 
+        if($id!=""){
+            
+            $em = $this->getDoctrine()->getEntityManager();
+            $prevPlage=$em->getRepository('PHPMBundle:PlageHoraire')->find($id);
+            
+            $entity->setDebut($prevPlage->getFin());
+            $entity->setFin($prevPlage->getFin());
+            $entity->setDureeCreneau($prevPlage->getDureeCreneau());
+            $entity->setRecoupementCreneau($prevPlage->getRecoupementCreneau());
+            $entity->setNbOrgasNecessaires($prevPlage->getNbOrgasNecessaires());
+            $entity->setTache($prevPlage->getTache());
+        }
+        $form   = $this->createForm(new PlageHoraireType(), $entity);
+        
         return array(
             'entity' => $entity,
             'form'   => $form->createView()
@@ -92,10 +107,24 @@ class PlageHoraireController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
             $em->flush();
+            
+            $action = $request->request->all();
+            
+            
+            
+            
+            if($action['action']=='validate_new'){
+            return $this->redirect($this->generateUrl('plagehoraire_new', array('id' => $entity->getId()))); 
+                
+            }
+            
+            
+            
 
             return $this->redirect($this->generateUrl('plagehoraire_show', array('id' => $entity->getId())));
             
         }
+        
 
         return array(
             'entity' => $entity,
