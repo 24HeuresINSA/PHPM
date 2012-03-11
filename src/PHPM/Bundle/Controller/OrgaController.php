@@ -664,7 +664,6 @@ public function validationAction()
 	*/
 	public function queryJsonAction()
 	{
-		
 		$request = $this->getRequest();
 		
 		$permis= $request->request->get('permis', '');
@@ -674,17 +673,16 @@ public function validationAction()
 		$maxDateNaissance = new \DateTime();
 		$creneau = $request->request->get('creneau_id', '');
 		
-		if($age!='')
-		$maxDateNaissance->modify('-'.$age.' year');
-		
-		
+		if ($age!='') {
+			$maxDateNaissance->modify('-'.$age.' year');
+		}
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $maxDateNaissance->format('Y-m-d'), $plage_id, $niveau_confiance, $creneau);
-		;
+		
 		$orgaArray = array();
-		foreach ($entities as $orga){
-			
+		
+		foreach ($entities as $orga) {
 			$a = array();
 			foreach ($orga->getDisponibilites() as $dispo){
 				if ($dispo->toArrayOrgaWebService() != null){
@@ -694,11 +692,7 @@ public function validationAction()
 				
 			}
 			
-			
-			$orgaArray[$orga->getId()]= array(
-			    		
-			    	    
-			    		
+			$orgaArray[$orga->getId()] = array(
 			        	"nom" => $orga->getNom(),
 			        	"prenom" => $orga->getPrenom(),
 						"confiance" => $orga->getConfiance()->getId(),
@@ -706,22 +700,16 @@ public function validationAction()
 			    		"dateDeNaissance" => $orga->getDateDeNaissance()->format('Y-m-d H:i:s'),
 			    		"departement" => $orga->getDepartement(),
 			    		"commentaire" => $orga->getCommentaire(), 	
-			        	"disponibilites" => $a);
-			
-		
-			
-			
+			        	"disponibilites" => $a
+						);
 		}
 		
-		
-    	
     	//exit(var_dump($orgaArray));
     	
     	$response = new Response();
     	$response->setContent(json_encode($orgaArray));
 		$response->headers->set('Content-Type', 'application/json');
     	
-    
     	return $response;
 	}
 	
