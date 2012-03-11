@@ -35,8 +35,6 @@ CreneauModel.prototype = {
 		($.isNumeric(pmAffectation.current.creneau.age) === true) && (pmAffectation.current.creneau.age != -1) && (_params.age = pmAffectation.current.creneau.age);
 		($.isNumeric(pmAffectation.current.creneau.permis) === true) && (pmAffectation.current.creneau.permis != -1) && (_params.permis = pmAffectation.current.creneau.permis);
 		
-		log(_params);
-		
 		$.ajax({
 			url: pmAffectation.url+pmAffectation.paths.creneaux,
 			dataType: 'json',
