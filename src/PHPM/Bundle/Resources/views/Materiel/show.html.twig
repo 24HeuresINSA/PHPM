@@ -1,0 +1,45 @@
+<h1>Materiel</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Nom</th>
+            <td>{{ entity.nom }}</td>
+        </tr>
+        <tr>
+            <th>Categorie</th>
+            <td>{{ entity.categorie }}</td>
+        </tr>
+        <tr>
+            <th>Type</th>
+            <td>{{ entity.type }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ entity.description }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('materiel') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('materiel_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('materiel_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

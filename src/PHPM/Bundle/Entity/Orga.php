@@ -96,12 +96,12 @@ class Orga implements UserInterface
      */
     protected $departement;
 
-    /**
-     * @var string $equipe
-     *
-     * @ORM\Column(name="equipe", type="string", length=255, nullable=true)
-     */
-    protected $equipe;
+//     /**
+//      * @var string $equipe
+//      *
+//      * @ORM\Column(name="equipe", type="string", length=255, nullable=true)
+//      */
+//     protected $equipe;
     
     
     
@@ -159,6 +159,18 @@ class Orga implements UserInterface
      * @ORM\Column(type="boolean", name="is_admin",nullable=true)
      */
     protected $isAdmin;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Equipe", inversedBy="orgas")
+     * @ORM\JoinColumn(name="equipe_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+     * @Assert\Valid
+     */
+    protected $equipe;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Commentaire", mappedBy="auteur")
+     */
+    protected $commentaires;
     
     
     
@@ -644,5 +656,27 @@ class Orga implements UserInterface
     public function getEquipe()
     {
         return $this->equipe;
+    }
+
+
+
+    /**
+     * Add commentaires
+     *
+     * @param PHPM\Bundle\Entity\Commentaire $commentaires
+     */
+    public function addCommentaire(\PHPM\Bundle\Entity\Commentaire $commentaires)
+    {
+        $this->commentaires[] = $commentaires;
+    }
+
+    /**
+     * Get commentaires
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
     }
 }

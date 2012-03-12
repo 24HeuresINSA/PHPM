@@ -2,6 +2,10 @@
 
 namespace PHPM\Bundle\Controller;
 
+use PHPM\Bundle\Form\BesoinMaterielType;
+
+use PHPM\Bundle\Entity\BesoinMateriel;
+
 use PHPM\Bundle\Entity\PlageHoraire;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +17,7 @@ use PHPM\Bundle\Entity\Tache;
 use PHPM\Bundle\Entity\Confiance;
 use PHPM\Bundle\Entity\Categorie;
 use PHPM\Bundle\Form\TacheType;
+use PHPM\Bundle\Form\TacheBesoinsType;
 
 /**
  * Tache controller.
@@ -83,7 +88,7 @@ class TacheController extends Controller
 
         return array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+            'form' => $deleteForm->createView(),        );
     }
 
     /**
@@ -95,8 +100,10 @@ class TacheController extends Controller
     public function newAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
+        $config  =$this->get('config.extension');
+
         $entity = new Tache();
-        $form   = $this->createForm(new TacheType($em), $entity);
+        $form   = $this->createForm(new TacheType(false,$em,$config), $entity);
 
         return array(
             'entity' => $entity,
@@ -114,9 +121,10 @@ class TacheController extends Controller
     public function createAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
+        $config  =$this->get('config.extension');
         $entity  = new Tache();
         $request = $this->getRequest();
-        $form    = $this->createForm(new TacheType($em), $entity);
+        $form    = $this->createForm(new TacheType(false,$em,$config), $entity);
         $form->bindRequest($request);
 
         if ($form->isValid()) {
@@ -143,6 +151,7 @@ class TacheController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
+        $config  =$this->get('config.extension');
 
         $entity = $em->getRepository('PHPMBundle:Tache')->find($id);
 
@@ -150,13 +159,16 @@ class TacheController extends Controller
             throw $this->createNotFoundException('Unable to find Tache entity.');
         }
 
-        $editForm = $this->createForm(new TacheType($em), $entity);
+        
+        
+        $editForm = $this->createForm(new TacheType(false,$em,$config,$entity),$entity);
+//         $besoinsForm = $this->createForm(new TacheBesoinsType(false,$em,$config,$entity));
         $deleteForm = $this->createDeleteForm($id);
-
+        
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form'   => $editForm->createView(),
+//                 'form_besoins'  => $besoinsForm->createView()
         );
     }
 
@@ -169,32 +181,83 @@ class TacheController extends Controller
      */
     public function updateAction($id)
     {
+        
+        
         $em = $this->getDoctrine()->getEntityManager();
-
+        $config  =$this->get('config.extension');
+        $request = $this->getRequest();
+        $action = $request->request->all();
         $entity = $em->getRepository('PHPMBundle:Tache')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Tache entity.');
         }
 
-        $editForm   = $this->createForm(new TacheType($em), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $editForm   = $this->createForm(new TacheType(false,$em,$config), $entity);
 
-        $request = $this->getRequest();
-
-        $editForm->bindRequest($request);
-
+        
+        
+            $editForm->bindRequest($request);
+            $data=$editForm->getData();
+            
         if ($editForm->isValid()) {
+            foreach ($data->getTmpMateriel() as $group){
+                foreach ($group as $key=> $value){
+                    
+                    
+                        
+                        $bms = $em->createQuery("SELECT b FROM PHPMBundle:BesoinMateriel b JOIN b.materiel m JOIN b.tache t WHERE t.id = :tid AND m.id=:mid")
+                        ->setParameter('tid',$id)
+                        ->setParameter('mid',$key)
+                        
+                        ->getResult();
+                        
+                        if(!array_key_exists(0, $bms)){
+                            
+                            var_dump('ne');
+                        
+                            $bm= new BesoinMateriel();
+                            $bm->setTache($entity);
+                            $m = $em->createQuery("SELECT m FROM PHPMBundle:Materiel  m  WHERE  m.id=:mid")
+                            ->setParameter('mid',$key)
+                            ->getSingleResult();
+                            $bm->setMateriel($m);
+                            $em->persist($bm);
+                            
+                            
+                            
+                        }else{
+                            $bm=$bms[0];
+                        }
+                        
+                        $bm->setQuantite($value*1);
+                        $entity->addBesoinMateriel($bm);
+                        
+                        
+                        
+                    
+                }
+                }
+                
+                
+            
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('tache_edit', array('id' => $id)));
+//             return $this->redirect($this->generateUrl('tache_edit', array('id' => $id)));
         }
+        
+        
+            
+                
+                
+            
+            
+        
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form'   => $editForm->createView()
         );
     }
 

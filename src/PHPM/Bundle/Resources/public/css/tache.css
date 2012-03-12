@@ -1,0 +1,27 @@
+@media all {
+
+#phpm_bundle_tachetype_Materiel > div > div > div{
+	float:left;
+}
+
+
+
+#phpm_bundle_tachetype_Materiel  > div {
+clear:both;
+}
+
+#phpm_bundle_tachetype_Materiel  >div > div  > div{
+text-align: center;
+margin-right: 1em;
+}
+
+#phpm_bundle_tachetype_Materiel  >div > div  > div > input{
+width: 3em;
+
+}
+
+#phpm_bundle_tachetype , p {
+clear:both;
+}
+
+}

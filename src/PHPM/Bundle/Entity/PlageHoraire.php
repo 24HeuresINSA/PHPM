@@ -278,4 +278,5 @@ class PlageHoraire
     {
         return $this->recoupementCreneau;
     }
+  
 }

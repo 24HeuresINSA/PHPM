@@ -46,13 +46,6 @@ class Tache
      */
     protected $consignes;
     
-    /**
-    * @var text $materielNecessaire
-    *
-    * @ORM\Column(name="materielNecessaire", type="text", nullable=true)
-    */
-    protected $materielNecessaire;
-    
     
     /**
     * @var smallint $permisNecessaire
@@ -71,11 +64,11 @@ class Tache
     protected $ageNecessaire;
     
     
+
     /**
-     * @var string $lieu
-     *
-     * @ORM\Column(name="lieu", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\ManyToOne(targetEntity="Lieu", inversedBy="taches")
+     * @ORM\JoinColumn(name="lieu_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+     * @Assert\Valid
      */
     protected $lieu;
     
@@ -102,11 +95,36 @@ class Tache
     protected $confiance;
     
     /**
-    * @ORM\OneToMany(targetEntity="PlageHoraire", mappedBy="tache")
+    * @ORM\OneToMany(targetEntity="PlageHoraire", mappedBy="tache", indexBy="id")
     */
     protected $plagesHoraire;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="GroupeTache", inversedBy="taches")
+     * @ORM\JoinColumn(name="groupetache_id", referencedColumnName="id",onDelete="CASCADE", onUpdate="CASCADE")
+     * @Assert\Valid
+     */
+    protected $groupeTache;
+    
+    /**
+     * @var smallint $statut
+     * @Assert\Choice(choices = {"0", "1", "2"})
+     * @ORM\Column(name="statut", type="smallint")
+     */
+    protected $statut;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Commentaire", mappedBy="tache", indexBy="id")
+     */
+    protected $commentaires;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="BesoinMateriel", mappedBy="tache", indexBy="id")
+    */
+    protected $besoinsMateriel;
 
-
+    public $tmpMateriel;
+  
     
     /**
      * Get id
@@ -139,25 +157,7 @@ class Tache
     }
 
 
-    /**
-     * Set lieu
-     *
-     * @param string $lieu
-     */
-    public function setLieu($lieu)
-    {
-        $this->lieu = $lieu;
-    }
 
-    /**
-     * Get lieu
-     *
-     * @return string 
-     */
-    public function getLieu()
-    {
-        return $this->lieu;
-    }
     public function __construct()
     {
         $this->plagesHoraire = new \Doctrine\Common\Collections\ArrayCollection();
@@ -242,7 +242,6 @@ class Tache
     	"importId" => $this->getImportId(),
     	"nom" => $this->getNom(),
     	"lieu" => $this->getLieu(),
-    	"materielNecessaire" => $this->getMaterielNecessaire(),
     	"consignes" => $this->getConsignes(),
     	"confiance" => $this->getConfiance()->toArray(),
     	"categorie" => $this->getCategorie()->toArray(),
@@ -262,6 +261,7 @@ class Tache
         	);
     	 
     }
+
 
 
     /**
@@ -304,25 +304,7 @@ class Tache
         return $this->consignes;
     }
 
-    /**
-     * Set materielNecessaire
-     *
-     * @param text $materielNecessaire
-     */
-    public function setMaterielNecessaire($materielNecessaire)
-    {
-        $this->materielNecessaire = $materielNecessaire;
-    }
 
-    /**
-     * Get materielNecessaire
-     *
-     * @return text 
-     */
-    public function getMaterielNecessaire()
-    {
-        return $this->materielNecessaire;
-    }
 
     /**
      * Set importId
@@ -383,4 +365,159 @@ class Tache
     {
         return $this->responsable;
     }
+
+    /**
+     * Set statut
+     *
+     * @param smallint $statut
+     */
+    public function setStatut($statut)
+    {
+        $this->statut = $statut;
+    }
+
+    /**
+     * Get statut
+     *
+     * @return smallint 
+     */
+    public function getStatut()
+    {
+        return $this->statut;
+    }
+
+    /**
+     * Set groupeTache
+     *
+     * @param PHPM\Bundle\Entity\GroupeTache $groupeTache
+     */
+    public function setGroupeTache(\PHPM\Bundle\Entity\GroupeTache $groupeTache)
+    {
+        $this->groupeTache = $groupeTache;
+    }
+
+    /**
+     * Get groupeTache
+     *
+     * @return PHPM\Bundle\Entity\GroupeTache 
+     */
+    public function getGroupeTache()
+    {
+        return $this->groupeTache;
+    }
+
+ 
+
+    /**
+     * Set lieu
+     *
+     * @param PHPM\Bundle\Entity\Lieu $lieu
+     */
+    public function setLieu(\PHPM\Bundle\Entity\Lieu $lieu)
+    {
+        $this->lieu = $lieu;
+    }
+
+    /**
+     * Get lieu
+     *
+     * @return PHPM\Bundle\Entity\Lieu 
+     */
+    public function getLieu()
+    {
+        return $this->lieu;
+    }
+
+
+
+    /**
+     * Add commentaires
+     *
+     * @param PHPM\Bundle\Entity\Commentaire $commentaires
+     */
+    public function addCommentaire(\PHPM\Bundle\Entity\Commentaire $commentaires)
+    {
+        $this->commentaires[] = $commentaires;
+    }
+
+    /**
+     * Get commentaires
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
+    }
+
+  
+
+    /**
+     * Add besoinsMateriel
+     *
+     * @param PHPM\Bundle\Entity\BesoinMateriel $besoinsMateriel
+     */
+    public function addBesoinMateriel(\PHPM\Bundle\Entity\BesoinMateriel $besoinsMateriel)
+    {
+        $this->besoinsMateriel[] = $besoinsMateriel;
+    }
+
+    /**
+     * Get besoinsMateriel
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getBesoinsMateriel()
+    {
+        return $this->besoinsMateriel;
+    }
+    
+    public function getMateriel()
+    {
+//         $em = $this->getDoctrine()->getEntityManager();
+//         $data = $em->createQuery('SELECT b,m FROM PHPMBundle:BesoinMateriel b JOIN b.materiel m JOIN b.tache t WHERE t.id = 1')->getResult();
+     
+        
+        $materiel = array();
+        
+        
+        $bm = $this->besoinsMateriel;
+        
+        
+        foreach($this->besoinsMateriel as $bm){
+            $m= $bm->getMateriel();
+            
+            if($m->getType()==0){
+            $q=($bm->getQuantite()==1);
+            }else{
+                $q=$bm->getQuantite();
+            }
+            
+            $materiel[$m->getCategorie()][$m->getId()]=$q;
+        
+            }
+        
+            
+        
+        
+        
+        return  $materiel;
+    }
+    
+    public function getTmpMateriel()
+    {
+       
+    
+    
+        return $this->tmpMateriel;
+    }
+    
+    public function setMateriel($materiel)
+    {
+        
+       $this->tmpMateriel= $materiel;
+        
+    }
+    
+    
 }

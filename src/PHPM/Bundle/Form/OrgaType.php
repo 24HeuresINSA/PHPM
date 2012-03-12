@@ -43,12 +43,7 @@ class OrgaType extends AbstractType
                     'PC'=>'PC','GMC'=>'GMC','GMD'=>'GMD', 'GMPP'=>'GMPP', 'IF'=>'IF', 'SGM'=>'SGM',
                     'GI'=>'GI', 'GE'=>'GE', 'TC'=>'TC', 'GCU'=>'GCU', 'BIM'=>'BIM', 'BIOCH'=>'BIOCH', 'GEN'=>'GEN', 'Autre'=>'Autre' 
                     )))
-            ->add('equipe','choice',array('label'=>'Com', 'choices'=>array(
-                            'Bural'=>'Bural','Orga'=>'Orga','Pédales'=>'Pédales','Anims Plaisir'=>'Anims Plaisir',
-                    'Com Com'=>'Com Com','Anims Q'=>'Anims Q','Anims Sports'=>'Anims Sports','Santé DD'=>'Santé DD',
-                    'Concerts'=>'Concerts', '25eme'=>'25eme','Autre'=>'Autre'
-                     
-            )))
+            ->add('equipe',null,array('label'=>'Équipe'))
             ->add('commentaire')
             ->add('permis','choice',array('label'=>'Titulaire du permis B', 'choices'=>$libellesPermis));
     	if($this->admin){

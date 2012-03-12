@@ -2,12 +2,27 @@
 {% set pageTitle = 'Edition de la tâche' %}
 {% use "PHPMBundle::edit.html.twig" %}
 
+{% form_theme form _self %}
+
+
+{% block style %}
+{{ parent() }}
+			{% stylesheets 'bundles/phpm/css/tache.css' filter='cssrewrite'  %}
+				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
+			{% endstylesheets %}
+{% endblock %}
+
+
 {% block content %}
-<form action="{{ path('tache_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
+<h2>Informations Générales</h2>
+<form action="{{ path('tache_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
     <p>
-        <button type="submit">Valider</button>
+        <button type="submit"  name="action" value="infos">Valider</button>
     </p>
 </form>
+
+<div id="form_besoins">
+<h2>Besoins en matériel</h2>
 
 {% endblock %}

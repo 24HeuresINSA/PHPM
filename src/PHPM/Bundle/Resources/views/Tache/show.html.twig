@@ -3,6 +3,7 @@
 {% use "PHPMBundle::show.html.twig" %}
 
 {% block content %}
+<h2>Informations Générales</h2>
 <table class="record_properties">
     <tbody>
         <tr>
@@ -22,10 +23,6 @@
             <td>{{ entity.lieu }}</td>
         </tr>
         <tr>
-            <th>Mat&eacute;riel necessaire</th>
-            <td>{{ entity.materielNecessaire }}</td>
-        </tr>
-        <tr>
             <th>Permis Necessaire</th>
             <td>{{entity.permisnecessaire|permis}}</td>
         </tr>
@@ -39,4 +36,6 @@
         </tr>
     </tbody>
 </table>
+
+<h2>Besoins</h2>
 {% endblock %}
