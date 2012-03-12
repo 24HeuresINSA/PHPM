@@ -53,7 +53,7 @@ OrgaController.prototype = {
 	// clic sur un orga
 	clickHandler: function(obj) {
 		$("#orga_"+pmAffectation.current.orga.id).removeClass('current');
-		$("#orga_"+obj.data.id).addClass('current');
+		$("#orga_"+obj.id).addClass('current');
 		
 		pmAffectation.controllers.creneau.empty(); // vide la colonne creneau
 		
@@ -61,7 +61,7 @@ OrgaController.prototype = {
 		(pmAffectation.current.quart_heure != -1) && ($('#'+pmAffectation.current.quart_heure).removeClass('current')); // si existe bien
 		pmAffectation.current.quart_heure = -1;
 
-		pmAffectation.current.orga.id = obj.data.id;
+		pmAffectation.current.orga.id = obj.id;
 		pmHistory.setUrlParam(); // maj de l'url
 		
 		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga.id});
