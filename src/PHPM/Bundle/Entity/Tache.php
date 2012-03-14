@@ -74,7 +74,7 @@ class Tache
     
     
     /**
-    * @ORM\ManyToOne(targetEntity="Orga", inversedBy="taches")
+    * @ORM\ManyToOne(targetEntity="Orga", inversedBy="tachesResponsable")
     * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
     * @Assert\Valid
     */
@@ -123,7 +123,6 @@ class Tache
     */
     protected $besoinsMateriel;
 
-    public $tmpMateriel;
   
     
     /**
@@ -225,7 +224,7 @@ class Tache
     
     public function __toString()
     {
-    	return $this->getNom();
+        return $this->getId()."- ".$this->getNom();
     }
     
     public function toArray($developCreneaux = NULL)
@@ -483,6 +482,7 @@ class Tache
         
         $bm = $this->besoinsMateriel;
         
+        if(isset($bm)){
         
         foreach($this->besoinsMateriel as $bm){
             $m= $bm->getMateriel();
@@ -497,27 +497,15 @@ class Tache
         
             }
         
-            
-        
-        
-        
+           
         return  $materiel;
-    }
-    
-    public function getTmpMateriel()
-    {
-       
-    
-    
-        return $this->tmpMateriel;
-    }
-    
-    public function setMateriel($materiel)
-    {
         
-       $this->tmpMateriel= $materiel;
+        }
+        return array();
         
     }
+    
+
     
     
 }

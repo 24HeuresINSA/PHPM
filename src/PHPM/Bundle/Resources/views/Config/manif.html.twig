@@ -1,19 +1,84 @@
 {% extends "PHPMBundle:Config:layout.html.twig"  %}
 {% set pageTitle = 'Configuration de la Manifestation' %}
 
+{% form_theme form _self %}
+
+
+{% block style %}
+{{ parent() }}
+			{% stylesheets 'bundles/phpm/css/config.css' filter='cssrewrite'  %}
+				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
+			{% endstylesheets %}
+{% endblock %}
+
 
 {% block content %}
 <form action="{{ path('config_manif') }}" method="post" {{ form_enctype(form) }}>
-                {% for tag in form.configItems %}
-        {{ form_row(tag) }}
-         
-        
-                {% endfor %}
-          
-        
-        
+<div id="tabs">
+	<ul>
+		<li><a href="#configItems">Clés de configuration</a></li>
+		<li><a href="#lieuItems">Lieux</a></li>
+		<li><a href="#equipeItems">Équipes</a></li>
+		<li><a href="#confianceItems">Niveaux de Confiance</a></li>
+		<li><a href="#materielItems">Matériel</a></li>		
+			</ul>
 
-    <p>
+
+
+
+<div id="configItems" >
+
+
+{% for i in form.configItems %}
+    {{ i.vars.value }}
+    {{ form_errors(i) }}
+    {{ form_widget(i) }}
+         
+{% endfor %}
+</div>
+
+
+
+<div id="lieuItems" class = "rowsection">
+
+
+
+{% for i in form.lieuItems %}
+    {{ form_errors(i) }}
+    {{ form_widget(i) }}
+         
+{% endfor %}
+
+</div>      
+<div id="equipeItems" class = "rowsection">
+{% for i in form.equipeItems %}
+    {{ form_errors(i) }}
+    {{ form_widget(i) }}
+         
+{% endfor %}
+
+</div>   
+<div id="confianceItems" class = "rowsection">
+{% for i in form.confianceItems %}
+    {{ form_errors(i) }}
+    {{ form_widget(i) }}
+         
+{% endfor %}
+
+</div>   
+
+<div id="materielItems" class = "rowsection">
+{% for i in form.materielItems %}
+    {{ form_errors(i) }}
+    {{ form_widget(i) }}
+         
+{% endfor %}
+
+</div>  
+        
+        
+{{ form_rest(form) }}
+    <p class="clear">
         <button type="submit">Enregistrer la configuration</button>
     </p>
 </form>

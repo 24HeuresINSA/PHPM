@@ -131,11 +131,16 @@ class Orga implements UserInterface
     /**
     * @ORM\OneToMany(targetEntity="Tache", mappedBy="responsable")
     */
-    protected $taches;
+    protected $tachesResponsable;
     
     /**
-    * @ORM\OneToMany(targetEntity="Disponibilite", mappedBy="orga", cascade={"persist", "remove"})
+    * @ORM\OneToMany(targetEntity="Equipe", mappedBy="responsable")
     */
+    protected $equipesResponsable;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Disponibilite", mappedBy="orga", cascade={"persist", "remove"})
+     */
     protected $disponibilites;
     
     /**
@@ -173,9 +178,127 @@ class Orga implements UserInterface
     protected $commentaires;
     
     
+    public function __toString()
+    {
+        return $this->prenom." ".$this->nom;
+        
+    }
     
+    public function toArray($developCreneaux = NULL)
+    {
+    	$a = array();
+    	if(isset($developCreneaux))
+    	foreach ($this->getDisponibilites() as $entity){
+    		$a[$entity->getId()] = $entity->toArray(TRUE);
+    	}
+    	 
+    	 
+    	return array(
+    		"id" => $this->getId(),
+    	    "importid" => $this->getImportId(),
+    		"statut" => $this->getStatut(),
+        	"nom" => $this->getNom(),
+        	"prenom" => $this->getPrenom(),
+    		"surnom" => $this->getSurnom(),
+    		"telephone" => $this->getTelephone(),
+    		"email" => $this->getEmail(),
+    		"dateDeNaissance" => $this->getDateDeNaissance(),
+    		"departement" => $this->getDepartement(),
+    		"commentaire" => $this->getCommentaire(),
+    		"permis"=>$this->getPermis(),
+        	"confiance" => $this->getConfiance()->toArray(),
+        	"disponibilites" => $a);
+    	 
+    }
+    
+    public function toExportArray()
+    {
+    	$a = array();
+    	
+    		foreach ($this->getDisponibilites() as $entity){
+    		$a[$entity->getId()] = $entity->toSimpleArray();
+    		}
+    	
+    
+    
+    	return array(
+    			"id" => $this->getId(),
+    			"statut" => $this->getStatut(),
+    			"nom" => $this->getNom(),
+    			"prenom" => $this->getPrenom(),
+    			"surnom" => $this->getSurnom(),
+    			"telephone" => $this->getTelephone(),
+    			"email" => $this->getEmail(),
+    			"dateDeNaissance" => $this->getDateDeNaissance()->format('Y-m-d'),
+    			"departement" => $this->getDepartement(),
+    			"commentaire" => $this->getCommentaire(),
+    			"permis"=>$this->getPermis(),
+    			"confiance" => $this->getConfiance()->getId(),
+    			"disponibilites" => $a);
+    
+    }
+
+
     
 
+    
+
+    public function getRoles()
+    {
+    	return array('ROLE_ADMIN');
+    }
+    
+    public function equals(UserInterface $user)
+    {
+    	return $user->getEmail() === $this->email;
+    }
+    
+    public function eraseCredentials()
+    {
+    }
+    
+
+    
+    public function getSalt()
+    {
+    	return "";
+    }
+    
+    public function getPassword()
+    {
+    	return "";
+    }
+    
+    /**
+     * Get username
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->email;
+    }
+    
+    
+    public function serialize()
+    {
+        return serialize($this->email);
+    }
+    
+    public function unserialize($data)
+    {
+        $this->email = unserialize($data);
+    }
+
+    public function __construct()
+    {
+        $this->tachesResponsable = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->equipesResponsable = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->disponibilites = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->disponibilitesInscription = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -184,6 +307,26 @@ class Orga implements UserInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set importId
+     *
+     * @param integer $importId
+     */
+    public function setImportId($importId)
+    {
+        $this->importId = $importId;
+    }
+
+    /**
+     * Get importId
+     *
+     * @return integer 
+     */
+    public function getImportId()
+    {
+        return $this->importId;
     }
 
     /**
@@ -224,6 +367,26 @@ class Orga implements UserInterface
     public function getPrenom()
     {
         return $this->prenom;
+    }
+
+    /**
+     * Set surnom
+     *
+     * @param string $surnom
+     */
+    public function setSurnom($surnom)
+    {
+        $this->surnom = $surnom;
+    }
+
+    /**
+     * Get surnom
+     *
+     * @return string 
+     */
+    public function getSurnom()
+    {
+        return $this->surnom;
     }
 
     /**
@@ -339,137 +502,11 @@ class Orga implements UserInterface
     /**
      * Get permis
      *
-     * @return smallint
+     * @return smallint 
      */
     public function getPermis()
     {
         return $this->permis;
-    }
-
-   
-    public function __construct()
-    {
-        $this->disponibilites = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
-     * Set confiance
-     *
-     * @param PHPM\Bundle\Entity\Confiance $confiance
-     */
-    public function setConfiance(\PHPM\Bundle\Entity\Confiance $confiance)
-    {
-        $this->confiance = $confiance;
-    }
-
-    /**
-     * Get confiance
-     *
-     * @return PHPM\Bundle\Entity\Confiance 
-     */
-    public function getConfiance()
-    {
-        return $this->confiance;
-    }
-
-    /**
-     * Add disponibilites
-     *
-     * @param PHPM\Bundle\Entity\Disponibilite $disponibilites
-     */
-    public function addDisponibilite(\PHPM\Bundle\Entity\Disponibilite $disponibilites)
-    {
-        $this->disponibilites[] = $disponibilites;
-        $disponibilites->setOrga($this);
-    }
-
-    /**
-     * Get disponibilites
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getDisponibilites()
-    {
-        return $this->disponibilites;
-    }
-    
-    public function __toString()
-    {
-    	return $this->getPrenom()." ".$this->getNom();
-    }
-
-    /**
-     * Set surnom
-     *
-     * @param string $surnom
-     */
-    public function setSurnom($surnom)
-    {
-        $this->surnom = $surnom;
-    }
-
-    /**
-     * Get surnom
-     *
-     * @return string 
-     */
-    public function getSurnom()
-    {
-        return $this->surnom;
-    }
-    
-    public function toArray($developCreneaux = NULL)
-    {
-    	$a = array();
-    	if(isset($developCreneaux))
-    	foreach ($this->getDisponibilites() as $entity){
-    		$a[$entity->getId()] = $entity->toArray(TRUE);
-    	}
-    	 
-    	 
-    	return array(
-    		"id" => $this->getId(),
-    	    "importid" => $this->getImportId(),
-    		"statut" => $this->getStatut(),
-        	"nom" => $this->getNom(),
-        	"prenom" => $this->getPrenom(),
-    		"surnom" => $this->getSurnom(),
-    		"telephone" => $this->getTelephone(),
-    		"email" => $this->getEmail(),
-    		"dateDeNaissance" => $this->getDateDeNaissance(),
-    		"departement" => $this->getDepartement(),
-    		"commentaire" => $this->getCommentaire(),
-    		"permis"=>$this->getPermis(),
-        	"confiance" => $this->getConfiance()->toArray(),
-        	"disponibilites" => $a);
-    	 
-    }
-    
-    public function toExportArray()
-    {
-    	$a = array();
-    	
-    		foreach ($this->getDisponibilites() as $entity){
-    		$a[$entity->getId()] = $entity->toSimpleArray();
-    		}
-    	
-    
-    
-    	return array(
-    			"id" => $this->getId(),
-    			"statut" => $this->getStatut(),
-    			"nom" => $this->getNom(),
-    			"prenom" => $this->getPrenom(),
-    			"surnom" => $this->getSurnom(),
-    			"telephone" => $this->getTelephone(),
-    			"email" => $this->getEmail(),
-    			"dateDeNaissance" => $this->getDateDeNaissance()->format('Y-m-d'),
-    			"departement" => $this->getDepartement(),
-    			"commentaire" => $this->getCommentaire(),
-    			"permis"=>$this->getPermis(),
-    			"confiance" => $this->getConfiance()->getId(),
-    			"disponibilites" => $a);
-    
     }
 
     /**
@@ -493,128 +530,6 @@ class Orga implements UserInterface
     }
 
     /**
-     * Set importId
-     *
-     * @param integer $importId
-     */
-    public function setImportId($importId)
-    {
-        $this->importId = $importId;
-    }
-
-    /**
-     * Get importId
-     *
-     * @return integer 
-     */
-    public function getImportId()
-    {
-        return $this->importId;
-    }
-
-    /**
-     * Add taches
-     *
-     * @param PHPM\Bundle\Entity\Tache $taches
-     */
-    public function addTache(\PHPM\Bundle\Entity\Tache $taches)
-    {
-        $this->taches[] = $taches;
-    }
-
-    /**
-     * Get taches
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getTaches()
-    {
-        return $this->taches;
-    }
-
-    /**
-     * Add disponibilitesInscription
-     *
-     * @param PHPM\Bundle\Entity\DisponibiliteInscription $disponibilitesInscription
-     */
-    public function addDisponibiliteInscription(\PHPM\Bundle\Entity\DisponibiliteInscription $disponibilitesInscription)
-    {
-        $this->disponibilitesInscription[] = $disponibilitesInscription;
-    }
-    
-    /**
-     * Set disponibilitesInscription
-     *
-     * 
-     */
-    public function setDisponibilitesInscription($disponibilitesInscription)
-    {
-        $this->disponibilitesInscription = $disponibilitesInscription;
-    }
-
-    /**
-     * Get disponibilitesInscription
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getDisponibilitesInscription()
-    {
-        return $this->disponibilitesInscription;
-    }
-    
-
-    
-
-    public function getRoles()
-    {
-    	return array('ROLE_ADMIN');
-    }
-    
-    public function equals(UserInterface $user)
-    {
-    	return $user->getEmail() === $this->email;
-    }
-    
-    public function eraseCredentials()
-    {
-    }
-    
-
-    
-    public function getSalt()
-    {
-    	return "";
-    }
-    
-    public function getPassword()
-    {
-    	return "";
-    }
-    
-    /**
-     * Get username
-     *
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->email;
-    }
-    
-    
-    public function serialize()
-    {
-        return serialize($this->email);
-    }
-    
-    public function unserialize($data)
-    {
-        $this->email = unserialize($data);
-    }
-    
-    
-
-    /**
      * Set isAdmin
      *
      * @param boolean $isAdmin
@@ -633,17 +548,113 @@ class Orga implements UserInterface
     {
         return $this->isAdmin;
     }
-    
 
-    
-    
+    /**
+     * Set confiance
+     *
+     * @param PHPM\Bundle\Entity\Confiance $confiance
+     */
+    public function setConfiance(\PHPM\Bundle\Entity\Confiance $confiance)
+    {
+        $this->confiance = $confiance;
+    }
+
+    /**
+     * Get confiance
+     *
+     * @return PHPM\Bundle\Entity\Confiance 
+     */
+    public function getConfiance()
+    {
+        return $this->confiance;
+    }
+
+    /**
+     * Add tachesResponsable
+     *
+     * @param PHPM\Bundle\Entity\Tache $tachesResponsable
+     */
+    public function addTache(\PHPM\Bundle\Entity\Tache $tachesResponsable)
+    {
+        $this->tachesResponsable[] = $tachesResponsable;
+    }
+
+    /**
+     * Get tachesResponsable
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getTachesResponsable()
+    {
+        return $this->tachesResponsable;
+    }
+
+    /**
+     * Add equipesResponsable
+     *
+     * @param PHPM\Bundle\Entity\Equipe $equipesResponsable
+     */
+    public function addEquipe(\PHPM\Bundle\Entity\Equipe $equipesResponsable)
+    {
+        $this->equipesResponsable[] = $equipesResponsable;
+    }
+
+    /**
+     * Get equipesResponsable
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getEquipesResponsable()
+    {
+        return $this->equipesResponsable;
+    }
+
+    /**
+     * Add disponibilites
+     *
+     * @param PHPM\Bundle\Entity\Disponibilite $disponibilites
+     */
+    public function addDisponibilite(\PHPM\Bundle\Entity\Disponibilite $disponibilites)
+    {
+        $this->disponibilites[] = $disponibilites;
+    }
+
+    /**
+     * Get disponibilites
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getDisponibilites()
+    {
+        return $this->disponibilites;
+    }
+
+    /**
+     * Add disponibilitesInscription
+     *
+     * @param PHPM\Bundle\Entity\DisponibiliteInscription $disponibilitesInscription
+     */
+    public function addDisponibiliteInscription(\PHPM\Bundle\Entity\DisponibiliteInscription $disponibilitesInscription)
+    {
+        $this->disponibilitesInscription[] = $disponibilitesInscription;
+    }
+
+    /**
+     * Get disponibilitesInscription
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getDisponibilitesInscription()
+    {
+        return $this->disponibilitesInscription;
+    }
 
     /**
      * Set equipe
      *
-     * @param string $equipe
+     * @param PHPM\Bundle\Entity\Equipe $equipe
      */
-    public function setEquipe($equipe)
+    public function setEquipe(\PHPM\Bundle\Entity\Equipe $equipe)
     {
         $this->equipe = $equipe;
     }
@@ -651,14 +662,12 @@ class Orga implements UserInterface
     /**
      * Get equipe
      *
-     * @return string 
+     * @return PHPM\Bundle\Entity\Equipe 
      */
     public function getEquipe()
     {
         return $this->equipe;
     }
-
-
 
     /**
      * Add commentaires

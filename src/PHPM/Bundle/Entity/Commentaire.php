@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
  * PHPM\Bundle\Entity\Commentaire
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\Commentaire")
+ * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\CommentaireRepository")
  */
 class Commentaire
 {
@@ -47,6 +47,13 @@ class Commentaire
      */
     protected $auteur;
     
+    /**
+     * @var text $texte
+     *
+     * @ORM\Column(name="texte", type="text")
+     * @Assert\NotBlank()
+     */
+    protected $texte;
     
 
 
@@ -121,5 +128,25 @@ class Commentaire
     public function getAuteur()
     {
         return $this->auteur;
+    }
+
+    /**
+     * Set texte
+     *
+     * @param text $texte
+     */
+    public function setTexte($texte)
+    {
+        $this->texte = $texte;
+    }
+
+    /**
+     * Get texte
+     *
+     * @return text 
+     */
+    public function getTexte()
+    {
+        return $this->texte;
     }
 }

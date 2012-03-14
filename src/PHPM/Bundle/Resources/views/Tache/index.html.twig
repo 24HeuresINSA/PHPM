@@ -1,7 +1,32 @@
 {% extends "PHPMBundle:Tache:layout.html.twig"  %}
-{% set pageTitle = 'Liste des Organisateurs' %}
+{% set pageTitle = 'Liste des Tâches' %}
 {% use "PHPMBundle::index.html.twig" %}
 
 {% block content %}
-   {% include 'PHPMBundle:Tache:afficheListe.html.twig' with {'entities': entities} %}
+
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Tâches soumises à validation</a></li>
+		<li><a href="#tabs-2">Tâches en cours de rédaction</a></li>
+		<li><a href="#tabs-3">Tâches validées</a></li>
+	</ul>
+	<div id="tabs-1">
+
+{% if  s %}
+   {% include 'PHPMBundle:Tache:afficheListe.html.twig' with {'entities': s} %}
+{% endif %}
+	</div>
+	<div id="tabs-2">
+
+{% if  r %}
+   {% include 'PHPMBundle:Tache:afficheListe.html.twig' with {'entities': r} %}
+{% endif %}
+
+	<div id="tabs-3">
+
+{% if  v %}
+   {% include 'PHPMBundle:Tache:afficheListe.html.twig' with {'entities': v} %}
+{% endif %}
+</div>
+</div>
 {% endblock %}

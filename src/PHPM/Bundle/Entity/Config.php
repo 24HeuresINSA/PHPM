@@ -87,7 +87,7 @@ class Config
     
     public function __toString()
     {
-    	return "";
+    	return $this->label;
     }
 
     /**

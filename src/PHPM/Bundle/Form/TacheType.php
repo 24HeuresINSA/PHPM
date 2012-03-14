@@ -4,10 +4,12 @@ namespace PHPM\Bundle\Form;
 
 use PHPM\Bundle\Entity\BesoinMateriel;
 
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use PHPM\Bundle\Form\BesoinMaterielType;
+use PHPM\Bundle\Entity\Tache;
 
 class TacheType extends AbstractType
 {
@@ -30,7 +32,9 @@ class TacheType extends AbstractType
         
         $libellesPermis =  json_decode($this->config->getValue('manifestation_permis_libelles'),true);
         
-        $builder
+        
+        $i=$builder->create('entity','form',array('label'=>" ", 'required'=>false));
+        $i->add('groupeTache')
         ->add('nom')
         ->add('consignes')
         ->add('lieu')
@@ -39,14 +43,18 @@ class TacheType extends AbstractType
         ->add('consignes')
         ->add('permisNecessaire','choice',array('label'=>'Permis Nécessaire', 'choices'=>$libellesPermis))
         ->add('ageNecessaire')
-        ->add('responsable')
-        ->add('statut', 'choice',array('choices'=>array('0'=>'En rédaction','1'=>'Soumise à validation','2'=>'Validée')))
+        ->add('responsable');
         
-        ;
+        if($this->admin){
+        $i->add('statut', 'choice',array('choices'=>array('0'=>'En rédaction','1'=>'Soumise à validation','2'=>'Validée')));
+        }
+        
         
         
         $m=$builder->create('Materiel','form',array('label'=>"Matériel requis", 'required'=>false));
-        $builder->add($m);
+        $builder->add($i)
+        ->add($m)
+        ->add('commentaire','textarea', array('required'=>false, 'attr'=>array('placeholder'=>'Ajouter un commentaire')));
 
         
         

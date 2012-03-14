@@ -1,0 +1,61 @@
+{% extends "PHPMBundle:GroupeTache:layout.html.twig"  %}
+{% set pageTitle = 'Edition du Groupe de Tâches' %}
+{% use "PHPMBundle::edit.html.twig" %}
+
+{% form_theme form _self %}
+
+
+{# {% block style %}#}
+{# {{ parent() }}#}
+{# 			{% stylesheets 'bundles/phpm/css/tache.css' filter='cssrewrite'  %}#}
+{# 				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />#}
+{# 			{% endstylesheets %}#}
+{# {% endblock %}#}
+
+
+{% block content %}
+
+<form action="{{ path('groupetache_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+
+{{ form_errors(form) }}
+<div>
+<h2>Informations Générales</h2>
+
+
+
+</div>
+
+
+{{ form_rest(form) }}
+    <p>
+        <button type="submit"  name="action" value="infos">Enregistrer</button>
+    </p>
+</form>
+<h2>Liste des Tâches du groupe</h2>
+
+{% if entity.taches %}
+
+<table>
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Responsable</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entity.taches %}
+        <tr>
+            <td><a href="{{ path('tache_edit', { 'id': entity.id }) }}">{{ entity.id }}- {{ entity.nom }}</a></td>
+            <td>{{ entity.responsable }}</td>
+
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a class="button" href="{{ path('tache_new', { 'gid': entity.id }) }}">Créer une nouvelle tâche</a>
+{% endif %}
+
+{% endblock %}
+
+

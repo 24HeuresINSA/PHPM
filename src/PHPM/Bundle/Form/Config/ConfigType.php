@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPM\Bundle\Form;
+namespace PHPM\Bundle\Form\Config;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
@@ -15,11 +15,18 @@ class ConfigType extends AbstractType
     	
     	
     	$builder->add('value','textarea', array('label'=>' '));
-    	$builder->add('label','hidden');
     	$builder->add('field','hidden');
     	
         
     }
+    
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'PHPM\Bundle\Entity\Config',
+        );
+    }
+    
 
     public function getName()
     {

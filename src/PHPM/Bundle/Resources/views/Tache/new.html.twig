@@ -1,6 +1,7 @@
 {% extends "PHPMBundle:Tache:layout.html.twig"  %}
-{% set pageTitle = 'Nouvelle Tâche' %}
+{% set pageTitle = 'Nouvelle tâche' %}
 {% use "PHPMBundle::new.html.twig" %}
+
 {% form_theme form _self %}
 
 
@@ -12,12 +13,44 @@
 {% endblock %}
 
 
-
 {% block content %}
-<form action="{{ path('tache_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
+
+<form action="{{ path('tache_create', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+
+{{ form_errors(form) }}
+<div>
+<h2>Informations Générales</h2>
+
+
+    {{ form_errors(form.entity) }}
+    {{ form_widget(form.entity) }}
+</div>
+
+
+<div>
+<h2>Besoins en matériel</h2>
+
+    {{ form_errors(form.Materiel) }}
+    {{ form_widget(form.Materiel) }}
+</div>
+<div>
+
+
+    <h3>Enregistrer les Modifications</h3>
+    {{ form_errors(form.commentaire) }}
+    {{ form_widget(form.commentaire) }}
+
+
+</div>
+
+
+{{ form_rest(form) }}
     <p>
-        <button type="submit">Cr&eacute;er la t&acirc;che</button>
+        <button type="submit" >Enregistrer</button>
     </p>
 </form>
+
+
+
+
 {% endblock %}

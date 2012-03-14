@@ -1,6 +1,6 @@
 {% if entities %}
 
-<table class="records_list">
+<table >
     <thead>
         <tr>
             <th>Id</th>
@@ -17,7 +17,7 @@
     <tbody>
     {% for entity in entities %}
         <tr style="cursor:pointer" onclick="window.location='{{ path('tache_show', { 'id': entity.id }) }}'" >
-            <td><a href="{{ path('tache_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td><a href="{{ path('tache_edit', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td>{{ entity.nom }}</td>
             <td>{{ entity.consignes }}</td>
             <td>{{ entity.lieu }}</td>

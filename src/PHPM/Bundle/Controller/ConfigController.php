@@ -11,8 +11,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PHPM\Bundle\Entity\Config;
 use PHPM\Bundle\Entity\User;
-use PHPM\Bundle\Form\ConfigType;
+use PHPM\Bundle\Form\Config\ConfigType;
 use PHPM\Bundle\Form\UserType;
+use PHPM\Bundle\Form\Config\ManifType;
 
 /**
  * Config controller.
@@ -20,19 +21,6 @@ use PHPM\Bundle\Form\UserType;
  * @Route("/configv")
  */
 class ConfigController extends Controller {
-// 	/**
-// 	 * Lists all Config entities.
-// 	 *
-// 	 * @Route("/", name="config")
-// 	 * @Template()
-// 	 */
-// 	public function indexAction() {
-// 		$em = $this->getDoctrine()->getEntityManager();
-
-// 		$entities = $em->getRepository('PHPMBundle:Config')->findAll();
-
-// 		return array('entities' => $entities);
-// 	}
 
 	/**
 	 * Finds and displays a Config entity.
@@ -254,9 +242,10 @@ class ConfigController extends Controller {
 
 		$initiale = $em->getRepository('PHPMBundle:Config')
 				->findOneByField('phpm_config_initiale');
+		$admin=$this->get('security.context')->isGranted('ROLE_ADMIN');
 
 		if (!(!$initiale)
-				& !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+				& !$admin) {
 			throw new AccessDeniedHttpException(
 					"PHPM a déjà été configuré, veuillez vous connecter pour réinitialiser la configuration.");
 		}
@@ -340,78 +329,39 @@ COMMIT;
 	public function manifAction() {
 		$request = $this->get('request');
 		$em = $this->getDoctrine()->getEntityManager();
+		$admin=$this->get('security.context')->isGranted('ROLE_ADMIN');
+		$config = $e=$this->get('config.extension');
 	
-		$entities = $em->getRepository('PHPMBundle:Config')->findAll();
-		$data = array();
-		foreach ($entities as $entity)
-		{
-		    $data[$entity->getLabel()]=$entity;
+		
+		$configItems = $em->getRepository('PHPMBundle:Config')->findAll();
+		$lieuItems = $em->getRepository('PHPMBundle:Lieu')->findAll();
+		$equipeItems = $em->getRepository('PHPMBundle:Equipe')->findAll();
+		$confianceItems = $em->getRepository('PHPMBundle:Confiance')->findAll();
+		$materielItems = $em->createQuery("SELECT m FROM PHPMBundle:Materiel m ORDER BY m.categorie ")->getResult();
+		$data = array(
+		        'configItems'=>$configItems,
+		        'lieuItems'=>$lieuItems,
+		        'equipeItems'=>$equipeItems,
+		        'confianceItems'=>$confianceItems,
+		        'materielItems'=>$materielItems
+		        );
+		
+
+
+		
+		$form    = $this->createForm(new ManifType($admin,$config), $data);
+		
+		
+		if ($this->get('request')->getMethod() == 'POST') {
+		$form->bindRequest($request);
+		$data = $form->getData();
+		var_dump("dd");
+		
+		if ($form->isValid()) {
+		    $em->flush();
+		    
 		}
 		
-// 		$data = array("Plages de la manif"=>$plages);
-		$builder = $this->createFormBuilder(array(
-		        
-		        "configItems"=>$data
-		));
-		
-		$builder->add('configItems', 'collection',array('type' => new ConfigType()));
-		$builder->add('user', 'collection', array('type' => new UserType(), 'label' =>' '));
-		
-		$form = $builder->getForm();
-		
-// 		$configItems = array();
-// 		$data = array();
-		
-// 		foreach ($entities as $entity)
-// 		{
-// 		    $configItems[$entity->getLabel()]=array($entity->getId()=>$entity);
-//  		   // $data["configItems"][$entity->getLabel()][$entity->getId()]=$entity;
-// 		}
-// 		    $configItems = array("configItems"=>array("Nom de la manifestation"=>$orga,
-// 		                                                    "Plages de la manif"=>$plages)
-// 		                                                );
-		
-// 		$builder = $this->createFormBuilder(array("configItems"=>$configItems));
-// // 		var_dump($configItems);
-		
-		
-		
-//  		$builder->add('configItems', 'collection',array('type' => new ConfigType()));
-		
-// // $builder->setData($data);
-// 		$form = $builder->getForm();
-		
-		//var_dump($form->createView());
-
-		if ($this->get('request')->getMethod() == 'POST') {
-
-			$form->bindRequest($request);
-			$data = $form->getData();
-
-			$validator = $this->get('validator');
-			foreach ($data['configItems'] as $item) {
-
-				$errors = $validator->validate($item);
-
-				if (count($errors) > 0) {
-					return new Response(print_r($errors, true));
-				} else {
-					$em->persist($item);
-					$em->flush();
-				}
-			}
-
-			foreach ($data['user'] as $item) {
-
-				$errors = $validator->validate($item);
-
-				if (count($errors) > 0) {
-					return new Response(print_r($errors, true));
-				} else {
-					$em->persist($item);
-					$em->flush();
-				}
-			}
 
 		}
 

@@ -12,9 +12,20 @@ class MaterielType extends AbstractType
         $builder
             ->add('nom')
             ->add('categorie')
-            ->add('type')
+            ->add('type','choice', array(
+                    'label'=>' ',
+                    'choices'   => array(
+                            '0' => 'Dénombrable',
+                             '1' => 'Indénombrable')))
             ->add('description')
         ;
+    }
+    
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'PHPM\Bundle\Entity\Materiel',
+        );
     }
 
     public function getName()

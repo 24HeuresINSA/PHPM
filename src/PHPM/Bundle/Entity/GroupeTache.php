@@ -42,12 +42,7 @@ class GroupeTache
      */
     protected $responsable;
     
-    /**
-     * @var smallint $statut
-     * @Assert\Choice(choices = {"0", "1", "2"})
-     * @ORM\Column(name="statut", type="smallint")
-     */
-    protected $statut;
+
     
     /**
      * @ORM\ManyToOne(targetEntity="Equipe", inversedBy="groupesTache")
@@ -67,7 +62,7 @@ class GroupeTache
     
     public function __toString()
     {
-        return $this->getNom();
+        return $this->getId()."- ".$this->getNom();
     }
     public function __construct()
     {
@@ -104,25 +99,6 @@ class GroupeTache
         return $this->nom;
     }
 
-    /**
-     * Set statut
-     *
-     * @param smallint $statut
-     */
-    public function setStatut($statut)
-    {
-        $this->statut = $statut;
-    }
-
-    /**
-     * Get statut
-     *
-     * @return smallint 
-     */
-    public function getStatut()
-    {
-        return $this->statut;
-    }
 
     /**
      * Add taches

@@ -6,45 +6,45 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use PHPM\Bundle\Entity\User;
-use PHPM\Bundle\Form\UserType;
+use PHPM\Bundle\Entity\Lieu;
+use PHPM\Bundle\Form\LieuType;
 
 /**
- * User controller.
+ * Lieu controller.
  *
- * @Route("/user")
+ * @Route("/lieu")
  */
-class UserController extends Controller
+class LieuController extends Controller
 {
     /**
-     * Lists all User entities.
+     * Lists all Lieu entities.
      *
-     * @Route("/", name="user")
+     * @Route("/", name="lieu")
      * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('PHPMBundle:User')->findAll();
+        $entities = $em->getRepository('PHPMBundle:Lieu')->findAll();
 
         return array('entities' => $entities);
     }
 
     /**
-     * Finds and displays a User entity.
+     * Finds and displays a Lieu entity.
      *
-     * @Route("/{id}/show", name="user_show")
+     * @Route("/{id}/show", name="lieu_show")
      * @Template()
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('PHPMBundle:User')->find($id);
+        $entity = $em->getRepository('PHPMBundle:Lieu')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+            throw $this->createNotFoundException('Unable to find Lieu entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -55,15 +55,15 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a form to create a new User entity.
+     * Displays a form to create a new Lieu entity.
      *
-     * @Route("/new", name="user_new")
+     * @Route("/new", name="lieu_new")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new User();
-        $form   = $this->createForm(new UserType(), $entity);
+        $entity = new Lieu();
+        $form   = $this->createForm(new LieuType(), $entity);
 
         return array(
             'entity' => $entity,
@@ -72,17 +72,17 @@ class UserController extends Controller
     }
 
     /**
-     * Creates a new User entity.
+     * Creates a new Lieu entity.
      *
-     * @Route("/create", name="user_create")
+     * @Route("/create", name="lieu_create")
      * @Method("post")
-     * @Template("PHPMBundle:User:new.html.twig")
+     * @Template("PHPMBundle:Lieu:new.html.twig")
      */
     public function createAction()
     {
-        $entity  = new User();
+        $entity  = new Lieu();
         $request = $this->getRequest();
-        $form    = $this->createForm(new UserType(), $entity);
+        $form    = $this->createForm(new LieuType(), $entity);
         $form->bindRequest($request);
 
         if ($form->isValid()) {
@@ -90,7 +90,7 @@ class UserController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('user_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('lieu_show', array('id' => $entity->getId())));
             
         }
 
@@ -101,22 +101,22 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing User entity.
+     * Displays a form to edit an existing Lieu entity.
      *
-     * @Route("/{id}/edit", name="user_edit")
+     * @Route("/{id}/edit", name="lieu_edit")
      * @Template()
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('PHPMBundle:User')->find($id);
+        $entity = $em->getRepository('PHPMBundle:Lieu')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+            throw $this->createNotFoundException('Unable to find Lieu entity.');
         }
 
-        $editForm = $this->createForm(new UserType(), $entity);
+        $editForm = $this->createForm(new LieuType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -127,23 +127,23 @@ class UserController extends Controller
     }
 
     /**
-     * Edits an existing User entity.
+     * Edits an existing Lieu entity.
      *
-     * @Route("/{id}/update", name="user_update")
+     * @Route("/{id}/update", name="lieu_update")
      * @Method("post")
-     * @Template("PHPMBundle:User:edit.html.twig")
+     * @Template("PHPMBundle:Lieu:edit.html.twig")
      */
     public function updateAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('PHPMBundle:User')->find($id);
+        $entity = $em->getRepository('PHPMBundle:Lieu')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+            throw $this->createNotFoundException('Unable to find Lieu entity.');
         }
 
-        $editForm   = $this->createForm(new UserType(), $entity);
+        $editForm   = $this->createForm(new LieuType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
@@ -154,7 +154,7 @@ class UserController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('user_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('lieu_edit', array('id' => $id)));
         }
 
         return array(
@@ -165,9 +165,9 @@ class UserController extends Controller
     }
 
     /**
-     * Deletes a User entity.
+     * Deletes a Lieu entity.
      *
-     * @Route("/{id}/delete", name="user_delete")
+     * @Route("/{id}/delete", name="lieu_delete")
      * @Method("post")
      */
     public function deleteAction($id)
@@ -179,17 +179,17 @@ class UserController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('PHPMBundle:User')->find($id);
+            $entity = $em->getRepository('PHPMBundle:Lieu')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find User entity.');
+                throw $this->createNotFoundException('Unable to find Lieu entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('user'));
+        return $this->redirect($this->generateUrl('lieu'));
     }
 
     private function createDeleteForm($id)

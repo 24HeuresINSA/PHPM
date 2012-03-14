@@ -1,0 +1,24 @@
+{% extends "PHPMBundle:GroupeTache:layout.html.twig"  %}
+{% set pageTitle = 'Nouveau Groupe de Tâches' %}
+{% use "PHPMBundle::new.html.twig" %}
+{% form_theme form _self %}
+
+
+{# {% block style %}#}
+{# {{ parent() }}#}
+{# 			{% stylesheets 'bundles/phpm/css/tache.css' filter='cssrewrite'  %}#}
+{# 				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />#}
+{# 			{% endstylesheets %}#}
+{# {% endblock %}#}
+
+
+
+{% block content %}
+
+<form action="{{ path('groupetache_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Create</button>
+    </p>
+</form>
+{% endblock %}

@@ -1,0 +1,29 @@
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Groupe</th>
+            <th>Équipe</th>
+            <th>Responsable</th>
+            <th>Taches</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('groupetache_edit', { 'id': entity.id }) }}">{{ entity.id }}- {{ entity.nom }}</a></td>
+            <td>{{ entity.equipe.nom }}</td>   
+            <td>{{ entity.responsable }}</td>
+            <td>
+            <ul>
+           {% for tache in entity.taches %}
+            <li class="statut{{  tache.statut }}" ><a class="statut{{  tache.statut }}" href="{{ path('tache_edit', { 'id': tache.id }) }}">{{ tache.id }}- {{ tache.nom }}</a></li>
+            
+            {% endfor %}
+            </ul></td>
+
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+

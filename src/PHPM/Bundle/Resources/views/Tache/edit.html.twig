@@ -14,15 +14,54 @@
 
 
 {% block content %}
-<h2>Informations Générales</h2>
+
 <form action="{{ path('tache_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
+
+{{ form_errors(form) }}
+<div>
+<h2>Informations Générales</h2>
+
+
+    {{ form_errors(form.entity) }}
+    {{ form_widget(form.entity) }}
+</div>
+
+
+<div>
+<h2>Besoins en matériel</h2>
+
+    {{ form_errors(form.Materiel) }}
+    {{ form_widget(form.Materiel) }}
+</div>
+<div>
+
+<h2 style = "clear:both">Commentaires</h2>
+
+
+    {% for com in entity.commentaires %}
+        <div class="com">
+        <div class="com_infos"><span class="com_auteur">{{com.auteur}}</span><span class="com_heure"> {{ com.heure|format_datetime('EEEE dd MMM HH:mm') }}</span></div>
+        <div class="com_texte">{{com.texte|raw}}</div>
+        <div class=clear></div>
+        
+        </div>
+    {% endfor %}
+    <h3>Enregistrer les Modifications</h3>
+    {{ form_errors(form.commentaire) }}
+    {{ form_widget(form.commentaire) }}
+
+
+</div>
+
+
+{{ form_rest(form) }}
     <p>
-        <button type="submit"  name="action" value="infos">Valider</button>
+        <button type="submit" name="action" value="save" style = "float:left">Enregistrer</button>
+        {% if not is_granted('ROLE_ADMIN') and entity.statut ==0 %}<button type="submit" name="action" value="submit_validation">Demander Validation</button>{% endif %}
     </p>
 </form>
 
-<div id="form_besoins">
-<h2>Besoins en matériel</h2>
+
+
 
 {% endblock %}

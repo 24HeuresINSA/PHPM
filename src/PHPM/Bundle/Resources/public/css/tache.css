@@ -16,7 +16,7 @@ margin-right: 1em;
 }
 
 #phpm_bundle_tachetype_Materiel  >div > div  > div > input{
-width: 3em;
+width: 4em;
 
 }
 
@@ -24,4 +24,61 @@ width: 3em;
 clear:both;
 }
 
+}
+
+div.com{
+	clear:both;
+
+	border: none;
+-moz-border-radius: 5px;
+border-radius: 5px;
+	text-shadow: 0px 1px 0px #fff;
+	background-color: #E0E0E0;
+	margin-bottom: .5em;
+	}
+
+div.com_infos{
+	float:left;
+background-color: lightblue;
+margin-right: .5em;
+padding:.2em;
+border-top-left-radius: 5px;
+border-bottom-left-radius: 5px;	
+	
+	
+}
+
+span.com_auteur{
+	float:left;
+		font-weight: bold;
+		padding-right:1em;
+}
+
+span.com_heure{
+	float:left;
+	font-weight: lighter;
+	}
+	
+div.com_texte{
+	padding:.2em;
+	float:left;
+	}
+
+
+
+
+
+
+.statut0  {
+	color:red !important; 
+	
+}
+
+.statut1{
+	color:darkorange !important;
+	
+}
+.statut2{
+	color:green !important;
+	
 }

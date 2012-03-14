@@ -5,26 +5,27 @@ namespace PHPM\Bundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 
-class ConfianceType extends AbstractType
+class LieuType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('nom')
-            ->add('valeur')
-            ->add('couleur')
+            ->add('nom', 'text',array('label'=>'Nom'))
+            ->add('description')
+            ->add('latitude')
+            ->add('longitude')
         ;
     }
     
     public function getDefaultOptions(array $options)
     {
         return array(
-                'data_class' => 'PHPM\Bundle\Entity\Confiance',
+                'data_class' => 'PHPM\Bundle\Entity\Lieu',
         );
     }
 
     public function getName()
     {
-        return 'phpm_bundle_confiancetype';
+        return 'phpm_bundle_lieutype';
     }
 }

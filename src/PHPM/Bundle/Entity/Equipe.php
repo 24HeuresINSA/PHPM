@@ -33,7 +33,7 @@ class Equipe
 
     
     /**
-     * @ORM\ManyToOne(targetEntity="Orga", inversedBy="tachesResponsable")
+     * @ORM\ManyToOne(targetEntity="Orga", inversedBy="equipesResponsable",cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
      * @Assert\Valid
      */

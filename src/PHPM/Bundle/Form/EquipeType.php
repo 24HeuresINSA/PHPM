@@ -5,26 +5,25 @@ namespace PHPM\Bundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 
-class ConfianceType extends AbstractType
+class EquipeType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
             ->add('nom')
-            ->add('valeur')
-            ->add('couleur')
+            ->add('responsable')
         ;
     }
     
     public function getDefaultOptions(array $options)
     {
         return array(
-                'data_class' => 'PHPM\Bundle\Entity\Confiance',
+                'data_class' => 'PHPM\Bundle\Entity\Equipe',
         );
     }
 
     public function getName()
     {
-        return 'phpm_bundle_confiancetype';
+        return 'phpm_bundle_equipetype';
     }
 }

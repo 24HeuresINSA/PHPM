@@ -1,0 +1,20 @@
+{% extends "PHPMBundle:GroupeTache:layout.html.twig"  %}
+{% set pageTitle = 'Liste des Groupes de Tâches' %}
+{% use "PHPMBundle::index.html.twig" %}
+
+{% block style %}
+{{ parent() }}
+			{% stylesheets 'bundles/phpm/css/tache.css' filter='cssrewrite'  %}
+				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
+			{% endstylesheets %}
+{% endblock %}
+
+
+
+{% block content %}
+{% if  entities %}
+
+   {% include 'PHPMBundle:GroupeTache:afficheListe.html.twig' with {'entities': entities} %}
+{% endif %}
+
+{% endblock %}
