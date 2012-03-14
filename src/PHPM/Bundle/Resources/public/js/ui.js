@@ -12,15 +12,17 @@ $(function() {
 	    
 	} );
 	 
-
-	$( '.birthdaydp' ).datepicker({
+	// page orga ?
+	$('.birthdaydp').datepicker({
 		changeMonth: true,
 		changeYear: true,
 		dateFormat: 'yy-mm-dd',
 		yearRange: '1985:1995',
 	});
 	
-	$( '.debutdp' ).datetimepicker({
+	// page créneau (edit/new)
+	// début de la plage
+	$('input.debutdp').datetimepicker({
 		changeMonth: true,
 		changeYear: true,
 		dateFormat: 'yy-mm-dd',
@@ -29,11 +31,33 @@ $(function() {
 		stepMinute: 15,
 		hourGrid: 4,
 		minuteGrid: 15,
-		onClose: function(dateText, inst) { $('.findp').val(dateText);}
-
+		/*currentText: "Maintenant",
+		closeText: "Fermer",*/
+		showButtonPanel: false, // on cache les boutons du bas
+		beforeShow: function(input, inst) {
+			// on calcule la durée du créneau
+			var _debut = $('input.debutdp').datepicker('getDate');
+			var _fin = $('input.findp').datepicker('getDate');
+			
+			if (_debut != null && _fin != null) {
+				// stock la durée dans l'inst, plus propre
+				inst.duree = $('input.findp').datepicker('getDate').getTime()-$('input.debutdp').datepicker('getDate').getTime();
+			}
+		},
+		onClose: function(dateText, inst) {
+			// on modifie l'heure de fin pour garder la durée
+			if (inst.duree != undefined) {
+				var _heureFin = $('input.debutdp').datepicker('getDate').getTime()+inst.duree;
+				$('input.findp').datepicker('setDate', new Date(_heureFin));
+			} else {
+				// cas où le champs fin était vide avant, par défaut on met 2 heures
+				var _heureFin = $('input.debutdp').datepicker('getDate').getTime()+7200000;
+				$('input.findp').datepicker('setDate', new Date(_heureFin));
+			}
+		}
 	});
-	
-	$( '.findp' ).datetimepicker({
+	// fin de la plage
+	$('input.findp').datetimepicker({
 		changeMonth: true,
 		changeYear: true,
 		dateFormat: 'yy-mm-dd',
@@ -41,23 +65,16 @@ $(function() {
 		stepHour: 1,
 		stepMinute: 15,
 		hourGrid: 4,
-		minuteGrid: 15
-
-
+		minuteGrid: 15,
+		/*currentText: "Maintenant",
+		closeText: "Fermer",*/
+		showButtonPanel: false, // on cache les boutons du bas
 	});
 	
-	$( ".datep" ).datepicker({
+	// page ?
+	$('.datep').datepicker({
 		dateFormat: 'yy-mm-dd',
 	});
-	
-	
-	
-	
-	
-	
-
-	   
-	   
 });
 
 function fnShowHide( iCol )
