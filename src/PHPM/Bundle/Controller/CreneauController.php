@@ -327,7 +327,7 @@ class CreneauController extends Controller
     		$response->setContent(json_encode($err->getMessageTemplate()));
     		return $response;
     	}
-    
+
     	$creneau->setDisponibilite(null);
     	$em->flush();
     	$response->setContent('OK');
@@ -336,6 +336,60 @@ class CreneauController extends Controller
     
     	 
     	 
+    }
+    
+    
+    /**
+    *
+    *
+    * @Route("/diviser.json", name="creneau_diviser")
+    * @Template
+    * 
+    */
+    public function diviserAction()
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$request = $this->getRequest();
+    	$creneau_id= $request->request->get('creneau_id', '');
+    	$creneau= $em->getRepository('PHPMBundle:Creneau')->find($creneau_id);
+    	$date_times= $request->request->get('date_time', '');
+		$date_time = new \DateTime($date_times);
+    	var_dump($date_time);
+    	//TODO remplacer les tgc par les erreurs ad hoc
+		if (!$creneau)
+		{
+			return array('response'=>'tgc');
+		}
+		if (!$date_time)
+		{
+			return array('response'=>'tgc');
+		}
+//     	On vérifie que l'heure est bien incluse dans le créneau
+		
+		
+		
+    	if ($date_time < $creneau->getDebut() || $date_time > $creneau->getFin())
+    	{
+			return array('response'=>'tgc');
+    	}
+    	else
+    	{
+//     	=>crée un créneau B possédant les memes propriétés que le créneau A, mais commençant à l'heure fournie
+//     	=>met la fin du créneau A à l'heure fournie
+    		$nouveauCreneau = new Creneau(); 
+    		$nouveauCreneau->setDebut($date_time);
+    		$nouveauCreneau->setFin($creneau->getFin());
+    		$nouveauCreneau->setDisponibilite($creneau->getDisponibilite());
+    		$nouveauCreneau->setPlageHoraire($creneau->getPlageHoraire());
+    		
+    		$creneau->setFin($date_time);
+			
+    		$em->persist($nouveauCreneau);
+    		$em->flush();
+    		return array('response'=>'cay cool');
+    	}
+
+    
     }
     
     

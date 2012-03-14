@@ -59,7 +59,16 @@ OrgaView.prototype = {
 			
 			$('#liste_orgas').append(_html);
 			
-			$('#orga_'+_iOrga).bind('click', {id: _iOrga}, pmAffectation.controllers.orga.clickHandler); // handler de click
+			// handler de click
+			$('#orga_'+_iOrga).bind('click', function(e) {
+				if (e.shiftKey) {
+					// Shift + click : affiche les infos détaillées de l'orga
+					var _popup = window.open(pmAffectation.url+'orga/'+_iOrga+'/show', '', config='height=600, width=600, toolbar=no, menubar=no, location=no, directories=no, status=no');
+				} else {
+					// sinon on click sur l'orga
+					pmAffectation.controllers.orga.clickHandler({id: _iOrga});
+				}
+			});
 		}
 		
 		$("#orga_"+pmAffectation.current.orga.id).addClass('current'); // met le focus là où il faut

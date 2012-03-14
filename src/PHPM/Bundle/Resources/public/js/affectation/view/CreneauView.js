@@ -44,7 +44,7 @@ CreneauView.prototype = {
 		$('#liste_taches').empty(); // reset la liste
 		$('#liste_taches').removeClass('spinner_medium');
 		
-		for (_iCreneau in pmAffectation.data.creneaux) {
+		for (var _iCreneau in pmAffectation.data.creneaux) {
 			var _html = '<div class="item tache" id="tache_'+_iCreneau+'" idCreneau="'+_iCreneau+'">';
 			_html += pmAffectation.data.creneaux[_iCreneau]['nom']+' - '+pmAffectation.data.creneaux[_iCreneau]['lieu']+' (';
 			_html += pmAffectation.data.creneaux[_iCreneau]['debut'].getThisFormat('H:I')+' - '+pmAffectation.data.creneaux[_iCreneau]['fin'].getThisFormat('H:I')+')';
@@ -53,7 +53,22 @@ CreneauView.prototype = {
 			$('#liste_taches').append(_html);
 			
 			// handler de click
-			$('#tache_'+_iCreneau).bind('click', {idCreneau: _iCreneau, idOrga: pmAffectation.current.orga.id}, pmAffectation.controllers.creneau.clickHandler); // handler de click
+			$('#tache_'+_iCreneau).bind('click', function(e) {
+				if (e.shiftKey) {
+					// Shift + click : affiche la page pour modifier le créneau
+					var _popup = window.open(pmAffectation.url+'creneau/'+_iCreneau+'/edit', '', config='height=600, width=600, toolbar=no, menubar=no, location=no, directories=no, status=no');
+					
+					// à la fermeture, refresh la liste des créneaux
+					// unload est firé au chargement (unload de about:blank),
+					// on attache le vrai handler qu'après le chargement initial donc
+					_popup.onunload = function() {
+						_popup.bind('unload', pmAffectation.controllers.creneau.getData());
+					};
+				} else {
+					// sinon on fait l'affectation
+					pmAffectation.controllers.creneau.clickHandler({idCreneau: _iCreneau, idOrga: pmAffectation.current.orga.id});
+				}
+			});
 		}
 	},
 	

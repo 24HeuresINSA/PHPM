@@ -46,10 +46,10 @@ CreneauController.prototype = {
 	// clic sur un creneau : on fait l'affectation
 	clickHandler: function(obj) {
 		// on log l'action
-		pmUtils.logAction('affectation', obj.data.idCreneau, obj.data.idOrga);
+		pmUtils.logAction('affectation', obj.idCreneau, obj.idOrga);
 		
 		// on appelle le webservice
-		pmAffectation.models.creneau.affecterCreneau('affecter', obj.data.idCreneau, obj.data.idOrga, pmAffectation.controllers.creneau.callbackAffectation);
+		pmAffectation.models.creneau.affecterCreneau('affecter', obj.idCreneau, obj.idOrga, pmAffectation.controllers.creneau.callbackAffectation);
 	},
 	// callback
 	callbackAffectation: function() {

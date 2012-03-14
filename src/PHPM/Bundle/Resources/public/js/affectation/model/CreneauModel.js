@@ -25,7 +25,7 @@ CreneauModel.prototype = {
 		var _params = {
 			plage_id: pmAffectation.current.plage, // on fournit toujours la plage, la base
 		};
-		($.isNumeric(pmAffectation.current.quart_heure) === true) && (pmAffectation.current.quart_heure != -1) && (_params.date_time = pmUtils.getDateBack(pmAffectation.current['quart_heure']));
+		(typeof(pmAffectation.current.quart_heure) !== 'undefined') && (pmAffectation.current.quart_heure != -1) && (_params.date_time = pmUtils.getDateBack(pmAffectation.current.quart_heure));
 		($.isNumeric(pmAffectation.current.orga.id) === true) && (pmAffectation.current.orga.id != -1) && (_params.orga_id = pmAffectation.current.orga.id);
 		
 		// filtres
@@ -34,7 +34,7 @@ CreneauModel.prototype = {
 		($.isNumeric(pmAffectation.current.creneau.categorie) === true) && (pmAffectation.current.creneau.categorie != -1) && (_params.categorie_id = pmAffectation.current.creneau.categorie);
 		($.isNumeric(pmAffectation.current.creneau.age) === true) && (pmAffectation.current.creneau.age != -1) && (_params.age = pmAffectation.current.creneau.age);
 		($.isNumeric(pmAffectation.current.creneau.permis) === true) && (pmAffectation.current.creneau.permis != -1) && (_params.permis = pmAffectation.current.creneau.permis);
-				
+		
 		$.ajax({
 			url: pmAffectation.url+pmAffectation.paths.creneaux,
 			dataType: 'json',

@@ -16,8 +16,13 @@ class OrgaRepository extends EntityRepository
 {
 	public function getOrgasWithCriteria($permis, $maxDateNaissance, $plage_id, $niveau_confiance,$creneau)
 	{
-		$dql = "Select Distinct o From PHPMBundle:Orga as o JOIN o.disponibilites d JOIN d.creneaux c Where o.statut=1";
+		// la requête ci-dessous plante (plsu exactement le JOIN) : à corriger
+		//$dql = "Select Distinct o From PHPMBundle:Orga as o JOIN o.disponibilites d JOIN d.creneaux c Where o.statut=1";
 		//le distinct est là à cause du creneau_id, en attendant qu'il soit mieux codé ^ ^
+		
+		// (le JOIN plante)ancienne) requête (148b2848650e5c3af0bff2685054605d5ee10944)
+		$dql = "Select o From PHPMBundle:Orga as o JOIN o.disponibilites d WHERE o.statut=1 AND d.orga != 0";
+		
 		if($permis!='')
 		{
 			$dql.=" AND o.permis >= '$permis'";
