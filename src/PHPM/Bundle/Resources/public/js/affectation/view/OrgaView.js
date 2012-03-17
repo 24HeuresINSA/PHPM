@@ -61,7 +61,7 @@ OrgaView.prototype = {
 			
 			// handler de click
 			$('#orga_'+_iOrga).bind('click', {id: _iOrga}, function(e) {
-				if (e.shiftKey) {
+				if (e.altKey) {
 					// Shift + click : affiche les infos détaillées de l'orga
 					var _popup = window.open(pmAffectation.url+'orga/'+e.data.id+'/show', '', config='height=600, width=600, toolbar=no, menubar=no, location=no, directories=no, status=no');
 				} else {

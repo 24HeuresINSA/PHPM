@@ -55,7 +55,7 @@ CreneauView.prototype = {
 			
 			// handler de click
 			$('#tache_'+_iCreneau).bind('click', {idCreneau: _iCreneau}, function(e) {
-				if (e.shiftKey) {
+				if (e.altKey) {
 					// Shift + click : affiche la page pour modifier le créneau
 					var _popup = window.open(pmAffectation.url+'creneau/'+e.data.idCreneau+'/edit', '', config='height=600, width=600, toolbar=no, menubar=no, location=no, directories=no, status=no');
 					
