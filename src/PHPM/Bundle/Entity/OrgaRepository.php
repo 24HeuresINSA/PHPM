@@ -14,7 +14,7 @@ use PHPM\Bundle\Entity\Config;
  */
 class OrgaRepository extends EntityRepository
 {
-	public function getOrgasWithCriteria($permis, $maxDateNaissance, $plage_id, $niveau_confiance,$creneau)
+	public function getOrgasWithCriteria($permis, $maxDateNaissance, $plage_id, $niveau_confiance, $creneau)
 	{
 		// la requête ci-dessous plante (plus exactement le JOIN) : à corriger
 		//$dql = "Select Distinct o From PHPMBundle:Orga as o JOIN o.disponibilites d JOIN d.creneaux c Where o.statut=1";
