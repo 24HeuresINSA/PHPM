@@ -24,12 +24,14 @@ class ManifType extends AbstractType
     {
     	
         
-        $builder->add('configItems', 'collection',array('type' => new ConfigType(),'allow_add' => true,'by_reference' => false));
+        $builder->add('configItems', 'collection',array('type' => new ConfigType(),'allow_add' => true,'allow_delete' => true,'by_reference' => false));
         
-        $builder->add('lieuItems', 'collection',array('type' => new LieuType(),'allow_add' => true,'by_reference' => false));
-        $builder->add('equipeItems', 'collection',array('type' => new EquipeType(),'allow_add' => true,'by_reference' => false));
-        $builder->add('confianceItems', 'collection',array('type' => new ConfianceType(),'allow_add' => true,'by_reference' => false));
-        $builder->add('materielItems', 'collection',array('type' => new MaterielType(),'allow_add' => true,'by_reference' => false));
+        $builder->add('lieuItems', 'collection',array(
+                'type' => new LieuType(),'allow_add' => true,'by_reference' => false,'allow_delete' => true,
+                'options'  => array( 'label'  => " ")));
+        $builder->add('equipeItems', 'collection',array('type' => new EquipeType(),'allow_add' => true,'allow_delete' => true,'by_reference' => false));
+        $builder->add('confianceItems', 'collection',array('type' => new ConfianceType(),'allow_add' => true,'allow_delete' => true,'by_reference' => false));
+        $builder->add('materielItems', 'collection',array('type' => new MaterielType(),'allow_add' => true,'allow_delete' => true,'by_reference' => false));
         
 		$form = $builder->getForm();
         

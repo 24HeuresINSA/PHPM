@@ -33,7 +33,7 @@ class TacheType extends AbstractType
         $libellesPermis =  json_decode($this->config->getValue('manifestation_permis_libelles'),true);
         
         
-        $i=$builder->create('entity','form',array('label'=>" ", 'required'=>false));
+        $i=$builder->create('entity','form',array('label'=>" ", 'required'=>false, 'data_class' => 'PHPM\Bundle\Entity\Tache'));
         $i->add('groupeTache')
         ->add('nom')
         ->add('consignes')

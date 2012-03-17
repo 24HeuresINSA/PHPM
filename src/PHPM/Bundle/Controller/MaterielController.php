@@ -90,7 +90,7 @@ class MaterielController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('materiel_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('config_manif'));
             
         }
 
@@ -168,16 +168,13 @@ class MaterielController extends Controller
      * Deletes a Materiel entity.
      *
      * @Route("/{id}/delete", name="materiel_delete")
-     * @Method("post")
+     * 
      */
     public function deleteAction($id)
     {
-        $form = $this->createDeleteForm($id);
+        
         $request = $this->getRequest();
 
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
             $entity = $em->getRepository('PHPMBundle:Materiel')->find($id);
 
@@ -187,9 +184,9 @@ class MaterielController extends Controller
 
             $em->remove($entity);
             $em->flush();
-        }
+        
 
-        return $this->redirect($this->generateUrl('materiel'));
+        return $this->redirect($this->generateUrl('config_manif'));
     }
 
     private function createDeleteForm($id)

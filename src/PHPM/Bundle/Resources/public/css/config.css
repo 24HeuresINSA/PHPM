@@ -1,13 +1,14 @@
 @media all {
-.rowsection > div > div {
+.hrow  >div> div{
 
 	float:left;
 }
 
-.rowsection, .rowsection > div{
+.hrow> div{
 		clear:both;
 	
 }
+
 
 
 }

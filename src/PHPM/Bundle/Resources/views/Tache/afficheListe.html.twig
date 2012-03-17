@@ -3,26 +3,20 @@
 <table >
     <thead>
         <tr>
-            <th>Id</th>
             <th>Nom</th>
-            <th>Consignes</th>
-            <th>Lieu</th>
-            <th>permisNecessaire</th>
-            <th>ageNecessaire</th>
-            <th>responsable</th>
-            <th>Actions</th>
+            <th>Groupe de Tâches</th>
+            <th>Équipe</th>
+            <th>Responsable</th>
             
         </tr>
     </thead>
     <tbody>
     {% for entity in entities %}
-        <tr style="cursor:pointer" onclick="window.location='{{ path('tache_show', { 'id': entity.id }) }}'" >
-            <td><a href="{{ path('tache_edit', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.nom }}</td>
-            <td>{{ entity.consignes }}</td>
-            <td>{{ entity.lieu }}</td>
-            <td>{{entity.permisnecessaire|permis}}</td>
-            <td>{{ entity.ageNecessaire }}</td>
+        
+            <td><a href="{{ path('tache_edit', { 'id': entity.id }) }}">{{ entity.id }}
+            {{ entity.nom }}</a></td>
+            <td>{{ entity.groupeTache.nom }}</td>
+            <td>{{ entity.groupeTache.equipe.nom }}</td>            
             <td>{{ entity.responsable }}</td>
             <td>
 					{{ bouton.edit( path('tache_edit', { 'id': entity.id }) ) }}

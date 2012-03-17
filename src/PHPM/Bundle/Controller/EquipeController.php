@@ -90,7 +90,7 @@ class EquipeController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('equipe_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('config_manif'));
             
         }
 
@@ -168,16 +168,16 @@ class EquipeController extends Controller
      * Deletes a Equipe entity.
      *
      * @Route("/{id}/delete", name="equipe_delete")
-     * @Method("post")
+     * 
      */
     public function deleteAction($id)
     {
-        $form = $this->createDeleteForm($id);
+        
         $request = $this->getRequest();
 
-        $form->bindRequest($request);
+        
 
-        if ($form->isValid()) {
+        
             $em = $this->getDoctrine()->getEntityManager();
             $entity = $em->getRepository('PHPMBundle:Equipe')->find($id);
 
@@ -187,9 +187,9 @@ class EquipeController extends Controller
 
             $em->remove($entity);
             $em->flush();
-        }
+        
 
-        return $this->redirect($this->generateUrl('equipe'));
+        return $this->redirect($this->generateUrl('config_manif'));
     }
 
     private function createDeleteForm($id)

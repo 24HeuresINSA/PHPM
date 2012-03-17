@@ -203,7 +203,7 @@ class ConfianceController extends Controller
             $em->flush();
         
 
-        return $this->redirect($this->generateUrl('confiance'));
+        return $this->redirect($this->generateUrl('config_manif'));
     }
 
     private function createDeleteForm($id)

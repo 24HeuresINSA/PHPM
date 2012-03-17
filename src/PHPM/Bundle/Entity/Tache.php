@@ -99,6 +99,7 @@ class Tache
     */
     protected $plagesHoraire;
     
+    
     /**
      * @ORM\ManyToOne(targetEntity="GroupeTache", inversedBy="taches")
      * @ORM\JoinColumn(name="groupetache_id", referencedColumnName="id",onDelete="CASCADE", onUpdate="CASCADE")

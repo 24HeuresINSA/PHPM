@@ -12,7 +12,7 @@ use Sonata\IntlBundle\Templating\Helper;
  * PHPM\Bundle\Entity\BesoinMateriel
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\BesoinMateriel")
+ * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\BesoinMaterielRepository")
  * 
  */
 class BesoinMateriel

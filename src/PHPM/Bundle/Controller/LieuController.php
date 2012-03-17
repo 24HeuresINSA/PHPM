@@ -90,7 +90,7 @@ class LieuController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('lieu_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('config_manif'));
             
         }
 
@@ -168,28 +168,26 @@ class LieuController extends Controller
      * Deletes a Lieu entity.
      *
      * @Route("/{id}/delete", name="lieu_delete")
-     * @Method("post")
+     * 
      */
     public function deleteAction($id)
     {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
+           $request = $this->getRequest();
 
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
             $entity = $em->getRepository('PHPMBundle:Lieu')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Lieu entity.');
+                
             }
 
             $em->remove($entity);
             $em->flush();
-        }
+        
+        
 
-        return $this->redirect($this->generateUrl('lieu'));
+        return $this->redirect($this->generateUrl('config_manif'));
     }
 
     private function createDeleteForm($id)

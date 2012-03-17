@@ -36,6 +36,10 @@ class TacheController extends Controller
  public function indexAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
+        
+        $g =$em
+        ->createQuery("SELECT g FROM PHPMBundle:GroupeTache g JOIN g.equipe e ORDER BY e.id ")
+        ->getResult();
 
         $r =$em
         ->createQuery("SELECT t FROM PHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e WHERE t.statut = 0 ORDER BY e.id ")
@@ -52,7 +56,7 @@ class TacheController extends Controller
 
         
 
-        return array('r'=>$r,'s'=>$s,'v'=>$v);
+        return array('r'=>$r,'s'=>$s,'v'=>$v, 'g'=>$g);
     }
     
     /**

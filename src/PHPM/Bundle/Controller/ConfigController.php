@@ -355,7 +355,7 @@ COMMIT;
 		if ($this->get('request')->getMethod() == 'POST') {
 		$form->bindRequest($request);
 		$data = $form->getData();
-		var_dump("dd");
+		
 		
 		if ($form->isValid()) {
 		    $em->flush();
