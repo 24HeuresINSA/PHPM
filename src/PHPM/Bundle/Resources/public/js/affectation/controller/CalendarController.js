@@ -36,6 +36,15 @@ CalendarController.prototype = {
 	/*
 	 * Handlers
 	 */
+	// clic sur un jour (le titre en haut)
+	clickJour: function(date) {
+		pmAffectation.current.jour = date;
+		
+		pmHistory.setUrlParam(); // maj de l'url
+		
+		// on va chercher les creneaux
+		pmAffectation.controllers.creneau.getData();
+	},
 	// clic sur un quart d'heure
 	clickQuartHeure: function(obj) {
 		// on met une petite classe current, qui indique où on se trouve

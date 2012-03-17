@@ -38,11 +38,13 @@ CalendarView.prototype = {
 		
 		for (var _i=0;_i<_nbJours;_i++) {
 			var _date = new Date(pmAffectation.data.calendar.plage[plage]['debut'].getTime()+_i*24*60*60*1000);
+			var _dateComplete = _date.getThisFormat('Y-m-d');
 
 			// on fait déjà la barre de titre
-			_htmlBarreDates += '<div class="titre_date" style="width: '+100/_nbJours+'%;">'+pmUtils.jours[_date.getDay()]+' '+_date.getThisFormat('d/m') +'</div>';
+			// handler de click via le onClick, seule solution comme le DOM n'est pas encore construit
+			_htmlBarreDates += '<div class="titre_date" onClick="pmAffectation.controllers.calendar.clickJour(\''+_dateComplete+'\')" '
+								+'style="width: '+100/_nbJours+'%;">'+pmUtils.jours[_date.getDay()]+' '+_date.getThisFormat('d/m') +'</div>';
 		
-			var _dateComplete = _date.getThisFormat('Y-m-d');
 			_htmlJours += this.makeADay(_dateComplete, _date.getDay(), _nbJours);
 		}
 		

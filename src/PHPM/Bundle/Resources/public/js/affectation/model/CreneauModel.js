@@ -25,7 +25,8 @@ CreneauModel.prototype = {
 		var _params = {
 			plage_id: pmAffectation.current.plage, // on fournit toujours la plage, la base
 		};
-		(typeof(pmAffectation.current.quart_heure) !== 'undefined') && (pmAffectation.current.quart_heure != -1) && (_params.date_time = pmUtils.getDateBack(pmAffectation.current.quart_heure));
+		(typeof(pmAffectation.current.jour) !== 'undefined') && (pmAffectation.current.jour != -1) && (_params.jour = pmAffectation.current.jour);
+		(typeof(pmAffectation.current.quart_heure) !== 'undefined') && (pmAffectation.current.quart_heure != -1) && (_params.date_time = pmUtils.getDateTimeBack(pmAffectation.current.quart_heure));
 		($.isNumeric(pmAffectation.current.orga.id) === true) && (pmAffectation.current.orga.id != -1) && (_params.orga_id = pmAffectation.current.orga.id);
 		
 		// filtres

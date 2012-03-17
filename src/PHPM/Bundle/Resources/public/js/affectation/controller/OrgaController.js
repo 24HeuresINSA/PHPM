@@ -57,9 +57,10 @@ OrgaController.prototype = {
 		
 		pmAffectation.controllers.creneau.empty(); // vide la colonne creneau
 		
-		// on de-set le quart d'heure
+		// on de-set le quart d'heure et le jour
 		(pmAffectation.current.quart_heure != -1) && ($('#'+pmAffectation.current.quart_heure).removeClass('current')); // si existe bien
 		pmAffectation.current.quart_heure = -1;
+		pmAffectation.current.jour = -1;
 
 		pmAffectation.current.orga.id = obj.id;
 		pmHistory.setUrlParam(); // maj de l'url
