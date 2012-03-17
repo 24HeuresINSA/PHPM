@@ -71,4 +71,13 @@ CalendarController.prototype = {
 		
 		pmHistory.setUrlParam(); // maj de l'url
 	},
+	// reset les paramètres quart d'heure et jour
+	resetDateHeure: function() {
+		// le quart d'heure, check s'il n'y avait pas un current
+		(pmAffectation.current.quart_heure != -1) && ($('#'+pmAffectation.current.quart_heure).removeClass('current'));
+		pmAffectation.current.quart_heure = -1;
+		
+		// le jour
+		pmAffectation.current.jour = -1;
+	},
 }
