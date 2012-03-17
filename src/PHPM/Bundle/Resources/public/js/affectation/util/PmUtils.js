@@ -236,9 +236,10 @@ PmUtils.prototype = {
 	 * S'assurer qu'un nombre est bien sur 2 chiffres,
 	 * Rajoutant un 0 au besoin
 	 * Source : http://www.electrictoolbox.com/pad-number-two-digits-javascript/
+	 * Petite amélioration (cast du number pour virer un potentiel 0 non significatif)
 	 */
 	pad2: function(number) {
-		return (number < 10 ? '0' : '') + number;
+		return (number < 10 ? '0' : '') + Number(number);
 	},
 	
 };
