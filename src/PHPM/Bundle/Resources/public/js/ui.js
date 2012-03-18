@@ -46,10 +46,10 @@ $(function() {
 		},
 		onClose: function(dateText, inst) {
 			// on modifie l'heure de fin pour garder la durée
-			if (inst.duree != undefined) {
+			if (inst.duree != undefined && $('input.debutdp').datepicker('getDate') != null) {
 				var _heureFin = $('input.debutdp').datepicker('getDate').getTime()+inst.duree;
 				$('input.findp').datepicker('setDate', new Date(_heureFin));
-			} else {
+			} else if ($('input.debutdp').datepicker('getDate') != null) {
 				// cas où le champs fin était vide avant, par défaut on met 2 heures
 				var _heureFin = $('input.debutdp').datepicker('getDate').getTime()+7200000;
 				$('input.findp').datepicker('setDate', new Date(_heureFin));

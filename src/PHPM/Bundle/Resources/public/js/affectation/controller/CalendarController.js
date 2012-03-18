@@ -15,6 +15,10 @@ CalendarController.prototype = {
 		pmAffectation.data.calendar = {};
 		pmAffectation.models.calendar = new CalendarModel();
 		pmAffectation.views.calendar = new CalendarView();
+		
+		// on s'occupe de lier le petit bouton en haut
+		$('#bouton_reset').button();
+		$('#bouton_reset').bind('click', this.resetDateHeure)
 	},
 	
 	/*
@@ -36,6 +40,15 @@ CalendarController.prototype = {
 	/*
 	 * Handlers
 	 */
+	// clic sur un jour (le titre en haut)
+	clickJour: function(date) {
+		pmAffectation.current.jour = date;
+		
+		pmHistory.setUrlParam(); // maj de l'url
+		
+		// on va chercher les creneaux
+		pmAffectation.controllers.creneau.getData();
+	},
 	// clic sur un quart d'heure
 	clickQuartHeure: function(obj) {
 		// on met une petite classe current, qui indique où on se trouve
@@ -61,5 +74,22 @@ CalendarController.prototype = {
 		pmAffectation.controllers.creneau.empty(); // vide la colonne creneau - deviendra peut-être inutile si on prend un orga par défaut
 		
 		pmHistory.setUrlParam(); // maj de l'url
+	},
+	// reset les paramètres quart d'heure et jour
+	// fetchData : si non on met à jour la liste des créneaux, sinon s'occupe juste de current
+	resetDateHeure: function(notFetchData) {
+		// le quart d'heure, check s'il n'y avait pas un current
+		(pmAffectation.current.quart_heure != -1) && ($('#'+pmAffectation.current.quart_heure).removeClass('current'));
+		pmAffectation.current.quart_heure = -1;
+		
+		// le jour
+		pmAffectation.current.jour = -1;
+		
+		if (notFetchData !== true) {
+			pmHistory.setUrlParam(); // maj de l'url
+			
+			// on re-get les créneaux
+			pmAffectation.controllers.creneau.getData();
+		}
 	},
 }

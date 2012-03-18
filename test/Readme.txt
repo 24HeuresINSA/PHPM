@@ -1,0 +1,2 @@
+L'admin doit posseder l'id 1
+Pour importer la base de donnée, ouvrir phpmyadmin et importer les données (la suppression des anciennes données et gérée automatiquement, l'orga possèdant l'id 1 (administrateur est gardé)

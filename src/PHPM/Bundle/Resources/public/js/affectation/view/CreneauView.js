@@ -47,16 +47,17 @@ CreneauView.prototype = {
 		for (var _iCreneau in pmAffectation.data.creneaux) {
 			var _html = '<div class="item tache" id="tache_'+_iCreneau+'" idCreneau="'+_iCreneau+'">';
 			_html += pmAffectation.data.creneaux[_iCreneau]['nom']+' - '+pmAffectation.data.creneaux[_iCreneau]['lieu']+' (';
+			_html += pmAffectation.data.creneaux[_iCreneau]['debut'].getThisFormat('j')+' : ';
 			_html += pmAffectation.data.creneaux[_iCreneau]['debut'].getThisFormat('H:I')+' - '+pmAffectation.data.creneaux[_iCreneau]['fin'].getThisFormat('H:I')+')';
 			_html += '</div>';
 			
 			$('#liste_taches').append(_html);
 			
 			// handler de click
-			$('#tache_'+_iCreneau).bind('click', function(e) {
-				if (e.shiftKey) {
+			$('#tache_'+_iCreneau).bind('click', {idCreneau: _iCreneau}, function(e) {
+				if (e.altKey) {
 					// Shift + click : affiche la page pour modifier le créneau
-					var _popup = window.open(pmAffectation.url+'creneau/'+_iCreneau+'/edit', '', config='height=600, width=600, toolbar=no, menubar=no, location=no, directories=no, status=no');
+					var _popup = window.open(pmAffectation.url+'creneau/'+e.data.idCreneau+'/edit', '', config='height=600, width=600, toolbar=no, menubar=no, location=no, directories=no, status=no');
 					
 					// à la fermeture, refresh la liste des créneaux
 					// unload est firé au chargement (unload de about:blank),
@@ -66,7 +67,7 @@ CreneauView.prototype = {
 					};
 				} else {
 					// sinon on fait l'affectation
-					pmAffectation.controllers.creneau.clickHandler({idCreneau: _iCreneau, idOrga: pmAffectation.current.orga.id});
+					pmAffectation.controllers.creneau.clickHandler({idCreneau: e.data.idCreneau, idOrga: pmAffectation.current.orga.id});
 				}
 			});
 		}

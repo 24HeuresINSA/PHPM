@@ -665,10 +665,10 @@ public function validationAction()
 	{
 		$request = $this->getRequest();
 		
-		$permis= $request->request->get('permis', '');
-		$age= $request->request->get('age', '0');
-		$plage_id= $request->request->get('plage_id', '');
-		$niveau_confiance= $request->request->get('confiance_id', '');
+		$permis = $request->request->get('permis', '');
+		$age = $request->request->get('age', '0');
+		$plage_id = $request->request->get('plage_id', '');
+		$niveau_confiance = $request->request->get('confiance_id', '');
 		$maxDateNaissance = new \DateTime();
 		$creneau = $request->request->get('creneau_id', '');
 		

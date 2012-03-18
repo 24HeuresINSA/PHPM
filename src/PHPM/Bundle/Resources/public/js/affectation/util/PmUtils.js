@@ -220,7 +220,7 @@ PmUtils.prototype = {
 	 * A partir d'une date hashée (comme dans les paramètres de l'url)
 	 * Ne pas chercher à faire autrement, trop de chars spéciaux pour passer la date dans l'url !
 	 */
-	getDateBack: function(str) {
+	getDateTimeBack: function(str) {
 		if (str == -1) {
 			return -1; // rien à parser, c'est le wildcart
 		}
@@ -236,9 +236,10 @@ PmUtils.prototype = {
 	 * S'assurer qu'un nombre est bien sur 2 chiffres,
 	 * Rajoutant un 0 au besoin
 	 * Source : http://www.electrictoolbox.com/pad-number-two-digits-javascript/
+	 * Petite amélioration (cast du number pour virer un potentiel 0 non significatif)
 	 */
 	pad2: function(number) {
-		return (number < 10 ? '0' : '') + number;
+		return (number < 10 ? '0' : '') + Number(number);
 	},
 	
 };

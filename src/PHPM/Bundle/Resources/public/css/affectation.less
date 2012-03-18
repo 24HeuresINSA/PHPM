@@ -102,6 +102,10 @@ body {
 	  float: left;
 	}
 	
+	.bouton_reset {
+	  height: auto;
+	}
+	
 	.bouton_hide_menu {
 	  position: absolute;
 	  top: 0;
@@ -153,6 +157,7 @@ body {
       text-align: center;
       background: #BBB;
       overflow: hidden;
+      cursor: pointer;
       .border-box();
       
       &:last-of-type {
@@ -223,6 +228,7 @@ body {
           // quart d'heure disponible, clair
           &.free {
             background: #fff;
+            cursor: pointer;
           }
           // le quart d'heure sur lequel on vient de cliquer a un petit indicateur
           &.current {

@@ -14,28 +14,27 @@ use PHPM\Bundle\Entity\Config;
  */
 class OrgaRepository extends EntityRepository
 {
-	public function getOrgasWithCriteria($permis, $maxDateNaissance, $plage_id, $niveau_confiance,$creneau)
+	public function getOrgasWithCriteria($permis, $maxDateNaissance, $plage_id, $niveau_confiance, $creneau)
 	{
-		// la requête ci-dessous plante (plsu exactement le JOIN) : à corriger
+		// la requête ci-dessous plante (plus exactement le JOIN) : à corriger
 		//$dql = "Select Distinct o From PHPMBundle:Orga as o JOIN o.disponibilites d JOIN d.creneaux c Where o.statut=1";
 		//le distinct est là à cause du creneau_id, en attendant qu'il soit mieux codé ^ ^
 		
 		// (le JOIN plante)ancienne) requête (148b2848650e5c3af0bff2685054605d5ee10944)
 		$dql = "Select o From PHPMBundle:Orga as o JOIN o.disponibilites d WHERE o.statut=1 AND d.orga != 0";
 		
-		if($permis!='')
-		{
-			$dql.=" AND o.permis >= '$permis'";
+		if ($permis != '') {
+			$dql.=" AND o.permis = '$permis'";
 		}
-		if($maxDateNaissance !='')
+		if ($maxDateNaissance != '')
 		{
 			$dql.=" AND o.dateDeNaissance <= '$maxDateNaissance'";
 		}
-		if($niveau_confiance !='')
+		if ($niveau_confiance != '')
 		{
 			$dql.=" AND o.confiance >= '$niveau_confiance'";
 		}
-		if($plage_id !='')
+		if ($plage_id != '')
 		{
 			$pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation_plages')->getValue(),TRUE);
 			$plage= $pref[$plage_id];
@@ -43,7 +42,7 @@ class OrgaRepository extends EntityRepository
 			$debut=$plage["debut"];
 			$dql.=" AND d.debut < '$fin' AND d.fin > '$debut'";
 		}
-		if($creneau !='')
+		if ($creneau != '')
 		{
 			//test sur l'overlap des créneaux
 			$dql.=" AND (o.id NOT IN (SELECT oi.id FROM PHPMBundle:Orga as oi JOIN oi.disponibilites di JOIN di.creneaux ci, PHPMBundle:Creneau cref where cref.id = '$creneau' AND (ci.debut < cref.fin) AND (ci.fin > cref.debut ) ))";
