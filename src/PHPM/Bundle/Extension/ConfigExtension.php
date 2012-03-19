@@ -11,12 +11,8 @@ class ConfigExtension extends \Twig_Extension {
         $this->doctrine = $doctrine;
         
 
-        
-        
         $this->configs = $this->doctrine->getEntityManager()->getRepository('PHPMBundle:Config')->findAllAsArray();        
   
-        
-        
         
     }
     

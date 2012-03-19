@@ -58,6 +58,13 @@ class GroupeTache
      * @Assert\Valid
      */
     protected $lieu;
+    
+    /**
+     * @var integer $animLiee
+     *
+     * @ORM\Column(name="animLiee", type="integer")
+     */
+    protected $animLiee;
 
     
     public function __toString()
@@ -178,5 +185,25 @@ class GroupeTache
     public function getLieu()
     {
         return $this->lieu;
+    }
+
+    /**
+     * Set animLiee
+     *
+     * @param integer $animLiee
+     */
+    public function setAnimLiee($animLiee)
+    {
+        $this->animLiee = $animLiee;
+    }
+
+    /**
+     * Get animLiee
+     *
+     * @return integer 
+     */
+    public function getAnimLiee()
+    {
+        return $this->animLiee;
     }
 }

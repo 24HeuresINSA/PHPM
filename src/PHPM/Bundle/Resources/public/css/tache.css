@@ -1,21 +1,31 @@
 @media all {
 
-#phpm_bundle_tachetype_Materiel > div > div > div{
+
+ #phpm_bundle_tachetype_entity_plagesHoraire > div > div > div{
 	float:left;
 }
 
 
 
-#phpm_bundle_tachetype_Materiel  > div {
+ #phpm_bundle_tachetype_entity_plagesHoraire > div{
 clear:both;
 }
 
-#phpm_bundle_tachetype_Materiel  >div > div  > div{
-text-align: center;
-margin-right: 1em;
+#phpm_bundle_tachetype_entity_consignes{
+	height:10em;
 }
 
-#phpm_bundle_tachetype_Materiel  >div > div  > div > input{
+#phpm_bundle_tachetype_entity_ageNecessaire{
+	width: 3em;
+}
+
+.materiel_item{
+text-align: center;
+margin-right: 1em;
+float:left;
+}
+
+.materiel_item > input{
 width: 4em;
 
 }

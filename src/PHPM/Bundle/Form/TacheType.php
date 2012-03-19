@@ -34,22 +34,32 @@ class TacheType extends AbstractType
         
         
         $i=$builder->create('entity','form',array('label'=>" ", 'required'=>false, 'data_class' => 'PHPM\Bundle\Entity\Tache'));
-        $i->add('groupeTache')
+        $i->add('groupeTache', 'entity', array(
+    'class' => 'PHPMBundle:GroupeTache'
+    
+            
+    
+))
         ->add('nom')
         ->add('consignes')
         ->add('lieu')
-        ->add('categorie')
         ->add('confiance')
         ->add('consignes')
         ->add('permisNecessaire','choice',array('label'=>'Permis Nécessaire', 'choices'=>$libellesPermis))
         ->add('ageNecessaire')
-        ->add('responsable');
+        ->add('responsable')
+        ->add('materielSupplementaire');
+       
         
         if($this->admin){
         $i->add('statut', 'choice',array('choices'=>array('0'=>'En rédaction','1'=>'Soumise à validation','2'=>'Validée')));
         }
         
-        
+        $i->add('plagesHoraire','collection',array('type' => new PlageHoraireType(),'allow_add' => true,'allow_delete' => true,
+                'by_reference' => false,
+                'options'  => array( 'label'  => " "),
+                'property_path'=>'plagesHoraire'
+        ));
         
         $m=$builder->create('Materiel','form',array('label'=>"Matériel requis", 'required'=>false));
         $builder->add($i)

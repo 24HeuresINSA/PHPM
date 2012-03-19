@@ -16,7 +16,7 @@ use PHPM\Bundle\Validator\Recoupe;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\DisponibiliteRepository")
  * @DebutAvantFin()
- * @Recoupe()
+
  */
 class Disponibilite
 {

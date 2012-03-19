@@ -2,14 +2,21 @@
 {% set pageTitle = 'Liste des Tâches' %}
 {% use "PHPMBundle::index.html.twig" %}
 
+{% block style %}
+{{ parent() }}
+			{% stylesheets 'bundles/phpm/css/tache.css' filter='cssrewrite'  %}
+				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
+			{% endstylesheets %}
+{% endblock %}
+
 {% block content %}
 
 <div id="tabs">
 	<ul>
 	    <li><a href="#tabs-1">Groupes de tâches</a></li>
-		<li><a href="#tabs-2">Tâches soumises à validation</a></li>
-		<li><a href="#tabs-3">Tâches en cours de rédaction</a></li>
-		<li><a href="#tabs-4">Tâches validées</a></li>
+		<li><a href="#tabs-2" class="statut1" >Tâches soumises à validation</a></li>
+		<li><a href="#tabs-3" class="statut0">Tâches en cours de rédaction</a></li>
+		<li><a href="#tabs-4" class="statut2">Tâches validées</a></li>
 	</ul>
 	
 	<div id="tabs-1">

@@ -32,11 +32,12 @@ class RecoupeValidator extends ConstraintValidator
   
 public function isValid($entity, Constraint $constraint)
     {
-    	$debut=$entity->getDebut()->format('Y-m-d H:i:s');
+    	
+        $debut=$entity->getDebut()->format('Y-m-d H:i:s');
     	$fin=$entity->getFin()->format('Y-m-d H:i:s');
     	$id = $entity->getId();
-    	if(!isset($id))
-    	$id=0;
+//     	if(!isset($id))
+//     	$id=0;
     	if($entity instanceof Disponibilite){
     	    
     		$pid=$entity->getOrga()->getId();
@@ -48,7 +49,7 @@ public function isValid($entity, Constraint $constraint)
                 ->setParameter('pid', $pid)
                
                 ->setParameter('debut', $debut)
-                ->setParameter('fin', $debut)
+                ->setParameter('fin', $fin)
                 ->getSingleScalarResult();
             
             
@@ -56,7 +57,7 @@ public function isValid($entity, Constraint $constraint)
     	
     	}elseif ($entity instanceof PlageHoraire){
     		
-    		
+    	    
     		$pid=$entity->getTache()->getId();
     		
     		$dql = 'SELECT (count(p)) FROM PHPMBundle:PlageHoraire p WHERE p.tache = :pid AND (p.debut < :fin ) AND (p.fin > :debut) AND p.id!=:id';
@@ -68,10 +69,9 @@ public function isValid($entity, Constraint $constraint)
                 ->setParameter('pid', $pid)
                 
                 ->setParameter('debut', $debut)
-                ->setParameter('fin', $debut)
+                ->setParameter('fin', $fin)
                 ->getSingleScalarResult();
-            
-            
+
             
             
     	}elseif ($entity instanceof Creneau){
@@ -87,7 +87,7 @@ public function isValid($entity, Constraint $constraint)
                 ->setParameter('pid', $pid)
                 ->setParameter('tid', $tid)
                 ->setParameter('debut', $debut)
-                ->setParameter('fin', $debut)
+                ->setParameter('fin', $fin)
                 ->getSingleScalarResult();
             
     	}else{

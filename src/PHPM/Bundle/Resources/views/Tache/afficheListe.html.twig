@@ -13,8 +13,7 @@
     <tbody>
     {% for entity in entities %}
         
-            <td><a href="{{ path('tache_edit', { 'id': entity.id }) }}">{{ entity.id }}
-            {{ entity.nom }}</a></td>
+            <td><a href="{{ path('tache_edit', { 'id': entity.id }) }}">{{ entity.id }}- {{ entity.nom }}</a></td>
             <td>{{ entity.groupeTache.nom }}</td>
             <td>{{ entity.groupeTache.equipe.nom }}</td>            
             <td>{{ entity.responsable }}</td>

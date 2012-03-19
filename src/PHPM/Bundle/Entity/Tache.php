@@ -46,6 +46,14 @@ class Tache
      */
     protected $consignes;
     
+    /**
+     * @var text $materielSupplementaire
+     *
+     * @ORM\Column(name="materielSupplementaire", type="text")
+     * 
+     */
+    protected $materielSupplementaire;
+    
     
     /**
     * @var smallint $permisNecessaire
@@ -95,7 +103,7 @@ class Tache
     protected $confiance;
     
     /**
-    * @ORM\OneToMany(targetEntity="PlageHoraire", mappedBy="tache", indexBy="id")
+    * @ORM\OneToMany(targetEntity="PlageHoraire", mappedBy="tache", indexBy="id",orphanRemoval=true, cascade={"persist", "remove"})
     */
     protected $plagesHoraire;
     
@@ -208,9 +216,23 @@ class Tache
      *
      * @param PHPM\Bundle\Entity\PlageHoraire $plagesHoraire
      */
-    public function addPlageHoraire(\PHPM\Bundle\Entity\PlageHoraire $plagesHoraire)
+    public function addPlageHoraire(\PHPM\Bundle\Entity\PlageHoraire $plageHoraire)
     {
-        $this->plagesHoraire[] = $plagesHoraire;
+        var_dump("ap");
+        $plageHoraire->setTache($this);
+        $this->plagesHoraire[] = $plageHoraire;
+    }
+    
+    /**
+     * Set plagesHoraire
+     *
+     * @param PHPM\Bundle\Entity\PlageHoraire $plagesHoraire
+     */
+    public function setPlagesHoraire($plagesHoraire)
+    {
+        foreach ($plagesHoraire as $pl)
+            $pl->setTache($this);
+        $this->plagesHoraire = $plagesHoraire;
     }
 
     /**
@@ -509,4 +531,24 @@ class Tache
 
     
     
+
+    /**
+     * Set materielSupplementaire
+     *
+     * @param text $materielSupplementaire
+     */
+    public function setMaterielSupplementaire($materielSupplementaire)
+    {
+        $this->materielSupplementaire = $materielSupplementaire;
+    }
+
+    /**
+     * Get materielSupplementaire
+     *
+     * @return text 
+     */
+    public function getMaterielSupplementaire()
+    {
+        return $this->materielSupplementaire;
+    }
 }

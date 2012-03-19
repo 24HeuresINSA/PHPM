@@ -16,7 +16,7 @@ use PHPM\Bundle\Validator\Recoupe;
  * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\CreneauRepository")
  * @DebutAvantFin()
  * @Inclus()
- * @Recoupe()
+
  */
 class Creneau
 {

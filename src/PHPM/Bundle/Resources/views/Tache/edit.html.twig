@@ -12,31 +12,121 @@
 			{% endstylesheets %}
 {% endblock %}
 
+{% form_theme form _self %}
+
+
 
 {% block content %}
 
 <form action="{{ path('tache_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
 
 {{ form_errors(form) }}
-<div>
+
+
 <h2>Informations Générales</h2>
+<div>
+<div class="form_row">
+{{ form_row(form.entity.nom, { 'label':  'Nom de la tâche'}) }}
+
+{{ form_row(form.entity.groupeTache, { 'label':  'Groupe de la tâche'}) }}
+
+{{ form_row(form.entity.lieu, { 'label':  'Lieu'}) }}
+{{ form_row(form.entity.confiance, { 'label':  'Niveau de Confiance requis'}) }}
+{{ form_row(form.entity.permisNecessaire, { 'label':  'Permis nécessaire'}) }}
+{{ form_row(form.entity.ageNecessaire, { 'label':  'Âge nécessaire'}) }}
+
+ </div>
+ <div class="form_row">
+
+{{ form_row(form.entity.responsable, { 'label':  'Orga Responsable'}) }}
 
 
-    {{ form_errors(form.entity) }}
-    {{ form_widget(form.entity) }}
+
+
+ </div>
+ 
+ <div class="clear" >
+<h3>{{ form_label(form.entity.consignes,'Consignes') }}</h3>
+{{ form_widget(form.entity.consignes) }}
+
+
+
+
+
 </div>
 
 
+</div>
+
+<h2>Plages Horaires</h2>
 <div>
+    {{ form_widget(form.entity.plagesHoraire) }}
+    
+
+    
+    <div class ="clear"></div>
+    
+    
+    
+<a class="addbutton" id="addPHButton" href="#">+</a>
+<a class="rmbutton"  id="rmPHButton" href="#">-</a>
+    
+    </div>
+    
+    <script type="text/javascript">
+function addTagForm() {
+var collectionHolder = $('#phpm_bundle_tachetype_entity_plagesHoraire');
+// Get the data-prototype we explained earlier
+var prototype = collectionHolder.attr('data-prototype');
+// Replace '$$name$$' in the prototype's HTML to
+// instead be a number based on the current collection's length.
+form = prototype.replace(/\$\$name\$\$/g, collectionHolder.children().length);
+// Display the form in the page
+collectionHolder.append(form);
+}
+
+function rmTagForm() {
+	var last = $('#phpm_bundle_tachetype_entity_plagesHoraire > :last-child');
+	
+	last.remove();
+	}
+
+$('#addPHButton').click(function(event){
+    addTagForm();
+});
+$('#rmPHButton').click(function(event){
+    rmTagForm();
+});
+</script>
+    
+    
+    
+
+
+
+
+
+
 <h2>Besoins en matériel</h2>
-
-    {{ form_errors(form.Materiel) }}
-    {{ form_widget(form.Materiel) }}
-</div>
 <div>
+  
+    {% for c in form.Materiel %}
+    <h3>{{ form_label(c) }}</h3>
+    <div>
+    {% for i in c %}
+     
+<div class="materiel_item">{{ form_label(i) }}<br/>{{ form_widget(i) }}</div>
+{% endfor %}
+</div>
+{% endfor %} 
+<h3>{{ form_label(form.entity.materielSupplementaire,'Matériel Supplémentaire') }}</h3>
+{{ form_widget(form.entity.materielSupplementaire) }}
 
-<h2 style = "clear:both">Commentaires</h2>
+</div>
 
+
+<h2>Commentaires</h2>
+<div>
 
     {% for com in entity.commentaires %}
         <div class="com">
@@ -49,7 +139,9 @@
     <h3>Enregistrer les Modifications</h3>
     {{ form_errors(form.commentaire) }}
     {{ form_widget(form.commentaire) }}
-
+{% if form.entity.statut is defined %}
+{{ form_row(form.entity.statut, { 'label':  'Statut'}) }}
+{% endif %}
 
 </div>
 

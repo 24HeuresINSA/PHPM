@@ -67,10 +67,13 @@ class GroupeTacheController extends Controller
      */
     public function newAction()
     {
+        $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+        $em = $this->getDoctrine()->getEntityManager();
+        $config  =$this->get('config.extension');
         $user = $this->get('security.context')->getToken()->getUser();
         $entity = new GroupeTache();
         $entity->setResponsable($user);
-        $form   = $this->createForm(new GroupeTacheType(), $entity);
+        $form   = $this->createForm(new GroupeTacheType($admin,$config), $entity);
         
         
         return array(
@@ -117,6 +120,9 @@ class GroupeTacheController extends Controller
      */
     public function editAction($id)
     {
+        $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+        $em = $this->getDoctrine()->getEntityManager();
+        $config  =$this->get('config.extension');
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:GroupeTache')->find($id);
@@ -125,7 +131,7 @@ class GroupeTacheController extends Controller
             throw $this->createNotFoundException('Unable to find GroupeTache entity.');
         }
 
-        $editForm = $this->createForm(new GroupeTacheType(), $entity);
+        $editForm = $this->createForm(new GroupeTacheType($admin,$config), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(

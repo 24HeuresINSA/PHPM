@@ -18,13 +18,19 @@ class PlageHoraireType extends AbstractType
                     'label'=>'Fin',
                     'widget' => 'single_text',
                     'attr'=>array('class'=>'findp')))
-            ->add('tache')
-			->add('nbOrgasNecessaires')
-			->add('dureeCreneau')
-			->add('recoupementCreneau')
+			->add('nbOrgasNecessaires',null,array('label'=>'Orgas nécessaires'))
+			->add('dureeCreneau',null,array('label'=>'Durée d\'un créneau'))
+			->add('recoupementCreneau',null,array('label'=>'Marge entre créneaux'))
 			
 			;
 
+    }
+    
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'PHPM\Bundle\Entity\PlageHoraire',
+        );
     }
 
     public function getName()
