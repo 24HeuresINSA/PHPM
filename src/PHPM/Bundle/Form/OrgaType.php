@@ -42,7 +42,8 @@ class OrgaType extends AbstractType
             ->add('datePermis', null, array(
                             'label'=>'Date de permis',
                             'widget' => 'single_text',
-                            'format' => 'yyyy-MM-dd'))
+                            'format' => 'yyyy-MM-dd',
+                            'attr'=>array('class'=>'datep')))
             ->add('departement','choice',array('label'=>'Département INSA', 'choices'=>array(
                     'PC'=>'PC','GMC'=>'GMC','GMD'=>'GMD', 'GMPP'=>'GMPP', 'IF'=>'IF', 'SGM'=>'SGM',
                     'GI'=>'GI', 'GE'=>'GE', 'TC'=>'TC', 'GCU'=>'GCU', 'BIM'=>'BIM', 'BIOCH'=>'BIOCH', 'GEN'=>'GEN', 'Autre'=>'Autre' 

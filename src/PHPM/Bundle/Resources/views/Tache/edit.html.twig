@@ -37,23 +37,14 @@
 <div>
 <div class="form_row">
 {{ form_row(form.entity.nom, { 'label':  'Nom de la tâche'}) }}
-
 {{ form_row(form.entity.groupeTache, { 'label':  'Groupe de la tâche'}) }}
-
+{{ form_row(form.entity.responsable, { 'label':  'Orga Responsable'}) }}
 {{ form_row(form.entity.lieu, { 'label':  'Lieu de rendez-vous'}) }}
 {{ form_row(form.entity.confiance, { 'label':  'Niveau de confiance requis'}) }}
 {{ form_row(form.entity.permisNecessaire, { 'label':  'Permis nécessaire'}) }}
-{{ form_row(form.entity.ageNecessaire, { 'label':  'Âge nécessaire'}) }}
 
  </div>
- <div class="form_row">
 
-{{ form_row(form.entity.responsable, { 'label':  'Orga Responsable'}) }}
-
-
-
-
- </div>
  
  <div class="clear" >
 <h3>{{ form_label(form.entity.consignes,'Consignes') }}</h3>{{ form_errors(form.entity.consignes) }}

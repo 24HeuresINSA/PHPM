@@ -12,7 +12,7 @@
             <th>Com'</th>
             <th width="10em">Départ</th>
             <th>Commentaire</th>
-            <th>Permis</th>
+            
             <th>Admin</th>
             <th>Actions</th>
         </tr>
@@ -28,7 +28,6 @@
             <td>{{ entity.equipe }}</td>
             <td>{{ entity.departement }}</td>
             <td>{{ entity.commentaire }}</td>
-            <td>{{entity.permis}}</td>
             <td>{{ entity.isAdmin }}</td>
             <td><span><a href="{{ path('orga_show', { 'id': entity.id }) }}">Détails</a>
             <a href="{{ path('orga_edit', { 'id': entity.id }) }}">Éditer</a>

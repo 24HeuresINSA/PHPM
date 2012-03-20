@@ -73,7 +73,9 @@ $(function() {
 	
 	// page ?
 	$('.datep').datepicker({
-		dateFormat: 'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true,
+		dateFormat: 'yy-mm-dd'
 	});
 
 	

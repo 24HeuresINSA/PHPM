@@ -51,7 +51,6 @@ class TacheType extends AbstractType
         ->add('confiance')
         ->add('consignes')
         ->add('permisNecessaire','choice',array('label'=>'Permis Nécessaire', 'choices'=>$libellesPermis))
-        ->add('ageNecessaire')
         ->add('responsable')
         ->add('materielSupplementaire');
        

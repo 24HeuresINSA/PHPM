@@ -62,15 +62,7 @@ class Tache
     * @Assert\Min(limit = "0")
     */
     protected $permisNecessaire;
-
-    /**
-    * @var smallint $ageNecessaire
-    *
-    * @ORM\Column(name="ageNecessaire", type="smallint")
-    * @Assert\Min(limit = "0")
-    */
-    protected $ageNecessaire;
-    
+  
     
     /**
      * @var string $lieu
@@ -356,25 +348,6 @@ class Tache
         return $this->importId;
     }
 
-    /**
-     * Set ageNecessaire
-     *
-     * @param smallint $ageNecessaire
-     */
-    public function setAgeNecessaire($ageNecessaire)
-    {
-        $this->ageNecessaire = $ageNecessaire;
-    }
-
-    /**
-     * Get ageNecessaire
-     *
-     * @return smallint 
-     */
-    public function getAgeNecessaire()
-    {
-        return $this->ageNecessaire;
-    }
 
     /**
      * Set responsable
