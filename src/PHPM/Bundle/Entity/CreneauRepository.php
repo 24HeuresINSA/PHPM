@@ -131,9 +131,11 @@ class CreneauRepository extends EntityRepository
 	    	$dql.= "AND t.categorie = $categorie ";
 	    }
 
-// 	    TODO:Implement according to SQL specs
-// 	    if ($duree !='')
-// 	    $dql.= "AND ((c.fin - c.debut) <= $duree ) ";
+		// A TESTER
+		/*
+ 	    if ($duree !='') {
+ 	    	$dql.= 'AND (DATE_DIFF(c.debut, c.fin) <= '.($duree/3600/24).' ) '; // DATE_DIFF en jour
+		}*/
 	    
 	    if ($plage != '') {
 		    $pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation_plages')->getValue(),TRUE);
