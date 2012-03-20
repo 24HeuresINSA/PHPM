@@ -10,9 +10,11 @@ namespace PHPM\Bundle\Entity;
 class AnimLinker
 {
     protected  $dbpath;
+    protected $edition;
    
-    public function __construct($dbpath){
+    public function __construct($dbpath, $edition){
         $this->dbpath=$dbpath;
+        $this->edition=$edition;
         
     }
     
@@ -23,7 +25,7 @@ class AnimLinker
         
         $anims = array();
         if (!$dbhandle) die ($error);
-        $results = $dbhandle->query('SELECT id,numero,nom FROM anims');
+        $results = $dbhandle->query("SELECT id,numero,nom FROM anims WHERE edition=$this->edition");
         while ($row = $results->fetchArray()) {
             $anims[$row['id']]=($row['nom']);
         }

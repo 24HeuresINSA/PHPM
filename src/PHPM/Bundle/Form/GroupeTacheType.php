@@ -19,7 +19,7 @@ class GroupeTacheType extends AbstractType
     
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $al = new AnimLinker($this->config->getValue('animations.db.path'));
+        $al = new AnimLinker($this->config->getValue('animations_db_path'),$this->config->getValue('manifestation_edition'));
         
         
         $builder
