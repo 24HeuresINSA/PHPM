@@ -52,17 +52,25 @@ class GroupeTache
     protected $equipe;
 
     
+//     /**
+//      * @ORM\ManyToOne(targetEntity="Lieu", inversedBy="groupestache")
+//      * @ORM\JoinColumn(name="lieu_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+//      * @Assert\Valid
+//      */
+//     protected $lieu;
+    
     /**
-     * @ORM\ManyToOne(targetEntity="Lieu", inversedBy="groupestache")
-     * @ORM\JoinColumn(name="lieu_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
-     * @Assert\Valid
+     * @var string $lieu
+     *
+     * @ORM\Column(name="lieu", type="string", length=255)
+     * @Assert\NotBlank()
      */
     protected $lieu;
     
     /**
      * @var integer $animLiee
      *
-     * @ORM\Column(name="animLiee", type="integer")
+     * @ORM\Column(name="animLiee", type="integer", nullable="true")
      */
     protected $animLiee;
 
@@ -167,25 +175,7 @@ class GroupeTache
         return $this->equipe;
     }
 
-    /**
-     * Set lieu
-     *
-     * @param PHPM\Bundle\Entity\Lieu $lieu
-     */
-    public function setLieu(\PHPM\Bundle\Entity\Lieu $lieu)
-    {
-        $this->lieu = $lieu;
-    }
 
-    /**
-     * Get lieu
-     *
-     * @return PHPM\Bundle\Entity\Lieu 
-     */
-    public function getLieu()
-    {
-        return $this->lieu;
-    }
 
     /**
      * Set animLiee
@@ -205,5 +195,25 @@ class GroupeTache
     public function getAnimLiee()
     {
         return $this->animLiee;
+    }
+
+    /**
+     * Set lieu
+     *
+     * @param string $lieu
+     */
+    public function setLieu($lieu)
+    {
+        $this->lieu = $lieu;
+    }
+
+    /**
+     * Get lieu
+     *
+     * @return string 
+     */
+    public function getLieu()
+    {
+        return $this->lieu;
     }
 }

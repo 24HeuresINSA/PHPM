@@ -2,15 +2,15 @@
 {% set pageTitle = 'Edition du Groupe de Tâches' %}
 {% use "PHPMBundle::edit.html.twig" %}
 
-{% form_theme form _self %}
 
 
-{# {% block style %}#}
-{# {{ parent() }}#}
-{# 			{% stylesheets 'bundles/phpm/css/tache.css' filter='cssrewrite'  %}#}
-{# 				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />#}
-{# 			{% endstylesheets %}#}
-{# {% endblock %}#}
+
+{% block style %}
+{{ parent() }}
+			{% stylesheets 'bundles/phpm/css/tache.css' filter='cssrewrite'  %}
+				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
+			{% endstylesheets %}
+{% endblock %}
 
 
 {% block content %}
@@ -53,7 +53,7 @@
     {% endfor %}
     </tbody>
 </table>
-<a class="button" href="{{ path('tache_new', { 'gid': entity.id }) }}">Créer une nouvelle tâche</a>
+<a class="button" href="{{ path('tache_create', { 'gid': entity.id }) }}">Créer une nouvelle tâche</a>
 {% endif %}
 
 {% endblock %}

@@ -1,31 +1,31 @@
 {% block actions %}
-{% block indexAction %}
-    <li>
-        <a href="{{ path(indexRoute) }}">
-            {{indexActionLabel }}
-        </a>
-    </li>
-{% endblock %}
-{% block newAction %}
-    <li>
-        <a href="{{ path(newRoute) }}">
-            {{newActionLabel }}
-        </a>
-    </li>
-{% endblock %}
-{% block editAction %}
-<li>
-    <a href="{{ path(editRoute, { 'id': entity.id }) }}">
-    {{editActionLabel }}
-    </a>
-</li>
-{% endblock %}
+{# {% block indexAction %}#}
+{#     <li>#}
+{#         <a href="{{ path(indexRoute) }}">#}
+{#             {{indexActionLabel }}#}
+{#         </a>#}
+{#     </li>#}
+{# {% endblock %}#}
+{# {% block newAction %}#}
+{#     <li>#}
+{#         <a href="{{ path(newRoute) }}">#}
+{#             {{newActionLabel }}#}
+{#         </a>#}
+{#     </li>#}
+{# {% endblock %}#}
+{# {% block editAction %}#}
+{# <li>#}
+{#     <a href="{{ path(editRoute, { 'id': entity.id }) }}">#}
+{#     {{editActionLabel }}#}
+{#     </a>#}
+{# </li>#}
+{# {% endblock %}#}
 
 
-{% block deleteAction %}
+{# {% block deleteAction %}#}
 
-<li>
-    <a href="javascript:confirm_delete('{{ path(deleteRoute, { 'id': entity.id }) }}')">{{deleteActionLabel }}</a>
-</li>
-{% endblock %}
+{# <li>#}
+{#     <a href="javascript:confirm_delete('{{ path(deleteRoute, { 'id': entity.id }) }}')">{{deleteActionLabel }}</a>#}
+{# </li>#}
+{# {% endblock %}#}
 {% endblock %}

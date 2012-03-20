@@ -58,16 +58,28 @@ border-bottom-left-radius: 5px;
 	
 }
 
+span.lcom{
+	
+background-color: lightblue;
+
+border-radius: 5px;
+padding:.2em;
+	
+	
+}
+
 span.com_auteur{
-	float:left;
+	
 		font-weight: bold;
-		padding-right:1em;
+		padding-right:.5em;
 }
 
 span.com_heure{
-	float:left;
+	
 	font-weight: lighter;
 	}
+	
+
 	
 div.com_texte{
 	padding:.2em;

@@ -41,7 +41,7 @@ class Tache
     /**
      * @var text $consignes
      *
-     * @ORM\Column(name="consignes", type="text")
+     * @ORM\Column(name="consignes", type="text", nullable=true)
      * @Assert\NotBlank()
      */
     protected $consignes;
@@ -49,7 +49,7 @@ class Tache
     /**
      * @var text $materielSupplementaire
      *
-     * @ORM\Column(name="materielSupplementaire", type="text")
+     * @ORM\Column(name="materielSupplementaire", type="text", nullable=true)
      * 
      */
     protected $materielSupplementaire;
@@ -72,13 +72,21 @@ class Tache
     protected $ageNecessaire;
     
     
-
     /**
-     * @ORM\ManyToOne(targetEntity="Lieu", inversedBy="taches")
-     * @ORM\JoinColumn(name="lieu_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
-     * @Assert\Valid
+     * @var string $lieu
+     *
+     * @ORM\Column(name="lieu", type="string", length=255)
+     * @Assert\NotBlank()
      */
     protected $lieu;
+    
+    
+//     /**
+//      * @ORM\ManyToOne(targetEntity="Lieu", inversedBy="taches")
+//      * @ORM\JoinColumn(name="lieu_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+//      * @Assert\Valid
+//      */
+//     protected $lieu;
     
     
     /**
@@ -88,12 +96,12 @@ class Tache
     */
     protected $responsable;
     
-    /**
-    * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="taches")
-    * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
-    * @Assert\Valid
-    */
-    protected $categorie;
+//     /**
+//     * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="taches")
+//     * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+//     * @Assert\Valid
+//     */
+//     protected $categorie;
     
     /**
     * @ORM\ManyToOne(targetEntity="Confiance", inversedBy="taches")
@@ -430,26 +438,6 @@ class Tache
 
  
 
-    /**
-     * Set lieu
-     *
-     * @param PHPM\Bundle\Entity\Lieu $lieu
-     */
-    public function setLieu(\PHPM\Bundle\Entity\Lieu $lieu)
-    {
-        $this->lieu = $lieu;
-    }
-
-    /**
-     * Get lieu
-     *
-     * @return PHPM\Bundle\Entity\Lieu 
-     */
-    public function getLieu()
-    {
-        return $this->lieu;
-    }
-
 
 
     /**
@@ -471,6 +459,7 @@ class Tache
     {
         return $this->commentaires;
     }
+    
 
   
 
@@ -550,5 +539,25 @@ class Tache
     public function getMaterielSupplementaire()
     {
         return $this->materielSupplementaire;
+    }
+
+    /**
+     * Set lieu
+     *
+     * @param string $lieu
+     */
+    public function setLieu($lieu)
+    {
+        $this->lieu = $lieu;
+    }
+
+    /**
+     * Get lieu
+     *
+     * @return string 
+     */
+    public function getLieu()
+    {
+        return $this->lieu;
     }
 }

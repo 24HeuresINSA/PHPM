@@ -86,31 +86,36 @@ class GroupeTacheController extends Controller
      * Creates a new GroupeTache entity.
      *
      * @Route("/create", name="groupetache_create")
-     * @Method("post")
+     * 
      * @Template("PHPMBundle:GroupeTache:new.html.twig")
      */
+       
     public function createAction()
     {
+        $em = $this->getDoctrine()->getEntityManager();
+        $config  =$this->get('config.extension');
         $entity  = new GroupeTache();
-        $entity->setStatut(0);
         $request = $this->getRequest();
-        $form    = $this->createForm(new GroupeTacheType(), $entity);
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('groupetache_show', array('id' => $entity->getId())));
-            
-        }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        );
+        $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+        $user = $this->get('security.context')->getToken()->getUser();
+    
+        
+            $entity->setResponsable($user);
+            $entity->setNom('Groupe sans nom');
+            $entity->setLieu(' ');
+    
+        
+        $em->persist($entity);
+        $em->flush();
+    
+    
+        return $this->redirect($this->generateUrl('groupetache_edit', array('id' => $entity->getId())));
+    
+         
     }
+    
+    
+    
 
     /**
      * Displays a form to edit an existing GroupeTache entity.
@@ -149,7 +154,11 @@ class GroupeTacheController extends Controller
      */
     public function updateAction($id)
     {
+        
+        $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
         $em = $this->getDoctrine()->getEntityManager();
+        $config  =$this->get('config.extension');
+        
 
         $entity = $em->getRepository('PHPMBundle:GroupeTache')->find($id);
 
@@ -157,7 +166,7 @@ class GroupeTacheController extends Controller
             throw $this->createNotFoundException('Unable to find GroupeTache entity.');
         }
 
-        $editForm   = $this->createForm(new GroupeTacheType(), $entity);
+        $editForm   = $this->createForm(new GroupeTacheType($admin,$config), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
@@ -173,8 +182,7 @@ class GroupeTacheController extends Controller
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form'   => $editForm->createView()
         );
     }
 

@@ -39,13 +39,18 @@ class OrgaType extends AbstractType
                     'widget' => 'single_text',
                     'attr'=>array('class'=>'birthdaydp'),
                     'format' => 'yyyy-MM-dd'))
+            ->add('datePermis', null, array(
+                            'label'=>'Date de permis',
+                            'widget' => 'single_text',
+                            'format' => 'yyyy-MM-dd'))
             ->add('departement','choice',array('label'=>'Département INSA', 'choices'=>array(
                     'PC'=>'PC','GMC'=>'GMC','GMD'=>'GMD', 'GMPP'=>'GMPP', 'IF'=>'IF', 'SGM'=>'SGM',
                     'GI'=>'GI', 'GE'=>'GE', 'TC'=>'TC', 'GCU'=>'GCU', 'BIM'=>'BIM', 'BIOCH'=>'BIOCH', 'GEN'=>'GEN', 'Autre'=>'Autre' 
                     )))
             ->add('equipe',null,array('label'=>'Équipe'))
             ->add('commentaire')
-            ->add('permis','choice',array('label'=>'Titulaire du permis B', 'choices'=>$libellesPermis));
+            
+    	    ;
     	if($this->admin){
         $builder
 			->add('confiance', null,array('read_only'=>!$this->admin))

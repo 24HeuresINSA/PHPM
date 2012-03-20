@@ -17,6 +17,16 @@
 
 
 {% block content %}
+{% if valid is defined %}
+
+{% if valid==1 %}
+<div class ="success">La tâche à bien été enregistrée.</div>
+{% else %}
+<div class ="alert">Il y a des erreurs dans la fiche, la tâche n'a pas été mise à jour.</div>
+{% endif %}
+{% endif %}
+
+
 
 <form action="{{ path('tache_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
 
@@ -30,8 +40,8 @@
 
 {{ form_row(form.entity.groupeTache, { 'label':  'Groupe de la tâche'}) }}
 
-{{ form_row(form.entity.lieu, { 'label':  'Lieu'}) }}
-{{ form_row(form.entity.confiance, { 'label':  'Niveau de Confiance requis'}) }}
+{{ form_row(form.entity.lieu, { 'label':  'Lieu de rendez-vous'}) }}
+{{ form_row(form.entity.confiance, { 'label':  'Niveau de confiance requis'}) }}
 {{ form_row(form.entity.permisNecessaire, { 'label':  'Permis nécessaire'}) }}
 {{ form_row(form.entity.ageNecessaire, { 'label':  'Âge nécessaire'}) }}
 
@@ -46,7 +56,7 @@
  </div>
  
  <div class="clear" >
-<h3>{{ form_label(form.entity.consignes,'Consignes') }}</h3>
+<h3>{{ form_label(form.entity.consignes,'Consignes') }}</h3>{{ form_errors(form.entity.consignes) }}
 {{ form_widget(form.entity.consignes) }}
 
 
@@ -67,7 +77,7 @@
     <div class ="clear"></div>
     
     
-    
+    {% if not rOnly  %}
 <a class="addbutton" id="addPHButton" href="#">+</a>
 <a class="rmbutton"  id="rmPHButton" href="#">-</a>
     
@@ -83,6 +93,19 @@ var prototype = collectionHolder.attr('data-prototype');
 form = prototype.replace(/\$\$name\$\$/g, collectionHolder.children().length);
 // Display the form in the page
 collectionHolder.append(form);
+
+$('input.dtp').datetimepicker({
+	changeMonth: true,
+	changeYear: true,
+	dateFormat: 'yy-mm-dd',
+	timeFormat: 'hh:mm:ss',		
+	stepHour: 1,
+	stepMinute: 15,
+	hourGrid: 4,
+	minuteGrid: 15,
+	showButtonPanel: false, // on cache les boutons du bas
+});
+
 }
 
 function rmTagForm() {
@@ -98,6 +121,7 @@ $('#rmPHButton').click(function(event){
     rmTagForm();
 });
 </script>
+    {% endif %}
     
     
     
@@ -136,6 +160,7 @@ $('#rmPHButton').click(function(event){
         
         </div>
     {% endfor %}
+    {% if not rOnly  %}
     <h3>Enregistrer les Modifications</h3>
     {{ form_errors(form.commentaire) }}
     {{ form_widget(form.commentaire) }}
@@ -147,10 +172,12 @@ $('#rmPHButton').click(function(event){
 
 
 {{ form_rest(form) }}
+    
     <p>
         <button type="submit" name="action" value="save" style = "float:left">Enregistrer</button>
         {% if not is_granted('ROLE_ADMIN') and entity.statut ==0 %}<button type="submit" name="action" value="submit_validation">Demander Validation</button>{% endif %}
     </p>
+    {% endif %}
 </form>
 
 

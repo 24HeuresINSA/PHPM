@@ -1,4 +1,5 @@
 {% import "PHPMBundle:Macros:bouton.html.twig" as bouton %}
+{% import "PHPMBundle:Macros:entities.html.twig" as entitiesMacro %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -70,7 +71,7 @@
         			<li><a href="{{ path('orga') }}">Orga</a></li>
         			<li><a href="{{ path('disponibiliteinscription') }}">Inscriptions</a></li>
         			<li><a href="{{ path('orga_affectation') }}">Affectation</a></li>
-        			<li><a href="{{ path('tache') }}">T&acirc;che</a></li>
+        			<li><a href="{{ path('tache') }}">Fiches Tâches</a></li>
         			<li><a href="{{ path('plagehoraire') }}">Plage Horaire</a></li>
         			<li><a href="{{ path('creneau') }}">Cr&eacute;neaux</a></li>         			
         			<li><a href="{{ path('disponibilite') }}">Disponibilité</a></li>
@@ -79,9 +80,10 @@
         			<li><a href="/">Administration</a></li>-->
         			<li><a href="{{ path('logout') }}">Logout</a></li>
         			{% elseif is_granted('ROLE_USER') %}
-        			<li><a href="{{ path('orga_show',{'id':app.user.id })}}">Mes Informations</a></li>
+        			<li><a href="{{ path('orga_edit',{'id':app.user.id })}}">Mes Informations</a></li>
         			<li><a href="{{ path('orga_inscriptionhard',{'id':app.user.id })}}">Mes Disponibilités</a></li>
-        			<li><a href="{{ path('orga_charisme')}}">Classement Charisme</a></li>
+        			<li><a href="{{ path('tache') }}">Fiches Tâches</a></li>
+{#         			<li><a href="{{ path('orga_charisme')}}">Classement Charisme</a></li>#}
         			<li><a href="{{ path('logout') }}">Logout</a></li>
         		    {% else %}
         		    <li><a href="{{ path('login') }}">Login</a></li>
@@ -114,6 +116,9 @@
 Si vous rencontrez un bug dans ce logiciel, veuillez contacter <a href="mailto:DSI@24heures.org">DSI@24heures.org</a>. Merci.
 
         </div>
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
+        	{% render "PHPMBundle:Orga:updateLastActivity"  %}
+        	{% endif %}
     </body>
 </html>
 

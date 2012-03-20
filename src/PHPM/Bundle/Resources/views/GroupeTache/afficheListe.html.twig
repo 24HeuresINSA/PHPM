@@ -1,24 +1,28 @@
 <table>
     <thead>
         <tr>
-            <th>Groupe</th>
+            <th>Groupe de Tâches</th>
             <th>Équipe</th>
             <th>Responsable</th>
-            <th>Taches</th>
+            <th>Tâches</th>
+            
             
         </tr>
     </thead>
     <tbody>
     {% for entity in entities %}
         <tr>
-            <td><a href="{{ path('groupetache_edit', { 'id': entity.id }) }}">{{ entity.id }}- {{ entity.nom }}</a></td>
+            <td>{{ entitiesMacro.groupeTache(entity) }}</td>
             <td>{{ entity.equipe.nom }}</td>   
-            <td>{{ entity.responsable }}</td>
+            <td>{{ entitiesMacro.orga(entity.responsable) }}</td>
             <td>
             <ul>
            {% for tache in entity.taches %}
-            <li class="statut{{  tache.statut }}" ><a class="statut{{  tache.statut }}" href="{{ path('tache_edit', { 'id': tache.id }) }}">{{ tache.id }}- {{ tache.nom }}</a></li>
-            
+            <li ><a class="statut{{  tache.statut }}" href="{{ path('tache_edit', { 'id': tache.id }) }}">{{ tache.id }}- {{ tache.nom }}</a>
+            {% if tache.commentaires.last.id is defined %}
+            <span class="lcom"><span class="com_auteur">{{tache.commentaires.last.auteur}}</span><span class="com_heure"> {{ tache.commentaires.last.heure|format_datetime('EEEE dd MMM HH:mm') }} : </span>{{ tache.commentaires.last.texte | raw }}</span>
+            {% endif %}
+            </li>
             {% endfor %}
             </ul></td>
 

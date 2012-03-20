@@ -42,9 +42,12 @@ color: white;
 font-weight: bold;
 }
 
-h1,h2,h3{
+h1,h2{
 	clear:both;
-	padding-top: 1em;
+	padding-top: .5em;
+}
+h3{
+	clear:both;
 }
 
 

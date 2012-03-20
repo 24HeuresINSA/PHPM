@@ -88,6 +88,15 @@ class Orga implements UserInterface
      * @Assert\Date()
      */
     protected $dateDeNaissance;
+    
+    /**
+     * @var date $datePermis
+     *
+     * @ORM\Column(name="datePermis", type="date", nullable=true)
+     *
+     * @Assert\Date()
+     */
+    protected $datePermis;
 
     /**
      * @var string $departement
@@ -112,12 +121,12 @@ class Orga implements UserInterface
      */
     protected $commentaire;
 
-    /**
-     * @var smallint $permis
-     * @Assert\Choice(choices = {"0", "1", "2"})
-     * @ORM\Column(name="permis", type="smallint")
-     */
-    protected $permis;
+//     /**
+//      * @var smallint $permis
+//      * @Assert\Choice(choices = {"0", "1", "2"})
+//      * @ORM\Column(name="permis", type="smallint")
+//      */
+//     protected $permis;
     
 
 
@@ -176,6 +185,16 @@ class Orga implements UserInterface
      * @ORM\OneToMany(targetEntity="Commentaire", mappedBy="auteur")
      */
     protected $commentaires;
+    
+    /**
+     * @var datetime $lastActivity
+     *
+     * @ORM\Column(name="lastActivity", type="datetime", nullable=true)
+     *
+     * @Assert\DateTime()
+     */
+    protected $lastActivity;
+    
     
     
     public function __toString()
@@ -489,25 +508,7 @@ class Orga implements UserInterface
         return $this->commentaire;
     }
 
-    /**
-     * Set permis
-     *
-     * @param smallint $permis
-     */
-    public function setPermis($permis)
-    {
-        $this->permis = $permis;
-    }
 
-    /**
-     * Get permis
-     *
-     * @return smallint 
-     */
-    public function getPermis()
-    {
-        return $this->permis;
-    }
 
     /**
      * Set statut
@@ -687,5 +688,45 @@ class Orga implements UserInterface
     public function getCommentaires()
     {
         return $this->commentaires;
+    }
+
+    /**
+     * Set lastActivity
+     *
+     * @param datetime $lastActivity
+     */
+    public function setLastActivity($lastActivity)
+    {
+        $this->lastActivity = $lastActivity;
+    }
+
+    /**
+     * Get lastActivity
+     *
+     * @return datetime 
+     */
+    public function getLastActivity()
+    {
+        return $this->lastActivity;
+    }
+
+    /**
+     * Set datePermis
+     *
+     * @param date $datePermis
+     */
+    public function setDatePermis($datePermis)
+    {
+        $this->datePermis = $datePermis;
+    }
+
+    /**
+     * Get datePermis
+     *
+     * @return date 
+     */
+    public function getDatePermis()
+    {
+        return $this->datePermis;
     }
 }

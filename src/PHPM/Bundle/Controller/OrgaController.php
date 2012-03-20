@@ -766,6 +766,16 @@ public function validationAction()
 	                 'coms'=>$coms);
 	}
 	
+	public function updateLastActivityAction(){
+	    $user = $this->get('security.context')->getToken()->getUser();
+	    $user->setLastActivity(new \DateTime());
+	    $em = $this->getDoctrine()->getEntityManager();
+	    $em->flush();
+	    return new Response();
+	    
+	    
+	}
+	
 	
 		
 }

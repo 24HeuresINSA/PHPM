@@ -80,6 +80,20 @@ $(function() {
 	
 	$( "#tabs" ).tabs();
 
+	$('input.dtp').datetimepicker({
+		changeMonth: true,
+		changeYear: true,
+		dateFormat: 'yy-mm-dd',
+		timeFormat: 'hh:mm:ss',		
+		stepHour: 1,
+		stepMinute: 15,
+		hourGrid: 4,
+		minuteGrid: 15,
+		showButtonPanel: false, // on cache les boutons du bas
+	});
+	
+	
+	
 });
 
 function fnShowHide( iCol )

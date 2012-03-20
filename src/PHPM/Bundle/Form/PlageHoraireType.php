@@ -13,14 +13,14 @@ class PlageHoraireType extends AbstractType
             ->add('debut',null,array(
                     'label'=>'Début',
                     'widget' => 'single_text',
-                    'attr'=>array('class'=>'debutdp')))
+                    'attr'=>array('class'=>'dtp')))
             ->add('fin',null,array(
                     'label'=>'Fin',
                     'widget' => 'single_text',
-                    'attr'=>array('class'=>'findp')))
+                    'attr'=>array('class'=>'dtp')))
 			->add('nbOrgasNecessaires',null,array('label'=>'Orgas nécessaires'))
-			->add('dureeCreneau',null,array('label'=>'Durée d\'un créneau'))
-			->add('recoupementCreneau',null,array('label'=>'Marge entre créneaux'))
+			->add('dureeCreneau',null,array('label'=>'Durée d\'un créneau (en secondes)'))
+			->add('recoupementCreneau',null,array('label'=>'Marge entre créneaux (en secondes)'))
 			
 			;
 

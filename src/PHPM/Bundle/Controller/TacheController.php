@@ -42,21 +42,38 @@ class TacheController extends Controller
         ->getResult();
 
         $r =$em
-        ->createQuery("SELECT t FROM PHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e WHERE t.statut = 0 ORDER BY e.id ")
+        ->createQuery("SELECT t FROM PHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e WHERE t.statut = 0 ORDER BY e.id, g.id")
         ->getResult();
         
         $s =$em
-        ->createQuery("SELECT t FROM PHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e WHERE t.statut = 1 ORDER BY e.id ")
+        ->createQuery("SELECT t FROM PHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e WHERE t.statut = 1 ORDER BY e.id, g.id")
         ->getResult();
         
         $v =$em
-        ->createQuery("SELECT t FROM PHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e WHERE t.statut = 2 ORDER BY e.id ")
+        ->createQuery("SELECT t FROM PHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e WHERE t.statut = 2 ORDER BY e.id, g.id ")
+        ->getResult();
+        
+        
+        
+        
+        $eid = $this->get('security.context')->getToken()->getUser()->getEquipe()->getId();
+        $oid =  $this->get('security.context')->getToken()->getUser()->getId();
+        
+        
+        $sr =$em
+        ->createQuery("SELECT g FROM PHPMBundle:GroupeTache g JOIN g.equipe e JOIN g.responsable r WHERE r.id = :oid ORDER BY r.id")
+        ->setParameter('oid',$oid)
+        ->getResult();
+        
+        $e =$em
+        ->createQuery("SELECT g FROM PHPMBundle:GroupeTache g JOIN g.equipe e JOIN g.responsable r WHERE e.id = :eid ORDER BY r.id")
+        ->setParameter('eid',$eid)
         ->getResult();
         
 
         
 
-        return array('r'=>$r,'s'=>$s,'v'=>$v, 'g'=>$g);
+        return array('r'=>$r,'s'=>$s,'v'=>$v, 'g'=>$g, 'e'=>$e, 'sr'=>$sr);
     }
     
     /**
@@ -84,75 +101,16 @@ class TacheController extends Controller
     	return $response;
     }
 
-    /**
-     * Finds and displays a Tache entity.
-     *
-     * @Route("/{id}/show", name="tache_show")
-     * @Template()
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('PHPMBundle:Tache')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Tache entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'form' => $deleteForm->createView(),        );
-    }
-
-    /**
-     * Displays a form to create a new Tache entity.
-     *
-     * @Route("/new/{gid}", defaults={"gid"=""}, name="tache_new")
-     * @Template()
-     */
-    public function newAction($gid)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-        $config  =$this->get('config.extension');
-        $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
-        
-        
-        $entity = new Tache();
-        
-        if($gid!=""){
-        $groupe = $em->getRepository('PHPMBundle:GroupeTache')->find($gid);
-        
-        if (!$groupe) {
-            throw $this->createNotFoundException('Pas de groupe correspondant.');
-        }
-        
-        $entity->setGroupeTache($groupe);
-        $entity->setLieu($groupe->getLieu());
-        $entity->setResponsable($groupe->getResponsable());
-        $entity->setStatut(0);
-        }
-        
-        
-        $defaultValues = array('entity'=>$entity, 'Materiel'=> $entity->getMateriel(), "commentaire"=>'Création de la fiche');
-        $form   = $this->createForm(new TacheType($admin,$em,$config), $defaultValues);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        );
-    }
 
     /**
      * Creates a new Tache entity.
      *
-     * @Route("/create", name="tache_create")
-     * @Method("post")
-     * @Template("PHPMBundle:Tache:new.html.twig")
+     * @Route("/create/{gid}", name="tache_create")
+     * 
+     * 
      */
-    public function createAction()
+    public function createAction($gid)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $config  =$this->get('config.extension');
@@ -162,36 +120,29 @@ class TacheController extends Controller
         $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
         $user = $this->get('security.context')->getToken()->getUser();
         
-        $defaultValues = array('entity'=>$entity, 'Materiel'=> $entity->getMateriel(), "commentaire"=>'Création de la fiche');
-        $form   = $this->createForm(new TacheType($admin,$em,$config), $defaultValues);
-        $form->bindRequest($request);
-        $data=$form->getData();
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            
-
-            if($data['commentaire']!=''){
-                $commentaire = new Commentaire();
-                $commentaire->setAuteur($user);
-                $commentaire->setHeure(new \DateTime());
-                $commentaire->setTache($entity);
-                $commentaire->setTexte($data['commentaire']);
+        if($gid!=""){
+            $groupe = $em->getRepository('PHPMBundle:GroupeTache')->find($gid);
+        
+            if (!$groupe) {
+                throw $this->createNotFoundException('Pas de groupe correspondant.');
             }
-            
-            
-            $em->persist($commentaire);
-            $em->persist($entity);
-            $em->flush();
-            
-            return $this->redirect($this->generateUrl('tache_edit', array('id' => $entity->getId())));
+        
+            $entity->setGroupeTache($groupe);
+            $entity->setLieu($groupe->getLieu());
+            $entity->setResponsable($groupe->getResponsable());
+            $entity->setStatut(0);
+            $entity->setNom('Tâche sans nom');
+            $entity->setPermisNecessaire(0);
+            $entity->setAgeNecessaire(16);
             
         }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        );
+        $em->persist($entity);
+        $em->flush();
+            
+            
+        return $this->redirect($this->generateUrl('tache_edit', array('id' => $entity->getId())));
+            
+       
     }
 
     /**
@@ -213,15 +164,18 @@ class TacheController extends Controller
         }
 
         $defaultValues = array('entity'=>$entity, 'Materiel'=> $entity->getMateriel(), "commentaire"=>'');
+        $rOnly = ($entity->getStatut()>=1 ) && (!$admin);
         
-        $editForm = $this->createForm(new TacheType($admin,$em,$config,$entity),$defaultValues);
+        
+        $editForm = $this->createForm(new TacheType($admin,$em,$config,$rOnly),$defaultValues);
 //         $besoinsForm = $this->createForm(new TacheBesoinsType(false,$em,$config,$entity));
         $deleteForm = $this->createDeleteForm($id);
         
         return array(
             'entity'      => $entity,
             'form'   => $editForm->createView(),
-            'admin' =>$admin
+            'admin' =>$admin,
+                'rOnly'=>$rOnly
 
         );
     }
@@ -240,16 +194,17 @@ class TacheController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $config  =$this->get('config.extension');
         $request = $this->getRequest();
-        $action = $request->request->all();
+        $param = $request->request->all();
         $entity = $em->getRepository('PHPMBundle:Tache')->find($id);
         $prevStatut= $entity->getStatut();
         $user = $this->get('security.context')->getToken()->getUser();
+        $rOnly = ($entity->getStatut()>=1 ) && (!$admin);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Tache entity.');
         }
         $defaultValues = array('entity'=>$entity, 'Materiel'=> $entity->getMateriel());
-        $editForm   = $this->createForm(new TacheType($admin,$em,$config), $defaultValues);
+        $editForm   = $this->createForm(new TacheType($admin,$em,$config,$rOnly), $defaultValues);
 
         
             $editForm->bindRequest($request);
@@ -259,8 +214,14 @@ class TacheController extends Controller
            
             
         if ($editForm->isValid()) {
-            
+            $valid= true;
             $tmpm = $data['Materiel'];
+            
+            
+            if($param['action']=='submit_validation'){
+                $entity->setStatut(1);
+            }
+            
             
             if($tmpm){
             
@@ -347,10 +308,13 @@ class TacheController extends Controller
             $em->flush();
 
             $defaultValues = array('entity'=>$entity, 'Materiel'=> $entity->getMateriel());
-            $editForm   = $this->createForm(new TacheType($admin,$em,$config), $defaultValues);
+            $rOnly = ($entity->getStatut()>=1 ) && (!$admin);
+            $editForm   = $this->createForm(new TacheType($admin,$em,$config,$rOnly), $defaultValues);
             
             
 //             return $this->redirect($this->generateUrl('tache_edit', array('id' => $id)));
+        }else{
+            $valid= false;
         }
         
         
@@ -363,7 +327,9 @@ class TacheController extends Controller
 
         return array(
             'entity'      => $entity,
-            'form'   => $editForm->createView()
+            'form'   => $editForm->createView(),
+            'valid' => $valid,
+                'rOnly'=>$rOnly
         );
     }
 

@@ -19,21 +19,26 @@ class TacheType extends AbstractType
     protected $em;
     protected $config;
     protected $tache;
-    function __construct($admin,$em,$config){
+    protected $rOnly;
+    function __construct($admin,$em,$config,$rOnly){
 
             $this->em = $em;
             $this->config =$config;
             $this->admin =$admin;
+            $this->rOnly = $rOnly;
             
     }
     
     public function buildForm(FormBuilder $builder, array $options)
     {
         
+        
+        
         $libellesPermis =  json_decode($this->config->getValue('manifestation_permis_libelles'),true);
         
         
-        $i=$builder->create('entity','form',array('label'=>" ", 'required'=>false, 'data_class' => 'PHPM\Bundle\Entity\Tache'));
+        $i=$builder->create('entity','form',array('label'=>" ", 'required'=>false, 'data_class' => 'PHPM\Bundle\Entity\Tache',
+                'error_bubbling'=>true, "read_only"=>$this->rOnly));
         $i->add('groupeTache', 'entity', array(
     'class' => 'PHPMBundle:GroupeTache'
     
@@ -58,13 +63,15 @@ class TacheType extends AbstractType
         $i->add('plagesHoraire','collection',array('type' => new PlageHoraireType(),'allow_add' => true,'allow_delete' => true,
                 'by_reference' => false,
                 'options'  => array( 'label'  => " "),
-                'property_path'=>'plagesHoraire'
+                'property_path'=>'plagesHoraire',
+                 "read_only"=>$this->rOnly
         ));
         
-        $m=$builder->create('Materiel','form',array('label'=>"Matériel requis", 'required'=>false));
+        $m=$builder->create('Materiel','form',array('label'=>"Matériel requis", 'required'=>false, "read_only"=>$this->rOnly));
         $builder->add($i)
         ->add($m)
-        ->add('commentaire','textarea', array('required'=>false, 'attr'=>array('placeholder'=>'Ajouter un commentaire')));
+        ->add('commentaire','textarea', array('required'=>false,
+                 "read_only"=>$this->rOnly, 'attr'=>array('placeholder'=>'Ajouter un commentaire')));
 
         
         
