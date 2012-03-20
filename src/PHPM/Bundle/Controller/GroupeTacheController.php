@@ -101,6 +101,7 @@ class GroupeTacheController extends Controller
     
         
             $entity->setResponsable($user);
+            $entity->setEquipe($user->getEquipe());
             $entity->setNom('Groupe sans nom');
             $entity->setLieu(' ');
     
