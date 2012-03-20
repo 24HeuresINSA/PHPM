@@ -11,7 +11,7 @@ class EquipeType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('responsable')
+            ->add('responsable',null,array('required'=>false))
         ;
     }
     
