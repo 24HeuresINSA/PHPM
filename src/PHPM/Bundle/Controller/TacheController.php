@@ -16,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PHPM\Bundle\Entity\Tache;
 use PHPM\Bundle\Entity\Commentaire;
 use PHPM\Bundle\Entity\Confiance;
-use PHPM\Bundle\Entity\Categorie;
+// use PHPM\Bundle\Entity\Categorie;
 use PHPM\Bundle\Form\TacheType;
 use PHPM\Bundle\Form\TacheBesoinsType;
 
@@ -413,7 +413,7 @@ class TacheController extends Controller
 				print "<br />";
 				//*	
 				$confiance = $em->getRepository('PHPMBundle:Confiance')->findOneById($tache_en_traitement['confiance_id']);
-				$categorie = $em->getRepository('PHPMBundle:Categorie')->findOneById($tache_en_traitement['categorie_id']);
+// 				$categorie = $em->getRepository('PHPMBundle:Categorie')->findOneById($tache_en_traitement['categorie_id']);
 				
 				
 				$entity  = new tache();
@@ -423,7 +423,7 @@ class TacheController extends Controller
 				$entity->setMaterielNecessaire($tache_en_traitement['materielNecessaire']);
 				$entity->setPermisNecessaire($tache_en_traitement['permisNecessaire']);
 				$entity->setLieu($tache_en_traitement['lieu']);
-				$entity->setCategorie( $categorie);
+// 				$entity->setCategorie( $categorie);
 				$entity->setConfiance( $confiance);
 				
 					
@@ -494,7 +494,7 @@ class TacheController extends Controller
 		
 		
 		$duree= $request->request->get('duree', '');
-		$categorie= $request->request->get('categorie_id', '');
+// 		$categorie= $request->request->get('categorie_id', '');
 		$permis= $request->request->get('permisNecessaire', '');
 		//$age= $request->request->get('ageNecessaire', '0');
 		$niveau_confiance= $request->request->get('confiance_id', '');
@@ -505,7 +505,7 @@ class TacheController extends Controller
 	
 		$em = $this->getDoctrine()->getEntityManager();
 	
-		$entities = $em->getRepository('PHPMBundle:Tache')->getTacheWithCriteria($duree, $categorie, $permis,  $niveau_confiance, $plage, $bloc);
+		$entities = $em->getRepository('PHPMBundle:Tache')->getTacheWithCriteria($duree, $permis,  $niveau_confiance, $plage, $bloc);
 	
 		//exit(var_dump($entities));
 		$response = new Response();
@@ -524,7 +524,7 @@ class TacheController extends Controller
 				"nom" => $entity->getNom(),
 				"lieu" => $entity->getLieu(),
 				"confiance" => $entity->getConfiance()->getId(),
-				"categorie" => $entity->getCategorie()->getId(),
+// 				"categorie" => $entity->getCategorie()->getId(),
 				"creneaux" => $a,
 				"permisNecessaire" => $entity->getPermisNecessaire());		    	
 		    	

@@ -212,7 +212,7 @@ class CreneauController extends Controller
     	$permis = $request->request->get('permis', '');
 //     	$age = $request->request->get('age', '0');
     	$niveau_confiance = $request->request->get('confiance_id', '');
-    	$categorie = $request->request->get('categorie_id', '');
+//     	$categorie = $request->request->get('categorie_id', '');
     	$duree = $request->request->get('duree', '');
     	$orga = $request->request->get('orga_id', '');
     	$plage = $request->request->get('plage_id', '');
@@ -225,7 +225,7 @@ class CreneauController extends Controller
 		}
     
     	$em = $this->getDoctrine()->getEntityManager();
-    	$entities = $em->getRepository('PHPMBundle:Creneau')->getCreneauxCompatibleWithCriteria($niveau_confiance, $categorie, $permis, $duree, $orga, $plage, $jour, $date_time, $bloc);
+    	$entities = $em->getRepository('PHPMBundle:Creneau')->getCreneauxCompatibleWithCriteria($niveau_confiance,  $permis, $duree, $orga, $plage, $jour, $date_time, $bloc);
 
     	$creneauArray = array();
     	foreach ($entities as $creneau) {
@@ -233,7 +233,7 @@ class CreneauController extends Controller
     			        	"nom" => $creneau->getPlageHoraire()->getTache()->getNom(),
     						"lieu" => $creneau->getPlageHoraire()->getTache()->getLieu(),
     						"confiance" => $creneau->getPlageHoraire()->getTache()->getConfiance()->getId(),
-    						"categorie" => $creneau->getPlageHoraire()->getTache()->getCategorie()->getId(),
+//     						"categorie" => $creneau->getPlageHoraire()->getTache()->getCategorie()->getId(),
 				    		"debut" => $creneau->getDebut(),
 				    		"fin" => $creneau->getFin(),
     			        	"duree" => $creneau->getDuree(),

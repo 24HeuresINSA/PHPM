@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class TacheRepository extends EntityRepository
 {
 	
-	public function getTacheWithCriteria($duree, $categorie, $permis, $niveau_confiance, $plage, $bloc)
+	public function getTacheWithCriteria($duree, $permis, $niveau_confiance, $plage, $bloc)
 	{
 	
 		$qb = $this->getEntityManager()->createQueryBuilder();
@@ -33,10 +33,10 @@ class TacheRepository extends EntityRepository
 		{
 			$andx->add('(ct.fin - ct.debut < '.$duree.' )');
 		}
-		if($categorie !='')
-		{
-			$andx->add($qb->expr()->eq('t.categorie_id',$categorie));
-		}
+// 		if($categorie !='')
+// 		{
+// 			$andx->add($qb->expr()->eq('t.categorie_id',$categorie));
+// 		}
 		if($permis!='')
 		{
 			$andx->add($qb->expr()->gte('t.permisNecessaire',$permis));

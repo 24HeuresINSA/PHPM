@@ -171,26 +171,7 @@ class Tache
         $this->plagesHoraire = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
-    /**
-     * Set categorie
-     *
-     * @param PHPM\Bundle\Entity\Categorie $categorie
-     */
-    public function setCategorie(\PHPM\Bundle\Entity\Categorie $categorie)
-    {
-        $this->categorie = $categorie;
-    }
-
-    /**
-     * Get categorie
-     *
-     * @return PHPM\Bundle\Entity\Categorie 
-     */
-    public function getCategorie()
-    {
-        return $this->categorie;
-    }
-
+  
     /**
      * Set confiance
      *
