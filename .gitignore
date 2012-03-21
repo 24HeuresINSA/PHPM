@@ -3,7 +3,6 @@
 /web/css
 /web/js
 /web/images
-/web/.htaccess
 
 /app/bootstrap*
 /app/cache/*
