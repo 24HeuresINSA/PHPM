@@ -133,7 +133,6 @@ class TacheController extends Controller
             $entity->setStatut(0);
             $entity->setNom('Tâche sans nom');
             $entity->setPermisNecessaire(0);
-            $entity->setAgeNecessaire(16);
             
         }
         $em->persist($entity);
