@@ -11,9 +11,21 @@ monolog:
     handlers:
         main:
             type:         fingers_crossed
-            action_level: error
-            handler:      nested
-        nested:
+            action_level: critical
+            handler:      grouped
+        grouped:
+            type:    group
+            members: [streamed, buffered]
+        streamed:
             type:  stream
-            path:  %kernel.logs_dir%/%kernel.environment%.log
+            path:  %kernel.logs_dir%/prod.log
             level: debug
+        buffered:
+            type:    buffer
+            handler: swift
+        swift:
+            type:       swift_mailer
+            from_email: %mailer_user%
+            to_email:   %admin_email%
+            subject:    PHPLanningMaker Error
+            level:      debug
