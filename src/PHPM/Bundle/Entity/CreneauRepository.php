@@ -173,7 +173,7 @@ class CreneauRepository extends EntityRepository
 		    $dql.="AND (c.id IN
 		    (SELECT ca.id FROM PHPMBundle:Creneau ca JOIN ca.plageHoraire pa JOIN pa.tache ta JOIN ta.confiance confca,
 		    PHPMBundle:Orga oa JOIN oa.confiance confoa
-	        WHERE oa =$orga AND oa.permis >= ta.permisNecessaire AND confoa.valeur >= confca.valeur
+	        WHERE oa =$orga AND confoa.valeur >= confca.valeur
 		    ))";
 	    }
 

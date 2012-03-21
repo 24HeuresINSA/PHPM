@@ -670,7 +670,7 @@ public function validationAction()
 			        	"nom" => $orga->getNom(),
 			        	"prenom" => $orga->getPrenom(),
 						"confiance" => $orga->getConfiance()->getId(),
-						"permis"=>$orga->getPermis(),
+// 						"permis"=>$orga->getPermis(),
 			    		"dateDeNaissance" => $orga->getDateDeNaissance()->format('Y-m-d H:i:s'),
 			    		"departement" => $orga->getDepartement(),
 			    		"commentaire" => $orga->getCommentaire(), 	
