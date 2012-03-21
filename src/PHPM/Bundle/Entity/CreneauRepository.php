@@ -111,7 +111,7 @@ class CreneauRepository extends EntityRepository
 		
 	}
 	
-	public function getCreneauxCompatibleWithCriteria($niveau_confiance, $categorie, $age, $permis, $duree, $orga, $plage, $jour, $date_time, $bloc)
+	public function getCreneauxCompatibleWithCriteria($niveau_confiance, $categorie, $permis, $duree, $orga, $plage, $jour, $date_time, $bloc)
 	{
 	    $dql = 'SELECT c FROM PHPMBundle:Creneau c JOIN c.plageHoraire p JOIN p.tache t JOIN t.confiance conf WHERE c.disponibilite IS NULL ';
 	
@@ -119,9 +119,9 @@ class CreneauRepository extends EntityRepository
 	    	$dql.= "AND t.permisNecessaire = $permis ";
 		}
 	    
-	    if ($age != '') {
-	    	$dql.= "AND t.ageNecessaire >= $age ";
-	    }
+// 	    if ($age != '') {
+// 	    	$dql.= "AND t.ageNecessaire >= $age ";
+// 	    }
 	   
 	    if ($niveau_confiance != '') {
 	    	$dql.= "AND conf.valeur >= $niveau_confiance ";

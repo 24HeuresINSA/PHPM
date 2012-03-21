@@ -210,7 +210,7 @@ class CreneauController extends Controller
     	$request = $this->getRequest();
     
     	$permis = $request->request->get('permis', '');
-    	$age = $request->request->get('age', '0');
+//     	$age = $request->request->get('age', '0');
     	$niveau_confiance = $request->request->get('confiance_id', '');
     	$categorie = $request->request->get('categorie_id', '');
     	$duree = $request->request->get('duree', '');
@@ -225,7 +225,7 @@ class CreneauController extends Controller
 		}
     
     	$em = $this->getDoctrine()->getEntityManager();
-    	$entities = $em->getRepository('PHPMBundle:Creneau')->getCreneauxCompatibleWithCriteria($niveau_confiance, $categorie, $age, $permis, $duree, $orga, $plage, $jour, $date_time, $bloc);
+    	$entities = $em->getRepository('PHPMBundle:Creneau')->getCreneauxCompatibleWithCriteria($niveau_confiance, $categorie, $permis, $duree, $orga, $plage, $jour, $date_time, $bloc);
 
     	$creneauArray = array();
     	foreach ($entities as $creneau) {

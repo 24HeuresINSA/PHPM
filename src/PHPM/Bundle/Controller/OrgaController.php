@@ -72,32 +72,7 @@ class OrgaController extends Controller
         return array('entities' => $entities);
     }
 
-    /**
-     * Finds and displays a Orga entity.
-     *
-     * @Route("/{id}/show", name="orga_show")
-     * @Template()
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('PHPMBundle:Orga')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Orga entity.');
-        }
-        
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser() != $entity) {
-            throw new AccessDeniedException();
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
-    }
+ 
 
     /**
      * Displays a form to create a new Orga entity.

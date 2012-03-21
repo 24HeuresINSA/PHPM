@@ -23,9 +23,9 @@ class OrgaRepository extends EntityRepository
 		// (le JOIN plante)ancienne) requête (148b2848650e5c3af0bff2685054605d5ee10944)
 		$dql = "Select o From PHPMBundle:Orga as o JOIN o.disponibilites d WHERE o.statut=1 AND d.orga != 0";
 		
-		if ($permis != '') {
-			$dql.=" AND o.permis = '$permis'";
-		}
+// 		if ($permis != '') {
+// 			$dql.=" AND o.permis = '$permis'";
+// 		}
 		if ($maxDateNaissance != '')
 		{
 			$dql.=" AND o.dateDeNaissance <= '$maxDateNaissance'";

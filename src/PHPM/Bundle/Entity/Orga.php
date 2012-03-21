@@ -224,7 +224,7 @@ class Orga implements UserInterface
     		"dateDeNaissance" => $this->getDateDeNaissance(),
     		"departement" => $this->getDepartement(),
     		"commentaire" => $this->getCommentaire(),
-    		"permis"=>$this->getPermis(),
+//     		"permis"=>$this->getPermis(),
         	"confiance" => $this->getConfiance()->toArray(),
         	"disponibilites" => $a);
     	 
@@ -251,7 +251,7 @@ class Orga implements UserInterface
     			"dateDeNaissance" => $this->getDateDeNaissance()->format('Y-m-d'),
     			"departement" => $this->getDepartement(),
     			"commentaire" => $this->getCommentaire(),
-    			"permis"=>$this->getPermis(),
+//     			"permis"=>$this->getPermis(),
     			"confiance" => $this->getConfiance()->getId(),
     			"disponibilites" => $a);
     
