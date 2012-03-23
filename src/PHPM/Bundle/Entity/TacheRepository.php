@@ -15,23 +15,11 @@ class TacheRepository extends EntityRepository
 	
 	public function getTacheWithCriteria($duree, $permis, $niveau_confiance, $plage, $bloc)
 	{
-	
-		$qb = $this->getEntityManager()->createQueryBuilder();
-		$expr = $qb->expr();
-		
-		$andx = $expr->andx(
-		
-		$expr->eq('ct.plageHoraire', 'p'),
-		$expr->eq('p.tache','t')
-		
-		);
-		
-		$offset = $bloc*50;
-		$limit = $offset+49;
+		$dql= "Select t From PHPMBundle:Creneau ct Join ct.plageHoraire p Join p.tache t Where 1";
 	
 		if($duree!='')
 		{
-			$andx->add('(ct.fin - ct.debut < '.$duree.' )');
+			$dql.= " AND (ct.fin - ct.debut < '$duree' )";
 		}
 // 		if($categorie !='')
 // 		{
@@ -39,7 +27,7 @@ class TacheRepository extends EntityRepository
 // 		}
 		if($permis!='')
 		{
-			$andx->add($qb->expr()->gte('t.permisNecessaire',$permis));
+			$dql.= " AND t.permisNecessaire >= '$permis'";
 		}
 // 		if($age !='')
 // 		{
@@ -47,32 +35,19 @@ class TacheRepository extends EntityRepository
 // 		}
 		if($niveau_confiance !='')
 		{
-			$andx->add($qb->expr()->gte('t.confiance_id',$niveau_confiance));
+			$dql.= " AND t.confiance_id >= '$niveau_confiance'";
 		}
 		if($plage !='')
 		{
-			$andx->add($qb->expr()->eq('p.id',$plage));
-			$andx->add($qb->expr()->neq('ct.disponibilite','O'));
+			$dql.= " AND ct.disponibilite != 0";
+			$dql.= " AND p.id = '$plage'";
 		}
-		
-		$qb
-		->select('t')
-		
-		->from('PHPMBundle:PlageHoraire', 'p')
-		->from('PHPMBundle:Tache', 't')
-		->from('PHPMBundle:Creneau', 'ct')
-		
-		->where($andx)
-		->setFirstResult($offset)
-		->setMaxResults($limit);;
-		
-		
 		
 		//exit(var_dump($qb->getQuery()->getDQL()));
 		
+		$query = $this->getEntityManager()->createQuery($dql);
 		
-		return $qb->getQuery()->getResult();
-	
+		return $query->getResult();	
 	}
 	
 	public function search($s)
