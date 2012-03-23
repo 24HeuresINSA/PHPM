@@ -1,37 +1,28 @@
 @media all {
 
-
-
-
-
-
- #phpm_bundle_tachetype_entity_plagesHoraire > div {
-margin-bottom: 2em;
-clear:both;
-overflow: auto;
+#phpm_bundle_tachetype_entity_plagesHoraire > div {
+	margin-bottom: 2em;
+	clear:both;
+	overflow: auto;
 }
- #phpm_bundle_tachetype_entity_plagesHoraire > div >div {
-float:left;
-text-align: center;
-margin-right: 1em;
+#phpm_bundle_tachetype_entity_plagesHoraire > div > div {
+	float:left;
+	text-align: center;
+	margin-right: 1em;
 }
- #phpm_bundle_tachetype_entity_plagesHoraire > div >div >label {
-display:block;
-
+#phpm_bundle_tachetype_entity_plagesHoraire > div > div >label {
+	display:block;
 }
 
 
 #plagesHoraires > div{
-	
 	margin-bottom: .5em;
 	background-color: lightblue;
-margin-right: .5em;
-padding:.5em;
-border-radius: 5px;
-overflow: auto;
-display: inline-block;
-
-	
+	margin-right: .5em;
+	padding:.5em;
+	border-radius: 5px;
+	overflow: auto;
+	display: inline-block;
 }
 
 #phpm_bundle_tachetype_entity_consignes{
@@ -43,87 +34,73 @@ display: inline-block;
 }
 
 .materiel_item{
-text-align: center;
-margin-right: 1em;
-float:left;
+	text-align: center;
+	margin-right: 1em;
+	float:left;
 }
-
 .materiel_item > input{
-width: 4em;
+	width: 4em;
+}
+
+#phpm_bundle_tachetype, p {
+	clear:both;
+}
 
 }
 
-#phpm_bundle_tachetype , p {
-clear:both;
+.alert-message {
+	color: red;
+	font-weight: bold;
 }
-
+.alert-message ul {
+	list-style-type: none;
 }
 
 div.com{
 	clear:both;
-
 	border: none;
--moz-border-radius: 5px;
-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 	text-shadow: 0px 1px 0px #fff;
 	background-color: #E0E0E0;
 	margin-bottom: .5em;
-	}
+}
 
 div.com_infos{
 	float:left;
-background-color: lightblue;
-margin-right: .5em;
-padding:.2em;
-border-top-left-radius: 5px;
-border-bottom-left-radius: 5px;	
-	
-	
+	background-color: lightblue;
+	margin-right: .5em;
+	padding:.2em;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;		
 }
 
 span.lcom{
-	
-background-color: lightblue;
-
-border-radius: 5px;
-padding:.2em;
-	
-	
+	background-color: lightblue;
+	border-radius: 5px;
+	padding:.2em;
 }
 
 span.com_auteur{
-	
-		font-weight: bold;
-		padding-right:.5em;
+	font-weight: bold;
+	padding-right:.5em;
 }
 
 span.com_heure{
-	
 	font-weight: lighter;
-	}
-	
-
+}
 	
 div.com_texte{
 	padding:.2em;
 	float:left;
-	}
-
-
-
-
-
+}
 
 .statut0  {
-	color:red !important; 
-	
+	color: red !important; 
 }
-
 .statut1{
-	color:darkorange !important;
-	
+	color: darkorange !important;
 }
 .statut2{
-	color:green !important;
-	
+	color: green !important;
 }
