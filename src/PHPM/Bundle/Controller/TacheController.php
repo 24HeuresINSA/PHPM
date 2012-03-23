@@ -487,11 +487,10 @@ class TacheController extends Controller
 	*/
 	public function queryJsonAction()
 	{
+// fonction qui permet de selectionner une liste de tache en fonction de certains critères
 		$request = $this->getRequest();
 		
-		
-		
-		
+		//on recupere les paramètres passés en post
 		$duree= $request->request->get('duree', '');
 // 		$categorie= $request->request->get('categorie_id', '');
 		$permis= $request->request->get('permisNecessaire', '');
@@ -503,19 +502,18 @@ class TacheController extends Controller
 		//exit(var_dump($request));
 	
 		$em = $this->getDoctrine()->getEntityManager();
-	
+		//création de la requete SQL et récupération de son retour
 		$entities = $em->getRepository('PHPMBundle:Tache')->getTacheWithCriteria($duree, $permis,  $niveau_confiance, $plage, $bloc);
 	
 		//exit(var_dump($entities));
 		$response = new Response();
-	
 		
-			
-		foreach ($entities as $entity){
+		//creation du json de retour
+		foreach ($entities as $entity)
+		{
 			$a = array();
-			
-			
-			foreach ($entity->getPlagesHoraire() as $creneau){
+			foreach ($entity->getPlagesHoraire() as $creneau)
+			{
 				$a[$creneau->getId()] = $creneau->toSimpleArray();
 			}
 			
@@ -526,18 +524,11 @@ class TacheController extends Controller
 // 				"categorie" => $entity->getCategorie()->getId(),
 				"creneaux" => $a,
 				"permisNecessaire" => $entity->getPermisNecessaire());		    	
-		    	
-			
-			$a[$entity->getId()] = $tacheArray;
-	
+				$a[$entity->getId()] = $tacheArray;
 		}
-	
 	
 		//exit(var_dump($tacheArray));
 		$response->setContent(json_encode($a));
-	
-
-	
 		return $response;
 	}
 	

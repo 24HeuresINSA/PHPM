@@ -131,7 +131,7 @@ class CreneauRepository extends EntityRepository
 // 	    	$dql.= "AND t.categorie = $categorie ";
 // 	    }
 
-		// A TESTER
+		// TODO A TESTER
 		/*
  	    if ($duree !='') {
  	    	$dql.= 'AND (DATE_DIFF(c.debut, c.fin) <= '.($duree/3600/24).' ) '; // DATE_DIFF en jour
@@ -181,85 +181,6 @@ class CreneauRepository extends EntityRepository
 		
 	    return $query->getResult();
 	}
-	
-// 	public function getCreneauxCompatibleWithCriteria($niveau_confiance, $categorie, $age, $permis, $duree, $orga, $plage, $date_time, $bloc)
-// 	{
-// 		$qb = $this->getEntityManager()->createQueryBuilder();
-// 		$expr = $qb->expr();
-		
-// 		$andx = $expr->andx(
-
-// 		$expr->eq('ct.plageHoraire', 'p'),
-// 		$expr->eq('p.tache','t'),
-// 		$expr->isNull('ct.disponibilite')
-
-// 		);
-
-// 		//$offset = $bloc*50;
-// 		//$limit = 50;
-		
-// 		if($permis!='')
-// 		{
-// 			$andx->add($expr->gte('t.permisNecessaire',$permis));
-// 		}
-// 		if($age !='')
-// 		{
-// 			$andx->add($expr->gte('t.ageNecessaire','\''.$age.'\''));
-// 		}
-// 		if($niveau_confiance !='')
-// 		{
-// 			$andx->add($expr->gte('t.confiance',$niveau_confiance));
-// 		}
-		
-// 		if($categorie !='')
-// 		{
-// 			$andx->add($expr->gte('t.categorie',$categorie));
-// 		}
-// 		if($duree !='')
-// 		{
-			
-// 			$andx->add('(ct.fin - ct.debut < '.$duree.' )');
-// 		}		
-// 		if($orga !='')
-// 		{
-// 			$andx->add(" ct.id NOT IN (SELECT ci.id FROM PHPMBundle:Creneau ci , PHPMBundle:Creneau co, PHPMBundle:Disponibilite do
-// 			WHERE (co.disponibilite= do.id AND do.orga = $orga ) AND ( (ci.debut < co.fin) AND (ci.fin > co.debut ) )
-// 			OR	(((ci.debut<p.debut)OR(ci.fin > p.fin))OR((ci.debut >= p.fin)OR(ci.fin <= p.debut)))
-			
-// 		)");
-// 		}
-// 		if($plage !='')
-// 		{
-// 			$pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation.plages')->getValue(),TRUE);
-// 			$plage= $pref[$plage];
-// 			$andx->add('(ct.debut < \''.$plage["fin"].'\' ) AND (ct.fin >\''.$plage["debut"].'\' )');
-// 		}
-// 		if($date_time!='')
-// 		{
-// 			$andx->add(($expr->lte('ct.debut',"'$date_time'")));
-// 			$andx->add(($expr->gte('ct.fin',"'$date_time'")));
-// 		}
-		
-		
-		
-// 		$qb
-// 		->select('ct')
-		
-// 		->from('PHPMBundle:PlageHoraire', 'p')
-// 		->from('PHPMBundle:Tache', 't')
-// 		->from('PHPMBundle:Creneau', 'ct')
-		
-// 		->where($andx);
-		
-		
-		
-// 		//exit(var_dump($qb->getQuery()->getDQL()));
-		
-		
-		
-// 		return $qb->getQuery()->getResult();
-		
-// 	}
 		
 	
 }
