@@ -60,34 +60,41 @@ class PlageHoraireController extends Controller
     /**
      * Displays a form to create a new PlageHoraire entity.
      *
-     * @Route("/new/{id}", defaults={"id"=""},name="plagehoraire_new")
-     * @Template()
+     * @Route("/new/{id}", name="plagehoraire_new")
+     * @Template("PHPMBundle:PlageHoraire:new.html.twig")
      */
     public function newAction($id)
     {
+        $em = $this->getDoctrine()->getEntityManager();
+        $config = $e=$this->get('config.extension');
+        $tache=$em->getRepository('PHPMBundle:Tache')->find($id);
         
-        $entity = new PlageHoraire();
-        
-
-        if($id!=""){
-            
-            $em = $this->getDoctrine()->getEntityManager();
-            $prevPlage=$em->getRepository('PHPMBundle:PlageHoraire')->find($id);
-            
-            $entity->setDebut($prevPlage->getFin());
-            $entity->setFin($prevPlage->getFin());
-            $entity->setDureeCreneau($prevPlage->getDureeCreneau());
-            $entity->setRecoupementCreneau($prevPlage->getRecoupementCreneau());
-            $entity->setNbOrgasNecessaires($prevPlage->getNbOrgasNecessaires());
-            $entity->setTache($prevPlage->getTache());
+        if (!$tache) {
+            throw $this->createNotFoundException('Unable to find Tache entity.');
         }
-        $form   = $this->createForm(new PlageHoraireType(), $entity);
+                
+        $entity = new PlageHoraire();
+
         
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        );
+        $plages = json_decode($config->getValue('manifestation_plages'),true);
+        $debut = new \DateTime($plages[1]['debut']);
+        
+        $entity->setTache($tache);
+        $entity->setDebut($debut);
+        $entity->setFin($debut);
+        $entity->setDureeCreneau(0);
+        $entity->setRecoupementCreneau(0);
+        
+        $em->persist($entity);
+        $em->flush();
+        
+        
+        return $this->redirect($this->generateUrl('plagehoraire_edit', array('id' => $entity->getId())));
+
     }
+    
+    
+    
 
     /**
      * Creates a new PlageHoraire entity.
@@ -101,7 +108,10 @@ class PlageHoraireController extends Controller
         $entity  = new PlageHoraire();
         $request = $this->getRequest();
         $form    = $this->createForm(new PlageHoraireType(), $entity);
+
         $form->bindRequest($request);
+        
+        
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
@@ -176,8 +186,7 @@ class PlageHoraireController extends Controller
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form'   => $editForm->createView()
         );
     }
 
@@ -209,13 +218,20 @@ class PlageHoraireController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            $param = $request->request->all();
+            
+            
+                if($param['action']=='save_return'){
+                    return $this->redirect($this->generateUrl('tache_edit', array('id' => $entity->getTache()->getId())));
+                }
+            
+            
             return $this->redirect($this->generateUrl('plagehoraire_edit', array('id' => $id)));
         }
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form'   => $editForm->createView()
         );
     }
 
@@ -238,8 +254,13 @@ class PlageHoraireController extends Controller
             $em->remove($entity);
             $em->flush();
         
+            $tacheId=$entity->getTache()->getId();
+           
+            
+            
+            return $this->redirect($this->generateUrl('tache_edit', array('id'=>$tacheId)));
+            
 
-        return $this->redirect($this->generateUrl('plagehoraire'));
     }
 
     private function createDeleteForm($id)

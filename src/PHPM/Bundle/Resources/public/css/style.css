@@ -34,7 +34,7 @@ a, a:link , a:visited {
 
 a.button, a.button:link, a.button:visited {
 	display:inline-block;
-	margin:1em;
+
 padding: 5px 30px;
 border-radius: 4px;
 background: darkGray;

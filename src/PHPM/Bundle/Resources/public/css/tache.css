@@ -21,6 +21,19 @@ display:block;
 }
 
 
+#plagesHoraires > div{
+	
+	margin-bottom: .5em;
+	background-color: lightblue;
+margin-right: .5em;
+padding:.5em;
+border-radius: 5px;
+overflow: auto;
+display: inline-block;
+
+	
+}
+
 #phpm_bundle_tachetype_entity_consignes{
 	height:10em;
 }

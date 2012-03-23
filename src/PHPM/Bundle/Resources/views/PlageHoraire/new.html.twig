@@ -2,12 +2,86 @@
 {% set pageTitle = 'Nouvelle plage horaire' %}
 {% use "PHPMBundle::new.html.twig" %}
 
+{% form_theme form _self %}
+
+
+{% block style %}
+{{ parent() }}
+			{% stylesheets 'bundles/phpm/css/tache.css' filter='cssrewrite'  %}
+				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
+			{% endstylesheets %}
+{% endblock %}
+
+
+
 {% block content %}
 <form action="{{ path('plagehoraire_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
+
+    <h2>Informations</h2>
+{{ form_row(form.tache) }}      
+{{ form_row(form.debut) }}
+{{ form_row(form.fin) }}
+{{ form_row(form.dureeCreneau) }}
+{{ form_row(form.recoupementCreneau) }}
+{{ form_row(form.respNecessaire) }}
+    <h2>Besoins en Orgas</h2>
+    <div id="phpm_bundle_plagehorairetype_besoinsorga" data-prototype="{{ form_widget(form.besoinsOrga.get('prototype')) | e }}">
+
+    {% for bo in form.besoinsOrga %}
+    <div>
+    {{ form_errors(bo) }}
+    
+    {{ form_widget(bo.equipe) }}   {{ form_widget(bo.nbOrgasNecessaires) }}
+
+       
+    </div>
+    {% endfor %}
+
+    </div>
+        <a class="addbutton" id="addBOButton" href="#">+</a>
+<a class="rmbutton"  id="rmBOButton" href="#">-</a>
     <p>
-        <button type="submit", name="action" value="validate">Valider</button>
-        <button type="submit", name="action" value="validate_new">Valider et Créer une nouvelle plage</button>
+        <button type="submit">Valider</button>
     </p>
 </form>
+
+<script type="text/javascript">
+function addTagForm() {
+var collectionHolder = $('#phpm_bundle_plagehorairetype_besoinsorga');
+// Get the data-prototype we explained earlier
+var prototype = collectionHolder.attr('data-prototype');
+// Replace '$$name$$' in the prototype's HTML to
+// instead be a number based on the current collection's length.
+form = prototype.replace(/\$\$name\$\$/g, collectionHolder.children().length);
+// Display the form in the page
+collectionHolder.append(form);
+
+$('input.dtp').datetimepicker({
+	changeMonth: true,
+	changeYear: true,
+	dateFormat: 'yy-mm-dd',
+	timeFormat: 'hh:mm:ss',		
+	stepHour: 1,
+	stepMinute: 15,
+	hourGrid: 4,
+	minuteGrid: 15,
+	showButtonPanel: false, // on cache les boutons du bas
+});
+
+}
+
+function rmTagForm() {
+	var last = $('#phpm_bundle_plagehorairetype_besoinsorga > :last-child');
+	
+	last.remove();
+	}
+
+$('#addBOButton').click(function(event){
+    addTagForm();
+});
+$('#rmBOButton').click(function(event){
+    rmTagForm();
+});
+</script>
+
 {% endblock %}

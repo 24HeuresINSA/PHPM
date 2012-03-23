@@ -12,7 +12,7 @@
 			{% endstylesheets %}
 {% endblock %}
 
-{% form_theme form _self %}
+
 
 
 
@@ -46,7 +46,7 @@
  </div>
 
  
- <div class="clear" >
+
 <h3>{{ form_label(form.entity.consignes,'Consignes') }}</h3>{{ form_errors(form.entity.consignes) }}
 {{ form_widget(form.entity.consignes) }}
 
@@ -54,81 +54,81 @@
 
 
 
-</div>
 
 
 </div>
 
-<h2>Plages Horaires</h2>
-<div>
+
+
+{# <div>#}
    
-    {{ form_errors(form.entity.plagesHoraire) }}
+{#     {{ form_errors(form.entity.plagesHoraire) }}#}
     
-    <div id="phpm_bundle_tachetype_entity_plagesHoraire" data-prototype="{{ form_widget(form.entity.plagesHoraire.get('prototype')) | e }}">
-    {% for pl in form.entity.plagesHoraire %}
-    <div>
-    {{ form_errors(pl) }}
+{#     <div id="phpm_bundle_tachetype_entity_plagesHoraire" data-prototype="{{ form_widget(form.entity.plagesHoraire.get('prototype')) | e }}">#}
+{#     {% for pl in form.entity.plagesHoraire %}#}
+{#     <div>#}
+{#     {{ form_errors(pl) }}#}
     
-    {{ form_row(pl.debut) }}
-    {{ form_row(pl.fin) }}
-    {{ form_row(pl.dureeCreneau) }}
-    {{ form_row(pl.recoupementCreneau) }}
-    {{ form_row(pl.nbOrgasComNecessaires) }}
-    {{ form_row(pl.nbOrgasNecessaires) }}
-    {{ form_row(pl.respNecessaire) }}
-    </div>
-    {% endfor %}
-    </div>
+{#     {{ form_row(pl.debut) }}#}
+{#     {{ form_row(pl.fin) }}#}
+{#     {{ form_row(pl.dureeCreneau) }}#}
+{#     {{ form_row(pl.recoupementCreneau) }}#}
+
+
+{#     {{ form_row(pl.respNecessaire) }}#}
+{#     </div>#}
+{#     {% endfor %}#}
+{#     </div>#}
 
     
 
     
     
-    {% if not rOnly  %}
-<a class="addbutton" id="addPHButton" href="#">+</a>
-<a class="rmbutton"  id="rmPHButton" href="#">-</a>
+{#     {% if not rOnly  %}#}
+{# <a class="addbutton" id="addPHButton" href="#">+</a>#}
+{# <a class="rmbutton"  id="rmPHButton" href="#">-</a>#}
     
-    </div>
+{#     </div>#}
     
-    <script type="text/javascript">
-function addTagForm() {
-var collectionHolder = $('#phpm_bundle_tachetype_entity_plagesHoraire');
-// Get the data-prototype we explained earlier
-var prototype = collectionHolder.attr('data-prototype');
-// Replace '$$name$$' in the prototype's HTML to
-// instead be a number based on the current collection's length.
-form = prototype.replace(/\$\$name\$\$/g, collectionHolder.children().length);
-// Display the form in the page
-collectionHolder.append(form);
+{#     <script type="text/javascript">#}
+{# function addTagForm() {#}
+{# var collectionHolder = $('#phpm_bundle_tachetype_entity_plagesHoraire');#}
+{# // Get the data-prototype we explained earlier#}
+{# var prototype = collectionHolder.attr('data-prototype');#}
+{# // Replace '$$name$$' in the prototype's HTML to#}
+{# // instead be a number based on the current collection's length.#}
+{# form = prototype.replace(/\$\$name\$\$/g, collectionHolder.children().length);#}
+{# // Display the form in the page#}
+{# collectionHolder.append(form);#}
 
-$('input.dtp').datetimepicker({
-	changeMonth: true,
-	changeYear: true,
-	dateFormat: 'yy-mm-dd',
-	timeFormat: 'hh:mm:ss',		
-	stepHour: 1,
-	stepMinute: 15,
-	hourGrid: 4,
-	minuteGrid: 15,
-	showButtonPanel: false, // on cache les boutons du bas
-});
+{# $('input.dtp').datetimepicker({#}
+{# 	changeMonth: true,#}
+{# 	changeYear: true,#}
+{# 	dateFormat: 'yy-mm-dd',#}
+{# 	timeFormat: 'hh:mm:ss',		#}
+{# 	stepHour: 1,#}
+{# 	stepMinute: 15,#}
+{# 	hourGrid: 4,#}
+{# 	minuteGrid: 15,#}
+{# 	showButtonPanel: false, // on cache les boutons du bas#}
+{# });#}
 
-}
+{# }#}
 
-function rmTagForm() {
-	var last = $('#phpm_bundle_tachetype_entity_plagesHoraire > :last-child');
+{# function rmTagForm() {#}
+{# 	var last = $('#phpm_bundle_tachetype_entity_plagesHoraire > :last-child');#}
 	
-	last.remove();
-	}
+{# 	last.remove();#}
+{# 	}#}
 
-$('#addPHButton').click(function(event){
-    addTagForm();
-});
-$('#rmPHButton').click(function(event){
-    rmTagForm();
-});
-</script>
-    {% endif %}
+{# $('#addPHButton').click(function(event){#}
+{#     addTagForm();#}
+{# });#}
+{# $('#rmPHButton').click(function(event){#}
+{#     rmTagForm();#}
+{# });#}
+{# </script>#}
+{#     {% endif %}#}
     
     
     
@@ -154,6 +154,35 @@ $('#rmPHButton').click(function(event){
 {{ form_widget(form.entity.materielSupplementaire) }}
 
 </div>
+
+<h2>Plages Horaires</h2>
+<p><em>Attention : Enregistrez la fiche tâche avant de modifier les plages horaires !</em></p>
+<div id="plagesHoraires">
+    {% for pl in entity.plagesHoraire %}
+    <div>
+
+    <div>
+    {{ pl.debut | format_datetime }} -> {{ pl.fin | format_datetime }}
+    </div>
+    <div>
+    <b>Besoins Orga :</b>
+    {% for bo in pl.besoinsOrga %}
+    ({{ bo.equipe }} : {{ bo.nbOrgasNecessaires }})
+    
+    {% endfor %}</div><a href="{{ path('plagehoraire_edit', { 'id': pl.id }) }}">Éditer</a>
+    <a href="{{ path('plagehoraire_delete', { 'id': pl.id }) }}">Supprimer</a>
+   
+    </div>
+    <br/>
+    {% endfor %}
+    
+
+    <a class="button" href="{{ path('plagehoraire_new', { 'id': entity.id }) }}">Ajouter une nouvelle plage horaire</a>
+    
+    
+</div>
+
+
 
 
 <h2>Commentaires</h2>

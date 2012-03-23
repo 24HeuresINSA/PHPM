@@ -59,12 +59,12 @@ class TacheType extends AbstractType
         $i->add('statut', 'choice',array('choices'=>array('0'=>'En rédaction','1'=>'Soumise à validation','2'=>'Validée')));
         }
         
-        $i->add('plagesHoraire','collection',array('type' => new PlageHoraireType(),'allow_add' => true,'allow_delete' => true,
-                'by_reference' => false,
-                'options'  => array( 'label'  => " "),
-                'property_path'=>'plagesHoraire',
-                 "read_only"=>$this->rOnly
-        ));
+//         $i->add('plagesHoraire','collection',array('type' => new PlageHoraireType(),'allow_add' => true,'allow_delete' => true,
+//                 'by_reference' => false,
+//                 'options'  => array( 'label'  => " "),
+//                 'property_path'=>'plagesHoraire',
+//                  "read_only"=>$this->rOnly
+//         ));
         
         $m=$builder->create('Materiel','form',array('label'=>"Matériel requis", 'required'=>false, "read_only"=>$this->rOnly));
         $builder->add($i)
