@@ -18,9 +18,13 @@ class PlageHoraireType extends AbstractType
                     'label'=>'Fin',
                     'widget' => 'single_text',
                     'attr'=>array('class'=>'dtp')))
-			->add('nbOrgasNecessaires',null,array('label'=>'Orgas nécessaires'))
-			->add('dureeCreneau',null,array('label'=>'Durée d\'un créneau (en secondes)'))
-			->add('recoupementCreneau',null,array('label'=>'Marge entre créneaux (en secondes)'))
+            ->add('dureeCreneau',null,array('label'=>'Durée d\'un créneau (en sec.)'))
+            ->add('recoupementCreneau',null,array('label'=>'Recoupement entre deux créneaux consécutifs (en sec.)' ))
+            ->add('nbOrgasComNecessaires',null,array('label'=>'Nombre d\'orgas de l\'équipe nécessaires'))
+			->add('nbOrgasNecessaires',null,array('label'=>'Nombre d\'autres orgas nécessaires'))
+			->add('respNecessaire',null,array('label'=>'Le responsable de la tâche doit être présent'))
+
+
 			
 			;
 

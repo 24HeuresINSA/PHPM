@@ -74,6 +74,21 @@ class PlageHoraire
     protected $nbOrgasNecessaires;
     
     /**
+     * @var smallint $nbOrgasComNecessaires
+     *
+     * @ORM\Column(name="nbOrgasComNecessaires", type="smallint")
+     * @Assert\Min(limit = "0")
+     */
+    protected $nbOrgasComNecessaires;
+    
+    /**
+     * @var bool $respNecessaire
+     *
+     * @ORM\Column(name="respNecessaire", type="boolean")
+     */
+    protected $respNecessaire;
+    
+    /**
     * @ORM\OneToMany(targetEntity="Creneau", mappedBy="plageHoraire")
     */
     protected $creneaux;
@@ -279,4 +294,44 @@ class PlageHoraire
         return $this->recoupementCreneau;
     }
   
+
+    /**
+     * Set nbOrgasComNecessaires
+     *
+     * @param smallint $nbOrgasComNecessaires
+     */
+    public function setNbOrgasComNecessaires($nbOrgasComNecessaires)
+    {
+        $this->nbOrgasComNecessaires = $nbOrgasComNecessaires;
+    }
+
+    /**
+     * Get nbOrgasComNecessaires
+     *
+     * @return smallint 
+     */
+    public function getNbOrgasComNecessaires()
+    {
+        return $this->nbOrgasComNecessaires;
+    }
+
+    /**
+     * Set respNecessaire
+     *
+     * @param boolean $respNecessaire
+     */
+    public function setRespNecessaire($respNecessaire)
+    {
+        $this->respNecessaire = $respNecessaire;
+    }
+
+    /**
+     * Get respNecessaire
+     *
+     * @return boolean 
+     */
+    public function getRespNecessaire()
+    {
+        return $this->respNecessaire;
+    }
 }

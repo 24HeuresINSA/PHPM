@@ -1,15 +1,25 @@
 @media all {
 
 
- #phpm_bundle_tachetype_entity_plagesHoraire > div > div > div{
-	float:left;
-}
 
 
 
- #phpm_bundle_tachetype_entity_plagesHoraire > div{
+
+ #phpm_bundle_tachetype_entity_plagesHoraire > div {
+margin-bottom: 2em;
 clear:both;
+overflow: auto;
 }
+ #phpm_bundle_tachetype_entity_plagesHoraire > div >div {
+float:left;
+text-align: center;
+margin-right: 1em;
+}
+ #phpm_bundle_tachetype_entity_plagesHoraire > div >div >label {
+display:block;
+
+}
+
 
 #phpm_bundle_tachetype_entity_consignes{
 	height:10em;
