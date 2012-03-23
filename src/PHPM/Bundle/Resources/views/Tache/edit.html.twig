@@ -61,11 +61,27 @@
 
 <h2>Plages Horaires</h2>
 <div>
-    {{ form_widget(form.entity.plagesHoraire) }}
+   
+    {{ form_errors(form.entity.plagesHoraire) }}
     
+    <div id="phpm_bundle_tachetype_entity_plagesHoraire" data-prototype="{{ form_widget(form.entity.plagesHoraire.get('prototype')) | e }}">
+    {% for pl in form.entity.plagesHoraire %}
+    <div>
+    {{ form_errors(pl) }}
+    
+    {{ form_row(pl.debut) }}
+    {{ form_row(pl.fin) }}
+    {{ form_row(pl.dureeCreneau) }}
+    {{ form_row(pl.recoupementCreneau) }}
+    {{ form_row(pl.nbOrgasComNecessaires) }}
+    {{ form_row(pl.nbOrgasNecessaires) }}
+    {{ form_row(pl.respNecessaire) }}
+    </div>
+    {% endfor %}
+    </div>
 
     
-    <div class ="clear"></div>
+
     
     
     {% if not rOnly  %}
