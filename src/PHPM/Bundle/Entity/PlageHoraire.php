@@ -84,7 +84,7 @@ class PlageHoraire
     /**
      * @var bool $respNecessaire
      *
-     * @ORM\Column(name="respNecessaire", type="boolean")
+     * @ORM\Column(name="respNecessaire", type="boolean", nullable=true)
      */
     protected $respNecessaire;
     
