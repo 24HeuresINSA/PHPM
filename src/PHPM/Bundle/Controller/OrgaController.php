@@ -638,8 +638,10 @@ public function validationAction()
 	*/
 	public function queryJsonAction()
 	{
+		// fonction qui permet de selectionner une list d'orga en fonction de certains critères
 		$request = $this->getRequest();
 		
+		//on recupère les paramètres passés en post
 		$permis = $request->request->get('permis', '');
 		$age = $request->request->get('age', '0');
 		$plage_id = $request->request->get('plage_id', '');
@@ -647,25 +649,27 @@ public function validationAction()
 		$maxDateNaissance = new \DateTime();
 		$creneau = $request->request->get('creneau_id', '');
 		
-		if ($age!='') {
+		if ($age!='') 
+		{ //petit conversion pour changer l'age en date de naissance
 			$maxDateNaissance->modify('-'.$age.' year');
 		}
 		
 		$em = $this->getDoctrine()->getEntityManager();
+		// on appelle la fonction qui va faire la requête SQL et nous renvoyer le resultat
 		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $maxDateNaissance->format('Y-m-d'), $plage_id, $niveau_confiance, $creneau);
 		
 		$orgaArray = array();
-		
+		//création du Json de retour selon le modèle définit dans la spec (cf wiki)
 		foreach ($entities as $orga) {
 			$a = array();
-			foreach ($orga->getDisponibilites() as $dispo){
-				if ($dispo->toArrayOrgaWebService() != null){
+			foreach ($orga->getDisponibilites() as $dispo)
+			{
+				if ($dispo->toArrayOrgaWebService() != null)
+				{
 					$a[$dispo->getId()] = $dispo->toArrayOrgaWebService();
-				}
-				
-				
+				}			
 			}
-			
+			//TODO pk permis est commenté? 
 			$orgaArray[$orga->getId()] = array(
 			        	"nom" => $orga->getNom(),
 			        	"prenom" => $orga->getPrenom(),

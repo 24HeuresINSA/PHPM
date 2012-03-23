@@ -207,8 +207,10 @@ class CreneauController extends Controller
     * @Method("post")
     */
     public function queryJsonAction() {
+    	// fonction qui permet de selectionner une list de creneau en fonction de certains critères
     	$request = $this->getRequest();
     
+    	//on recupère les paramètres passés en post
     	$permis = $request->request->get('permis', '');
 //     	$age = $request->request->get('age', '0');
     	$niveau_confiance = $request->request->get('confiance_id', '');
@@ -233,7 +235,7 @@ class CreneauController extends Controller
     			        	"nom" => $creneau->getPlageHoraire()->getTache()->getNom(),
     						"lieu" => $creneau->getPlageHoraire()->getTache()->getLieu(),
     						"confiance" => $creneau->getPlageHoraire()->getTache()->getConfiance()->getId(),
-//     						"categorie" => $creneau->getPlageHoraire()->getTache()->getCategorie()->getId(),
+//  TODO   						"categorie" => $creneau->getPlageHoraire()->getTache()->getCategorie()->getId(),
 				    		"debut" => $creneau->getDebut(),
 				    		"fin" => $creneau->getFin(),
     			        	"duree" => $creneau->getDuree(),
@@ -333,17 +335,18 @@ class CreneauController extends Controller
     *
     * @Route("/diviser.json", name="creneau_diviser")
     * @Template
-    * 
+    * @Method("post")
     */
+    //On passe en post un creneau_id et un date_time
     public function diviserAction()
-    {
+    { // permet de couper un créneau en 2
     	$em = $this->getDoctrine()->getEntityManager();
     	$request = $this->getRequest();
     	$creneau_id= $request->request->get('creneau_id', '');
     	$creneau= $em->getRepository('PHPMBundle:Creneau')->find($creneau_id);
     	$date_times= $request->request->get('date_time', '');
 		$date_time = new \DateTime($date_times);
-    	var_dump($date_time);
+    	//var_dump($date_time);
     	//TODO remplacer les tgc par les erreurs ad hoc
 		if (!$creneau)
 		{
@@ -354,9 +357,6 @@ class CreneauController extends Controller
 			return array('response'=>'tgc');
 		}
 //     	On vérifie que l'heure est bien incluse dans le créneau
-		
-		
-		
     	if ($date_time < $creneau->getDebut() || $date_time > $creneau->getFin())
     	{
 			return array('response'=>'tgc');
