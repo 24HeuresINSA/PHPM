@@ -232,3 +232,14 @@ h3{
 .clear{
 	clear: both;
 }
+
+/*
+ * Avertissement, affiché sur les formulaires
+ */
+.alert-message {
+	color: red;
+	font-weight: bold;
+}
+.alert-message ul {
+	list-style-type: none;
+}
