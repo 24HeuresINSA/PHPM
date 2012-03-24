@@ -10,7 +10,7 @@ class PlageHoraireType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options) {
         $choixDurees= array();
         
-        for ($i=1;$i<=40;$i++){
+        for ($i=1;$i<=12;$i++){
             $s= 900*$i;
             $choixDurees[$s]=gmdate("H\hi", $s);
         }
@@ -35,11 +35,13 @@ class PlageHoraireType extends AbstractType
             ->add('dureeCreneau', 'choice', array('label'=>'Durée d\'un créneau', 'choices'=>$choixDurees))
             ->add('recoupementCreneau', 'choice', array('label'=>'Recoupement entre deux créneaux consécutifs (en sec.)', 'choices' => $choixRC ))
 			->add('respNecessaire', null, array('label'=>'Le responsable de la tâche doit être présent'))
-			->add('besoinsOrga','collection',array('type' => new BesoinOrgaType(),'allow_add' => true,'allow_delete' => true,
-                'by_reference' => false,
-			    'label'  => " ",
-                'options'  => array( 'label'  => " ")
-        ));
+			->add('besoinsOrga','collection', array('type' => new BesoinOrgaType(),
+													'allow_add' => true,
+													'allow_delete' => true,
+									                'by_reference' => false,
+												    'label'  => ' ',
+									                'options'  => array('label' => ' ')
+        										));
     }
     
     public function getDefaultOptions(array $options) {
