@@ -54,7 +54,7 @@ PmHistory.prototype = {
 			}
 			
 			// on re-set les paramètres
-			History.replaceState('Paramètre GET parsé', null, History.getState().url.split("?")[0]);
+			History.replaceState('Paramètre GET parsé', 'Paramètre GET parsé', History.getState().url.split("?")[0]);
 		}
 		
 		if (_hash.substr(0, 6) == 'param&') { // parseur - on a reconnu notre format
