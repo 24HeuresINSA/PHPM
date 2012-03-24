@@ -2,41 +2,43 @@
 {% set pageTitle = 'Liste des Organisateurs' %}
 {% use "PHPMBundle::index.html.twig" %}
 
-
-        {% block javascript %}
-            {{ parent() }}
-            <script>
-            $(function() {
-            	fnShowHide(7);
-	    });
+{% block javascript %}
+	{{ parent() }}
+	
+	<script>
+		    $(function() {
+		    	fnShowHide(7);
+		});
 	</script>
-        {% endblock %}
+{% endblock %}
 
 
 
 {% block content %}
-{% include 'PHPMBundle:Orga:afficheListe.html.twig' %}
+	{% include 'PHPMBundle:Orga:afficheListe.html.twig' %}
 {% endblock %}
 
 {% block actions %}
-{{ parent() }}
-{% if is_granted('ROLE_ADMIN') %}
-<li>
-    <a href="{{ path('orga_charisme') }}">
-    Classement Charisme
-    </a>
-</li>
-{% endif %}
-<li>
-    <a href="{{ path('orga_validation') }}">
-    Validation
-    </a>
-</li>
-<li>
-    <a href="{{ path('orga_plannings_impression') }}" target="_blank">
-    Impression des plannings
-    </a>
-</li>
+	{{ parent() }}
+	
+	{% if is_granted('ROLE_ADMIN') %}
+		<li>
+		    <a href="{{ path('orga_charisme') }}">
+		    Classement Charisme
+		    </a>
+		</li>
+	{% endif %}
+	
+	<li>
+	    <a href="{{ path('orga_validation') }}">
+	    Validation
+	    </a>
+	</li>
+	<li>
+	    <a href="{{ path('orga_plannings_impression') }}" target="_blank">
+	    Impression des plannings
+	    </a>
+	</li>
 {% endblock %}
 
 
