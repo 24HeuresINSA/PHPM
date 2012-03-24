@@ -253,6 +253,14 @@ class Tache
     	"plagesHoraire" => $a);
     	
     }
+	
+    public function toSearchArray()
+    {
+    	return array(
+    		"type" => "tache",
+	    	"id" => $this->getId(),
+	    	"nom" => $this->getNom());
+    }
     
     public function toArrayOrgaWebService($developCreneaux = NULL)
     {

@@ -225,6 +225,17 @@ h3{
 }
 
 /*
+ * Auto complete du champ de recherche
+ */
+.ui-autocomplete-category {
+	font-weight: bold;
+	padding: .2em .4em;
+	margin: .8em 0 .2em;
+	line-height: 1.5;
+	text-transform: capitalize;
+}
+
+/*
  * Avertissement, affiché sur les formulaires
  */
 .alert-message {

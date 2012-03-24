@@ -43,6 +43,14 @@
 				{% endjavascripts %}
         {% endblock %}
         {% endblock %}
+        
+        <script>
+       		// petit hack : variable avec l'adresse de l'appli, accessibles de partout
+        	app_url = "{{ url('phpm__default_home') }}";
+        	app_search_url = "{{ url('search_json') }}";
+        	app_orga_url = "{{ url('orga') }}";
+        	app_tache_url = "{{ url('tache') }}";
+        </script>
     </head>
     <body>
         <div class="header" id="header" >
@@ -55,10 +63,11 @@
         		    <h1>{{ manifestation_nom }} - {{ pageTitle }}</h1>
         		{% endif %}
         		{% endblock %}
+        		
         		{% if is_granted('ROLE_ADMIN') %}
-        		<form method="post" action="{{ path('search') }}">
-        			<input id="searchBox" name="s" />
-        		</form>   
+	        		<form method="post" action="{{ path('search') }}" id="search_form">
+	        			<input id="searchBox" name="s" size="30" />
+	        		</form>   
         		{% endif %}     		
         	</div>
         	

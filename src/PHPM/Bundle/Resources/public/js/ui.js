@@ -1,11 +1,70 @@
 $(window).load(function() {
-var regional = $.datepicker.regional['fr'];
-regional.dateFormat = 'yy-mm-dd';
- $.datepicker.setDefaults(regional);
+	var regional = $.datepicker.regional['fr'];
+	regional.dateFormat = 'yy-mm-dd';
+	 $.datepicker.setDefaults(regional);
 });
 
 $(function() {
-	 $('.records_list').dataTable( {
+	// auto-complete pour le champ de recherche en haut de page
+	$.widget('custom.catcomplete', $.ui.autocomplete, {
+		_renderMenu: function(ul, items) {
+			var self = this,
+				currentType = '';
+				
+			$.each(items, function(index, item) {
+				if (item.type != currentType) {
+					ul.append('<li class="ui-autocomplete-category">' + item.type + '</li>');
+					currentType = item.type;
+				}
+				self._renderItem( ul, item );
+			});
+		}
+	}); // là on a mis un peu en forme
+	$('#searchBox').catcomplete({
+		source: function(request, response) {
+			$.ajax({
+				url: app_search_url,
+				dataType: 'json',
+				type: 'post',
+				data: {
+					s: request.term
+				},
+				success: function(data) {
+					var _result = new Array();
+					
+					// on parcourt les résultats
+					// la clef _item est bien unique
+					for (var _item in data) {
+						if (data[_item]['type'] === 'orga') {
+							_result.push({label: data[_item]['prenom'] + ' ' + data[_item]['nom'] + ' (' + data[_item]['surnom'] + ')',
+											value: data[_item]['telephone'],
+											type: data[_item]['type'],
+											id: data[_item]['id']}); // on prend le téléphone qui est unique
+						} else if  (data[_item]['type'] === 'tache') {
+							_result.push({label: data[_item]['nom'],
+											value: data[_item]['nom'],
+											type: data[_item]['type'],
+											id: data[_item]['id']});
+						}
+					}
+					
+					response(_result); // on appelle le callback
+				},
+				position: {my : 'right top', at: 'right bottom'}
+			});
+		},
+		minLength: 2,
+		select: function(event, ui) {
+			// on va sur la bonne page lors de la sélection
+			if (ui.item.type === 'orga') {
+				window.location.href = app_orga_url + ui.item.id + '/edit';
+			} else if (ui.item.type === 'tache') {
+				window.location.href = app_tache_url + ui.item.id + '/edit';
+			}
+		}
+	});
+	
+	$('.records_list').dataTable( {
 		"bInfo": false,
 		"bPaginate": false,
 		"bJQueryUI": true

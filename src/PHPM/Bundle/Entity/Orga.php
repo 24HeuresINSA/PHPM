@@ -229,6 +229,18 @@ class Orga implements UserInterface
         	"disponibilites" => $a);
     	 
     }
+	
+    public function toSearchArray()
+    {
+    	return array(
+    		"type" => "orga" ,
+    		"id" => $this->getId(),
+        	"nom" => $this->getNom(),
+        	"prenom" => $this->getPrenom(),
+    		"surnom" => $this->getSurnom(),
+    		"telephone" => $this->getTelephone(),
+    		"email" => $this->getEmail());
+    }
     
     public function toExportArray()
     {
