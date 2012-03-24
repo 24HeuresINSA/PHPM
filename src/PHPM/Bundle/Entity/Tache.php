@@ -50,7 +50,7 @@ class Tache
      * @var text $materielSupplementaire
      *
      * @ORM\Column(name="materielSupplementaire", type="text", nullable=true)
-     * 
+     *
      */
     protected $materielSupplementaire;
     
@@ -117,7 +117,7 @@ class Tache
     
     /**
      * @var smallint $statut
-     * @Assert\Choice(choices = {"0", "1", "2"})
+     * @Assert\Choice(choices = {"0", "1", "2","-1"})
      * @ORM\Column(name="statut", type="smallint")
      */
     protected $statut;
@@ -137,7 +137,7 @@ class Tache
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -157,7 +157,7 @@ class Tache
     /**
      * Get nom
      *
-     * @return string 
+     * @return string
      */
     public function getNom()
     {
@@ -185,7 +185,7 @@ class Tache
     /**
      * Get confiance
      *
-     * @return PHPM\Bundle\Entity\Confiance 
+     * @return PHPM\Bundle\Entity\Confiance
      */
     public function getConfiance()
     {
@@ -219,7 +219,7 @@ class Tache
     /**
      * Get plagesHoraire
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getPlagesHoraire()
     {
@@ -280,7 +280,7 @@ class Tache
     /**
      * Get permisNecessaire
      *
-     * @return smallint 
+     * @return smallint
      */
     public function getPermisNecessaire()
     {
@@ -300,7 +300,7 @@ class Tache
     /**
      * Get consignes
      *
-     * @return text 
+     * @return text
      */
     public function getConsignes()
     {
@@ -322,7 +322,7 @@ class Tache
     /**
      * Get importId
      *
-     * @return integer 
+     * @return integer
      */
     public function getImportId()
     {
@@ -343,7 +343,7 @@ class Tache
     /**
      * Get responsable
      *
-     * @return PHPM\Bundle\Entity\Orga 
+     * @return PHPM\Bundle\Entity\Orga
      */
     public function getResponsable()
     {
@@ -363,7 +363,7 @@ class Tache
     /**
      * Get statut
      *
-     * @return smallint 
+     * @return smallint
      */
     public function getStatut()
     {
@@ -383,7 +383,7 @@ class Tache
     /**
      * Get groupeTache
      *
-     * @return PHPM\Bundle\Entity\GroupeTache 
+     * @return PHPM\Bundle\Entity\GroupeTache
      */
     public function getGroupeTache()
     {
@@ -407,7 +407,7 @@ class Tache
     /**
      * Get commentaires
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getCommentaires()
     {
@@ -430,7 +430,7 @@ class Tache
     /**
      * Get besoinsMateriel
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getBesoinsMateriel()
     {
@@ -488,7 +488,7 @@ class Tache
     /**
      * Get materielSupplementaire
      *
-     * @return text 
+     * @return text
      */
     public function getMaterielSupplementaire()
     {
@@ -508,7 +508,7 @@ class Tache
     /**
      * Get lieu
      *
-     * @return string 
+     * @return string
      */
     public function getLieu()
     {

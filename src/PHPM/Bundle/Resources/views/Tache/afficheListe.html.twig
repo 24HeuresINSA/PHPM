@@ -7,16 +7,17 @@
             <th>Groupe de Tâches</th>
             <th>Équipe</th>
             <th>Responsable</th>
-            
+            <th>Dernier Commentaire</th>
         </tr>
     </thead>
     <tbody>
     {% for entity in entities %}
         
-            <td><a href="{{ path('tache_edit', { 'id': entity.id }) }}">{{ entity.id }}- {{ entity.nom }}</a></td>
+            <td>{{ entitiesMacro.tache(entity) }}</td>
             <td>{{ entitiesMacro.groupeTache(entity.groupeTache) }}</td>
-            <td>{{ entity.groupeTache.equipe.nom }}</td>            
+            <td>{{ entity.groupeTache.equipe.nom }}</td>
             <td>{{ entitiesMacro.orga(entity.responsable) }}</td>
+            <td>{{ entitiesMacro.tacheCom(entity) }}</td>
             
         </tr>
     {% endfor %}

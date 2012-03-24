@@ -1,7 +1,6 @@
 <?php
 
 namespace PHPM\Bundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -29,21 +28,19 @@ class GroupeTache
      * @Assert\NotBlank()
      */
     protected $nom;
-    
+
     /**
-    * @ORM\OneToMany(targetEntity="Tache", mappedBy="groupeTache")
-    */
+     * @ORM\OneToMany(targetEntity="Tache", mappedBy="groupeTache")
+     */
     protected $taches;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Orga", inversedBy="groupesTachesResponsable")
      * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
      * @Assert\Valid
      */
     protected $responsable;
-    
 
-    
     /**
      * @ORM\ManyToOne(targetEntity="Equipe", inversedBy="groupesTache")
      * @ORM\JoinColumn(name="equipe_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
@@ -51,14 +48,13 @@ class GroupeTache
      */
     protected $equipe;
 
-    
-//     /**
-//      * @ORM\ManyToOne(targetEntity="Lieu", inversedBy="groupestache")
-//      * @ORM\JoinColumn(name="lieu_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
-//      * @Assert\Valid
-//      */
-//     protected $lieu;
-    
+    //     /**
+    //      * @ORM\ManyToOne(targetEntity="Lieu", inversedBy="groupestache")
+    //      * @ORM\JoinColumn(name="lieu_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+    //      * @Assert\Valid
+    //      */
+    //     protected $lieu;
+
     /**
      * @var string $lieu
      *
@@ -66,7 +62,7 @@ class GroupeTache
      * @Assert\NotBlank()
      */
     protected $lieu;
-    
+
     /**
      * @var integer $animLiee
      *
@@ -74,20 +70,26 @@ class GroupeTache
      */
     protected $animLiee;
 
-    
+    /**
+     * @var smallint $statut
+     * @Assert\Choice(choices = {"0","-1"})
+     * @ORM\Column(name="statut", type="smallint")
+     */
+    protected $statut;
+
     public function __toString()
     {
-        return $this->getId()."- ".$this->getNom();
+        return $this->getId() . "- " . $this->getNom();
     }
     public function __construct()
     {
         $this->taches = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -107,13 +109,12 @@ class GroupeTache
     /**
      * Get nom
      *
-     * @return string 
+     * @return string
      */
     public function getNom()
     {
         return $this->nom;
     }
-
 
     /**
      * Add taches
@@ -128,9 +129,19 @@ class GroupeTache
     /**
      * Get taches
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getTaches()
+    {
+        return $this->taches;
+    }
+
+    /**
+     * Get non-deleted taches
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getNonDeletedTaches()
     {
         return $this->taches;
     }
@@ -148,7 +159,7 @@ class GroupeTache
     /**
      * Get responsable
      *
-     * @return PHPM\Bundle\Entity\Orga 
+     * @return PHPM\Bundle\Entity\Orga
      */
     public function getResponsable()
     {
@@ -168,14 +179,12 @@ class GroupeTache
     /**
      * Get equipe
      *
-     * @return PHPM\Bundle\Entity\Equipe 
+     * @return PHPM\Bundle\Entity\Equipe
      */
     public function getEquipe()
     {
         return $this->equipe;
     }
-
-
 
     /**
      * Set animLiee
@@ -190,7 +199,7 @@ class GroupeTache
     /**
      * Get animLiee
      *
-     * @return integer 
+     * @return integer
      */
     public function getAnimLiee()
     {
@@ -210,10 +219,47 @@ class GroupeTache
     /**
      * Get lieu
      *
-     * @return string 
+     * @return string
      */
     public function getLieu()
     {
         return $this->lieu;
+    }
+
+    /**
+     * Set statut
+     *
+     * @param smallint $statut
+     */
+    public function setStatut($statut)
+    {
+        $this->statut = $statut;
+    }
+
+    /**
+     * Get statut
+     *
+     * @return smallint
+     */
+    public function getStatut()
+    {
+        return $this->statut;
+    }
+
+    /**
+     * Is deletable ?
+     *
+     * @param smallint $statut
+     */
+    public function isDeletable()
+    {
+
+        foreach ($this->taches as $tache) {
+            if ($tache->getStatut() != -1) {
+                return false;
+            }
+        }
+        return true;
+
     }
 }

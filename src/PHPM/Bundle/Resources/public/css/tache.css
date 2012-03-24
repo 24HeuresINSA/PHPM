@@ -88,6 +88,10 @@ div.com_texte{
 	float:left;
 }
 
+.statut-1  {
+	text-decoration: line-through !important;
+	color: black !important;
+}
 .statut0  {
 	color: red !important; 
 }

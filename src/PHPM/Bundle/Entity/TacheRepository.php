@@ -47,7 +47,7 @@ class TacheRepository extends EntityRepository
 		
 		$query = $this->getEntityManager()->createQuery($dql);
 		
-		return $query->getResult();	
+		return $query->getResult();
 	}
 	
 	public function search($s)
@@ -56,6 +56,14 @@ class TacheRepository extends EntityRepository
 		->createQuery("SELECT t FROM PHPMBundle:Tache t WHERE t.nom LIKE :s")
 		->setParameter('s', "%".$s."%")
 		->getResult();
+	}
+	
+	public function getNonDeletedTaches($gid)
+	{
+	    return $this->getEntityManager()
+	    ->createQuery('SELECT t FROM PHPMBundle:Tache t LEFT JOIN t.groupeTache g WHERE g.id = :gid AND t.statut !=-1')
+	    ->setParameter('gid', $gid)
+	    ->getResult();
 	}
 	
 

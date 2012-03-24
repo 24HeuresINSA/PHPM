@@ -24,7 +24,7 @@
 
 <div class="alert-message">{{ form_errors(form) }}</div>
 
-<h2>{{ form.entity.vars.value.nom }}</h2>
+<h2 class="statut{{ form.entity.vars.value.statut }}">{{ form.entity.vars.value.nom }}</h2>
     
     <div>
     	<div class="form_row">
@@ -97,8 +97,23 @@
 
 <h2>Commentaires</h2>
     
+    <script>
+    function toggleOldComs() {
+		$( "#oldComs" ).toggle();
+	};
+	</script>
+    
+    
+    
+    
     <div>
+        <div id="oldComs" style="display: none; ">
         {% for com in entity.commentaires %}
+            {% if com == entity.commentaires.last %}
+            
+        </div>
+        <a href="javascript:toggleOldComs()">Afficher/Masquer les anciens commentaires</a>
+        {% endif %}
             <div class="com">
     	        <div class="com_infos">
     	        	<span class="com_auteur">{{com.auteur}}</span>
@@ -107,6 +122,8 @@
     	        <div class="com_texte">{{com.texte|raw}}</div>
     	        <div class=clear></div>
             </div>
+        
+            
         {% endfor %}
         
         {% if not rOnly  %}
@@ -119,7 +136,7 @@
     	
 {{ form_rest(form) }}
     <p>
-        <button type="submit" name="action" value="save" style = "float:left">Enregistrer</button>
+        <button type="submit" name="action" value="save" >Enregistrer</button>
         
         {% if entity.statut ==0 %}
         	<button class="yesbutton" type="submit" name="action" value="submit_validation">Passer en Validation</button>
@@ -128,9 +145,15 @@
             {% if entity.statut ==1  %}
         	    <button class="yesbutton" type="submit" name="action" value="validate">Valider la fiche</button>
         	{% endif %}
-        	{% if entity.statut !=0  %}
+        	{% if entity.statut >=1  %}
         	     <button class="nobutton" type="submit" name="action" value="reject">Rejeter la fiche</button>
         	{% endif %}
+        {% endif %}
+        {% if entity.statut !=-1  %}
+        <button class="nobutton" type="submit" name="action" value="delete">SUPPRIMER la fiche</button>
+        {% endif %}
+        {% if entity.statut ==-1 and entity.groupeTache.statut !=-1 %}
+        <button class="yesbutton" type="submit" name="action" value="restore">Restaurer la fiche</button>
         {% endif %}
     </p>
 {% endif %}

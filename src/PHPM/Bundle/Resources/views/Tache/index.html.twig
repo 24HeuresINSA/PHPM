@@ -20,6 +20,8 @@
 	    <li><a href="#tabs-2" class="statut1" >Tâches soumises à validation</a></li>
 		
 		<li><a href="#tabs-4" class="statut2">Tâches validées</a></li>
+		<li><a href="#tabs-7" >Tâches supprimées</a></li>
+		<li><a href="#tabs-8" >Groupes Supprimés</a></li>
 	</ul>
 	
 	<div id="tabs-1">
@@ -59,6 +61,19 @@
 
 {% if  sr %}
    {% include 'PHPMBundle:GroupeTache:afficheListe.html.twig' with {'entities': sr} %}
+{% endif %}
+	</div>
+	
+		<div id="tabs-7">
+
+{% if  deletedTaches %}
+   {% include 'PHPMBundle:Tache:afficheListe.html.twig' with {'entities': deletedTaches} %}
+{% endif %}
+	</div>
+		<div id="tabs-8">
+
+{% if  deletedGroups %}
+   {% include 'PHPMBundle:GroupeTache:afficheListe.html.twig' with {'entities': deletedGroups} %}
 {% endif %}
 	</div>
 

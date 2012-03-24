@@ -38,7 +38,7 @@ class TacheController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         
         $g =$em
-        ->createQuery("SELECT g FROM PHPMBundle:GroupeTache g JOIN g.equipe e ORDER BY e.id ")
+        ->createQuery("SELECT g FROM PHPMBundle:GroupeTache g JOIN g.equipe e WHERE g.statut= 0 ORDER BY e.id ")
         ->getResult();
 
         $r =$em
@@ -53,6 +53,14 @@ class TacheController extends Controller
         ->createQuery("SELECT t FROM PHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e WHERE t.statut = 2 ORDER BY e.id, g.id ")
         ->getResult();
         
+        $deletedTaches =$em
+        ->createQuery("SELECT t FROM PHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e WHERE t.statut = -1 ORDER BY e.id, g.id ")
+        ->getResult();
+        
+        $deletedGroups =$em
+        ->createQuery("SELECT g FROM PHPMBundle:GroupeTache g JOIN g.equipe e JOIN g.responsable r WHERE g.statut = -1 ORDER BY e.id")
+        ->getResult();
+        
         
         
         
@@ -61,19 +69,20 @@ class TacheController extends Controller
         
         
         $sr =$em
-        ->createQuery("SELECT g FROM PHPMBundle:GroupeTache g JOIN g.equipe e JOIN g.responsable r WHERE r.id = :oid ORDER BY r.id")
+        ->createQuery("SELECT g FROM PHPMBundle:GroupeTache g JOIN g.equipe e JOIN g.responsable r WHERE r.id = :oid AND g.statut = 0 ORDER BY r.id")
         ->setParameter('oid',$oid)
         ->getResult();
         
         $e =$em
-        ->createQuery("SELECT g FROM PHPMBundle:GroupeTache g JOIN g.equipe e JOIN g.responsable r WHERE e.id = :eid ORDER BY r.id")
+        ->createQuery("SELECT g FROM PHPMBundle:GroupeTache g JOIN g.equipe e JOIN g.responsable r WHERE e.id = :eid AND g.statut = 0 ORDER BY r.id")
         ->setParameter('eid',$eid)
         ->getResult();
         
 
         
 
-        return array('r'=>$r,'s'=>$s,'v'=>$v, 'g'=>$g, 'e'=>$e, 'sr'=>$sr);
+        return array('r'=>$r,'s'=>$s,'v'=>$v, 'g'=>$g, 'e'=>$e, 'sr'=>$sr, 'deletedTaches' => $deletedTaches,
+                'deletedGroups' => $deletedGroups);
     }
     
     /**
@@ -210,7 +219,7 @@ class TacheController extends Controller
             
             $data=$editForm->getData();
             
-           
+        $texteCommentaire = $data['commentaire'];
             
         if ($editForm->isValid()) {
             $valid= true;
@@ -219,14 +228,26 @@ class TacheController extends Controller
             
             if($param['action']=='submit_validation'){
                 $entity->setStatut(1);
+                $texteCommentaire=$texteCommentaire."<b>&rarr;Fiche soumise à Validation.</b>";
             }
             
             if($param['action']=='validate'){
                 $entity->setStatut(2);
+                $texteCommentaire=$texteCommentaire."<b>&rarr;Fiche validée.</b>";
             }
             
             if($param['action']=='reject'){
                 $entity->setStatut(0);
+                $texteCommentaire=$texteCommentaire."<b>&rarr;Fiche rejetée.</b>";
+            }
+            
+            if($param['action']=='delete'){
+                $entity->setStatut(-1);
+                $texteCommentaire=$texteCommentaire."<b>&rarr;Fiche supprimée.</b>";
+            }
+            if($param['action']=='restore'){
+                $entity->setStatut(0);
+                $texteCommentaire=$texteCommentaire."<b>&rarr;Fiche restaurée.</b>";
             }
             
             
@@ -273,26 +294,9 @@ class TacheController extends Controller
             
             
             
-                $texte = $data['commentaire'];
+                                
                 
-                if($entity->getStatut()!=(string)$prevStatut){
-                    if($entity->getStatut()==0){
-                        $texte=$texte."<b>&rarr;Tache en cours de rédaction</b>";
-                
-                    }
-                    if($entity->getStatut()==1){
-                        $texte=$texte."<b>&rarr;Tache soumise à validation</b>";
-                
-                    }
-                    if($entity->getStatut()==2){
-                        $texte=$texte."<b>&rarr;Tache validée</b>";
-                
-                    }
-                
-                }
-                
-                
-                if($texte!=""){
+                if($texteCommentaire!=""){
                     
                     
                 
@@ -301,7 +305,7 @@ class TacheController extends Controller
                 $commentaire->setAuteur($user);
                 $commentaire->setHeure(new \DateTime());
                 $commentaire->setTache($entity);
-                $commentaire->setTexte($texte);
+                $commentaire->setTexte($texteCommentaire);
                 $em->persist($commentaire);
                 }
             

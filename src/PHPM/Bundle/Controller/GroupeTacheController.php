@@ -3,6 +3,7 @@
 namespace PHPM\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -86,7 +87,7 @@ class GroupeTacheController extends Controller
      * Creates a new GroupeTache entity.
      *
      * @Route("/create", name="groupetache_create")
-     * 
+     *
      * @Template("PHPMBundle:GroupeTache:new.html.twig")
      */
        
@@ -136,13 +137,15 @@ class GroupeTacheController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find GroupeTache entity.');
         }
+        $taches = $em->getRepository('PHPMBundle:Tache')->getNonDeletedTaches($id);
 
         $editForm = $this->createForm(new GroupeTacheType($admin,$config), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
-            'form'   => $editForm->createView()
+            'form'   => $editForm->createView(),
+            'taches' => $taches
         );
     }
 
@@ -158,7 +161,9 @@ class GroupeTacheController extends Controller
         
         $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
         $em = $this->getDoctrine()->getEntityManager();
+        $request = $this->getRequest();
         $config  =$this->get('config.extension');
+        $param = $request->request->all();
         
 
         $entity = $em->getRepository('PHPMBundle:GroupeTache')->find($id);
@@ -175,6 +180,16 @@ class GroupeTacheController extends Controller
         $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
+            
+            if($param['action']=='delete' && $entity->isDeletable()){
+                $entity->setStatut(-1);
+                
+            }
+            
+            if($param['action']=='restore'){
+                $entity->setStatut(0);
+            }
+            
             $em->persist($entity);
             $em->flush();
 
