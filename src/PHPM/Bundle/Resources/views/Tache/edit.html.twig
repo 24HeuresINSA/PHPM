@@ -144,6 +144,11 @@
 		    
 		    <div>
 		    <b>Besoins Orga :</b>
+		    {% if pl.respNecessaire  %}
+		    (RESP)
+		    {% endif %}
+		    
+		    
 			    {% for bo in pl.besoinsOrga %}
 			    	({{ bo.equipe }} : {{ bo.nbOrgasNecessaires }})
 			    {% endfor %}
