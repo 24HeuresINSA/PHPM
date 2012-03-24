@@ -20,7 +20,6 @@ CreneauView.prototype = {
 		// filtres : bind les events
 		$('#filtre_tache_confiance').change(function() {pmAffectation.controllers.creneau.clickFilter('confiance', $('#filtre_tache_confiance').val());});
 		$('#filtre_tache_permis').change(function() {pmAffectation.controllers.creneau.clickFilter('permis', $('#filtre_tache_permis').val());});
-		$('#filtre_tache_age').change(function() {pmAffectation.controllers.creneau.clickFilter('age', $('#filtre_tache_age').val());});
 		$('#filtre_tache_categorie').change(function() {pmAffectation.controllers.creneau.clickFilter('categorie', $('#filtre_tache_categorie').val());});
 		$('#filtre_tache_duree').change(function() {pmAffectation.controllers.creneau.clickFilter('duree', $('#filtre_tache_duree').val());});
 	},
@@ -31,7 +30,6 @@ CreneauView.prototype = {
 	setFilters: function() {
 		(pmAffectation.current.creneau.confiance !== undefined) && ($('#filtre_tache_confiance').val(pmAffectation.current.creneau.confiance));
 		(pmAffectation.current.creneau.permis !== undefined) && ($('#filtre_tache_permis').val(pmAffectation.current.creneau.permis));
-		(pmAffectation.current.creneau.age !== undefined) && ($('#filtre_tache_age').val(pmAffectation.current.creneau.age));
 		(pmAffectation.current.creneau.categorie !== undefined) && ($('#filtre_tache_categorie').val(pmAffectation.current.creneau.categorie));
 		(pmAffectation.current.creneau.duree !== undefined) && ($('#filtre_tache_duree').val(pmAffectation.current.creneau.duree));
 	},
