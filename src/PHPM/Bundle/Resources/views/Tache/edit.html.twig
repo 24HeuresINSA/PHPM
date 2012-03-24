@@ -113,8 +113,6 @@
 {# </script>#}
 {#     {% endif %}#}
     
-    
-    
 
 
 <h2>Besoins en matériel</h2>
@@ -182,7 +180,7 @@
 	    {{ form_widget(form.commentaire) }}
 	    
 		{% if form.entity.statut is defined %}
-			{{ form_row(form.entity.statut, { 'label':  'Statut'}) }}
+			{{ form_row(form.entity.statut, { 'label':  'Statut : '}) }}
 		{% endif %}
 	</div>
 	
