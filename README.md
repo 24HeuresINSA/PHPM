@@ -4,7 +4,7 @@ PHPlanningMaker
 1) Required Configuration
 -------------------------
 Apache 2 w/mod_rewrite
-PHP5.3 w/ php5-intl
+PHP5.3 w/ php5-intl --> cf PHP Config section below
 
 2) Deployment
 -------------
@@ -48,6 +48,13 @@ Then follow this:
 'http://www.blogafab.com/installer-et-utiliser-nodejs-et-le-module-less-sur-mac-os-x/'
 
 
+*** PHP Config ***
+
+You'll need Php-Intl module
+
+Magic quotes should be disabled (or there'll be strange behaviors in some forms, Symfony2 already handles this).
+Add this directive to your php.ini :
+'magic_quotes_gpc = Off'
 
 
 
