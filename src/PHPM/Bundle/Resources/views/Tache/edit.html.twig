@@ -11,7 +11,6 @@
 	{% endstylesheets %}
 {% endblock %}
 
-
 {% block content %}
 {% if valid is defined %}
 	{% if valid==1 %}
@@ -21,185 +20,120 @@
 	{% endif %}
 {% endif %}
 
-
 <form action="{{ path('tache_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
 
 <div class="alert-message">{{ form_errors(form) }}</div>
 
-<h2>Informations Générales</h2>
-
-<div>
-	<div class="form_row">
-		{{ form_row(form.entity.nom, { 'label':  'Nom de la tâche'}) }}
-		{{ form_row(form.entity.groupeTache, { 'label':  'Groupe de la tâche'}) }}
-		{{ form_row(form.entity.responsable, { 'label':  'Orga Responsable'}) }}
-		{{ form_row(form.entity.lieu, { 'label':  'Lieu de rendez-vous'}) }}
-		{{ form_row(form.entity.confiance, { 'label':  'Niveau de confiance requis'}) }}
-		{{ form_row(form.entity.permisNecessaire, { 'label':  'Permis nécessaire'}) }}
-	</div>
-
-	<h3>{{ form_label(form.entity.consignes,'Consignes') }}</h3>
-	
-	<div class="alert-message">{{ form_errors(form.entity.consignes) }}</div>
-	{{ form_widget(form.entity.consignes) }}
-</div>
-
-
-{# <div>#}
-   
-{#     <div class="alert-message">{{ form_errors(form.entity.plagesHoraire) }}</div>#}
+<h2>{{ form.entity.vars.value.nom }}</h2>
     
-{#     <div id="phpm_bundle_tachetype_entity_plagesHoraire" data-prototype="{{ form_widget(form.entity.plagesHoraire.get('prototype')) | e }}">#}
-{#     {% for pl in form.entity.plagesHoraire %}#}
-{#     <div>#}
-{#     {{ form_errors(pl) }}#}
+    <div>
+    	<div class="form_row">
+    		{{ form_row(form.entity.nom, { 'label':  'Nom de la tâche'}) }}
+    		{{ form_row(form.entity.groupeTache, { 'label':  'Groupe de la tâche'}) }}
+    		{{ form_row(form.entity.responsable, { 'label':  'Orga Responsable'}) }}
+    		{{ form_row(form.entity.lieu, { 'label':  'Lieu de rendez-vous'}) }}
+    		{{ form_row(form.entity.permisNecessaire, { 'label':  'Permis nécessaire'}) }}
+    	</div>
     
-{#     {{ form_row(pl.debut) }}#}
-{#     {{ form_row(pl.fin) }}#}
-{#     {{ form_row(pl.dureeCreneau) }}#}
-{#     {{ form_row(pl.recoupementCreneau) }}#}
-
-
-{#     {{ form_row(pl.respNecessaire) }}#}
-{#     </div>#}
-{#     {% endfor %}#}
-{#     </div>#}
-
-
-    
-{#     {% if not rOnly  %}#}
-{# <a class="addbutton" id="addPHButton" href="#">+</a>#}
-{# <a class="rmbutton"  id="rmPHButton" href="#">-</a>#}
-    
-{#     </div>#}
-    
-{#     <script type="text/javascript">#}
-{# function addTagForm() {#}
-{# var collectionHolder = $('#phpm_bundle_tachetype_entity_plagesHoraire');#}
-{# // Get the data-prototype we explained earlier#}
-{# var prototype = collectionHolder.attr('data-prototype');#}
-{# // Replace '$$name$$' in the prototype's HTML to#}
-{# // instead be a number based on the current collection's length.#}
-{# form = prototype.replace(/\$\$name\$\$/g, collectionHolder.children().length);#}
-{# // Display the form in the page#}
-{# collectionHolder.append(form);#}
-
-{# $('input.dtp').datetimepicker({#}
-{# 	changeMonth: true,#}
-{# 	changeYear: true,#}
-{# 	dateFormat: 'yy-mm-dd',#}
-{# 	timeFormat: 'hh:mm:ss',		#}
-{# 	stepHour: 1,#}
-{# 	stepMinute: 15,#}
-{# 	hourGrid: 4,#}
-{# 	minuteGrid: 15,#}
-{# 	showButtonPanel: false, // on cache les boutons du bas#}
-{# });#}
-
-{# }#}
-
-{# function rmTagForm() {#}
-{# 	var last = $('#phpm_bundle_tachetype_entity_plagesHoraire > :last-child');#}
-	
-{# 	last.remove();#}
-{# 	}#}
-
-{# $('#addPHButton').click(function(event){#}
-{#     addTagForm();#}
-{# });#}
-{# $('#rmPHButton').click(function(event){#}
-{#     rmTagForm();#}
-{# });#}
-{# </script>#}
-{#     {% endif %}#}
-    
-
+    	<h3>{{ form_label(form.entity.consignes,'Consignes') }}</h3>
+    	
+    	<div class="alert-message">{{ form_errors(form.entity.consignes) }}</div>
+    	{{ form_widget(form.entity.consignes) }}
+    </div>
 
 <h2>Besoins en matériel</h2>
-<div>
-  
-    {% for c in form.Materiel %}
-	    <h3>{{ form_label(c) }}</h3>
-	    
-	    <div>
-		    {% for i in c %}
-				<div class="materiel_item">{{ form_label(i) }}<br/>{{ form_widget(i) }}</div>
-			{% endfor %}
-		</div>
-	{% endfor %} 
-	
-	<h3>{{ form_label(form.entity.materielSupplementaire,'Matériel Supplémentaire') }}</h3>
-	
-	{{ form_widget(form.entity.materielSupplementaire) }}
-</div>
+    <div>
+      
+        {% for c in form.Materiel %}
+    	    <h3>{{ form_label(c) }}</h3>
+    	    
+    	    <div>
+    		    {% for i in c %}
+    				<div class="materiel_item">{{ form_label(i) }}<br/>{{ form_widget(i) }}</div>
+    			{% endfor %}
+    		</div>
+    	{% endfor %}
+    	
+    	<h3>{{ form_label(form.entity.materielSupplementaire,'Matériel Supplémentaire') }}</h3>
+    	
+    	{{ form_widget(form.entity.materielSupplementaire) }}
+    </div>
 
 <h2>Plages Horaires</h2>
-
-<p><em>Attention : Enregistrez la fiche tâche avant de modifier les plages horaires !</em></p>
-
-<div id="plagesHoraires">
-    {% for pl in entity.plagesHoraire %}
-	    <div>
-		    <div>{{ pl.debut | format_datetime }} -> {{ pl.fin | format_datetime }}</div>
-		    
-		    <div>
-		    <b>Besoins Orga :</b>
-		    {% if pl.respNecessaire  %}
-		    (RESP)
-		    {% endif %}
-		    
-		    
-			    {% for bo in pl.besoinsOrga %}
-			    	({{ bo.equipe }} : {{ bo.nbOrgasNecessaires }})
-			    {% endfor %}
-			    <b>Total :{{ pl.besoinsOrgaTotal }}</b>
-		    </div>
-		    
-		    <a href="{{ path('plagehoraire_edit', { 'id': pl.id }) }}">Éditer</a>
-		    <a href="{{ path('plagehoraire_delete', { 'id': pl.id }) }}">Supprimer</a>
-	    </div>
-    <br />
-    {% endfor %}
     
-    <a class="button" href="{{ path('plagehoraire_new', { 'id': entity.id }) }}">Ajouter une nouvelle plage horaire</a>
-</div>
-
+    <p><em>Attention : Enregistrez la fiche tâche avant de modifier les plages horaires !</em></p>
+    
+    
+    <table>
+        <thead>
+            <th>Horaires</th>
+            <th>Besoins</th>
+            <th>Total</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+        {% for pl in entity.plagesHoraire %}
+    	    <tr><td>
+    		    {{ pl.debut | format_datetime }} -> {{ pl.fin | format_datetime }}
+    		    </td>
+    		    <td>
+    		    {% if pl.respNecessaire  %}(RESP) {% endif %}
+    		    
+    			{% for bo in pl.besoinsOrga %}({{ bo.equipe }} : {{ bo.nbOrgasNecessaires }}){% endfor %}
+    			</td>
+    			<td>{{ pl.besoinsOrgaTotal }}</td>
+    		    <td>
+    		    <a href="{{ path('plagehoraire_edit', { 'id': pl.id }) }}">Éditer</a>
+    		    <a href="{{ path('plagehoraire_delete', { 'id': pl.id }) }}">Supprimer</a>
+    	    </td></tr>
+        
+        {% endfor %}
+        </tbody>
+    </table>
+    <br/>
+    <a class="addbutton" href="{{ path('plagehoraire_new', { 'id': entity.id }) }}">+</a>
+    
+        
 
 <h2>Commentaires</h2>
-
-<div>
-    {% for com in entity.commentaires %}
-        <div class="com">
-	        <div class="com_infos">
-	        	<span class="com_auteur">{{com.auteur}}</span>
-	        	<span class="com_heure"> {{ com.heure|format_datetime('EEEE dd MMM HH:mm') }}</span>
-	        </div>
-	        <div class="com_texte">{{com.texte|raw}}</div>
-	        <div class=clear></div>
-        </div>
-    {% endfor %}
     
-    {% if not rOnly  %}
-	    <h3>Enregistrer les Modifications</h3>
-	    
-	    {{ form_errors(form.commentaire) }}
-	    {{ form_widget(form.commentaire) }}
-	    
-		{% if form.entity.statut is defined %}
-			{{ form_row(form.entity.statut, { 'label':  'Statut'}) }}
-		{% endif %}
-	</div>
-	
-	{{ form_rest(form) }}
-	    <p>
-	        <button type="submit" name="action" value="save" style = "float:left">Enregistrer</button>
-	        
-	        {% if not is_granted('ROLE_ADMIN') and entity.statut ==0 %}
-	        	<button type="submit" name="action" value="submit_validation">Demander Validation</button>
-	        {% endif %}
-	    </p>
-    {% endif %}
+    <div>
+        {% for com in entity.commentaires %}
+            <div class="com">
+    	        <div class="com_infos">
+    	        	<span class="com_auteur">{{com.auteur}}</span>
+    	        	<span class="com_heure"> {{ com.heure|format_datetime('EEEE dd MMM HH:mm') }}</span>
+    	        </div>
+    	        <div class="com_texte">{{com.texte|raw}}</div>
+    	        <div class=clear></div>
+            </div>
+        {% endfor %}
+        
+        {% if not rOnly  %}
+    	    <h3>Enregistrer les Modifications</h3>
+    	    
+    	    {{ form_errors(form.commentaire) }}
+    	    {{ form_widget(form.commentaire) }}
+    	    
+    	</div>
+    	
+{{ form_rest(form) }}
+    <p>
+        <button type="submit" name="action" value="save" style = "float:left">Enregistrer</button>
+        
+        {% if entity.statut ==0 %}
+        	<button class="yesbutton" type="submit" name="action" value="submit_validation">Passer en Validation</button>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN')  %}
+            {% if entity.statut ==1  %}
+        	    <button class="yesbutton" type="submit" name="action" value="validate">Valider la fiche</button>
+        	{% endif %}
+        	{% if entity.statut !=0  %}
+        	     <button class="nobutton" type="submit" name="action" value="reject">Rejeter la fiche</button>
+        	{% endif %}
+        {% endif %}
+    </p>
+{% endif %}
 </form>
-
 
 {% endblock %}

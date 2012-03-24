@@ -1,7 +1,6 @@
 <?php
 
 namespace PHPM\Bundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -31,7 +30,7 @@ class Config
      * @Assert\NotBlank()
      */
     protected $field;
-    
+
     /**
      * @var string $label
      *
@@ -43,16 +42,14 @@ class Config
     /**
      * @var text $value
      *
-     * @ORM\Column(name="value", type="text")
-     * @Assert\NotBlank()
+     * @ORM\Column(name="value", type="text", nullable=true)
      */
     protected $value;
-
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -72,22 +69,22 @@ class Config
     /**
      * Get field
      *
-     * @return string 
+     * @return string
      */
     public function getField()
     {
         return $this->field;
     }
 
-    
     public function toArray()
     {
-    	return array("id" => $this->getId(),"field" => $this->getField(),"value" => $this->getValue());
+        return array("id" => $this->getId(), "field" => $this->getField(),
+                "value" => $this->getValue());
     }
-    
+
     public function __toString()
     {
-    	return $this->label;
+        return $this->label;
     }
 
     /**
@@ -103,7 +100,7 @@ class Config
     /**
      * Get value
      *
-     * @return text 
+     * @return text
      */
     public function getValue()
     {
@@ -123,7 +120,7 @@ class Config
     /**
      * Get label
      *
-     * @return string 
+     * @return string
      */
     public function getLabel()
     {

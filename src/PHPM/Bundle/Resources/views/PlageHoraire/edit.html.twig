@@ -4,7 +4,6 @@
 
 {% form_theme form _self %}
 
-
 {% block style %}
 	{{ parent() }}
 	{% stylesheets 'bundles/phpm/css/tache.css' filter='cssrewrite'  %}
@@ -12,10 +11,10 @@
 	{% endstylesheets %}
 {% endblock %}
 
-
 {% block content %}
 <form action="{{ path('plagehoraire_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
     <h2>Informations</h2>
+    
     <div class="alert-message">{{ form_errors(form) }}</div>
     
 	{{ form_row(form.tache) }}
@@ -32,13 +31,13 @@
 
 	{{ form_row(form.respNecessaire) }}
 	
-    <h2>{{ form_label(form.besoinsOrga) }}</h2>
+    <h2>Besoins en Orgas</h2>
     
+    {{ form_errors(form.besoinsOrga) }}
     <div id="phpm_bundle_plagehorairetype_besoinsorga" data-prototype="{{ form_widget(form.besoinsOrga.get('prototype')) | e }}">
 	    {% for bo in form.besoinsOrga %}
 		    <div>
 		    	{{ form_errors(bo) }}
-		    
 		    	{{ form_widget(bo.equipe) }}
 		    	{{ form_widget(bo.nbOrgasNecessaires) }}
 		    </div>
@@ -55,8 +54,7 @@
     
     {{ form_rest(form) }}
 </form>
-
-<script type="text/javascript">	
+<script type="text/javascript">
 	function addTagForm() {
 		var collectionHolder = $('#phpm_bundle_plagehorairetype_besoinsorga');
 		

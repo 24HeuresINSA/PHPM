@@ -107,8 +107,8 @@ class TacheController extends Controller
      * Creates a new Tache entity.
      *
      * @Route("/create/{gid}", name="tache_create")
-     * 
-     * 
+     *
+     *
      */
     public function createAction($gid)
     {
@@ -221,6 +221,14 @@ class TacheController extends Controller
                 $entity->setStatut(1);
             }
             
+            if($param['action']=='validate'){
+                $entity->setStatut(2);
+            }
+            
+            if($param['action']=='reject'){
+                $entity->setStatut(0);
+            }
+            
             
             if($tmpm){
             
@@ -235,7 +243,7 @@ class TacheController extends Controller
                         
                         ->getResult();
                         
-                        if(!array_key_exists(0, $bms)){                        
+                        if(!array_key_exists(0, $bms)){
                             $bm= new BesoinMateriel();
                             $bm->setTache($entity);
                             $m = $em->createQuery("SELECT m FROM PHPMBundle:Materiel  m  WHERE  m.id=:mid")
@@ -336,7 +344,7 @@ class TacheController extends Controller
      * Deletes a Tache entity.
      *
      * @Route("/{id}/delete", name="tache_delete")
-     * 
+     *
      */
     public function deleteAction($id)
     {
@@ -399,7 +407,7 @@ class TacheController extends Controller
 		foreach ($tabArray as $tache_en_traitement) {
 			$found = FALSE;
 			foreach ($entities as $elements){
-				if ($elements->getImportId() == $tache_en_traitement['id']){	
+				if ($elements->getImportId() == $tache_en_traitement['id']){
 					$found = TRUE;
 					break;
 				}
@@ -410,7 +418,7 @@ class TacheController extends Controller
 				print "ajout de la tache ";
 				print $tache_en_traitement['id'];
 				print "<br />";
-				//*	
+				//*
 				$confiance = $em->getRepository('PHPMBundle:Confiance')->findOneById($tache_en_traitement['confiance_id']);
 // 				$categorie = $em->getRepository('PHPMBundle:Categorie')->findOneById($tache_en_traitement['categorie_id']);
 				
@@ -470,9 +478,9 @@ class TacheController extends Controller
 			}else{
 				print "tache ";
 				print $tache_en_traitement['id'];
-				print " deja a jour <br />";				
+				print " deja a jour <br />";
 			}
-		}	
+		}
 			
 		
 	exit(print($tabArray));
@@ -523,7 +531,7 @@ class TacheController extends Controller
 				"confiance" => $entity->getConfiance()->getId(),
 // 				"categorie" => $entity->getCategorie()->getId(),
 				"creneaux" => $a,
-				"permisNecessaire" => $entity->getPermisNecessaire());		    	
+				"permisNecessaire" => $entity->getPermisNecessaire());
 				$a[$entity->getId()] = $tacheArray;
 		}
 	

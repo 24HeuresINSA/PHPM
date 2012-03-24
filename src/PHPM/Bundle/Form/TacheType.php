@@ -48,16 +48,11 @@ class TacheType extends AbstractType
         ->add('nom')
         ->add('consignes')
         ->add('lieu')
-        ->add('confiance')
         ->add('consignes')
         ->add('permisNecessaire','choice',array('label'=>'Permis Nécessaire', 'choices'=>$libellesPermis))
         ->add('responsable')
         ->add('materielSupplementaire');
        
-        
-        if($this->admin){
-        $i->add('statut', 'choice',array('choices'=>array('0'=>'En rédaction','1'=>'Soumise à validation','2'=>'Validée')));
-        }
         
 //         $i->add('plagesHoraire','collection',array('type' => new PlageHoraireType(),'allow_add' => true,'allow_delete' => true,
 //                 'by_reference' => false,

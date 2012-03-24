@@ -53,7 +53,8 @@
     {% endfor %}
     </tbody>
 </table>
-<a class="button" href="{{ path('tache_create', { 'gid': entity.id }) }}">Créer une nouvelle tâche</a>
+<br/>
+<a class="yesbutton" href="{{ path('tache_create', { 'gid': entity.id }) }}">Créer une nouvelle tâche</a>
 {% endif %}
 
 {% endblock %}

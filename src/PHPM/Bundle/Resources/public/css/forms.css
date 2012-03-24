@@ -1,8 +1,29 @@
 button {
+    display: inline-block;
 	border: none;
 	padding: .3em;
 	border-radius: 4px;
-	background: orange;
+	background: darkslategray;
+	color: white;
+	font-weight: bold;
+}
+
+button.yesbutton,a.yesbutton,a.yesbutton:link,a.yesbutton:visited {
+	display: inline-block;
+	border: none;
+	padding: .3em;
+	border-radius: 4px;
+	background: limegreen;
+	color: white;
+	font-weight: bold;
+}
+
+button.nobutton,a.nobutton,a.nobutton:link,a.nobutton:visited {
+	display: inline-block;
+	border: none;
+	padding: .3em;
+	border-radius: 4px;
+	background: #C00;
 	color: white;
 	font-weight: bold;
 }
@@ -59,20 +80,22 @@ a.button,a.button:link,a.button:visited {
 
 a.addbutton,a.addbutton:link,a.addbutton:visited {
 	display: inline-block;
-	padding: .3em;
+	padding: .1em 1em;
 	border-radius: 4px;
-	background: #33CC66;
+	background: limegreen;
 	color: white;
-	font-weight: bold;
 	text-decoration: none;
+	font-size: large;
 }
 
 a.rmbutton,a.rmbutton:link,a.rmbutton:visited {
 	display: inline-block;
-	padding: .3em;
+	padding: .1em 1em;
 	border-radius: 4px;
 	background: #CC0000;
 	color: white;
-	font-weight: bold;
 	text-decoration: none;
+	font-size: larger;
+	font-size: large;
 }
+
