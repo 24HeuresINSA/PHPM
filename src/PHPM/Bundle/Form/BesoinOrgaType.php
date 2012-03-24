@@ -10,10 +10,8 @@ class BesoinOrgaType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('equipe',null,array('label'=>' '))
-            ->add('nbOrgasNecessaires',null,array('label'=>'Orgas nécessaires'))
-            
-        ;
+            ->add('equipe', null, array('label'=>' '))
+            ->add('nbOrgasNecessaires', null, array('label' => 'Orgas nécessaires', 'attr' => array('min' => 1)));
     }
 
     public function getDefaultOptions(array $options)
