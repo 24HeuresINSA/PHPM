@@ -1,28 +1,28 @@
 button {
-   border: none;
-   padding: 5px 30px;
-   border-radius: 4px;
-   background: darkgray;
-   color:white;
-   font-weight: bold;
+	border: none;
+	padding: .3em;
+	border-radius: 4px;
+	background: orange;
+	color: white;
+	font-weight: bold;
 }
 
-input, textarea {
+input,textarea {
 	padding: 5px;
 	border: none;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	text-shadow: 0px 1px 0px #fff;
 	background-color: #E0E0E0;
-
 }
+
 label {
 	padding-right: 5px;
 }
 
 textarea {
-	width:95%;
-	height:3em;
+	width: 95%;
+	height: 3em;
 }
 
 input:focus {
@@ -35,29 +35,41 @@ input:focus {
 	margin-bottom: .5em;
 	clear: both;
 }
-.form_row > div {
+
+.form_row>div {
 	float: left;
 	text-align: center;
 	margin-right: 1em;
 }
-.form_row > div > label {
+
+.form_row>div>label {
 	display: block;
 	padding-right: 0;
 }
 
+a.button,a.button:link,a.button:visited {
+	display: inline-block;
+	padding: .3em;
+	border-radius: 4px;
+	background: orange;
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
+}
 
-a.addbutton, a.addbutton:link, a.addbutton:visited {
-	display:inline-block;
-	padding: .5em 1em;
+a.addbutton,a.addbutton:link,a.addbutton:visited {
+	display: inline-block;
+	padding: .3em;
 	border-radius: 4px;
 	background: #33CC66;
 	color: white;
 	font-weight: bold;
 	text-decoration: none;
 }
-a.rmbutton, a.rmbutton:link, a.rmbutton:visited {
-	display:inline-block;
-	padding: .5em 1em;
+
+a.rmbutton,a.rmbutton:link,a.rmbutton:visited {
+	display: inline-block;
+	padding: .3em;
 	border-radius: 4px;
 	background: #CC0000;
 	color: white;

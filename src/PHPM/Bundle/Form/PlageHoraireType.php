@@ -37,6 +37,7 @@ class PlageHoraireType extends AbstractType
 			->add('respNecessaire', null, array('label'=>'Le responsable de la tâche doit être présent'))
 			->add('besoinsOrga','collection',array('type' => new BesoinOrgaType(),'allow_add' => true,'allow_delete' => true,
                 'by_reference' => false,
+			    'label'  => "Besoins en Orgas",
                 'options'  => array( 'label'  => " ")
         ));
     }

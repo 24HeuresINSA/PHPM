@@ -1,14 +1,9 @@
 @media all {
-.hrow  >div> div{
-
-	float:left;
-}
-
-.hrow> div{
-		clear:both;
-	
-}
-
-
-
+	.hrow>div>div {
+		float: left;
+	}
+	.hrow>div {
+		clear: both;
+		margin-bottom: .2em;
+	}
 }

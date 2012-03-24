@@ -32,15 +32,6 @@ a, a:link , a:visited {
 	color : black;
 }
 
-a.button, a.button:link, a.button:visited {
-	display:inline-block;
-
-padding: 5px 30px;
-border-radius: 4px;
-background: darkGray;
-color: white;
-font-weight: bold;
-}
 
 h1,h2{
 	clear:both;

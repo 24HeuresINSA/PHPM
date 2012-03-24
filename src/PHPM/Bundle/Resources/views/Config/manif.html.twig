@@ -3,7 +3,6 @@
 
 {% form_theme form _self %}
 
-
 {% block style %}
 {{ parent() }}
 			{% stylesheets 'bundles/phpm/css/config.css' filter='cssrewrite'  %}
@@ -11,34 +10,18 @@
 			{% endstylesheets %}
 {% endblock %}
 
-
 {% block content %}
 <form action="{{ path('config_manif') }}" method="post" {{ form_enctype(form) }}>
 <div id="tabs">
 	<ul>
-		<li><a href="#configItems">Clés de configuration</a></li>
-		<li><a href="#lieuItems">Lieux</a></li>
-		<li><a href="#equipeItems">Équipes</a></li>
-		<li><a href="#confianceItems">Niveaux de Confiance</a></li>
-		<li><a href="#materielItems">Matériel</a></li>		
+		<li><a href="#configItems">{{ form_label(form.configItems) }}</a></li>
+		<li><a href="#lieuItems">{{ form_label(form.lieuItems) }}</a></li>
+		<li><a href="#equipeItems">{{ form_label(form.equipeItems) }}</a></li>
+		<li><a href="#confianceItems">{{ form_label(form.confianceItems) }}</a></li>
+		<li><a href="#materielItems">{{ form_label(form.materielItems) }}</a></li>
 			</ul>
-<!-- 		
-	 // Get the div that holds the collection of tags
-    var collectionHolder = $('#phpm_bundle_maniftype_lieuItems');
-    // Get the data-prototype we explained earlier
-    var prototype = collectionHolder.attr('data-prototype');
-    // Replace '$$name$$' in the prototype's HTML to
-    // instead be a number based on the current collection's length.
-    form = prototype.replace(/\$\$name\$\$/g, collectionHolder.children().length);
-    // Display the form in the page
-    collectionHolder.append(form);		
- -->	
-
-
 
 <div id="configItems" >
-
-
 {% for i in form.configItems %}
     {{ i.vars.value }}
     {{ form_errors(i) }}
@@ -47,59 +30,58 @@
 {% endfor %}
 </div>
 
-
-
 <div id="lieuItems" class = "rowsection">
-
 {% for i in form.lieuItems %}
     <div class=hrow>
 {{ form_errors(i) }}
-    {{ form_widget(i) }}
-    <a class="button" href="{{ path('lieu_delete', { 'id': i.vars.value.id }) }}">Supprimer</a>
-      </div>
+{{ form_widget(i) }}
+    <a class="rmbutton" href="{{ path('lieu_delete', { 'id': i.vars.value.id }) }}">Supprimer</a>
+    </div>
 {% endfor %}
-<div class="clear"></div>
-<a class="button" href="{{ path('lieu_new') }}">Nouveau Lieu</a>
-</div>      
+<br/>
+<a class="addbutton" href="{{ path('lieu_new') }}">Nouveau Lieu</a>
+</div>
+
 <div id="equipeItems" class = "rowsection">
 {% for i in form.equipeItems %}
     <div class=hrow>
     {{ form_errors(i) }}
     {{ form_widget(i) }}
-    <a class="button" href="{{ path('equipe_delete', { 'id': i.vars.value.id }) }}">Supprimer</a>
+    <a class="rmbutton" href="{{ path('equipe_delete', { 'id': i.vars.value.id }) }}">Supprimer</a>
          </div>
 {% endfor %}
-<div class="clear"></div>
-<a class="button" href="{{ path('equipe_new') }}">Nouvelle équipe</a>
-</div>   
+<br/>
+<a class="addbutton" href="{{ path('equipe_new') }}">Nouvelle équipe</a>
+</div>
+
 <div id="confianceItems" class = "rowsection">
 {% for i in form.confianceItems %}
     <div class=hrow>
     {{ form_errors(i) }}
     {{ form_widget(i) }}
-    <a class="button" href="{{ path('confiance_delete', { 'id': i.vars.value.id }) }}">Supprimer</a>
+    <a class="rmbutton" href="{{ path('confiance_delete', { 'id': i.vars.value.id }) }}">Supprimer</a>
          </div>
          
 {% endfor %}
-<div class="clear"></div>
-<a class="button" href="{{ path('confiance_new') }}">Nouveau niveau</a>
-</div>   
+<br/>
+<a class="addbutton" href="{{ path('confiance_new') }}">Nouveau niveau</a>
+</div>
 
 <div id="materielItems" class = "rowsection">
 {% for i in form.materielItems %}
     <div class=hrow>
     {{ form_errors(i) }}
     {{ form_widget(i) }}
-    <a class="button" href="{{ path('materiel_delete', { 'id': i.vars.value.id }) }}">Supprimer</a>
+    <a class="rmbutton" href="{{ path('materiel_delete', { 'id': i.vars.value.id }) }}">Supprimer</a>
          </div>
 {% endfor %}
-<div class="clear"></div>
-<a class="button" href="{{ path('materiel_new') }}">Nouvel Item</a>
-</div>  
+<br/>
+<a class="addbutton" href="{{ path('materiel_new') }}">Nouvel Item</a>
+</div>
         
         
 {{ form_rest(form) }}
-    <p class="clear">
+
         <button type="submit">Enregistrer la configuration</button>
     </p>
 </form>
