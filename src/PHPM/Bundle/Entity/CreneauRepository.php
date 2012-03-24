@@ -131,11 +131,11 @@ class CreneauRepository extends EntityRepository
 // 	    	$dql.= "AND t.categorie = $categorie ";
 // 	    }
 
-		// TODO A TESTER
-		/*
+		// Filtre sur la durée, on utilise une fonction DQL custom
+		// intval pour protéger notre code
  	    if ($duree !='') {
- 	    	$dql.= 'AND (DATE_DIFF(c.debut, c.fin) <= '.($duree/3600/24).' ) '; // DATE_DIFF en jour
-		}*/
+ 	    	$dql.= 'AND (TIMEDIFF(c.debut, c.fin) <= '.intval($duree).' ) '; // TIMEDIFF, fonction DQL custom, fait la différence en minutes
+		}
 	    
 	    if ($plage != '') {
 		    $pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation_plages')->getValue(),TRUE);
