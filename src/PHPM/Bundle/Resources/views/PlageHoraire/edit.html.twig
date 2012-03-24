@@ -18,19 +18,18 @@
 
 <form action="{{ path('plagehoraire_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
     <h2>Informations</h2>  
-    {{ form_errors(form) }}
+    <div class="alert-message">{{ form_errors(form) }}</div>
+    
 	{{ form_row(form.tache) }}  
 	{{ form_row(form.debut) }}
 	{{ form_row(form.fin) }}
 	
 	<div>
-		{{ form_label(form.dureeCreneau) }}
-		{{ form_widget(form.dureeCreneau) }} 
+		{{ form_label(form.dureeCreneau) }} {{ form_widget(form.dureeCreneau) }} 
 	</div>
 
 	<div>
-		{{ form_label(form.recoupementCreneau) }}
-		{{ form_widget(form.recoupementCreneau) }}
+		{{ form_label(form.recoupementCreneau) }} {{ form_widget(form.recoupementCreneau) }}
 	</div>
 
 	{{ form_row(form.respNecessaire) }}

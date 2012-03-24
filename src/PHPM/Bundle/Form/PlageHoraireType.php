@@ -7,14 +7,12 @@ use Symfony\Component\Form\FormBuilder;
 
 class PlageHoraireType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
-    {
+    public function buildForm(FormBuilder $builder, array $options) {
         $choixDurees= array();
         
         for ($i=1;$i<=40;$i++){
             $s= 900*$i;
             $choixDurees[$s]=gmdate("H\hi", $s);
-            
         }
         
         $choixRC= array();
@@ -22,7 +20,6 @@ class PlageHoraireType extends AbstractType
         for ($i=0;$i<=2;$i++){
             $s= 900*$i;
             $choixRC[$s]=gmdate("H\hi", $s);
-        
         }
         
         $builder
@@ -35,32 +32,23 @@ class PlageHoraireType extends AbstractType
                     'label'=>'Fin',
                     'widget' => 'single_text',
                     'attr'=>array('class'=>'dtp')))
-            ->add('dureeCreneau','choice',array('label'=>'Durée d\'un créneau', 'choices'=>$choixDurees))
-            
-            
-            
-            ->add('recoupementCreneau','choice',array('label'=>'Recoupement entre deux créneaux consécutifs (en sec.)', 'choices'=>$choixRC ))
-			->add('respNecessaire',null,array('label'=>'Le responsable de la tâche doit être présent'))
+            ->add('dureeCreneau', 'choice', array('label'=>'Durée d\'un créneau', 'choices'=>$choixDurees))
+            ->add('recoupementCreneau', 'choice', array('label'=>'Recoupement entre deux créneaux consécutifs (en sec.)', 'choices' => $choixRC ))
+			->add('respNecessaire', null, array('label'=>'Le responsable de la tâche doit être présent'))
 			->add('besoinsOrga','collection',array('type' => new BesoinOrgaType(),'allow_add' => true,'allow_delete' => true,
                 'by_reference' => false,
                 'options'  => array( 'label'  => " ")
         ));
-
-
-			
-			
-
     }
     
-    public function getDefaultOptions(array $options)
-    {
+    public function getDefaultOptions(array $options) {
         return array(
                 'data_class' => 'PHPM\Bundle\Entity\PlageHoraire',
         );
     }
 
-    public function getName()
-    {
+    public function getName() {
         return 'phpm_bundle_plagehorairetype';
     }
+	
 }
