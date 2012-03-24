@@ -33,7 +33,6 @@ CreneauModel.prototype = {
 		($.isNumeric(pmAffectation.current.creneau.confiance) === true) && (pmAffectation.current.creneau.confiance != -1) && (_params.confiance_id = pmAffectation.current.creneau.confiance);
 		($.isNumeric(pmAffectation.current.creneau.duree) === true) && (pmAffectation.current.creneau.duree != -1) && (_params.duree = pmAffectation.current.creneau.duree);
 		($.isNumeric(pmAffectation.current.creneau.categorie) === true) && (pmAffectation.current.creneau.categorie != -1) && (_params.categorie_id = pmAffectation.current.creneau.categorie);
-		($.isNumeric(pmAffectation.current.creneau.age) === true) && (pmAffectation.current.creneau.age != -1) && (_params.age = pmAffectation.current.creneau.age);
 		($.isNumeric(pmAffectation.current.creneau.permis) === true) && (pmAffectation.current.creneau.permis != -1) && (_params.permis = pmAffectation.current.creneau.permis);
 		
 		$.ajax({
