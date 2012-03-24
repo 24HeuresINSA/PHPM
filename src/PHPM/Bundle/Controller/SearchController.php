@@ -24,7 +24,6 @@ class SearchController extends Controller
 
         $orgas = $em->getRepository('PHPMBundle:Orga')->search($searchString);
 		$taches = $em->getRepository('PHPMBundle:Tache')->search($searchString);
-
 		
         return array('searchString' => $searchString, 'orgas' => $orgas, 'taches' => $taches);
     }
