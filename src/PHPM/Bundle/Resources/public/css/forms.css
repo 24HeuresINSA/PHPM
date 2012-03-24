@@ -35,7 +35,7 @@ input:focus {
 	margin-bottom: .5em;
 	clear: both;
 }
-.form_row >div {
+.form_row > div {
 	float: left;
 	text-align: center;
 	margin-right: 1em;
