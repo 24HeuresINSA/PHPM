@@ -115,9 +115,13 @@ PmHistory.prototype = {
 	 */
 	setUrlParam: function() {
 		// concrètement, pour ne pas avoir de problèmes, on reconstruit l'url entière
+		
+		// on va déjà filtrer pour virer les -1
+		var _current = pmUtils.filter(pmAffectation.current, function(key, val) {return (val != -1)});
+		
 		// Jquery goodness for sérialiser rapidemment (et en profondeur)
 		// bien préciser 'data' et 'title' dans History.pushState, sinon elle peut bugguer
-		var _newHash = '#param&' + $.param(pmAffectation.current);
+		var _newHash = '#param&' + $.param(_current);
 		
 		// à savoir : History.js unescape le hash
         History.pushState({params: _newHash}, "Etat " + _newHash, _newHash);
