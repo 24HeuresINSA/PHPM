@@ -35,11 +35,13 @@ class PlageHoraireType extends AbstractType
             ->add('dureeCreneau', 'choice', array('label'=>'Durée d\'un créneau', 'choices'=>$choixDurees))
             ->add('recoupementCreneau', 'choice', array('label'=>'Recoupement entre deux créneaux consécutifs (en sec.)', 'choices' => $choixRC ))
 			->add('respNecessaire', null, array('label'=>'Le responsable de la tâche doit être présent'))
-			->add('besoinsOrga','collection',array('type' => new BesoinOrgaType(),'allow_add' => true,'allow_delete' => true,
-                'by_reference' => false,
-			    'label'  => "Besoins en Orgas",
-                'options'  => array( 'label'  => " ")
-        ));
+			->add('besoinsOrga','collection', array('type' => new BesoinOrgaType(),
+													'allow_add' => true,
+													'allow_delete' => true,
+									                'by_reference' => false,
+												    'label'  => ' ',
+									                'options'  => array('label' => ' ')
+        										));
     }
     
     public function getDefaultOptions(array $options) {
