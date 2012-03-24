@@ -10,7 +10,7 @@ class PlageHoraireType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options) {
         $choixDurees= array();
         
-        for ($i=1;$i<=40;$i++){
+        for ($i=1;$i<=12;$i++){
             $s= 900*$i;
             $choixDurees[$s]=gmdate("H\hi", $s);
         }
