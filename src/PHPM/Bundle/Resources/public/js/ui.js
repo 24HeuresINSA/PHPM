@@ -20,7 +20,12 @@ $(function() {
 		yearRange: '1985:1995',
 	});
 	
-	// page créneau (edit/new)
+	/*
+	 * Mise en place d'un DateTimePicker
+	 * Utilisé sur les pages
+	 * créneau (edit/new)
+	 * et plage horaire (edit)
+	 */ 
 	// début de la plage
 	$('input.debutdp').datetimepicker({
 		changeMonth: true,
@@ -31,8 +36,6 @@ $(function() {
 		stepMinute: 15,
 		hourGrid: 4,
 		minuteGrid: 15,
-		/*currentText: "Maintenant",
-		closeText: "Fermer",*/
 		showButtonPanel: false, // on cache les boutons du bas
 		beforeShow: function(input, inst) {
 			// on calcule la durée du créneau
@@ -66,8 +69,6 @@ $(function() {
 		stepMinute: 15,
 		hourGrid: 4,
 		minuteGrid: 15,
-		/*currentText: "Maintenant",
-		closeText: "Fermer",*/
 		showButtonPanel: false, // on cache les boutons du bas
 	});
 	
@@ -78,10 +79,11 @@ $(function() {
 		dateFormat: 'yy-mm-dd'
 	});
 
-	
-	
+	// tabs
 	$( "#tabs" ).tabs();
 
+	// page ?
+	/*
 	$('input.dtp').datetimepicker({
 		changeMonth: true,
 		changeYear: true,
@@ -92,14 +94,11 @@ $(function() {
 		hourGrid: 4,
 		minuteGrid: 15,
 		showButtonPanel: false, // on cache les boutons du bas
-	});
-	
-	
+	});*/
 	
 });
 
-function fnShowHide( iCol )
-{
+function fnShowHide(iCol) {
     /* Get the DataTables object again - this is not a recreation, just a get of the object */
     var oTable = $('.records_list').dataTable();
      
@@ -107,8 +106,7 @@ function fnShowHide( iCol )
     oTable.fnSetColumnVis( iCol, bVis ? false : true );
 }
 
-function copyDateToEnd()
-{
+function copyDateToEnd() {
 
     $('.findp').val($('.debutdp')[0].val());
     
