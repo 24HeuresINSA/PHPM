@@ -236,11 +236,32 @@ PmUtils.prototype = {
 	 * S'assurer qu'un nombre est bien sur 2 chiffres,
 	 * Rajoutant un 0 au besoin
 	 * Source : http://www.electrictoolbox.com/pad-number-two-digits-javascript/
-	 * Petite amélioration (cast du number pour virer un potentiel 0 non significatif)
+	 * Petite amélioration : cast du number pour virer un potentiel 0 non significatif
 	 */
 	pad2: function(number) {
 		return (number < 10 ? '0' : '') + Number(number);
 	},
-	
+
+	/*
+	 * Permet de parcourir récursivement un objet littéral
+	 * et de le filtrer avec la fonction callback(key, value)
+	 * La valeur n'est gardée que si callback renvoie true
+	 */
+	filter: function(object, callback) {
+		var _result = {};
+		
+		for (var _i in object) {
+			if (typeof(object[_i]) === "object") {
+				_result[_i] = pmUtils.filter(object[_i], callback);
+			} else if (typeof(object[_i]) !== "function") {
+				if (callback(_i, object[_i]) === true) {
+					_result[_i] = object[_i];
+				}
+			}
+		}
+		
+		return _result;
+	}
+		
 };
 
