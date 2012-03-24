@@ -147,6 +147,7 @@
 			    {% for bo in pl.besoinsOrga %}
 			    	({{ bo.equipe }} : {{ bo.nbOrgasNecessaires }})
 			    {% endfor %}
+			    <b>Total :{{ pl.besoinsOrgaTotal }}</b>
 		    </div>
 		    
 		    <a href="{{ path('plagehoraire_edit', { 'id': pl.id }) }}">Éditer</a>

@@ -313,6 +313,21 @@ class PlageHoraire
     {
         $this->besoinsOrga[] = $besoinsOrga;
     }
+    
+    /**
+     * Get besoinsOrgaTotal
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getBesoinsOrgaTotal()
+    {
+        $count = $this->getRespNecessaire()*1;
+        
+        foreach ($this->getBesoinsOrga() as $bo)
+            $count+=$bo->getNbOrgasNecessaires();
+        
+        return $count;
+    }
 
     /**
      * Get besoinsOrga
