@@ -73,7 +73,7 @@ class OrgaRepository extends EntityRepository
 	
 	}
 	
-        public function getOrgasFromRegistration()
+    public function getOrgasFromRegistration()
     {
     
         return $this->getEntityManager()
@@ -84,7 +84,7 @@ class OrgaRepository extends EntityRepository
     
     }
     
-            public function getNombreOrgas() 
+    public function getNombreOrgas() 
     {
         return $this->getEntityManager()
         ->createQuery("SELECT COUNT (o.id) AS nbOrgas FROM PHPMBundle:Orga o WHERE (o.statut=1)")   
@@ -131,7 +131,7 @@ class OrgaRepository extends EntityRepository
 	public function search($s)
 	{
 		return $this->getEntityManager()
-		->createQuery("SELECT o FROM PHPMBundle:Orga o WHERE (o.nom LIKE :s OR o.prenom LIKE :s OR o.surnom LIKE :s OR o.telephone LIKE :s OR o.email LIKE :s OR o.commentaire LIKE :s)")
+		->createQuery("SELECT o FROM PHPMBundle:Orga o WHERE (o.nom LIKE :s OR o.prenom LIKE :s OR o.surnom LIKE :s OR o.telephone LIKE :s OR o.email LIKE :s)")
 		->setParameter('s', "%".$s."%")
 		->getResult();	
 	}
