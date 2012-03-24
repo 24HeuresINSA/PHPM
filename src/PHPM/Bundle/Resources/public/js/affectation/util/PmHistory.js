@@ -43,6 +43,21 @@ PmHistory.prototype = {
 	parseUrlParam: function() {
 		var _hash = History.getHash(); // le hash est ce qui suit le # (non inclus)
 		
+		// on récupère les éventuels paramètres passés en GET
+		if (location.search !== '') {
+			var _get = location.search.substring(1, location.search.length);
+			var _parameters = $.deparam(_get);
+			
+			// paramètre _orga
+			if (_parameters.orga_id) {
+				pmAffectation.current.orga.id = _parameters.orga_id;
+			}
+			
+			// on re-set les paramètres
+			// on utilise split pour bien enlever le '?'
+			History.replaceState(null, null, History.getState().url.split("?")[0]);
+		}
+		
 		if (_hash.substr(0, 6) == 'param&') { // parseur - on a reconnu notre format
 			var _str = decodeURIComponent(_hash.substr(6, _hash.length)); // petite décodage du format URL nécessaire
 			
