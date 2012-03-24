@@ -12,7 +12,7 @@ $(function() {
 	    
 	} );
 	 
-	// page orga ?
+	// page orga, champ age
 	$('.birthdaydp').datepicker({
 		changeMonth: true,
 		changeYear: true,
