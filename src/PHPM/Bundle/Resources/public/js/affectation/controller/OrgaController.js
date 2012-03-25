@@ -73,5 +73,14 @@ OrgaController.prototype = {
 		
 		pmAffectation.controllers.orga.getData();
 	},
+	
+	/*
+	 * Vide la colonne
+	 */
+	empty: function() {
+		pmAffectation.data.orga = {};
+		
+		$('#liste_orgas').empty();
+	},
 
 }

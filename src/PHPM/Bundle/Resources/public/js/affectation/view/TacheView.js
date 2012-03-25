@@ -61,23 +61,16 @@ TacheView.prototype = {
 			$('#liste_taches').append(_html);
 			
 			// handler de click
-			// TODO
-			/*$('#tache_'+_iTache).bind('click', {idTache: _iTache}, function(e) {
+			$('#tache_'+_iTache).bind('click', {idTache: _iTache}, function(e) {
 				if (e.altKey) {
-					// Shift + click : affiche la page pour modifier le créneau
-					var _popup = window.open(pmAffectation.url+'creneau/'+e.data.idCreneau+'/edit', '', config='height=600, width=600, toolbar=no, menubar=no, location=no, directories=no, status=no');
-					
-					// à la fermeture, refresh la liste des créneaux
-					// unload est firé au chargement (unload de about:blank),
-					// on attache le vrai handler qu'après le chargement initial donc
-					_popup.onunload = function() {
-						_popup.bind('unload', pmAffectation.controllers.creneau.getData());
-					};
+					// Shift + click : affiche les infos détaillées de la tache
+					// TODO
+					//var _popup = window.open(pmAffectation.url+'orga/'+e.data.id+'/show', '', config='height=600, width=600, toolbar=no, menubar=no, location=no, directories=no, status=no');
 				} else {
-					// sinon on fait l'affectation
-					pmAffectation.controllers.creneau.clickHandler({idCreneau: e.data.idCreneau, idOrga: pmAffectation.current.orga.id});
+					// sinon on click sur l'orga
+					pmAffectation.controllers.tache.clickHandler({id: e.data.idTache});
 				}
-			});*/
+			});
 		}
 	},
 	
