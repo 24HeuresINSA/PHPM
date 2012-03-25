@@ -37,6 +37,11 @@ $(function() {
 	}); // là on a mis un peu en forme
 	$('#searchBox').catcomplete({
 		source: function(request, response) {
+			// si on a un début de numéro (06...), on attend d'avoir le troisième chiffre
+			if ($.isNumeric(request.term) && request.term.length === 2) {
+				return; // on ne fait rien
+			}
+			
 			$.ajax({
 				url: app_search_url,
 				dataType: 'json',
@@ -44,6 +49,7 @@ $(function() {
 				data: {
 					s: request.term
 				},
+				search: request.term, // on stock le terme recherché
 				success: function(data) {
 					var _result = new Array();
 					
@@ -51,10 +57,13 @@ $(function() {
 					// la clef _item est bien unique
 					for (var _item in data) {
 						if (data[_item]['type'] === 'orga') {
-							_result.push({label: data[_item]['prenom'] + ' ' + data[_item]['nom'] + ' (' + data[_item]['surnom'] + ')',
-											value: data[_item]['telephone'],
+							var _label = data[_item]['surnom'];
+							($.isNumeric(this.search)) && (_label = data[_item]['telephone']);
+					
+							_result.push({label: data[_item]['prenom'] + ' ' + data[_item]['nom'] + ' (' + _label + ')',
+											value: data[_item]['prenom'] + ' ' + data[_item]['nom'],
 											type: data[_item]['type'],
-											id: data[_item]['id']}); // on prend le téléphone qui est unique
+											id: data[_item]['id']});
 						} else if  (data[_item]['type'] === 'tache' || data[_item]['type'] === 'groupe_tache') {
 							_result.push({label: data[_item]['nom'],
 											value: data[_item]['nom'],
@@ -68,7 +77,7 @@ $(function() {
 				position: {my : 'right top', at: 'right bottom'}
 			});
 		},
-		minLength: 3,
+		minLength: 2,
 		select: function(event, ui) {
 			// on va sur la bonne page lors de la sélection
 			if (ui.item.type === 'orga') {
