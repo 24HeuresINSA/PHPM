@@ -14,6 +14,11 @@
    		<h2>Taches :</h2>
    		{% include 'PHPMBundle:Tache:afficheListe.html.twig' with {'entities': taches} %}
 	{% endif %}
+	
+	{% if groupe_taches %}
+   		<h2>Groupes de taches :</h2>
+   		{% include 'PHPMBundle:GroupeTache:afficheListe.html.twig' with {'entities': groupe_taches} %}
+	{% endif %}
 
 {% endblock %}
 

@@ -25,8 +25,9 @@ class SearchController extends Controller
 
         $orgas = $em->getRepository('PHPMBundle:Orga')->search($searchString);
 		$taches = $em->getRepository('PHPMBundle:Tache')->search($searchString);
+		$groupe_taches = $em->getRepository('PHPMBundle:GroupeTache')->search($searchString);
 		
-        return array('searchString' => $searchString, 'orgas' => $orgas, 'taches' => $taches);
+        return array('searchString' => $searchString, 'orgas' => $orgas, 'taches' => $taches, 'groupe_taches' => $groupe_taches);
     }
 	
     /**
@@ -43,18 +44,21 @@ class SearchController extends Controller
 
         $orgas = $em->getRepository('PHPMBundle:Orga')->search($searchString);
 		$taches = $em->getRepository('PHPMBundle:Tache')->search($searchString);
+		$groupe_taches = $em->getRepository('PHPMBundle:GroupeTache')->search($searchString);
 		
 		// on va recopier tous les résultats dans un grand tableau
 		$results = array();
 		$i = 0;
-    	 
     	foreach ($orgas as $orga) {
     		$results[$i] = $orga->toSearchArray();
 			$i++;
     	}
-		
     	foreach ($taches as $tache) {
     		$results[$i] = $tache->toSearchArray();
+			$i++;
+    	}
+    	foreach ($groupe_taches as $groupe_tache) {
+    		$results[$i] = $groupe_tache->toSearchArray();
 			$i++;
     	}
 		

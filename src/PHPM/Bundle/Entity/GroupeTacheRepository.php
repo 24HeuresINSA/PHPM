@@ -12,4 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class GroupeTacheRepository extends EntityRepository
 {
+	public function search($s)
+	{
+		return $this->getEntityManager()
+		->createQuery("SELECT g FROM PHPMBundle:GroupeTache g WHERE g.nom LIKE :s")
+		->setParameter('s', "%".$s."%")
+		->getResult();
+	}
 }

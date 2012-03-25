@@ -226,6 +226,7 @@ class GroupeTache
         return $this->lieu;
     }
 
+<<<<<<< HEAD
     /**
      * Set statut
      *
@@ -261,5 +262,16 @@ class GroupeTache
         }
         return true;
 
+    }
+
+	/*
+	 * Recherche
+	 */
+    public function toSearchArray()
+    {
+    	return array(
+    		"type" => "groupe_tache",
+	    	"id" => $this->getId(),
+	    	"nom" => $this->getNom());
     }
 }
