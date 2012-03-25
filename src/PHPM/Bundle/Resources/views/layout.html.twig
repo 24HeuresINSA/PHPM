@@ -53,81 +53,83 @@
         </script>
     </head>
     <body>
-        <div class="header" id="header" >
-        	{% block header %}
-        	<div class="title" id="title">
-        		{% block topHeader %}
-        		{% if is_granted('ROLE_ADMIN') %}
-        		<h1>{{ manifestation_nom }} - <a href="{{ path('accueil') }}"> PlanningMaker</a> &gt; <a href="{{ path(indexRoute) }}"> {{ sectionTitle }}</a> &gt;  {{ pageTitle }}</h1>
-        		{% else %}
-        		    <h1>{{ manifestation_nom }} - {{ pageTitle }}</h1>
-        		{% endif %}
-        		{% endblock %}
-        		
-        		{% if is_granted('ROLE_ADMIN') %}
-	        		<form method="post" action="{{ path('search') }}" id="search_form">
-	        			<input id="searchBox" name="s" size="30" />
-	        		</form>   
-        		{% endif %}     		
-        	</div>
-        	
-        	<div class="menu" id="menu">
-        		{% block menuheader %}
-        		<ul>
-        		    {% if is_granted('ROLE_ADMIN') %}
-        			<li><a href="{{ path('phpm__default_home') }}">Accueil</a></li>
-        			<li><a href="{{ path('orga_inscriptionhard',{'id':app.user.id })}}">Mes Disponibilités</a></li>
-        			<li><a href="{{ path('orga') }}">Orga</a></li>
-        			<li><a href="{{ path('disponibiliteinscription') }}">Inscriptions</a></li>
-        			<li><a href="{{ path('orga_affectation') }}">Affectation</a></li>
-        			<li><a href="{{ path('tache') }}">Fiches Tâches</a></li>
-        			<li><a href="{{ path('plagehoraire') }}">Plage Horaire</a></li>
-        			<li><a href="{{ path('creneau') }}">Cr&eacute;neaux</a></li>         			
-        			<li><a href="{{ path('disponibilite') }}">Disponibilité</a></li>
-         			<li><a href="{{ path('config') }}">Configuration</a></li>
-        			<!--<li><a href="/">T&acirc;ches</a></li>
-        			<li><a href="/">Administration</a></li>-->
-        			<li><a href="{{ path('logout') }}">Logout</a></li>
-        			{% elseif is_granted('ROLE_USER') %}
-        			<li><a href="{{ path('orga_edit',{'id':app.user.id })}}">Mes Informations</a></li>
-        			<li><a href="{{ path('orga_inscriptionhard',{'id':app.user.id })}}">Mes Disponibilités</a></li>
-        			<li><a href="{{ path('tache') }}">Fiches Tâches</a></li>
-{#         			<li><a href="{{ path('orga_charisme')}}">Classement Charisme</a></li>#}
-        			<li><a href="{{ path('logout') }}">Logout</a></li>
-        		    {% else %}
-        		    <li><a href="{{ path('login') }}">Login</a></li>
-        		    {% endif %}
-        		</ul>
-        		{% endblock %}
-        	</div>
-        	
-       	</div>
-       	
-		<div class="menu_action" id="menu_action">
-		    <ul>
-
-        	{% block actions %}
-        	{% endblock %}
-			</ul>
-			{% endblock %}
-        </div> 
-        
-        <div class="content" id="content">
-        	<div class="message" id="message"><!-- ici arriveront les messages, classes alert ou success --></div>
-        	
-        	{% block content %}
-        		<p>Il y aura ici le contenu</p>
-        	{% endblock %}
-        </div> 
-        
-        <div class="footer" id="footer">
-        	&copy;2011 nous - PHPM <br/>
-Si vous rencontrez un bug dans ce logiciel, veuillez contacter <a href="mailto:DSI@24heures.org">DSI@24heures.org</a>. Merci.
-
+    	<div class="superglobal" id="superglobal">
+	        <div class="header" id="header" >
+	        	{% block header %}
+	        	<div class="title" id="title">
+	        		{% block topHeader %}
+	        		{% if is_granted('ROLE_ADMIN') %}
+	        		<h1>{{ manifestation_nom }} - <a href="{{ path('accueil') }}"> PlanningMaker</a> &gt; <a href="{{ path(indexRoute) }}"> {{ sectionTitle }}</a> &gt;  {{ pageTitle }}</h1>
+	        		{% else %}
+	        		    <h1>{{ manifestation_nom }} - {{ pageTitle }}</h1>
+	        		{% endif %}
+	        		{% endblock %}
+	        		
+	        		{% if is_granted('ROLE_ADMIN') %}
+		        		<form method="post" action="{{ path('search') }}" id="search_form">
+		        			<input id="searchBox" name="s" size="30" />
+		        		</form>   
+	        		{% endif %}     		
+	        	</div>
+	        	
+	        	<div class="menu" id="menu">
+	        		{% block menuheader %}
+	        		<ul>
+	        		    {% if is_granted('ROLE_ADMIN') %}
+	        			<li><a href="{{ path('phpm__default_home') }}">Accueil</a></li>
+	        			<li><a href="{{ path('orga_inscriptionhard',{'id':app.user.id })}}">Mes Disponibilités</a></li>
+	        			<li><a href="{{ path('orga') }}">Orga</a></li>
+	        			<li><a href="{{ path('disponibiliteinscription') }}">Inscriptions</a></li>
+	        			<li><a href="{{ path('orga_affectation') }}">Affectation</a></li>
+	        			<li><a href="{{ path('tache') }}">Fiches Tâches</a></li>
+	        			<li><a href="{{ path('plagehoraire') }}">Plage Horaire</a></li>
+	        			<li><a href="{{ path('creneau') }}">Cr&eacute;neaux</a></li>         			
+	        			<li><a href="{{ path('disponibilite') }}">Disponibilité</a></li>
+	         			<li><a href="{{ path('config') }}">Configuration</a></li>
+	        			<!--<li><a href="/">T&acirc;ches</a></li>
+	        			<li><a href="/">Administration</a></li>-->
+	        			<li><a href="{{ path('logout') }}">Logout</a></li>
+	        			{% elseif is_granted('ROLE_USER') %}
+	        			<li><a href="{{ path('orga_edit',{'id':app.user.id })}}">Mes Informations</a></li>
+	        			<li><a href="{{ path('orga_inscriptionhard',{'id':app.user.id })}}">Mes Disponibilités</a></li>
+	        			<li><a href="{{ path('tache') }}">Fiches Tâches</a></li>
+	{#         			<li><a href="{{ path('orga_charisme')}}">Classement Charisme</a></li>#}
+	        			<li><a href="{{ path('logout') }}">Logout</a></li>
+	        		    {% else %}
+	        		    <li><a href="{{ path('login') }}">Login</a></li>
+	        		    {% endif %}
+	        		</ul>
+	        		{% endblock %}
+	        	</div>
+	        	
+	       	</div>
+	       	
+			<div class="menu_action" id="menu_action">
+			    <ul>
+	
+	        	{% block actions %}
+	        	{% endblock %}
+				</ul>
+				{% endblock %}
+	        </div> 
+	        
+	        <div class="content" id="content">
+	        	<div class="message" id="message"><!-- ici arriveront les messages, classes alert ou success --></div>
+	        	
+	        	{% block content %}
+	        		<p>Il y aura ici le contenu</p>
+	        	{% endblock %}
+	        </div> 
+	        
+	        <div class="footer" id="footer">
+	        	&copy;2011-2012 nous - PHPM @ <a href="https://github.com/lbillon/PHPM" target="_blank">Github</a><br/>
+				<small><i>Si vous rencontrez un bug dans ce logiciel, veuillez contacter <a href="mailto:DSI@24heures.org">DSI@24heures.org</a></i></small>
+	        </div>
+	        
+	        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
+	        	{% render "PHPMBundle:Orga:updateLastActivity"  %}
+	        {% endif %}
         </div>
-        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
-        	{% render "PHPMBundle:Orga:updateLastActivity"  %}
-        	{% endif %}
     </body>
 </html>
 
