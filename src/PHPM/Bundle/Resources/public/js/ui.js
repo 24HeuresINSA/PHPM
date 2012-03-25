@@ -57,8 +57,7 @@ $(function() {
 					// la clef _item est bien unique
 					for (var _item in data) {
 						if (data[_item]['type'] === 'orga') {
-							var _label = data[_item]['surnom'];
-							($.isNumeric(this.search)) && (_label = data[_item]['telephone']);
+							var _label = ($.isNumeric(this.search) === true)? data[_item]['telephone'] : data[_item]['surnom'];
 					
 							_result.push({label: data[_item]['prenom'] + ' ' + data[_item]['nom'] + ' (' + _label + ')',
 											value: data[_item]['prenom'] + ' ' + data[_item]['nom'],
