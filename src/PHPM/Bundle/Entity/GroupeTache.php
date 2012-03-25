@@ -226,7 +226,6 @@ class GroupeTache
         return $this->lieu;
     }
 
-<<<<<<< HEAD
     /**
      * Set statut
      *
