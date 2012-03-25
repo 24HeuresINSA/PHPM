@@ -32,7 +32,7 @@ TacheController.prototype = {
 	 * Callbacks
 	 */
 	callbackTaches: function() {
-		pmAffectation.data.taches = pmAffectation.models.tache.getTaches();
+		pmAffectation.data.tache = pmAffectation.models.tache.getTaches();
 		
 		pmAffectation.views.tache.setTaches();
 	},
