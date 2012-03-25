@@ -499,41 +499,44 @@ class TacheController extends Controller
 	*/
 	public function queryJsonAction()
 	{
-// fonction qui permet de selectionner une liste de tache en fonction de certains critères
+		// fonction qui permet de selectionner une liste de tache en fonction de certains critères
 		$request = $this->getRequest();
 		
 		//on recupere les paramètres passés en post
 		$duree= $request->request->get('duree', '');
-// 		$categorie= $request->request->get('categorie_id', '');
+		// $categorie= $request->request->get('categorie_id', '');
 		$permis= $request->request->get('permisNecessaire', '');
-		//$age= $request->request->get('ageNecessaire', '0');
+		// $age= $request->request->get('ageNecessaire', '0');
 		$niveau_confiance= $request->request->get('confiance_id', '');
 		$plage = $request->request->get('plage_id', '');
 		$bloc = $request->request->get('bloc', '0');
 	
 		$em = $this->getDoctrine()->getEntityManager();
-		//création de la requête SQL et récupération de son retour
-		$entities = $em->getRepository('PHPMBundle:Tache')->getTacheWithCriteria($duree, $permis,  $niveau_confiance, $plage, $bloc);
+		// création de la requête SQL et récupération de son retour
+		$entities = $em->getRepository('PHPMBundle:Tache')->getTacheWithCriteria($duree, $permis, $niveau_confiance, $plage, $bloc);
 		
-		//creation du json de retour
-		$a = array();
+		// creation du json de retour
+		$taches = array();
 		foreach ($entities as $entity) {
+			$creneaux = array();
 			foreach ($entity->getPlagesHoraire() as $creneau) {
-				$a[$creneau->getId()] = $creneau->toSimpleArray();
+				$creneaux[$creneau->getId()] = $creneau->toSimpleArray();
 			}
 			
 			$tacheArray = array(
+				"id" => $entity->getId(),
 				"nom" => $entity->getNom(),
 				"lieu" => $entity->getLieu(),
 				"confiance" => $entity->getConfiance()->getId(),
 // 				"categorie" => $entity->getCategorie()->getId(),
-				"creneaux" => $a,
+				"creneaux" => $creneaux,
 				"permisNecessaire" => $entity->getPermisNecessaire());
-				$a[$entity->getId()] = $tacheArray;
+				
+				$taches[$entity->getId()] = $tacheArray;
 		}
 	
     	$response = new Response();
-    	$response->setContent(json_encode($a));
+    	$response->setContent(json_encode($taches));
 		$response->headers->set('Content-Type', 'application/json');
 		
 		return $response;
