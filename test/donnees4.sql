@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Dim 25 Mars 2012 à 22:49
+-- Généré le : Dim 25 Mars 2012 à 23:55
 -- Version du serveur: 5.5.9
 -- Version de PHP: 5.3.6
 
@@ -53,12 +53,13 @@ CREATE TABLE `BesoinOrga` (
   PRIMARY KEY (`id`),
   KEY `IDX_BDE21E3A2D9955DA` (`plageHoraire_id`),
   KEY `IDX_BDE21E3A6D861B89` (`equipe_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Contenu de la table `BesoinOrga`
 --
 
+INSERT INTO `BesoinOrga` VALUES(1, 1, 2, 19);
 
 -- --------------------------------------------------------
 
@@ -148,11 +149,11 @@ CREATE TABLE `Config` (
 INSERT INTO `Config` VALUES(1, 'manifestation_plages', 'Plages de la manifestation', '{"1":{"nom":"Prémanif","debut":"2012-05-16 00:00","fin":"2012-05-24 00:00"},"2":{"nom":"Manif","debut":"2012-05-24 00:00","fin":"2012-05-27 00:00"},"3":{"nom":"Postmanif","debut":"2012-05-28 00:00","fin":"2012-06-01 00:00"}}');
 INSERT INTO `Config` VALUES(2, 'manifestation_organisation_nom', 'Nom de l''organisation', '24 Heures de l''INSA');
 INSERT INTO `Config` VALUES(3, 'phpm_config_initiale', 'PHPlanningMaker configuré', '1');
-INSERT INTO `Config` VALUES(4, 'server_baseurl', 'URL du serveur', 'localhost:8888');
+INSERT INTO `Config` VALUES(4, 'server_baseurl', 'URL du serveur', 'localhost');
 INSERT INTO `Config` VALUES(5, 'manifestation_nom', 'Nom de la manifestation', '24 Heures de l''INSA 38e');
 INSERT INTO `Config` VALUES(6, 'manifestation_orga_responsableconfiancemin', 'Confiance minimale pour être responsable d''une tâche', '500');
 INSERT INTO `Config` VALUES(7, 'manifestation_permis_libelles', 'Libellés des permis', '{"0": "Pas de permis","1": "Permis - de 2 ans","2": "Permis de + de 2 ans" }');
-INSERT INTO `Config` VALUES(8, 'animations_db_path', 'Chemin vers la BDD des anims', '');
+INSERT INTO `Config` VALUES(8, 'animations_db_path', 'Chemin vers la BDD des anims', NULL);
 INSERT INTO `Config` VALUES(9, 'manifestation_edition', 'Numéro de l''édition', '38');
 
 -- --------------------------------------------------------
@@ -441,13 +442,16 @@ CREATE TABLE `GroupeTache` (
   PRIMARY KEY (`id`),
   KEY `IDX_21178F0A53C59D72` (`responsable_id`),
   KEY `IDX_21178F0A6D861B89` (`equipe_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Contenu de la table `GroupeTache`
 --
 
 INSERT INTO `GroupeTache` VALUES(1, 69, 1, 'Logistique', 'Local 24', 0, 1);
+INSERT INTO `GroupeTache` VALUES(2, 69, 1, 'Logistique', 'Scene 24', 0, 0);
+INSERT INTO `GroupeTache` VALUES(3, 69, 1, 'Groupe sans nom', ' ', NULL, 0);
+INSERT INTO `GroupeTache` VALUES(4, 69, 1, 'Groupe sans nom', ' ', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -535,7 +539,7 @@ INSERT INTO `Orga` VALUES(65, 3, NULL, 'Cros', 'Lucas', 'Lucas', '0654231456', '
 INSERT INTO `Orga` VALUES(66, 2, NULL, 'Dubourg', 'Jean Baptiste', 'JB', '0654231234', 'jb@yahoo.fr', '2012-03-09', 'PC', NULL, 1, 0, 1, '2012-03-25', NULL);
 INSERT INTO `Orga` VALUES(67, 2, NULL, 'Duvoluy', 'Charlotte', 'Chacha', '0745212345', 'Chacha@hotmail.fr', '1991-03-14', 'IF', NULL, 1, 0, 1, '2002-03-26', NULL);
 INSERT INTO `Orga` VALUES(68, 3, NULL, 'Dupuy', 'Mathilde', 'Mathilde', '0645231456', 'Mathilde@gmail.com', '2012-03-09', 'SGM', NULL, 1, 0, 1, '2005-03-22', NULL);
-INSERT INTO `Orga` VALUES(69, 3, NULL, 'bourgin', 'sylvain', 'Cil', '0685178329', 'sylvain.bourgin@gmail.com', '1990-07-06', 'IF', 'plouf', 1, 1, 1, '2008-03-14', '2012-03-25 22:48:49');
+INSERT INTO `Orga` VALUES(69, 3, NULL, 'bourgin', 'sylvain', 'Cil', '0685178329', 'sylvain.bourgin@gmail.com', '1990-07-06', 'IF', 'plouf', 1, 1, 1, '2008-03-14', '2012-03-25 23:25:14');
 
 -- --------------------------------------------------------
 
@@ -576,7 +580,7 @@ CREATE TABLE `PlageHoraire` (
   `respNecessaire` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_6A556E34D2235D39` (`tache_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
 -- Contenu de la table `PlageHoraire`
@@ -592,6 +596,7 @@ INSERT INTO `PlageHoraire` VALUES(15, 10, '2012-05-28 06:00:00', '2012-05-30 08:
 INSERT INTO `PlageHoraire` VALUES(16, 12, '2012-03-27 10:15:00', '2012-03-28 12:15:00', 3600, 900, 69);
 INSERT INTO `PlageHoraire` VALUES(17, 7, '2012-03-23 11:00:00', '2012-03-23 19:00:00', 3600, 0, 69);
 INSERT INTO `PlageHoraire` VALUES(18, 7, '2012-05-26 11:00:00', '2012-05-26 13:00:00', 3600, 0, 69);
+INSERT INTO `PlageHoraire` VALUES(19, 13, '2012-05-16 00:00:00', '2012-05-16 04:00:00', 6300, 900, 1);
 
 -- --------------------------------------------------------
 
@@ -616,18 +621,19 @@ CREATE TABLE `Tache` (
   KEY `IDX_52460F7153C59D72` (`responsable_id`),
   KEY `IDX_52460F719C9352E1` (`confiance_id`),
   KEY `IDX_52460F71600C5B0A` (`groupetache_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Contenu de la table `Tache`
 --
 
-INSERT INTO `Tache` VALUES(7, 69, 3, NULL, NULL, 'Deployer matos bar', '-Pas de consignes', 'Des mains', 2, 'Lyon', 0);
-INSERT INTO `Tache` VALUES(8, 69, 2, NULL, NULL, 'Apporter matos scene', '-arrivée prévue à 18h', 'Un camion', 2, 'Lyon', 0);
-INSERT INTO `Tache` VALUES(9, 69, 2, NULL, NULL, 'Servir des bières', 'Bien pleines svp !', NULL, 0, 'Pelouse des humas', 0);
-INSERT INTO `Tache` VALUES(10, 69, 2, NULL, NULL, 'Rangement des barrières', 'Rdv 10h le 28 mai', NULL, 2, 'Pelouse des humas', 0);
-INSERT INTO `Tache` VALUES(11, 69, 2, NULL, NULL, 'Sandwichs', 'Servir des sandwich', NULL, 0, 'Pelouse des humas', 0);
-INSERT INTO `Tache` VALUES(12, 69, 2, NULL, NULL, 'Nettoyer pelouse humas', 'Nettoyer pelouse humas', NULL, 0, 'Pelouse humas', 0);
+INSERT INTO `Tache` VALUES(7, 69, 3, 1, NULL, 'Deployer matos bar', '-Pas de consignessssss', 'Des mains', 2, 'Lyon', 0);
+INSERT INTO `Tache` VALUES(8, 69, 2, 2, NULL, 'Apporter matos scene', '-arrivée prévue à 18h', 'Un camion', 2, 'Lyon', 0);
+INSERT INTO `Tache` VALUES(9, 69, 2, 1, NULL, 'Servir des bières', 'Bien pleines svp !', NULL, 0, 'Pelouse des humas', 0);
+INSERT INTO `Tache` VALUES(10, 69, 2, 2, NULL, 'Rangement des barrières', 'Rdv 10h le 28 mai', NULL, 2, 'Pelouse des humas', 0);
+INSERT INTO `Tache` VALUES(11, 69, 2, 1, NULL, 'Sandwichs', 'Servir des sandwich', NULL, 0, 'Pelouse des humas', 0);
+INSERT INTO `Tache` VALUES(12, 69, 2, 2, NULL, 'Nettoyer pelouse humas', 'Nettoyer pelouse humas', NULL, 0, 'Pelouse humas', 0);
+INSERT INTO `Tache` VALUES(13, 69, NULL, 2, NULL, 'Tache test', 'Tache creuser les fondations de la scène des 24', NULL, 1, 'Scene 24', 0);
 
 --
 -- Contraintes pour les tables exportées
