@@ -276,12 +276,20 @@ PmUtils.prototype = {
 			pmAffectation.controllers.orga = new OrgaController();
 			pmAffectation.controllers.orga.getData();
 	
-			// 4 : colonne tache - dedans on met des créneaux
+			// colonne tache - dedans on met des créneaux
 			pmAffectation.controllers.creneau = new CreneauController();
 			// pas besoin d'aller chercher des données dedans
 		} else if (mode === 'tache') {
 			$('#boutons_orga').hide();
 			$('#boutons_tache').show();
+			
+			// on va chercher la colonne tche
+			pmAffectation.controllers.tache = new TacheController();
+			pmAffectation.controllers.tache.getData();
+	
+			// colonne orga
+			pmAffectation.controllers.orga = new OrgaController();
+			// pas besoin d'aller chercher des données dedans
 		}
 	},
 		

@@ -1,6 +1,6 @@
 /*
  * Page Affectation
- * Vue des taches
+ * Vue des tâches
  */
 function TacheView() {
 	// on lance juste le constructeur
@@ -12,41 +12,58 @@ TacheView.prototype = {
 	 * Constructeur
 	 */
 	initialize: function() {
-		// boutons pour changer d'orga
-		/*$('#bouton_orga_prev').button({
-			icons: {primary: 'ui-icon-triangle-1-w'},
-			text: false
-		}).click(function() { $('#orga_'+pmAffectation.current.orga.id).prev().click(); });
-		$('#bouton_orga_next').button({
-			icons: {primary: 'ui-icon-triangle-1-e'},
-			text: false
-		}).click(function() { $('#orga_'+pmAffectation.current.orga.id).next().click(); });
+		this.setFilters(); // met les bonnes valeurs dans les filtres
 		
-		$('#bouton_tache_refresh').button({
-			icons: {primary: 'ui-icon-refresh'},
-			text: false
-		}).click(function() { pmAffectation.controllers.orga.getData(); });*/
+		// filtres : bind les events
+		$('#filtre_tache_confiance').change(function() {pmAffectation.controllers.tache.clickFilter('confiance', $('#filtre_tache_confiance').val());});
+		$('#filtre_tache_permis').change(function() {pmAffectation.controllers.tache.clickFilter('permis', $('#filtre_tache_permis').val());});
+		$('#filtre_tache_categorie').change(function() {pmAffectation.controllers.tache.clickFilter('categorie', $('#filtre_tache_categorie').val());});
+		$('#filtre_tache_duree').change(function() {pmAffectation.controllers.tache.clickFilter('duree', $('#filtre_tache_duree').val());});
 	},
 	
 	/*
-	 * Charge la liste des taches
+	 * Sélectionne les bons filtres
 	 */
-	setTaches: function() {
-		$('#liste_taches').removeClass('spinner_medium');
+	setFilters: function() {
+		(pmAffectation.current.tache.confiance !== undefined) && ($('#filtre_tache_confiance').val(pmAffectation.current.tache.confiance));
+		(pmAffectation.current.tache.permis !== undefined) && ($('#filtre_tache_permis').val(pmAffectation.current.tache.permis));
+		(pmAffectation.current.tache.categorie !== undefined) && ($('#filtre_tache_categorie').val(pmAffectation.current.tache.categorie));
+		(pmAffectation.current.tache.duree !== undefined) && ($('#filtre_tache_duree').val(pmAffectation.current.tache.duree));
+	},
+	
+	/*
+	 * Charge la liste des tâches
+	 */
+	setTachex: function() {
 		$('#liste_taches').empty(); // reset la liste
+		$('#liste_taches').removeClass('spinner_medium');
 		
-		/*for (_iOrga in pmAffectation.data.orga) {
-			var _html = '<div class="item orga" id="orga_'+_iOrga+'" idOrga="'+_iOrga+'">';
-			_html += pmAffectation.data.orga[_iOrga]['prenom']+' '+pmAffectation.data.orga[_iOrga]['nom'];
-			(pmAffectation.data.orga[_iOrga]['surnom'] !== null) && (_html += ' ('+pmAffectation.data.orga[_iOrga]['surnom']+')')
+		for (var _iTache in pmAffectation.data.taches) {
+			var _html = '<div class="item tache" id="tache_'+_iTache+'" idTache="'+_iTache+'">';
+			_html += pmAffectation.data.taches[_iTache]['nom']+' ('+pmAffectation.data.taches[_iTache]['lieu']+')';
 			_html += '</div>';
 			
-			$('#liste_orgas').append(_html);
+			$('#liste_taches').append(_html);
 			
-			$('#orga_'+_iOrga).bind('click', {id: _iOrga}, pmAffectation.controllers.orga.clickHandler); // handler de click
+			// handler de click
+			// TODO
+			/*$('#tache_'+_iTache).bind('click', {idTache: _iTache}, function(e) {
+				if (e.altKey) {
+					// Shift + click : affiche la page pour modifier le créneau
+					var _popup = window.open(pmAffectation.url+'creneau/'+e.data.idCreneau+'/edit', '', config='height=600, width=600, toolbar=no, menubar=no, location=no, directories=no, status=no');
+					
+					// à la fermeture, refresh la liste des créneaux
+					// unload est firé au chargement (unload de about:blank),
+					// on attache le vrai handler qu'après le chargement initial donc
+					_popup.onunload = function() {
+						_popup.bind('unload', pmAffectation.controllers.creneau.getData());
+					};
+				} else {
+					// sinon on fait l'affectation
+					pmAffectation.controllers.creneau.clickHandler({idCreneau: e.data.idCreneau, idOrga: pmAffectation.current.orga.id});
+				}
+			});*/
 		}
-		
-		$("#orga_"+pmAffectation.current.orga.id).addClass('current'); // met le focus là où il faut*/
 	},
 	
 }

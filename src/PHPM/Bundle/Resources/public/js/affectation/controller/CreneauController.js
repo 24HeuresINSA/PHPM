@@ -100,7 +100,4 @@ CreneauController.prototype = {
 		
 		$('#liste_taches').empty();
 	},
-	
-
-
 }

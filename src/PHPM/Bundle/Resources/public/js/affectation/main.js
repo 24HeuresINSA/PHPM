@@ -26,6 +26,7 @@
 	pmAffectation.current.plage = 1; // par défaut on est sur la plage 0
 	pmAffectation.current.quart_heure = -1; // wildcart
 	pmAffectation.current.creneau = {};
+	pmAffectation.current.tache = {};
 	pmAffectation.current.mode = 'orga';
 	
 	// log de toutes les affectations/désaffectations réalisées
@@ -43,6 +44,7 @@
 	pmAffectation.paths.plages = 'configv/get/manifestation_plages';
 	pmAffectation.paths.orgas = 'orga/query.json';
 	pmAffectation.paths.creneaux = 'creneau/query.json';
+	pmAffectation.paths.taches = 'tache/query.json';
 	pmAffectation.paths.affecter = 'creneau/';
 	pmAffectation.paths.categories = 'categorie/index.json';
 	pmAffectation.paths.niveaux = 'confiance/index.json';

@@ -12,9 +12,8 @@ TacheController.prototype = {
 	 * Constructeur
 	 */
 	initialize: function() {
-		console.error("Ce Controller ne sert à rien normalement !");
-		
 		pmAffectation.data.tache = {};
+
 		pmAffectation.models.tache = new TacheModel();
 		pmAffectation.views.tache = new TacheView();
 	},
@@ -26,45 +25,37 @@ TacheController.prototype = {
 		$('#liste_taches').empty();
 		$('#liste_taches').addClass('spinner_medium');
 		
-		pmAffectation.models.creneau.getData(pmAffectation.controllers.tache.callbackCreneaux);
+		pmAffectation.models.tache.getData(pmAffectation.controllers.tache.callbackTaches);
 	},
 	
 	/*
 	 * Callbacks
 	 */
-	// pour les créneaux
-	callbackCreneaux: function() {
-		pmAffectation.data.creneaux = pmAffectation.models.creneau.getCreneaux();
-		
-		pmAffectation.views.tache.setCreneaux();
-	},
-	// pour les taches
 	callbackTaches: function() {
-		/*pmAffectation.data.taches = pmAffectation.models.orga.getOrgas();
+		pmAffectation.data.taches = pmAffectation.models.tache.getTaches();
 		
-		pmAffectation.views.orga.setOrgas();
-		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga.id});*/
+		pmAffectation.views.tache.setTaches();
 	},
 	
 	/*
 	 * Handlers
 	 */
-	// clic sur une tache
-	clickHandler: function(obj) {
-		/*$("#orga_"+pmAffectation.current.orga).removeClass('current');
-		$("#orga_"+obj.data.id).addClass('current');
-
-		pmAffectation.current.orga = obj.data.id;
+	// clic sur une tache : affiche son planning
+	// TODO
+	// changement de la valeur d'un filtre
+	clickFilter: function(nomFiltre, valeurFiltre) {
+		pmAffectation.current.tache[nomFiltre] = valeurFiltre;
+		
 		pmHistory.setUrlParam(); // maj de l'url
 		
-		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga});*/
+		pmAffectation.controllers.tache.getData();
 	},
 	
 	/*
 	 * Vide la colonne
 	 */
 	empty: function() {
-		pmAffectation.data.creneaux = {};
+		pmAffectation.data.taches = {};
 		
 		$('#liste_taches').empty();
 	},

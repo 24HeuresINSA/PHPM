@@ -21,20 +21,19 @@ TacheModel.prototype = {
 	getData: function(callBack) {
 		pmAffectation.models.tache.callBack = callBack;
 		
-		// TODO ; à faire
-		
-		// suivant le mode dans le quel on est, soit des taches soit des créneaux
-
-		// TODO : compléter
-		// construit les paramètres que l'on va envoyer, teste si déjà on a les filtres
+		// construit les paramètres que l'on va envoyer, -1 est le wildcart
 		var _params = {
 			plage_id: pmAffectation.current.plage, // on fournit toujours la plage, la base
-		}; // -1 est le wildcart
-		//(($.isNumeric(pmAffectation.current.confiance) === true) && (pmAffectation.current.confiance != -1)) && (_params.confiance_id = pmAffectation.current.confiance);
-		//(($.isNumeric(pmAffectation.current.permis) === true) && (pmAffectation.current.permis != -1)) && (_params.permis = pmAffectation.current.permis);
+		};
+		
+		// filtres
+		($.isNumeric(pmAffectation.current.tache.confiance) === true) && (pmAffectation.current.tache.confiance != -1) && (_params.confiance_id = pmAffectation.current.tache.confiance);
+		($.isNumeric(pmAffectation.current.tache.duree) === true) && (pmAffectation.current.tache.duree != -1) && (_params.duree = pmAffectation.current.tache.duree);
+		($.isNumeric(pmAffectation.current.tache.categorie) === true) && (pmAffectation.current.tache.categorie != -1) && (_params.categorie_id = pmAffectation.current.tache.categorie);
+		($.isNumeric(pmAffectation.current.tache.permis) === true) && (pmAffectation.current.tache.permis != -1) && (_params.permis = pmAffectation.current.tache.permis);
 		
 		$.ajax({
-			url: pmAffectation.url+pmAffectation.paths.creneaux,
+			url: pmAffectation.url+pmAffectation.paths.taches,
 			dataType: 'json',
 			data: _params,
 			success: pmAffectation.models.tache.requestSuccess,
@@ -47,50 +46,40 @@ TacheModel.prototype = {
 	 * Récup les résultats
 	 */
 	requestSuccess: function(data) {
+		log(data);
+		
 		pmAffectation.models.tache.data = data;
 	
 		pmAffectation.models.tache.callBack();
 	},
 	requestError: function(data, statusText) {
-		pmMessage.alert("Impossible de récupérer les taches : " + statusText);
+		pmMessage.alert("Impossible de faire l'opération : " + statusText);
 	},
 	
 	/*
 	 * Getters des résultats
 	 */
 	getTaches: function() {	
-		/*var _orgas = {};
+		var _taches = {};
 		
 		// traitement des orgas
-		for (var _iOrga in this.data) {
-			var _orga = {};
+		for (var _iTache in this.data) {
+			var _tache = {};
 			
 			// récupère toutes les données
-			for (var _iChamp in this.data[_iOrga]) {
-				_orga[_iChamp] = this.data[_iOrga][_iChamp];
+			for (var _iChamp in this.data[_iTache]) {
+				_tache[_iChamp] = this.data[_iTache][_iChamp];
 			}
 			
-			// re-traitement du niveau de confiance derrière
-			_orga['confiance'] = this.data[_iOrga]['confiance'];
+			// re-traitement des dates
+			// TODO : check
+			/*_creneau['debut'] = new Date(_creneau['debut']['date']);
+			_creneau['fin'] = new Date(this.data[_iCreneau]['fin']['date']);*/
 			
-			// de la date de naissance
-			_orga['dateDeNaissance'] = new Date(this.data[_iOrga]['dateDeNaissance']);
-			
-			// disponibilités, cela devient physique
-			for (var _iDispo in this.data[_iOrga]['disponibilites']) {
-				// créneaux, encore un niveau
-				for (var _iCreneau in this.data[_iOrga]['disponibilites'][_iDispo]['creneaux']) {
-					this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut']);
-					this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin']);
-				}
-				
-				this.data[_iOrga]['disponibilites'][_iDispo]['debut'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['debut']);
-				this.data[_iOrga]['disponibilites'][_iDispo]['fin'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['fin']);
-			}
-		
-			_orgas[_iOrga] = _orga;
+			_taches[_taches] = _taches;
 		}
 		
-		return _orgas;*/
-	}
+		return _taches;
+	},
+
 }
