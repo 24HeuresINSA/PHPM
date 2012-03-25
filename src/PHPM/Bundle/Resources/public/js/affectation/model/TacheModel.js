@@ -46,8 +46,6 @@ TacheModel.prototype = {
 	 * Récup les résultats
 	 */
 	requestSuccess: function(data) {
-		log(data);
-		
 		pmAffectation.models.tache.data = data;
 	
 		pmAffectation.models.tache.callBack();
@@ -62,7 +60,7 @@ TacheModel.prototype = {
 	getTaches: function() {	
 		var _taches = {};
 		
-		// traitement des orgas
+		// traitement des taches
 		for (var _iTache in this.data) {
 			var _tache = {};
 			
@@ -72,11 +70,10 @@ TacheModel.prototype = {
 			}
 			
 			// re-traitement des dates
-			// TODO : check
-			/*_creneau['debut'] = new Date(_creneau['debut']['date']);
-			_creneau['fin'] = new Date(this.data[_iCreneau]['fin']['date']);*/
+			_tache['debut'] = new Date(this.data[_iTache]['debut']['date']);
+			_tache['fin'] = new Date(this.data[_iTache]['fin']['date']);
 			
-			_taches[_taches] = _taches;
+			_taches[_iTache] = _tache;
 		}
 		
 		return _taches;

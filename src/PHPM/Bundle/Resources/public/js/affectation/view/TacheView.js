@@ -34,7 +34,7 @@ TacheView.prototype = {
 	/*
 	 * Charge la liste des tâches
 	 */
-	setTachex: function() {
+	setTaches: function() {
 		$('#liste_taches').empty(); // reset la liste
 		$('#liste_taches').removeClass('spinner_medium');
 		
