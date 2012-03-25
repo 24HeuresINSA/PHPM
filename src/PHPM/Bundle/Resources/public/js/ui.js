@@ -13,7 +13,22 @@ $(function() {
 				
 			$.each(items, function(index, item) {
 				if (item.type != currentType) {
-					ul.append('<li class="ui-autocomplete-category">' + item.type + '</li>');
+					var _label;
+					
+					switch (item.type) {
+						case 'tache':
+							_label = 'Tâche';
+							break;
+						case 'groupe_tache':
+							_label = 'Groupe de tâches';
+							break;
+						case 'orga':
+							_label = 'Orga';
+							break;
+						default:
+							_label = item.type;
+					}
+					ul.append('<li class="ui-autocomplete-category">' + _label + '</li>');
 					currentType = item.type;
 				}
 				self._renderItem( ul, item );
@@ -40,7 +55,7 @@ $(function() {
 											value: data[_item]['telephone'],
 											type: data[_item]['type'],
 											id: data[_item]['id']}); // on prend le téléphone qui est unique
-						} else if  (data[_item]['type'] === 'tache') {
+						} else if  (data[_item]['type'] === 'tache' || data[_item]['type'] === 'groupe_tache') {
 							_result.push({label: data[_item]['nom'],
 											value: data[_item]['nom'],
 											type: data[_item]['type'],
@@ -53,7 +68,7 @@ $(function() {
 				position: {my : 'right top', at: 'right bottom'}
 			});
 		},
-		minLength: 2,
+		minLength: 3,
 		select: function(event, ui) {
 			// on va sur la bonne page lors de la sélection
 			if (ui.item.type === 'orga') {
