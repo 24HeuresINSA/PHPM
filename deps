@@ -1,10 +1,10 @@
 [symfony]
     git=http://github.com/symfony/symfony.git
-    version=v2.0.10
+    version=v2.0.12
 
 [twig]
     git=http://github.com/fabpot/Twig.git
-    version=v1.6.0
+    version=v1.6.2
 
 [monolog]
     git=http://github.com/Seldaek/monolog.git
@@ -28,7 +28,7 @@
 
 [assetic]
     git=http://github.com/kriswallsmith/assetic.git
-    version=v1.0.2
+    version=v1.0.3
 
 [twig-extensions]
     git=http://github.com/fabpot/Twig-extensions.git
@@ -61,21 +61,3 @@
     git=http://github.com/symfony/AsseticBundle.git
     target=/bundles/Symfony/Bundle/AsseticBundle
     version=v1.0.1
-
-[LightOpenId]
-    git=git://gitorious.org/lightopenid/lightopenid.git
-
-[SonataIntlBundle]
-    git=https://github.com/sonata-project/SonataIntlBundle
-    target=/bundles/Sonata/IntlBundle
-    
-[DataTables]
-    git=https://github.com/DataTables/DataTables.git
-    version=RELEASE_1_9_0
-   
-[Timepicker]
-    git=https://github.com/trentrichardson/jQuery-Timepicker-Addon.git
-    version=v1.0.0
-    
-   
- 
