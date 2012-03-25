@@ -99,13 +99,13 @@ class GroupeTacheController extends Controller
         $request = $this->getRequest();
         $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
         $user = $this->get('security.context')->getToken()->getUser();
-    
-        
-            $entity->setResponsable($user);
-            $entity->setEquipe($user->getEquipe());
-            $entity->setNom('Groupe sans nom');
-            $entity->setLieu(' ');
-    
+            
+        $entity->setResponsable($user);
+        $entity->setEquipe($user->getEquipe());
+        $entity->setNom('Groupe sans nom');
+        $entity->setLieu(' ');
+        $entity->setStatut(0);
+                
         
         $em->persist($entity);
         $em->flush();
