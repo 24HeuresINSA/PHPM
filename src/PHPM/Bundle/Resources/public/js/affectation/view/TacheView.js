@@ -22,7 +22,7 @@ TacheView.prototype = {
 			text: false
 		}).click(function() { $('#orga_'+pmAffectation.current.orga.id).next().click(); });
 		
-		$('#bouton_refresh').button({
+		$('#bouton_tache_refresh').button({
 			icons: {primary: 'ui-icon-refresh'},
 			text: false
 		}).click(function() { pmAffectation.controllers.orga.getData(); });*/

@@ -40,7 +40,17 @@
 	
 	<div class="menu_calendar" id ="menu_calendar">
 		<div class="bouton_reset" id="bouton_reset">Reset heure/jour</div>
+		
 		<div class="boutons_plage" id="boutons_plage"></div>
+		
+		<div class="bouton_mode" id="bouton_mode">
+			<form>
+				<div id="radio_mode">
+					<input type="radio" id="radio_mode_orga" name="radio" /><label for="radio_mode_orga">Mode Orga -> Créneaux</label>
+					<input type="radio" id="radio_mode_tache" name="radio" /><label for="radio_mode_tache">Mode Tache -> Orgas</label>
+				</div>
+			</form>
+		</div>
 		<div class="bouton_hide_menu" id="bouton_hide_menu">^ Cacher ^</div>
 	</div>
 	
@@ -50,7 +60,7 @@
 				<button id="bouton_orga_prev">Bouton pr&eacute;c&eacute;dent</button>
 				<button id="bouton_orga_next">Bouton suivant</button>
 				
-				<button id="bouton_refresh">Rafra&icirc;chir</button>
+				<button id="bouton_orga_refresh" class="bouton_orga_refresh">Rafra&icirc;chir</button>
 			</div>
 			
 			<div class="liste liste_orgas" id="liste_orgas">
@@ -87,12 +97,12 @@
 		</div>
 		
 		<div class="sidebar sidebar_tache" id="sidebar_tache">
-			<!--<div class="boutons_orga" id="boutons_orga">
-				<button id="bouton_orga_prev">Bouton pr&eacute;c&eacute;dent</button>
-				<button id="bouton_orga_next">Bouton suivant</button>
+			<div class="boutons_tache" id="boutons_tache">
+				<button id="bouton_tache_prev">Bouton pr&eacute;c&eacute;dent</button>
+				<button id="bouton_tache_next">Bouton suivant</button>
 				
-				<button id="bouton_refresh">Rafra&icirc;chir</button>
-			</div>-->
+				<button id="bouton_tache_refresh" class="bouton_tache_refresh">Rafra&icirc;chir</button>
+			</div>
 			
 			<div class="liste liste_taches" id="liste_taches">
 				<!-- liste des taches -->

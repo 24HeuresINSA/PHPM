@@ -82,7 +82,7 @@ CalendarView.prototype = {
 	 * Set les boutons pour changer de plage
 	 */
 	setBoutonsPlage: function() {
-		var _html = '<form><div id="radio">';
+		var _html = '<form><div id="radio_plage">';
 		
 		for (var _unePlage in pmAffectation.data.calendar.plage) {
 			// utiliser un onClick est sale, mais force la recopie de _unePlage sinon cela plante
@@ -94,7 +94,7 @@ CalendarView.prototype = {
 		
 		$('#boutons_plage').html(_html);
 		
-		$("#radio").buttonset(); // jQuery goodness
+		$("#radio_plage").buttonset(); // jQuery goodness
 	},
 	
 	/*

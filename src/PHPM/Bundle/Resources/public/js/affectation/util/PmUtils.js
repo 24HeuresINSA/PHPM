@@ -261,7 +261,30 @@ PmUtils.prototype = {
 		}
 		
 		return _result;
-	}
+	},
+	
+	/*
+	 * Set le mode de l'application :
+	 * Orga -> Créneau ou Tache -> Orga
+	 */
+	setMode: function(mode) {
+		if (mode === 'orga') {
+			$('#boutons_tache').hide();
+			$('#boutons_orga').show();
+		} else if (mode === 'tache') {
+			$('#boutons_orga').hide();
+			$('#boutons_tache').show();
+		}
+		
+		if (pmAffectation.current.mode !== mode) {
+			pmAffectation.current.mode = mode;
+			pmHistory.setUrlParam();
+		}
+	},
+	// set les boutons pour changer de mode
+	initMode: function() {
+		$("#radio_mode").buttonset(); // jQuery goodness
+	},
 		
 };
 

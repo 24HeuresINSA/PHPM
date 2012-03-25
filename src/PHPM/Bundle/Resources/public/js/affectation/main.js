@@ -26,6 +26,7 @@
 	pmAffectation.current.plage = 1; // par défaut on est sur la plage 0
 	pmAffectation.current.quart_heure = -1; // wildcart
 	pmAffectation.current.creneau = {};
+	pmAffectation.current.mode = 'orga';
 	
 	// log de toutes les affectations/désaffectations réalisées
 	pmAffectation.journal = [];
@@ -60,6 +61,9 @@ $(document).ready(function() {
 	// 0.5 : travail sur l'historique
 	pmHistory.initHistoryListener(); 
 	pmHistory.parseUrlParam(); // un peu bizarre : parfois faut le faire, parfois pas
+	// 0.8 : set le mode
+	pmUtils.setMode(pmAffectation.current.mode);
+	pmUtils.initMode();
 	
 	// 1 : lancer les requêtes pour les paramètres
 	// requêtes synchrones car nécessaire partout dans l'appli
@@ -79,7 +83,7 @@ $(document).ready(function() {
 	
 	// 4 : colonne tache - dedans on met des créneaux
 	pmAffectation.controllers.creneau = new CreneauController();
-	//pmAffectation.controllers.creneau.getData(); // pas besoin de donner pour l'instant
+	//pmAffectation.controllers.creneau.getData(); // pas besoin de données pour l'instant
 	
 	// last step : à partir de maintenant, les modifs du hash provoquent la mise à jour des données
 	pmHistory.refreshData = true;
