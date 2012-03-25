@@ -118,10 +118,6 @@ class CreneauRepository extends EntityRepository
 	    if ($permis != '') {
 	    	$dql.= "AND t.permisNecessaire = $permis ";
 		}
-	    
-// 	    if ($age != '') {
-// 	    	$dql.= "AND t.ageNecessaire >= $age ";
-// 	    }
 	   
 	    if ($niveau_confiance != '') {
 	    	$dql.= "AND conf.valeur >= $niveau_confiance ";
