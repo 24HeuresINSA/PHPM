@@ -70,8 +70,10 @@ TacheModel.prototype = {
 			}
 			
 			// re-traitement des dates
-			_tache['debut'] = new Date(this.data[_iTache]['debut']['date']);
-			_tache['fin'] = new Date(this.data[_iTache]['fin']['date']);
+			for (var _iCreneau in _tache['creneaux']) {
+				_tache['creneaux'][_iCreneau]['debut'] = new Date(_tache['creneaux'][_iCreneau]['debut']['date']);
+				_tache['creneaux'][_iCreneau]['fin'] = new Date(_tache['creneaux'][_iCreneau]['fin']['date']);
+			}
 			
 			_taches[_iTache] = _tache;
 		}

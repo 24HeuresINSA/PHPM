@@ -12,6 +12,21 @@ TacheView.prototype = {
 	 * Constructeur
 	 */
 	initialize: function() {
+		// boutons pour changer d'orga
+		$('#bouton_tache_prev').button({
+			icons: {primary: 'ui-icon-triangle-1-w'},
+			text: false
+		}).click(function() { $('#tache_'+pmAffectation.current.tache.id).prev().click(); });
+		$('#bouton_tache_next').button({
+			icons: {primary: 'ui-icon-triangle-1-e'},
+			text: false
+		}).click(function() { $('#tache_'+pmAffectation.current.tache.id).next().click(); });
+		
+		$('#bouton_tache_refresh').button({
+			icons: {primary: 'ui-icon-refresh'},
+			text: false
+		}).click(function() { pmAffectation.controllers.tache.getData(); });
+		
 		this.setFilters(); // met les bonnes valeurs dans les filtres
 		
 		// filtres : bind les events
