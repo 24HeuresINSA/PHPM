@@ -69,12 +69,13 @@
             <th>Horaires</th>
             <th>Besoins</th>
             <th>Total</th>
+            <th>Durée d'un créneau<br/>(Recoupement)</th>
             <th>Actions</th>
         </thead>
         <tbody>
         {% for pl in entity.plagesHoraire %}
     	    <tr><td>
-    		    {{ pl.debut | format_datetime }} -> {{ pl.fin | format_datetime }}
+    		    {{ pl.debut | format_datetime }} &rarr; {{ pl.fin | format_datetime }}
     		    </td>
     		    <td>
     		    {% if pl.respNecessaire  %}(RESP) {% endif %}
@@ -82,6 +83,11 @@
     			{% for bo in pl.besoinsOrga %}({{ bo.equipe }} : {{ bo.nbOrgasNecessaires }}){% endfor %}
     			</td>
     			<td>{{ pl.besoinsOrgaTotal }}</td>
+    			<td>{{ pl.dureeCreneau/3600}}h
+    			{% if pl.recoupementCreneau != 0 %}
+    			 ({{ pl.recoupementCreneau/60 }}m)
+    			{% endif %}
+    			</td>
     		    <td>
     		    <a href="{{ path('plagehoraire_edit', { 'id': pl.id }) }}">Éditer</a>
     		    <a href="{{ path('plagehoraire_delete', { 'id': pl.id }) }}">Supprimer</a>
