@@ -271,19 +271,18 @@ PmUtils.prototype = {
 		if (mode === 'orga') {
 			$('#boutons_tache').hide();
 			$('#boutons_orga').show();
+			
+			// on va chercher la colonne orgas
+			pmAffectation.controllers.orga = new OrgaController();
+			pmAffectation.controllers.orga.getData();
+	
+			// 4 : colonne tache - dedans on met des créneaux
+			pmAffectation.controllers.creneau = new CreneauController();
+			// pas besoin d'aller chercher des données dedans
 		} else if (mode === 'tache') {
 			$('#boutons_orga').hide();
 			$('#boutons_tache').show();
 		}
-		
-		if (pmAffectation.current.mode !== mode) {
-			pmAffectation.current.mode = mode;
-			pmHistory.setUrlParam();
-		}
-	},
-	// set les boutons pour changer de mode
-	initMode: function() {
-		$("#radio_mode").buttonset(); // jQuery goodness
 	},
 		
 };

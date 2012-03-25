@@ -203,4 +203,14 @@ CalendarView.prototype = {
 		
 		pmUtils.setPopupClose(); // pour sa fermeture, un seul popup à la fois
 	},
+
+	/* 
+	 * Set les boutons pour changer de mode
+	 */
+	initMode: function() {
+		$("#radio_mode").buttonset(); // jQuery goodness
+		
+		$('#radio_mode_orga').bind('click', {mode: 'orga'}, pmAffectation.controllers.calendar.changeMode);
+		$('#radio_mode_tache').bind('click', {mode: 'tache'}, pmAffectation.controllers.calendar.changeMode);
+	},
 }
