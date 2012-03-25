@@ -510,22 +510,15 @@ class TacheController extends Controller
 		$niveau_confiance= $request->request->get('confiance_id', '');
 		$plage = $request->request->get('plage_id', '');
 		$bloc = $request->request->get('bloc', '0');
-		
-		//exit(var_dump($request));
 	
 		$em = $this->getDoctrine()->getEntityManager();
-		//création de la requete SQL et récupération de son retour
+		//création de la requête SQL et récupération de son retour
 		$entities = $em->getRepository('PHPMBundle:Tache')->getTacheWithCriteria($duree, $permis,  $niveau_confiance, $plage, $bloc);
-	
-		//exit(var_dump($entities));
-		$response = new Response();
 		
 		//creation du json de retour
-		foreach ($entities as $entity)
-		{
-			$a = array();
-			foreach ($entity->getPlagesHoraire() as $creneau)
-			{
+		$a = array();
+		foreach ($entities as $entity) {
+			foreach ($entity->getPlagesHoraire() as $creneau) {
 				$a[$creneau->getId()] = $creneau->toSimpleArray();
 			}
 			
@@ -539,8 +532,10 @@ class TacheController extends Controller
 				$a[$entity->getId()] = $tacheArray;
 		}
 	
-		//exit(var_dump($tacheArray));
-		$response->setContent(json_encode($a));
+    	$response = new Response();
+    	$response->setContent(json_encode($a));
+		$response->headers->set('Content-Type', 'application/json');
+		
 		return $response;
 	}
 	

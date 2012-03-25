@@ -15,35 +15,32 @@ class TacheRepository extends EntityRepository
 	
 	public function getTacheWithCriteria($duree, $permis, $niveau_confiance, $plage, $bloc)
 	{
-		$dql= "Select t From PHPMBundle:Creneau ct Join ct.plageHoraire p Join p.tache t Where 1";
+		$dql = "SELECT t FROM PHPMBundle:Tache t JOIN t.plagesHoraire p JOIN p.creneaux c WHERE c.disponibilite IS NULL";
 	
-		if($duree!='')
-		{
-			$dql.= " AND (ct.fin - ct.debut < '$duree' )";
+		if ($duree != '') {
+			$dql.= " AND ((c.fin - c.debut) < '$duree' )";
 		}
 // 		if($categorie !='')
 // 		{
 // 			$andx->add($qb->expr()->eq('t.categorie_id',$categorie));
 // 		}
-		if($permis!='')
-		{
+		if ($permis != '') {
 			$dql.= " AND t.permisNecessaire >= '$permis'";
 		}
 // 		if($age !='')
 // 		{
 // 			$andx->add($qb->expr()->gte('t.ageNecessaire',$age));
 // 		}
-		if($niveau_confiance !='')
-		{
+		if ($niveau_confiance != '') {
 			$dql.= " AND t.confiance_id >= '$niveau_confiance'";
 		}
-		if($plage !='')
-		{
-			$dql.= " AND ct.disponibilite != 0";
-			$dql.= " AND p.id = '$plage'";
+		if ($plage != '') {
+		    $pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation_plages')->getValue(),TRUE);
+		    $plage= $pref[$plage];
+		    $debut = $plage['debut'];
+		    $fin = $plage['fin'];
+		    $dql.= " AND (c.debut <= '$fin') AND (c.fin >='$debut') ";
 		}
-		
-		//exit(var_dump($qb->getQuery()->getDQL()));
 		
 		$query = $this->getEntityManager()->createQuery($dql);
 		
