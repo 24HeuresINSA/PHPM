@@ -22,10 +22,17 @@ class DefaultController extends Controller
     {
     	$em = $this->getDoctrine()->getEntityManager();
     	$pref = $em->getRepository('PHPMBundle:Config')->findOneByField('phpm_config_initiale');
+    	$logged= $this->get('security.context')->isGranted('ROLE_USER');
     	
-    	
-    	if (!$pref)
+    	if (!$pref){
     	return $this->redirect($this->generateUrl('config_initiale'));
+    	}
+    	
+    	if (!$logged){
+    	return $this->redirect($this->generateUrl('login'));
+    	}
+    	
+    	
     	
     	
         return array();
