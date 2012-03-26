@@ -54,7 +54,7 @@ class DefaultController extends Controller
     
             $openid = new \LightOpenID($serverurl);
             if(!$openid->mode) {
-                if(isset($_GET['login'])) {
+//                 if(isset($_GET['login'])) {
                     $openid->identity = 'https://www.google.com/accounts/o8/id';
                     $openid->required = array('namePerson/friendly', 'contact/email');
                     //header('Location: ' . $openid->authUrl());
@@ -64,7 +64,7 @@ class DefaultController extends Controller
     
                     return $response;
     
-                }
+//                 }
                 return array("registered"=>$registered);
     
             } elseif($openid->mode == 'cancel') {
