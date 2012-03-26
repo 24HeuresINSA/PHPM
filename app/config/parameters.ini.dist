@@ -13,4 +13,6 @@
     secret=""
     admin_email=""
     kernel.logs_dir="/var/log/symfony"
+    node_bin="/usr/bin/node"
+    node_paths=/usr/lib/node/
     
