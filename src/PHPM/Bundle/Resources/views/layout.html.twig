@@ -23,6 +23,11 @@
 				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
 			{% endstylesheets %}
 			
+			{# Feuilles de style less#}
+			{% stylesheets filter='less' 'bundles/phpm/css/style.less' %}
+    		<link href="{{ asset_url }}" rel="stylesheet" media="screen" />
+			{% endstylesheets %}
+			
 			{# on inclue manuellement cette feuille de style qu'Assetic ne nous casse pas les liens des images #}
 			<link rel="stylesheet" href="{{ asset('bundles/phpm/css/jquery-ui/themes/smoothness/jquery-ui-1.8.16.custom.css') }}" type="text/css" />
 		{% endblock %}
