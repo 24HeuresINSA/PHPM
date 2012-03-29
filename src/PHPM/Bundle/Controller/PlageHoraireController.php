@@ -209,6 +209,7 @@ class PlageHoraireController extends Controller
 
         $editForm   = $this->createForm(new PlageHoraireType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
+        
 
         $request = $this->getRequest();
 
@@ -220,13 +221,9 @@ class PlageHoraireController extends Controller
 
             $param = $request->request->all();
             
+     
             
-                if($param['action']=='save_return'){
-                    return $this->redirect($this->generateUrl('tache_edit', array('id' => $entity->getTache()->getId())));
-                }
-            
-            
-            return $this->redirect($this->generateUrl('plagehoraire_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('tache_edit', array('id' => $entity->getTache()->getId())));
         }
 
         return array(

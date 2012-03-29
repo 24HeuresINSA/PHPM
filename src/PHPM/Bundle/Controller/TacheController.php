@@ -366,6 +366,40 @@ class TacheController extends Controller
 
         return $this->redirect($this->generateUrl('tache'));
     }
+    
+    /**
+     * Moves a Tache entity to trash.
+     *
+     * @Route("/{id}/trash", name="tache_trash")
+     *
+     */
+    public function trashAction($id)
+    {
+    
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$entity = $em->getRepository('PHPMBundle:Tache')->find($id);
+    	
+    	$user = $this->get('security.context')->getToken()->getUser();
+    
+    	if (!$entity) {
+    		throw $this->createNotFoundException('Unable to find Tache entity.');
+    	}
+    		
+    	$entity->setStatut(-1);
+    	$commentaire = new Commentaire();
+    	$commentaire->setAuteur($user);
+    	$commentaire->setHeure(new \DateTime());
+    	$commentaire->setTache($entity);
+    	$commentaire->setTexte("<b>&rarr;Fiche supprimée.</b>");
+    	$em->persist($commentaire);
+    	
+    	
+    	$em->flush();
+    
+    
+    	return $this->redirect($this->generateUrl('tache'));
+    }
+    
 
     private function createDeleteForm($id)
     {

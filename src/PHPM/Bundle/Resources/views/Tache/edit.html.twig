@@ -193,7 +193,7 @@ $(function() {
         	{% endif %}
         {% endif %}
         {% if entity.statut !=-1  %}
-        <button class="btn btn-danger" type="submit" name="action" value="delete"><i class="icon-trash"></i> Supprimer la fiche</button>
+        <a class="btn  btn-danger" href="{{ path('tache_trash', { 'id': entity.id }) }}"><i class="icon-remove"></i> Supprimer la fiche</a>
         {% endif %}
         {% if entity.statut ==-1 and entity.groupeTache.statut !=-1 %}
         <button class="btn btn-success" type="submit" name="action" value="restore">Restaurer la fiche</button>
