@@ -7,7 +7,7 @@
 <form action="{{ path('orga_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     {{ form_widget(edit_form) }}
     <p>
-        <button type="submit">Valider</button>
+        <button class="btn" type="submit">Valider</button>
     </p>
 </form>
 {% endblock %}

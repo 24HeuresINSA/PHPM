@@ -1,37 +1,5 @@
 @media all {
 
-#phpm_bundle_tachetype_entity_plagesHoraire > div {
-	margin-bottom: 2em;
-	clear:both;
-	overflow: auto;
-}
-#phpm_bundle_tachetype_entity_plagesHoraire > div > div {
-	float:left;
-	text-align: center;
-	margin-right: 1em;
-}
-#phpm_bundle_tachetype_entity_plagesHoraire > div > div >label {
-	display:block;
-}
-
-
-#plagesHoraires > div{
-	margin-bottom: .5em;
-	background-color: lightblue;
-	margin-right: .5em;
-	padding:.5em;
-	border-radius: 5px;
-	overflow: auto;
-	display: inline-block;
-}
-
-#phpm_bundle_tachetype_entity_consignes{
-	height:10em;
-}
-
-#phpm_bundle_tachetype_entity_ageNecessaire{
-	width: 3em;
-}
 
 .materiel_item{
 	text-align: center;
@@ -42,15 +10,11 @@
 	width: 4em;
 }
 
-#phpm_bundle_tachetype, p {
-	clear:both;
-}
 
-}
 
 
 div.com{
-	clear:both;
+	overflow:auto;
 	border: none;
 	-moz-border-radius: 5px;
 	border-radius: 5px;

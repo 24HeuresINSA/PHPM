@@ -14,33 +14,33 @@
 {% block content %}
 {% if valid is defined %}
 	{% if valid==1 %}
-		<div class ="success">La tâche à bien été enregistrée.</div>
+		<div class ="alert alert-success">La tâche à bien été enregistrée.</div>
 	{% else %}
-		<div class ="alert">Il y a des erreurs dans la fiche, la tâche n'a pas été mise à jour.</div>
+		<div class ="alert alert-error">Il y a des erreurs dans la fiche, la tâche n'a pas été mise à jour.</div>
 	{% endif %}
 {% endif %}
 
-<form action="{{ path('tache_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+<form class="form-horizontal" action="{{ path('tache_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
 
 <div class="alert-message">{{ form_errors(form) }}</div>
 
-<h2 class="statut{{ form.entity.vars.value.statut }}">{{ form.entity.vars.value.nom }}</h2>
-    
-    <div>
-    	<div class="form_row">
-    		{{ form_row(form.entity.nom, { 'label':  'Nom de la tâche'}) }}
-    		{{ form_row(form.entity.groupeTache, { 'label':  'Groupe de la tâche'}) }}
+{# <h2 class="statut{{ form.entity.vars.value.statut }}">{{ form.entity.vars.value.nom }}</h2>#}
+    <div class="row-fluid">
+    <div class="span6">
+			<h2>Informations Générales</h2>
+    		{{ form_row(form.entity.nom) }}
+    		{{ form_row(form.entity.groupeTache) }}
     		{{ form_row(form.entity.responsable, { 'label':  'Orga Responsable'}) }}
     		{{ form_row(form.entity.lieu, { 'label':  'Lieu de rendez-vous'}) }}
     		{{ form_row(form.entity.permisNecessaire, { 'label':  'Permis nécessaire'}) }}
     	</div>
-    
-    	<h3>{{ form_label(form.entity.consignes,'Consignes') }}</h3>
+       <div class="span6">
+    	<h3>Consignes</h3>
     	
     	<div class="alert-message">{{ form_errors(form.entity.consignes) }}</div>
 
 	{{ form_widget(form.entity.consignes,{ 'style':  'width:500px'}) }}
-    </div>
+    
 <style>
 .wysiwyg-input { width: 500px; height: 250px }
 </style>
@@ -62,32 +62,32 @@ $(function() {
     });
 });
 </script>
-    
-    
-<h2>Besoins en matériel</h2>
-    <div>
-      
-        {% for c in form.Materiel %}
-    	    <h3>{{ form_label(c) }}</h3>
-    	    
-    	    <div>
-    		    {% for i in c %}
-    				<div class="materiel_item">{{ form_label(i) }}<br/>{{ form_widget(i) }}</div>
-    			{% endfor %}
-    		</div>
-    	{% endfor %}
-    	
-    	<h3>{{ form_label(form.entity.materielSupplementaire,'Matériel Supplémentaire') }}</h3>
-    	
-    	{{ form_widget(form.entity.materielSupplementaire) }}
+    </div>
     </div>
 
+        <div class="row-fluid">
+    <div class="span12">
+      <h2>Besoins en matériel</h2>
+        {% for c in form.Materiel %}
+    	    <h3>{{ c.vars.label }}</h3>
+    	    
+    		    {% for i in c %}
+    				<div class="materiel_item">{{ form_label(i) }}{{ form_widget(i) }}</div>
+    			{% endfor %}
+    	{% endfor %}
+    	
+    	<h3>Matériel Supplémentaire</h3>
+    	
+    	{{ form_widget(form.entity.materielSupplementaire) }}
+    </div></div>
+
+        <hr>
 <h2>Plages Horaires</h2>
 
     <p><em>Attention : Enregistrez la fiche tâche avant de modifier les plages horaires !</em></p>
     
     
-    <table>
+    <table class="table table-condensed">
         <thead>
             <th>Horaires</th>
             <th>Besoins</th>
@@ -113,8 +113,10 @@ $(function() {
     			</td>
     		    <td>
     		    {% if not rOnly  %}
-    		    <a href="{{ path('plagehoraire_edit', { 'id': pl.id }) }}">Éditer</a>
-    		    <a href="{{ path('plagehoraire_delete', { 'id': pl.id }) }}">Supprimer</a>
+    		    <div class="btn-group">
+    		    <a class="btn" href="{{ path('plagehoraire_edit', { 'id': pl.id }) }}"><i class="icon-pencil"></i> Éditer</a>
+    		    <a class="btn  btn-danger" href="{{ path('plagehoraire_delete', { 'id': pl.id }) }}"><i class="icon-remove"></i> Supprimer</a>
+    		    </div>
     		    {% endif %}
     	    </td></tr>
         
@@ -123,10 +125,10 @@ $(function() {
     </table>
     <br/>
     {% if not rOnly  %}
-    <a class="addbutton" href="{{ path('plagehoraire_new', { 'id': entity.id }) }}">+</a>
+    <a class="btn btn-success" href="{{ path('plagehoraire_new', { 'id': entity.id }) }}"><i class="icon-plus"></i></a>
     {% endif %}
         
-
+    <hr>
 <h2>Commentaires</h2>
     
     <script>
@@ -152,14 +154,15 @@ $(function() {
     	        	<span class="com_heure"> {{ com.heure|format_datetime('EEEE dd MMM HH:mm') }}</span>
     	        </div>
     	        <div class="com_texte">{{com.texte|raw}}</div>
-    	        <div class=clear></div>
+
             </div>
         
             
         {% endfor %}
         </div>
         {% if not rOnly  %}
-    	    <h3>Enregistrer les Modifications</h3>
+            <hr>
+    	    <h2>Enregistrer les Modifications</h2>
     	    
     	    {{ form_errors(form.commentaire) }}
     	    {{ form_widget(form.commentaire) }}
@@ -167,27 +170,29 @@ $(function() {
     	
     	
 {{ form_rest(form) }}
-    <p>
-        <button type="submit" name="action" value="save" >Enregistrer</button>
+<div class="form-actions">
+    <div class="btn-group">
+        <button class="btn" type="submit" name="action" value="save" >Enregistrer</button>
         
         {% if entity.statut ==0 %}
-        	<button class="yesbutton" type="submit" name="action" value="submit_validation">Passer en Validation</button>
+        	<button class="btn btn-success" type="submit" name="action" value="submit_validation"><i class="icon-eye-open"></i> Passer en Validation</button>
         {% endif %}
         {% if is_granted('ROLE_ADMIN')  %}
             {% if entity.statut ==1  %}
-        	    <button class="yesbutton" type="submit" name="action" value="validate">Valider la fiche</button>
+        	    <button class="btn btn-success" type="submit" name="action" value="validate"><i class="icon-ok"></i> Valider la fiche</button>
         	{% endif %}
         	{% if entity.statut >=1  %}
-        	     <button class="nobutton" type="submit" name="action" value="reject">Rejeter la fiche</button>
+        	     <button class="btn btn-warning" type="submit" name="action" value="reject"><i class="icon-remove"></i> Rejeter la fiche</button>
         	{% endif %}
         {% endif %}
         {% if entity.statut !=-1  %}
-        <button class="nobutton" type="submit" name="action" value="delete">SUPPRIMER la fiche</button>
+        <button class="btn btn-danger" type="submit" name="action" value="delete"><i class="icon-trash"></i> Supprimer la fiche</button>
         {% endif %}
         {% if entity.statut ==-1 and entity.groupeTache.statut !=-1 %}
-        <button class="yesbutton" type="submit" name="action" value="restore">Restaurer la fiche</button>
+        <button class="btn btn-success" type="submit" name="action" value="restore">Restaurer la fiche</button>
         {% endif %}
-    </p>
+    </div>
+    </div>
 {% endif %}
 </form>
 

@@ -12,7 +12,8 @@
 {% endblock %}
 
 {% block content %}
-<form action="{{ path('plagehoraire_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+<form class="form-inline" action="{{ path('plagehoraire_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+    
     <h2>Informations</h2>
     
     <div class="alert-message">{{ form_errors(form) }}</div>
@@ -64,13 +65,19 @@
 	    {% endfor %}
     </div>
     
-    <a class="addbutton" id="addBOButton" href="#">+</a>
-	<a class="rmbutton"  id="rmBOButton" href="#">-</a>
-	
-    <p>
-        <button type="submit" name="action" value="save" style = "float:left">Enregistrer</button>
-        <button type="submit" name="action" value="save_return" style = "float:left">Enregister et revenir à la tâche</button>
-    </p>
+    <div class="btn-group">
+    <a class="btn btn-success" id="addBOButton" href="#"><i class="icon-plus"></i></a>
+	<a class="btn btn-danger"  id="rmBOButton" href="#"><i class="icon-minus"></i></a>
+	</div>
+	<br>
+	<div class="form-actions">
+    <div class="btn-group">
+        <button class="btn  btn-primary" type="submit" name="action" value="save" style = "float:left">Enregistrer</button>
+        <button class="btn" type="submit" name="action" value="save_return" style = "float:left">Enregister et revenir à la tâche</button>
+        <a class="btn btn-warning" href=""><i class="icon-share-alt"></i> Revenir à la tâche sans enregistrer</a>
+        <a class="btn btn-danger" href=""><i class="icon-trash"></i> Supprimer cette plage horaire</a>
+    </div>
+    </div>
     
     {{ form_rest(form) }}
 </form>
