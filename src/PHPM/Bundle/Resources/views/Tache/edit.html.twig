@@ -38,9 +38,17 @@
     	<h3>{{ form_label(form.entity.consignes,'Consignes') }}</h3>
     	
     	<div class="alert-message">{{ form_errors(form.entity.consignes) }}</div>
-    	{{ form_widget(form.entity.consignes) }}
+
+	{{ form_widget(form.entity.consignes) }}
     </div>
 
+    <script type="text/javascript">
+$(function() {
+    $('#phpm_bundle_tachetype_entity_consignes').wysiwyg();
+});
+</script>
+    
+    
 <h2>Besoins en matériel</h2>
     <div>
       
@@ -89,16 +97,19 @@
     			{% endif %}
     			</td>
     		    <td>
+    		    {% if not rOnly  %}
     		    <a href="{{ path('plagehoraire_edit', { 'id': pl.id }) }}">Éditer</a>
     		    <a href="{{ path('plagehoraire_delete', { 'id': pl.id }) }}">Supprimer</a>
+    		    {% endif %}
     	    </td></tr>
         
         {% endfor %}
         </tbody>
     </table>
     <br/>
+    {% if not rOnly  %}
     <a class="addbutton" href="{{ path('plagehoraire_new', { 'id': entity.id }) }}">+</a>
-    
+    {% endif %}
         
 
 <h2>Commentaires</h2>
@@ -131,14 +142,14 @@
         
             
         {% endfor %}
-        
+        </div>
         {% if not rOnly  %}
     	    <h3>Enregistrer les Modifications</h3>
     	    
     	    {{ form_errors(form.commentaire) }}
     	    {{ form_widget(form.commentaire) }}
     	    
-    	</div>
+    	
     	
 {{ form_rest(form) }}
     <p>

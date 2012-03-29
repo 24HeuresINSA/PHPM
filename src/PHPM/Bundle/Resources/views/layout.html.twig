@@ -30,7 +30,16 @@
 			
 			{# on inclue manuellement cette feuille de style qu'Assetic ne nous casse pas les liens des images #}
 			<link rel="stylesheet" href="{{ asset('bundles/phpm/css/jquery-ui/themes/smoothness/jquery-ui-1.8.16.custom.css') }}" type="text/css" />
-		{% endblock %}
+		    
+		{% stylesheets
+
+				'../vendor/jWYSIWYG/jquery.wysiwyg.css'
+			%}
+							<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
+			{% endstylesheets %}
+				
+			
+			{% endblock %}
 		
 		{# même chose pour Javascript, bien le mettre APRES à cause de LESS #}
         {% block javascript %}
@@ -42,6 +51,7 @@
 				'@PHPMBundle/Resources/public/js/ui.js'
 				'../vendor/DataTables/media/js/jquery.dataTables.js'
 				'../vendor/Timepicker/jquery-ui-timepicker-addon.js'
+				'../vendor/jWYSIWYG/jquery.wysiwyg.js'
 				'http://jquery-ui.googlecode.com/svn/tags/latest/ui/minified/i18n/jquery-ui-i18n.min.js'
 			%}
 				<script src="{{ asset_url }}" type="text/javascript"></script>
