@@ -65,3 +65,7 @@
 [jWYSIWYG]
     git=https://github.com/akzhan/jwysiwyg.git
     version=0.97
+
+[TwitterBootstrap]
+    git=https://github.com/twitter/bootstrap.git
+    version=v2.0.2
