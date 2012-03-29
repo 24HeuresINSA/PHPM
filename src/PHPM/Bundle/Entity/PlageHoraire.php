@@ -57,6 +57,13 @@ class PlageHoraire
     protected $dureeCreneau;
     
     /**
+     * @var bool $creneauUnique
+     *
+     * @ORM\Column(name="creneauUnique", type="boolean", nullable=true)
+     */
+    protected $creneauUnique;
+    
+    /**
      * @var smallint $recoupementCreneau
      *
      * @ORM\Column(name="recoupementCreneau", type="smallint")
@@ -369,5 +376,25 @@ class PlageHoraire
     public function getTache()
     {
         return $this->tache;
+    }
+
+    /**
+     * Set creneauUnique
+     *
+     * @param boolean $creneauUnique
+     */
+    public function setCreneauUnique($creneauUnique)
+    {
+        $this->creneauUnique = $creneauUnique;
+    }
+
+    /**
+     * Get creneauUnique
+     *
+     * @return boolean 
+     */
+    public function getCreneauUnique()
+    {
+        return $this->creneauUnique;
     }
 }

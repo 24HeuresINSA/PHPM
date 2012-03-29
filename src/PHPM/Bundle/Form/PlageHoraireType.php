@@ -32,6 +32,7 @@ class PlageHoraireType extends AbstractType
                     'label'=>'Fin',
                     'widget' => 'single_text',
                     'attr'=>array('class'=>'findp')))
+            ->add('creneauUnique', null, array('label'=>'Créneau Unique (pas de découpage)'))
             ->add('dureeCreneau', 'choice', array('label'=>'Durée d\'un créneau', 'choices'=>$choixDurees))
             ->add('recoupementCreneau', 'choice', array('label'=>'Recoupement entre deux créneaux consécutifs (en sec.)', 'choices' => $choixRC ))
 			->add('respNecessaire', null, array('label'=>'Le responsable de la tâche doit être présent'))

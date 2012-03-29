@@ -22,11 +22,31 @@
 	{{ form_row(form.fin) }}
 	
 	<div>
-		{{ form_label(form.dureeCreneau) }} {{ form_widget(form.dureeCreneau) }}
+		{{ form_row(form.creneauUnique) }}
+	</div>
+	
+	<script type="text/javascript">
+
+	$(document).ready(function(){
+		
+		$("#infosCreneaux").toggle($('#phpm_bundle_plagehorairetype_creneauUnique:checked').val() ==undefined);
+
+});
+	
+	
+	$('#phpm_bundle_plagehorairetype_creneauUnique').click(function() {
+	    $("#infosCreneaux").toggle();
+	});</script>
+	
+	<div id="infosCreneaux">
+	<div>
+		{{ form_row(form.dureeCreneau) }}
 	</div>
 
 	<div>
-		{{ form_label(form.recoupementCreneau) }} {{ form_widget(form.recoupementCreneau) }}
+		{{  form_row(form.recoupementCreneau) }}
+	</div>
+	
 	</div>
 
 	{{ form_row(form.respNecessaire) }}
