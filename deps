@@ -64,6 +64,7 @@
 
 [jWYSIWYG]
     git=https://github.com/akzhan/jwysiwyg.git
+    target=../web/lib/jWYSIWYG
     version=0.97
 
 [TwitterBootstrap]

@@ -18,6 +18,10 @@
 				'bundles/phpm/css/jquery.dataTables.css'
 				'../vendor/DataTables/media/css/jquery.dataTables_themeroller.css'
 				'../vendor/Timepicker/jquery-ui-timepicker-addon.css'
+				'lib/jWYSIWYG/jquery.wysiwyg.css'
+				'lib/bootstrap/bootstrap.min.css'
+				'lib/bootstrap/bootstrap-responsive.min.css'
+				
 				filter='cssrewrite' 
 			%}
 				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
@@ -30,10 +34,10 @@
 			
 			{# on inclue manuellement cette feuille de style qu'Assetic ne nous casse pas les liens des images #}
 			<link rel="stylesheet" href="{{ asset('bundles/phpm/css/jquery-ui/themes/smoothness/jquery-ui-1.8.16.custom.css') }}" type="text/css" />
-		    
+
 		{% stylesheets
 
-				'../vendor/jWYSIWYG/jquery.wysiwyg.css'
+				
 			%}
 							<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
 			{% endstylesheets %}

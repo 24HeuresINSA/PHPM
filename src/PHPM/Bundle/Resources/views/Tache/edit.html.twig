@@ -39,12 +39,15 @@
     	
     	<div class="alert-message">{{ form_errors(form.entity.consignes) }}</div>
 
-	{{ form_widget(form.entity.consignes) }}
+	{{ form_widget(form.entity.consignes,{ 'style':  'width:500px'}) }}
     </div>
-
+<style>
+.wysiwyg-input { width: 500px; height: 250px }
+</style>
     <script type="text/javascript">
 $(function() {
     $('#phpm_bundle_tachetype_entity_consignes').wysiwyg({
+    	iFrameClass: "wysiwyg-input",
         rmUnusedControls: true,
         controls: {
             bold: { visible : true },
@@ -80,7 +83,7 @@ $(function() {
     </div>
 
 <h2>Plages Horaires</h2>
-    
+
     <p><em>Attention : Enregistrez la fiche tâche avant de modifier les plages horaires !</em></p>
     
     
