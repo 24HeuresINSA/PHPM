@@ -44,7 +44,19 @@
 
     <script type="text/javascript">
 $(function() {
-    $('#phpm_bundle_tachetype_entity_consignes').wysiwyg();
+    $('#phpm_bundle_tachetype_entity_consignes').wysiwyg({
+        rmUnusedControls: true,
+        controls: {
+            bold: { visible : true },
+            italic: { visible : true },
+            strikeThrough: { visible : true },
+            underline: { visible : true },
+            insertOrderedList: { visible : true },
+            insertUnorderedList: { visible : true },
+            removeFormat: { visible : true },
+            insertTable: { visible : true }
+        }
+    });
 });
 </script>
     
