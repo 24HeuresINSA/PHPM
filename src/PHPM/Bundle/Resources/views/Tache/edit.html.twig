@@ -98,7 +98,7 @@ $(function() {
         <tbody>
         {% for pl in entity.plagesHoraire %}
     	    <tr><td>
-    		    {{ pl.debut | format_datetime }} &rarr; {{ pl.fin | format_datetime }}
+    		    {{ pl.debut | format_datetime }} <i class="icon-arrow-right"></i> {{ pl.fin | format_datetime }}
     		    </td>
     		    <td>
     		    {% if pl.respNecessaire  %}(RESP) {% endif %}
@@ -106,10 +106,17 @@ $(function() {
     			{% for bo in pl.besoinsOrga %}({{ bo.equipe }} : {{ bo.nbOrgasNecessaires }}){% endfor %}
     			</td>
     			<td>{{ pl.besoinsOrgaTotal }}</td>
-    			<td>{{ pl.dureeCreneau/3600}}h
+    			<td>
+    			{% if pl.creneauUnique  %}
+    			
+    			{% else %}
+    			{{ pl.dureeCreneau/3600}}h
     			{% if pl.recoupementCreneau != 0 %}
     			 ({{ pl.recoupementCreneau/60 }}m)
     			{% endif %}
+    			 {% endif %}
+    			
+    			
     			</td>
     		    <td>
     		    {% if not rOnly  %}
@@ -125,7 +132,7 @@ $(function() {
     </table>
     <br/>
     {% if not rOnly  %}
-    <a class="btn btn-success" href="{{ path('plagehoraire_new', { 'id': entity.id }) }}"><i class="icon-plus"></i></a>
+    <a class="btn btn-success" href="{{ path('plagehoraire_new', { 'id': entity.id }) }}"><i class="icon-plus"></i> Ajouter une plage horaire</a>
     {% endif %}
         
     <hr>
