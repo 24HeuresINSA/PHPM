@@ -8,43 +8,34 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>{{ pageTitle }} - PHPlanningMaker</title>
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
-        
         {# c'est pas très beau - on met un code 'générique' dans un block - mais à priori la seule méthode #}
         {% block style %}
+        	
+		{# Rewritten CSS #}
 			{% stylesheets
-
 				'bundles/phpm/css/jquery.dataTables.css'
 				'../vendor/DataTables/media/css/jquery.dataTables_themeroller.css'
 				'../vendor/Timepicker/jquery-ui-timepicker-addon.css'
 				'lib/jWYSIWYG/jquery.wysiwyg.css'
-				
-				
-							
-
-				
 				filter='cssrewrite' 
 			%}
 				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
 			{% endstylesheets %}
 			
-			{# Feuilles de style less#}
-			{% stylesheets filter='less' 'bundles/phpm/css/style.less' %}
+		{# LESS Stylesheets#}
+			{% stylesheets filter='less'
+				'bundles/phpm/css/style.less'
+
+			
+			%}
     		<link href="{{ asset_url }}" rel="stylesheet" media="screen" />
 			{% endstylesheets %}
 			
-			{# on inclue manuellement cette feuille de style qu'Assetic ne nous casse pas les liens des images #}
+			{# Not rewritten stylesheets #}
 			<link rel="stylesheet" href="{{ asset('bundles/phpm/css/jquery-ui/themes/smoothness/jquery-ui-1.8.16.custom.css') }}" type="text/css" />
 			<link rel="stylesheet" href="{{ asset('lib/bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" />
 			<link rel="stylesheet" href="{{ asset('lib/bootstrap/css/bootstrap.min.css') }}" type="text/css" />
 			
-			
-		{% stylesheets
-
-				
-			%}
-							<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
-			{% endstylesheets %}
-				
 			
 			{% endblock %}
 		
@@ -60,14 +51,14 @@
 				'../vendor/Timepicker/jquery-ui-timepicker-addon.js'
 				'lib/jWYSIWYG/jquery.wysiwyg.js'
 				'http://jquery-ui.googlecode.com/svn/tags/latest/ui/minified/i18n/jquery-ui-i18n.min.js'
-
+				'lib/bootstrap/js/bootstrap.min.js'
 			%}
 				<script src="{{ asset_url }}" type="text/javascript"></script>
 				{% endjavascripts %}
         {% endblock %}
-        {% endblock %}
         
-        <script src="{{ asset('lib/bootstrap/js/bootstrap.min.js') }}"></script>
+        
+        
         <script>
        		// petit hack : variable avec l'adresse de l'appli, accessibles de partout
         	app_url = "{{ url('phpm__default_home') }}";
@@ -75,8 +66,10 @@
         	app_orga_url = "{{ url('orga') }}";
         	app_tache_url = "{{ url('tache') }}";
         </script>
+        {% endblock %}
     </head>
     <body>
+    
     
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
@@ -89,81 +82,65 @@
           <a class="brand" href="{{ path('accueil') }}">PHPlanningMaker</a>
           <div class="nav-collapse in" style="height: auto; ">
             <ul class="nav">
-	 {% if is_granted('ROLE_ADMIN') %}
-
-		        			<li><a href="{{ path('orga_inscriptionhard',{'id':app.user.id })}}">Mes Disponibilités</a></li>
-		        			<li><a href="{{ path('orga') }}">Orga</a></li>
-		        			<li><a href="{{ path('disponibiliteinscription') }}">Inscriptions</a></li>
-		        			<li><a href="{{ path('orga_affectation') }}">Affectation</a></li>
-		        			<li><a href="{{ path('tache') }}">Fiches Tâches</a></li>
-		        			<li><a href="{{ path('plagehoraire') }}">Plage Horaire</a></li>
-		        			<li><a href="{{ path('creneau') }}">Cr&eacute;neaux</a></li>         			
-		        			<li><a href="{{ path('disponibilite') }}">Disponibilité</a></li>
-		         			<li><a href="{{ path('config') }}">Configuration</a></li>
-		        			<!--<li><a href="/">T&acirc;ches</a></li>
-		        			<li><a href="/">Administration</a></li>-->
-		        			<li><a href="{{ path('logout') }}">Logout</a></li>
-		        			{% elseif is_granted('ROLE_USER') %}
-		        			<li><a href="{{ path('orga_edit',{'id':app.user.id })}}">Mes Informations</a></li>
-		        			<li><a href="{{ path('orga_inscriptionhard',{'id':app.user.id })}}">Mes Disponibilités</a></li>
-		        			<li><a href="{{ path('tache') }}">Fiches Tâches</a></li>
-
-		        			<li><a href="{{ path('logout') }}">Logout</a></li>
-		        		    {% else %}
-		        		    <li><a href="{{ path('login') }}">Login</a></li>
-		        		    {% endif %}
+ 			{% if is_granted('ROLE_ADMIN') %}
+       			<li><a href="{{ path('orga_inscriptionhard',{'id':app.user.id })}}">Mes Disponibilités</a></li>
+       			<li><a href="{{ path('orga') }}">Orga</a></li>
+       			<li><a href="{{ path('disponibiliteinscription') }}">Inscriptions</a></li>
+       			<li><a href="{{ path('orga_affectation') }}">Affectation</a></li>
+       			<li><a href="{{ path('tache') }}">Fiches Tâches</a></li>
+       			<li><a href="{{ path('plagehoraire') }}">Plage Horaire</a></li>
+        		<li><a href="{{ path('creneau') }}">Cr&eacute;neaux</a></li>         			
+        		<li><a href="{{ path('disponibilite') }}">Disponibilité</a></li>
+         		<li><a href="{{ path('config') }}">Configuration</a></li>
+       			<!--<li><a href="/">T&acirc;ches</a></li>
+       			<li><a href="/">Administration</a></li>-->
+       			<li><a href="{{ path('logout') }}">Logout</a></li>
+     		{% elseif is_granted('ROLE_USER') %}
+        		<li><a href="{{ path('orga_edit',{'id':app.user.id })}}">Mes Informations</a></li>
+       			<li><a href="{{ path('orga_inscriptionhard',{'id':app.user.id })}}">Mes Disponibilités</a></li>
+        		<li><a href="{{ path('tache') }}">Fiches Tâches</a></li>
+       			<li><a href="{{ path('logout') }}">Logout</a></li>
+        	{% else %}
+       		    <li><a href="{{ path('login') }}">Login</a></li>
+        	{% endif %}
             </ul>
             {% if is_granted('ROLE_ADMIN') %}
 	            <form class="navbar-text pull-right form-search" method="post" action="{{ path('search') }}" id="search_form">
 		           <input  class="input-medium search-query" id="searchBox" name="s" size="30" />		        		  
 		        </form>
-	        {% endif %}
+        	{% endif %}
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
     
-    
-    
-  
-
-	        
-<div class="container-fluid">
-<div class="row-fluid">
-       
-        <div class="page-header">
-        <h1>{{ pageTitle }}</h1>
-        </div>
-      </div>
-      <div class="row-fluid">
-       
+	<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="page-header">
+	        <h1>{{ pageTitle }}</h1>
+	    </div>
+	</div>
+	<div class="row-fluid">	       
         <div class="span12">
-	        	{% block content %}
-	        		<p>Il y aura ici le contenu</p>
-	        	{% endblock %}
-        </div><!--/span-->
-      </div><!--/row-->
+	        {% block content %}
 
-      <hr>
-
-<footer>
-
-	        	&copy;2011-2012 nous - PHPM @ <a href="https://github.com/lbillon/PHPM" target="_blank">Github</a><br/>
-				<small><i>Si vous rencontrez un bug dans ce logiciel, veuillez contacter <a href="mailto:DSI@24heures.org">DSI@24heures.org</a></i></small>
-	        
-</footer>
-
-    </div>	        
+        	{% endblock %}
+        </div>
+	</div>
+	
+	<hr>
+	
+	<footer>
+	&copy; 2011-2012 PHPM @ <a href="https://github.com/lbillon/PHPM" target="_blank">Github</a><br/>
+	<small><i>Si vous rencontrez un bug dans ce logiciel, veuillez consulter
+	<a href="http://www.assembla.com/spaces/planning-maker/support/tickets" target="_blank">le support en ligne</a</small>       
+	</footer>
+	</div>
+	
+	{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
+		{% render "PHPMBundle:Orga:updateLastActivity"  %}
+	{% endif %}    
 	      
-	          
-	        
-	        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
-	        	{% render "PHPMBundle:Orga:updateLastActivity"  %}
-	        {% endif %}
-	        
-{# <script src="{{ asset('') }}" type="text/javascript"></script>#}
-
-
-    </body>
+	</body>
 </html>
 
