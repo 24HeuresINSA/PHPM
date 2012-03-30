@@ -1,3 +1,13 @@
 #!/bin/sh
-git pull origin master && bin/vendors install && app/console assets:install web --symlink && app/console cache:clear --env=prod && app/console assetic:dump --env=prod
+set -e
+git pull origin master 
+bin/vendors install
+cat ~/Dropbox/tbs
+cd vendor/TwitterBootstrap
+make bootstrap
+cp -R bootstrap ../../web/lib/
+cd ../../
+app/console assets:install web --symlink
+app/console cache:clear --env=prod
+app/console assetic:dump --env=prod
 
