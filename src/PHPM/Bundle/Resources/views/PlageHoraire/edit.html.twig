@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block content %}
-<form class="form-inline" action="{{ path('plagehoraire_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+<form class="form-horizontal" action="{{ path('plagehoraire_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
     
     <h2>Informations</h2>
     
