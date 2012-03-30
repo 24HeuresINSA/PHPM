@@ -84,9 +84,6 @@ $(function() {
         <hr>
 <h2>Plages Horaires</h2>
 
-    <p><em>Attention : Enregistrez la fiche tâche avant de modifier les plages horaires !</em></p>
-    
-    
     <table class="table table-condensed">
         <thead>
             <th>Horaires</th>
@@ -132,7 +129,7 @@ $(function() {
     </table>
     <br/>
     {% if not rOnly  %}
-    <a class="btn btn-success" href="{{ path('plagehoraire_new', { 'id': entity.id }) }}"><i class="icon-plus"></i> Ajouter une plage horaire</a>
+    <button class="btn btn-success" type="submit" name="action" value="add_plage" ><i class="icon-plus"></i> Ajouter une plage horaire</button>
     {% endif %}
         
     <hr>
@@ -144,9 +141,7 @@ $(function() {
 	};
 	</script>
     
-    
-    
-    
+  
     <div>
         <div id="oldComs" style="display: none; ">
         {% for com in entity.commentaires %}
@@ -166,7 +161,7 @@ $(function() {
         
             
         {% endfor %}
-        </div>
+    </div>
         {% if not rOnly  %}
             <hr>
     	    <h2>Enregistrer les Modifications</h2>
@@ -179,8 +174,9 @@ $(function() {
 {{ form_rest(form) }}
 <div class="form-actions">
     <div class="btn-group">
-        <button class="btn" type="submit" name="action" value="save" >Enregistrer</button>
-        
+        <button class="btn btn-primary" type="submit" name="action" value="save" >Enregistrer</button>
+        <button class="btn" type="submit" name="action" value="save_return" ><i class="icon-share-alt"></i> Enregistrer et revenir au groupe</button>        
+ 
         {% if entity.statut ==0 %}
         	<button class="btn btn-success" type="submit" name="action" value="submit_validation"><i class="icon-eye-open"></i> Passer en Validation</button>
         {% endif %}
