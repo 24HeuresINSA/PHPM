@@ -276,93 +276,94 @@ class PlageHoraireController extends Controller
      */	
 		
 	public function creationCreneauAction($id)   
-	{		
-		$em = $this->getDoctrine()->getEntityManager();  
-        $entity = $em->getRepository('PHPMBundle:PlageHoraire')->find($id);
-		$arrayCreneauCree = array();
+	{	
+// 		TODO: Complete interface with review	
+// 		$em = $this->getDoctrine()->getEntityManager();  
+//         $entity = $em->getRepository('PHPMBundle:PlageHoraire')->find($id);
+// 		$arrayCreneauCree = array();
 		
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find PlageHoraire entity.');
-        }
+//         if (!$entity) {
+//             throw $this->createNotFoundException('Unable to find PlageHoraire entity.');
+//         }
 		
-		$nbCreneauACreerPourOrga = $entity->getnbOrgasNecessaires();
+// 		$nbCreneauACreerPourOrga = $entity->getnbOrgasNecessaires();
             
-			// suppression des creneaux déjà  existant
+// 			// suppression des creneaux déjà  existant
 			
-			$creneauxASupprimer = $em->getRepository('PHPMBundle:Creneau')->findByPlageHoraire($entity->getId());
+// 			$creneauxASupprimer = $em->getRepository('PHPMBundle:Creneau')->findByPlageHoraire($entity->getId());
 			
-			foreach ($creneauxASupprimer as $creneauASupprimer) {
+// 			foreach ($creneauxASupprimer as $creneauASupprimer) {
 				
 			
-					$nouvelID = $creneauASupprimer->getId();
+// 					$nouvelID = $creneauASupprimer->getId();
 					
-					$em->remove($creneauASupprimer);
+// 					$em->remove($creneauASupprimer);
 					
-				}
+// 				}
             
-            while (!$nbCreneauACreerPourOrga == 0)
-            {
-			if ( ( $entity->getdureeCreneau() +  $entity->getrecoupementCreneau()) > ( $entity->getfin()->getTimestamp() -  $entity->getdebut()->getTimestamp()) )	
-			 {
+//             while (!$nbCreneauACreerPourOrga == 0)
+//             {
+// 			if ( ( $entity->getdureeCreneau() +  $entity->getrecoupementCreneau()) > ( $entity->getfin()->getTimestamp() -  $entity->getdebut()->getTimestamp()) )	
+// 			 {
 
-				$nouveauCreneau = new Creneau();
+// 				$nouveauCreneau = new Creneau();
 				
-				$nouveauCreneau->setPlageHoraire($entity);			
+// 				$nouveauCreneau->setPlageHoraire($entity);			
 				
 				
-				$debutDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getdebut()->getTimestamp()) ); // permet d'avoir le bon format pour le stocker dans la BDD				
-				$finDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getfin()->getTimestamp()) ); // permet d'avoir le bon format pour le stocker dans la BDD				
+// 				$debutDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getdebut()->getTimestamp()) ); // permet d'avoir le bon format pour le stocker dans la BDD				
+// 				$finDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getfin()->getTimestamp()) ); // permet d'avoir le bon format pour le stocker dans la BDD				
 					
-				$nouveauCreneau->setDebut(new \DateTime("20$debutDesCreneauxDate"));
-				$nouveauCreneau->setFin(new \DateTime("20$finDesCreneauxDate"));
+// 				$nouveauCreneau->setDebut(new \DateTime("20$debutDesCreneauxDate"));
+// 				$nouveauCreneau->setFin(new \DateTime("20$finDesCreneauxDate"));
                 
-				$em->persist($nouveauCreneau);
+// 				$em->persist($nouveauCreneau);
             
-			 }
+// 			 }
 			
-			else 
-			 {
-				$tempsRestantAAffecter = ($entity->getfin()->getTimestamp() - $entity->getdebut()->getTimestamp() );
-				$debutDesCreneaux = $entity->getdebut()->getTimestamp();
-				while ( ($entity->getdureeCreneau() + $entity->getrecoupementCreneau()) < $tempsRestantAAffecter)
-					{
-						$nouveauCreneau = new Creneau();
-						$nouveauCreneau->setPlageHoraire($entity);			
+// 			else 
+// 			 {
+// 				$tempsRestantAAffecter = ($entity->getfin()->getTimestamp() - $entity->getdebut()->getTimestamp() );
+// 				$debutDesCreneaux = $entity->getdebut()->getTimestamp();
+// 				while ( ($entity->getdureeCreneau() + $entity->getrecoupementCreneau()) < $tempsRestantAAffecter)
+// 					{
+// 						$nouveauCreneau = new Creneau();
+// 						$nouveauCreneau->setPlageHoraire($entity);			
 						
-						$debutDesCreneauxDate = date ('y-m-d H:i:s', $debutDesCreneaux); // permet d'avoir le bon format pour le stocker dans la BDD
-						$finDuCreneauDate = ($debutDesCreneaux + $entity->getdureeCreneau() + $entity->getrecoupementCreneau() );
-						$finDuCreneauDate = date ('y-m-d H:i:s', $finDuCreneauDate);
+// 						$debutDesCreneauxDate = date ('y-m-d H:i:s', $debutDesCreneaux); // permet d'avoir le bon format pour le stocker dans la BDD
+// 						$finDuCreneauDate = ($debutDesCreneaux + $entity->getdureeCreneau() + $entity->getrecoupementCreneau() );
+// 						$finDuCreneauDate = date ('y-m-d H:i:s', $finDuCreneauDate);
 					
 						
-						$nouveauCreneau->setDebut(new \DateTime("20$debutDesCreneauxDate"));					
-						$nouveauCreneau->setFin(new \DateTime("20$finDuCreneauDate"));
+// 						$nouveauCreneau->setDebut(new \DateTime("20$debutDesCreneauxDate"));					
+// 						$nouveauCreneau->setFin(new \DateTime("20$finDuCreneauDate"));
 						
 						
-						$tempsRestantAAffecter = ($tempsRestantAAffecter- ($entity->getdureeCreneau()));
-						$debutDesCreneaux += $entity->getdureeCreneau();					
+// 						$tempsRestantAAffecter = ($tempsRestantAAffecter- ($entity->getdureeCreneau()));
+// 						$debutDesCreneaux += $entity->getdureeCreneau();					
 						
-						$em->persist($nouveauCreneau);								
-					}
-				if ($tempsRestantAAffecter > 0)	
-					{
-						$nouveauCreneau = new Creneau();
+// 						$em->persist($nouveauCreneau);								
+// 					}
+// 				if ($tempsRestantAAffecter > 0)	
+// 					{
+// 						$nouveauCreneau = new Creneau();
 				
-						$nouveauCreneau->setPlageHoraire($entity);			
+// 						$nouveauCreneau->setPlageHoraire($entity);			
 						
-						$debutDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getfin()->getTimestamp() - $tempsRestantAAffecter) ); // permet d'avoir le bon format pour le stocker dans la BDD				
-						$finDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getfin()->getTimestamp()) ); // permet d'avoir le bon format pour le stocker dans la BDD									
+// 						$debutDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getfin()->getTimestamp() - $tempsRestantAAffecter) ); // permet d'avoir le bon format pour le stocker dans la BDD				
+// 						$finDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getfin()->getTimestamp()) ); // permet d'avoir le bon format pour le stocker dans la BDD									
 				
-						$nouveauCreneau->setDebut(new \DateTime("20$debutDesCreneauxDate"));
-						$nouveauCreneau->setFin(new \DateTime("20$finDesCreneauxDate"));
+// 						$nouveauCreneau->setDebut(new \DateTime("20$debutDesCreneauxDate"));
+// 						$nouveauCreneau->setFin(new \DateTime("20$finDesCreneauxDate"));
 						
-						$em->persist($nouveauCreneau);
+// 						$em->persist($nouveauCreneau);
 						
-					}
-			}
-        $nbCreneauACreerPourOrga --;
-		}	
-         $em->flush();
-         return $this->redirect($this->generateUrl('plagehoraire_show', array('id' => $entity->getId())));
+// 					}
+// 			}
+//         $nbCreneauACreerPourOrga --;
+// 		}	
+//          $em->flush();
+//          return $this->redirect($this->generateUrl('plagehoraire_show', array('id' => $entity->getId())));
 	
 	}
 }
