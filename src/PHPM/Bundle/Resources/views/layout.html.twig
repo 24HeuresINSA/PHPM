@@ -17,8 +17,9 @@
 				'../vendor/DataTables/media/css/jquery.dataTables_themeroller.css'
 				'../vendor/Timepicker/jquery-ui-timepicker-addon.css'
 				'lib/jWYSIWYG/jquery.wysiwyg.css'
-								'lib/bootstrap/css/bootstrap.min.css'
-				'lib/bootstrap/css/bootstrap-responsive.min.css'
+				
+				
+							
 
 				
 				filter='cssrewrite' 
@@ -33,7 +34,9 @@
 			
 			{# on inclue manuellement cette feuille de style qu'Assetic ne nous casse pas les liens des images #}
 			<link rel="stylesheet" href="{{ asset('bundles/phpm/css/jquery-ui/themes/smoothness/jquery-ui-1.8.16.custom.css') }}" type="text/css" />
-
+			<link rel="stylesheet" href="{{ asset('lib/bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" />
+			<link rel="stylesheet" href="{{ asset('lib/bootstrap/css/bootstrap.min.css') }}" type="text/css" />
+			
 		{% stylesheets
 
 				
@@ -54,7 +57,7 @@
 				'@PHPMBundle/Resources/public/js/ui.js'
 				'../vendor/DataTables/media/js/jquery.dataTables.js'
 				'../vendor/Timepicker/jquery-ui-timepicker-addon.js'
-				'../vendor/jWYSIWYG/jquery.wysiwyg.js'
+				'lib/jWYSIWYG/jquery.wysiwyg.js'
 				'http://jquery-ui.googlecode.com/svn/tags/latest/ui/minified/i18n/jquery-ui-i18n.min.js'
 
 			%}
