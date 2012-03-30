@@ -10,75 +10,77 @@
 {% endblock %}
 
 {% block content %}
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span2">
+			<ul class="nav nav-list">
+<li class="nav-header">
+Tâches
+</li>
+<li{% if app.request.get('orgaid') == app.user.id %} class="active" {% endif %}>
+    <a href="{{ path('tache', {	'orgaid': app.user.id ,
+    							'equipeid':app.request.get('equipeid'),
+								'statut':app.request.get('statut')}) }}">Mes tâches</a>
+</li>
+<li{% if app.request.get('equipeid') == app.user.equipe.id %} class="active" {% endif %}>
+    <a href="{{ path('tache', {	'orgaid': 'all' ,
+    							'equipeid':app.user.equipe.id,
+								'statut':app.request.get('statut')}) }}">Celles de ma Com</a>
+</li>
 
-<div id="tabs">
-	<ul>
-	    <li><a href="#tabs-6">Mes Groupes de tâches</a></li>
-	    <li><a href="#tabs-5">Ceux de ma Com'</a></li>
-	    <li><a href="#tabs-1">Ceux de l'asso</a></li>
-	    <li><a href="#tabs-3" class="statut0">Tâches en cours de rédaction</a></li>
-	    <li><a href="#tabs-2" class="statut1" >Tâches soumises à validation</a></li>
+<li class="dropdown
+{% if app.request.get('equipeid') != 'all' and app.request.get('equipeid') != app.user.equipe.id  %} active {% endif %}">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Par équipe<b class="caret"></b></a>
+    <ul class="dropdown-menu">
+    {% for equipe in equipes %}
+		<li 
 		
-		<li><a href="#tabs-4" class="statut2">Tâches validées</a></li>
-		<li><a href="#tabs-7" >Tâches supprimées</a></li>
-		<li><a href="#tabs-8" >Groupes Supprimés</a></li>
-	</ul>
-	
-	<div id="tabs-1">
+		{% if app.request.get('equipeid') == equipe.id %}
+		class="active"
+		{% endif %}
+		>
+		    <a href="{{ path('tache', {'equipeid':equipe.id, 'statut':app.request.get('statut')}) }}">{{ equipe.nom }}</a>
+		</li>
+	{% endfor %}
+    </ul>
+  </li>
+<li{% if app.request.get('equipeid') =='all' and app.request.get('orgaid') == 'all' %} class="active" {% endif %}>
+    <a href="{{ path('tache', {'statut':app.request.get('statut'),'equipeid':'all'}) }}">Toutes</a>
+</li>
 
-{% if  g %}
-   {% include 'PHPMBundle:GroupeTache:afficheListe.html.twig' with {'entities': g} %}
-{% endif %}
+  <li class="nav-header">
+    Statut
+  </li>
+<li{% if app.request.get('statut') ==0 and app.request.get('statut') !='all' %} class="active" {% endif %}>
+    <a href="{{ path('tache', {'equipeid':app.request.get('equipeid'),'statut':0}) }}">En rédaction</a>
+</li>
+<li{% if app.request.get('statut') == 1 %} class="active" {% endif %}>
+    <a href="{{ path('tache', {'equipeid':app.request.get('equipeid'),'statut':1}) }}">En cours de validation</a>
+</li>
+<li{% if app.request.get('statut') == 2 %} class="active" {% endif %}>
+    <a href="{{ path('tache', {'equipeid':app.request.get('equipeid'),'statut':2}) }}">Validées</a>
+</li>
+<li{% if app.request.get('statut') == -1 %} class="active" {% endif %}>
+    <a href="{{ path('tache', {'equipeid':app.request.get('equipeid'),'statut':-1}) }}">Supprimées</a>
+</li>
+<li{% if app.request.get('statut') == 'all' %} class="active" {% endif %}>
+    <a href="{{ path('tache', {'equipeid':app.request.get('equipeid'),'statut':'all'}) }}">Pas de filtre</a>
+</li>
+  
+  
+  <li class="divider"></li>
+  <li class="nav-header">
+    Actions
+  </li>
+<li>
+    <a href="{{ path('groupetache_create') }}"><i class="icon-folder-open"></i> Créer un nouveau groupe de Tâches</a>
+</li>
+			</ul>
+		</div>
+		<div class="span10">
+		{% include 'PHPMBundle:Tache:afficheListe.html.twig' with {'entities': taches} %}
+		</div>
 	</div>
-	
-
-	
-	<div id="tabs-2">
-
-{% if  s %}
-   {% include 'PHPMBundle:Tache:afficheListe.html.twig' with {'entities': s} %}
-{% endif %}
-	</div>
-	<div id="tabs-3">
-
-{% if  r %}
-   {% include 'PHPMBundle:Tache:afficheListe.html.twig' with {'entities': r} %}
-{% endif %}
 </div>
-	<div id="tabs-4">
 
-{% if  v %}
-   {% include 'PHPMBundle:Tache:afficheListe.html.twig' with {'entities': v} %}
-{% endif %}
-</div>
-<div id="tabs-5">
-
-{% if  e %}
-   {% include 'PHPMBundle:GroupeTache:afficheListe.html.twig' with {'entities': e} %}
-{% endif %}
-	</div>
-	<div id="tabs-6">
-
-{% if  sr %}
-   {% include 'PHPMBundle:GroupeTache:afficheListe.html.twig' with {'entities': sr} %}
-{% endif %}
-	</div>
-	
-		<div id="tabs-7">
-
-{% if  deletedTaches %}
-   {% include 'PHPMBundle:Tache:afficheListe.html.twig' with {'entities': deletedTaches} %}
-{% endif %}
-	</div>
-		<div id="tabs-8">
-
-{% if  deletedGroups %}
-   {% include 'PHPMBundle:GroupeTache:afficheListe.html.twig' with {'entities': deletedGroups} %}
-{% endif %}
-	</div>
-
-
-</div>
-<br/>
-<a class="btn" href="{{ path('groupetache_create') }}"><i class="icon-folder-open"></i> Créer un nouveau groupe de Tâches</a>
 {% endblock %}

@@ -3,8 +3,8 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Nom</th>
-            <th>Groupe de Tâches</th>
+        	<th>Groupe de Tâches</th>
+            <th>Nom</th>            
             <th>Équipe</th>
             <th>Responsable</th>
             <th>Dernier Commentaire</th>
@@ -12,9 +12,8 @@
     </thead>
     <tbody>
     {% for entity in entities %}
-        
-            <td>{{ entitiesMacro.tache(entity) }}</td>
-            <td>{{ entitiesMacro.groupeTache(entity.groupeTache) }}</td>
+        	<td>{{ entitiesMacro.groupeTache(entity.groupeTache) }}</td>
+            <td>{{ entitiesMacro.tache(entity) }}</td>            
             <td>{{ entity.groupeTache.equipe.nom }}</td>
             <td>{{ entitiesMacro.orga(entity.responsable) }}</td>
             <td>{{ entitiesMacro.tacheCom(entity) }}</td>

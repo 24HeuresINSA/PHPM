@@ -30,59 +30,43 @@ class TacheController extends Controller
     /**
      * Lists all Tache entities.
      *
-     * @Route("/", name="tache")
+     * @Route("/index/{equipeid}/{statut}/{orgaid}", defaults={"equipeid"="all","statut"="all","orgaid"="all"}, name="tache")
      * @Template()
      */
- public function indexAction()
+ public function indexAction($equipeid,$statut,$orgaid)
     {
         $em = $this->getDoctrine()->getEntityManager();
         
-        $g =$em
-        ->createQuery("SELECT g FROM PHPMBundle:GroupeTache g JOIN g.equipe e WHERE g.statut= 0 ORDER BY e.id ")
-        ->getResult();
-
-        $r =$em
-        ->createQuery("SELECT t FROM PHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e WHERE t.statut = 0 ORDER BY e.id, g.id")
+        $equipes =$em
+        ->createQuery("SELECT e FROM PHPMBundle:Equipe e")
         ->getResult();
         
-        $s =$em
-        ->createQuery("SELECT t FROM PHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e WHERE t.statut = 1 ORDER BY e.id, g.id")
+		$tachesDQL = "SELECT t FROM PHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e JOIN t.responsable r WHERE 1=1 ";
+		
+		if($statut !='all'){
+			$tachesDQL .= " AND t.statut = $statut ";
+		}
+		
+		if($equipeid !='all'){
+			$tachesDQL .= " AND e.id = $equipeid ";
+			
+		}
+		if($orgaid !='all'){
+			$tachesDQL .= " AND r.id = $orgaid ";
+				
+		}
+		
+		$tachesDQL .= " ORDER BY e.id, g.id, t.statut";
+        
+        
+        $taches =$em
+        ->createQuery($tachesDQL)
         ->getResult();
         
-        $v =$em
-        ->createQuery("SELECT t FROM PHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e WHERE t.statut = 2 ORDER BY e.id, g.id ")
-        ->getResult();
-        
-        $deletedTaches =$em
-        ->createQuery("SELECT t FROM PHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e WHERE t.statut = -1 ORDER BY e.id, g.id ")
-        ->getResult();
-        
-        $deletedGroups =$em
-        ->createQuery("SELECT g FROM PHPMBundle:GroupeTache g JOIN g.equipe e JOIN g.responsable r WHERE g.statut = -1 ORDER BY e.id")
-        ->getResult();
-        
-        
-        
-        
-        $eid = $this->get('security.context')->getToken()->getUser()->getEquipe()->getId();
-        $oid =  $this->get('security.context')->getToken()->getUser()->getId();
-        
-        
-        $sr =$em
-        ->createQuery("SELECT g FROM PHPMBundle:GroupeTache g JOIN g.equipe e JOIN g.responsable r WHERE r.id = :oid AND g.statut = 0 ORDER BY r.id")
-        ->setParameter('oid',$oid)
-        ->getResult();
-        
-        $e =$em
-        ->createQuery("SELECT g FROM PHPMBundle:GroupeTache g JOIN g.equipe e JOIN g.responsable r WHERE e.id = :eid AND g.statut = 0 ORDER BY r.id")
-        ->setParameter('eid',$eid)
-        ->getResult();
-        
-
-        
-
-        return array('r'=>$r,'s'=>$s,'v'=>$v, 'g'=>$g, 'e'=>$e, 'sr'=>$sr, 'deletedTaches' => $deletedTaches,
-                'deletedGroups' => $deletedGroups);
+        return array('equipes' => $equipes,
+        		'taches' => $taches
+        		
+        		);
     }
     
     /**
