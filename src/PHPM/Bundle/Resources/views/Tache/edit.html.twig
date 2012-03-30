@@ -142,14 +142,24 @@ $(function() {
 	</script>
     
   
-    <div>
-        <div id="oldComs" style="display: none; ">
-        {% for com in entity.commentaires %}
+  <div class="accordion" id="oldCom">
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#odlcom" href="#collapseOne">
+                  Anciens commentaires
+                </a>
+              </div>
+              <div id="collapseOne" class="accordion-body collapse" style="height: 0px; ">
+                <div class="accordion-inner">
+                  {% for com in entity.commentaires %}
             {% if com == entity.commentaires.last %}
             
-        </div>
-        <a href="javascript:toggleOldComs()">Afficher/Masquer les anciens commentaires</a>
-        {% endif %}
+            </div>
+              </div>
+            </div>
+            
+          </div>
+          {% endif %}
             <div class="com">
     	        <div class="com_infos">
     	        	<span class="com_auteur">{{com.auteur}}</span>
@@ -161,7 +171,8 @@ $(function() {
         
             
         {% endfor %}
-    </div>
+  
+  
         {% if not rOnly  %}
             <hr>
     	    <h2>Enregistrer les Modifications</h2>
