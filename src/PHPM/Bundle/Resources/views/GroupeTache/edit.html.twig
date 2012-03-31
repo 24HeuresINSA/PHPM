@@ -14,57 +14,59 @@
 
 
 {% block content %}
-
 <form class="form-horizontal" action="{{ path('groupetache_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
-
-{{ form_errors(form) }}
-<div>
-<h2>Informations Générales</h2>
-
-
-
-</div>
-
-
-{{ form_rest(form) }}
-    <div class="btn-group">
-        <button class="btn" type="submit"  name="action" value="save">Enregistrer</button>
-        {% if entity.statut ==0 and entity.isDeletable  %}
-        <button class="btn btn-danger" type="submit" name="action" value="delete"><i class="icon-trash"></i> Supprimer le groupe</button>
-        {% endif %}
-        {% if entity.statut ==-1  %}
-        <button class="btn btn-success" type="submit" name="action" value="restore"><i class="icon-repeat"></i> Restaurer le groupe</button>
-        {% endif %}
-        </div>
-    
+	<div class="row-fluid">       
+		<div class="span6">
+	      	
+				<div>
+					<h2>Informations Générales</h2>
+						{{ form_rest(form) }}
+			    </div>
+	    </div>
+	    {% if taches|length > 0 %}
+		    <div class="span6">
+				<h2>Liste des Tâches du groupe</h2>
+				
+				
+				<table class="table">
+				    <thead>
+				        <tr>
+				            <th>Nom</th>
+				            <th>Responsable</th>
+				            
+				        </tr>
+				    </thead>
+				    <tbody>
+				    {% for entity in taches %}
+				        <tr>
+				            <td>{{ entitiesMacro.tache(entity) }}</td>
+				            <td>{{ entity.responsable }}</td>
+				
+				        </tr>
+				    {% endfor %}
+				    </tbody>
+				</table>		
+			</div>
+		{% endif %}
+	</div>	
+	<div class="row-fluid">
+		<div class="form-actions">
+		    <div class="btn-group">
+		    		<button class="btn btn-primary" type="submit"  name="action" value="save">Enregistrer</button>
+		    		<button class="btn" type="submit" name="action" value="add_tache"><i class="icon-file"></i> Ajouter une nouvelle tâche</button>
+			        {% if entity.statut ==0 and entity.isDeletable  %}
+			        <button class="btn btn-danger" type="submit" name="action" value="delete"><i class="icon-trash"></i> Supprimer le groupe</button>
+			        {% endif %}
+			        {% if entity.statut ==-1  %}
+			        <button class="btn btn-success" type="submit" name="action" value="restore"><i class="icon-repeat"></i> Restaurer le groupe</button>
+			        {% endif %}
+		    	
+		        
+			</div>
+		</div>
+	</div>
 </form>
-<h2>Liste des Tâches du groupe</h2>
-{% if taches is defined %}
-
-
-
-
-<table>
-    <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Responsable</th>
-            
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in taches %}
-        <tr>
-            <td>{{ entitiesMacro.tache(entity) }}</td>
-            <td>{{ entity.responsable }}</td>
-
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-<br/>
-{% endif %}
-<a class="btn" href="{{ path('tache_create', { 'gid': entity.id }) }}"> <i class="icon-file"></i> Créer une nouvelle tâche</a>
+	
 
 
 {% endblock %}

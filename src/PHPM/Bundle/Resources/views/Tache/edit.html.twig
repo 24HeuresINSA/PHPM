@@ -132,17 +132,12 @@ $(function() {
     <button class="btn btn-success" type="submit" name="action" value="add_plage" ><i class="icon-plus"></i> Ajouter une plage horaire</button>
     {% endif %}
         
+          {% if  entity.commentaires.count > 0  %}
     <hr>
-<h2>Commentaires</h2>
-    
-    <script>
-    function toggleOldComs() {
-		$( "#oldComs" ).toggle();
-	};
-	</script>
-    
-  
-  <div class="accordion" id="oldCom">
+  <h2>Commentaires</h2>
+      
+
+  		<div class="accordion" id="oldCom">
             <div class="accordion-group">
               <div class="accordion-heading">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#odlcom" href="#collapseOne">
@@ -154,11 +149,10 @@ $(function() {
                   {% for com in entity.commentaires %}
             {% if com == entity.commentaires.last %}
             
-            </div>
+            	</div>
               </div>
-            </div>
-            
-          </div>
+            </div>            
+         </div>
           {% endif %}
             <div class="com">
     	        <div class="com_infos">
@@ -171,7 +165,7 @@ $(function() {
         
             
         {% endfor %}
-  
+  {% endif %}
   
         {% if not rOnly  %}
             <hr>

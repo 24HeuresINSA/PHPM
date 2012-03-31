@@ -2,6 +2,8 @@
 
 namespace PHPM\Bundle\Controller;
 
+use PHPM\Bundle\Entity\Tache;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -173,14 +175,13 @@ class GroupeTacheController extends Controller
         }
 
         $editForm   = $this->createForm(new GroupeTacheType($admin,$config), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        
 
         $request = $this->getRequest();
 
         $editForm->bindRequest($request);
-
+       
         if ($editForm->isValid()) {
-            
             if($param['action']=='delete' && $entity->isDeletable()){
                 $entity->setStatut(-1);
                 
@@ -190,8 +191,24 @@ class GroupeTacheController extends Controller
                 $entity->setStatut(0);
             }
             
+           
             $em->persist($entity);
             $em->flush();
+            
+            if($param['action']=='add_tache'){
+            	$tache = new Tache(); 
+            	$tache->setGroupeTache($entity);
+            	$tache->setNom("Tâche sans nom");
+            	$tache->setStatut(0);
+            	$tache->setResponsable($entity->getResponsable());
+            	$tache->setPermisNecessaire(0);
+            	$tache->setLieu($entity->getLieu());
+            	$em->persist($tache);
+            	$em->flush();
+            	return $this->redirect($this->generateUrl('tache_edit', array('id' => $tache->getId())));            	
+            }
+            
+            
 
             return $this->redirect($this->generateUrl('groupetache_edit', array('id' => $id)));
         }
