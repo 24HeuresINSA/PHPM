@@ -273,32 +273,14 @@ class TacheController extends Controller
                 }
                 }
             }
-                
-            
-            
-            
-            
-            
-                                
-                
                 if($texteCommentaire!=""){
-                    
-                    
-                
-                
-                $commentaire = new Commentaire();
-                $commentaire->setAuteur($user);
-                $commentaire->setHeure(new \DateTime());
-                $commentaire->setTache($entity);
-                $commentaire->setTexte($texteCommentaire);
-                $em->persist($commentaire);
+	                $commentaire = new Commentaire();
+	                $commentaire->setAuteur($user);
+	                $commentaire->setHeure(new \DateTime());
+	                $commentaire->setTache($entity);
+	                $commentaire->setTexte($texteCommentaire);
+	                $em->persist($commentaire);
                 }
-            
-                
-                
-                
-                
-            
             
             $em->persist($entity);
             $em->flush();
@@ -309,15 +291,17 @@ class TacheController extends Controller
             
             
 //             return $this->redirect($this->generateUrl('tache_edit', array('id' => $id)));
+            if($param['action']=='save_return'){
+            	return $this->redirect($this->generateUrl('groupetache_edit', array('id' => $entity->getGroupeTache()->getId())));
+            }
+        
         }else{
             $valid= false;
         }
         
         
             
-        if($param['action']=='save_return'){
-        	return $this->redirect($this->generateUrl('groupetache_edit', array('id' => $entity->getGroupeTache()->getId())));
-        }        
+             
         
         if($param['action']=='add_plage'){
         	return $this->redirect($this->generateUrl('plagehoraire_new', array('id' => $entity->getId())));

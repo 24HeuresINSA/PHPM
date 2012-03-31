@@ -116,11 +116,13 @@
     
 	        
 <div class="container-fluid">
+	{% block pageHeader %}
 	<div class="row-fluid">       
         <div class="page-header">
        	 <h1>{{ pageTitle }}</h1>
         </div>
     </div>
+    {% endblock %}
   	{% block content %}
 		<p>Il y aura ici le contenu</p>
 	{% endblock %}

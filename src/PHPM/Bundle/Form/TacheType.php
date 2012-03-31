@@ -39,12 +39,8 @@ class TacheType extends AbstractType
         
         $i=$builder->create('entity','form',array('label'=>" ", 'required'=>false, 'data_class' => 'PHPM\Bundle\Entity\Tache',
                 'error_bubbling'=>true, "read_only"=>$this->rOnly));
-        $i->add('groupeTache', 'entity', array(
-    'class' => 'PHPMBundle:GroupeTache'
-    
-            
-    
-))
+        $i
+//         ->add('groupeTache', 'entity', array('class' => 'PHPMBundle:GroupeTache'))
         ->add('nom')
         ->add('consignes')
         ->add('lieu')
