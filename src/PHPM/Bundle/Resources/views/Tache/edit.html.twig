@@ -145,6 +145,7 @@
 	{% if  entity.commentaires.count > 0  %}
 		<hr>
 		<h2>Commentaires</h2>
+		{% if  entity.commentaires.count > 4  %}
 	          <div class="accordion" id="oldCom">
 	            <div class="accordion-group">
 	              <div class="accordion-heading">
@@ -155,7 +156,7 @@
 	              <div id="collapseOne" class="accordion-body collapse" style="height: 0px; ">
 	                <div class="accordion-inner">
 	                  {% for com in entity.commentaires %}
-				            {% if com == entity.commentaires.last %}
+				            {% if (loop.length-loop.index == 4) %}
 				            
 	                </div>
 	              </div>
@@ -163,7 +164,7 @@
 	         </div>
 				          {% endif %}
 				            <div class="com">
-				                <div class="com_infos">
+				                <div class="com_infos">{{loop.index}}/{{loop.length}}
 				                    <span class="com_auteur">{{com.auteur}}</span>
 				                    <span class="com_heure"> {{ com.heure|format_datetime('EEEE dd MMM HH:mm') }}</span>
 				                </div>
@@ -173,7 +174,23 @@
 	        
 	            
 	        			{% endfor %}
-  {% endif %}
+	    {% else %}
+	    		          
+	                  {% for com in entity.commentaires %}
+				           <div class="com">
+				                <div class="com_infos">{{loop.index}}/{{loop.length}}
+				                    <span class="com_auteur">{{com.auteur}}</span>
+				                    <span class="com_heure"> {{ com.heure|format_datetime('EEEE dd MMM HH:mm') }}</span>
+				                </div>
+				                <div class="com_texte">{{com.texte|raw}}</div>
+				
+				            </div>
+	        
+	            
+	        			{% endfor %}
+	        			
+	  	{% endif %}
+	  {% endif %}
   
         {% if not rOnly  %}
             <hr>
