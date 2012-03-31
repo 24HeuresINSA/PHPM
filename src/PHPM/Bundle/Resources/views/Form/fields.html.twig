@@ -1,9 +1,10 @@
 {% block field_row %}
 {% spaceless %}
-<div class="control-group">
+<div class="control-group{% if form_errors(form)|length > 0 %} error{% endif %}">
 <label class="control-label">{{ form_label(form, label|default(null)) }}</label>
 <div class="controls">
 {{ form_widget(form) }}
+<span class="help-inline">{{ form_errors(form) }}</span>
 </div>
 </div>
 {% endspaceless %}
