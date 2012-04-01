@@ -1,14 +1,12 @@
 {% if entities %}
-<a href="javascript:void(0);" onclick="fnShowHide(7);">Afficher/masquer les commentaires<br></a>
-
-<table class="records_list">
+<table class="table">
     <thead>
         <tr>
             <th>Id</th>
             <th>Nom</th>
             <th>Telephone</th>
             <th>Email</th>
-            <th>Datedenaissance</th>
+            <th>Date de Naissance</th>
             <th>Com'</th>
             <th width="10em">Départ</th>
             <th>Commentaire</th>
@@ -28,7 +26,7 @@
             <td>{{ entity.equipe }}</td>
             <td>{{ entity.departement }}</td>
             <td>{{ entity.commentaire }}</td>
-            <td>{{ entity.isAdmin }}</td>
+            <td>{% if entity.isAdmin %}<i class="icon-ok"></i>{% endif%}</td>
             <td>
 	            <span>
 		            <a href="{{ path('orga_edit', { 'id': entity.id }) }}">Éditer</a>
