@@ -62,6 +62,21 @@
     target=/bundles/Symfony/Bundle/AsseticBundle
     version=v1.0.1
 
+[LightOpenId]
+    git=git://gitorious.org/lightopenid/lightopenid.git
+
+[SonataIntlBundle]
+    git=https://github.com/sonata-project/SonataIntlBundle
+    target=/bundles/Sonata/IntlBundle
+    
+[DataTables]
+    git=https://github.com/DataTables/DataTables.git
+    version=RELEASE_1_9_0
+   
+[Timepicker]
+    git=https://github.com/trentrichardson/jQuery-Timepicker-Addon.git
+    version=v1.0.0
+
 [jWYSIWYG]
     git=https://github.com/akzhan/jwysiwyg.git
     target=../web/lib/jWYSIWYG
