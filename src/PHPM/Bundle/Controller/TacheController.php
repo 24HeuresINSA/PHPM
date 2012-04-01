@@ -205,8 +205,10 @@ class TacheController extends Controller
             
         $texteCommentaire = $data['commentaire'];
             
+        $valid=$editForm->isValid();
         
-        if ($editForm->isValid()) {
+        if ($valid) {
+        	
             $tmpm = $data['Materiel'];
             
             
@@ -304,8 +306,8 @@ class TacheController extends Controller
         return array(
             'entity'      => $entity,
             'form'   => $editForm->createView(),
-            'valid' => $editForm->isValid(),
-                'rOnly'=>$rOnly
+            'valid' => $valid,
+             'rOnly'=>$rOnly
         );
     }
 

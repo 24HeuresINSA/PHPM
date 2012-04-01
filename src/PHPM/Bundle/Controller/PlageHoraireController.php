@@ -215,8 +215,9 @@ class PlageHoraireController extends Controller
 
         $editForm->bindRequest($request);
 
+        $valid=$editForm->isValid();
         
-        if ($editForm->isValid()) {
+        if ($valid) {
         	
             $em->persist($entity);
             $em->flush();
@@ -231,7 +232,7 @@ class PlageHoraireController extends Controller
         return array(
             'entity'      => $entity,
             'form'   => $editForm->createView(),
-        	'valid'	=>$editForm->isValid()	
+        	'valid'	=>$valid	
         );
     }
 
