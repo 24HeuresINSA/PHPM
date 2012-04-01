@@ -6,6 +6,11 @@
 	</projects>
 	<buildSpec>
 		<buildCommand>
+			<name>com.aptana.ide.core.unifiedBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
 			<name>com.dubture.symfony.core.symfonyBuilder</name>
 			<arguments>
 			</arguments>
@@ -33,5 +38,6 @@
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 		<nature>com.dubture.twig.core.TwigNature</nature>
 		<nature>com.dubture.doctrine.core.doctrineNature</nature>
+		<nature>com.aptana.ruby.core.rubynature</nature>
 	</natures>
 </projectDescription>
