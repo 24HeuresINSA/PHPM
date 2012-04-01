@@ -1,5 +1,13 @@
 {% import "PHPMBundle:Macros:bouton.html.twig" as bouton %}
 {% import "PHPMBundle:Macros:entities.html.twig" as entitiesMacro %}
+
+{% macro navBarItem(nom,route,params) %}
+{% if params !="" %}
+<li{% if route == app.request.attributes.get('_route') %} class="active" {% endif %}><a href="{{ path(route,params) }}">{{ nom }}</a></li>
+{% else %}
+<li{% if route == app.request.attributes.get('_route') %} class="active" {% endif %}><a href="{{ path(route) }}">{{ nom }}</a></li>
+{% endif %}
+{% endmacro %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -83,25 +91,21 @@
           <div class="nav-collapse in" style="height: auto; ">
             <ul class="nav">
  			{% if is_granted('ROLE_ADMIN') %}
-       			<li><a href="{{ path('orga_inscriptionhard',{'id':app.user.id })}}">Mes Disponibilités</a></li>
-       			<li><a href="{{ path('orga') }}">Orga</a></li>
-       			<li><a href="{{ path('disponibiliteinscription') }}">Inscriptions</a></li>
-       			<li><a href="{{ path('orga_affectation') }}">Affectation</a></li>
-       			<li><a href="{{ path('tache') }}">Fiches Tâches</a></li>
-       			<li><a href="{{ path('plagehoraire') }}">Plage Horaire</a></li>
-        		<li><a href="{{ path('creneau') }}">Cr&eacute;neaux</a></li>         			
-        		<li><a href="{{ path('disponibilite') }}">Disponibilité</a></li>
-         		<li><a href="{{ path('config') }}">Configuration</a></li>
-       			<!--<li><a href="/">T&acirc;ches</a></li>
-       			<li><a href="/">Administration</a></li>-->
-       			<li><a href="{{ path('logout') }}">Logout</a></li>
+ 				{{ _self.navBarItem('Orgas','orga') }}
+       			{{ _self.navBarItem('Mes Disponibilités','orga_inscriptionhard',{'id':app.user.id }) }}
+       			{{ _self.navBarItem('Inscriptions','disponibiliteinscription') }}
+       			{{ _self.navBarItem('Affectation','orga_affectation') }}
+       			{{ _self.navBarItem('Fiches Tâches','tache') }}
+       			{{ _self.navBarItem('Configuration','config') }}
+       			{{ _self.navBarItem('Logout','logout') }}
      		{% elseif is_granted('ROLE_USER') %}
-        		<li><a href="{{ path('orga_edit',{'id':app.user.id })}}">Mes Informations</a></li>
-       			<li><a href="{{ path('orga_inscriptionhard',{'id':app.user.id })}}">Mes Disponibilités</a></li>
-        		<li><a href="{{ path('tache') }}">Fiches Tâches</a></li>
-       			<li><a href="{{ path('logout') }}">Logout</a></li>
+        		{{ _self.navBarItem('Mes Informations','orga_edit',{'id':app.user.id }) }}
+       			{{ _self.navBarItem('Mes Disponibilités','orga_inscriptionhard',{'id':app.user.id }) }}
+        		{{ _self.navBarItem('Fiches Tâches','tache') }}
+       			{{ _self.navBarItem('Logout','logout') }}
+       			
         	{% else %}
-       		    <li><a href="{{ path('login') }}">Login</a></li>
+       			{{ _self.navBarItem('Se connecter','login') }}
         	{% endif %}
             </ul>
             {% if is_granted('ROLE_ADMIN') %}
