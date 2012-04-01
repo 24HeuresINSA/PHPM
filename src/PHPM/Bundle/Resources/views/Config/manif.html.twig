@@ -1,5 +1,5 @@
 {% extends "PHPMBundle:Config:layout.html.twig"  %}
-{% set pageTitle = 'Configuration de la Manifestation' %}
+{% set pageTitle = 'Configuration' %}
 
 {% form_theme form _self %}
 
@@ -11,79 +11,112 @@
 {% endblock %}
 
 {% block content %}
-<form action="{{ path('config_manif') }}" method="post" {{ form_enctype(form) }}>
-<div id="tabs">
-	<ul>
-		<li><a href="#configItems">{{ form_label(form.configItems) }}</a></li>
-		<li><a href="#lieuItems">{{ form_label(form.lieuItems) }}</a></li>
-		<li><a href="#equipeItems">{{ form_label(form.equipeItems) }}</a></li>
-		<li><a href="#confianceItems">{{ form_label(form.confianceItems) }}</a></li>
-		<li><a href="#materielItems">{{ form_label(form.materielItems) }}</a></li>
-			</ul>
+<form action="{{ path('config') }}" method="post" {{ form_enctype(form) }}>
+	<div class="row-fluid">
+	
+	<ul id="tab" class="nav nav-tabs">
+	    <li><a href="#configItems" data-toggle="tab">Clés de configuration</a></li>
+{# 	    <li><a href="#lieuItems" data-toggle="tab">Lieux</a></li>#}
+		<li><a href="#equipeItems" data-toggle="tab">Équipes</a></li>
+		<li><a href="#materielItems" data-toggle="tab">Matériel</a></li>
+            
+    </ul>
+          <div id="myTabContent" class="tab-content">
+			<div class="tab-pane fade active in" id="configItems" >
+						{% for i in form.configItems %}
+						    {{ i.vars.value }}
+						    {{ form_errors(i) }}
+						    {{ form_widget(i) }}
+						         
+						{% endfor %}
+			</div>
 
-<div id="configItems" >
-{% for i in form.configItems %}
-    {{ i.vars.value }}
-    {{ form_errors(i) }}
-    {{ form_widget(i) }}
-         
-{% endfor %}
-</div>
 
-<div id="lieuItems" class = "rowsection">
-{% for i in form.lieuItems %}
-    <div class=hrow>
-{{ form_errors(i) }}
-{{ form_widget(i) }}
-    <a class="rmbutton" href="{{ path('lieu_delete', { 'id': i.vars.value.id }) }}">Supprimer</a>
-    </div>
-{% endfor %}
-<br/>
-<a class="addbutton" href="{{ path('lieu_new') }}">Nouveau Lieu</a>
-</div>
+{# 		<div id="lieuItems"  class="tab-pane fade">#}
+{# 			{% for i in form.lieuItems %}#}
+{# 			    <div class=hrow>#}
+{# 			{{ form_errors(i) }}#}
+{# 			{{ form_widget(i) }}#}
+{# 			    <a class="btn btn-danger" href="{{ path('lieu_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a>#}
+{# 			    </div>#}
+{# 			{% endfor %}#}
+{# 			<br/>#}
+{# 			<a class="btn btn-success" href="{{ path('lieu_new') }}">Nouveau Lieu</a>#}
+{# 		</div>#}
 
-<div id="equipeItems" class = "rowsection">
-{% for i in form.equipeItems %}
-    <div class=hrow>
-    {{ form_errors(i) }}
-    {{ form_widget(i) }}
-    <a class="rmbutton" href="{{ path('equipe_delete', { 'id': i.vars.value.id }) }}">Supprimer</a>
-         </div>
-{% endfor %}
-<br/>
-<a class="addbutton" href="{{ path('equipe_new') }}">Nouvelle équipe</a>
-</div>
+		<div id="equipeItems"  class="tab-pane fade">
+			<table class="table table-condensed">
+		        <thead>
+		            <th>Nom</th>
+		            <th>Responsable</th>
+		            <th></th>
+		        </thead>
+		        <tbody>
+		        
+				{% for i in form.equipeItems %}
+				    <tr>
+				    <td>{{ form_widget(i.nom) }}</td>
+				    <td>{{ form_widget(i.responsable) }}</td>
+				    <td><a class="btn btn-danger" href="{{ path('equipe_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a></td>
+				    </tr>
+				{% endfor %}
+				
+		        </tbody>
+	    	</table>
+			
+			<div class="row-fluid">
+			<a class="btn btn-success" href="{{ path('equipe_new') }}"><i class="icon-plus"></i> Nouvelle équipe</a>
+			</div>
+		</div>
 
-<div id="confianceItems" class = "rowsection">
-{% for i in form.confianceItems %}
-    <div class=hrow>
-    {{ form_errors(i) }}
-    {{ form_widget(i) }}
-    <a class="rmbutton" href="{{ path('confiance_delete', { 'id': i.vars.value.id }) }}">Supprimer</a>
-         </div>
-         
-{% endfor %}
-<br/>
-<a class="addbutton" href="{{ path('confiance_new') }}">Nouveau niveau</a>
-</div>
+{# 		<div id="confianceItems"  class="tab-pane fade">#}
+{# 			{% for i in form.confianceItems %}#}
+{# 			    <div class=hrow>#}
+{# 			    {{ form_errors(i) }}#}
+{# 			    {{ form_widget(i) }}#}
+{# 			    <a class="btn btn-danger" href="{{ path('confiance_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a>#}
+{# 			    </div>			         #}
+{# 			{% endfor %}#}
+{# 			<br/>#}
+{# 			<a class="btn btn-success" href="{{ path('confiance_new') }}">Nouveau niveau</a>#}
+{# 		</div>#}
+		
+		<div id="materielItems" class="tab-pane fade">
+			<table class="table table-condensed">
+		        <thead>
+		            <th>Nom</th>
+		            <th>Catégorie</th>
+		            <th>Type</th>
+		            <th></th>
+		        </thead>
+		        <tbody>
+		        
+					{% for i in form.materielItems %}
+				    <tr>
+				    <td>{{ form_widget(i.nom) }}</td>
+				    <td>{{ form_widget(i.categorie) }}</td>
+				    <td>{{ form_widget(i.type) }}</td>
+				    <td><a class="btn btn-danger" href="{{ path('materiel_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a></td>
+				    </tr>
+				{% endfor %}
+				
+		        </tbody>
+	    	</table>
+			
+			<div class="row-fluid">
+				<a class="btn btn-success" href="{{ path('materiel_new') }}"><i class="icon-plus"></i> Nouveau matériel</a>
+			</div>
+	</div>
 
-<div id="materielItems" class = "rowsection">
-{% for i in form.materielItems %}
-    <div class=hrow>
-    {{ form_errors(i) }}
-    {{ form_widget(i) }}
-    <a class="rmbutton" href="{{ path('materiel_delete', { 'id': i.vars.value.id }) }}">Supprimer</a>
-         </div>
-{% endfor %}
-<br/>
-<a class="addbutton" href="{{ path('materiel_new') }}">Nouvel Item</a>
-</div>
-        
-        
 {{ form_rest(form) }}
 
-        <button type="submit">Enregistrer la configuration</button>
+        
     </p>
+    </div>
+    <div class="form-actions row-fluid">
+    <button class="btn btn-primary" type="submit">Enregistrer la configuration</button>
+    </div>
+    
 </form>
 
 {% endblock %}

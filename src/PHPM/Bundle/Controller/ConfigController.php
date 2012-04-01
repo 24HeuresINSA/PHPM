@@ -321,8 +321,6 @@ COMMIT;
 
 	/**
 	 *
-	 *
-	 * @Route("/", name="config_manif")
 	 * @Route("/", name="config")
 	 * @Template
 	 */

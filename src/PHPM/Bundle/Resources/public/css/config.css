@@ -6,4 +6,10 @@
 		clear: both;
 		margin-bottom: .2em;
 	}
+	textarea{
+	    width:100%;
+	    word-wrap: break-word;
+        overflow-x: hidden;
+        overflow-y: auto;
+	}
 }
