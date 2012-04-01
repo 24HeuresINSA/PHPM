@@ -14,7 +14,7 @@
     {% for entity in entities %}
         	<td>{{ entitiesMacro.groupeTache(entity.groupeTache) }}</td>
             <td>{{ entitiesMacro.tache(entity) }}</td>            
-            <td>{{ entity.groupeTache.equipe.nom }}</td>
+            <td>{{ entitiesMacro.equipe(entity.groupeTache.equipe) }}</td>
             <td>{{ entitiesMacro.orga(entity.responsable) }}</td>
             <td>{{ entitiesMacro.tacheCom(entity) }}</td>
             

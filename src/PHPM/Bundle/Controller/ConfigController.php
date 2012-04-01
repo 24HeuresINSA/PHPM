@@ -349,13 +349,15 @@ COMMIT;
 		
 		$form    = $this->createForm(new ManifType($admin,$config), $data);
 		
-		
+		$valid = null;
 		if ($this->get('request')->getMethod() == 'POST') {
 		$form->bindRequest($request);
 		$data = $form->getData();
+		$valid=$form->isValid();
 		
 		
-		if ($form->isValid()) {
+        
+        if ($valid) {
 		    $em->flush();
 		    
 		}
@@ -363,7 +365,8 @@ COMMIT;
 
 		}
 
-		return array('form' => $form->createView());
+		return array(	'form' => $form->createView(),
+						'valid' => $valid);
 
 	}
 

@@ -50,6 +50,14 @@ class Equipe
      */
     protected $orgas;
     
+    /**
+     * @var string $couleur
+     *
+     * @ORM\Column(name="couleur", type="string", length=255)
+     * @Assert\NotBlank()
+     */
+    protected $couleur;
+    
     public function __toString()
     {
         return $this->getNom() ;
@@ -150,5 +158,25 @@ class Equipe
     public function getOrgas()
     {
         return $this->orgas;
+    }
+
+    /**
+     * Set couleur
+     *
+     * @param string $couleur
+     */
+    public function setCouleur($couleur)
+    {
+        $this->couleur = $couleur;
+    }
+
+    /**
+     * Get couleur
+     *
+     * @return string 
+     */
+    public function getCouleur()
+    {
+        return $this->couleur;
     }
 }

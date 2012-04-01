@@ -10,6 +10,10 @@
 <a class="statut{{  tache.statut }}" href="{{ path('tache_edit', { 'id': tache.id }) }}">{{ tache.id }}- {{ tache.nom }}</a>
 {% endmacro %}
 
+{% macro equipe(equipe) %}
+<span style="color: {{ equipe.couleur }}">{{ equipe.nom }}</span>
+{% endmacro %}
+
 {% macro tacheCom(tache) %}
 {% if tache.commentaires.last.id is defined %}
 <span class="lcom"><span class="com_auteur">{{tache.commentaires.last.auteur}}</span><span class="com_heure"> {{ tache.commentaires.last.heure|format_datetime('EEEE dd MMM HH:mm') }} : </span>{{ tache.commentaires.last.texte | raw }}</span>
