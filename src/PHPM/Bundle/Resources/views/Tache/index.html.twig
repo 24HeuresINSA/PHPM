@@ -39,7 +39,7 @@ Tâches
 		class="active"
 		{% endif %}
 		>
-		    <a href="{{ path('tache', {'equipeid':equipe.id, 'statut':app.request.get('statut')}) }}">{{ equipe.nom }}</a>
+		    <a href="{{ path('tache', {'equipeid':equipe.id, 'statut':app.request.get('statut')}) }}">{{ entitiesMacro.equipe(equipe) }}</a>
 		</li>
 	{% endfor %}
     </ul>

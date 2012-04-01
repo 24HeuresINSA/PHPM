@@ -28,9 +28,9 @@ class DefaultController extends Controller
     	return $this->redirect($this->generateUrl('config_initiale'));
     	}
     	
-    	if (!$logged){
-    	return $this->redirect($this->generateUrl('login'));
-    	}
+//     	if (!$logged){
+//     	return $this->redirect($this->generateUrl('login'));
+//     	}
     	
     	
     	
@@ -92,13 +92,17 @@ class DefaultController extends Controller
                 
                 
                 
-                if($user->getIsAdmin())
+                if($user->getPrivileges()==2)
                 {
                     $options = array('ROLE_ADMIN');
                 }
-                else
+                elseif($user->getPrivileges()==1)
                 {
                     $options = array('ROLE_USER');
+                }
+                elseif($user->getPrivileges()==0)
+                {
+                	$options = array('ROLE_VISITOR');
                 }
                 
                 

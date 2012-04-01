@@ -2,6 +2,18 @@
  <a href="{{ path('orga_edit', { 'id': entity.id }) }}">{{ entity.prenom }} {{ entity.nom }}{% if entity.surnom  %} ({{ entity.surnom }}){% endif %}</a>
 {% endmacro %}
 
+{% macro orgaPrivileges(privileges) %}
+{% spaceless %}
+{% if(privileges == 2) %}<span class="label label-important">Admin</span>{% endif %}
+{% if(privileges == 1) %}<span class="label label-info">Orga</span>{% endif %}
+{% if(privileges == 0) %}<span class="label">Visiteur</span>{% endif %}
+{% endspaceless %}
+{% endmacro %}
+
+{% macro orgaEmail(email) %}
+<a href="mailto:{{ email }}">{{ email }}</a>
+{% endmacro %}
+
 {% macro groupeTache(entity) %}
  <a href="{{ path('groupetache_edit', { 'id': entity.id }) }}">{{ entity.id }}- {{ entity.nom }}</a>
 {% endmacro %}

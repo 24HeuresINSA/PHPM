@@ -11,7 +11,7 @@
             <th width="10em">Départ</th>
             <th>Commentaire</th>
             
-            <th>Admin</th>
+            <th>Privilèges</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -21,12 +21,12 @@
             <td>{{ entity.id }}</td>
             <td>{{ entity.prenom }} {{ entity.nom }}{% if entity.surnom  %} ({{ entity.surnom }}){% endif %}</td>
             <td>{{ entity.telephone }}</td>
-            <td>{{ entity.email }}</td>
+            <td>{{ entitiesMacro.orgaEmail(entity.email) }}</td>
             <td>{% if entity.dateDeNaissance %}{{ entity.dateDeNaissance|format_date('dd MMM Y') }}{% endif%}</td>
-            <td>{{ entity.equipe }}</td>
+            <td>{{ entitiesMacro.equipe(entity.equipe) }}</td>
             <td>{{ entity.departement }}</td>
             <td>{{ entity.commentaire }}</td>
-            <td>{% if entity.isAdmin %}<i class="icon-ok"></i>{% endif%}</td>
+            <td>{{ entitiesMacro.orgaPrivileges(entity.privileges) }}</td>
             <td>
 	            <span>
 		            <a href="{{ path('orga_edit', { 'id': entity.id }) }}">Éditer</a>

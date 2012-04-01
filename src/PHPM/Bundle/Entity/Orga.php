@@ -170,9 +170,10 @@ class Orga implements UserInterface
     protected $disponibilitesInscription;
     
     /**
-     * @ORM\Column(type="boolean", name="is_admin",nullable=true)
+     * @ORM\Column(type="smallint", name="privileges")
+     * @Assert\Choice(choices = {"0", "1","2"})
      */
-    protected $isAdmin;
+    protected $privileges;
     
     /**
      * @ORM\ManyToOne(targetEntity="Equipe", inversedBy="orgas")
@@ -543,26 +544,6 @@ class Orga implements UserInterface
     }
 
     /**
-     * Set isAdmin
-     *
-     * @param boolean $isAdmin
-     */
-    public function setIsAdmin($isAdmin)
-    {
-        $this->isAdmin = $isAdmin;
-    }
-
-    /**
-     * Get isAdmin
-     *
-     * @return boolean 
-     */
-    public function getIsAdmin()
-    {
-        return $this->isAdmin;
-    }
-
-    /**
      * Set confiance
      *
      * @param PHPM\Bundle\Entity\Confiance $confiance
@@ -740,5 +721,25 @@ class Orga implements UserInterface
     public function getDatePermis()
     {
         return $this->datePermis;
+    }
+
+    /**
+     * Set privileges
+     *
+     * @param smallint $privileges
+     */
+    public function setPrivileges($privileges)
+    {
+        $this->privileges = $privileges;
+    }
+
+    /**
+     * Get privileges
+     *
+     * @return smallint 
+     */
+    public function getPrivileges()
+    {
+        return $this->privileges;
     }
 }
