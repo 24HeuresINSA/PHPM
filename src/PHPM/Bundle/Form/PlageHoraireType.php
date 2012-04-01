@@ -23,7 +23,6 @@ class PlageHoraireType extends AbstractType
         }
         
         $builder
-            ->add('tache')
             ->add('debut',null,array(
                     'label'=>'Début',
                     'widget' => 'single_text',

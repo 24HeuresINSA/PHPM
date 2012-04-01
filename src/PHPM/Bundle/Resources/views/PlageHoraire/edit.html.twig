@@ -11,72 +11,94 @@
 	{% endstylesheets %}
 {% endblock %}
 
+{% block pageHeader %}
+{% endblock %}
+
 {% block content %}
 <form class="form-horizontal" action="{{ path('plagehoraire_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
-    
-    <h2>Informations</h2>
-    
-    <div class="alert-message">{{ form_errors(form) }}</div>
-    
-	{{ form_row(form.tache) }}
-	{{ form_row(form.debut) }}
-	{{ form_row(form.fin) }}
-	
-	<div>
-		{{ form_row(form.creneauUnique) }}
+<div class="row-fluid">       
+	<div class="page-header">
+		<h1>{{form.vars.value.tache.nom }}</h1>
+		<br>
+		Édition d'une plage horaire
 	</div>
-	
-	<script type="text/javascript">
-
-	$(document).ready(function(){
+</div>
+    {% if valid is defined %}    
+        <div class="row-fluid">  
+            {% if valid==1 %}
+            {% else %}
+                <div class ="alert alert-error">Cette plage horaire comporte des erreurs, elle n'a pas été enregistrée :
+                <br/>
+                {{ form_errors(form) }}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+    
+    <div class="row-fluid">
+    	<div class="span-6">  
+		    <h2>Informations</h2>
+			{{ form_row(form.debut) }}
+			{{ form_row(form.fin) }}
+			
+			<div>
+				{{ form_row(form.creneauUnique) }}
+			</div>
+			
+			<script type="text/javascript">
 		
-		$("#infosCreneaux").toggle($('#phpm_bundle_plagehorairetype_creneauUnique:checked').val() ==undefined);
-
-});
-	
-	
-	$('#phpm_bundle_plagehorairetype_creneauUnique').click(function() {
-	    $("#infosCreneaux").toggle();
-	});</script>
-	
-	<div id="infosCreneaux">
-	<div>
-		{{ form_row(form.dureeCreneau) }}
-	</div>
-
-	<div>
-		{{  form_row(form.recoupementCreneau) }}
-	</div>
-	
-	</div>
-
-	{{ form_row(form.respNecessaire) }}
-	
-    <h2>Besoins en Orgas</h2>
-    
-    {{ form_errors(form.besoinsOrga) }}
-    <div id="phpm_bundle_plagehorairetype_besoinsorga" data-prototype="{{ form_widget(form.besoinsOrga.get('prototype')) | e }}">
-	    {% for bo in form.besoinsOrga %}
-		    <div>
-		    	{{ form_errors(bo) }}
-		    	{{ form_widget(bo.equipe) }}
-		    	{{ form_widget(bo.nbOrgasNecessaires) }}
+			$(document).ready(function(){
+				
+				$("#infosCreneaux").toggle($('#phpm_bundle_plagehorairetype_creneauUnique:checked').val() ==undefined);
+		
+		});
+			
+			
+			$('#phpm_bundle_plagehorairetype_creneauUnique').click(function() {
+			    $("#infosCreneaux").toggle();
+			});</script>
+			
+			<div id="infosCreneaux">
+			<div>
+				{{ form_row(form.dureeCreneau) }}
+			</div>
+		
+			<div>
+				{{  form_row(form.recoupementCreneau) }}
+			</div>
+			
+			</div>
+		
+			{{ form_row(form.respNecessaire) }}
+		</div>
+		<div class="span-6">
+		    <h2>Besoins en Orgas</h2>
+		    
+		    {{ form_errors(form.besoinsOrga) }}
+		    <div id="phpm_bundle_plagehorairetype_besoinsorga" data-prototype="{{ form_widget(form.besoinsOrga.get('prototype')) | e }}">
+			    {% for bo in form.besoinsOrga %}
+				    <div>
+				    	{{ form_errors(bo) }}
+				    	{{ form_widget(bo.equipe) }}
+				    	{{ form_widget(bo.nbOrgasNecessaires) }}
+				    </div>
+			    {% endfor %}
 		    </div>
-	    {% endfor %}
-    </div>
-    
-    <div class="btn-group">
-    <a class="btn btn-success" id="addBOButton" href="#"><i class="icon-plus"></i></a>
-	<a class="btn btn-danger"  id="rmBOButton" href="#"><i class="icon-minus"></i></a>
+		    
+		    <div class="btn-group">
+		    <a class="btn btn-success" id="addBOButton" href="#"><i class="icon-plus"></i></a>
+			<a class="btn btn-danger"  id="rmBOButton" href="#"><i class="icon-minus"></i></a>
+			</div>
+			<br>
+		</div>
 	</div>
-	<br>
-	<div class="form-actions">
-    <div class="btn-group">
-        
-        <button class="btn" type="submit" name="action" value="save" >Enregister</button>
-        <a class="btn btn-warning" href="{{ path('tache_edit',{'id':entity.tache.id })}}"><i class="icon-share-alt"></i> Revenir à la tâche sans enregistrer</a>
-        <a class="btn btn-danger" href="{{ path('plagehoraire_delete',{'id':entity.id })}}"><i class="icon-trash"></i> Supprimer cette plage horaire</a>
-    </div>
+	<div class="form-actions row-fluid">
+	    <div class="btn-group">
+	        
+	        <button class="btn" type="submit" name="action" value="save" >Enregister</button>
+	        <a class="btn btn-warning" href="{{ path('tache_edit',{'id':entity.tache.id })}}"><i class="icon-share-alt"></i> Revenir à la tâche sans enregistrer</a>
+	        <a class="btn btn-danger" href="{{ path('plagehoraire_delete',{'id':entity.id })}}"><i class="icon-trash"></i> Supprimer cette plage horaire</a>
+	    </div>
     </div>
     
     {{ form_rest(form) }}

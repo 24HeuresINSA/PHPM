@@ -207,7 +207,6 @@ class TacheController extends Controller
             
         
         if ($editForm->isValid()) {
-            $valid= true;
             $tmpm = $data['Materiel'];
             
             
@@ -295,26 +294,17 @@ class TacheController extends Controller
             	return $this->redirect($this->generateUrl('groupetache_edit', array('id' => $entity->getGroupeTache()->getId())));
             }
         
-        }else{
-            $valid= false;
-        }
-        
-        
-            
-             
+        }  
         
         if($param['action']=='add_plage'){
         	return $this->redirect($this->generateUrl('plagehoraire_new', array('id' => $entity->getId())));
         }
                 
             
-            
-        
-
         return array(
             'entity'      => $entity,
             'form'   => $editForm->createView(),
-            'valid' => $valid,
+            'valid' => $editForm->isValid(),
                 'rOnly'=>$rOnly
         );
     }
