@@ -147,8 +147,9 @@ class OrgaController extends Controller
         $entity  = new Orga();
         $request = $this->getRequest();
         $entity->setStatut(0);
+        $entity->setPrivileges(1);
         $entity->setConfiance($em->getRepository('PHPMBundle:Confiance')->find(3));
-        $entity->setIsAdmin(false);
+        
         $form    = $this->createForm(new OrgaType(false,$config), $entity);
         $form->bindRequest($request);
     
