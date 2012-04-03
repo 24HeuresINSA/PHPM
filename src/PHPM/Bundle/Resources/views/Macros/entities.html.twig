@@ -1,5 +1,5 @@
 {% macro orga(entity) %}
- <a href="{{ path('orga_edit', { 'id': entity.id }) }}">{{ entity.prenom }} {{ entity.nom }}{% if entity.surnom  %} ({{ entity.surnom }}){% endif %}</a>
+{{ entity.prenom }} {{ entity.nom }}{% if entity.surnom  %} ({{ entity.surnom }}){% endif %}
 {% endmacro %}
 
 {% macro orgaPrivileges(privileges) %}
