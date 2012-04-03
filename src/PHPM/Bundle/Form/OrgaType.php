@@ -54,9 +54,9 @@ class OrgaType extends AbstractType
     	    ;
     	if($this->admin){
         $builder
-			->add('confiance', null,array('read_only'=>!$this->admin))
+			
 			->add('statut', 'choice',array('choices'=>array('0'=>'Inscrit','1'=>'Validé'), 'read_only'=>!$this->admin))
-			->add('isAdmin',null,array('label'=>'Administrateur','read_only'=>!$this->admin));
+			->add('privileges','choice',array('choices'=>array('0'=>'Visiteur','1'=>'Orga', '2'=>'Admin'),'read_only'=>!$this->admin));
         
     	}
     }

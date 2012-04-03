@@ -249,7 +249,7 @@ class OrgaController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Orga entity.');
         }
-        $protectedfields = array($entity->getIsAdmin(),$entity->getConfiance(),$entity->getStatut(), $entity->getEmail());
+        
         
 
         $config = $e=$this->get('config.extension');
@@ -262,12 +262,7 @@ class OrgaController extends Controller
         
         
         
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') &&
-                 ($protectedfields!=array($entity->getIsAdmin(),$entity->getConfiance(),$entity->getStatut(), $entity->getEmail()))
-                
-                ) {
-            throw new AccessDeniedException();
-        }
+        
         
         
         
