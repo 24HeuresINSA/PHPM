@@ -44,6 +44,10 @@ CalendarController.prototype = {
 	clickJour: function(date) {
 		pmAffectation.current.jour = date;
 		
+		// on de-set l'éventuel quart d'heure sélectionné
+		(pmAffectation.current.quart_heure != -1) && ($('#'+pmAffectation.current.quart_heure).removeClass('current'));
+		pmAffectation.current.quart_heure = -1;
+		
 		pmHistory.setUrlParam(); // maj de l'url
 		
 		// on va chercher les creneaux
@@ -55,6 +59,7 @@ CalendarController.prototype = {
 		(pmAffectation.current.quart_heure != -1) && ($('#'+pmAffectation.current.quart_heure).removeClass('current')); // si existe bien
 		$('#'+obj.currentTarget.id).addClass('current');
 		pmAffectation.current.quart_heure = obj.currentTarget.id;
+		pmAffectation.current.jour = -1; // de-set le jout
 		pmHistory.setUrlParam(); // maj de l'url
 		
 		// on va chercher les creneaux
