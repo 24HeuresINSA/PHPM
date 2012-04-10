@@ -1,0 +1,23 @@
+/*
+ * Dans cette feuille de style, inclue particulièrement, on peut lister des éléments avec des images
+ * Les assets seront mappés correctement
+ */
+
+/* Spinner */
+.spinner {
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+}
+.spinner_large {
+  .spinner;
+  background: url('../images/loader_big.gif') center center no-repeat;
+}
+.spinner_medium {
+  .spinner;
+  background: url('../images/loader_medium.gif') center center no-repeat;
+}
+.spinner_small {
+  .spinner;
+  background: url('../images/loader_small.gif') center center no-repeat;
+}
