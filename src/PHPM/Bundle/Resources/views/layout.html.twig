@@ -28,12 +28,8 @@
 				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
 			{% endstylesheets %}
 			
-			{# LESS Stylesheets#}
-			{% stylesheets filter='less'
-				'bundles/phpm/css/style.less'
-			%}
-    			<link href="{{ asset_url }}" rel="stylesheet" media="screen" />
-			{% endstylesheets %}
+			{# Was re-writen, but will stick to less.js for the moment #}
+			<link rel="stylesheet/less" href="{{ asset('bundles/phpm/css/style.less') }}" type="text/css" />
 			
 			{# Not rewritten stylesheets #}
 			<link rel="stylesheet" href="{{ asset('bundles/phpm/css/jquery-ui/themes/smoothness/jquery-ui-1.8.16.custom.css') }}" type="text/css" />
