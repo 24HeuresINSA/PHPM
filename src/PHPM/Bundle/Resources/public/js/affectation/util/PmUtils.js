@@ -80,7 +80,7 @@ PmUtils.prototype = {
 	// resize le calendar et tout ce qui va avec
 	resizeCalendar: function(deltaTaille) {
 		// on convertit tout en % pour mieux gérer le redimensionnement de la fenêtre
-		var _newWidth = ($('#calendar').width()+deltaTaille)/$('.content').width()*100;
+		var _newWidth = ($('#calendar').width()+deltaTaille)/$('.affectation-wrapper').width()*100;
 		$('#calendar').width(_newWidth+'%');
 
 		// même chose pour les sidebars
