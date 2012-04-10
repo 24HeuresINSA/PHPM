@@ -22,8 +22,8 @@ PmUtils.prototype = {
 	/*
 	 * Adapte la taille du layout
 	 */
-	setAppHeight: function(headerHeight) {
-		var _headerHeight = (isFinite(headerHeight))? headerHeight : $('#header').height();
+	setAppHeight: function() {
+		var _headerHeight = $('#header').height();
 		var _contentHeight = $(window).height()-_headerHeight;
 		var _clientHeight = _contentHeight-$('#menu_calendar').outerHeight()-3; // 3 de border tout en bas
 		
