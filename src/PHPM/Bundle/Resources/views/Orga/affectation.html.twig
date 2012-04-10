@@ -46,9 +46,24 @@
 {% endblock %}
 
 {% block content %}
-	<script type="text/javascript">
-		pmAffectation.url = "{{ url('phpm__default_home') }}"; // l'url
-	</script>
+    <script>
+   		// ce bloc nous permet de passer des infos à notre appli proprement
+   		
+   		// cas à part
+    	pmAffectation.url = "{{ url('phpm__default_home') }}";
+    	pmAffectation.paths = {};
+    	pmAffectation.paths.affecter = 'creneau/';
+    	
+    	// urls : adresses absolues
+    	pmAffectation.urls = {};
+		pmAffectation.urls.orgas = "{{ url('orga_query_json') }}";
+		pmAffectation.urls.creneaux = "{{ url('creneau_query_json') }}";
+		pmAffectation.urls.taches = "{{ url('tache_query_json') }}";
+		pmAffectation.urls.categories = "{{ url('categorie', {'_format' : 'json'}) }}";
+		pmAffectation.urls.niveaux = "{{ url('confiance', {'_format' : 'json'}) }}";
+		pmAffectation.urls.plages = "{{ url('config_get', {'string' : 'manifestation_plages'} ) }}";
+		pmAffectation.urls.permis = "{{ url('config_get', {'string' : 'manifestation_permis_libelles'} ) }}";	
+    </script>
 	
 	<div class="affectation-wrapper">
 		<!-- contiendra les éventuels messages à afficher -->

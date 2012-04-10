@@ -33,7 +33,7 @@ TacheModel.prototype = {
 		($.isNumeric(pmAffectation.current.tache.permis) === true) && (pmAffectation.current.tache.permis != -1) && (_params.permis = pmAffectation.current.tache.permis);
 		
 		$.ajax({
-			url: pmAffectation.url+pmAffectation.paths.taches,
+			url: pmAffectation.urls.taches,
 			dataType: 'json',
 			data: _params,
 			success: pmAffectation.models.tache.requestSuccess,

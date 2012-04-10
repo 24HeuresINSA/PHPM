@@ -16,9 +16,6 @@
 	// stockage des données
 	pmAffectation.data = {};
 	
-	// les URLS
-	pmAffectation.paths = {};
-	
 	// infos courantes
 	pmAffectation.current = {}; // sera stocké dans l'url
 	// bien mettre des valeurs par défaut aux paramètres
@@ -40,15 +37,9 @@
 /*
  * CONSTANTES
  */
-	// les urls sur lesquelles on fera les requêtes
-	pmAffectation.paths.plages = 'configv/get/manifestation_plages';
-	pmAffectation.paths.orgas = 'orga/query.json';
-	pmAffectation.paths.creneaux = 'creneau/query.json';
-	pmAffectation.paths.taches = 'tache/query.json';
-	pmAffectation.paths.affecter = 'creneau/';
-	pmAffectation.paths.categories = 'categorie/index.json';
-	pmAffectation.paths.niveaux = 'confiance/index.json';
-	pmAffectation.paths.permis = 'configv/get/manifestation_permis_libelles';
+	// les urls sur lesquelles ont fait les requêtes
+	// sont passées par la page sur laquelle on est
+	// (dans un <script>)
 	
 /*
  * Lancement

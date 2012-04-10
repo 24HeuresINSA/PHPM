@@ -22,7 +22,7 @@ CalendarModel.prototype = {
 		pmAffectation.models.calendar.callBack = callBack;
 		
 		$.ajax({
-			url: pmAffectation.url+pmAffectation.paths.plages,
+			url: pmAffectation.urls.plages,
 			dataType: 'json',
 			success: pmAffectation.models.calendar.requestSuccess,
 			error: pmAffectation.models.calendar.requestError,

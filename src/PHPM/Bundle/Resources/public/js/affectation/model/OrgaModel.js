@@ -33,7 +33,7 @@ OrgaModel.prototype = {
 		($.isNumeric(pmAffectation.current.orga.age) === true) && (pmAffectation.current.orga.age != -1) && (_params.age = pmAffectation.current.orga.age);
 		
 		$.ajax({
-			url: pmAffectation.url+pmAffectation.paths.orgas,
+			url: pmAffectation.urls.orgas,
 			dataType: 'json',
 			data: _params,
 			success: pmAffectation.models.orga.requestSuccess,

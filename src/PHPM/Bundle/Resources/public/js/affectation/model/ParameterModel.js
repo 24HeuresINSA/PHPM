@@ -26,7 +26,7 @@ ParameterModel.prototype = {
 		
 		// pour les catégories
 		$.ajax({
-			url: pmAffectation.url+pmAffectation.paths.categories,
+			url: pmAffectation.urls.categories,
 			dataType: 'json',
 			success: pmAffectation.models.parameter.requestSuccessCategories,
 			error: pmAffectation.models.parameter.requestError,
@@ -36,7 +36,7 @@ ParameterModel.prototype = {
 		
 		// pour les niveaux de confiance
 		$.ajax({
-			url: pmAffectation.url+pmAffectation.paths.niveaux,
+			url: pmAffectation.urls.niveaux,
 			dataType: 'json',
 			success: pmAffectation.models.parameter.requestSuccessNiveaux,
 			error: pmAffectation.models.parameter.requestError,
@@ -46,7 +46,7 @@ ParameterModel.prototype = {
 		
 		// pour les niveaux de permis
 		$.ajax({
-			url: pmAffectation.url+pmAffectation.paths.permis,
+			url: pmAffectation.urls.permis,
 			dataType: 'json',
 			success: pmAffectation.models.parameter.requestSuccessPermis,
 			error: pmAffectation.models.parameter.requestError,
