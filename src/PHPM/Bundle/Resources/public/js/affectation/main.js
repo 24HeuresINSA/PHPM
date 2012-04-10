@@ -59,7 +59,6 @@ $(document).ready(function() {
 	
 	// 0 : setter le layout et récupérer les paramètres dans l'Url
 	pmUtils.setResizeableSidebars();
-	pmUtils.setHideTopMenu();
 	// 0.5 : travail sur l'historique
 	pmHistory.initHistoryListener(); 
 	pmHistory.parseUrlParam(); // un peu bizarre : parfois faut le faire, parfois pas

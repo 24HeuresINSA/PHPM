@@ -32,7 +32,6 @@ html {
 }
 body {
 	background: #fff;
-	height: 100%; // normalement déjà mis dans la feuille de style générale
 	overflow-x: hidden; // alors là, comme des bourrins
 }
 .content {
@@ -49,13 +48,14 @@ body {
 }
 
 /*
- * Override d'éléments de Twitter Bootstrap :
- * faut pas déconner, je suis sur ma page
+ * Override d'éléments de Twitter Bootstrap
  */
-.container-fluid {
-  width: 100%;
-  padding: 0;
-  margin: 0;
+// ici on a juste défini un bloc à nous
+.affectation-wrapper {
+  margin: 0 -20px;
+}
+.page-header {
+  display: none;
 }
 
 /*
@@ -114,19 +114,6 @@ body {
 	
 	.bouton_reset {
 	  height: auto;
-	}
-	
-	.bouton_hide_menu {
-	  position: absolute;
-	  top: 0;
-	  right: 20px;
-	  height: 28px;
-	  line-height: 28px;
-	  padding: 0 8px;
-	  background: #333;
-	  color: #fff;
-	  cursor: pointer;
-	  border-radius: 0 0 5px 5px;
 	}
 }
 

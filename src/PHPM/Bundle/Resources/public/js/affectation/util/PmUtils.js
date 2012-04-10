@@ -39,28 +39,6 @@ PmUtils.prototype = {
 	},
 	
 	/*
-	 * Un bouton permettant de cacher le menu du haut
-	 */
-	// set le bouton
-	setHideTopMenu: function() {
-		$('#bouton_hide_menu').click(pmUtils.hideTopMenu);
-	},
-	// handler
-	hideTopMenu: function() {
-		if ($('.header').css('display') === 'none') {
-			$('.header').show(500, 'swing');
-			$('#bouton_hide_menu').html('^ Cacher ^');
-			
-			pmUtils.setAppHeight(79);
-		} else {
-			$('.header').hide(500, 'swing');
-			$('#bouton_hide_menu').html('&or; Menu &or;');
-			
-			pmUtils.setAppHeight(0);
-		}
-	},
-	
-	/*
 	 * Pour les sidebars redimensionnables
 	 */
 	setResizeableSidebars: function() {
