@@ -98,7 +98,7 @@
             </ul>
             {% if is_granted('ROLE_ADMIN') %}
 	            <form class="navbar-text pull-right form-search" method="post" action="{{ path('search') }}" id="search_form">
-		           <input  class="input-medium search-query" id="searchBox" name="s" size="30" />		        		  
+		           <input  class="input-medium search-query" id="searchBox" name="s" size="30" placeholder="Rechercher..." />		        		  
 		        </form>
         	{% endif %}
           </div><!--/.nav-collapse -->
