@@ -101,19 +101,14 @@ body {
  */
 .menu_calendar {
 	width: 100%;
-	position: relative;
-	padding: 10px 0;
+	.border-box();
+	padding: 10px 20%;
 	border-bottom: 1px solid #666;
 	margin: 0;
-	height: @menuHeight - 41px;
 	
 	div {
-	  height: 40px;
 	  float: left;
-	}
-	
-	.bouton_reset {
-	  height: auto;
+	  margin: 0 5px;
 	}
 }
 
@@ -272,11 +267,6 @@ body {
   height: 100%;
   .border-box();
   
-  button {
-    height: 30px;
-    width: 30px;
-  }
-  
   .liste {
     width: 100%;
     height: 70%;
@@ -320,11 +310,11 @@ body {
   .boutons_orga {
     display: none;
     width: 100%;
-    text-align: center;
     margin: 10px 0;
     
-    .bouton_orga_refresh {
-      margin-left: 35px;
+    div {
+      float: left;
+      margin: 0 5px;
     }
   }
   
@@ -350,11 +340,11 @@ body {
   .boutons_tache {
     display: none;
     width: 100%;
-    text-align: center;
     margin: 10px 0;
     
-    .bouton_tache_refresh {
-      margin-left: 35px;
+    div {
+      float: left;
+      margin: 0 5px;
     }
   }
 	

@@ -69,28 +69,28 @@
 		<!-- contiendra les éventuels messages à afficher -->
 		<div class="message_affection" id="message_affection"></div>
 		
-		<div class="menu_calendar" id ="menu_calendar">
-			<div class="bouton_reset" id="bouton_reset">Reset heure/jour</div>
+		<div class="menu_calendar" id ="menu_calendar">		
+			<div class="btn-group" id="boutons_plage"></div>
 			
-			<div class="boutons_plage" id="boutons_plage"></div>
-			
-			<div class="bouton_mode" id="bouton_mode">
-				<form>
-					<div id="radio_mode">
-						<input type="radio" id="radio_mode_orga" name="radio" /><label for="radio_mode_orga">Mode Orga -> Créneaux</label>
-						<input type="radio" id="radio_mode_tache" name="radio" /><label for="radio_mode_tache">Mode Tache -> Orgas</label>
-					</div>
-				</form>
+			<div class="btn-group" id="bouton_mode">
+				<button type="button" class="btn btn-info" id="bouton_mode_orga">Mode Orga -> Créneaux</button>
+				<button type="button" class="btn btn-info" id="bouton_mode_tache">Mode Tache -> Orgas</button>
 			</div>
+			
+			<button class="btn btn-inverse" id="bouton_reset" type="button">Reset heure/jour</button>
 		</div>
 		
 		<div class="client" id="client">
 			<div class="sidebar sidebar_orga" id ="sidebar_orga">
 				<div class="boutons_orga" id="boutons_orga">
-					<button id="bouton_orga_prev">Bouton pr&eacute;c&eacute;dent</button>
-					<button id="bouton_orga_next">Bouton suivant</button>
+					<div class="btn-group">
+						<button type="button" class="btn" id="bouton_orga_prev"><i class="icon-chevron-left"></i></button>
+						<button type="button" class="btn" id="bouton_orga_next"><i class="icon-chevron-right"></i></button>						
+					</div>
 					
-					<button id="bouton_orga_refresh" class="bouton_orga_refresh">Rafra&icirc;chir</button>
+					<button type="button" class="btn" id="bouton_orga_refresh"><i class="icon-refresh"></i></button>
+					
+					<button type="button" class="btn" id="bouton_orga_detail"><i class="icon-edit"></i></button>
 				</div>
 				
 				<div class="liste liste_orgas" id="liste_orgas">
@@ -128,10 +128,12 @@
 			
 			<div class="sidebar sidebar_tache" id="sidebar_tache">
 				<div class="boutons_tache" id="boutons_tache">
-					<button id="bouton_tache_prev">Bouton pr&eacute;c&eacute;dent</button>
-					<button id="bouton_tache_next">Bouton suivant</button>
+					<div class="btn-group">
+						<button type="button" class="btn" id="bouton_tache_prev"><i class="icon-chevron-left"></i></button>
+						<button type="button" class="btn" id="bouton_tache_next"><i class="icon-chevron-right"></i></button>						
+					</div>
 					
-					<button id="bouton_tache_refresh" class="bouton_tache_refresh">Rafra&icirc;chir</button>
+					<button type="button" class="btn" id="bouton_tache_refresh"><i class="icon-refresh"></i></button>
 				</div>
 				
 				<div class="liste liste_taches" id="liste_taches">

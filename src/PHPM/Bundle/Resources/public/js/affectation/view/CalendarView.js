@@ -82,19 +82,14 @@ CalendarView.prototype = {
 	 * Set les boutons pour changer de plage
 	 */
 	setBoutonsPlage: function() {
-		var _html = '<form><div id="radio_plage">';
+		var _html = '';
 		
 		for (var _unePlage in pmAffectation.data.calendar.plage) {
 			// utiliser un onClick est sale, mais force la recopie de _unePlage sinon cela plante
-			_html += '<input type="radio" id="radio_'+_unePlage+'" name="radio" onclick="pmAffectation.controllers.calendar.changePlage('+_unePlage+')"" />';
-			_html += '<label for="radio_'+_unePlage+'">'+pmAffectation.data.calendar.plage[_unePlage]['nom']+'</label>';
+			_html += '<button class="btn btn-primary" id="plage_'+_unePlage+'" onclick="pmAffectation.controllers.calendar.changePlage('+_unePlage+')" type="button">'+pmAffectation.data.calendar.plage[_unePlage]['nom']+'</button>';
 		}
-	
-		_html += '</div></form>';
 		
 		$('#boutons_plage').html(_html);
-		
-		$("#radio_plage").buttonset(); // jQuery goodness
 	},
 	
 	/*
@@ -233,9 +228,7 @@ CalendarView.prototype = {
 	 * Set les boutons pour changer de mode
 	 */
 	initMode: function() {
-		$("#radio_mode").buttonset(); // jQuery goodness
-		
-		$('#radio_mode_orga').bind('click', {mode: 'orga'}, pmAffectation.controllers.calendar.changeMode);
-		$('#radio_mode_tache').bind('click', {mode: 'tache'}, pmAffectation.controllers.calendar.changeMode);
+		$('#bouton_mode_orga').bind('click', {mode: 'orga'}, pmAffectation.controllers.calendar.changeMode);
+		$('#bouton_mode_tache').bind('click', {mode: 'tache'}, pmAffectation.controllers.calendar.changeMode);
 	},
 }

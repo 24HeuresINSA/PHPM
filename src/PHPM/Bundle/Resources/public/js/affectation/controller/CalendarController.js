@@ -17,7 +17,6 @@ CalendarController.prototype = {
 		pmAffectation.views.calendar = new CalendarView();
 		
 		// on s'occupe de lier le petit bouton en haut
-		$('#bouton_reset').button();
 		$('#bouton_reset').bind('click', this.resetDateHeure)
 	},
 	

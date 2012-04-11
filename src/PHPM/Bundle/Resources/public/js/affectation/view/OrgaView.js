@@ -12,20 +12,11 @@ OrgaView.prototype = {
 	 * Constructeur
 	 */
 	initialize: function() {
-		// boutons pour changer d'orga
-		$('#bouton_orga_prev').button({
-			icons: {primary: 'ui-icon-triangle-1-w'},
-			text: false
-		}).click(function() { $('#orga_'+pmAffectation.current.orga.id).prev().click(); });
-		$('#bouton_orga_next').button({
-			icons: {primary: 'ui-icon-triangle-1-e'},
-			text: false
-		}).click(function() { $('#orga_'+pmAffectation.current.orga.id).next().click(); });
-		
-		$('#bouton_orga_refresh').button({
-			icons: {primary: 'ui-icon-refresh'},
-			text: false
-		}).click(function() { pmAffectation.controllers.orga.getData(); });
+		// on écoute les boutons
+		$('#bouton_orga_prev').click(function() { $('#orga_'+pmAffectation.current.orga.id).prev().click(); });
+		$('#bouton_orga_next').click(function() { $('#orga_'+pmAffectation.current.orga.id).next().click(); });
+		$('#bouton_orga_refresh').click(function() { pmAffectation.controllers.orga.getData(); });
+		$('#bouton_orga_detail').click(function() { pmAffectation.views.orga.viewOrgaDetail({id: pmAffectation.current.orga.id}); });
 		
 		this.setFilters(); // met les bonnes valeurs dans les filtres
 		
@@ -63,7 +54,7 @@ OrgaView.prototype = {
 			$('#orga_'+_iOrga).bind('click', {id: _iOrga}, function(e) {
 				if (e.altKey) {
 					// Shift + click : affiche les infos détaillées de l'orga
-					var _popup = window.open(pmAffectation.url+'orga/'+e.data.id+'/show', '', config='height=600, width=600, toolbar=no, menubar=no, location=no, directories=no, status=no');
+					pmAffectation.views.orga.viewOrgaDetail({id: e.data.id});
 				} else {
 					// sinon on click sur l'orga
 					pmAffectation.controllers.orga.clickHandler({id: e.data.id});
@@ -72,5 +63,13 @@ OrgaView.prototype = {
 		}
 		
 		$("#orga_"+pmAffectation.current.orga.id).addClass('current'); // met le focus là où il faut
+	},
+	
+	/*
+	 * Affiche un dialogue modal
+	 * avec des infos sur l'orga
+	 */
+	viewOrgaDetail: function(obj) {
+		var _popup = window.open(pmAffectation.url+'orga/'+obj.id+'/edit');		
 	},
 }
