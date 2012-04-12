@@ -247,8 +247,8 @@ PmUtils.prototype = {
 	 */
 	setMode: function(mode) {
 		if (mode === 'orga') {
-			$('#boutons_tache').hide();
-			$('#boutons_orga').show();
+			//$('#boutons_tache').hide();
+			//$('#boutons_orga').show();
 			
 			// on va chercher la colonne orgas
 			pmAffectation.controllers.orga = new OrgaController();
@@ -258,10 +258,10 @@ PmUtils.prototype = {
 			pmAffectation.controllers.creneau = new CreneauController();
 			// pas besoin d'aller chercher des données dedans
 		} else if (mode === 'tache') {
-			$('#boutons_orga').hide();
-			$('#boutons_tache').show();
+			//$('#boutons_orga').hide();
+			//$('#boutons_tache').show();
 			
-			// on va chercher la colonne tche
+			// on va chercher la colonne tache
 			pmAffectation.controllers.tache = new TacheController();
 			pmAffectation.controllers.tache.getData();
 	
