@@ -85,13 +85,12 @@
        			{{ _self.navBarItem('Affectation','orga_affectation') }}
        			{{ _self.navBarItem('Fiches Tâches','tache') }}
        			{{ _self.navBarItem('Configuration','config') }}
-       			{{ _self.navBarItem('Logout','logout') }}
+       			{{ _self.navBarItem('Se déconnecter','logout') }}
      		{% elseif is_granted('ROLE_USER') %}
         		{{ _self.navBarItem('Mes Informations','orga_edit',{'id':app.user.id }) }}
        			{{ _self.navBarItem('Mes Disponibilités','orga_inscriptionhard',{'id':app.user.id }) }}
         		{{ _self.navBarItem('Fiches Tâches','tache') }}
-       			{{ _self.navBarItem('Logout','logout') }}
-       			
+       			{{ _self.navBarItem('Se déconnecter','logout') }}
         	{% else %}
        			{{ _self.navBarItem('Se connecter','login') }}
         	{% endif %}
