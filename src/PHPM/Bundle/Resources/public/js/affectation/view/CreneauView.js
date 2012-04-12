@@ -12,8 +12,8 @@ CreneauView.prototype = {
 	 * Constructeur
 	 */
 	initialize: function() {
-		// on a pas de boutons pour changer de creneau et toussa :
-		// inutile, et le refresh des orgas provoque un refresh des créneaux
+		// écoute des boutons
+		$('#bouton_tache_refresh').click(function() { pmAffectation.controllers.creneau.getData(); });
 		
 		this.setFilters(); // met les bonnes valeurs dans les filtres
 		
@@ -55,7 +55,7 @@ CreneauView.prototype = {
 			$('#tache_'+_iCreneau).bind('click', {idCreneau: _iCreneau}, function(e) {
 				if (e.altKey) {
 					// Shift + click : affiche la page pour modifier le créneau
-					var _popup = window.open(pmAffectation.url+'creneau/'+e.data.idCreneau+'/edit', '', config='height=600, width=600, toolbar=no, menubar=no, location=no, directories=no, status=no');
+					var _popup = window.open(pmAffectation.url+'creneau/'+e.data.idCreneau+'/edit', '');
 					
 					// à la fermeture, refresh la liste des créneaux
 					// unload est firé au chargement (unload de about:blank),
@@ -70,5 +70,4 @@ CreneauView.prototype = {
 			});
 		}
 	},
-	
 }
