@@ -87,6 +87,7 @@ class CreneauMakerController extends Controller
     				$creneau->setDebut($debut);
     				$creneau->setFin($fin);
     				$creneau->setPlageHoraire($plageHoraire);
+    				$creneau->setEquipeHint($besoinOrga->getEquipe());
     				$em->persist($creneau);
     			}
     		
@@ -96,6 +97,8 @@ class CreneauMakerController extends Controller
     				$creneau->setDebut($debut);
     				$creneau->setFin($fin);
     				$creneau->setPlageHoraire($plageHoraire);
+    				$creneau->setOrgaHint($plageHoraire->getTache()->getResponsable());
+    				$creneau->setEquipeHint($plageHoraire->getTache()->getGroupeTache()->getEquipe());
     				$em->persist($creneau);
     	}
 

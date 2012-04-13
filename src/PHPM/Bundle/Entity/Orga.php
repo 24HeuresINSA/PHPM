@@ -196,6 +196,11 @@ class Orga implements UserInterface
      */
     protected $lastActivity;
     
+    /**
+     * @ORM\OneToMany(targetEntity="Creneau", mappedBy="orgaHint")
+     */
+    protected $creneauxHint;
+    
     
     
     public function __toString()
@@ -741,5 +746,25 @@ class Orga implements UserInterface
     public function getPrivileges()
     {
         return $this->privileges;
+    }
+
+    /**
+     * Add creneauxHint
+     *
+     * @param PHPM\Bundle\Entity\Creneau $creneauxHint
+     */
+    public function addCreneau(\PHPM\Bundle\Entity\Creneau $creneauxHint)
+    {
+        $this->creneauxHint[] = $creneauxHint;
+    }
+
+    /**
+     * Get creneauxHint
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getCreneauxHint()
+    {
+        return $this->creneauxHint;
     }
 }

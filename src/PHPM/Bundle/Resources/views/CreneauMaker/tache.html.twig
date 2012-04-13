@@ -45,6 +45,8 @@
 				    <table class="table table-condensed">
 			        <thead>
 			            <th>Créneau</th>
+			            <th>Orga Nécessaire</th>
+			            <th>Équipe nécessaire</th>
 			            <th>Orga Affecté</th>
 			            {% if tache.statut ==2 %}
 			            <th>Actions</th>
@@ -55,6 +57,20 @@
 			            <tr>
 			            	<td>
 			                	{{ c.debut | format_datetime }} <i class="icon-arrow-right"></i> {{ c.fin | format_datetime }}
+			                </td>
+			                <td>
+				                {% if c.orgaHint is not null %}
+									{{ entitiesMacro.orga(c.orgaHint) }}
+				                {% else %}
+				                	-
+				                {% endif %}
+			                </td>
+			                <td>
+				                {% if c.equipeHint is not null %}
+									{{ c.equipeHint }}
+				                {% else %}
+				                	-
+				                {% endif %}
 			                </td>
 			                <td>
 				                {% if c.disponibilite is not null %}

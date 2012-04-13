@@ -64,6 +64,19 @@ class Creneau
     */
     protected $plageHoraire;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Equipe")
+     * @ORM\JoinColumn(name="equipeHint_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+     * @Assert\Valid
+     */
+    protected $equipeHint;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Orga", inversedBy="creneauxHint")
+     * @ORM\JoinColumn(name="orgaHint_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+     * @Assert\Valid
+     */
+    protected $orgaHint;
 
     /**
      * Get id
@@ -185,4 +198,44 @@ class Creneau
     return $this->getDebut()->format('D d H:i').' - '.$this->getFin()->format('D d H:i');
     }
         
+
+    /**
+     * Set equipeHint
+     *
+     * @param PHPM\Bundle\Entity\Equipe $equipeHint
+     */
+    public function setEquipeHint(\PHPM\Bundle\Entity\Equipe $equipeHint)
+    {
+        $this->equipeHint = $equipeHint;
+    }
+
+    /**
+     * Get equipeHint
+     *
+     * @return PHPM\Bundle\Entity\Equipe 
+     */
+    public function getEquipeHint()
+    {
+        return $this->equipeHint;
+    }
+
+    /**
+     * Set orgaHint
+     *
+     * @param PHPM\Bundle\Entity\Orga $orgaHint
+     */
+    public function setOrgaHint(\PHPM\Bundle\Entity\Orga $orgaHint)
+    {
+        $this->orgaHint = $orgaHint;
+    }
+
+    /**
+     * Get orgaHint
+     *
+     * @return PHPM\Bundle\Entity\Orga 
+     */
+    public function getOrgaHint()
+    {
+        return $this->orgaHint;
+    }
 }
