@@ -225,12 +225,13 @@ PmUtils.prototype = {
 	 * Permet de parcourir récursivement un objet littéral
 	 * et de le filtrer avec la fonction callback(key, value)
 	 * La valeur n'est gardée que si callback renvoie true
+	 * arrayMode permet de filtrer des objects contenant une liste d'objets (sur un seul niveau)
 	 */
-	filter: function(object, callback) {
+	filter: function(object, callback, arrayMode) {
 		var _result = {};
 		
 		for (var _i in object) {
-			if (typeof(object[_i]) === "object") {
+			if (arrayMode != true && typeof(object[_i]) === "object") {
 				_result[_i] = pmUtils.filter(object[_i], callback);
 			} else if (typeof(object[_i]) !== "function") {
 				if (callback(_i, object[_i]) === true) {

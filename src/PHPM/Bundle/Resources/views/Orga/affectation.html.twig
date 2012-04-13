@@ -79,13 +79,22 @@
 					
 					<button type="button" class="btn" id="bouton_orga_detail"><i class="icon-edit"></i></button>
 					
-					<button type="button" class="btn" id="bouton_orga_rechercher"><i class="icon-search"></i></button>
+					<div class="btn-group dropup" id="orga_rechercher">
+						<button class="btn dropdown-toggle" id="bouton_orga_rechercher" data-toggle="dropdown" data-target="#orga_rechercher">
+							<i class="icon-search"></i>
+						</button>
+	      				<ul class="filtre dropdown-menu">
+							<li>
+								<input type="text" class="input-medium" id="champ_orga_rechercher" placeholder="Rechercher...">
+							</li>
+	      				</ul>
+      				</div>
 					
-  					<div class="btn-group dropup">
-          				<button class="btn dropdown-toggle" data-toggle="dropdown">
+  					<div class="btn-group dropup" id="filtres_orga">
+          				<button class="btn dropdown-toggle" data-toggle="dropdown" data-target="#filtres_orga">
           					<i class="icon-tags"></i> <span class="caret"></span>
           				</button>
-          				<ul class="filtre dropdown-menu" id="filtres_orga">
+          				<ul class="filtre dropdown-menu">
 							<li>
 								<select name="orga_confiance" id="filtre_orga_confiance">
 									<option value="-1" selected>Tous les niveaux</option>
@@ -135,8 +144,8 @@
 					
 					<!--<button type="button" class="btn" id="bouton_tache_detail"><i class="icon-edit"></i></button>-->
 					
-  					<div class="btn-group">
-          				<button class="btn dropdown-toggle" data-toggle="dropdown">
+  					<div class="btn-group"  id="filtres_tache">
+          				<button class="btn dropdown-toggle" data-toggle="dropdown"  data-target="#filtres_tache">
           					<i class="icon-tags"></i> <span class="caret"></span>
           				</button>
           				<ul class="filtre dropdown-menu" id="filtres_tache">

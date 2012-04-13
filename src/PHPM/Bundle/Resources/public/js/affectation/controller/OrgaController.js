@@ -73,6 +73,23 @@ OrgaController.prototype = {
 		
 		pmAffectation.controllers.orga.getData();
 	},
+	// handler du champ de recherche, filtre la liste des orgas avec la str passée
+	filterList: function(str) {		
+		var _orgas = pmUtils.filter(pmAffectation.data.orga, function(key, val) {
+			// on recherche sur les champs nom, prénom, et surnom (test leur existence)
+			return (
+				(val.nom && val.nom.toLowerCase().substr(0, str.length) == str) || 
+				(val.prenom && val.prenom.toLowerCase().substr(0, str.length) == str) || 
+				(val.surnom && val.surnom.toLowerCase().substr(0, str.length) == str)
+			);
+		}, true);
+		
+		if ($.isEmptyObject(_orgas) === true) {
+			$('#liste_orgas').html('<strong>Aucun orga correspondant !</strong>');
+		} else {
+			pmAffectation.views.orga.setOrgas(_orgas);
+		}
+	},
 	
 	/*
 	 * Vide la colonne

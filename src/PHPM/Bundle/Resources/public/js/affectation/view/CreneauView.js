@@ -13,7 +13,7 @@ CreneauView.prototype = {
 	 */
 	initialize: function() {
 		// écoute des boutons
-		$('#bouton_tache_refresh').click(function() { pmAffectation.controllers.creneau.getData(); });
+		$('#bouton_tache_refresh').click(function() {pmAffectation.controllers.creneau.getData();});
 		
 		this.setFilters(); // met les bonnes valeurs dans les filtres
 		
