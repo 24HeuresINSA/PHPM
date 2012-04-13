@@ -21,6 +21,10 @@
             {% if valid==1 %}
             	<div class="alert alert-success alert-block">
 				  <a class="close" data-dismiss="alert">×</a>
+				  
+				  {% image output="images/human.jpg" '@PHPMBundle/Resources/public/images/human.jpg' %} 
+				  <img style="width:20em" src="{{ asset_url }}" alt="The Human"/>
+				  {% endimage %}
 				  <h4 class="alert-heading">Succès!</h4>
 				  La tâche à bien été enregistrée.
 				</div>
