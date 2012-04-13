@@ -200,7 +200,7 @@
 	  	{% endif %}
 	  {% endif %}
   
-        {% if not rOnly  %}
+        
             <hr>
             <h2>Enregistrer les Modifications</h2>
             
@@ -209,35 +209,40 @@
             
         
         
-{{ form_rest(form) }}
-<div class="form-actions">
-    <div class="btn-group">
-        <button class="btn btn-primary" type="submit" name="action" value="save" >Enregistrer</button>
-        <button class="btn" type="submit" name="action" value="save_return" ><i class="icon-share-alt"></i> Enregistrer et revenir au groupe</button>        
- 
-        {% if entity.statut ==0 %}
-            <button class="btn btn-success" type="submit" name="action" value="submit_validation"><i class="icon-eye-open"></i> Passer en Validation</button>
-        {% endif %}
-        {% if is_granted('ROLE_ADMIN')  %}
-            {% if entity.statut ==1  %}
-                <button class="btn btn-success" type="submit" name="action" value="validate"><i class="icon-ok"></i> Valider la fiche</button>
-            {% endif %}
-            {% if entity.statut ==2  %}
-                 <button class="btn btn-success" type="submit" name="action" value="creneaumaker"><i class="icon-arrow-right"></i> Ouvrir dans CréneauMaker</button>
-            {% endif %}
-            {% if entity.statut >=1  %}
-                 <button class="btn btn-warning" type="submit" name="action" value="reject"><i class="icon-remove"></i> Rejeter la fiche</button>
-            {% endif %}
-        {% endif %}
-        {% if entity.statut !=-1  %}
-        <a class="btn  btn-danger" href="{{ path('tache_trash', { 'id': entity.id }) }}"><i class="icon-remove"></i> Supprimer la fiche</a>
-        {% endif %}
-        {% if entity.statut ==-1 and entity.groupeTache.statut !=-1 %}
-        <button class="btn btn-success" type="submit" name="action" value="restore">Restaurer la fiche</button>
-        {% endif %}
-    </div>
-    </div>
-{% endif %}
+	{{ form_rest(form) }}
+	<div class="form-actions">
+	    <div class="btn-group">
+		    {% if not rOnly %}
+		        <button class="btn btn-primary" type="submit" name="action" value="save" >Enregistrer</button>
+		        <button class="btn" type="submit" name="action" value="save_return" ><i class="icon-share-alt"></i> Enregistrer et revenir au groupe</button>        
+		 
+		        {% if entity.statut ==0 %}
+		            <button class="btn btn-success" type="submit" name="action" value="submit_validation"><i class="icon-eye-open"></i> Passer en Validation</button>
+		        {% endif %}
+		        {% if is_granted('ROLE_ADMIN')  %}
+		            {% if entity.statut ==1  %}
+		                <button class="btn btn-success" type="submit" name="action" value="validate"><i class="icon-ok"></i> Valider la fiche</button>
+		            {% endif %}
+		            {% if entity.statut >=2  %}
+		                 <button class="btn btn-success" type="submit" name="action" value="creneaumaker"><i class="icon-arrow-right"></i> Ouvrir dans CréneauMaker</button>
+		            {% endif %}
+		            {% if entity.statut >=1  %}
+		                 <button class="btn btn-warning" type="submit" name="action" value="reject"><i class="icon-remove"></i> Rejeter la fiche</button>
+		            {% endif %}
+		        {% endif %}
+		        {% if entity.statut !=-1  %}
+		        <a class="btn  btn-danger" href="{{ path('tache_trash', { 'id': entity.id }) }}"><i class="icon-remove"></i> Supprimer la fiche</a>
+		        {% endif %}
+		        {% if entity.statut ==-1 and entity.groupeTache.statut !=-1 %}
+		        <button class="btn btn-success" type="submit" name="action" value="restore">Restaurer la fiche</button>
+		        {% endif %}
+		     {% else %}
+		     {% if is_granted('ROLE_ADMIN') and entity.statut ==3 %}
+		     <a class="btn  btn-danger" id="popover" href="{{ path('creneaumaker_deoktache', { 'id': entity.id }) }}" rel="popover" data-content="Cette tâche à peut-être déjà été affectée." data-original-title="Attention"></i> Modifier la tâche</a>
+		     {% endif %}
+		     {% endif %}
+	    </div>
+	</div>
 </form>
 
 {% endblock %}

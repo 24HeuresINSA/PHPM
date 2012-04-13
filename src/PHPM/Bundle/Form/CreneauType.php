@@ -18,8 +18,8 @@ class CreneauType extends AbstractType
                     'label'=>'Fin',
                     'widget' => 'single_text',
                     'attr'=>array('class'=>'findp')))
-            ->add('disponibilite')
-            ->add('plageHoraire')
+//             ->add('disponibilite')
+//             ->add('plageHoraire')
         ;
     }
 

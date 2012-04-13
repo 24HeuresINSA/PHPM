@@ -37,6 +37,9 @@ class CreneauMakerController extends Controller
     */
     public function homeAction()
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
     	return array();
     }
     
@@ -46,15 +49,25 @@ class CreneauMakerController extends Controller
      */
     public function tacheAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
     	$em = $this->getDoctrine()->getEntityManager();
     	$config  =$this->get('config.extension');
     	$admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    	
+    	
     	
     	$entity = $em->getRepository('PHPMBundle:Tache')->find($id);
     	
     	if (!$entity) {
     		throw $this->createNotFoundException('Cette tâche n\'existe pas.');
     	}
+    	if ($entity->getStatut()<2){
+    		throw new \Exception("La tâche doit être validée");
+    	}
+    	
+    	
     	
     	
     	
@@ -93,6 +106,9 @@ class CreneauMakerController extends Controller
      */
     public function genererphAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
     	$em = $this->getDoctrine()->getEntityManager();
     	$config  =$this->get('config.extension');
     	$admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
@@ -104,8 +120,8 @@ class CreneauMakerController extends Controller
     	if (!$entity) {
     		throw $this->createNotFoundException('Cette plage horaire n\'existe pas.');
     	}
-    	if ($entity->getTache()->getStatut()!=2){
-    		throw new Exception("La tâche doit être validée");
+    	if ($entity->getTache()->getStatut()<2){
+    		throw new \Exception("La tâche doit être validée");
     	}
     	// Géneration des créneaux
 
@@ -113,12 +129,12 @@ class CreneauMakerController extends Controller
     	if($entity->getCreneauUnique()){
     		$this->genererCreneaux($entity,$entity->getDebut(),$entity->getFin(),$em, $validator);
     	}else{
-    		$duree = $entity->getDureeCreneau() + 1*$entity->getRecoupementCreneau();
+    		$duree = $entity->getDureeCreneau();
 
     		 
     		$debutCreneau = clone $entity->getDebut();
     		$finCreneau = clone $entity->getDebut();
-    		$finCreneau->add(new \DateInterval('PT'.$duree.'S'));
+    		$finCreneau->add(new \DateInterval('PT'.($duree + 1*$entity->getRecoupementCreneau()).'S'));
 	    		
 	    	$creationTerminee = false;
 	    	
@@ -129,9 +145,10 @@ class CreneauMakerController extends Controller
 	    		$creationTerminee = true;
 	    		var_dump("ok");	
 	    	}
-	    	$debutCreneau = clone $finCreneau;
+	    	$debutCreneau = clone $debutCreneau;
+	    	$debutCreneau->add(new \DateInterval('PT'.($duree).'S'));
 	    	$finCreneau = clone $debutCreneau;
-	    	$finCreneau->add(new \DateInterval('PT'.$duree.'S'));
+	    	$finCreneau->add(new \DateInterval('PT'.($duree + 1*$entity->getRecoupementCreneau()).'S'));
 	    	
 	    	}
 	    	
@@ -156,6 +173,9 @@ class CreneauMakerController extends Controller
      */
     public function deleteallphAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
     	$em = $this->getDoctrine()->getEntityManager();
     	$config  =$this->get('config.extension');
     	$admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
@@ -164,6 +184,9 @@ class CreneauMakerController extends Controller
     
     	if (!$entity) {
     		throw $this->createNotFoundException('Cette plage horaire n\'existe pas.');
+    	}
+    	if ($entity->getTache()->getStatut()<2){
+    		throw new \Exception("La tâche doit être validée");
     	}
     	 
     	foreach ($entity->getCreneaux() as $creneau){
@@ -176,6 +199,46 @@ class CreneauMakerController extends Controller
     	 
     
     	return $this->redirect($this->generateUrl('creneaumaker_tache', array('id' => $entity->getTache()->getId())));
+    }
+    
+    /**
+     * @Route("/deoktache/{id}", name="creneaumaker_deoktache")
+     */
+    public function deoktacheAction($id)
+    {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
+    	
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$config  =$this->get('config.extension');
+    	$admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    	
+    	$user = $this->get('security.context')->getToken()->getUser();
+    
+    	$entity = $em->getRepository('PHPMBundle:Tache')->find($id);
+    
+    	if (!$entity) {
+    		throw $this->createNotFoundException('Cette tâche n\'existe pas.');
+    	}
+    	if ($entity->getStatut()<2){
+    		throw new \Exception("La tâche doit être validée");
+    	}
+    
+   	
+    	$commentaire = new Commentaire();
+    	$commentaire->setAuteur($user);
+    	$commentaire->setHeure(new \DateTime());
+    	$commentaire->setTache($entity);
+    	$commentaire->setTexte('<b>&rarr;Tache validée.</b>');
+    	$em->persist($commentaire);
+    	
+    	$entity->setStatut(2);
+    	
+    	$em->flush();
+    
+    
+    	return $this->redirect($this->generateUrl('tache_edit', array('id' => $entity->getId())));
     }
 
 

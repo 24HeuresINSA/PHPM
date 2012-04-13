@@ -156,7 +156,7 @@ class TacheController extends Controller
         }
 
         $defaultValues = array('entity'=>$entity, 'Materiel'=> $entity->getMateriel(), "commentaire"=>'');
-        $rOnly = ($entity->getStatut()>=1 ) && (!$admin);
+        $rOnly = (($entity->getStatut()>=1 ) && (!$admin)) || ($entity->getStatut()==3 );
         
         
         $editForm = $this->createForm(new TacheType($admin,$em,$config,$rOnly),$defaultValues);
@@ -190,7 +190,7 @@ class TacheController extends Controller
         $entity = $em->getRepository('PHPMBundle:Tache')->find($id);
         $prevStatut= $entity->getStatut();
         $user = $this->get('security.context')->getToken()->getUser();
-        $rOnly = ($entity->getStatut()>=1 ) && (!$admin);
+        $rOnly = (($entity->getStatut()>=1 ) && (!$admin)) || ($entity->getStatut()==3 );
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Tache entity.');
@@ -287,7 +287,7 @@ class TacheController extends Controller
             $em->flush();
 
             $defaultValues = array('entity'=>$entity, 'Materiel'=> $entity->getMateriel());
-            $rOnly = ($entity->getStatut()>=1 ) && (!$admin);
+            $rOnly = (($entity->getStatut()>=1 ) && (!$admin)) || ($entity->getStatut()==3 );
             $editForm   = $this->createForm(new TacheType($admin,$em,$config,$rOnly), $defaultValues);
             
             
@@ -312,6 +312,50 @@ class TacheController extends Controller
             'valid' => $valid,
              'rOnly'=>$rOnly
         );
+    }
+    
+    /**
+     * Sets a tache ok for affectation
+     *
+     * @Route("/{id}/ok", name="tache_okaffectation")
+     */
+    public function okaffectationAction($id)
+    {
+    
+    	$admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$config  =$this->get('config.extension');
+    	$request = $this->getRequest();
+    	$entity = $em->getRepository('PHPMBundle:Tache')->find($id);
+    	$user = $this->get('security.context')->getToken()->getUser();
+    	
+    
+    	if (!$entity) {
+    		throw $this->createNotFoundException('Unable to find Tache entity.');
+    	}
+    	
+    	if ($entity->getStatut()<2){
+    		throw new \Exception("La tâche doit être validée");
+    	}
+    	
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
+    	
+    	$commentaire = new Commentaire();
+    	$commentaire->setAuteur($user);
+    	$commentaire->setHeure(new \DateTime());
+    	$commentaire->setTache($entity);
+    	$commentaire->setTexte('<b>&rarr;Tache ok pour affectation.</b>');
+    	$em->persist($commentaire);
+    	
+    	$entity->setStatut(3);
+    	
+    	$em->flush();
+    
+    	
+    	return $this->redirect($this->generateUrl('creneaumaker_tache', array('id' => $entity->getId())));
+    	
     }
 
     /**

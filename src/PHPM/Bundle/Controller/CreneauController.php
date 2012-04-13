@@ -159,7 +159,7 @@ class CreneauController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('creneau_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('creneaumaker_tache',array('id'=>$entity->getPlageHoraire()->getTache()->getId())));
         }
 
         return array(
