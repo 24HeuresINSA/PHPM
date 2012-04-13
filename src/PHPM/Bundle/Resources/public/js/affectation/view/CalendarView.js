@@ -17,7 +17,7 @@ CalendarView.prototype = {
 	/*
 	 * Set la plage qu'il faut
 	 */
-	setPlage: function(plage) {
+	setPlage: function(plage) {		
 		// on vide déjà la div
 		$('#calendar').empty();
 		$('#client').removeClass('spinner_large');
@@ -51,7 +51,10 @@ CalendarView.prototype = {
 		$('#calendar').append(_htmlBarreDates+'</div><div class="jours" id="jours">'+_htmlHours+_htmlJours+'</div>');
 		
 		if (Object.keys(pmAffectation.data.calendar.plage).length != 0) {
-			this.setBoutonsPlage();
+			pmAffectation.views.calendar.setBoutonsPlage();
+			
+			// on met le bon effet sur le bon bouton
+			$('#bouton_plage_'+pmAffectation.current.plage).button('toggle');
 		}
 		
 		// on redimensionne l'app comme il faut
@@ -86,7 +89,7 @@ CalendarView.prototype = {
 		
 		for (var _unePlage in pmAffectation.data.calendar.plage) {
 			// utiliser un onClick est sale, mais force la recopie de _unePlage sinon cela plante
-			_html += '<button class="btn btn-primary" id="plage_'+_unePlage+'" onclick="pmAffectation.controllers.calendar.changePlage('+_unePlage+')" type="button">'+pmAffectation.data.calendar.plage[_unePlage]['nom']+'</button>';
+			_html += '<button class="btn btn-primary" id="bouton_plage_'+_unePlage+'" onclick="pmAffectation.controllers.calendar.changePlage('+_unePlage+')" type="button">'+pmAffectation.data.calendar.plage[_unePlage]['nom']+'</button>';
 		}
 		
 		$('#boutons_plage').html(_html);

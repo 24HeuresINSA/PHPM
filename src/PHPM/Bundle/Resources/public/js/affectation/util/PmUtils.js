@@ -250,6 +250,7 @@ PmUtils.prototype = {
 		if (mode === 'orga') {
 			//$('#boutons_tache').hide();
 			//$('#boutons_orga').show();
+			$('#bouton_mode_orga').button('toggle');
 			
 			// on va chercher la colonne orgas
 			pmAffectation.controllers.orga = new OrgaController();
@@ -261,6 +262,7 @@ PmUtils.prototype = {
 		} else if (mode === 'tache') {
 			//$('#boutons_orga').hide();
 			//$('#boutons_tache').show();
+			$('#bouton_mode_plage').button('toggle');
 			
 			// on va chercher la colonne tache
 			pmAffectation.controllers.tache = new TacheController();
