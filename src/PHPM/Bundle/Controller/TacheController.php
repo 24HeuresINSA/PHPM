@@ -306,8 +306,6 @@ class TacheController extends Controller
         }
 
         $images = array('bundles/phpm/images/human.jpg','bundles/phpm/images/human2.jpg','bundles/phpm/images/human3.jpg');
-        
-        var_dump($images[array_rand($images)]);
             
         return array(
         		'imageu'=> $images[array_rand($images)],
