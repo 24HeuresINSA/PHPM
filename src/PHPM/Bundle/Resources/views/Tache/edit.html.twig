@@ -222,6 +222,9 @@
             {% if entity.statut ==1  %}
                 <button class="btn btn-success" type="submit" name="action" value="validate"><i class="icon-ok"></i> Valider la fiche</button>
             {% endif %}
+            {% if entity.statut ==2  %}
+                 <button class="btn btn-success" type="submit" name="action" value="creneaumaker"><i class="icon-arrow-right"></i> Ouvrir dans CréneauMaker</button>
+            {% endif %}
             {% if entity.statut >=1  %}
                  <button class="btn btn-warning" type="submit" name="action" value="reject"><i class="icon-remove"></i> Rejeter la fiche</button>
             {% endif %}

@@ -295,6 +295,9 @@ class TacheController extends Controller
             if($param['action']=='save_return'){
             	return $this->redirect($this->generateUrl('groupetache_edit', array('id' => $entity->getGroupeTache()->getId())));
             }
+            if($param['action']=='creneaumaker'){
+				return $this->redirect($this->generateUrl('creneaumaker_tache', array('id' => $entity->getId())));
+            }
         
         }  
         

@@ -189,7 +189,7 @@ class CreneauController extends Controller
             $em->flush();
         
 
-        return $this->redirect($this->generateUrl('creneau'));
+        return $this->redirect($this->generateUrl('creneaumaker_tache',array('id'=>$entity->getPlageHoraire()->getTache()->getId())));
     }
 
     private function createDeleteForm($id)

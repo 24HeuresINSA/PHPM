@@ -1,0 +1,81 @@
+{% extends "PHPMBundle::layout.html.twig"  %}
+{% set pageTitle = 'CreneauMaker' %}
+
+{# {% form_theme form _self %}#}
+
+
+{% block pageHeader %}
+{% endblock %}
+
+{% block content %}
+   
+    <div class="row-fluid">       
+    	<div class="page-header">
+         	<h1>Tâche : {{ tache.nom }}</h1>
+         	<br>
+         	Gestion des créneaux
+         	<br>
+         	<a class="btn" href="{{ path('tache_edit', { 'id': tache.id }) }}" ><i class="icon-share-alt"></i> Retour à la fiche</a>
+         </div>
+    </div>
+    
+    <div class="row-fluid">   
+	    {% for ph in tache.plagesHoraire %}
+	    	<h3>Plage horaire : {{ ph.debut | format_datetime }} <i class="icon-arrow-right"></i> {{ ph.fin | format_datetime }}</h3>
+	    	{% if ph.creneauUnique %}
+	    	<b>Créneau Unique</b>
+	    	{% else %}
+	    	<b>Durée des créneaux :</b>
+                {{ ph.dureeCreneau/3600}}h
+                {% if ph.recoupementCreneau != 0 %} ({{ ph.recoupementCreneau/60 }}m){% endif %}
+	    	{% endif %}
+	    	<br>
+	    	<b>Besoins : </b>
+	    	{% if ph.respNecessaire  %}(RESP) {% endif %}
+	    	{% for bo in ph.besoinsOrga %}({{ bo.equipe }} : {{ bo.nbOrgasNecessaires }}){% endfor %}
+		    
+		    
+		    
+	    	{% if ph.creneaux.count >0 %}
+			    <br>
+			    <a class="btn btn-danger" href="{{ path('creneaumaker_deleteallph', { 'id': ph.id }) }}"><i class="icon-remove"></i> Tout Supprimer</a>
+			    <br>
+				    <table class="table table-condensed">
+			        <thead>
+			            <th>Créneau</th>
+			            <th>Orga Affecté</th>
+			            <th>Actions</th>
+			        </thead>
+			        <tbody>
+					{% for c in ph.creneaux %}
+			            <tr>
+			            	<td>
+			                	{{ c.debut | format_datetime }} <i class="icon-arrow-right"></i> {{ c.fin | format_datetime }}
+			                </td>
+			                <td>
+				                {% if c.disponibilite is not null %}
+									{{ entitiesMacro.orga(c.disponibilite.orga) }}
+				                {% else %}
+				                	-
+				                {% endif %}
+			                </td>
+			                <td>
+				                <div class="btn-group">
+				                <a class="btn  btn-danger" href="{{ path('creneau_delete', { 'id': c.id }) }}"><i class="icon-remove"></i> Supprimer</a>
+				                </div>
+			                </td>
+			            </tr>
+			        {% endfor %}
+			        </tbody>
+			    </table>
+		    {% else %}
+			    <div class="alert alert-info">
+			    Cette plage horaire ne comporte pas de créneaux.
+			    <br>
+			    <a class="btn btn-success" href="{{ path('creneaumaker_genererph', { 'id': ph.id }) }}"><i class="icon-plus"></i> Générer</a>
+			    </div>
+	    	{% endif %}	
+	    {% endfor %}
+    </div>
+
+{% endblock %}
