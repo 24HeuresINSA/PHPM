@@ -85,7 +85,7 @@ OrgaController.prototype = {
 		}, true);
 		
 		if ($.isEmptyObject(_orgas) === true) {
-			$('#liste_orgas').html('<strong>Aucun orga correspondant !</strong>');
+			$('#liste_orgas').html('<div class="alert">Aucun orga correspondant !</div>');
 		} else {
 			pmAffectation.views.orga.setOrgas(_orgas);
 		}
