@@ -231,7 +231,7 @@
 		        {% endif %}
 		     {% else %}
 		     {% if is_granted('ROLE_ADMIN') and entity.statut ==3 %}
-		     <a class="btn  btn-danger" id="popover" href="{{ path('creneaumaker_deoktache', { 'id': entity.id }) }}" rel="popover" data-content="Cette tâche à peut-être déjà été affectée." data-original-title="Attention"></i> Modifier la tâche</a>
+		     <a class="btn  btn-danger apopover" href="{{ path('creneaumaker_deoktache', { 'id': entity.id }) }}" rel="popover" data-content="Cette tâche à peut-être déjà été affectée." data-original-title="Attention"> Modifier la tâche</a>
 		     {% endif %}
 		     {% endif %}
 	    </div>

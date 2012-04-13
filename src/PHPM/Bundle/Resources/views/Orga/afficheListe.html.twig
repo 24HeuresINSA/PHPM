@@ -10,7 +10,7 @@
             <th>Com'</th>
             <th width="10em">Départ</th>
             <th>Commentaire</th>
-            
+            <th>Dernière activité</th>            
             <th>Privilèges</th>
             <th>Actions</th>
         </tr>
@@ -25,7 +25,12 @@
             <td>{% if entity.dateDeNaissance %}{{ entity.dateDeNaissance|format_date('dd MMM Y') }}{% endif%}</td>
             <td>{{ entitiesMacro.equipe(entity.equipe) }}</td>
             <td>{{ entity.departement }}</td>
-            <td>{{ entity.commentaire }}</td>
+            <td>
+            {% if entity.commentaire %}
+            <a class="btn  btn-info apopover" href="#" rel="popover" data-content="{{ entity.commentaire }}" data-original-title="Commentaire">Afficher</a>
+            {% endif %}
+            </td>
+            <td>{{ entity.lastActivity|format_date('dd MMM Y') }}</td>
             <td>{{ entitiesMacro.orgaPrivileges(entity.privileges) }}</td>
             <td>
 	            <span>

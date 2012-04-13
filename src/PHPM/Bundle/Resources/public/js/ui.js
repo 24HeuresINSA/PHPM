@@ -178,7 +178,7 @@ $(function() {
 		showButtonPanel: false, // on cache les boutons du bas
 	});*/
 	
-    $("#popover").popover();
+    $(".apopover").popover();
     
 	
 });
