@@ -4,15 +4,6 @@
 
 {% form_theme form _self %}
 
-
-{% block style %}
-{{ parent() }}
-			{% stylesheets 'bundles/phpm/css/tache.css' filter='cssrewrite'  %}
-				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
-			{% endstylesheets %}
-{% endblock %}
-
-
 {% block content %}
 
 <form action="{{ path('tache_create', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
