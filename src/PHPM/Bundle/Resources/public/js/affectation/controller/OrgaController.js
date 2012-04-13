@@ -63,6 +63,8 @@ OrgaController.prototype = {
 		pmAffectation.current.orga.id = obj.id;
 		pmHistory.setUrlParam(); // maj de l'url
 		
+		pmAffectation.controllers.creneau.getData(); // récupère les taches à jour
+		
 		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga.id});
 	},
 	// changement de la valeur d'un filtre
