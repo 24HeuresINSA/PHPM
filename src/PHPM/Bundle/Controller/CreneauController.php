@@ -220,14 +220,13 @@ class CreneauController extends Controller
     	$plage = $request->request->get('plage_id', '');
 		$jour = $request->request->get('jour', '');
     	$date_time = $request->request->get('date_time', '');
-    	$bloc = $request->request->get('bloc', '0');
 		
 		if ($jour != '') {
 			$jour = new \DateTime($jour);
 		}
     
     	$em = $this->getDoctrine()->getEntityManager();
-    	$entities = $em->getRepository('PHPMBundle:Creneau')->getCreneauxCompatibleWithCriteria($niveau_confiance,  $permis, $duree, $orga, $plage, $jour, $date_time, $bloc);
+    	$entities = $em->getRepository('PHPMBundle:Creneau')->getCreneauxCompatibleWithCriteria($niveau_confiance,  $permis, $duree, $orga, $plage, $jour, $date_time);
 
     	$creneauArray = array();
     	foreach ($entities as $creneau) {

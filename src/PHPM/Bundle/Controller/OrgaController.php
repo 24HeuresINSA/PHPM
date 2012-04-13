@@ -369,7 +369,7 @@ class OrgaController extends Controller
      * @Route("/validation", name="orga_validation")
      * @Template
      */
-public function validationAction()  
+	public function validationAction()  
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
@@ -442,9 +442,6 @@ public function validationAction()
                 
         return array("entities" => $entities);
     }
-
-
-
 	
 	/**
 	 * Inscription Hard
@@ -468,8 +465,6 @@ public function validationAction()
             throw new AccessDeniedException();
         }
 	    
-	    
-	    
 	    $em = $this->getDoctrine()->getEntityManager();
 	    $entities = $this->getDoctrine()->getEntityManager()->createQuery("SELECT d FROM PHPMBundle:DisponibiliteInscription d ORDER BY d.debut")->getResult();
 	    $form = $this->createForm(new InscriptionHardType($admin,$em,$orga));
@@ -477,42 +472,30 @@ public function validationAction()
 	    if ($request->getMethod() == 'POST') {
 	        $form->bindRequest($request);
 	        $data=$form->getData();
-	        
-	         
+	        	         
 	        if ($form->isValid()) {
-
-	             
-	             
-	             
-	             
 	            foreach ($data as $group)
 	                foreach ($group as $key=>$value){
 	                 
 	                $di = $entities[$key];
 
-
-	                if($value ==true && !$orga->getDisponibilitesInscription()->contains($di)){
+	                if ($value ==true && !$orga->getDisponibilitesInscription()->contains($di)){
 	                    $orga->addDisponibiliteInscription($di);
 	                    $di->addOrga($orga);
-	                    
 	                }
 	                
-	                if($admin == true && $value == false){
+	                if ($admin == true && $value == false){
 	                    $orga->getDisponibilitesInscription()->removeElement($di);
 	                    
 	                }
-	                 
-	                 
 	            }
 	             
 	            $em->flush();
 	            $form = $this->createForm(new InscriptionHardType($admin,$em,$orga));
-	             
 	        }
 	    }
 	    
-	    return array( 'form' => $form->createView(), 'orga'=>$orga);
-	    
+	    return array( 'form' => $form->createView(), 'orga'=>$orga); 
 	}
 
 	
@@ -545,7 +528,7 @@ public function validationAction()
 		$listeOrgaArray = json_decode($json,TRUE);
 		$validationErrors = array();
  	
-		foreach($listeOrgaArray as  $inscriptionOrga)
+		foreach ($listeOrgaArray as  $inscriptionOrga)
 				{
 					
 					$confiance = $em->getRepository('PHPMBundle:Confiance')->findOneById(1);  // pour récupérer confiance
@@ -597,8 +580,6 @@ public function validationAction()
 		
 		return array("entities" => $validationErrors);
 		}
-		
-
 	}
 	
 
@@ -645,8 +626,9 @@ public function validationAction()
 		$maxDateNaissance = new \DateTime();
 		$creneau = $request->request->get('creneau_id', '');
 		
-		if ($age!='') 
-		{ //petit conversion pour changer l'age en date de naissance
+		if ($age != '') 
+		{ 
+			// petite conversion pour changer l'age en date de naissance
 			$maxDateNaissance->modify('-'.$age.' year');
 		}
 		
@@ -665,7 +647,7 @@ public function validationAction()
 					$a[$dispo->getId()] = $dispo->toArrayOrgaWebService();
 				}			
 			}
-			//TODO pk permis est commenté? 
+
 			$orgaArray[$orga->getId()] = array(
 			        	"nom" => $orga->getNom(),
 			        	"prenom" => $orga->getPrenom(),
