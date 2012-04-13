@@ -26,12 +26,21 @@
     {% if valid is defined %}    
         <div class="row-fluid">  
             {% if valid==1 %}
-                <div class ="alert alert-success">La tâche à bien été enregistrée.</div>
+            	<div class="alert alert-success alert-block">
+				  <a class="close" data-dismiss="alert">×</a>
+				  <h4 class="alert-heading">Succès!</h4>
+				  La tâche à bien été enregistrée.
+				</div>
+
+                
             {% else %}
-                <div class ="alert alert-error">Il y a des erreurs dans la fiche, la tâche n'a pas été mise à jour.
-                <br/>
+				<div class="alert alert-error alert-block">
+				  <a class="close" data-dismiss="alert">×</a>
+				  <h4 class="alert-heading">Erreur!</h4>
+				  Il y a des erreurs dans la fiche, la tâche n'a pas été mise à jour.
+				  <br/>
                 {{ form_errors(form) }}
-                </div>
+				</div>
             {% endif %}
         </div>
     {% endif %}
