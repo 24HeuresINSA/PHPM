@@ -178,6 +178,9 @@ $(function() {
 		showButtonPanel: false, // on cache les boutons du bas
 	});*/
 	
+    $("#popover").popover();
+    
+	
 });
 
 function fnShowHide(iCol) {
@@ -193,3 +196,4 @@ function copyDateToEnd() {
     $('.findp').val($('.debutdp')[0].val());
     
 }
+
