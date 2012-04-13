@@ -20,7 +20,7 @@
         	<div class="page-header">
 	            <h1 class="statut{{ form.entity.vars.value.statut }}">Tâche : {{form.entity.vars.value.nom }}</h1>
 	            <br>
-	            <button class="btn" type="submit" name="action" value="save_return" ><i class="icon-share-alt"></i> {{form.entity.vars.value.groupetache.nom }}</button>
+	            <a class="btn" href="{{ path('groupetache_edit', { 'id': entity.id }) }}" ><i class="icon-share-alt"></i> {{ entity.id }}- {{ entity.nom }}</a>
         	</div>
     	</div>
     {% if valid is defined %}    
