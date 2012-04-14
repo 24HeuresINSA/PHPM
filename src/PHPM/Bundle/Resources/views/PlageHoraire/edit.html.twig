@@ -8,129 +8,118 @@
 {% endblock %}
 
 {% block content %}
-<form class="form-horizontal" action="{{ path('plagehoraire_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
-	<div class="row-fluid">       
-		<div class="page-header">
-			<h1>{{form.vars.value.tache.nom }} - Édition d'une plage horaire</h1>
-		</div>
-	</div>
-    {% if valid is defined %}    
-        <div class="row-fluid">  
-            {% if valid==1 %}
-            {% else %}
-                <div class ="alert alert-error">Cette plage horaire comporte des erreurs, elle n'a pas été enregistrée :
-                <br/>
-                {{ form_errors(form) }}
-                </div>
-            {% endif %}
-        </div>
-    {% endif %}
-	    
-    <div class="row-fluid">
-    	<fieldset>
-	    	<div class="span-6">  
-			    <legend>Informations</legend>
-				{{ form_row(form.debut) }}
-				{{ form_row(form.fin) }}
-				
-				<div>
-					{{ form_row(form.creneauUnique) }}
-				</div>
-				
-				<script type="text/javascript">
-					$(document).ready(function(){
-						
-						$("#infosCreneaux").toggle($('#phpm_bundle_plagehorairetype_creneauUnique:checked').val() ==undefined);
-				
-					});
-					
-					$('#phpm_bundle_plagehorairetype_creneauUnique').click(function() {
-					    $("#infosCreneaux").toggle();
-					});
-				</script>
-				
-				<div id="infosCreneaux">
-					<div>
-						{{ form_row(form.dureeCreneau) }}
-					</div>
-					<div>
-						{{  form_row(form.recoupementCreneau) }}
-					</div>
-				</div>
-			
-				{{ form_row(form.respNecessaire) }}
+	<form class="form-horizontal" action="{{ path('plagehoraire_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+		<div class="row-fluid">       
+			<div class="page-header">
+				<h1 class="my-inline-h">{{form.vars.value.tache.nom }}</h1> <span style="font-size: 1.2em;"><em>- Édition d'une plage horaire</em></span>
 			</div>
-		</fieldset>
-		
-		<fieldset>
+		</div>
+	    {% if valid is defined %}    
+	        <div class="row-fluid">  
+	            {% if valid == 1 %}
+	            {% else %}
+	                <div class ="alert alert-error">Cette plage horaire comporte des erreurs, elle n'a pas été enregistrée :
+	                <br/>
+	                {{ form_errors(form) }}
+	                </div>
+	            {% endif %}
+	        </div>
+	    {% endif %}
+    	<div class="row-fluid">
+    		<div class="span-6">
+    			<fieldset>
+    				<legend>Informations</legend>
+					{{ form_row(form.debut) }}
+					{{ form_row(form.fin) }}
+					<div>
+						{{ form_row(form.creneauUnique) }}
+					</div>
+		 			<div id="infosCreneaux">
+						<div>
+							{{ form_row(form.dureeCreneau) }}
+						</div>
+						<div>
+							{{  form_row(form.recoupementCreneau) }}
+						</div>
+					</div>
+					{{ form_row(form.respNecessaire) }}
+    			</fieldset>
+			</div>
 			<div class="span-6">
-			    <legend>Besoins en Orgas</legend>
-			    <em>Si un orga précis est sélectionné, les champs "équipe" et "nombre d'orgas sont ignorés"</em>
-			    <br />
-			    {{ form_errors(form.besoinsOrga) }}
-			    <div id="phpm_bundle_plagehorairetype_besoinsorga" data-prototype="{{ form_widget(form.besoinsOrga.get('prototype')) | e }}">
+				<fieldset>
+				    <legend>Besoins en Orgas</legend>
+				    <em>Si un orga précis est sélectionné, les champs "équipe" et "nombre d'orgas sont ignorés"</em>
+				    <br /><br />
+				    {{ form_errors(form.besoinsOrga) }}
+				    <div id="phpm_bundle_plagehorairetype_besoinsorga" data-prototype="{{ form_widget(form.besoinsOrga.get('prototype'), { 'attr': {'class': 'well'} }) | e }}">
 				    {% for bo in form.besoinsOrga %}
-					    <div>
+					    <div class="well">
 					    	{{ form_widget(bo.orgaHint) }}
-					    	OU
+					    	&nbsp;OU&nbsp;
 					    	{{ form_errors(bo) }}
 					    	{{ form_widget(bo.equipe) }}			    	
 					    	{{ form_widget(bo.nbOrgasNecessaires) }}
-					    </div>    
+					    </div> 
 				    {% endfor %}
-			    </div>
-			    <div class="btn-group">
-			    	<a class="btn btn-success" id="addBOButton" href="#"><i class="icon-plus"></i></a>
-					<a class="btn btn-danger"  id="rmBOButton" href="#"><i class="icon-minus"></i></a>
-				</div>
-				<br />
+				    </div>
+				    <div class="btn-group" style="padding-left: 150px;">
+				    	<a class="btn btn-success" id="addBOButton" href="#"><i class="icon-plus"></i></a>
+						<a class="btn btn-danger"  id="rmBOButton" href="#"><i class="icon-minus"></i></a>
+					</div>
+				</fieldset>
 			</div>
-		<fieldset>
-	</div>
-	<div class="form-actions row-fluid">
-        <button class="btn btn-primary" type="submit" name="action" value="save" >Enregister</button>
-        <a class="btn btn-warning" href="{{ path('tache_edit',{'id':entity.tache.id })}}"><i class="icon-share-alt"></i> Revenir à la tâche sans enregistrer</a>
-        <a class="btn btn-danger" href="{{ path('plagehoraire_delete',{'id':entity.id })}}"><i class="icon-trash"></i> Supprimer cette plage horaire</a>
-    </div>
-    
-    {{ form_rest(form) }}
-</form>
-
-<script type="text/javascript">
-	function addTagForm() {
-		var collectionHolder = $('#phpm_bundle_plagehorairetype_besoinsorga');
+		</div>
+		<div class="form-fluid">
+			<div class="form-actions">
+				<button class="btn btn-primary" type="submit" name="action" value="save" >Enregistrer</button>
+				<a class="btn btn-warning" href="{{ path('tache_edit',{'id':entity.tache.id })}}"><i class="icon-share-alt"></i> Revenir à la tâche sans enregistrer</a>
+				<a class="btn btn-danger" href="{{ path('plagehoraire_delete',{'id':entity.id })}}"><i class="icon-trash"></i> Supprimer cette plage horaire</a>
+		    </div>
+	    </div>
+    	{{ form_rest(form) }}
+	</form>
+	<script type="text/javascript">
+		$(document).ready(function(){	
+			$("#infosCreneaux").toggle($('#phpm_bundle_plagehorairetype_creneauUnique:checked').val() ==undefined);
+		});
 		
-		// Get the data-prototype we explained earlier
-		var prototype = collectionHolder.attr('data-prototype');
+		$('#phpm_bundle_plagehorairetype_creneauUnique').click(function() {
+		    $("#infosCreneaux").toggle();
+		});
 		
-		// Replace '$$name$$' in the prototype's HTML to
-		// instead be a number based on the current collection's length.
-		form = prototype.replace(/\$\$name\$\$/g, collectionHolder.children().length);
+		function addTagForm() {
+			var collectionHolder = $('#phpm_bundle_plagehorairetype_besoinsorga');
+			
+			// Get the data-prototype we explained earlier
+			var prototype = collectionHolder.attr('data-prototype');
+			
+			// Replace '$$name$$' in the prototype's HTML to
+			// instead be a number based on the current collection's length.
+			form = prototype.replace(/\$\$name\$\$/g, collectionHolder.children().length);
+			
+			// Display the form in the page
+			collectionHolder.append(form);
+			
+			// On a pas à gérer la DateTimePicker, ui.js s'en occupe
+		}
 		
-		// Display the form in the page
-		collectionHolder.append(form);
+		function rmTagForm() {
+			var last = $('#phpm_bundle_plagehorairetype_besoinsorga > :last-child');
+			
+			last.remove();
+		}
 		
-		// On a pas à gérer la DateTimePicker, ui.js s'en occupe
-	}
-	
-	function rmTagForm() {
-		var last = $('#phpm_bundle_plagehorairetype_besoinsorga > :last-child');
+		$('#addBOButton').click(function(event){
+		    addTagForm();
+		});
+		$('#rmBOButton').click(function(event){
+		    rmTagForm();
+		});
 		
-		last.remove();
-	}
-	
-	$('#addBOButton').click(function(event){
-	    addTagForm();
-	});
-	$('#rmBOButton').click(function(event){
-	    rmTagForm();
-	});
-	
-	function dureer(value) {
-		champ = $('#phpm_bundle_plagehorairetype_recoupementCreneau');
-		
-		champ.val(value);
-	}
-</script>
-
+		function dureer(value) {
+			champ = $('#phpm_bundle_plagehorairetype_recoupementCreneau');
+			
+			champ.val(value);
+		}
+	</script>
 {% endblock %}

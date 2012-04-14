@@ -13,13 +13,12 @@ class BesoinOrgaType extends AbstractType
         	->add('orgaHint', null, array('label'=>'Orga précis nécessaire', 'empty_value' => 'N\'importe qui', 'required'=> false))
         	->add('equipe', null, array('label'=>'Équipe', 'empty_value' => '(orga précis)', 'required'=> false))        	
             ->add('nbOrgasNecessaires', null, array('label' => 'Orgas nécessaires', 'attr' => array('min' => 1)));
-        	
     }
 
     public function getDefaultOptions(array $options)
     {
         return array(
-                'data_class' => 'PHPM\Bundle\Entity\BesoinOrga',
+        	'data_class' => 'PHPM\Bundle\Entity\BesoinOrga'
         );
     }
     

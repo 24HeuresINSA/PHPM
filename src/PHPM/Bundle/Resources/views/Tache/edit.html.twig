@@ -203,9 +203,9 @@
 			<div class="form-actions">
 			    {% if not rOnly %}
 			    	<button class="btn btn-primary" type="submit" name="action" value="save" >Enregistrer</button>
-					<button class="btn" type="submit" name="action" value="save_return" ><i class="icon-share-alt"></i> Enregistrer et revenir au groupe</button>
+					<button class="btn btn-info" type="submit" name="action" value="save_return" ><i class="icon-share-alt"></i> Enregistrer et revenir au groupe</button>
 			        {% if entity.statut == 0 %}
-			            <button class="btn btn-success" type="submit" name="action" value="submit_validation"><i class="icon-eye-open"></i> Passer en Validation</button>
+			            <button class="btn btn-success" type="submit" name="action" value="submit_validation"><i class="icon-eye-open"></i> Demander la validation</button>
 			        {% endif %}
 			        {% if is_granted('ROLE_ADMIN') %}
 			        	{% if entity.statut == 1 %}
