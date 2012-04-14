@@ -42,7 +42,8 @@ CalendarView.prototype = {
 
 			// on fait déjà la barre de titre
 			// handler de click via le onClick, seule solution comme le DOM n'est pas encore construit
-			_htmlBarreDates += '<div class="titre_date" onClick="pmAffectation.controllers.calendar.clickJour(\''+_dateComplete+'\')" '
+			// onClick="pmAffectation.controllers.calendar.clickJour(\''+_dateComplete+'\')"
+			_htmlBarreDates += '<div class="titre_date" jour="'+_dateComplete+'" id="titre_date_'+_dateComplete+'" '
 								+'style="width: '+100/_nbJours+'%;">'+pmUtils.jours[_date.getDay()]+' '+_date.getThisFormat('d/m') +'</div>';
 		
 			_htmlJours += this.makeADay(_dateComplete, _date.getDay(), _nbJours);
@@ -171,10 +172,16 @@ CalendarView.prototype = {
 	// place une disponibilite
 	placeDisponibilites: function(dateDebut, dateFin) {
 		// on place les dispos, avec la classe et le click
-		for (var _iDts = dateDebut; _iDts.getTime() < dateFin.getTime(); _iDts.setTime(_iDts.getTime()+15*60*1000)) {		
+		for (var _iDts = dateDebut; _iDts.getTime() < dateFin.getTime(); _iDts.setTime(_iDts.getTime()+15*60*1000)) {
+			var _dateComplete = _iDts.getFullYear()+'-'+_iDts.getPMonth()+'-'+_iDts.getPDate();
+			
+			// on rend le titre du jour cliquable - on ne sait pas s'il y a déjà un event ou pas, donc unbind
+			$('#titre_date_'+_dateComplete).unbind('click');
+			$('#titre_date_'+_dateComplete).bind('click', function() {ici()});
+			
 			// sélection des quarts d'heure suivant les attributs de temps de plus en plus précis
-			$('.jour[jour="'+_iDts.getFullYear()+'-'+_iDts.getPMonth()+'-'+_iDts.getPDate()+'"] > .heure[heure="'+
-			_iDts.getHours()+'"] > .quart_heure[minute="'+_iDts.getMinutes()+'"]').addClass('free')
+			$('.jour[jour="'+_dateComplete+'"] > .heure[heure="'+_iDts.getHours()
+			+'"] > .quart_heure[minute="'+_iDts.getMinutes()+'"]').addClass('free')
 			.bind('click', {}, pmAffectation.controllers.calendar.clickQuartHeure);
 		}
 	},
