@@ -83,6 +83,8 @@ $(function() {
 				window.location.href = app_orga_url + ui.item.id + '/edit';
 			} else if (ui.item.type === 'tache') {
 				window.location.href = app_tache_url + ui.item.id + '/edit';
+			} else if (ui.item.type === 'groupe_tache') {
+				window.location.href = app_groupetache_url + ui.item.id + '/edit';
 			}
 		}
 	});
