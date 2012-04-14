@@ -41,7 +41,7 @@ class TacheController extends Controller
         ->createQuery("SELECT e FROM PHPMBundle:Equipe e")
         ->getResult();
         
-		$tachesDQL = "SELECT t FROM PHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e JOIN t.responsable r WHERE 1=1 ";
+		$tachesDQL = "SELECT t,l,r,g FROM PHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e JOIN t.responsable r JOIN t.commentaires l WHERE 1=1 ";
 		
 		if($statut !='all'){
 			$tachesDQL .= " AND t.statut = $statut ";
