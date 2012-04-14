@@ -141,6 +141,9 @@
 
 </div>	        
 
+{% if is_granted('ROLE_VISITOR') %}
+	{% render "PHPMBundle:Orga:updateLastActivity"  %}
+{% endif %}
 	      
 	</body>
 </html>
