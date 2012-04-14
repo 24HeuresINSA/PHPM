@@ -22,6 +22,12 @@ CreneauView.prototype = {
 		$('#filtre_tache_permis').change(function() {pmAffectation.controllers.creneau.clickFilter('permis', $('#filtre_tache_permis').val());});
 		$('#filtre_tache_categorie').change(function() {pmAffectation.controllers.creneau.clickFilter('categorie', $('#filtre_tache_categorie').val());});
 		$('#filtre_tache_duree').change(function() {pmAffectation.controllers.creneau.clickFilter('duree', $('#filtre_tache_duree').val());});
+		
+		// la champ de recherche (caché)
+		// on doit empêcher la fermeture du dropdown du champ de recherche
+		$('#champ_tache_rechercher').click(function(event) { event.stopImmediatePropagation(); });
+		// on écoute lorsque des caractères sont tapés - keyup sinon on ne peut pas lire la valeur
+		$('#champ_tache_rechercher').keyup(function(event) { pmAffectation.controllers.creneau.filterList($('#champ_tache_rechercher').val()); });
 	},
 	
 	/*
@@ -38,15 +44,17 @@ CreneauView.prototype = {
 	 * Charge la liste des créneaux
 	 * Seul truc un peu tordu : on évolue dans une colonne appelée "liste_taches"
 	 */
-	setCreneaux: function() {
+	setCreneaux: function(creneaux) {
+		var _creneaux = $.isEmptyObject(creneaux) ? pmAffectation.data.creneaux : creneaux; // valeur par défaut
+		
 		$('#liste_taches').empty(); // reset la liste
 		$('#liste_taches').removeClass('spinner_medium');
 		
-		for (var _iCreneau in pmAffectation.data.creneaux) {
+		for (var _iCreneau in _creneaux) {
 			var _html = '<div class="item tache" id="tache_'+_iCreneau+'" idCreneau="'+_iCreneau+'">';
-			_html += pmAffectation.data.creneaux[_iCreneau]['nom']+' - '+pmAffectation.data.creneaux[_iCreneau]['lieu']+' (';
-			_html += pmAffectation.data.creneaux[_iCreneau]['debut'].getThisFormat('j')+' : ';
-			_html += pmAffectation.data.creneaux[_iCreneau]['debut'].getThisFormat('H:I')+' - '+pmAffectation.data.creneaux[_iCreneau]['fin'].getThisFormat('H:I')+')';
+			_html += _creneaux[_iCreneau]['nom']+' - '+_creneaux[_iCreneau]['lieu']+' (';
+			_html += _creneaux[_iCreneau]['debut'].getThisFormat('j')+' : ';
+			_html += _creneaux[_iCreneau]['debut'].getThisFormat('H:I')+' - '+_creneaux[_iCreneau]['fin'].getThisFormat('H:I')+')';
 			_html += '</div>';
 			
 			$('#liste_taches').append(_html);
