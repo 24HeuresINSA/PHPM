@@ -281,12 +281,20 @@ footer {
   
   .boutons {
     margin: 3px 0 3px 5%;
-    overflow: auto; // permet de clearer les float
     
     // les boutons
     div {
       float: left;
       margin: 3px;
+    }
+    
+    // pour clearer les float
+    &:after {
+       content: ".";
+       visibility: hidden;
+       display: block;
+       height: 0;
+       clear: both;
     }
     
     // le menu drop-drown avec les filtres
