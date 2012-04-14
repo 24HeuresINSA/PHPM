@@ -51,7 +51,7 @@
 			            <h3>{{ c.vars.label }}</h3>
 			            <div class="well overflow-auto">			      
 			                {% for i in c %}
-			                    <div class="">{{ form_label(i, null, {'attr': {'class': 'checkbox inline'}}) }}&nbsp;{{ form_widget(i, {'attr': {'class': 'checkbox my-small-input'}}) }}</div>
+			                    <div>{{ form_label(i, null, {'attr': {'class': 'checkbox inline'}}) }}&nbsp;{{ form_widget(i, {'attr': {'class': 'checkbox my-small-input'}}) }}</div>
 			                {% endfor %}
 		                </div>
 			        {% endfor %}
