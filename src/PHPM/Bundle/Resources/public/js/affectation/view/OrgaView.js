@@ -45,7 +45,7 @@ OrgaView.prototype = {
 	 * Charge la liste des orgas
 	 */
 	setOrgas: function(orgas) {
-		var _orgas = $.isEmptyObject(orgas) ? pmAffectation.data.orga : orgas; // valeur par défaut
+		var _orgas = $.isEmptyObject(orgas) ? pmAffectation.data.orgas : orgas; // valeur par défaut
 		
 		$('#liste_orgas').removeClass('spinner_medium');
 		$('#liste_orgas').empty(); // au cas où

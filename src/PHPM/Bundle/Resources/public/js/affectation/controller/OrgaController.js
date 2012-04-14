@@ -12,7 +12,7 @@ OrgaController.prototype = {
 	 * Constructeur
 	 */
 	initialize: function() {
-		pmAffectation.data.orga = {};
+		pmAffectation.data.orgas = {};
 		pmAffectation.models.orga = new OrgaModel();
 		pmAffectation.views.orga = new OrgaView();
 	},
@@ -31,11 +31,11 @@ OrgaController.prototype = {
 	 * Callbacks
 	 */
 	callbackOrgas: function() {
-		pmAffectation.data.orga = pmAffectation.models.orga.getOrgas();
+		pmAffectation.data.orgas = pmAffectation.models.orga.getOrgas();
 		
 		// si aucun orga n'est sélectionné, on choisit le 1er
-		if (pmAffectation.current.orga.id == -1 && Object.keys(pmAffectation.data.orga)[0]  !== undefined) {
-			pmAffectation.current.orga.id = Object.keys(pmAffectation.data.orga)[0];
+		if (pmAffectation.current.orga.id == -1 && Object.keys(pmAffectation.data.orgas)[0]  !== undefined) {
+			pmAffectation.current.orga.id = Object.keys(pmAffectation.data.orgas)[0];
 			
 			pmHistory.setUrlParam(); // maj de l'url
 		}
@@ -79,7 +79,7 @@ OrgaController.prototype = {
 	filterList: function(str) {
 		str = pmUtils.removeDiacritics(str); // retire les accents
 		
-		var _orgas = pmUtils.filter(pmAffectation.data.orga, function(key, val) {
+		var _orgas = pmUtils.filter(pmAffectation.data.orgas, function(key, val) {
 			// on recherche sur les champs nom, prénom, et surnom (test leur existence)
 			return (
 				(val.nom && pmUtils.removeDiacritics(val.nom.substr(0, str.length).toLowerCase()) == str) || 
@@ -99,7 +99,7 @@ OrgaController.prototype = {
 	 * Vide la colonne
 	 */
 	empty: function() {
-		pmAffectation.data.orga = {};
+		pmAffectation.data.orgas = {};
 		
 		$('#liste_orgas').empty();
 	},
