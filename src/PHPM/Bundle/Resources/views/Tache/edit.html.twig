@@ -115,9 +115,16 @@
 	                	{{ pl.debut | format_datetime }} <i class="icon-arrow-right"></i> {{ pl.fin | format_datetime }}
 	                </td>
 	                <td>
-		                {% if pl.respNecessaire  %}(RESP) {% endif %}
+		                {% if pl.respNecessaire  %}<b>(RESP)</b> {% endif %}
 		                
-		                {% for bo in pl.besoinsOrga %}({{ bo.equipe }} : {{ bo.nbOrgasNecessaires }}){% endfor %}
+		                {% for bo in pl.besoinsOrga %}
+		                	{% if bo.orgaHint is null %}
+		                	({{ bo.equipe }} : {{ bo.nbOrgasNecessaires }})
+		                	{% else %}
+		                	<b>({{ bo.orgaHint }})</b>
+		                	{% endif %}
+		                
+		                {% endfor %}
 	                </td>
 	                <td>
 	                	{{ pl.besoinsOrgaTotal }}

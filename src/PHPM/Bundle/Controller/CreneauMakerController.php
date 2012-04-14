@@ -82,6 +82,7 @@ class CreneauMakerController extends Controller
     
     private function genererCreneaux($plageHoraire,$debut,$fin,$em,$validator){
     	foreach ($plageHoraire->getBesoinsOrga() as $besoinOrga){
+    		if($besoinOrga->getOrgaHint() == NULL){
     			for ($i=0;$i<$besoinOrga->getNbOrgasNecessaires();$i++){
     				$creneau = new Creneau();
     				$creneau->setDebut($debut);
@@ -90,6 +91,15 @@ class CreneauMakerController extends Controller
     				$creneau->setEquipeHint($besoinOrga->getEquipe());
     				$em->persist($creneau);
     			}
+    		}else{
+    			$creneau = new Creneau();
+    			$creneau->setDebut($debut);
+    			$creneau->setFin($fin);
+    			$creneau->setPlageHoraire($plageHoraire);
+    			$creneau->setOrgaHint($besoinOrga->getOrgaHint());
+    			$creneau->setEquipeHint($besoinOrga->getOrgaHint()->getEquipe());
+    			$em->persist($creneau);
+    		}
     		
     	}
     	if($plageHoraire->getRespNecessaire()){

@@ -66,15 +66,32 @@
 		</div>
 		<div class="span-6">
 		    <h2>Besoins en Orgas</h2>
-		    
+		    <em>Si un orga précis est sélectionné, les champs "équipe" et "nombre d'orgas sont ignorés."</em>
 		    {{ form_errors(form.besoinsOrga) }}
 		    <div id="phpm_bundle_plagehorairetype_besoinsorga" data-prototype="{{ form_widget(form.besoinsOrga.get('prototype')) | e }}">
 			    {% for bo in form.besoinsOrga %}
 				    <div>
+				    	{{ form_widget(bo.orgaHint) }}
+				    	OU
 				    	{{ form_errors(bo) }}
-				    	{{ form_widget(bo.equipe) }}
+				    	{{ form_widget(bo.equipe) }}			    	
 				    	{{ form_widget(bo.nbOrgasNecessaires) }}
 				    </div>
+				    
+{# 				    			<script type="text/javascript">#}
+		
+{# 							$(document).ready(function(){#}
+								
+{# 								$("#bo{{ bo.id }}").toggle($('#phpm_bundle_plagehorairetype_creneauUnique:checked').val() ==undefined);#}
+						
+{# 						});#}
+							
+							
+{# 							$('#phpm_bundle_plagehorairetype_creneauUnique').click(function() {#}
+{# 							    $("#infosCreneaux").toggle();#}
+{# 							});</script>#}
+				    
+				    
 			    {% endfor %}
 		    </div>
 		    

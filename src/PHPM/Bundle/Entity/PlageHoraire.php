@@ -331,7 +331,11 @@ class PlageHoraire
         $count = $this->getRespNecessaire()*1;
         
         foreach ($this->getBesoinsOrga() as $bo)
-            $count+=$bo->getNbOrgasNecessaires();
+        	if($bo->getOrgaHint() == NULL){
+            	$count+=$bo->getNbOrgasNecessaires();
+        	}else{
+        		$count+=1;
+        	}
         
         return $count;
     }

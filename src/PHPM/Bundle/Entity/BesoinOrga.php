@@ -46,13 +46,20 @@ class BesoinOrga
     /**
     * @var smallint $nbOrgasNecessaires
     *
-    * @ORM\Column(name="nbOrgasNecessaires", type="smallint")
+    * @ORM\Column(name="nbOrgasNecessaires", type="smallint", nullable="true")
     * @Assert\Min(limit = "0")
     */
     protected $nbOrgasNecessaires;
     
-   
     
+    /**
+     * @ORM\ManyToOne(targetEntity="Orga", inversedBy="besoinsOrgaHint")
+     * @ORM\JoinColumn(name="orgaHint_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+     * @Assert\Valid
+     */
+    protected $orgaHint;
+    
+   
 
     /**
      * Get id
@@ -109,7 +116,7 @@ class BesoinOrga
      *
      * @param PHPM\Bundle\Entity\Equipe $equipe
      */
-    public function setEquipe(\PHPM\Bundle\Entity\Equipe $equipe)
+    public function setEquipe($equipe)
     {
         $this->equipe = $equipe;
     }
@@ -123,4 +130,27 @@ class BesoinOrga
     {
         return $this->equipe;
     }
+
+
+    /**
+     * Set orgaHint
+     *
+     * @param PHPM\Bundle\Entity\Orga $orgaHint
+     */
+    public function setOrgaHint($orgaHint)
+    {
+        $this->orgaHint = $orgaHint;
+    }
+
+    /**
+     * Get orgaHint
+     *
+     * @return PHPM\Bundle\Entity\Orga 
+     */
+    public function getOrgaHint()
+    {
+        return $this->orgaHint;
+    }
+
+    
 }

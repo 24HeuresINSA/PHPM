@@ -201,6 +201,11 @@ class Orga implements UserInterface
      */
     protected $creneauxHint;
     
+    /**
+     * @ORM\OneToMany(targetEntity="BesoinOrga", mappedBy="orgaHint")
+     */
+    protected $besoinsOrgaHint;
+    
     
     
     public function __toString()
@@ -766,5 +771,25 @@ class Orga implements UserInterface
     public function getCreneauxHint()
     {
         return $this->creneauxHint;
+    }
+
+    /**
+     * Add besoinsOrgaHint
+     *
+     * @param PHPM\Bundle\Entity\BesoinOrga $besoinsOrgaHint
+     */
+    public function addBesoinOrga(\PHPM\Bundle\Entity\BesoinOrga $besoinsOrgaHint)
+    {
+        $this->besoinsOrgaHint[] = $besoinsOrgaHint;
+    }
+
+    /**
+     * Get besoinsOrgaHint
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getBesoinsOrgaHint()
+    {
+        return $this->besoinsOrgaHint;
     }
 }
