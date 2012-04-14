@@ -67,6 +67,22 @@ CreneauController.prototype = {
 		
 		pmAffectation.controllers.creneau.getData();
 	},
+	// handler du champ de recherche, filtre la liste des orgas avec la str passée
+	filterList: function(str) {		
+		var _creneaux = pmUtils.filter(pmAffectation.data.creneaux, function(key, val) {
+			// on recherche sur les champs nom et lieu (test leur existence)
+			return (
+				(val.nom && val.nom.toLowerCase().substr(0, str.length) == str) || 
+				(val.lieu && val.lieu.toLowerCase().substr(0, str.length) == str) 
+			);
+		}, true);
+		
+		if ($.isEmptyObject(_creneaux) === true) {
+			$('#liste_taches').html('<div class="alert">Aucun créneau correspondant !</div>');
+		} else {
+			pmAffectation.views.creneau.setCreneaux(_creneaux);
+		}
+	},
 	
 	/*
 	 * Gère la désaffectation
