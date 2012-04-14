@@ -651,6 +651,7 @@ class OrgaController extends Controller
 			$orgaArray[$orga->getId()] = array(
 			        	"nom" => $orga->getNom(),
 			        	"prenom" => $orga->getPrenom(),
+			        	"surnom" => $orga->getSurnom(),
 						"confiance" => $orga->getConfiance()->getId(),
 // 						"permis"=>$orga->getPermis(),
 			    		"dateDeNaissance" => $orga->getDateDeNaissance()->format('Y-m-d H:i:s'),
