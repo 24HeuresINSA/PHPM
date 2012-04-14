@@ -47,6 +47,10 @@ class TacheController extends Controller
 			$tachesDQL .= " AND t.statut = $statut ";
 		}
 		
+		if($statut !=-1){
+			$tachesDQL .= " AND t.statut <> -1 ";
+		}
+		
 		if($equipeid !='all'){
 			$tachesDQL .= " AND e.id = $equipeid ";
 			
