@@ -158,12 +158,12 @@ PmUtils.prototype = {
 	resizeHandler: function(event, ui) {
 		$('#calendar').css('visibility', 'visible'); // raffiche
 		
-		this.resizeCalendar(ui.originalSize.width-ui.size.width);
+		pmUtils.resizeCalendar(ui.originalSize.width-ui.size.width);
 		
 		// on stock ces tailles dans les paramètres de l'utilisateur
 		// volontairement on travaille en pixels
-		this.setLocalStorage('SizeSidebarOrga', $('#sidebar_orga').width());
-		this.setLocalStorage('SizeSidebarTache', $('#sidebar_tache').width());
+		pmUtils.setLocalStorage('SizeSidebarOrga', $('#sidebar_orga').width());
+		pmUtils.setLocalStorage('SizeSidebarTache', $('#sidebar_tache').width());
 	},
 	// resize le calendar et tout ce qui va avec
 	resizeCalendar: function(deltaTaille) {
@@ -173,8 +173,8 @@ PmUtils.prototype = {
 		$('#calendar').width(_newWidth+'%');
 
 		// même chose pour les sidebars
-		this.setPourcentWidth('#sidebar_orga');
-		this.setPourcentWidth('#sidebar_tache');
+		pmUtils.setPourcentWidth('#sidebar_orga');
+		pmUtils.setPourcentWidth('#sidebar_tache');
 	},
 	
 	/*
