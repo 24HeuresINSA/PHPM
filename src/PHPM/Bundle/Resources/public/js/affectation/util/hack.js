@@ -55,17 +55,17 @@ Date.prototype.getThisFormat = function(leFormat) {
  */
 Date.prototype.getPMonth = function() {
 	var _mois = this.getMonth()+1; // on rajoute 1 pour coller à ce que fait PHP
-	return (_mois < 10 ? '0' : '') + _mois;
+	return (_mois < 10 ? '0' : '') + Number(_mois);
 }
 Date.prototype.getPDate = function() {
 	var _jour = this.getDate();
-	return (_jour < 10 ? '0' : '') + _jour;
+	return (_jour < 10 ? '0' : '') + Number(_jour);
 }
 Date.prototype.getPHours = function() {
 	var _heure = this.getHours();
-	return (_heure < 10 ? '0' : '') + _heure;
+	return (_heure < 10 ? '0' : '') + Number(_heure);
 }
 Date.prototype.getPMinutes = function() {
 	var _minute = this.getMinutes();
-	return (_minute < 10 ? '0' : '') + _minute;
+	return (_minute < 10 ? '0' : '') + Number(_minute);
 }
