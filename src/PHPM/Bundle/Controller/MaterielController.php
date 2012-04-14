@@ -90,7 +90,7 @@ class MaterielController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('config_manif'));
+            return $this->redirect($this->generateUrl('config'));
             
         }
 
@@ -186,7 +186,7 @@ class MaterielController extends Controller
             $em->flush();
         
 
-        return $this->redirect($this->generateUrl('config_manif'));
+        return $this->redirect($this->generateUrl('config'));
     }
 
     private function createDeleteForm($id)
