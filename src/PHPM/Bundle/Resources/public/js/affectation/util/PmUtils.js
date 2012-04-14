@@ -136,8 +136,8 @@ PmUtils.prototype = {
 									maxWidth: 400,
 									autoHide: true,
 									handles: 'e',
-									resize: this.hideCalendar,
-									stop: this.resizeHandler
+									resize: pmUtils.hideCalendar,
+									stop: pmUtils.resizeHandler
 									});
 			
 			$("#sidebar_tache").resizable({
@@ -145,8 +145,8 @@ PmUtils.prototype = {
 									maxWidth: 400,
 									autoHide: true,
 									handles: 'w',
-									resize: this.hideCalendar,
-									stop: this.resizeHandler
+									resize: pmUtils.hideCalendar,
+									stop: pmUtils.resizeHandler
 									});
 		});
 	},
