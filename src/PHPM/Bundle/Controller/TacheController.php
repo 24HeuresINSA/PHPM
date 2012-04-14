@@ -159,20 +159,18 @@ class TacheController extends Controller
             throw $this->createNotFoundException('Unable to find Tache entity.');
         }
 
-        $defaultValues = array('entity'=>$entity, 'Materiel'=> $entity->getMateriel(), "commentaire"=>'');
+        $defaultValues = array('entity' => $entity, 'Materiel' => $entity->getMateriel(), "commentaire" => '');
         $rOnly = (($entity->getStatut()>=1 ) && (!$admin)) || ($entity->getStatut()==3 );
         
-        
-        $editForm = $this->createForm(new TacheType($admin,$em,$config,$rOnly),$defaultValues);
+        $editForm = $this->createForm(new TacheType($admin, $em, $config, $rOnly), $defaultValues);
 //         $besoinsForm = $this->createForm(new TacheBesoinsType(false,$em,$config,$entity));
         $deleteForm = $this->createDeleteForm($id);
         
         return array(
-            'entity'      => $entity,
-            'form'   => $editForm->createView(),
-            'admin' =>$admin,
-                'rOnly'=>$rOnly
-
+            'entity' => $entity,
+            'form' => $editForm->createView(),
+            'admin' => $admin,
+            'rOnly'=>$rOnly
         );
     }
 
