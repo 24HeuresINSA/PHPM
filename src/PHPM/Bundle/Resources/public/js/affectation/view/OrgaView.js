@@ -16,7 +16,7 @@ OrgaView.prototype = {
 		$('#bouton_orga_prev').click(function() { $('#orga_'+pmAffectation.current.orga.id).prev().click(); });
 		$('#bouton_orga_next').click(function() { $('#orga_'+pmAffectation.current.orga.id).next().click(); });
 		$('#bouton_orga_refresh').click(function() { pmAffectation.controllers.orga.getData(); });
-		$('#bouton_orga_detail').click(function() { pmAffectation.views.orga.viewOrgaDetail({id: pmAffectation.current.orga.id}); });
+		$('#bouton_orga_detail').click(function() { pmAffectation.views.orga.viewOrgaDetails({id: pmAffectation.current.orga.id}); });
 		
 		this.setFilters(); // met les bonnes valeurs dans les filtres
 		
