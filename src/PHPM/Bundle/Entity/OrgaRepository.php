@@ -91,7 +91,7 @@ class OrgaRepository extends EntityRepository
         ->getResult();
     }
     
-            public function getNombreHeureDesCreneauNonAffecte() 
+    public function getNombreHeureDesCreneauNonAffecte() 
     {
         return $this->getEntityManager()
         ->createQuery("SELECT SUM(c.fin-c.debut)/3600 AS nbHeures FROM PHPMBundle:Creneau c  WHERE (c.disponibilite is NULL)")   

@@ -10,7 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use PHPM\Bundle\Form\BesoinMaterielType;
 use PHPM\Bundle\Entity\Tache;
 
-class TacheType extends AbstractType {
+class TacheType extends AbstractType
+{
 
 	protected $admin;
 	protected $em;
