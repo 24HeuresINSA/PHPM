@@ -31,8 +31,16 @@
 	    	{% endif %}
 	    	<br>
 	    	<b>Besoins : </b>
-	    	{% if ph.respNecessaire  %}(RESP) {% endif %}
-	    	{% for bo in ph.besoinsOrga %}({{ bo.equipe }} : {{ bo.nbOrgasNecessaires }}){% endfor %}
+ 			{% if ph.respNecessaire  %}<b>(RESP)</b> {% endif %}
+		                
+                {% for bo in ph.besoinsOrga %}
+                	{% if bo.orgaHint is null %}
+                	({{ bo.equipe }} : {{ bo.nbOrgasNecessaires }})
+                	{% else %}
+                	<b>({{ bo.orgaHint }})</b>
+                	{% endif %}
+                
+                {% endfor %}
 		    
 		    
 		    

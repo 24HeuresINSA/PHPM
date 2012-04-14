@@ -47,7 +47,6 @@ class BesoinOrga
     * @var smallint $nbOrgasNecessaires
     *
     * @ORM\Column(name="nbOrgasNecessaires", type="smallint", nullable="true")
-    * @Assert\Min(limit = "0")
     */
     protected $nbOrgasNecessaires;
     
