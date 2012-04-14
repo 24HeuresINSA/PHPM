@@ -45,7 +45,7 @@ class TacheType extends AbstractType
 		$m = $builder->create('Materiel', 'form', array('label' => "Matériel requis", 'required' => false, "read_only" => $this -> rOnly));
 		$builder->add($i)->add($m)->add('commentaire', 'textarea', array('required' => false, "read_only" => $this->rOnly, 'attr' => array('placeholder' => 'Ajouter un commentaire')));
 
-		$entities = $this->em->createQuery("SELECT m FROM PHPMBundle:Materiel m ORDER BY m.categorie") -> getResult();
+		$entities = $this->em->createQuery("SELECT m FROM PHPMBundle:Materiel m ORDER BY m.categorie")->getResult();
 
 		$prevcat = -1;
 
