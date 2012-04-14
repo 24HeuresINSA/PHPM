@@ -62,7 +62,7 @@ OrgaView.prototype = {
 			$('#orga_'+_iOrga).bind('click', {id: _iOrga}, function(e) {
 				if (e.altKey) {
 					// Shift + click : affiche les infos détaillées de l'orga
-					pmAffectation.views.orga.viewOrgaDetail({id: e.data.id});
+					pmAffectation.views.orga.viewOrgaDetails({id: e.data.id});
 				} else {
 					// sinon on click sur l'orga
 					pmAffectation.controllers.orga.clickHandler({id: e.data.id});
@@ -77,7 +77,7 @@ OrgaView.prototype = {
 	 * Affiche un dialogue modal
 	 * avec des infos sur l'orga
 	 */
-	viewOrgaDetail: function(obj) {
+	viewOrgaDetails: function(obj) {
 		var _popup = window.open(pmAffectation.url+'orga/'+obj.id+'/edit');		
 	},
 }

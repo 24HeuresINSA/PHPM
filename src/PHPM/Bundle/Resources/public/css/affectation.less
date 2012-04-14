@@ -279,13 +279,32 @@ footer {
   height: 100%;
   .border-box();
   
-  // le menu drop-drown avec les filtres
-  .filtre {
-    padding: 3px;
-    z-index: 5000;
+  .boutons {
+    margin: 3px 0 3px 5%;
     
-    li {
-      height: 30px;
+    // les boutons
+    div {
+      float: left;
+      margin: 3px;
+    }
+    
+    // pour clearer les float
+    &:after {
+       content: ".";
+       visibility: hidden;
+       display: block;
+       height: 0;
+       clear: both;
+    }
+    
+    // le menu drop-drown avec les filtres
+    .filtre {
+      padding: 3px;
+      z-index: 5000;
+      
+      li {
+        height: 30px;
+      }
     }
   }
   
@@ -319,15 +338,7 @@ footer {
   float: left;
   border-right: 1px solid #003366;
   
-  .boutons_orga {
-    width: 100%;
-    margin: 10px 0;
-    
-    div {
-      float: left;
-      margin: 0 5px;
-    }
-  }
+  .boutons_orga {}
   
   .liste_orgas {
     .orga {}
@@ -346,15 +357,7 @@ footer {
 	overflow-y: scroll;
 	.border-box();
 	
-  .boutons_tache {
-    width: 100%;
-    margin: 10px 0;
-    
-    div {
-      float: left;
-      margin: 0 5px;
-    }
-  }
+  .boutons_tache {}
 	
   .liste_taches {
     .tache {}
