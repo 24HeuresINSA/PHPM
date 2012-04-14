@@ -76,13 +76,15 @@ OrgaController.prototype = {
 		pmAffectation.controllers.orga.getData();
 	},
 	// handler du champ de recherche, filtre la liste des orgas avec la str passée
-	filterList: function(str) {		
+	filterList: function(str) {
+		str = pmUtils.removeDiacritics(str); // retire les accents
+		
 		var _orgas = pmUtils.filter(pmAffectation.data.orga, function(key, val) {
 			// on recherche sur les champs nom, prénom, et surnom (test leur existence)
 			return (
-				(val.nom && val.nom.toLowerCase().substr(0, str.length) == str) || 
-				(val.prenom && val.prenom.toLowerCase().substr(0, str.length) == str) || 
-				(val.surnom && val.surnom.toLowerCase().substr(0, str.length) == str)
+				(val.nom && pmUtils.removeDiacritics(val.nom.substr(0, str.length).toLowerCase()) == str) || 
+				(val.prenom && pmUtils.removeDiacritics(val.prenom.substr(0, str.length).toLowerCase()) == str) || 
+				(val.surnom && pmUtils.removeDiacritics(val.surnom.substr(0, str.length).toLowerCase()) == str)
 			);
 		}, true);
 		

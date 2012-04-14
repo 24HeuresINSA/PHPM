@@ -68,12 +68,14 @@ CreneauController.prototype = {
 		pmAffectation.controllers.creneau.getData();
 	},
 	// handler du champ de recherche, filtre la liste des orgas avec la str passée
-	filterList: function(str) {		
+	filterList: function(str) {
+		str = pmUtils.removeDiacritics(str); // retire les accents
+		
 		var _creneaux = pmUtils.filter(pmAffectation.data.creneaux, function(key, val) {
 			// on recherche sur les champs nom et lieu (test leur existence)
 			return (
-				(val.nom && val.nom.toLowerCase().substr(0, str.length) == str) || 
-				(val.lieu && val.lieu.toLowerCase().substr(0, str.length) == str) 
+				(val.nom && pmUtils.removeDiacritics(val.nom.substr(0, str.length).toLowerCase()) == str) || 
+				(val.lieu && pmUtils.removeDiacritics(val.lieu.substr(0, str.length).toLowerCase()) == str) 
 			);
 		}, true);
 		
