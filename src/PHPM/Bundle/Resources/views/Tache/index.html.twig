@@ -47,7 +47,7 @@
 				    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':2}) }}"><i class="icon-ok"></i> Validées</a>
 				</li>
 				<li{% if app.request.get('statut') == 3 %} class="active" {% endif %}>
-				    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':3}) }}"><i class="icon-arrow-right"></i>Prêtes pour affectation</a>
+				    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':3}) }}"><i class="icon-arrow-right"></i> Prêtes pour affectation</a>
 				</li>
 				<li{% if app.request.get('statut') == -1 %} class="active" {% endif %}>
 				    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':-1}) }}"><i class="icon-trash"></i> Supprimées</a>
