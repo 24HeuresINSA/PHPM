@@ -17,26 +17,39 @@
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
         {# c'est pas très beau - on met un code 'générique' dans un block - mais à priori la seule méthode #}
         {% block style %}
-			{# Rewritten CSS #}
-			{% stylesheets
-				'bundles/phpm/css/jquery.dataTables.css'
-				'../vendor/DataTables/media/css/jquery.dataTables_themeroller.css'
-				'../vendor/Timepicker/jquery-ui-timepicker-addon.css'
-				'lib/jWYSIWYG/jquery.wysiwyg.css'
-				filter='cssrewrite' 
-			%}
-				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
-			{% endstylesheets %}
+			
+			{# Twitter Bootstrap Code #}
+				<link rel="stylesheet" href="{{ asset('lib/bootstrap/css/bootstrap.min.css') }}" type="text/css" />
+				<style type="text/css">
+			      body {
+			        padding-top: 60px;
+			        padding-bottom: 40px;
+			      }
+			      .sidebar-nav {
+			        padding: 9px 0;
+			      }
+			    </style>
+				<link rel="stylesheet" href="{{ asset('lib/bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" />
+        
+        
+        	{# Rewritten CSS #}
+				{% stylesheets
+					'bundles/phpm/css/jquery.dataTables.css'
+					'../vendor/DataTables/media/css/jquery.dataTables_themeroller.css'
+					'../vendor/Timepicker/jquery-ui-timepicker-addon.css'
+					'lib/jWYSIWYG/jquery.wysiwyg.css'
+					filter='cssrewrite' 
+				%}
+					<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
+				{% endstylesheets %}
 			
 			{# Was re-writen, but will stick to less.js for the moment #}
-			<link rel="stylesheet/less" href="{{ asset('bundles/phpm/css/style.less') }}" type="text/css" />
-			<link rel="stylesheet/less" href="{{ asset('bundles/phpm/css/tache.less') }}" type="text/css" />
+				<link rel="stylesheet/less" href="{{ asset('bundles/phpm/css/style.less') }}" type="text/css" />
+				<link rel="stylesheet/less" href="{{ asset('bundles/phpm/css/tache.less') }}" type="text/css" />
 			
 			{# Not rewritten stylesheets #}
-			<link rel="stylesheet" href="{{ asset('bundles/phpm/css/jquery-ui/themes/smoothness/jquery-ui-1.8.16.custom.css') }}" type="text/css" />
-			<link rel="stylesheet" href="{{ asset('lib/bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" />
-			<link rel="stylesheet" href="{{ asset('lib/bootstrap/css/bootstrap.min.css') }}" type="text/css" />
-			<link rel="stylesheet" href="{{ asset('bundles/phpm/css/images.css') }}" type="text/css" />
+				<link rel="stylesheet" href="{{ asset('bundles/phpm/css/jquery-ui/themes/smoothness/jquery-ui-1.8.16.custom.css') }}" type="text/css" />
+				<link rel="stylesheet" href="{{ asset('bundles/phpm/css/images.css') }}" type="text/css" />
 		{% endblock %}
 		
 		{# même chose pour Javascript, bien le mettre APRES à cause de LESS #}
