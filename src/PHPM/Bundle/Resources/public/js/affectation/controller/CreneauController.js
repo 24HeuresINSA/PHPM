@@ -14,7 +14,7 @@ CreneauController.prototype = {
 	 * Constructeur
 	 */
 	initialize: function() {
-		pmAffectation.data.creneau = {};
+		pmAffectation.data.creneaux = {};
 
 		pmAffectation.models.creneau = new CreneauModel();
 		pmAffectation.views.creneau = new CreneauView();
