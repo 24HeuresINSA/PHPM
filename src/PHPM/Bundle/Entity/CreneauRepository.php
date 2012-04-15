@@ -114,16 +114,19 @@ class CreneauRepository extends EntityRepository
 	public function getCreneauxCompatibleWithCriteria($niveau_confiance, $permis, $duree, $orga, $plage, $jour, $date_time)
 	{
 		// bien filtrer pour ne prendre que les tâches prêtes pour affectation (statut = 3)
-	    $dql = 'SELECT c FROM PHPMBundle:Creneau c JOIN c.plageHoraire p JOIN p.tache t JOIN t.confiance conf WHERE c.disponibilite IS NULL AND t.statut = 3 ';
+		// viré le reliquat "confiance"
+	    $dql = 'SELECT c FROM PHPMBundle:Creneau c JOIN c.plageHoraire p JOIN p.tache t WHERE c.disponibilite IS NULL AND t.statut = 3 ';
 	
 	    if ($permis != '') {
 	    	$dql.= "AND t.permisNecessaire = $permis ";
 		}
 	   
 	    if ($niveau_confiance != '') {
-	    	$dql.= "AND conf.valeur >= $niveau_confiance ";
+		 	// TODO : ré-écrire avec nouvelle gestion de la confiance
+	    	//$dql.= "AND conf.valeur >= $niveau_confiance ";
 		}
-	       
+	    
+		// TODO : catégorie à remettre
 // 	    if ($categorie != '') {
 // 	    	$dql.= "AND t.categorie = $categorie ";
 // 	    }
@@ -154,24 +157,24 @@ class CreneauRepository extends EntityRepository
 	    if ($date_time != '') {
 	    	$dql.= "AND (c.debut <= '$date_time') AND (c.fin >= '$date_time') ";
 	    }
-	    
 
 	    if ($orga != '') {
-		    // Conflicts With creneaux
+	        // on est dans les dispos de l'orga
+		    $dql .= "AND (c.id IN 
+		    (SELECT cin.id FROM PHPMBundle:Creneau cin, PHPMBundle:Orga oin JOIN oin.disponibilites doin
+		    WHERE oin = $orga AND ((cin.debut >= doin.debut) AND (cin.fin <= doin.fin )))) ";
+			
+		    // pas sur un créneau déjà affecté
 		    $dql .= "AND (c.id NOT IN 
 		    (SELECT ci.id FROM PHPMBundle:Creneau ci, PHPMBundle:Orga o JOIN o.disponibilites do JOIN do.creneaux co
 		    WHERE o = $orga AND ((ci.debut < co.fin) AND (ci.fin > co.debut )))) ";
 		    
-	        // Not in Orga dispo
-		    $dql .= "AND (c.id IN 
-		    (SELECT cin.id FROM PHPMBundle:Creneau cin, PHPMBundle:Orga oin JOIN oin.disponibilites doin
-		    WHERE oin = $orga AND ((cin.debut >= doin.debut) AND (cin.fin <= doin.fin )))) ";
-		    
-		    // Compatible with orga attributes
-		    $dql .= "AND (c.id IN
+		    // compatible avec l'orga : sa confiance, son équipe
+		    // TODO : à mettre à jour
+		    /*$dql .= "AND (c.id IN
 		    (SELECT ca.id FROM PHPMBundle:Creneau ca JOIN ca.plageHoraire pa JOIN pa.tache ta JOIN ta.confiance confca,
 		    PHPMBundle:Orga oa JOIN oa.confiance confoa
-	        WHERE oa = $orga AND confoa.valeur >= confca.valeur)) ";
+	        WHERE oa = $orga AND confoa.valeur >= confca.valeur)) ";*/
 	    }
 
 	    $query = $this->getEntityManager()->createQuery($dql);
