@@ -117,7 +117,13 @@ PmUtils.prototype = {
 		
 		$('#content').height(_contentHeight+'px');
 		$('#client').height(_clientHeight+'px');
+		
 		$('#jours').height(_clientHeight-30+'px');
+		
+		var _sidebarHeight = $('#sidebar_tache').height();
+		
+		$('#liste_orgas').height(_sidebarHeight-34-6+'px'); // 6px de diverses marges
+		$('#liste_taches').height(_sidebarHeight-34-6+'px');
 	},
 	// fonction appelée lorsqu'on touche au calendrier
 	setResizeableApp: function() {

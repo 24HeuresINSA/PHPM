@@ -77,22 +77,30 @@ footer {
  */
 ::-webkit-scrollbar {
   width: 8px;
+  border: 0;
   margin: 0;
   padding: 0;
 }
 ::-webkit-scrollbar-track {
-  display: none; // affiche pas, pas gênant
+  //display: none; // affiche pas, pas gênant
+  background: #fff;
 }
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 8px;
   border-radius: 8px;
-  background: rgba(100, 100, 100, 0.5); 
+  background: rgb(180, 180, 180); 
 }
 ::-webkit-scrollbar-thumb:window-inactive {
   display: none;
 }
 ::-webkit-scrollbar-button {
   display: none; // on ne peut pas de boutons d'ascenseur
+}
+::-webkit-scrollbar-track-piece {           /* Fond */
+  background: transparent none;
+  border: none;
+  margin: 4px;
+  //-webkit-box-shadow: inset 1px 1px 0 0 rgb(137,131,117), inset -1px -1px 0 0 rgb(224,220,210);
 }
 
 /*
@@ -276,7 +284,13 @@ footer {
 .sidebar {
   width: 20%;
   height: 100%;
+  overflow: hidden;
   .border-box();
+  
+  // bug, Chrome affiche sinon une scrollbar vide ?
+  ::-webkit-scrollbar {
+    display: none;
+  }
   
   .boutons {
     margin: 3px 0 3px 5%;
@@ -310,8 +324,9 @@ footer {
   .liste {
     width: 100%;
     overflow-x: hidden; // normalement il n'y en a pas
-    overflow-y: auto;
+    overflow-y: scroll;
     border-top: 1px solid #333;
+    .border-box();
     
     .item {
       border-top: 1px solid #888;

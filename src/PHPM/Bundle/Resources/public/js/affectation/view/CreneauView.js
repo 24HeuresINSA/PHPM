@@ -54,7 +54,7 @@ CreneauView.prototype = {
 			var _html = '<div class="item tache" id="tache_'+_iCreneau+'" idCreneau="'+_iCreneau+'">';
 			_html += _creneaux[_iCreneau]['nom']+' - '+_creneaux[_iCreneau]['lieu']+' (';
 			_html += _creneaux[_iCreneau]['debut'].getThisFormat('j')+' : ';
-			_html += _creneaux[_iCreneau]['debut'].getThisFormat('H:I')+' - '+_creneaux[_iCreneau]['fin'].getThisFormat('H:I')+')';
+			_html += _creneaux[_iCreneau]['debut'].getThisFormat('H:I')+'-'+_creneaux[_iCreneau]['fin'].getThisFormat('H:I')+')';
 			_html += '</div>';
 			
 			$('#liste_taches').append(_html);
