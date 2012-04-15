@@ -113,7 +113,8 @@ class CreneauRepository extends EntityRepository
 	
 	public function getCreneauxCompatibleWithCriteria($niveau_confiance, $permis, $duree, $orga, $plage, $jour, $date_time)
 	{
-	    $dql = 'SELECT c FROM PHPMBundle:Creneau c JOIN c.plageHoraire p JOIN p.tache t JOIN t.confiance conf WHERE c.disponibilite IS NULL ';
+		// bien filtrer pour ne prendre que les tâches prêtes pour affectation (statut = 3)
+	    $dql = 'SELECT c FROM PHPMBundle:Creneau c JOIN c.plageHoraire p JOIN p.tache t JOIN t.confiance conf WHERE c.disponibilite IS NULL AND t.statut = 3 ';
 	
 	    if ($permis != '') {
 	    	$dql.= "AND t.permisNecessaire = $permis ";
@@ -129,16 +130,17 @@ class CreneauRepository extends EntityRepository
 
 		// Filtre sur la durée, on utilise une fonction DQL custom
 		// intval pour protéger notre code
- 	    if ($duree !='') {
- 	    	$dql.= 'AND (TIMEDIFF(c.debut, c.fin) <= '.intval($duree).' ) '; // TIMEDIFF, fonction DQL custom, fait la différence en minutes
+ 	    if ($duree != '') {
+ 	    	$dql.= 'AND (TIMEDIFF(c.debut, c.fin) <= '.intval($duree).') '; // TIMEDIFF, fonction DQL custom, fait la différence en minutes
 		}
 	    
 	    if ($plage != '') {
-		    $pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation_plages')->getValue(),TRUE);
+		    $pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation_plages')->getValue(), TRUE);
 		    $plage= $pref[$plage];
 		    $debut = $plage['debut'];
 		    $fin = $plage['fin'];
-		    $dql.= "AND (c.debut <= '$fin') AND (c.fin >='$debut') ";
+			
+		    $dql.= "AND (c.debut <= '$fin') AND (c.fin >= '$debut') ";
 	    }
 	    
 		if ($jour != '') {
@@ -146,31 +148,30 @@ class CreneauRepository extends EntityRepository
 			// DQL n'implémente pas correctement DATE() (merci Doctrine de merde), 
 			// on regarde donc par rapport à l'intervalle $jour 00:00:00 et $jour+1 00:00:00
 			// on ne s'intéresse qu'à l'heure de début (question de ne pas oublier de créneaux)
-			$dql.= "AND (c.debut >= '".$jour->format('Y-m-d')."' ) AND (c.debut < '".$jour->add(new \DateInterval('P1D'))->format('Y-m-d')."' ) ";
+			$dql.= "AND (c.debut >= '".$jour->format('Y-m-d')."') AND (c.debut < '".$jour->add(new \DateInterval('P1D'))->format('Y-m-d')."') ";
 		}
 		
 	    if ($date_time != '') {
-	    	$dql.= "AND (c.debut <= '$date_time' ) AND (c.fin >= '$date_time' ) ";
+	    	$dql.= "AND (c.debut <= '$date_time') AND (c.fin >= '$date_time') ";
 	    }
 	    
 
 	    if ($orga != '') {
-		    // Conflcts With creneaux
-		    $dql.="AND (c.id NOT IN 
+		    // Conflicts With creneaux
+		    $dql .= "AND (c.id NOT IN 
 		    (SELECT ci.id FROM PHPMBundle:Creneau ci, PHPMBundle:Orga o JOIN o.disponibilites do JOIN do.creneaux co
-		    WHERE o =$orga AND ( (ci.debut < co.fin) AND (ci.fin > co.debut ) )   ))";
+		    WHERE o = $orga AND ((ci.debut < co.fin) AND (ci.fin > co.debut )))) ";
 		    
 	        // Not in Orga dispo
-		    $dql.="AND (c.id IN 
+		    $dql .= "AND (c.id IN 
 		    (SELECT cin.id FROM PHPMBundle:Creneau cin, PHPMBundle:Orga oin JOIN oin.disponibilites doin
-		    WHERE oin =$orga AND ( (cin.debut >= doin.debut) AND (cin.fin <= doin.fin ) )   ))";
+		    WHERE oin = $orga AND ((cin.debut >= doin.debut) AND (cin.fin <= doin.fin )))) ";
 		    
 		    // Compatible with orga attributes
-		    $dql.="AND (c.id IN
+		    $dql .= "AND (c.id IN
 		    (SELECT ca.id FROM PHPMBundle:Creneau ca JOIN ca.plageHoraire pa JOIN pa.tache ta JOIN ta.confiance confca,
 		    PHPMBundle:Orga oa JOIN oa.confiance confoa
-	        WHERE oa =$orga AND confoa.valeur >= confca.valeur
-		    ))";
+	        WHERE oa = $orga AND confoa.valeur >= confca.valeur)) ";
 	    }
 
 	    $query = $this->getEntityManager()->createQuery($dql);

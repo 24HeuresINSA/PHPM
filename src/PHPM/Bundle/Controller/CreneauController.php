@@ -212,7 +212,6 @@ class CreneauController extends Controller
     
     	//on recupère les paramètres passés en post
     	$permis = $request->request->get('permis', '');
-//     	$age = $request->request->get('age', '0');
     	$niveau_confiance = $request->request->get('confiance_id', '');
 //     	$categorie = $request->request->get('categorie_id', '');
     	$duree = $request->request->get('duree', '');
@@ -226,9 +225,10 @@ class CreneauController extends Controller
 		}
     
     	$em = $this->getDoctrine()->getEntityManager();
-    	$entities = $em->getRepository('PHPMBundle:Creneau')->getCreneauxCompatibleWithCriteria($niveau_confiance,  $permis, $duree, $orga, $plage, $jour, $date_time);
+    	$entities = $em->getRepository('PHPMBundle:Creneau')->getCreneauxCompatibleWithCriteria($niveau_confiance, $permis, $duree, $orga, $plage, $jour, $date_time);
 
     	$creneauArray = array();
+    	
     	foreach ($entities as $creneau) {
     		$creneauArray[$creneau->getId()]= array(
     			        	"nom" => $creneau->getPlageHoraire()->getTache()->getNom(),
@@ -241,8 +241,7 @@ class CreneauController extends Controller
     			    		"permis_necessaire"=> $creneau->getPlageHoraire()->getTache()->getPermisNecessaire()
     			        	);
     	}
-    	 
-    	//exit(var_dump($creneauArray));
+		
     	$response = new Response();
     	$response->setContent(json_encode($creneauArray));
     	$response->headers->set('Content-Type', 'application/json');
