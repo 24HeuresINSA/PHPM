@@ -111,26 +111,26 @@ class CreneauRepository extends EntityRepository
 		
 	}
 	
-	public function getCreneauxCompatibleWithCriteria($niveau_confiance, $permis, $duree, $orga, $plage, $jour, $date_time)
+	public function getCreneauxCompatibleWithCriteria($niveau_confiance, $permis, $duree, $orgaId, $plage, $jour, $date_time)
 	{
+		
+		
+		
 		// bien filtrer pour ne prendre que les tâches prêtes pour affectation (statut = 3)
 		// viré le reliquat "confiance"
-	    $dql = 'SELECT c FROM PHPMBundle:Creneau c JOIN c.plageHoraire p JOIN p.tache t WHERE c.disponibilite IS NULL AND t.statut = 3 ';
+	    $dql = 'SELECT c FROM PHPMBundle:Creneau c JOIN c.plageHoraire p JOIN p.tache t LEFT JOIN c.equipeHint eh LEFT JOIN eh.confiance ehc
+	     LEFT JOIN c.orgaHint oh WHERE c.disponibilite IS NULL AND t.statut = 3 ';
 	
 	    if ($permis != '') {
 	    	$dql.= "AND t.permisNecessaire = $permis ";
 		}
 	   
 	    if ($niveau_confiance != '') {
-		 	// TODO : ré-écrire avec nouvelle gestion de la confiance
-	    	//$dql.= "AND conf.valeur >= $niveau_confiance ";
+
+	    	$valeurConfianceMin =  $this->getEntityManager()->createQuery("SELECT c FROM PHPMBundle:Confiance c WHERE c.id = $niveau_confiance")->getSingleResult()->getValeur();
+	    	$dql.= "AND ehc.valeur >= $valeurConfianceMin ";
 		}
 	    
-		// TODO : catégorie à remettre
-// 	    if ($categorie != '') {
-// 	    	$dql.= "AND t.categorie = $categorie ";
-// 	    }
-
 		// Filtre sur la durée, on utilise une fonction DQL custom
 		// intval pour protéger notre code
  	    if ($duree != '') {
@@ -158,30 +158,30 @@ class CreneauRepository extends EntityRepository
 	    	$dql.= "AND (c.debut <= '$date_time') AND (c.fin >= '$date_time') ";
 	    }
 
-	    if ($orga != '') {
-	        // on est dans les dispos de l'orga
+	    if ($orgaId != '') {
+	        
+	    	$orga =  $this->getEntityManager()->createQuery("SELECT o FROM PHPMBundle:Orga o WHERE o.id = $orgaId")->getSingleResult();
+	    	$equipe = $orga->getEquipe()->getId();
+	    	
+	    	// on est dans les dispos de l'orga
 		    $dql .= "AND (c.id IN 
 		    (SELECT cin.id FROM PHPMBundle:Creneau cin, PHPMBundle:Orga oin JOIN oin.disponibilites doin 
-		    WHERE oin = $orga AND ((cin.debut >= doin.debut) AND (cin.fin <= doin.fin )))) ";
+		    WHERE oin = $orgaId AND ((cin.debut >= doin.debut) AND (cin.fin <= doin.fin )))) ";
 			
 		    // pas sur un créneau déjà affecté
 		    $dql .= "AND (c.id NOT IN 
 		    (SELECT ci.id FROM PHPMBundle:Creneau ci, PHPMBundle:Orga o JOIN o.disponibilites do JOIN do.creneaux co 
-		    WHERE o = $orga AND ((ci.debut < co.fin) AND (ci.fin > co.debut )))) ";
+		    WHERE o = $orgaId AND ((ci.debut < co.fin) AND (ci.fin > co.debut )))) ";
 		    
-		    // compatible avec le niveau de confiance de notre orga
-		    // TODO : à mettre à jour
-		    /*$dql .= "AND (c.id IN
-		    (SELECT ca.id FROM PHPMBundle:Creneau ca JOIN ca.plageHoraire pa JOIN pa.tache ta JOIN ta.confiance confca,
-		    PHPMBundle:Orga oa JOIN oa.confiance confoa
-	        WHERE oa = $orga AND confoa.valeur >= confca.valeur)) ";*/
+		    // Compatibilité équipe/niveau de confiance
+		    // On retourne les créneaux pour lesquels
+		    // 1 - L'orga est dans l'équipe equipeHint
+		    // OU 2 - l'orga a une confiance supérieure ou égale à l'équipeHint 
+		    $valeurConfianceOrga= $orga->getConfiance()->getValeur();
+		    $dql.= "AND (ehc.valeur <= $valeurConfianceOrga OR c.equipeHint = $equipe)";
 	       
-	       	// on vérifie s'il y a une consigne d'équipe ou d'orga
-	       	// CODE PROVISOIRE
-	       	//$dql .= "AND (c.equipeHint IS NULL OR c.equipeHint IN (SELECT eq.id FROM PHPMBundle:Orga org JOIN org.equipe eq WHERE org.id = $orga)) ";
-	       	// CODE PROVISOIRE
-	       	// TODO : consigne d'équipe
-	       	$dql .= "AND (c.orgaHint IS NULL OR c.orgaHint = $orga) ";
+	       	// on vérifie s'il y a une consigne  d'orga
+	       	$dql .= "AND (c.orgaHint IS NULL OR c.orgaHint = $orgaId) ";
 	    }
 		
 		// on dé-duplique
@@ -192,7 +192,7 @@ class CreneauRepository extends EntityRepository
 			// on trie par priorité : orga, équipe puis confiance
 			// TODO : equipeHint
 			// TODO : confiance
-			//$dql .= "ORDER BY oh.id ASC";
+// 			$dql .= "ORDER BY u DESC";
 		}
 
 	    $query = $this->getEntityManager()->createQuery($dql);

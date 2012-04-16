@@ -13,6 +13,7 @@ class EquipeType extends AbstractType
             ->add('nom')
             ->add('couleur')
             ->add('responsable',null,array('required'=>false,'label'=>false))
+            ->add('confiance')
         ;
     }
     

@@ -46,15 +46,11 @@ class Confiance
      */
     protected $couleur;
     
-    /**
-    * @ORM\OneToMany(targetEntity="Tache", mappedBy="confiance")
-    */
-    protected $taches;
     
     /**
-    * @ORM\OneToMany(targetEntity="Orga", mappedBy="confiance")
+    * @ORM\OneToMany(targetEntity="Equipe", mappedBy="confiance")
     */
-    protected $orgas;
+    protected $equipes;
     
 
 
@@ -185,5 +181,25 @@ class Confiance
     public function toSimpleArray()
     {
         return array("nom" => $this->getNom(),"couleur" => $this->getCouleur());
+    }
+
+    /**
+     * Add equipes
+     *
+     * @param PHPM\Bundle\Entity\Equipe $equipes
+     */
+    public function addEquipe(\PHPM\Bundle\Entity\Equipe $equipes)
+    {
+        $this->equipes[] = $equipes;
+    }
+
+    /**
+     * Get equipes
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getEquipes()
+    {
+        return $this->equipes;
     }
 }

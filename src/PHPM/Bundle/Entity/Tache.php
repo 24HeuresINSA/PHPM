@@ -95,12 +95,7 @@ class Tache
 //     */
 //     protected $categorie;
     
-    /**
-    * @ORM\ManyToOne(targetEntity="Confiance", inversedBy="taches")
-    * @ORM\JoinColumn(name="confiance_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
-    * @Assert\Valid
-    */
-    protected $confiance;
+
     
     /**
     * @ORM\OneToMany(targetEntity="PlageHoraire", mappedBy="tache", indexBy="id",orphanRemoval=true, cascade={"persist", "remove"})
