@@ -169,16 +169,20 @@ class CreneauRepository extends EntityRepository
 		    (SELECT ci.id FROM PHPMBundle:Creneau ci, PHPMBundle:Orga o JOIN o.disponibilites do JOIN do.creneaux co
 		    WHERE o = $orga AND ((ci.debut < co.fin) AND (ci.fin > co.debut )))) ";
 		    
-		    // compatible avec l'orga : sa confiance, son équipe
+		    // compatible avec le niveau de confiance de notre orga
 		    // TODO : à mettre à jour
 		    /*$dql .= "AND (c.id IN
 		    (SELECT ca.id FROM PHPMBundle:Creneau ca JOIN ca.plageHoraire pa JOIN pa.tache ta JOIN ta.confiance confca,
 		    PHPMBundle:Orga oa JOIN oa.confiance confoa
 	        WHERE oa = $orga AND confoa.valeur >= confca.valeur)) ";*/
+	       
+	       	// on vérifie s'il y a une consigne d'équipe ou d'orga
+	       	// TODO : consigne d'équipe
+	       	$dql .= "AND (c.orgaHint IS NULL OR c.orgaHint = $orga) ";
 	    }
 		
 		// on dé-duplique
-		$dql .= 'GROUP BY c.plageHoraire, c.equipeHint, c.orgaHint';
+		$dql .= "GROUP BY c.plageHoraire, c.equipeHint, c.orgaHint";
 
 	    $query = $this->getEntityManager()->createQuery($dql);
 		
