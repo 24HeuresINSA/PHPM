@@ -113,28 +113,25 @@ class CreneauRepository extends EntityRepository
 	
 	public function getCreneauxCompatibleWithCriteria($niveau_confiance, $permis, $duree, $orgaId, $plage, $jour, $date_time)
 	{
-		
-		
-		
 		// bien filtrer pour ne prendre que les tâches prêtes pour affectation (statut = 3)
 		// viré le reliquat "confiance"
 	    $dql = 'SELECT c FROM PHPMBundle:Creneau c JOIN c.plageHoraire p JOIN p.tache t LEFT JOIN c.equipeHint eh LEFT JOIN eh.confiance ehc
 	     LEFT JOIN c.orgaHint oh WHERE c.disponibilite IS NULL AND t.statut = 3 ';
 	
 	    if ($permis != '') {
-	    	$dql.= "AND t.permisNecessaire = $permis ";
+	    	$dql .= "AND t.permisNecessaire = $permis ";
 		}
 	   
 	    if ($niveau_confiance != '') {
-
-	    	$valeurConfianceMin =  $this->getEntityManager()->createQuery("SELECT c FROM PHPMBundle:Confiance c WHERE c.id = $niveau_confiance")->getSingleResult()->getValeur();
-	    	$dql.= "AND ehc.valeur >= $valeurConfianceMin ";
+	    	$valeurConfianceMin = $this->getEntityManager()->createQuery("SELECT c FROM PHPMBundle:Confiance c WHERE c.id = $niveau_confiance")->getSingleResult()->getValeur();
+	    	
+	    	$dql .= "AND ehc.valeur = $valeurConfianceMin "; // comportement strict
 		}
 	    
 		// Filtre sur la durée, on utilise une fonction DQL custom
 		// intval pour protéger notre code
  	    if ($duree != '') {
- 	    	$dql.= 'AND (TIMEDIFF(c.debut, c.fin) <= '.intval($duree).') '; // TIMEDIFF, fonction DQL custom, fait la différence en minutes
+ 	    	$dql .= 'AND (TIMEDIFF(c.debut, c.fin) <= '.intval($duree).') '; // TIMEDIFF, fonction DQL custom, fait la différence en minutes
 		}
 	    
 	    if ($plage != '') {
@@ -143,7 +140,7 @@ class CreneauRepository extends EntityRepository
 		    $debut = $plage['debut'];
 		    $fin = $plage['fin'];
 			
-		    $dql.= "AND (c.debut <= '$fin') AND (c.fin >= '$debut') ";
+		    $dql .= "AND (c.debut <= '$fin') AND (c.fin >= '$debut') ";
 	    }
 	    
 		if ($jour != '') {
@@ -157,9 +154,13 @@ class CreneauRepository extends EntityRepository
 	    if ($date_time != '') {
 	    	$dql.= "AND (c.debut <= '$date_time') AND (c.fin >= '$date_time') ";
 	    }
+		
+		// TODO : remettre
+		/*if ($categorie != '') {
+		$dql.= "AND t.categorie = $categorie ";
+		}*/
 
 	    if ($orgaId != '') {
-	        
 	    	$orga =  $this->getEntityManager()->createQuery("SELECT o FROM PHPMBundle:Orga o WHERE o.id = $orgaId")->getSingleResult();
 	    	$equipe = $orga->getEquipe()->getId();
 	    	
