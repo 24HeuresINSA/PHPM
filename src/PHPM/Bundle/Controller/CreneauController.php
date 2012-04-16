@@ -230,6 +230,14 @@ class CreneauController extends Controller
     	$creneauArray = array();
     	
     	foreach ($entities as $creneau) {
+    		// la priorité, faut tester pour déterminer la valeur
+    		$priorite = 'soft';
+    		if ($creneau->getOrgaHint() != null) {
+    			$priorite = 'orga';
+    		} else if ($creneau->getEquipeHint() != null) {
+    			$priorite = 'equipe';
+    		}
+    		
     		$creneauArray[$creneau->getId()]= array(
     			        	"nom" => $creneau->getPlageHoraire()->getTache()->getNom(),
     						"lieu" => $creneau->getPlageHoraire()->getTache()->getLieu(),
@@ -237,7 +245,8 @@ class CreneauController extends Controller
 				    		"debut" => $creneau->getDebut(),
 				    		"fin" => $creneau->getFin(),
     			        	"duree" => $creneau->getDuree(),
-    			    		"permis_necessaire"=> $creneau->getPlageHoraire()->getTache()->getPermisNecessaire()
+    			    		"permis_necessaire"=> $creneau->getPlageHoraire()->getTache()->getPermisNecessaire(),
+    			    		"priorite" => $priorite
     			        	);
     	}
 		

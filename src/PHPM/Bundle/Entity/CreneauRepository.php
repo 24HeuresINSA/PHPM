@@ -185,7 +185,15 @@ class CreneauRepository extends EntityRepository
 	    }
 		
 		// on dé-duplique
-		$dql .= "GROUP BY c.plageHoraire, c.equipeHint, c.orgaHint";
+		$dql .= "GROUP BY c.plageHoraire, c.equipeHint, c.orgaHint ";
+		
+		if ($orga != '') {
+			// ORDER BY doit être en dernier, après GROUP BY
+			// on trie par priorité : orga, équipe puis confiance
+			// TODO : equipeHint
+			// TODO : confiance
+			//$dql .= "ORDER BY oh.id ASC";
+		}
 
 	    $query = $this->getEntityManager()->createQuery($dql);
 		
