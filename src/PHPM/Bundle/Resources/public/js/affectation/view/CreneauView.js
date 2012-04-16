@@ -51,11 +51,25 @@ CreneauView.prototype = {
 		$('#liste_taches').removeClass('spinner_medium');
 		
 		for (var _iCreneau in _creneaux) {
+			// petit jeu sur la priorité, on met les labels
+			var _priorite = '';
+			switch (_creneaux[_iCreneau]['priorite']) {
+				case 'orga':
+					_priorite = ' <span class="label label-important">orga</span>';
+					break;
+				case 'equipe':
+					_priorite = ' <span class="label label-warning">équipe</span>';
+					break;
+				case 'confiance':
+					_priorite = ' <span class="label label-success">confiance</span>';
+					break;
+			}
+			
 			var _html = '<div class="item tache" id="tache_'+_iCreneau+'" idCreneau="'+_iCreneau+'">';
 			_html += _creneaux[_iCreneau]['nom']+' - '+_creneaux[_iCreneau]['lieu']+' (';
 			_html += _creneaux[_iCreneau]['debut'].getThisFormat('j')+' : ';
 			_html += _creneaux[_iCreneau]['debut'].getThisFormat('H:I')+'-'+_creneaux[_iCreneau]['fin'].getThisFormat('H:I')+')';
-			_html += '</div>';
+			_html += _priorite+'</div>';
 			
 			$('#liste_taches').append(_html);
 			
