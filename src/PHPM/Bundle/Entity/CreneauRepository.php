@@ -161,12 +161,12 @@ class CreneauRepository extends EntityRepository
 	    if ($orga != '') {
 	        // on est dans les dispos de l'orga
 		    $dql .= "AND (c.id IN 
-		    (SELECT cin.id FROM PHPMBundle:Creneau cin, PHPMBundle:Orga oin JOIN oin.disponibilites doin
+		    (SELECT cin.id FROM PHPMBundle:Creneau cin, PHPMBundle:Orga oin JOIN oin.disponibilites doin 
 		    WHERE oin = $orga AND ((cin.debut >= doin.debut) AND (cin.fin <= doin.fin )))) ";
 			
 		    // pas sur un créneau déjà affecté
 		    $dql .= "AND (c.id NOT IN 
-		    (SELECT ci.id FROM PHPMBundle:Creneau ci, PHPMBundle:Orga o JOIN o.disponibilites do JOIN do.creneaux co
+		    (SELECT ci.id FROM PHPMBundle:Creneau ci, PHPMBundle:Orga o JOIN o.disponibilites do JOIN do.creneaux co 
 		    WHERE o = $orga AND ((ci.debut < co.fin) AND (ci.fin > co.debut )))) ";
 		    
 		    // compatible avec le niveau de confiance de notre orga
@@ -177,6 +177,9 @@ class CreneauRepository extends EntityRepository
 	        WHERE oa = $orga AND confoa.valeur >= confca.valeur)) ";*/
 	       
 	       	// on vérifie s'il y a une consigne d'équipe ou d'orga
+	       	// CODE PROVISOIRE
+	       	//$dql .= "AND (c.equipeHint IS NULL OR c.equipeHint IN (SELECT eq.id FROM PHPMBundle:Orga org JOIN org.equipe eq WHERE org.id = $orga)) ";
+	       	// CODE PROVISOIRE
 	       	// TODO : consigne d'équipe
 	       	$dql .= "AND (c.orgaHint IS NULL OR c.orgaHint = $orga) ";
 	    }
