@@ -71,12 +71,15 @@ ParameterController.prototype = {
 			pmUtils.resizeCalendar($('#sidebar_orga').width()-_ssOrga);
 			
 			$('#sidebar_orga').width(_ssOrga);
+			pmUtils.setPourcentWidth('#sidebar_orga');
 		}
+		
 		var _ssTache = pmUtils.getLocalStorage('SizeSidebarTache');
 		if (_ssTache !== undefined) {
 			pmUtils.resizeCalendar($('#sidebar_tache').width()-_ssTache);
 			
 			$('#sidebar_tache').width(_ssTache);
+			pmUtils.setPourcentWidth('#sidebar_tache');
 		}
 	}
 	
