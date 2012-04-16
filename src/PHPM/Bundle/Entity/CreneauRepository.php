@@ -178,8 +178,8 @@ class CreneauRepository extends EntityRepository
 		    // On retourne les créneaux pour lesquels
 		    // 1 - L'orga est dans l'équipe equipeHint
 		    // OU 2 - l'orga a une confiance supérieure ou égale à l'équipeHint 
-		    $valeurConfianceOrga= $orga->getConfiance()->getValeur();
-		    $dql.= "AND (ehc.valeur <= $valeurConfianceOrga OR c.equipeHint = $equipe)";
+		    $valeurConfianceOrga = $orga->getConfiance()->getValeur();
+		    $dql .= "AND (ehc.valeur <= $valeurConfianceOrga OR c.equipeHint = $equipe)";
 	       
 	       	// on vérifie s'il y a une consigne  d'orga
 	       	$dql .= "AND (c.orgaHint IS NULL OR c.orgaHint = $orgaId) ";

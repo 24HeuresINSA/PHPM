@@ -226,26 +226,22 @@ class CreneauController extends Controller
     
     	$em = $this->getDoctrine()->getEntityManager();
     	$entities = $em->getRepository('PHPMBundle:Creneau')->getCreneauxCompatibleWithCriteria($niveau_confiance, $permis, $duree, $orgaId, $plage, $jour, $date_time);
-		
+		// nécessaire pour la suite, la priorité
+    	/*if ($orgaId != '') {
+    		$orga =  $em->createQuery("SELECT o FROM PHPMBundle:Orga o WHERE o.id = $orgaId")->getSingleResult();
+    		$equipe = $orga->getEquipe();
+    	}*/
+	    			
     	$creneauArray = array();
     	
-    	
-
-    	
     	foreach ($entities as $creneau) {
-    	    	//Gestion de la priorité
-	    	$priorite = '';
-	    	
-	    	if ($orgaId != '') {
-	    		 
-	    		$orga =  $this->getEntityManager()->createQuery("SELECT o FROM PHPMBundle:Orga o WHERE o.id = $orgaId")->getSingleResult();
-	    		$equipe = $orga->getEquipe()->getId();
-	    		
-	    		
-	    	
-	    	}
-    		
-    		
+    		// la priorité, faut tester pour déterminer la valeur
+    		$priorite = 'soft';
+    		if ($creneau->getOrgaHint() != null) {
+    			$priorite = 'orga';
+    		} else if ($creneau->getEquipeHint() != null) {
+    			$priorite = 'equipe';
+    		}
     		
     		$creneauArray[$creneau->getId()]= array(
     			        	"nom" => $creneau->getPlageHoraire()->getTache()->getNom(),
