@@ -176,6 +176,9 @@ class CreneauRepository extends EntityRepository
 		    PHPMBundle:Orga oa JOIN oa.confiance confoa
 	        WHERE oa = $orga AND confoa.valeur >= confca.valeur)) ";*/
 	    }
+		
+		// on dé-duplique
+		$dql .= 'GROUP BY c.plageHoraire, c.equipeHint, c.orgaHint';
 
 	    $query = $this->getEntityManager()->createQuery($dql);
 		
