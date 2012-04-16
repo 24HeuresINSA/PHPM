@@ -58,8 +58,9 @@ $(function() {
 					for (var _item in data) {
 						if (data[_item]['type'] === 'orga') {
 							var _label = ($.isNumeric(this.search) === true)? data[_item]['telephone'] : data[_item]['surnom'];
+							var _content = (_label !== null)? ' (' + _label + ')' : '';
 					
-							_result.push({label: data[_item]['prenom'] + ' ' + data[_item]['nom'] + ' (' + _label + ')',
+							_result.push({label: data[_item]['prenom'] + ' ' + data[_item]['nom'] + _content,
 											value: data[_item]['prenom'] + ' ' + data[_item]['nom'],
 											type: data[_item]['type'],
 											id: data[_item]['id']});
