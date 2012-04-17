@@ -23,9 +23,12 @@
 <div class="hero-unit">
 	<h1>PHPlanningMaker</h1>
 	<p>la Gestion des Ressources Humaines 2.0</p>
-	<p>
-		<a class="btn btn-primary btn-large" href="{{ url('login') }}">Se connecter</a>
-	</p>
+	{% if is_granted('ROLE_VISITOR') %}
+	{% else %}
+		<p>
+			<a class="btn btn-primary btn-large" href="{{ url('login') }}">Se connecter</a>
+		</p>
+	{% endif %}
 </div>
 
 {% endblock %}

@@ -118,6 +118,7 @@
         		{{ _self.navBarItem('Fiches Tâches','tache',{'orgaid': app.user.id}) }}
         		{{ _self.navBarItem('Groupes de tâches','groupetache',{'orgaid': app.user.id}) }}
        			{{ _self.navBarItem('Se déconnecter','logout') }}
+       		{% elseif is_granted('ROLE_VISITOR') %}	
         	{% else %}
        			{{ _self.navBarItem('Se connecter','login') }}
         	{% endif %}
