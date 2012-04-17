@@ -49,6 +49,8 @@ CreneauModel.prototype = {
 	 * Récup les résultats
 	 */
 	requestSuccess: function(data) {
+		// attention, on reçoit un tableau (l'ordre compte)
+		
 		pmAffectation.models.creneau.data = data;;
 	
 		pmAffectation.models.creneau.callBack();
@@ -61,7 +63,7 @@ CreneauModel.prototype = {
 	 * Getters des résultats
 	 */
 	getCreneaux: function() {	
-		var _creneaux = {};
+		var _creneaux = [];
 		
 		// traitement des orgas
 		for (var _iCreneau in this.data) {
@@ -76,7 +78,7 @@ CreneauModel.prototype = {
 			_creneau['debut'] = new Date(_creneau['debut']['date']);
 			_creneau['fin'] = new Date(this.data[_iCreneau]['fin']['date']);
 			
-			_creneaux[_iCreneau] = _creneau;
+			_creneaux.push(_creneau);
 		}
 		
 		return _creneaux;
