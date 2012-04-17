@@ -128,14 +128,11 @@ class Orga implements UserInterface
 //      */
 //     protected $permis;
     
-
-
+    
     /**
-    * @ORM\ManyToOne(targetEntity="Confiance", inversedBy="orgas")
-    * @ORM\JoinColumn(name="confiance_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
-    * @Assert\Valid
-    */
-    protected $confiance;
+     * @ORM\OneToMany(targetEntity="GroupeTache", mappedBy="responsable")
+     */
+    protected $groupesTacheResponsable;
     
     /**
     * @ORM\OneToMany(targetEntity="Tache", mappedBy="responsable")
@@ -551,26 +548,6 @@ class Orga implements UserInterface
     public function getStatut()
     {
         return $this->statut;
-    }
-
-    /**
-     * Set confiance
-     *
-     * @param PHPM\Bundle\Entity\Confiance $confiance
-     */
-    public function setConfiance(\PHPM\Bundle\Entity\Confiance $confiance)
-    {
-        $this->confiance = $confiance;
-    }
-
-    /**
-     * Get confiance
-     *
-     * @return PHPM\Bundle\Entity\Confiance 
-     */
-    public function getConfiance()
-    {
-        return $this->confiance;
     }
 
     /**

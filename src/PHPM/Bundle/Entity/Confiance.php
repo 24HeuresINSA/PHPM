@@ -53,7 +53,6 @@ class Confiance
     protected $equipes;
     
 
-
     /**
      * Get id
      *
@@ -149,26 +148,7 @@ class Confiance
         return $this->taches;
     }
 
-    /**
-     * Add orgas
-     *
-     * @param PHPM\Bundle\Entity\Orga $orgas
-     */
-    public function addOrga(\PHPM\Bundle\Entity\Orga $orgas)
-    {
-        $this->orgas[] = $orgas;
-    }
-
-    /**
-     * Get orgas
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getOrgas()
-    {
-        return $this->orgas;
-    }
-    
+     
     public function __toString()
     {
 	return $this->getValeur().' - '.$this->getNom() ;
