@@ -47,13 +47,13 @@ class ManifType extends AbstractType
                                 'label' => 'Équipes',
                 				'options'  => array('error_bubbling'=>true)));
 
-//         $builder
-//                 ->add('confianceItems', 'collection',
-//                         array('type' => new ConfianceType(),
-//                                 'allow_add' => true, 'allow_delete' => true,
-//                                 'by_reference' => false,
-//                                 'label' => 'Niveaux de Confiance',
-//                 				'options'  => array('error_bubbling'=>true)));
+        $builder
+                ->add('confianceItems', 'collection',
+                        array('type' => new ConfianceType(),
+                                'allow_add' => true, 'allow_delete' => true,
+                                'by_reference' => false,
+                                'label' => 'Niveaux de Confiance',
+                				'options'  => array('error_bubbling'=>true)));
 
         $builder
                 ->add('materielItems', 'collection',

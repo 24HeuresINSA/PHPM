@@ -34,6 +34,7 @@
 	    <li><a href="#configItems" data-toggle="tab">Clés de configuration</a></li>
 {# 	    <li><a href="#lieuItems" data-toggle="tab">Lieux</a></li>#}
 		<li><a href="#equipeItems" data-toggle="tab">Équipes</a></li>
+		<li><a href="#confianceItems" data-toggle="tab">Niveaux de Confiance</a></li>
 		<li><a href="#materielItems" data-toggle="tab">Matériel</a></li>
             
     </ul>
@@ -89,17 +90,17 @@
 			</div>
 		</div>
 
-{# 		<div id="confianceItems"  class="tab-pane fade">#}
-{# 			{% for i in form.confianceItems %}#}
-{# 			    <div class=hrow>#}
-{# 			    {{ form_errors(i) }}#}
-{# 			    {{ form_widget(i) }}#}
-{# 			    <a class="btn btn-danger" href="{{ path('confiance_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a>#}
-{# 			    </div>			         #}
-{# 			{% endfor %}#}
-{# 			<br/>#}
-{# 			<a class="btn btn-success" href="{{ path('confiance_new') }}">Nouveau niveau</a>#}
-{# 		</div>#}
+		<div id="confianceItems"  class="tab-pane fade">
+			{% for i in form.confianceItems %}
+			    <div class=hrow>
+			    {{ form_errors(i) }}
+			    {{ form_widget(i) }}
+			    <a class="btn btn-danger" href="{{ path('confiance_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a>
+			    </div>			         
+			{% endfor %}
+			<br/>
+			<a class="btn btn-success" href="{{ path('confiance_new') }}">Nouveau niveau</a>
+		</div>
 		
 		<div id="materielItems" class="tab-pane fade">
 			<table class="table table-condensed">
