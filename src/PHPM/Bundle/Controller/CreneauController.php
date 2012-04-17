@@ -236,7 +236,7 @@ class CreneauController extends Controller
     	
     	foreach ($entities as $creneau) {
     		// la priorité, faut tester pour déterminer la valeur
-    		$priorite = 'soft';
+    		$priorite = '';
     		if ($creneau->getOrgaHint() != null) {
     			$priorite = 'orga';
     		} else if ($creneau->getEquipeHint() != null) {
@@ -251,6 +251,7 @@ class CreneauController extends Controller
 				    		"fin" => $creneau->getFin(),
     			        	"duree" => $creneau->getDuree(),
     			    		"permis_necessaire"=> $creneau->getPlageHoraire()->getTache()->getPermisNecessaire(),
+    			    		"confiance"=>$creneau->getEquipeHint()->getConfiance()->getId(),
     			    		"priorite" => $priorite
     			        	);
     	}
