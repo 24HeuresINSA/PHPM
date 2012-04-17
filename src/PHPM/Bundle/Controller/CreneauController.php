@@ -257,10 +257,6 @@ class CreneauController extends Controller
     			    		"priorite" => $priorite
     			        	);
     	}
-		
-		usort($creneauArray, function ($a, $b) {
-	    		return ($a['priorite'] === 'orga' || $a['confiance'] > $b['confiance']) ? -1 : 1;
-			});
 
     	$response = new Response();
     	$response->setContent(json_encode($creneauArray));
