@@ -65,11 +65,14 @@ CreneauView.prototype = {
 					break;
 			}
 			
-			var _html = '<div class="item tache" id="tache_'+_iCreneau+'" idCreneau="'+_iCreneau+'">';
-			_html += _creneaux[_iCreneau]['nom']+' - '+_creneaux[_iCreneau]['lieu']+' (';
-			_html += _creneaux[_iCreneau]['debut'].getThisFormat('j')+' : ';
-			_html += _creneaux[_iCreneau]['debut'].getThisFormat('H:I')+'-'+_creneaux[_iCreneau]['fin'].getThisFormat('H:I')+')';
-			_html += _priorite+'</div>';
+			var _confiance = 	'<span class="label" style="background-color: '+pmAffectation.data.parameter.niveau[_creneaux[_iCreneau]['confiance']]['couleur']+';">'+
+								pmAffectation.data.parameter.niveau[_creneaux[_iCreneau]['confiance']]['nom'].toLowerCase()+'</span>';
+			
+			var _html = '<div class="item tache" id="tache_'+_iCreneau+'" idCreneau="'+_iCreneau+'">'+
+						_creneaux[_iCreneau]['nom']+' - '+_creneaux[_iCreneau]['lieu']+' ('+
+						_creneaux[_iCreneau]['debut'].getThisFormat('j')+' : '+
+						_creneaux[_iCreneau]['debut'].getThisFormat('H:I')+'-'+_creneaux[_iCreneau]['fin'].getThisFormat('H:I')+') '+
+						_confiance+' '+_priorite+'</div>';
 			
 			$('#liste_taches').append(_html);
 			

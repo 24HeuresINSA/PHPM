@@ -115,7 +115,7 @@ class CreneauRepository extends EntityRepository
 	{
 		// bien filtrer pour ne prendre que les tâches prêtes pour affectation (statut = 3)
 		// viré le reliquat "confiance"
-	    $dql = 'SELECT c FROM PHPMBundle:Creneau c JOIN c.plageHoraire p JOIN p.tache t LEFT JOIN c.equipeHint eh LEFT JOIN eh.confiance ehc
+	    $dql = 'SELECT c, eh, ehc FROM PHPMBundle:Creneau c JOIN c.plageHoraire p JOIN p.tache t LEFT JOIN c.equipeHint eh LEFT JOIN eh.confiance ehc
 	     LEFT JOIN c.orgaHint oh WHERE c.disponibilite IS NULL AND t.statut = 3 ';
 	
 	    if ($permis != '') {
