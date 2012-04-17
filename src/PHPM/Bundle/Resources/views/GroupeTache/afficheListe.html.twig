@@ -13,12 +13,12 @@
     {% for entity in entities %}
         <tr>
             <td>{{ entitiesMacro.groupeTache(entity) }}</td>
-            <td>{{ entity.equipe.nom }}</td>
+            <td>{{ entitiesMacro.equipe(entity.equipe) }}</td>
             <td>{{ entitiesMacro.orga(entity.responsable) }}</td>
             <td>
             <ul>
            {% for tache in entity.taches %}
-            <li >{{ entitiesMacro.tache(tache) }}{{ entitiesMacro.tacheCom(tache) }}</li>
+            <li >{{ entitiesMacro.tache(tache) }}</li>
             {% endfor %}
             </ul></td>
 

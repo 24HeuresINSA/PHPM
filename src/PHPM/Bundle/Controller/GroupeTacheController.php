@@ -22,16 +22,46 @@ class GroupeTacheController extends Controller
     /**
      * Lists all GroupeTache entities.
      *
-     * @Route("/", name="groupetache")
+     * @Route("/index/{equipeid}/{statut}/{orgaid}", defaults={"equipeid"="all","statut"="all","orgaid"="all"}, name="groupetache")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($equipeid,$statut,$orgaid)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities =$em
-        ->createQuery("SELECT g FROM PHPMBundle:GroupeTache g JOIN g.equipe e ORDER BY e.id ")
+        $equipes =$em
+        ->createQuery("SELECT e FROM PHPMBundle:Equipe e")
         ->getResult();
+        
+		$groupesDQL = "SELECT g,r,t FROM PHPMBundle:GroupeTache g LEFT JOIN g.equipe e JOIN g.responsable r JOIN g.taches t WHERE 1=1 ";
+		
+		if($statut !='all'){
+			$groupesDQL .= " AND g.statut = $statut ";
+		}
+		
+		if($statut !=-1){
+			$groupesDQL .= " AND g.statut <> -1 ";
+		}
+		
+		if($equipeid !='all'){
+			$groupesDQL .= " AND e.id = $equipeid ";
+			
+		}
+		if($orgaid !='all'){
+			$groupesDQL .= " AND r.id = $orgaid ";
+				
+		}
+		
+		$groupesDQL .= " AND t.statut <> -1 ORDER BY e.id, g.id, g.statut";
+		
+        $groupes =$em
+        ->createQuery($groupesDQL)
+        ->getResult();
+        
+        return array('equipes' => $equipes,
+        		'groupes' => $groupes
+        		
+        		);
         
 
         

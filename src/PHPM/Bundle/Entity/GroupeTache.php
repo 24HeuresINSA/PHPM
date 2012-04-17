@@ -35,7 +35,7 @@ class GroupeTache
     protected $taches;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Orga", inversedBy="groupesTachesResponsable")
+     * @ORM\ManyToOne(targetEntity="Orga", inversedBy="groupesTacheResponsable")
      * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
      * @Assert\Valid
      */
@@ -243,8 +243,39 @@ class GroupeTache
      */
     public function getStatut()
     {
-        return $this->statut;
+    	return $this->statut;
     }
+    
+    /**
+     * Get tachesStatut
+     *
+     * @return smallint
+     */
+    public function getTachesStatut()
+    {
+    
+    	if($this->getStatut() ==-1){
+    		return -1;
+    	}
+    	
+	    if(count($this->getTaches())==0){
+	    	$statut= 0;
+	    }else{
+	    	$statut=3;
+	    }
+    
+	    foreach ($this->getTaches() as $tache){
+	    	if($tache->getStatut()>=0){
+	    		$statut = min($statut,$tache->getStatut());
+	    	}
+    	 
+    	}
+    return $statut;
+    
+    }
+    
+   
+     
 
     /**
      * Is deletable ?
