@@ -106,7 +106,7 @@
 			        {% for pl in entity.plagesHoraire %}
 			            <tr>
 			            	<td>
-			                	{{ pl.debut | format_datetime }} <i class="icon-arrow-right"></i> {{ pl.fin | format_datetime }}
+			                	{{ pl.debut | format_datetime('EEEE dd MMM Y HH:mm') }} <i class="icon-arrow-right"></i> {{ pl.fin | format_datetime('EEEE dd MMM Y HH:mm') }}
 			                </td>
 			                <td>
 				                {% if pl.respNecessaire  %}
