@@ -14,7 +14,7 @@ class ConfigType extends AbstractType
     {
     	
     	
-    	$builder->add('value','textarea', array('label'=>' '));
+    	$builder->add('value','textarea', array('label'=>' ', 'required'=>false));
     	$builder->add('field','hidden');
     	
         
