@@ -240,19 +240,20 @@ class CreneauController extends Controller
     		$priorite = '';
     		if ($creneau->getOrgaHint() != null) {
     			$priorite = 'orga';
-    		} else if ($creneau->getEquipeHint() == $equipe) {
+    		} else if (isset($equipe) && $creneau->getEquipeHint() == $equipe) {
     			$priorite = 'equipe';
     		}
     		
-    		$creneauArray[$creneau->getId()]= array(
+    		$creneauArray[]= array(
+    						"id" => $creneau->getId(),
     			        	"nom" => $creneau->getPlageHoraire()->getTache()->getNom(),
     						"lieu" => $creneau->getPlageHoraire()->getTache()->getLieu(),
 //  TODO   						"categorie" => $creneau->getPlageHoraire()->getTache()->getCategorie()->getId(),
 				    		"debut" => $creneau->getDebut(),
 				    		"fin" => $creneau->getFin(),
     			        	"duree" => $creneau->getDuree(),
-    			    		"permis_necessaire"=> $creneau->getPlageHoraire()->getTache()->getPermisNecessaire(),
-    			    		"confiance"=>$creneau->getEquipeHint()->getConfiance()->getId(),
+    			    		"permis_necessaire" => $creneau->getPlageHoraire()->getTache()->getPermisNecessaire(),
+    			    		"confiance" =>$creneau->getEquipeHint()->getConfiance()->getId(),
     			    		"priorite" => $priorite
     			        	);
     	}
@@ -260,7 +261,7 @@ class CreneauController extends Controller
 		usort($creneauArray, function ($a, $b) {
 	    		return ($a['priorite'] === 'orga' || $a['confiance'] > $b['confiance']) ? -1 : 1;
 			});
-		
+
     	$response = new Response();
     	$response->setContent(json_encode($creneauArray));
     	$response->headers->set('Content-Type', 'application/json');
