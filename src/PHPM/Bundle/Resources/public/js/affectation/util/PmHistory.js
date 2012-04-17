@@ -123,8 +123,6 @@ PmHistory.prototype = {
 		// bien préciser 'data' et 'title' dans History.pushState, sinon elle peut bugguer
 		var _newHash = '#param&' + $.param(_current);
 		
-		console.log(new Date(), _current, _newHash);
-		
 		// à savoir : History.js unescape le hash, mais pas l'état et le titre,
 		// qui peuvent le faire planter aléatoirement
         History.pushState({params: escape(_newHash)}, "Etat " + escape(_newHash), _newHash);

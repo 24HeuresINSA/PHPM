@@ -28,6 +28,8 @@ CreneauView.prototype = {
 		$('#champ_tache_rechercher').click(function(event) { event.stopImmediatePropagation(); });
 		// on écoute lorsque des caractères sont tapés - keyup sinon on ne peut pas lire la valeur
 		$('#champ_tache_rechercher').keyup(function(event) { pmAffectation.controllers.creneau.filterList($('#champ_tache_rechercher').val()); });
+		// mochement, on attend 50 ms, sinon on ne peut aps focuser un élément en display: none...
+		$('#bouton_tache_rechercher').bind('click', function(event) { setInterval(function() { $('#champ_tache_rechercher').focus(); }, 50); })
 	},
 	
 	/*
