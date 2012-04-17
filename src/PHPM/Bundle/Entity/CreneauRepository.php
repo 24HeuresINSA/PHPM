@@ -163,7 +163,7 @@ class CreneauRepository extends EntityRepository
 
 	    if ($orgaId != '') {
 	    	$orga =  $this->getEntityManager()->createQuery("SELECT o FROM PHPMBundle:Orga o WHERE o.id = $orgaId")->getSingleResult();
-	    	$equipe = $orga->getEquipe()->getId();
+	    	$equipe = $orga->getEquipe();
 	    	
 	    	// on est dans les dispos de l'orga
 		    $dql .= "AND (c.id IN 
@@ -178,24 +178,17 @@ class CreneauRepository extends EntityRepository
 		    // Compatibilité équipe/niveau de confiance
 		    // On retourne les créneaux pour lesquels
 		    // 1 - L'orga est dans l'équipe equipeHint
-		    // OU 2 - l'orga a une confiance supérieure ou égale à l'équipeHint 
-		    $valeurConfianceOrga = $orga->getConfiance()->getValeur();
-		    $dql .= "AND (ehc.valeur <= $valeurConfianceOrga OR c.equipeHint = $equipe)";
+		    // OU 2 - l'orga a une confiance supérieure ou égale à celle de l'équipeHint 
+		    $dql .= "AND (ehc.valeur <= ".$equipe->getConfiance()->getValeur()." OR c.equipeHint = ".$equipe->getId().")";
 	       
-	       	// on vérifie s'il y a une consigne  d'orga
+	       	// on vérifie s'il y a une consigne d'orga
 	       	$dql .= "AND (c.orgaHint IS NULL OR c.orgaHint = $orgaId) ";
 	    }
 		
 		// on dé-duplique
 		$dql .= "GROUP BY c.plageHoraire, c.equipeHint, c.orgaHint ";
 		
-		if ($orga != '') {
-			// ORDER BY doit être en dernier, après GROUP BY
-			// on trie par priorité : orga, équipe puis confiance
-			// TODO : equipeHint
-			// TODO : confiance
-// 			$dql .= "ORDER BY u DESC";
-		}
+		// l'order se fait en PHP, dans le controller, plus simple
 
 	    $query = $this->getEntityManager()->createQuery($dql);
 		

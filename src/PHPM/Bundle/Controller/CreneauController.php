@@ -226,11 +226,12 @@ class CreneauController extends Controller
     
     	$em = $this->getDoctrine()->getEntityManager();
     	$entities = $em->getRepository('PHPMBundle:Creneau')->getCreneauxCompatibleWithCriteria($niveau_confiance, $permis, $duree, $orgaId, $plage, $jour, $date_time);
+		
 		// nécessaire pour la suite, la priorité
-    	/*if ($orgaId != '') {
+    	if ($orgaId != '') {
     		$orga =  $em->createQuery("SELECT o FROM PHPMBundle:Orga o WHERE o.id = $orgaId")->getSingleResult();
     		$equipe = $orga->getEquipe();
-    	}*/
+    	}
 	    			
     	$creneauArray = array();
     	
@@ -239,7 +240,7 @@ class CreneauController extends Controller
     		$priorite = '';
     		if ($creneau->getOrgaHint() != null) {
     			$priorite = 'orga';
-    		} else if ($creneau->getEquipeHint() != null) {
+    		} else if ($creneau->getEquipeHint() == $equipe) {
     			$priorite = 'equipe';
     		}
     		
@@ -255,6 +256,10 @@ class CreneauController extends Controller
     			    		"priorite" => $priorite
     			        	);
     	}
+		
+		usort($creneauArray, function ($a, $b) {
+	    		return ($a['priorite'] === 'orga' || $a['confiance'] > $b['confiance']) ? -1 : 1;
+			});
 		
     	$response = new Response();
     	$response->setContent(json_encode($creneauArray));
@@ -314,8 +319,6 @@ class CreneauController extends Controller
     * @Route("/{cid}/desaffecter/{oid}", name="creneau_desaffecter")
     *
     */
-    
-    
     public function desaffecterCreneau($cid)
     {
     	//on desaffecte un creneau à un orga
