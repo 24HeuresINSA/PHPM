@@ -68,7 +68,7 @@ CreneauView.prototype = {
 			var _confiance = 	'<span class="label" style="background-color: '+pmAffectation.data.parameter.niveau[_creneaux[_iCreneau]['confiance']]['couleur']+';">'+
 								pmAffectation.data.parameter.niveau[_creneaux[_iCreneau]['confiance']]['nom'].toLowerCase()+'</span>';
 			
-			var _html = '<div class="item tache" id="tache_'+_iCreneau+'" idCreneau="'+_iCreneau.id+'">'+
+			var _html = '<div class="item tache" id="tache_'+_iCreneau+'" idCreneau="'+_creneaux[_iCreneau]['id']+'">'+
 						_creneaux[_iCreneau]['nom']+' - '+_creneaux[_iCreneau]['lieu']+' ('+
 						_creneaux[_iCreneau]['debut'].getThisFormat('j')+' : '+
 						_creneaux[_iCreneau]['debut'].getThisFormat('H:I')+'-'+_creneaux[_iCreneau]['fin'].getThisFormat('H:I')+') '+
@@ -77,7 +77,7 @@ CreneauView.prototype = {
 			$('#liste_taches').append(_html);
 			
 			// handler de click
-			$('#tache_'+_iCreneau).bind('click', {idCreneau: _iCreneau.id}, function(e) {
+			$('#tache_'+_iCreneau).bind('click', {idCreneau: _creneaux[_iCreneau]['id']}, function(e) {
 				if (e.altKey) {
 					// Shift + click : affiche la page pour modifier le créneau
 					var _popup = window.open(pmAffectation.url+'creneau/'+e.data.idCreneau+'/edit', '');
