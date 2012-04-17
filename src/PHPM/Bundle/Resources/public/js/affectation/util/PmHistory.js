@@ -119,13 +119,14 @@ PmHistory.prototype = {
 		// on va déjà filtrer pour virer les -1
 		var _current = pmUtils.filter(pmAffectation.current, function(key, val) {return (val != -1)});
 		
-		console.log(new Date(), _current);
-		
 		// Jquery goodness for sérialiser rapidemment (et en profondeur)
 		// bien préciser 'data' et 'title' dans History.pushState, sinon elle peut bugguer
 		var _newHash = '#param&' + $.param(_current);
 		
-		// à savoir : History.js unescape le hash
-        History.pushState({params: _newHash}, "Etat " + _newHash, _newHash);
+		console.log(new Date(), _current, _newHash);
+		
+		// à savoir : History.js unescape le hash, mais pas l'état et le titre,
+		// qui peuvent le faire planter aléatoirement
+        History.pushState({params: escape(_newHash)}, "Etat " + escape(_newHash), _newHash);
 	},
 }

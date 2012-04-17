@@ -189,6 +189,7 @@ class CreneauRepository extends EntityRepository
 		$dql .= "GROUP BY c.plageHoraire, c.equipeHint, c.orgaHint ";
 		
 		// l'order se fait en PHP, dans le controller, plus simple
+		$dql .= "ORDER BY oh.id DESC, ehc.valeur DESC";
 
 	    $query = $this->getEntityManager()->createQuery($dql);
 		

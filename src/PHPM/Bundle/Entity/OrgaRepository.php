@@ -21,7 +21,7 @@ class OrgaRepository extends EntityRepository
 		//le distinct est là à cause du creneau_id, en attendant qu'il soit mieux codé ^ ^
 		
 		// (le JOIN plante)ancienne) requête (148b2848650e5c3af0bff2685054605d5ee10944)
-		$dql = "Select o From PHPMBundle:Orga as o JOIN o.disponibilites d WHERE o.statut=1 AND d.orga != 0";
+		$dql = "Select o From PHPMBundle:Orga as o JOIN o.disponibilites d JOIN o.equipe e WHERE o.statut=1 AND d.orga != 0";
 		
 // 		if ($permis != '') {
 // 			$dql.=" AND o.permis = '$permis'";
@@ -32,7 +32,7 @@ class OrgaRepository extends EntityRepository
 		}
 		if ($niveau_confiance != '')
 		{
-			$dql.=" AND o.confiance >= '$niveau_confiance'";
+			$dql.=" AND e.confiance >= '$niveau_confiance'";
 		}
 		if ($plage_id != '')
 		{
