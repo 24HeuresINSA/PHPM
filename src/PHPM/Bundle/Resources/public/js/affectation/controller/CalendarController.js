@@ -40,8 +40,8 @@ CalendarController.prototype = {
 	 * Handlers
 	 */
 	// clic sur un jour (le titre en haut)
-	clickJour: function(date) {
-		pmAffectation.current.jour = date;
+	clickJour: function(obj) {
+		pmAffectation.current.jour = obj.data.date;
 		
 		// on de-set l'éventuel quart d'heure sélectionné
 		(pmAffectation.current.quart_heure != -1) && ($('#'+pmAffectation.current.quart_heure).removeClass('current'));

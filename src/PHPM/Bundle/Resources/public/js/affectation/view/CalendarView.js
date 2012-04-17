@@ -177,7 +177,7 @@ CalendarView.prototype = {
 			
 			// on rend le titre du jour cliquable - on ne sait pas s'il y a déjà un event ou pas, donc unbind
 			$('#titre_date_'+_dateComplete).unbind('click');
-			$('#titre_date_'+_dateComplete).bind('click', function() {ici()});
+			$('#titre_date_'+_dateComplete).bind('click', {date: _dateComplete}, pmAffectation.controllers.calendar.clickJour);
 			
 			// sélection des quarts d'heure suivant les attributs de temps de plus en plus précis
 			$('.jour[jour="'+_dateComplete+'"] > .heure[heure="'+_iDts.getHours()
