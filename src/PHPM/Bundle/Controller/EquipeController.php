@@ -18,17 +18,30 @@ class EquipeController extends Controller
 {
     /**
      * Lists all Equipe entities.
-     *
-     * @Route("/", name="equipe")
+     * @Route("/index.{_format}", defaults={"_format"="html"}, requirements={"_format"="html|json"}, name="equipe")
+     * 
      * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
-
         $entities = $em->getRepository('PHPMBundle:Equipe')->findAll();
+        $format = $this->get('request')->getRequestFormat();
+       
 
-        return array('entities' => $entities);
+  		if($format=='html'){
+            
+            return array('entities' => $entities);
+        }
+        
+        if($format=='json'){
+            $a = array();
+            foreach ($entities as $entity){
+                $a[$entity->getId()] = $entity->getNom();
+            
+            }
+            return array('response'=>$a);
+        }
     }
 
     /**
