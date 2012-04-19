@@ -27,6 +27,10 @@ class GroupeTacheController extends Controller
      */
     public function indexAction($equipeid,$statut,$orgaid)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+    		throw new AccessDeniedException();
+    	}
+    	
         $em = $this->getDoctrine()->getEntityManager();
 
         $equipes =$em
@@ -77,6 +81,10 @@ class GroupeTacheController extends Controller
      */
     public function showAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+    		throw new AccessDeniedException();
+    	}
+    	
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:GroupeTache')->find($id);
@@ -100,6 +108,9 @@ class GroupeTacheController extends Controller
      */
     public function newAction()
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+    		throw new AccessDeniedException();
+    	}
         $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
         $em = $this->getDoctrine()->getEntityManager();
         $config  =$this->get('config.extension');
@@ -125,6 +136,9 @@ class GroupeTacheController extends Controller
        
     public function createAction()
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
         $config  =$this->get('config.extension');
         $entity  = new GroupeTache();
@@ -159,6 +173,9 @@ class GroupeTacheController extends Controller
      */
     public function editAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+    		throw new AccessDeniedException();
+    	}
         $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
         $em = $this->getDoctrine()->getEntityManager();
         $config  =$this->get('config.extension');
@@ -190,7 +207,9 @@ class GroupeTacheController extends Controller
      */
     public function updateAction($id)
     {
-        
+    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+    		throw new AccessDeniedException();
+    	}
         $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
@@ -257,6 +276,9 @@ class GroupeTacheController extends Controller
      */
     public function deleteAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $form = $this->createDeleteForm($id);
         $request = $this->getRequest();
 

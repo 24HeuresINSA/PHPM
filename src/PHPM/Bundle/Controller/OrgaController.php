@@ -82,10 +82,11 @@ class OrgaController extends Controller
      */
     public function newAction()
     {
-        $config = $this->get('config.extension');
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
+        $config = $this->get('config.extension');
+        
         $entity = new Orga();
         $form   = $this->createForm(new OrgaType(true, $config), $entity);
 
@@ -219,9 +220,7 @@ class OrgaController extends Controller
             throw $this->createNotFoundException('Unable to find Orga entity.');
         }
 
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser() != $entity) {
-            throw new AccessDeniedException();
-        }
+        
 
         $editForm = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN'),$config), $entity);
         $deleteForm = $this->createDeleteForm($id);
@@ -250,6 +249,9 @@ class OrgaController extends Controller
             throw $this->createNotFoundException('Unable to find Orga entity.');
         }
         
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser() != $entity) {
+            throw new AccessDeniedException();
+        }
         
 
         $config = $e=$this->get('config.extension');
@@ -314,134 +316,7 @@ class OrgaController extends Controller
         ;
     }
 	
-	 /**
-     * Import Orgas from website.
-     *
-     * @Route("/validation", name="orga_validation")
-     * @Template
-     */
-    /*
-	public function validationAction()	
-	{
-	    if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-	        throw new AccessDeniedException();
-	    }
-	    
-        $request = $this->get('request')->request;      
-		$em = $this->getDoctrine()->getEntityManager();
-						
-		if ($this->get('request')->getMethod() == 'POST') 
-		{
-        $data = $request->all();
-     	    foreach ($data as $idOrgaATraiter => $codeFormulaire) // code formulaire : 0 rien à faire, 1 validé, 2 supprimé
-       
-            {
-            	if($codeFormulaire == 0){
-            		continue;
-            	}
-            	
-            	$orga = $em->getRepository('PHPMBundle:Orga')->findOneById($idOrgaATraiter);
-	                  
-               if ($codeFormulaire==1)
-               {
-                  $orga->setStatut(1); // validation de l'orga
-               } 
-               
-               if ($codeFormulaire==2)
-               {
-                   $em->remove($orga);  
-               } 
-           
-               $em->persist($orga);
-               $em->flush();
-			}
-		}
-        
-		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasToValidate();
-		return array("entities" => $entities);
-	}
 
-*/
-
-     /**
-     * Import Orgas from website.
-     *
-     * @Route("/validation", name="orga_validation")
-     * @Template
-     */
-	public function validationAction()  
-    {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
-        
-        $request = $this->get('request')->request;      
-        $em = $this->getDoctrine()->getEntityManager();              
-        if ($this->get('request')->getMethod() == 'POST') 
-        {
-        $data = $request->all();
-            foreach ($data as $idOrgaATraiter => $codeFormulaire) // code formulaire : 0 rien à faire, 1 validé, 2 supprimé
-       
-            {
-                if($codeFormulaire == 0){
-                    continue;
-                }
-                
-                $orga = $em->getRepository('PHPMBundle:Orga')->findOneById($idOrgaATraiter);
-                      
-               if ($codeFormulaire==1)
-               {
-                  $orga->setStatut(1); // validation de l'orga
-                  $em->persist($orga);
-                  $disponibiliteInscription = $orga->getDisponibilitesInscription();
-                 
-                  if ($disponibiliteInscription[0] != NULL) // l'orga n'a pas de disponibilite
-                  {
-                          $entitydisponibilite = new disponibilite();
-                          $orga->addDisponibilite($entitydisponibilite);
-                          $entitydisponibilite->setOrga($orga);
-                          
-                          $entitydisponibilite->setDebut(new \DateTime(date('Y-m-d H:i:s',$disponibiliteInscription[0]->getDebut()->getTimestamp())));
-                          $entitydisponibilite->setFin(new \DateTime(date('Y-m-d H:i:s',$disponibiliteInscription[0]->getFin()->getTimestamp())));
-                                            
-                      foreach ($disponibiliteInscription as $di)
-                      {
-                          
-                          $debutDI = $di->getDebut()->getTimestamp();
-                          $finDI = $di->getFin()->getTimestamp();
-                          
-                          if ($entitydisponibilite->getFin()->getTimestamp() == $debutDI)
-                          {
-                             $entitydisponibilite->setFin(new \DateTime(date('Y-m-d H:i:s',$finDI))); 
-                          }
-                          else if ($entitydisponibilite->getDebut()->getTimestamp() != $debutDI)
-                          {
-                              $entitydisponibilite = new disponibilite();
-                              $orga->addDisponibilite($entitydisponibilite);
-                              $entitydisponibilite->setOrga($orga);
-                              $entitydisponibilite->setDebut(new \DateTime(date('Y-m-d H:i:s',$debutDI)));
-                              $entitydisponibilite->setFin(new \DateTime(date('Y-m-d H:i:s',$finDI)));
-                          }    
-                                                          
-                          
-                      }
-                  
-                  } 
-               }
-               if ($codeFormulaire==2)
-               {
-                   $em->remove($orga);  
-               } 
-           
-               
-               $em->flush();
-            }
-        }
-       
-        $entities = $em->getRepository('PHPMBundle:Orga')->getOrgasFromRegistration();
-                
-        return array("entities" => $entities);
-    }
 	
 	/**
 	 * Inscription Hard
@@ -520,88 +395,6 @@ class OrgaController extends Controller
 	}
 
 	
-	 /**
-     * Import Orgas from website.
-     *
-     * @Route("/import", name="orga_import")
-     * @Template
-     */
-	public function importAction()	
-	{
-	    if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-	        throw new AccessDeniedException();
-	    }
-		$em = $this->getDoctrine()->getEntityManager();
-		if ($this->get('request')->getMethod() == 'GET') {
-			
-			return array(""=> array());
-			
-		}else{
-			
-			$urlConstraint = new Url();
-			$urlConstraint->message = 'Adresse URL Invalide';
-			$errorList = $this->get('validator')->validateValue($_POST["pathJson"], $urlConstraint);
-			
-		if (count($errorList) != 0)       
-        throw new Exception($errorList[0]->getMessage());
-		$url=$_POST["pathJson"];	
-		$json = file_get_contents($url);
-		$listeOrgaArray = json_decode($json,TRUE);
-		$validationErrors = array();
- 	
-		foreach ($listeOrgaArray as  $inscriptionOrga)
-				{
-					
-					$confiance = $em->getRepository('PHPMBundle:Confiance')->findOneById(1);  // pour récupérer confiance
-					
-					$entity  = new orga();
-					$entity->setImportId($inscriptionOrga['id']);
-					$entity->setNom($inscriptionOrga['nom']);
-					$entity->setPrenom($inscriptionOrga['prenom']);
-					$entity->setConfiance($confiance);
-					$entity->settelephone($inscriptionOrga['telephone']);
-					$entity->setemail($inscriptionOrga['email']);
-					$entity->setdepartement($inscriptionOrga['departement']);
-					$entity->setcommentaire($inscriptionOrga['commentaire']);
-					$entity->setpermis($inscriptionOrga['permis']);
-					
-					$entity->setDateDeNaissance(new \DateTime($inscriptionOrga['dateDeNaissance']));
-					$entity->setSurnom($inscriptionOrga['surnom']);	
-					$entity->setStatut(0);			
-					
-					$validator = $this->get('validator');
-					$errors = $validator->validate($entity);
-    				
-    				
-				    if (count($errors) > 0) {
-				    	$err =$errors[0];
-				    	$errorMessage = $err->getPropertyPath()." ( ".$err->getInvalidValue()." ) : ".    $err->getMessageTemplate();
-				    	$simplifiedError = array("erreur" => $errorMessage, "orga" => $err->getRoot()->toArray());
-				    	array_push($validationErrors,$simplifiedError);
-				    	
-				    }else{
-				    	foreach($inscriptionOrga['disponibilites'] as $dispoAAjoute)
-				    	{
-				    		
-				    		$entitydisponibilite = new disponibilite();
-				    		$entity->addDisponibilite($entitydisponibilite);
-				    		$entitydisponibilite->setOrga($entity);
-				    		$entitydisponibilite->setDebut(new \DateTime($dispoAAjoute['debut']));
-				    		$entitydisponibilite->setFin(new \DateTime($dispoAAjoute['fin']));
-				    		var_dump($entitydisponibilite);
-				    			
-				    	}
-				    	$em->persist($entity);
-								$em->flush();							
-										
-				    } 
-				
-				}
-		
-		
-		return array("entities" => $validationErrors);
-		}
-	}
 	
 
 	 /**
