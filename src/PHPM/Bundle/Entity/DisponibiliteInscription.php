@@ -67,11 +67,11 @@ class DisponibiliteInscription
     private $orgas;
     
     /**
-     * @ORM\ManyToOne(targetEntity="GroupeDI", inversedBy="disponibilitesInscription")
-     * @ORM\JoinColumn(name="groupe_id", referencedColumnName="id",onDelete="CASCADE", onUpdate="CASCADE")
+     * @ORM\ManyToOne(targetEntity="Mission", inversedBy="disponibilitesInscription")
+     * @ORM\JoinColumn(name="mission_id", referencedColumnName="id",onDelete="CASCADE", onUpdate="CASCADE")
      * @Assert\Valid
      */
-    protected $groupe;
+    protected $mission;
 
     
 
@@ -188,22 +188,22 @@ class DisponibiliteInscription
     }
 
     /**
-     * Set groupe
+     * Set mission
      *
-     * @param PHPM\Bundle\Entity\GroupeDI $groupe
+     * @param PHPM\Bundle\Entity\Mission $mission
      */
-    public function setGroupe(\PHPM\Bundle\Entity\GroupeDI $groupe)
+    public function setmission(\PHPM\Bundle\Entity\Mission $mission)
     {
-        $this->groupe = $groupe;
+        $this->mission = $mission;
     }
 
     /**
-     * Get groupe
+     * Get mission
      *
-     * @return PHPM\Bundle\Entity\GroupeDI 
+     * @return PHPM\Bundle\Entity\Mission 
      */
-    public function getGroupe()
+    public function getmission()
     {
-        return $this->groupe;
+        return $this->mission;
     }
 }

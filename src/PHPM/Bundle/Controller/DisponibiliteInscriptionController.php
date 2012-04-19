@@ -53,7 +53,7 @@ class DisponibiliteInscriptionController extends Controller
         	if ($valid) {
         		
         		$decalage = $data['decalage'];
-        		$groupe = $data['groupe'];
+        		$mission = $data['mission'];
         		$statut = $data['statut'];
         		
         		foreach ($data['disponibiliteInscriptionItems'] as $di){
@@ -73,10 +73,10 @@ class DisponibiliteInscriptionController extends Controller
 	        				$finDi->add(new \DateInterval('PT'.($decalage).'S'));
 	        				$ndi->setDebut($debutDi);
 	        				$ndi->setFin($finDi);
-	        				if($groupe!=null){
-	        					$ndi->setGroupe($groupe);
+	        				if($mission!=null){
+	        					$ndi->setMission($mission);
 	        				}else{
-	        					$ndi->setStatut($di->getStatut());
+	        					$ndi->setMission($di->getMission());
 	        				}
 	        				 
 	        				if($statut!=null){
@@ -87,8 +87,8 @@ class DisponibiliteInscriptionController extends Controller
 	        				$em->persist($ndi);
         				}else{
         					
-        					if($groupe!=null){
-        						$di->setGroupe($groupe);
+        					if($mission!=null){
+        						$di->setMission($mission);
         					}
         					
         					if($statut!=null){
@@ -120,16 +120,16 @@ class DisponibiliteInscriptionController extends Controller
     }
     
     /**
-     * Lists all GroupeDI entities.
+     * Lists all Mission entities.
      *
-     * @Route("/missions", name="groupedi")
-     * @Template("PHPMBundle:GroupeDI:index.html.twig")
+     * @Route("/missions", name="mission")
+     * @Template("PHPMBundle:Mission:index.html.twig")
      */
     public function missionsAction()
     {
     	$em = $this->getDoctrine()->getEntityManager();
     
-    	$entities = $em->getRepository('PHPMBundle:GroupeDI')->findAll();
+    	$entities = $em->getRepository('PHPMBundle:Mission')->findAll();
     
     	return array('entities' => $entities);
     }

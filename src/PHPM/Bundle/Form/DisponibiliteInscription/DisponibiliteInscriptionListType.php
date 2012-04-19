@@ -45,8 +45,8 @@ class DisponibiliteInscriptionListType extends AbstractType
         		->add('statut','choice',array('label'=>'Statut', 'empty_value' => 'Changer le statut', 'required'=> false, 'choices'=>array(
         				'0'=>'Verrouillé', '1'=>'Cochable Uniquement', '2'=>'Cochable/Décochable'
         				)))
-        		->add('groupe', 'entity',
-        						array(	'class' => 'PHPMBundle:GroupeDI',
+        		->add('mission', 'entity',
+        						array(	'class' => 'PHPMBundle:Mission',
         								'label' => 'Groupe',
         								'empty_value' => 'Changer la mission',
         								'required'=> false

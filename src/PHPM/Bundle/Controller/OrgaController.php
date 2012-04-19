@@ -465,7 +465,7 @@ class OrgaController extends Controller
             throw new AccessDeniedException();
         }
 	    
-	    $groupesDIresult = $this->getDoctrine()->getEntityManager()->createQuery("SELECT g FROM PHPMBundle:GroupeDI g ORDER BY g.ordre")->getResult();
+	    $groupesDIresult = $this->getDoctrine()->getEntityManager()->createQuery("SELECT g FROM PHPMBundle:Mission g ORDER BY g.ordre")->getResult();
 	    $groupesDI = array();
 	     
 	    foreach ($groupesDIresult as $entity){

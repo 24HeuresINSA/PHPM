@@ -5,7 +5,7 @@ namespace PHPM\Bundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 
-class GroupeDIType extends AbstractType
+class MissionType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
@@ -18,6 +18,6 @@ class GroupeDIType extends AbstractType
 
     public function getName()
     {
-        return 'phpm_bundle_groupeditype';
+        return 'phpm_bundle_missiontype';
     }
 }

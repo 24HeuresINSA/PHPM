@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * PHPM\Bundle\Entity\GroupeDI
+ * PHPM\Bundle\Entity\Mission
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\GroupeDIRepository")
+ * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\MissionRepository")
  */
-class GroupeDI
+class Mission
 {
     /**
      * @var integer $id

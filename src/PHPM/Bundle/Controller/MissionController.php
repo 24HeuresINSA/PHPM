@@ -6,28 +6,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use PHPM\Bundle\Entity\GroupeDI;
-use PHPM\Bundle\Form\GroupeDIType;
+use PHPM\Bundle\Entity\Mission;
+use PHPM\Bundle\Form\MissionType;
 
 /**
- * GroupeDI controller.
+ * Mission controller.
  *
- * @Route("/groupedi")
+ * @Route("/mission")
  */
-class GroupeDIController extends Controller
+class MissionController extends Controller
 {
    
 
     /**
-     * Displays a form to create a new GroupeDI entity.
+     * Displays a form to create a new Mission entity.
      *
-     * @Route("/new", name="groupedi_new")
+     * @Route("/new", name="mission_new")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new GroupeDI();
-        $form   = $this->createForm(new GroupeDIType(), $entity);
+        $entity = new Mission();
+        $form   = $this->createForm(new MissionType(), $entity);
 
         return array(
             'entity' => $entity,
@@ -36,17 +36,17 @@ class GroupeDIController extends Controller
     }
 
     /**
-     * Creates a new GroupeDI entity.
+     * Creates a new Mission entity.
      *
-     * @Route("/create", name="groupedi_create")
+     * @Route("/create", name="mission_create")
      * @Method("post")
-     * @Template("PHPMBundle:GroupeDI:new.html.twig")
+     * @Template("PHPMBundle:Mission:new.html.twig")
      */
     public function createAction()
     {
-        $entity  = new GroupeDI();
+        $entity  = new Mission();
         $request = $this->getRequest();
-        $form    = $this->createForm(new GroupeDIType(), $entity);
+        $form    = $this->createForm(new MissionType(), $entity);
         $form->bindRequest($request);
 
         if ($form->isValid()) {
@@ -54,7 +54,7 @@ class GroupeDIController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('groupedi', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('mission', array('id' => $entity->getId())));
             
         }
 
@@ -65,22 +65,22 @@ class GroupeDIController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing GroupeDI entity.
+     * Displays a form to edit an existing Mission entity.
      *
-     * @Route("/{id}/edit", name="groupedi_edit")
+     * @Route("/{id}/edit", name="mission_edit")
      * @Template()
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('PHPMBundle:GroupeDI')->find($id);
+        $entity = $em->getRepository('PHPMBundle:Mission')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find GroupeDI entity.');
+            throw $this->createNotFoundException('Unable to find Mission entity.');
         }
 
-        $editForm = $this->createForm(new GroupeDIType(), $entity);
+        $editForm = $this->createForm(new MissionType(), $entity);
 
         return array(
             'entity'      => $entity,
@@ -89,23 +89,23 @@ class GroupeDIController extends Controller
     }
 
     /**
-     * Edits an existing GroupeDI entity.
+     * Edits an existing Mission entity.
      *
-     * @Route("/{id}/update", name="groupedi_update")
+     * @Route("/{id}/update", name="mission_update")
      * @Method("post")
-     * @Template("PHPMBundle:GroupeDI:edit.html.twig")
+     * @Template("PHPMBundle:Mission:edit.html.twig")
      */
     public function updateAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('PHPMBundle:GroupeDI')->find($id);
+        $entity = $em->getRepository('PHPMBundle:Mission')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find GroupeDI entity.');
+            throw $this->createNotFoundException('Unable to find Mission entity.');
         }
 
-        $editForm   = $this->createForm(new GroupeDIType(), $entity);
+        $editForm   = $this->createForm(new MissionType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
@@ -116,7 +116,7 @@ class GroupeDIController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('groupedi', array('id' => $id)));
+            return $this->redirect($this->generateUrl('mission', array('id' => $id)));
         }
 
         return array(
@@ -126,24 +126,24 @@ class GroupeDIController extends Controller
     }
 
     /**
-     * Deletes a GroupeDI entity.
+     * Deletes a Mission entity.
      *
-     * @Route("/{id}/delete", name="groupedi_delete")
+     * @Route("/{id}/delete", name="mission_delete")
      */
     public function deleteAction($id)
     {
 
 
             $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('PHPMBundle:GroupeDI')->find($id);
+            $entity = $em->getRepository('PHPMBundle:Mission')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find GroupeDI entity.');
+                throw $this->createNotFoundException('Unable to find Mission entity.');
             }
 
             $em->remove($entity);
             $em->flush();
-            return $this->redirect($this->generateUrl('groupedi'));
+            return $this->redirect($this->generateUrl('mission'));
         
 
         
