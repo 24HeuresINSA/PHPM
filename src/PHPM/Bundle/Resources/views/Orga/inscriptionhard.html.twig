@@ -13,12 +13,6 @@
 {% block pageHeader %}
 {% endblock %}
 
-
-
-
-
-
-
 {% block content %}
     <form action="{{ path('orga_inscriptionhard',{'id':orga.id }) }}" method="post" {{ form_enctype(form) }}>
 	    <div class="row-fluid">       
@@ -35,7 +29,8 @@
 		    </div>
 		    {% for categorie,di_jour in entities%}
 		    <div style="display:inline-block; margin-right: 2em" class="well">
-				<h3>{{ categorie }}</h3>
+				<h3>{{ (missions[categorie]).nom }}</h3>
+				<em>{{ (missions[categorie]).description }}</em><br>
 					    {% for jour,d in di_jour %}
 					    <div style="min-width:9em; float:left; margin-right: 1em">
 					    <h4>{{ jour }}</h4>

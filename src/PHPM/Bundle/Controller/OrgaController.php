@@ -465,12 +465,19 @@ class OrgaController extends Controller
             throw new AccessDeniedException();
         }
 	    
-	    $em = $this->getDoctrine()->getEntityManager();
+	    $groupesDIresult = $this->getDoctrine()->getEntityManager()->createQuery("SELECT g FROM PHPMBundle:GroupeDI g ORDER BY g.ordre")->getResult();
+	    $groupesDI = array();
+	     
+	    foreach ($groupesDIresult as $entity){
+	    	$groupesDI[$entity->getId()]=$entity;
+	    }
+
+	    
 	    $queryResult = $this->getDoctrine()->getEntityManager()->createQuery("SELECT d FROM PHPMBundle:DisponibiliteInscription d ORDER BY d.debut")->getResult();
-	    $entities = array();
+	    $DIs = array();
 	    
 	    foreach ($queryResult as $entity){
-	    	$entities[$entity->getCategorie()][\IntlDateFormatter::create(null, \IntlDateFormatter::MEDIUM, \IntlDateFormatter::SHORT,null,null,'EEEE d MMMM')->format($entity->getDebut())][$entity->getId()]=$entity;
+	    	$DIs[$entity->getGroupe()->getId()][\IntlDateFormatter::create(null, \IntlDateFormatter::MEDIUM, \IntlDateFormatter::SHORT,null,null,'EEEE d MMMM')->format($entity->getDebut())][$entity->getId()]=$entity;
 	    }
 	    $form = $this->createForm(new InscriptionHardType($admin));
 	    
@@ -507,7 +514,8 @@ class OrgaController extends Controller
 	    }
 	    
 	    return array( 	'form' => $form->createView(),
-	    				'entities' => $entities,
+	    				'entities' => $DIs,
+	    				'missions' => $groupesDI,
 	    				'orga'=>$orga); 
 	}
 

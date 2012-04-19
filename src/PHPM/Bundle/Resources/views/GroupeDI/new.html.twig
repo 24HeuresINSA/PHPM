@@ -1,0 +1,12 @@
+{% extends "PHPMBundle::layout.html.twig"  %}
+{% set pageTitle = 'Nouvelle Mission' %}
+{% use "PHPMBundle::edit.html.twig" %}
+
+{% block content %}
+<form action="{{ path('groupedi_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Valider</button>
+    </p>
+</form>
+{% endblock %}

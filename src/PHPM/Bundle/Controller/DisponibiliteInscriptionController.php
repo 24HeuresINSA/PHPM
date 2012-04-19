@@ -53,7 +53,7 @@ class DisponibiliteInscriptionController extends Controller
         	if ($valid) {
         		
         		$decalage = $data['decalage'];
-        		$categorie = $data['categorie'];
+        		$groupe = $data['groupe'];
         		$statut = $data['statut'];
         		
         		foreach ($data['disponibiliteInscriptionItems'] as $di){
@@ -64,14 +64,7 @@ class DisponibiliteInscriptionController extends Controller
         			}
         			
         			if($param['action']=='edit'){
-        				if($categorie!=null){
-        					$di->setCategorie($categorie);
-        				}
-        				
-        				if($statut!=null){
-        					$di->setStatut($statut);
-        				}
-        				
+      				
         				if($decalage!=null){
 	        				$ndi = new DisponibiliteInscription();
 	        				$debutDi = clone $di->getDebut();
@@ -80,7 +73,27 @@ class DisponibiliteInscriptionController extends Controller
 	        				$finDi->add(new \DateInterval('PT'.($decalage).'S'));
 	        				$ndi->setDebut($debutDi);
 	        				$ndi->setFin($finDi);
+	        				if($groupe!=null){
+	        					$ndi->setGroupe($groupe);
+	        				}else{
+	        					$ndi->setStatut($di->getStatut());
+	        				}
+	        				 
+	        				if($statut!=null){
+	        					$ndi->setStatut($statut);
+	        				}else{	        				
+	        					$ndi->setStatut($di->getStatut());
+	        				}
 	        				$em->persist($ndi);
+        				}else{
+        					
+        					if($groupe!=null){
+        						$di->setGroupe($groupe);
+        					}
+        					
+        					if($statut!=null){
+        						$di->setStatut($statut);
+        					}
         				}
         				 
         			}
@@ -104,6 +117,21 @@ class DisponibiliteInscriptionController extends Controller
 		
         return array('entities' => $entities,
         		'form'=>$form->createView());
+    }
+    
+    /**
+     * Lists all GroupeDI entities.
+     *
+     * @Route("/missions", name="groupedi")
+     * @Template("PHPMBundle:GroupeDI:index.html.twig")
+     */
+    public function missionsAction()
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    
+    	$entities = $em->getRepository('PHPMBundle:GroupeDI')->findAll();
+    
+    	return array('entities' => $entities);
     }
 
     /**

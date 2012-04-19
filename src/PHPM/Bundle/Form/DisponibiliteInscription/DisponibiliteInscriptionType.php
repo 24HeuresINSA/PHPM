@@ -18,10 +18,10 @@ class DisponibiliteInscriptionType extends AbstractType
                     'label'=>'Fin',
                     'widget' => 'single_text',
                     'attr'=>array('class'=>'findp')))
-            ->add('categorie')
             ->add('statut','choice',array('label'=>'Statut', 'choices'=>array(
         				'0'=>'Verrouillé', '1'=>'Cochable Uniquement', '2'=>'Cochable/Décochable'
         	)))
+        		->add('mission')
             
         ;
     }

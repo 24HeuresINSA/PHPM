@@ -50,13 +50,6 @@ class DisponibiliteInscription
      */
     private $fin;
     
-    /**
-     * @var string $categorie
-     *
-     * @ORM\Column(name="categorie", type="string", length=255)
-     * @Assert\NotBlank()
-     */
-    protected $categorie;
     
     /**
      * @var smallint $statut
@@ -72,6 +65,13 @@ class DisponibiliteInscription
      * @ORM\ManyToMany(targetEntity="Orga", mappedBy="disponibilitesInscription")
      */
     private $orgas;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="GroupeDI", inversedBy="disponibilitesInscription")
+     * @ORM\JoinColumn(name="groupe_id", referencedColumnName="id",onDelete="CASCADE", onUpdate="CASCADE")
+     * @Assert\Valid
+     */
+    protected $groupe;
 
     
 
@@ -166,28 +166,6 @@ class DisponibiliteInscription
     }
     
 
-    
-    
-
-    /**
-     * Set categorie
-     *
-     * @param string $categorie
-     */
-    public function setCategorie($categorie)
-    {
-        $this->categorie = $categorie;
-    }
-
-    /**
-     * Get categorie
-     *
-     * @return string 
-     */
-    public function getCategorie()
-    {
-        return $this->categorie;
-    }
 
     /**
      * Set statut
@@ -207,5 +185,25 @@ class DisponibiliteInscription
     public function getStatut()
     {
         return $this->statut;
+    }
+
+    /**
+     * Set groupe
+     *
+     * @param PHPM\Bundle\Entity\GroupeDI $groupe
+     */
+    public function setGroupe(\PHPM\Bundle\Entity\GroupeDI $groupe)
+    {
+        $this->groupe = $groupe;
+    }
+
+    /**
+     * Get groupe
+     *
+     * @return PHPM\Bundle\Entity\GroupeDI 
+     */
+    public function getGroupe()
+    {
+        return $this->groupe;
     }
 }
