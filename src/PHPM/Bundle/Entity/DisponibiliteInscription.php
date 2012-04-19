@@ -58,6 +58,14 @@ class DisponibiliteInscription
      */
     protected $categorie;
     
+    /**
+     * @var smallint $statut
+     * @Assert\Choice(choices = {"0", "1", "2"})
+     * 0 : locked, 1 : allow check only, 2 : unlocked
+     * @ORM\Column(name="statut", type="smallint")
+     */
+    protected $statut;
+    
 
     /**
      * 
@@ -179,5 +187,25 @@ class DisponibiliteInscription
     public function getCategorie()
     {
         return $this->categorie;
+    }
+
+    /**
+     * Set statut
+     *
+     * @param smallint $statut
+     */
+    public function setStatut($statut)
+    {
+        $this->statut = $statut;
+    }
+
+    /**
+     * Get statut
+     *
+     * @return smallint 
+     */
+    public function getStatut()
+    {
+        return $this->statut;
     }
 }
