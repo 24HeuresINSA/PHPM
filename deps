@@ -85,3 +85,6 @@
 [TwitterBootstrap]
     git=https://github.com/twitter/bootstrap.git
     version=v2.0.2
+
+[shiftkeybox]
+    git=https://github.com/nylen/shiftcheckbox.git
