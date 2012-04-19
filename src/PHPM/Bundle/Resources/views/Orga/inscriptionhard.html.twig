@@ -31,6 +31,7 @@
 	    <div class="row-fluid"> 
 		    <div class="well">
 		    	<em>Les créneaux oranges ne sont plus modifiables une fois cochés.</em>
+		    	{{ form_errors(form) }}
 		    </div>
 		    {% for categorie,di_jour in entities%}
 		    <div style="display:inline-block; margin-right: 2em" class="well">
@@ -44,7 +45,7 @@
 					    			<input class="shiftkeybox"type="checkbox" name="phpm_bundle_inscriptionhardtype[disponibiliteInscriptionItems][{{ e.id }}]"
 					    			id="phpm_bundle_inscriptionhardtype_disponibiliteInscriptionItems_{{ e.id }}" value="{{ e.id }}"
 					    			{% if e in orga.disponibilitesInscription %}checked="checked"{% endif %} 
-					    			{% if e.statut == 0 or (e.statut==1 and e in orga.disponibilitesInscription) %}disabled{% endif %}
+					    			{% if (e.statut == 0 or (e.statut==1 and e in orga.disponibilitesInscription)) and not is_granted('ROLE_ADMIN') %}disabled{% endif %}
 					    			>
 					               </label></div>
 							{% endfor %}
@@ -63,7 +64,7 @@
 				<button class="btn btn-primary" type="submit" name="action" value="save" >Valider</button>
 				</div>
 	    </div>
-	</form>
+
 
 
 {{ form_widget(form._token) }}

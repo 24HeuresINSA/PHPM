@@ -480,7 +480,6 @@ class OrgaController extends Controller
 	        $form->bindRequest($request);
 	        $data=$form->getData();
 	        $submittedDI=$data['disponibiliteInscriptionItems'];
-	        
 	        if ($form->isValid()) {
 	        	
 	        	$allDI = $this->getDoctrine()->getEntityManager()->createQuery("SELECT d FROM PHPMBundle:DisponibiliteInscription d")->getResult();
@@ -490,7 +489,7 @@ class OrgaController extends Controller
 	            {
 	                 
 	            	if($submittedDI->contains($di)){
-	            		if(!$orga->getDisponibilitesInscription()->contains($di) && $di->getStatut() > 0){
+	            		if(!$orga->getDisponibilitesInscription()->contains($di) && ($di->getStatut() > 0)){
 	            			$orga->addDisponibiliteInscription($di);
 	            			$di->addOrga($orga);
 	            		}
