@@ -12,50 +12,29 @@ class InscriptionHardType extends AbstractType
 {
     
     protected $admin;
-    protected $em;
-    protected $orga;
 
-    function __construct($admin,$em,$orga){
+    function __construct($admin){
         
-            $this->em = $em;
+
             $this->admin =$admin;
-            $this->orga = $orga;
     }
     
     public function buildForm(FormBuilder $builder, array $options)
     {
-       $entities = $this->em->createQuery("SELECT d FROM PHPMBundle:DisponibiliteInscription d ORDER BY d.debut")->getResult();
-       $prevday= -1;
-       $child = 0;
-       foreach ($entities as $key =>$e)
-        {
-            if($e->getDebut()->format('z')!=$prevday ){
-                $label =\IntlDateFormatter::create("fr_FR", null, null,null,null,'EEEE d MMMM')->format($e->getDebut());
-                $c=$builder->create($e->getDebut()->format('z'),'form',array('label'=>$label, 'required'=>false));
-                $builder->add($c);
-                           }
-            
-            
-            $checked = $this->orga->getDisponibilitesInscription()->contains($e);
-            $read_only = $checked  && !$this->admin;
-            $options = array(
-                    'data'=>$checked,
-                   
-                    'read_only'=>$read_only,
-                    'label'     => $e->__toString(),
-                    'required'  => false,
-                    'attr'=> array('class'=>'q')
-                    );
-            
-            
-                
-            $prevday = $e->getDebut()->format('z');
-            
-            $c->add((string)$key, 'checkbox',$options);
-            
-            
-        }
-        $builder->add('end',new FormType(),array('label'=>" ", 'required'=>false, 'attr'=> array('class'=>'clear')));
+       
+
+       
+       $builder->add('disponibiliteInscriptionItems', 'entity',
+       		array(	'class' => 'PHPMBundle:DisponibiliteInscription',
+       				'expanded'=>true,
+       				'multiple'=>true,
+       				'by_reference' => false,
+       				'label' => 'Di'
+       		));
+       
+       
+       
+        
 	    
     }
 

@@ -18,6 +18,7 @@ class DisponibiliteInscriptionType extends AbstractType
                     'label'=>'Fin',
                     'widget' => 'single_text',
                     'attr'=>array('class'=>'findp')))
+            ->add('categorie')
             
         ;
     }

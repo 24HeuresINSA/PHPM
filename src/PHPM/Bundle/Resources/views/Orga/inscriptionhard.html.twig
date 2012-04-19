@@ -10,54 +10,62 @@
 			{% endstylesheets %}
 {% endblock %}
 
-{% block field_row %}
-<div>
-{% spaceless %}
-         {{ form_label(form) }}
-         {{ form_widget(form) }}
-        {{ form_errors(form) }}
-{% endspaceless %}
-</div>
-{% endblock field_row %}
+{% block pageHeader %}
+{% endblock %}
 
-{% block checkbox_widget %}
-{% spaceless %}
-    <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
-{% endspaceless %}
-{% endblock checkbox_widget %}
+
+
 
 
 
 
 {% block content %}
+    <form action="{{ path('orga_inscriptionhard',{'id':orga.id }) }}" method="post" {{ form_enctype(form) }}>
+	    <div class="row-fluid">       
+	    	<div class="page-header">
+	         	<h1>Disponibilités de {{ orga.prenom }} {{ orga.nom }}</h1>
+	         </div>
+	    </div>
 
-{% if is_granted('ROLE_ADMIN') %}
-<h3>Disponibilités de {{ orga.prenom }} {{ orga.nom }}</h3>
-{% endif %}
+	    
+	    <div class="row-fluid"> 
+	    <div>
+	    {% for categorie,di_jour in entities%}
+	    <div style="display:inline-block; margin-right: 2em" class="well">
+			<h3>{{ categorie }}</h3>
+				    {% for jour,d in di_jour %}
+				    <div style="min-width:9em; float:left; margin-right: 1em">
+				    <h4>{{ jour }}</h4>
+						{% for e in d %}<div>
+					            <label class="checkbox">
+				    			{{ e.debut |format_datetime('HH:mm')}} <i class="icon-arrow-right"></i> {{ e.fin |format_datetime('HH:mm')}}
+				    			<input class="shiftkeybox"type="checkbox" name="phpm_bundle_inscriptionhardtype[disponibiliteInscriptionItems][{{ e.id }}]"
+				    			id="phpm_bundle_inscriptionhardtype_disponibiliteInscriptionItems_{{ e.id }}" value="{{ e.id }}"
+				    			{% if e in orga.disponibilitesInscription %}checked="checked"{% endif %}
+				    			>
+				               </label></div>
+						{% endfor %}
+					</div>
+				     {% endfor %}
+				     <div class="clear"></div>
+					
+			
+		</div>
+		{% endfor %}
+		</div>
+		
+		<div class="form-fluid">
+			<div class="form-actions">
+				<button class="btn btn-primary" type="submit" name="action" value="save" >Valider</button>
+				</div>
+	    </div>
+	</form>
 
-<form action="{{ path('orga_inscriptionhard',{'id':orga.id }) }}" method="post" {{ form_enctype(form) }}>
-{{ form_widget(form) }}
 
-
-
-    <p class="clear">
-    {% if not is_granted('ROLE_ADMIN') %}
-        <em>Attention : Une fois que vous avez validé vos disponibilités, il n'est plus possible 
-        de supprimer des créneaux. Il est néanmoins toujours possible d'en ajouter de nouveaux.<br/>
-        Si vous avez fait une erreur, veuillez contacter par mail l'orga humain : 
-        <a href="mailto:orga@24heures.org" >orga@24heures.org</a> </em><br/>
-    {% endif %}    
-    </p>
-
-
-<button type="submit" id="submit_button" >Valider</button>
-
-
+{{ form_widget(form._token) }}
 </form>
 
 
 
 {% endblock %}
 
-{% block actions %}
-{% endblock %}

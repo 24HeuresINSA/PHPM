@@ -41,16 +41,9 @@ class DisponibiliteInscriptionListType extends AbstractType
                                 'by_reference' => false,
                                 'label' => 'Di'
                 				))
-        		->add('decalage', 'choice', array('label'=>'Avec un décalage de', 'choices' => $choixDecalage ));
-
-//         $builder
-//                 ->add('lieuItems', 'collection',
-//                         array('type' => new LieuType(), 'allow_add' => true,
-//                                 'allow_delete' => true,
-//                                 'by_reference' => false,
-//                                 'label' => 'Lieux'));
-
-      
+        		->add('decalage', 'choice', array('label'=>'Avec un décalage de', 'choices' => $choixDecalage ))
+        		->add('categorie','text',array('required'=>false));
+     
 
         $form = $builder->getForm();
 

@@ -51,13 +51,20 @@ class DisponibiliteInscriptionController extends Controller
         
         
         	if ($valid) {
+        		
         		$decalage = $data['decalage'];
+        		$categorie = $data['categorie'];
         		
         		foreach ($data['disponibiliteInscriptionItems'] as $di){
         			
         			if($param['action']=='delete'){
         				 $em->remove($di);
         			
+        			}
+        			
+        			if($param['action']=='changecat'){
+        				$di->setCategorie($categorie);
+        				 
         			}
         			
         			if($param['action']=='duplicate'){

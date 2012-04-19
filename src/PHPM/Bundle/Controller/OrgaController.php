@@ -466,36 +466,47 @@ class OrgaController extends Controller
         }
 	    
 	    $em = $this->getDoctrine()->getEntityManager();
-	    $entities = $this->getDoctrine()->getEntityManager()->createQuery("SELECT d FROM PHPMBundle:DisponibiliteInscription d ORDER BY d.debut")->getResult();
-	    $form = $this->createForm(new InscriptionHardType($admin,$em,$orga));
+	    $queryResult = $this->getDoctrine()->getEntityManager()->createQuery("SELECT d FROM PHPMBundle:DisponibiliteInscription d ORDER BY d.debut")->getResult();
+	    $entities = array();
+	    
+	    foreach ($queryResult as $entity){
+	    	$entities[$entity->getCategorie()][\IntlDateFormatter::create(null, \IntlDateFormatter::MEDIUM, \IntlDateFormatter::SHORT,null,null,'EEEE d MMMM')->format($entity->getDebut())][$entity->getId()]=$entity;
+	    }
+	    $form = $this->createForm(new InscriptionHardType($admin));
+	    
+	    
 	
 	    if ($request->getMethod() == 'POST') {
 	        $form->bindRequest($request);
 	        $data=$form->getData();
-	        	         
+	        $submittedDI=$data['disponibiliteInscriptionItems'];
+	        
 	        if ($form->isValid()) {
-	            foreach ($data as $group)
-	                foreach ($group as $key=>$value){
+	        	
+	        	$allDI = $this->getDoctrine()->getEntityManager()->createQuery("SELECT d FROM PHPMBundle:DisponibiliteInscription d")->getResult();
+	        	
+	        	
+	            foreach ($allDI as $di)
+	            {
 	                 
-	                $di = $entities[$key];
-
-	                if ($value ==true && !$orga->getDisponibilitesInscription()->contains($di)){
-	                    $orga->addDisponibiliteInscription($di);
-	                    $di->addOrga($orga);
-	                }
-	                
-	                if ($admin == true && $value == false){
-	                    $orga->getDisponibilitesInscription()->removeElement($di);
-	                    
-	                }
+	            	if($submittedDI->contains($di)){
+	            		if(!$orga->getDisponibilitesInscription()->contains($di)){
+	            			$orga->addDisponibiliteInscription($di);
+	            			$di->addOrga($orga);
+	            		}
+	            	}else{
+	            		$orga->getDisponibilitesInscription()->removeElement($di);
+	            	}
+	            	
 	            }
-	             
 	            $em->flush();
 	            $form = $this->createForm(new InscriptionHardType($admin,$em,$orga));
 	        }
 	    }
 	    
-	    return array( 'form' => $form->createView(), 'orga'=>$orga); 
+	    return array( 	'form' => $form->createView(),
+	    				'entities' => $entities,
+	    				'orga'=>$orga); 
 	}
 
 	
