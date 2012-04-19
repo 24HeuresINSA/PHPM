@@ -183,6 +183,7 @@ $(function() {
 	
     $(".apopover").popover();
     
+    $('input.shiftkeybox').shiftcheckbox();
 	
 });
 
