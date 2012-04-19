@@ -490,12 +490,15 @@ class OrgaController extends Controller
 	            {
 	                 
 	            	if($submittedDI->contains($di)){
-	            		if(!$orga->getDisponibilitesInscription()->contains($di)){
+	            		if(!$orga->getDisponibilitesInscription()->contains($di) && $di->getStatut() > 0){
 	            			$orga->addDisponibiliteInscription($di);
 	            			$di->addOrga($orga);
 	            		}
 	            	}else{
-	            		$orga->getDisponibilitesInscription()->removeElement($di);
+	            		if($di->getStatut() == 2){
+	            			$orga->getDisponibilitesInscription()->removeElement($di);
+	            		}
+	            		
 	            	}
 	            	
 	            }

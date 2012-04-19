@@ -20,6 +20,7 @@
 			        <tr>
 			            <th>Horaires</th>
 			            <th>Catégorie</th>
+			            <th>Statut</th>
 			            <th>Total Orgas</th>
 			            <th>Actions</th>
 			        </tr>
@@ -35,6 +36,7 @@
 				               {{ e.fin |format_datetime('EEEE dd MMM HH:mm')}}
 			               </td>
 			           	   <td>{{ e.categorie }}</td>
+			           	   <td>{{ e.statut|statutDI }}</td>
 			               <td>{{ e.orgas.count }}</td>
 			               <td>
 			               <a class="btn" href="{{ path('disponibiliteinscription_edit', { 'id': e.id }) }}"><i class="icon-pencil"></i> Éditer</a>
@@ -52,9 +54,10 @@
 		<div class="form-fluid">
 			<div class="form-actions">
 				<a class="btn btn-success" href="{{ path('disponibiliteinscription_new') }}"><i class="icon-pencil"></i> Créer une nouveau créneau</a>
-				<button class="btn btn-danger" type="submit" name="action" value="delete" >Supprimer les créneaux sélectionnés</button>				
-				<button class="btn" type="submit" name="action" value="duplicate" >Dupliquer les créneaux sélectionnés avec ce décalage : </button>{{ form_widget(form.decalage) }}
-				<button class="btn" type="submit" name="action" value="changecat" >Changer la catégorie des créneaux sélectionnés : </button>{{ form_widget(form.categorie) }}
+				<button class="btn btn-danger" type="submit" name="action" value="delete" >Supprimer les créneaux sélectionnés</button>
+				<button class="btn btn-primary" type="submit" name="action" value="edit" >Modifier les créneaux sélectionnés</button><br>
+				{{ form_widget(form.decalage) }}{{ form_widget(form.categorie) }}{{ form_widget(form.statut) }}
+				
 			</div>
 	    </div>
 	</form>

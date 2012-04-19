@@ -54,6 +54,7 @@ class DisponibiliteInscriptionController extends Controller
         		
         		$decalage = $data['decalage'];
         		$categorie = $data['categorie'];
+        		$statut = $data['statut'];
         		
         		foreach ($data['disponibiliteInscriptionItems'] as $di){
         			
@@ -62,24 +63,26 @@ class DisponibiliteInscriptionController extends Controller
         			
         			}
         			
-        			if($param['action']=='changecat'){
-        				$di->setCategorie($categorie);
+        			if($param['action']=='edit'){
+        				if($categorie!=null){
+        					$di->setCategorie($categorie);
+        				}
+        				
+        				if($statut!=null){
+        					$di->setStatut($statut);
+        				}
+        				
+        				if($decalage!=null){
+	        				$ndi = new DisponibiliteInscription();
+	        				$debutDi = clone $di->getDebut();
+	        				$finDi = clone $di->getFin();
+	        				$debutDi->add(new \DateInterval('PT'.($decalage).'S'));
+	        				$finDi->add(new \DateInterval('PT'.($decalage).'S'));
+	        				$ndi->setDebut($debutDi);
+	        				$ndi->setFin($finDi);
+	        				$em->persist($ndi);
+        				}
         				 
-        			}
-        			
-        			if($param['action']=='duplicate'){
-        			
-        				$ndi = new DisponibiliteInscription();
-        				$debutDi = clone $di->getDebut();
-        				$finDi = clone $di->getFin();
-        				$debutDi->add(new \DateInterval('PT'.($decalage).'S'));
-        				$finDi->add(new \DateInterval('PT'.($decalage).'S'));
-        				$ndi->setDebut($debutDi);
-        				$ndi->setFin($finDi);
-        				
-        				$em->persist($ndi);
-        				
-        				
         			}
         			
         		

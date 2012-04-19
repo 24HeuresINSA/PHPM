@@ -29,30 +29,34 @@
 
 	    
 	    <div class="row-fluid"> 
-	    <div>
-	    {% for categorie,di_jour in entities%}
-	    <div style="display:inline-block; margin-right: 2em" class="well">
-			<h3>{{ categorie }}</h3>
-				    {% for jour,d in di_jour %}
-				    <div style="min-width:9em; float:left; margin-right: 1em">
-				    <h4>{{ jour }}</h4>
-						{% for e in d %}<div>
-					            <label class="checkbox">
-				    			{{ e.debut |format_datetime('HH:mm')}} <i class="icon-arrow-right"></i> {{ e.fin |format_datetime('HH:mm')}}
-				    			<input class="shiftkeybox"type="checkbox" name="phpm_bundle_inscriptionhardtype[disponibiliteInscriptionItems][{{ e.id }}]"
-				    			id="phpm_bundle_inscriptionhardtype_disponibiliteInscriptionItems_{{ e.id }}" value="{{ e.id }}"
-				    			{% if e in orga.disponibilitesInscription %}checked="checked"{% endif %}
-				    			>
-				               </label></div>
-						{% endfor %}
-					</div>
-				     {% endfor %}
-				     <div class="clear"></div>
-					
-			
+		    <div class="well">
+		    	<em>Les créneaux oranges ne sont plus modifiables une fois cochés.</em>
+		    </div>
+		    {% for categorie,di_jour in entities%}
+		    <div style="display:inline-block; margin-right: 2em" class="well">
+				<h3>{{ categorie }}</h3>
+					    {% for jour,d in di_jour %}
+					    <div style="min-width:9em; float:left; margin-right: 1em">
+					    <h4>{{ jour }}</h4>
+							{% for e in d %}<div>
+						            <label class="checkbox {% if e.statut == 1 %}statut1{% endif %}">
+					    			{{ e.debut |format_datetime('HH:mm')}} <i class="icon-arrow-right"></i> {{ e.fin |format_datetime('HH:mm')}}
+					    			<input class="shiftkeybox"type="checkbox" name="phpm_bundle_inscriptionhardtype[disponibiliteInscriptionItems][{{ e.id }}]"
+					    			id="phpm_bundle_inscriptionhardtype_disponibiliteInscriptionItems_{{ e.id }}" value="{{ e.id }}"
+					    			{% if e in orga.disponibilitesInscription %}checked="checked"{% endif %} 
+					    			{% if e.statut == 0 or (e.statut==1 and e in orga.disponibilitesInscription) %}disabled{% endif %}
+					    			>
+					               </label></div>
+							{% endfor %}
+						</div>
+					     {% endfor %}
+					     <div class="clear"></div>
+						
+				
+			</div>
+			{% endfor %}
 		</div>
-		{% endfor %}
-		</div>
+		
 		
 		<div class="form-fluid">
 			<div class="form-actions">

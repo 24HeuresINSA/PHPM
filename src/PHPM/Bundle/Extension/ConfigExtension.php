@@ -19,7 +19,8 @@ class ConfigExtension extends \Twig_Extension {
     
     public function getFilters() {
         return array(
-            'permis'     => new \Twig_Filter_Method($this, 'permis')
+            'permis'     => new \Twig_Filter_Method($this, 'permis'),
+        	'statutDI'     => new \Twig_Filter_Method($this, 'statutDI')
  
         );
     }
@@ -31,6 +32,10 @@ class ConfigExtension extends \Twig_Extension {
     public function permis($key) {
         $libelles = json_decode($this->configs['manifestation_permis_libelles'],true);
         return $libelles[$key];
+    }
+    public function statutDI($key) {
+    	$libelles = array('0'=>'Verrouillé', '1'=>'Cochable Uniquement', '2'=>'Cochable/Décochable');
+    	return $libelles[$key];
     }
 
     public function getValue($field)
