@@ -50,6 +50,14 @@ class DisponibiliteInscription
      */
     private $fin;
     
+    /**
+     * @var string $categorie
+     *
+     * @ORM\Column(name="categorie", type="string", length=255)
+     * @Assert\NotBlank()
+     */
+    protected $categorie;
+    
 
     /**
      * 
@@ -152,4 +160,24 @@ class DisponibiliteInscription
 
     
     
+
+    /**
+     * Set categorie
+     *
+     * @param string $categorie
+     */
+    public function setCategorie($categorie)
+    {
+        $this->categorie = $categorie;
+    }
+
+    /**
+     * Get categorie
+     *
+     * @return string 
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
+    }
 }
