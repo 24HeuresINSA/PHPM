@@ -96,14 +96,15 @@
           <div class="nav-collapse in" style="height: auto; ">
             <ul class="nav">
  			{% if is_granted('ROLE_ADMIN') %}
- 				{{ _self.navBarItem('Orgas','orga') }}
+ 				
  				<li class="dropdown" id="menu_topnav_inscriptions">
 				    <a class="dropdown-toggle" data-toggle="dropdown" href="#menu_topnav_inscriptions">
-				      Inscriptions
+				      Orgas
 				      <b class="caret"></b>
 				    </a>
 				    <ul class="dropdown-menu">
 				    	{% if is_granted('ROLE_ADMIN') %}
+				    		{{ _self.navBarItem('Liste','orga') }}
 							{{ _self.navBarItem('Créneaux d\'inscription','disponibiliteinscription') }}
 							{{ _self.navBarItem('Missions','mission') }}
 						{% endif %}
@@ -142,18 +143,21 @@
 				</li>
        			{{ _self.navBarItem('Mes Informations','orga_edit',{'id':app.user.id }) }}
        			{{ _self.navBarItem('Mes Disponibilités','orga_inscriptionhard',{'id':app.user.id }) }}
+       			{{ _self.navBarItem('Charisme','orga_charisme') }}
        		{% endif %}
        		{% if is_granted('ROLE_VISITOR') %}	
        		    {{ _self.navBarItem('Se déconnecter','logout') }}
         	{% else %}
        			{{ _self.navBarItem('Se connecter','login') }}
         	{% endif %}
-            </ul>
-            {% if is_granted('ROLE_ADMIN') %}
-	            <form class="navbar-text pull-right form-search" method="post" action="{{ path('search') }}" id="search_form">
-		           <input  class="input-medium search-query" id="searchBox" name="s" size="30" placeholder="Rechercher..." />		        		  
-		        </form>
+            
+        	</ul>
+        	{% if is_granted('ROLE_USER') %}
+	        	<form class="navbar-form pull-right form-search" method="post" action="{{ path('search') }}" id="search_form">
+			           <input  class="input-medium search-query" id="searchBox" name="s" size="30" placeholder="Rechercher..." />		        		  
+			    </form>
         	{% endif %}
+        	
           </div><!--/.nav-collapse -->
         </div>
       </div>

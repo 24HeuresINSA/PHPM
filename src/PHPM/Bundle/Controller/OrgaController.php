@@ -728,21 +728,21 @@ class OrgaController extends Controller
 	    $data = $em->getRepository('PHPMBundle:Orga')->findAll();
 	
 	    $departs = $em
-	    ->createQuery("SELECT o.departement, count(d) as nbc FROM PHPMBundle:Orga o LEFT OUTER  JOIN o.disponibilitesInscription d GROUP BY o.departement ORDER BY nbc DESC  ")
+	    ->createQuery("SELECT o.departement, sum(d.pointsCharisme) as pc FROM PHPMBundle:Orga o LEFT JOIN o.disponibilitesInscription d GROUP BY o.departement ORDER BY pc DESC  ")
 	    ->getResult();
 	    
 	
 	    $orgas = $em
-	    ->createQuery("SELECT o, count(d) as nbc FROM PHPMBundle:Orga o JOIN o.disponibilitesInscription d GROUP BY o.id ORDER BY nbc DESC")
+	    ->createQuery("SELECT o, sum(d.pointsCharisme) as pc FROM PHPMBundle:Orga o JOIN o.disponibilitesInscription d GROUP BY o.id ORDER BY pc DESC")
 	    ->getResult();
 	    
-	    $coms = $em
-	    ->createQuery("SELECT o.equipe, count(d) as nbc FROM PHPMBundle:Orga o LEFT OUTER  JOIN o.disponibilitesInscription d GROUP BY o.equipe ORDER BY nbc DESC  ")
+	    $equipes = $em
+	    ->createQuery("SELECT e, sum(d.pointsCharisme) as pc FROM PHPMBundle:Equipe e LEFT JOIN e.orgas o LEFT JOIN o.disponibilitesInscription d GROUP BY e ORDER BY pc DESC  ")
 	    ->getResult();
 	
 	    return array('orgas' => $orgas,
 	                 'departs'=>$departs,
-	                 'coms'=>$coms);
+	                 'equipes'=>$equipes);
 	}
 	
 	public function updateLastActivityAction(){
