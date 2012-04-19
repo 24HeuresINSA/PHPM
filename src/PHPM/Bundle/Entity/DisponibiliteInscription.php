@@ -59,6 +59,12 @@ class DisponibiliteInscription
      */
     protected $statut;
     
+    /**
+     * @var smallint $pointsCharisme
+     * @ORM\Column(name="pointsCharisme", type="smallint")
+     */
+    protected $pointsCharisme;
+    
 
     /**
      * 
@@ -188,11 +194,32 @@ class DisponibiliteInscription
     }
 
     /**
+     * Set pointsCharisme
+     *
+     * @param smallint $pointsCharisme
+     */
+    public function setPointsCharisme($pointsCharisme)
+    {
+        $this->pointsCharisme = $pointsCharisme;
+    }
+
+    /**
+     * Get pointsCharisme
+     *
+     * @return smallint 
+     */
+    public function getPointsCharisme()
+    {
+        return $this->pointsCharisme;
+    }
+
+
+    /**
      * Set mission
      *
      * @param PHPM\Bundle\Entity\Mission $mission
      */
-    public function setmission(\PHPM\Bundle\Entity\Mission $mission)
+    public function setMission(\PHPM\Bundle\Entity\Mission $mission)
     {
         $this->mission = $mission;
     }
@@ -202,7 +229,7 @@ class DisponibiliteInscription
      *
      * @return PHPM\Bundle\Entity\Mission 
      */
-    public function getmission()
+    public function getMission()
     {
         return $this->mission;
     }

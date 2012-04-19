@@ -51,6 +51,11 @@ class DisponibiliteInscriptionListType extends AbstractType
         								'empty_value' => 'Changer la mission',
         								'required'=> false
         						))
+        		->add('pointsCharisme',null,
+        						array( 'label' => 'Points de Charisme',
+        								'required'=> false,
+        								'attr' => array('placeHolder'=>'Changer les points de charisme')
+        						))
         				
         ;
      

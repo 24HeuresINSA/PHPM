@@ -477,7 +477,7 @@ class OrgaController extends Controller
 	    $DIs = array();
 	    
 	    foreach ($queryResult as $entity){
-	    	$DIs[$entity->getGroupe()->getId()][\IntlDateFormatter::create(null, \IntlDateFormatter::MEDIUM, \IntlDateFormatter::SHORT,null,null,'EEEE d MMMM')->format($entity->getDebut())][$entity->getId()]=$entity;
+	    	$DIs[$entity->getMission()->getId()][\IntlDateFormatter::create(null, \IntlDateFormatter::MEDIUM, \IntlDateFormatter::SHORT,null,null,'EEEE d MMMM')->format($entity->getDebut())][$entity->getId()]=$entity;
 	    }
 	    $form = $this->createForm(new InscriptionHardType($admin));
 	    

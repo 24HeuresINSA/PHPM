@@ -55,6 +55,7 @@ class DisponibiliteInscriptionController extends Controller
         		$decalage = $data['decalage'];
         		$mission = $data['mission'];
         		$statut = $data['statut'];
+        		$pointsCharisme = $data['pointsCharisme'];
         		
         		foreach ($data['disponibiliteInscriptionItems'] as $di){
         			
@@ -84,6 +85,13 @@ class DisponibiliteInscriptionController extends Controller
 	        				}else{	        				
 	        					$ndi->setStatut($di->getStatut());
 	        				}
+	        				
+	        				if($pointsCharisme!=null){
+	        					$ndi->setPointsCharisme($pointsCharisme);
+	        				}else{
+	        					$ndi->setPointsCharisme($di->getPointsCharisme());
+	        				}
+	        				
 	        				$em->persist($ndi);
         				}else{
         					
@@ -93,6 +101,9 @@ class DisponibiliteInscriptionController extends Controller
         					
         					if($statut!=null){
         						$di->setStatut($statut);
+        					}
+        					if($pointsCharisme!=null){
+        						$di->setPointsCharisme($pointsCharisme);
         					}
         				}
         				 

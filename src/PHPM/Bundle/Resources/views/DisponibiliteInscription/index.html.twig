@@ -21,6 +21,7 @@
 			            <th>Horaires</th>
 			            <th>Mission</th>
 			            <th>Statut</th>
+			            <th>Points de Charisme</th>
 			            <th>Total Orgas</th>
 			            <th>Actions</th>
 			        </tr>
@@ -37,6 +38,7 @@
 			               </td>
 			           	   <td>{{ e.mission }}</td>
 			           	   <td>{{ e.statut|statutDI }}</td>
+			           	   <td>{{ e.pointsCharisme }}</td>
 			               <td>{{ e.orgas.count }}</td>
 			               <td>
 			               <a class="btn" href="{{ path('disponibiliteinscription_edit', { 'id': e.id }) }}"><i class="icon-pencil"></i> Éditer</a>
@@ -56,7 +58,7 @@
 				<a class="btn btn-success" href="{{ path('disponibiliteinscription_new') }}"><i class="icon-pencil"></i> Créer une nouveau créneau</a>
 				<button class="btn btn-danger" type="submit" name="action" value="delete" >Supprimer les créneaux sélectionnés</button>
 				<button class="btn btn-primary" type="submit" name="action" value="edit" >Modifier les créneaux sélectionnés</button><br>
-				{{ form_widget(form.decalage) }}{{ form_widget(form.mission) }}{{ form_widget(form.statut) }}
+				{{ form_widget(form.decalage) }}{{ form_widget(form.mission) }}{{ form_widget(form.statut) }}{{ form_widget(form.pointsCharisme) }}
 				
 			</div>
 	    </div>

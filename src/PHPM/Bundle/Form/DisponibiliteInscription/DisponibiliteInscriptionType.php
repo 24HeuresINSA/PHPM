@@ -22,6 +22,7 @@ class DisponibiliteInscriptionType extends AbstractType
         				'0'=>'Verrouillé', '1'=>'Cochable Uniquement', '2'=>'Cochable/Décochable'
         	)))
         		->add('mission')
+        		->add('pointsCharisme')
             
         ;
     }
