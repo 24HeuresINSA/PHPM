@@ -26,7 +26,7 @@ class DisponibiliteInscriptionController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $config=$this->get('config.extension');
-        $entities = $em->getRepository('PHPMBundle:DisponibiliteInscription')->findAllWithOrgacount($config);
+        $entities = $em->getRepository('PHPMBundle:DisponibiliteInscription')->findAll($config);
 
 
         return array('entities' => $entities);
@@ -91,7 +91,7 @@ class DisponibiliteInscriptionController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('disponibiliteinscription_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('disponibiliteinscription'));
             
         }
 
@@ -155,7 +155,7 @@ class DisponibiliteInscriptionController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('disponibiliteinscription_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('disponibiliteinscription'));
         }
 
         return array(
@@ -173,12 +173,6 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function deleteAction($id)
     {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
             $entity = $em->getRepository('PHPMBundle:DisponibiliteInscription')->find($id);
 
@@ -188,9 +182,8 @@ class DisponibiliteInscriptionController extends Controller
 
             $em->remove($entity);
             $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('disponibiliteinscription'));
+            return $this->redirect($this->generateUrl('disponibiliteinscription'));
+        
     }
 
     private function createDeleteForm($id)
