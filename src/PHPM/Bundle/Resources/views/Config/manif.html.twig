@@ -43,9 +43,13 @@
 						{% for i in form.configItems %}
 						    {{ i.vars.value }}
 						    {{ form_errors(i) }}
+						    {% if  i.vars.value.hint %}
+						    <span class="apopover btn btn-info"  rel="popover" data-content="{{ i.vars.value.hint }}" >?</span>
+						    {% endif %}
 						    {{ form_widget(i) }}
 						         
 						{% endfor %}
+						
 			</div>
 
 

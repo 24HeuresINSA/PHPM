@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<table class="records_list">
+<table class="table table-condensed">
     <thead>
         <tr>
             <th>Debut</th><th>Fin</th>
@@ -23,8 +23,7 @@
            
                 <td> <a href="{{ path('disponibiliteinscription_edit', { 'id': entity.id }) }}">
                 
-    {{ entity.debut |format_datetime('dd MMM Y HH:mm')}}</a></td>
-                <td> {{ entity.fin |format_datetime('HH:mm')}}</td>
+    {{ entity.debut |format_datetime('EEEE dd MMM Y HH:mm')}}<i class="icon-arrow-right"></i> {{ entity.fin |format_datetime('EEEE dd MMM HH:mm')}}</a></td>
                 
                 {% for permis in entity.permis %}
                 <td> {{ permis }}</td>

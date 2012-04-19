@@ -45,6 +45,13 @@ class Config
      * @ORM\Column(name="value", type="text", nullable=true)
      */
     protected $value;
+    
+    /**
+     * @var text $hint
+     *
+     * @ORM\Column(name="hint", type="text", nullable=true)
+     */
+    protected $hint;
 
     /**
      * Get id
@@ -125,5 +132,25 @@ class Config
     public function getLabel()
     {
         return $this->label;
+    }
+
+    /**
+     * Set hint
+     *
+     * @param text $hint
+     */
+    public function setHint($hint)
+    {
+        $this->hint = $hint;
+    }
+
+    /**
+     * Get hint
+     *
+     * @return text 
+     */
+    public function getHint()
+    {
+        return $this->hint;
     }
 }

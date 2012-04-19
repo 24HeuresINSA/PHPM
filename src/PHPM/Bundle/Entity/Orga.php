@@ -769,4 +769,24 @@ class Orga implements UserInterface
     {
         return $this->besoinsOrgaHint;
     }
+
+    /**
+     * Add groupesTacheResponsable
+     *
+     * @param PHPM\Bundle\Entity\GroupeTache $groupesTacheResponsable
+     */
+    public function addGroupeTache(\PHPM\Bundle\Entity\GroupeTache $groupesTacheResponsable)
+    {
+        $this->groupesTacheResponsable[] = $groupesTacheResponsable;
+    }
+
+    /**
+     * Get groupesTacheResponsable
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getGroupesTacheResponsable()
+    {
+        return $this->groupesTacheResponsable;
+    }
 }
