@@ -55,11 +55,16 @@
 		</div>
 		<div class="form-fluid">
 			<div class="form-actions">
-				<a class="btn btn-success" href="{{ path('disponibiliteinscription_new') }}"><i class="icon-pencil"></i> Créer une nouveau créneau</a>
-				<button class="btn btn-danger" type="submit" name="action" value="delete" >Supprimer les créneaux sélectionnés</button>
-				<button class="btn btn-primary" type="submit" name="action" value="edit" >Modifier les créneaux sélectionnés</button><br>
-				{{ form_widget(form.decalage) }}{{ form_widget(form.mission) }}{{ form_widget(form.statut) }}{{ form_widget(form.pointsCharisme) }}
-				
+				<div class="btn-toolbar">
+					<a class="btn btn-success" href="{{ path('disponibiliteinscription_new') }}"><i class="icon-pencil"></i> Créer une nouveau créneau</a>
+					<button class="btn btn-danger" type="submit" name="action" value="delete" >Supprimer les créneaux sélectionnés</button>
+				</div>
+				<hr>
+				<h3>Modifier les créneaux sélectionnés</h3>
+				<div class="btn-toolbar">
+					{{ form_widget(form.decalage) }}{{ form_widget(form.mission) }}{{ form_widget(form.statut) }}{{ form_widget(form.pointsCharisme) }}
+					<button class="btn btn-primary" type="submit" name="action" value="edit" >Exécuter</button>
+				</div>
 			</div>
 	    </div>
 	</form>
