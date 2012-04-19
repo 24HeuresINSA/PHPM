@@ -2,12 +2,14 @@
 
 namespace PHPM\Bundle\Controller;
 
+use PHPM\Bundle\Form\DisponibiliteInscription\DisponibiliteInscriptionListType;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PHPM\Bundle\Entity\DisponibiliteInscription;
-use PHPM\Bundle\Form\DisponibiliteInscriptionType;
+use PHPM\Bundle\Form\DisponibiliteInscription\DisponibiliteInscriptionType;
 
 /**
  * DisponibiliteInscription controller.
@@ -24,12 +26,74 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function indexAction()
     {
+    	$request = $this->get('request');
+    	
+    	$param = $request->request->all();
         $em = $this->getDoctrine()->getEntityManager();
         $config=$this->get('config.extension');
-        $entities = $em->getRepository('PHPMBundle:DisponibiliteInscription')->findAll($config);
+        $admin=$this->get('security.context')->isGranted('ROLE_ADMIN');
+        $entitiesQuery="SELECT d, o FROM PHPMBundle:DisponibiliteInscription d LEFT JOIN d.orgas o ORDER BY d.debut"; 
 
+        $entities = $em->createQuery($entitiesQuery)->getResult();
+        
+        
+        $data = array(
+        		'disponibiliteInscriptionItems'=>$entities
+        );
+        $form    = $this->createForm(new DisponibiliteInscriptionListType($admin, $config));
 
-        return array('entities' => $entities);
+        if ($this->get('request')->getMethod() == 'POST') {
+        	$form->bindRequest($request);
+        	$data = $form->getData();
+        	$valid=$form->isValid();
+
+        
+        
+        
+        	if ($valid) {
+        		$decalage = $data['decalage'];
+        		
+        		foreach ($data['disponibiliteInscriptionItems'] as $di){
+        			
+        			if($param['action']=='delete'){
+        				 $em->remove($di);
+        			
+        			}
+        			
+        			if($param['action']=='duplicate'){
+        			
+        				$ndi = new DisponibiliteInscription();
+        				$debutDi = clone $di->getDebut();
+        				$finDi = clone $di->getFin();
+        				$debutDi->add(new \DateInterval('PT'.($decalage).'S'));
+        				$finDi->add(new \DateInterval('PT'.($decalage).'S'));
+        				$ndi->setDebut($debutDi);
+        				$ndi->setFin($finDi);
+        				
+        				$em->persist($ndi);
+        				
+        				
+        			}
+        			
+        		
+        		}
+        		
+        		
+        		
+        		
+        		
+        		
+        		$em->flush();
+        		
+        
+        	}
+        
+        	$form    = $this->createForm(new DisponibiliteInscriptionListType($admin, $config));
+        	$entities = $em->createQuery($entitiesQuery)->getResult();
+        }
+		
+        return array('entities' => $entities,
+        		'form'=>$form->createView());
     }
 
     /**

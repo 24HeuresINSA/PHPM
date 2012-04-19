@@ -6,38 +6,54 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row-fluid">       
-    	<div class="page-header">
-         	<h1>Liste des DI</h1>
-         </div>
-    </div>
-    
-    <div class="row-fluid"> 
-		<table class="table table-condensed">
-		    <thead>
-		        <tr>
-		            <th>Horaires</th>
-		            <th>Total Orgas</th>
-		            <th>Actions</th>
-		        </tr>
-		    </thead>
-		    <tbody>
-			    {% for entity in entities %}
-		           <tr>
-		               <td>
-			               {{ entity.debut |format_datetime('EEEE dd MMM Y HH:mm')}}<i class="icon-arrow-right"></i>
-			               {{ entity.fin |format_datetime('EEEE dd MMM HH:mm')}}
-		               </td>
-		               <td>{{ entity.orgas.count }}</td>
-		               <td>
-		               <a class="btn" href="{{ path('disponibiliteinscription_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Éditer</a>
-				       <a class="btn  btn-danger" href="{{ path('disponibiliteinscription_delete', { 'id': entity.id }) }}"><i class="icon-remove"></i> Supprimer</a>
-		               </td>
-		           </tr>
-			     {% endfor %}
-		    </tbody>
-		</table>
-	</div>
+    <form action="{{ path('disponibiliteinscription') }}" method="post" {{ form_enctype(form) }}>
+	    <div class="row-fluid">       
+	    	<div class="page-header">
+	         	<h1>Liste des Créneaux d'Inscription</h1>
+	         </div>
+	    </div>
+
+	    
+	    <div class="row-fluid"> 
+			<table class="table table-condensed">
+			    <thead>
+			        <tr>
+			            <th>Horaires</th>
+			            <th>Total Orgas</th>
+			            <th>Actions</th>
+			        </tr>
+			    </thead>
+			    <tbody>
+				    {% for e in entities %}
+			           <tr>
+			               <td>
+			                   <input class="shiftkeybox"type="checkbox" name="phpm_bundle_disponibiliteinscriptionlisttype[disponibiliteInscriptionItems][{{ e.id }}]" id="phpm_bundle_disponibiliteinscriptionlisttype_disponibiliteInscriptionItems_{{ e.id }}" value="{{ e.id }}">
+				               {{ e.debut |format_datetime('EEEE dd MMM Y HH:mm')}}<i class="icon-arrow-right"></i>
+				               {{ e.fin |format_datetime('EEEE dd MMM HH:mm')}}
+			               </td>
+			               <td>{{ e.orgas.count }}</td>
+			               <td>
+			               <a class="btn" href="{{ path('disponibiliteinscription_edit', { 'id': e.id }) }}"><i class="icon-pencil"></i> Éditer</a>
+					       <a class="btn  btn-danger" href="{{ path('disponibiliteinscription_delete', { 'id': e.id }) }}"><i class="icon-remove"></i> Supprimer</a>
+			               </td>
+			           </tr>
+				     {% endfor %}
+			    </tbody>
+			</table>
+			
+	{{ form_widget(form._token) }}
+	
+			
+		</div>
+		<div class="form-fluid">
+			<div class="form-actions">
+				<a class="btn btn-success" href="{{ path('disponibiliteinscription_new') }}"><i class="icon-pencil"></i> Créer une nouveau créneau</a>
+				<button class="btn btn-danger" type="submit" name="action" value="delete" >Supprimer les créneaux sélectionnés</button>
+				
+				<button class="btn btn-primary" type="submit" name="action" value="duplicate" >Dupliquer les créneaux sélectionnés avec ce décalage : </button>{{ form_widget(form.decalage) }}
+			</div>
+	    </div>
+	</form>
 {% endblock %}
 
 
