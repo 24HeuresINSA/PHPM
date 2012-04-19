@@ -720,10 +720,14 @@ class OrgaController extends Controller
 	 */
 	public function charismeAction()
 	{
-	    
-
-	    $em = $this->getDoctrine()->getEntityManager();
-	
+		if (false === $this->get('security.context')->isGranted('ROLE_VISITOR')) {
+			throw new AccessDeniedException();
+		}
+		
+		$em = $this->getDoctrine()->getEntityManager();
+		$user = $this->get('security.context')->getToken()->getUser();
+		
+		$stats = $em->getRepository('PHPMBundle:Orga')->getStatsCharisme($user->getId());
 	
 	    $data = $em->getRepository('PHPMBundle:Orga')->findAll();
 	
@@ -740,7 +744,8 @@ class OrgaController extends Controller
 	    ->createQuery("SELECT e, sum(d.pointsCharisme) as pc FROM PHPMBundle:Equipe e LEFT JOIN e.orgas o LEFT JOIN o.disponibilitesInscription d GROUP BY e ORDER BY pc DESC  ")
 	    ->getResult();
 	
-	    return array('orgas' => $orgas,
+	    return array('stats' => $stats,
+	    			 'orgas' => $orgas,
 	                 'departs'=>$departs,
 	                 'equipes'=>$equipes);
 	}

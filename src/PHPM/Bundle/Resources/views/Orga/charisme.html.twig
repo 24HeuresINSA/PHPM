@@ -12,8 +12,27 @@
 	        </div>
 </div>
 <div class="row-fluid">
+<div class="well">
+	<h2>Ton charisme :</h2>
+	<div class="progress progress-success progress-striped">
+        <div id="barreCharisme" class="bar"></div>
+        <script type="text/javascript">
+		$('#barreCharisme').attr('style',"width: {{ stats.PCOrga/stats.PCTotal*100 }}%");
+        </script>
+    </div>
+    <div style="text-align: center; font-size: x-large;">
+    	<div >Points de charisme : {{ stats.PCOrga}}/{{stats.PCTotal }}</div><br>
+    	Classement : {{ stats.rang}}/{{stats.nbOrgas }}
+    	</div>
+
+</div>
+</div>
+<div class="row-fluid">
+	<h2>Statistiques détaillées :</h2>
+</div>
+<div class="row-fluid">
 	<div class="span4">
-		<h2>Par orga</h2>
+		<h3>Par orga</h3>
 		<table class="table">
 		    <thead>
 		        <tr> 
@@ -38,7 +57,7 @@
 		</table>
 	</div>
 	<div class="span4">
-		<h2>Par équipe</h2>
+		<h3>Par équipe</h3>
 		<table class="table">
 		    <thead>
 		        <tr> 
@@ -59,7 +78,7 @@
 		</table>
 	</div>
 	<div class="span4">
-		<h2>Par département</h2>
+		<h3>Par département</h3>
 		<table class="table">
 		    <thead>
 		        <tr> 

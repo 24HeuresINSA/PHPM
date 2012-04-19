@@ -73,6 +73,37 @@ class OrgaRepository extends EntityRepository
 	
 	}
 	
+	public function getStatsCharisme($id)
+	{
+	
+		$totalpc = $this->getEntityManager()
+		->createQuery("SELECT sum(d.pointsCharisme)FROM PHPMBundle:DisponibiliteInscription d")
+		
+		->getSingleScalarResult();
+		
+		
+		$result = $this->getEntityManager()
+		->createQuery("SELECT o  , sum(d.pointsCharisme) as pc FROM PHPMBundle:Orga o JOIN o.disponibilitesInscription d GROUP BY o.id ORDER BY pc DESC")
+	
+		->getResult();
+		
+		$rang=1;
+		$nbOrgas = count($result);
+		
+		foreach ($result as $row){
+			$orga=$row[0];
+			$pc=$row['pc'];
+			if ($orga->getId()==$id){
+				return array('rang'=>$rang,'nbOrgas'=>$nbOrgas,'PCOrga'=>$pc,'PCTotal'=>$totalpc)
+				;
+			}
+			$rang++;
+		}
+		return(-1);
+	
+	
+	}
+	
     public function getOrgasFromRegistration()
     {
     
