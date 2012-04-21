@@ -18,7 +18,7 @@
     	</div>
 	    {% if valid is defined %}    
 	        <div class="row-fluid">  
-	            {% if valid==1 %}
+	            {% if valid == 1 %}
 	            	<div class="alert alert-success alert-block overflow-auto">
 					  <a class="close" data-dismiss="alert">×</a>
 					  <img style="height:10em; float: right;" src="{{ asset(imageu) }}" alt="The Human" />
@@ -68,23 +68,37 @@
 		        	{% endif %}
 		        	{{ form_widget(form.entity.consignes, {'style': 'width:500px'}) }}    
 					<style>
-						.wysiwyg-input {width: 100%; height: 300px;}
+						.wysiwyg-input {
+							width: 100%;
+							height: 300px;
+							{% if rOnly  %}
+								background-color: rgb(238, 238, 238) !important;
+							{% endif %}
+						}
 					</style>
 					<script type="text/javascript">
 						$(function() {
 						    $('#phpm_bundle_tachetype_entity_consignes').wysiwyg({
 						        iFrameClass: "wysiwyg-input",
+						        initialContent: '',
 						        rmUnusedControls: true,
-						        controls: {
-						            bold: {visible: true},
-						            italic: {visible: true},
-						            strikeThrough: {visible: true},
-						            underline: {visible: true},
-						            insertOrderedList: {visible: true},
-						            insertUnorderedList: {visible: true},
-						            removeFormat: {visible: true},
-						            insertTable: {visible: true}
-						        }
+						        {% if not rOnly  %}
+							        controls: {
+							            bold: {visible: true},
+							            italic: {visible: true},
+							            strikeThrough: {visible: true},
+							            underline: {visible: true},
+										superscript: {visible: true},
+										subscript: {visible: true},
+							  			indent: {visible: true},
+							            outdent: {visible: true},
+							            insertOrderedList: {visible: true},
+							            insertUnorderedList: {visible: true},
+							            undo: {visible: true},
+							           	redo: {visible: true},
+							            removeFormat: {visible: true}
+							        }
+						        {% endif %}
 						    });
 						});
 					</script>
