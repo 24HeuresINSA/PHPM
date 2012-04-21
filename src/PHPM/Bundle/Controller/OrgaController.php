@@ -119,13 +119,6 @@ class OrgaController extends Controller
         $entity->setEmail($email);
         $entity->setStatut(0);
         
-        $confianceObject = $em->getRepository('PHPMBundle:Confiance')->find($confianceId);
-        
-        if (!$confianceObject) {
-            throw $this->createNotFoundException('Unable to find Confiance entity.');
-        }
-        
-        $entity->setConfiance($confianceObject);
         $form   = $this->createForm(new OrgaType(false,$config), $entity);
     
         return array(
@@ -149,7 +142,6 @@ class OrgaController extends Controller
         $request = $this->getRequest();
         $entity->setStatut(0);
         $entity->setPrivileges(1);
-        $entity->setConfiance($em->getRepository('PHPMBundle:Confiance')->find(3));
         
         $form    = $this->createForm(new OrgaType(false,$config), $entity);
         $form->bindRequest($request);
