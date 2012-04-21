@@ -220,7 +220,7 @@ class CreneauController extends Controller
 		$jour = $request->request->get('jour', '');
     	$date_time = $request->request->get('date_time', '');
 		
-		if ($jour != '') {
+		if ($jour !== '') {
 			$jour = new \DateTime($jour);
 		}
     
@@ -228,7 +228,7 @@ class CreneauController extends Controller
     	$entities = $em->getRepository('PHPMBundle:Creneau')->getCreneauxCompatibleWithCriteria($niveau_confiance, $permis, $equipe_id, $duree, $orga_id, $plage, $jour, $date_time);
 		
 		// nécessaire pour la suite, la priorité
-    	if ($orga_id != '') {
+    	if ($orga_id !== '') {
     		$orga =  $em->createQuery("SELECT o FROM PHPMBundle:Orga o WHERE o.id = $orga_id")->getSingleResult();
     		$equipe_orga = $orga->getEquipe();
     	}
@@ -240,7 +240,7 @@ class CreneauController extends Controller
     		$priorite = '';
     		if ($creneau->getOrgaHint() != null) {
     			$priorite = 'orga';
-    		} else if ($creneau->getEquipeHint() == $equipe_orga) {
+    		} else if ($creneau->getEquipeHint() === $equipe_orga) {
     			$priorite = 'equipe';
     		}
 			
