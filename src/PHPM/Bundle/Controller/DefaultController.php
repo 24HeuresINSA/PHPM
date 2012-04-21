@@ -22,20 +22,23 @@ class DefaultController extends Controller
     {
     	$em = $this->getDoctrine()->getEntityManager();
     	$pref = $em->getRepository('PHPMBundle:Config')->findOneByField('phpm_config_initiale');
-    	$logged= $this->get('security.context')->isGranted('ROLE_USER');
+    	
     	
     	if (!$pref){
     	return $this->redirect($this->generateUrl('config_initiale'));
     	}
     	
-//     	if (!$logged){
-//     	return $this->redirect($this->generateUrl('login'));
-//     	}
+    	$user=$this->get('security.context')->getToken()->getUser();
+    	
+    	if($user){
+    		$statsUser=$em->getRepository('PHPMBundle:Orga')->getStats($user);
+    		$statsUser['taches']=$em->getRepository('PHPMBundle:Tache')->getOrgaStats($user);
+    		return array('statsOrga'=>$statsUser);
+    	}
+    	return array();
     	
     	
-    	
-    	
-        return array();
+        
     }
     
     
@@ -112,7 +115,7 @@ class DefaultController extends Controller
                 
                 
 
-                return array('m'=>'success', 'email'=>$email);
+                return $this->redirect($this->generateUrl('accueil'));
             }
         } catch(ErrorException $e) {
             return array("m"=>'error');

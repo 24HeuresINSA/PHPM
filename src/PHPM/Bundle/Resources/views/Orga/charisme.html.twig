@@ -17,12 +17,12 @@
 	<div class="progress progress-success progress-striped">
         <div id="barreCharisme" class="bar"></div>
         <script type="text/javascript">
-		$('#barreCharisme').attr('style',"width: {{ stats.PCOrga/stats.PCTotal*100 }}%");
+		$('#barreCharisme').attr('style',"width: {{ stats.PCOrga/stats.PCMax*100 }}%");
         </script>
     </div>
     <div style="text-align: center; font-size: x-large;">
-    	<div >Points de charisme : {{ stats.PCOrga}}/{{stats.PCTotal }}</div><br>
-    	Classement : {{ stats.rang}}/{{stats.nbOrgas }}
+    	<div >Points de charisme : {{ stats.PCOrga}}/{{stats.PCMax }}</div><br>
+    	Classement : {{ stats.rangCharisme}}/{{stats.nbOrgas }}
     	</div>
 
 </div>

@@ -7,7 +7,9 @@ INSERT INTO `Config` (`id`, `field`, `label`, `value`, `hint`) VALUES
 (6, 'manifestation_orga_responsableconfiancemin', 'Confiance minimale pour être responsable d''une tâche', '500', NULL),
 (7, 'manifestation_permis_libelles', 'Libellés des permis', '{"0": "Pas de permis","1": "Permis - de 2 ans","2": "Permis de + de 2 ans" }', 'Objet JSON. Exemple : "{"0": "Pas de permis","1": "Permis - de 2 ans","2": "Permis de + de 2 ans" }"'),
 (8, 'animations_db_path', 'Chemin vers la BDD des anims', '/var/www/animaker/Backend/Data/DB/DB.sqlite', 'Chemin absolu vers la base SQLite des animations, au format Animaker. Laisser nul sinon.'),
-(9, 'manifestation_edition', 'Numéro de l''édition', '38', NULL);
+(9, 'manifestation_edition', 'Numéro de l''édition', '38', NULL),
+(10, 'phpm_contenu_page_principale', 'Contenu de la page principale', '<h1>PHPlanningMaker<h2><p>Gestion des ressources humaines.</p>', '')
+;
 
 INSERT INTO `Confiance` (`id`, `nom`, `valeur`, `couleur`) VALUES
 (1, 'Soft', 100, 'blue'),

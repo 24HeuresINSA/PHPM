@@ -1,19 +1,16 @@
 {% extends "PHPMBundle:Default:layout.html.twig"  %}
 {% set pageTitle = 'Login' %}
 
-{% block actions %}
-
+{% block pageHeader %}
 {% endblock %}
 
 
 {% block content %}
 {% if m is not defined%}
-{% if registered and registered==1 %}
-Votre inscription a bien été prise en compte, veuillez cliquer sur le bouton ci-dessous pour vous connecter.
-{% endif %}
-<form action="?login" method="post">
-                        <button>Authentification</button>
-                        </form>
+	{% if registered and registered==1 %}
+	Votre inscription a bien été prise en compte, veuillez cliquer sur le bouton ci-dessous pour vous connecter.
+	{% endif %}
+
                        
                         
 {% elseif m=='error' %}

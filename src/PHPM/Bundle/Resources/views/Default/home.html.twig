@@ -1,35 +1,134 @@
-{% extends "PHPMBundle:Default:layout.html.twig"  %}
+{% extends "PHPMBundle::layout.html.twig"  %}
 {% set pageTitle = 'Accueil' %}
 
-{% block actions %}
-
-{{ parent() }}
-{% block newAction %}
+{% block pageHeader %}
 {% endblock %}
-{% block indexAction %}
-{% endblock %}
-{% block editAction %}
-{% endblock %}
-{% block deleteAction %}
-{% endblock %}
-{% block showAction %}
-{% endblock %}
-
-{% endblock %}
-
 
 {% block content %}
 
-<div class="hero-unit">
-	<h1>PHPlanningMaker</h1>
-	<p>la Gestion des Ressources Humaines 2.0</p>
-	{% if is_granted('ROLE_VISITOR') %}
-	{% else %}
-		<p>
-			<a class="btn btn-primary btn-large" href="{{ url('login') }}">Se connecter</a>
-		</p>
-	{% endif %}
-</div>
+{% if is_granted('ROLE_VISITOR') %}
+	<div class="row-fluid">
+		<h1>Bonsoir {{ app.user.prenom }} !</h1>
+		<hr>
+	</div>
 
+		
+	
+
+
+	{% if is_granted('ROLE_USER') %}
+		<div class="row-fluid">
+			<div class="span4">
+	          <h2>Mes Informations</h2>
+	          <p><em>Veuillez vous assurer que ces informations sont à jour.</em></p>
+		          <div class="well">
+		          <h3>{{ entitiesMacro.orga(app.user) }}</h3>
+		          <p>{{ app.user.email }} - {{ app.user.telephone }}</p>
+		          <dl class="dl-horizontal">
+			        
+			        <b>Date de Naissance : </b>
+			        {{ app.user.dateDeNaissance|format_date('dd MMM Y') }}<br>
+			        <b>Équipe : </b>
+			        {{ entitiesMacro.equipe(app.user.equipe) }}<br>
+			        <b>Permis de conduire : </b>
+			        {% if app.user.datePermis %}
+			        obtenu le {{ app.user.datePermis|format_date('dd MMM Y') }}.
+			        {% else %}
+			        non titulaire
+			        {% endif%}<br>
+			        <b>Département : </b>
+			        {{ app.user.departement }}<br>		        
+			      </dl>
+		          <p><a class="btn" href="{{ path('orga_edit',{'id':app.user.id }) }}">Modifier mes informations »</a></p>
+		    	</div>
+	    	</div>
+	    	
+			<div class="span4">
+	          <h2>Fiches Tâches</h2>
+	          			{% if (statsOrga.taches.orga[0] + statsOrga.taches.equipe[0]) > 0 %}
+			<div class="alert alert-block alert-error fade in">
+	            <a class="close" data-dismiss="alert" href="#">×</a>
+	            <h4 class="alert-heading">Il vous reste des fiches tâches à rédiger.</h4>
+	        </div>
+			{% endif %}
+	          <h3>Statistiques</h3>
+		          <table class="table table-condensed">
+				    <thead>
+				        <tr> 
+				        	<td></td>
+				            <th>Vous</th>
+				            <th>Votre équipe</th>
+				        </tr>
+				    </thead>
+				    <tbody>
+				        <tr class="statut0">
+					        <td>En rédaction</td>
+					        <td>{{ statsOrga.taches.orga[0]}}</td>
+						    <td>{{ statsOrga.taches.equipe[0]}}</td>
+				        </tr>
+				        <tr class="statut1">
+					        <td>En validation</td>
+					        <td>{{ statsOrga.taches.orga[1]}}</td>
+						    <td>{{ statsOrga.taches.equipe[1]}}</td>
+				        </tr>  
+				        <tr class="statut2">
+					        <td>Validées</td>
+					        <td>{{ statsOrga.taches.orga[2]}}</td>
+						    <td>{{ statsOrga.taches.equipe[2]}}</td>
+				        </tr>  
+				    </tbody>
+				</table>
+			
+	          <p><a class="btn" href="#">Accéder aux fiches tâches »</a></p>
+	    	</div>
+	    	
+			<div class="span4">
+	          <h2>Disponibilités</h2>
+	       {% if statsOrga.PCOrga==0 and statsOrga.PCMax>0%}
+			<div class="alert alert-block alert-error fade in">
+	            <a class="close" data-dismiss="alert" href="#">×</a>
+	            <h4 class="alert-heading">Aucun charisme !</h4>
+	            <p>Vous n'avez pas encore renseigné vos disponibilités.</p>
+				<p><a class="btn" href="{{ path('orga_inscriptionhard',{'id':app.user.id }) }}">Renseigner mes disponibilités »</a></p>
+	        </div>
+			{% else %}
+				{% if statsOrga.PCOrga<(statsOrga.PCTotal/statsOrga.nbOrgas) %}
+						<div class="alert alert-block  fade in">
+				            <a class="close" data-dismiss="alert" href="#">×</a>
+				            <h4 class="alert-heading">Faible charisme !</h4>
+				            <p>Vous avez renseigné peu de disponibilités.</p>
+				            <p><a class="btn" href="{{ path('orga_inscriptionhard',{'id':app.user.id }) }}">Ajouter des disponibilités</a></p>
+				        </div>
+				{% endif %}
+				<div class="well">
+					<h2>Ton charisme :</h2>
+					<div class="progress progress-success progress-striped">
+				        <div id="barreCharisme" class="bar"></div>
+				        <script type="text/javascript">
+						$('#barreCharisme').attr('style',"width: {{ statsOrga.PCOrga/statsOrga.PCMax*100 }}%");
+				        </script>
+				    </div>
+				    <div style="text-align: center;">
+				    	<p>Points de charisme : {{ statsOrga.PCOrga}}/{{statsOrga.PCMax }}<br>
+				    	Classement : {{ statsOrga.rangCharisme}}/{{statsOrga.nbOrgas }}
+				    	</p>
+				    </div>			
+				</div>
+				<div class="btn-toolbar"><a class="btn btn-primary" href="{{ path('orga_inscriptionhard',{'id':app.user.id }) }}">Modifier mes disponibilités »</a>
+				<a class="btn" href="{{ path('orga_charisme') }}">Statistiques Charisme »</a></div>
+			{% endif %}
+	    	</div>
+		</div>		
+	{% endif %}
+	
+{% else %}
+	<div class="hero-unit">
+	{{ phpm_contenu_page_principale |raw}}
+			<p>
+				<a class="btn btn-primary btn-large" href="{{ url('login') }}">Se connecter</a>
+			</p>
+	</div>
+
+{% endif %}
 {% endblock %}
 

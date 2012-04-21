@@ -63,6 +63,51 @@ class TacheRepository extends EntityRepository
 	    ->getResult();
 	}
 	
+	public function getOrgaStats(\PHPM\Bundle\Entity\Orga $orga)
+	{
+		$stats=array('orga'=>array("0"=>0,"1"=>0,"2"=>0),'equipe'=>array("0"=>0,"1"=>0,"2"=>0));
+		$orgaStats =  $this->getEntityManager()
+		->createQuery('SELECT t.statut,COUNT(t) as nb FROM PHPMBundle:Tache t LEFT JOIN t.groupeTache g JOIN g.equipe e JOIN t.responsable r 
+				WHERE r.id = :oid 
+				GROUP BY t.statut')
+		->setParameter('oid', $orga->getId())
+		->getResult();
+		
+		foreach ($orgaStats as $row){
+			if($row['statut']==0){
+				$stats['orga'][0]=$row['nb'];
+			}
+			if($row['statut']==1){
+				$stats['orga'][1]=$row['nb'];
+			}
+			if($row['statut']>=2){
+				$stats['orga'][2]+=$row['nb'];
+			}
+		}
+		
+		
+		$equipeStats =  $this->getEntityManager()
+		->createQuery('SELECT t.statut,COUNT(t) as nb FROM PHPMBundle:Tache t LEFT JOIN t.groupeTache g JOIN g.equipe e JOIN t.responsable r
+				WHERE e.id = :eid
+				GROUP BY t.statut')
+				->setParameter('eid', $orga->getEquipe()->getId())
+				->getResult();
+		
+		foreach ($equipeStats as $row){
+			if($row['statut']==0){
+				$stats['equipe'][0]=$row['nb'];
+			}
+			if($row['statut']==1){
+				$stats['equipe'][1]=$row['nb'];
+			}
+			if($row['statut']>=2){
+				$stats['equipe'][2]+=$row['nb'];
+			}
+		}
+		return $stats;
+
+	}
+	
 
 	
 	

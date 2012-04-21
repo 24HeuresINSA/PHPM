@@ -512,7 +512,7 @@ class OrgaController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		$user = $this->get('security.context')->getToken()->getUser();
 		
-		$stats = $em->getRepository('PHPMBundle:Orga')->getStatsCharisme($user->getId());
+		$stats = $em->getRepository('PHPMBundle:Orga')->getStats($user);
 	
 	    $data = $em->getRepository('PHPMBundle:Orga')->findAll();
 	

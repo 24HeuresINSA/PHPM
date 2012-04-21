@@ -73,33 +73,39 @@ class OrgaRepository extends EntityRepository
 	
 	}
 	
-	public function getStatsCharisme($id)
+	public function getStats(\PHPM\Bundle\Entity\Orga $orga)
 	{
 	
-		$totalpc = $this->getEntityManager()
+		
+		$pcmax = $this->getEntityManager()
 		->createQuery("SELECT sum(d.pointsCharisme)FROM PHPMBundle:DisponibiliteInscription d")
 		
 		->getSingleScalarResult();
 		
+		$totalpc = $this->getEntityManager()
+		->createQuery("SELECT sum(d.pointsCharisme)FROM PHPMBundle:Orga o JOIN o.disponibilitesInscription d")
 		
-		$result = $this->getEntityManager()
+		->getSingleScalarResult();
+		
+		
+		$DIs = $this->getEntityManager()
 		->createQuery("SELECT o  , sum(d.pointsCharisme) as pc FROM PHPMBundle:Orga o JOIN o.disponibilitesInscription d GROUP BY o.id ORDER BY pc DESC")
 	
 		->getResult();
 		
 		$rang=1;
-		$nbOrgas = count($result);
+		$nbOrgas = count($DIs);
 		
-		foreach ($result as $row){
-			$orga=$row[0];
+		foreach ($DIs as $row){
+			$orgaDI=$row[0];
 			$pc=$row['pc'];
-			if ($orga->getId()==$id){
-				return array('rang'=>$rang,'nbOrgas'=>$nbOrgas,'PCOrga'=>$pc,'PCTotal'=>$totalpc)
+			if ($orgaDI==$orga){
+				return array('rangCharisme'=>$rang,'nbOrgas'=>$nbOrgas,'PCOrga'=>$pc,'PCTotal'=>$totalpc, 'PCMax'=>$pcmax)
 				;
 			}
 			$rang++;
 		}
-		return(-1);
+		return(array('rangCharisme'=>-1,'nbOrgas'=>$nbOrgas,'PCOrga'=>0,'PCTotal'=>$totalpc,'PCMax'=>$pcmax));
 	
 	
 	}
