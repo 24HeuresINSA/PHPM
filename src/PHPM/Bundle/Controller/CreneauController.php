@@ -243,17 +243,20 @@ class CreneauController extends Controller
     		} else if (isset($equipe) && $creneau->getEquipeHint() == $equipe) {
     			$priorite = 'equipe';
     		}
+			
+			$equipe = $creneau->getEquipeHint();
+			$tache = $creneau->getPlageHoraire()->getTache();
     		
     		$creneauArray[]= array(
     						"id" => $creneau->getId(),
-    			        	"nom" => $creneau->getPlageHoraire()->getTache()->getNom(),
-    						"lieu" => $creneau->getPlageHoraire()->getTache()->getLieu(),
-//  TODO   						"categorie" => $creneau->getPlageHoraire()->getTache()->getCategorie()->getId(),
+    			        	"nom" => $tache->getNom(),
+    						"lieu" => $tache->getLieu(),
+	   						"equipe" => $equipe->getId(),
 				    		"debut" => $creneau->getDebut(),
 				    		"fin" => $creneau->getFin(),
     			        	"duree" => $creneau->getDuree(),
-    			    		"permis_necessaire" => $creneau->getPlageHoraire()->getTache()->getPermisNecessaire(),
-    			    		"confiance" =>$creneau->getEquipeHint()->getConfiance()->getId(),
+    			    		"permis_necessaire" => $tache->getPermisNecessaire(),
+    			    		"confiance" =>$equipe->getConfiance()->getId(),
     			    		"priorite" => $priorite
     			        	);
     	}
