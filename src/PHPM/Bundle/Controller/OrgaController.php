@@ -380,7 +380,7 @@ class OrgaController extends Controller
 	            	
 	            }
 	            $em->flush();
-	            $form = $this->createForm(new InscriptionHardType($admin,$em,$orga));
+	            $form = $this->createForm(new InputDisposType($admin,$em,$orga));
 	        }
 	    }
 	    
