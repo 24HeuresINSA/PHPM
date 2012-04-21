@@ -249,6 +249,7 @@ class CreneauController extends Controller
     		
     		$creneauArray[]= array(
     						"id" => $creneau->getId(),
+    						"tache_id" => $tache->getId(),
     			        	"nom" => $tache->getNom(),
     						"lieu" => $tache->getLieu(),
 	   						"equipe" => $equipe->getId(),
