@@ -30,7 +30,7 @@ class DefaultController extends Controller
     	
     	$user=$this->get('security.context')->getToken()->getUser();
     	
-    	if($user){
+    	if ($this->get('security.context')->isGranted('ROLE_VISITOR')) {
     		$statsUser=$em->getRepository('PHPMBundle:Orga')->getStats($user);
     		$statsUser['taches']=$em->getRepository('PHPMBundle:Tache')->getOrgaStats($user);
     		return array('statsOrga'=>$statsUser);
