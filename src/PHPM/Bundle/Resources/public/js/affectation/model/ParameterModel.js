@@ -19,16 +19,16 @@ ParameterModel.prototype = {
 	/*
 	 * Lance les requêtes
 	 */
-	getData: function(callbackCategories, callbackNiveaux, callbackPermis) {
-		pmAffectation.models.parameter.callbackCategories = callbackCategories;
+	getData: function(callbackEquipes, callbackNiveaux, callbackPermis) {
+		pmAffectation.models.parameter.callbackEquipes = callbackEquipes;
 		pmAffectation.models.parameter.callbackNiveaux = callbackNiveaux;
 		pmAffectation.models.parameter.callbackPermis = callbackPermis;
 		
-		// pour les catégories
+		// pour les équipes
 		$.ajax({
-			url: pmAffectation.urls.categories,
+			url: pmAffectation.urls.equipes,
 			dataType: 'json',
-			success: pmAffectation.models.parameter.requestSuccessCategories,
+			success: pmAffectation.models.parameter.requestSuccessEquipes,
 			error: pmAffectation.models.parameter.requestError,
 			type: 'GET',
 			async: false
@@ -58,10 +58,10 @@ ParameterModel.prototype = {
 	/*
 	 * Récup les résultats
 	 */
-	requestSuccessCategories: function(data) {
-		pmAffectation.models.parameter.data.categories = data;
+	requestSuccessEquipes: function(data) {
+		pmAffectation.models.parameter.data.equipes = data;
 	
-		pmAffectation.models.parameter.callbackCategories();
+		pmAffectation.models.parameter.callbackEquipes();
 	},
 	requestSuccessNiveaux: function(data) {
 		pmAffectation.models.parameter.data.niveaux = data;
@@ -81,8 +81,8 @@ ParameterModel.prototype = {
 	 * Getters des résultats
 	 */
 	// récupère les catégories des tâches
-	getCategories: function() {
-		return pmAffectation.models.parameter.data.categories;
+	getEquipes: function() {
+		return pmAffectation.models.parameter.data.equipes;
  	},
 	// récupère les niveaux de confiance des orgas
 	getNiveaux: function() {

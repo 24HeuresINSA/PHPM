@@ -20,7 +20,7 @@ CreneauView.prototype = {
 		// filtres : bind les events
 		$('#filtre_tache_confiance').change(function() {pmAffectation.controllers.creneau.clickFilter('confiance', $('#filtre_tache_confiance').val());});
 		$('#filtre_tache_permis').change(function() {pmAffectation.controllers.creneau.clickFilter('permis', $('#filtre_tache_permis').val());});
-		$('#filtre_tache_categorie').change(function() {pmAffectation.controllers.creneau.clickFilter('categorie', $('#filtre_tache_categorie').val());});
+		$('#filtre_tache_equipe').change(function() {pmAffectation.controllers.creneau.clickFilter('equipe', $('#filtre_tache_equipe').val());});
 		$('#filtre_tache_duree').change(function() {pmAffectation.controllers.creneau.clickFilter('duree', $('#filtre_tache_duree').val());});
 		
 		// la champ de recherche (caché)
@@ -38,7 +38,7 @@ CreneauView.prototype = {
 	setFilters: function() {
 		(pmAffectation.current.creneau.confiance !== undefined) && ($('#filtre_tache_confiance').val(pmAffectation.current.creneau.confiance));
 		(pmAffectation.current.creneau.permis !== undefined) && ($('#filtre_tache_permis').val(pmAffectation.current.creneau.permis));
-		(pmAffectation.current.creneau.categorie !== undefined) && ($('#filtre_tache_categorie').val(pmAffectation.current.creneau.categorie));
+		(pmAffectation.current.creneau.equipe !== undefined) && ($('#filtre_tache_equipe').val(pmAffectation.current.creneau.equipe));
 		(pmAffectation.current.creneau.duree !== undefined) && ($('#filtre_tache_duree').val(pmAffectation.current.creneau.duree));
 	},
 	
@@ -60,7 +60,7 @@ CreneauView.prototype = {
 					_priorite = ' <span class="label label-important">orga</span>';
 					break;
 				case 'equipe':
-					_priorite = ' <span class="label label-warning">équipe</span>';
+					_priorite = ' <span class="label label-inverse">'+pmAffectation.data.parameter.equipes[_creneaux[_iCreneau]['equipe']].toLowerCase()+'</span>';
 					break;
 				case 'confiance':
 					_priorite = ' <span class="label label-success">confiance</span>';
@@ -79,10 +79,10 @@ CreneauView.prototype = {
 			$('#liste_taches').append(_html);
 			
 			// handler de click
-			$('#tache_'+_iCreneau).bind('click', {idCreneau: _creneaux[_iCreneau]['id']}, function(e) {
+			$('#tache_'+_iCreneau).bind('click', {idCreneau: _creneaux[_iCreneau]['tache_id']}, function(e) {
 				if (e.altKey) {
 					// Shift + click : affiche la page pour modifier le créneau
-					var _popup = window.open(pmAffectation.url+'creneau/'+e.data.idCreneau+'/edit', '');
+					var _popup = window.open(pmAffectation.urls.creneauMaker+'/'+e.data.idCreneau, '');
 					
 					// à la fermeture, refresh la liste des créneaux
 					// unload est firé au chargement (unload de about:blank),

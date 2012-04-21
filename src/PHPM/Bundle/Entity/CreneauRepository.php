@@ -111,30 +111,34 @@ class CreneauRepository extends EntityRepository
 		
 	}
 	
-	public function getCreneauxCompatibleWithCriteria($niveau_confiance, $permis, $duree, $orgaId, $plage, $jour, $date_time)
+	public function getCreneauxCompatibleWithCriteria($niveau_confiance, $permis, $equipe, $duree, $orga_id, $plage, $jour, $date_time)
 	{
 		// bien filtrer pour ne prendre que les tâches prêtes pour affectation (statut = 3)
 		// viré le reliquat "confiance"
 	    $dql = 'SELECT c, eh, ehc FROM PHPMBundle:Creneau c JOIN c.plageHoraire p JOIN p.tache t LEFT JOIN c.equipeHint eh LEFT JOIN eh.confiance ehc
 	     LEFT JOIN c.orgaHint oh WHERE c.disponibilite IS NULL AND t.statut = 3 ';
-	
-	    if ($permis != '') {
-	    	$dql .= "AND t.permisNecessaire = $permis ";
-		}
 	   
-	    if ($niveau_confiance != '') {
+	    if ($niveau_confiance !== '') {
 	    	$valeurConfianceMin = $this->getEntityManager()->createQuery("SELECT c FROM PHPMBundle:Confiance c WHERE c.id = $niveau_confiance")->getSingleResult()->getValeur();
 	    	
 	    	$dql .= "AND ehc.valeur = $valeurConfianceMin "; // comportement strict
 		}
+		
+		if ($permis !== '') {
+	    	$dql .= "AND t.permisNecessaire = $permis ";
+		}
+		
+		if ($equipe !== '') {
+			$dql .= "AND eh.id = $equipe ";
+		}
 	    
 		// Filtre sur la durée, on utilise une fonction DQL custom
 		// intval pour protéger notre code
- 	    if ($duree != '') {
+ 	    if ($duree !== '') {
  	    	$dql .= 'AND (TIMEDIFF(c.debut, c.fin) <= '.intval($duree).') '; // TIMEDIFF, fonction DQL custom, fait la différence en minutes
 		}
 	    
-	    if ($plage != '') {
+	    if ($plage !== '') {
 		    $pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation_plages')->getValue(), TRUE);
 		    $plage= $pref[$plage];
 		    $debut = new \DateTime($plage['debut']);
@@ -144,7 +148,7 @@ class CreneauRepository extends EntityRepository
 		    $dql .= "AND (c.debut <= '".$fin->add(new \DateInterval('P1D'))->format('Y-m-d')."') AND (c.fin >= '".$debut->format('Y-m-d')."') ";
 	    }
 	    
-		if ($jour != '') {
+		if ($jour !== '') {
 			// $jour est automatiquement transformé en "$jour 00:00:00"
 			// DQL n'implémente pas correctement DATE() (merci Doctrine de merde), 
 			// on regarde donc par rapport à l'intervalle $jour 00:00:00 et $jour+1 00:00:00
@@ -152,28 +156,23 @@ class CreneauRepository extends EntityRepository
 			$dql.= "AND (c.debut >= '".$jour->format('Y-m-d')."') AND (c.debut < '".$jour->add(new \DateInterval('P1D'))->format('Y-m-d')."') ";
 		}
 		
-	    if ($date_time != '') {
+	    if ($date_time !== '') {
 	    	$dql.= "AND (c.debut <= '$date_time') AND (c.fin >= '$date_time') ";
 	    }
-		
-		// TODO : remettre
-		/*if ($categorie != '') {
-		$dql.= "AND t.categorie = $categorie ";
-		}*/
 
-	    if ($orgaId != '') {
-	    	$orga =  $this->getEntityManager()->createQuery("SELECT o FROM PHPMBundle:Orga o WHERE o.id = $orgaId")->getSingleResult();
+	    if ($orga_id !== '') {
+	    	$orga =  $this->getEntityManager()->createQuery("SELECT o FROM PHPMBundle:Orga o WHERE o.id = $orga_id")->getSingleResult();
 	    	$equipe = $orga->getEquipe();
 	    	
 	    	// on est dans les dispos de l'orga
 		    $dql .= "AND (c.id IN 
 		    (SELECT cin.id FROM PHPMBundle:Creneau cin, PHPMBundle:Orga oin JOIN oin.disponibilites doin 
-		    WHERE oin = $orgaId AND ((cin.debut >= doin.debut) AND (cin.fin <= doin.fin )))) ";
+		    WHERE oin = $orga_id AND ((cin.debut >= doin.debut) AND (cin.fin <= doin.fin )))) ";
 			
 		    // pas sur un créneau déjà affecté
 		    $dql .= "AND (c.id NOT IN 
 		    (SELECT ci.id FROM PHPMBundle:Creneau ci, PHPMBundle:Orga o JOIN o.disponibilites do JOIN do.creneaux co 
-		    WHERE o = $orgaId AND ((ci.debut < co.fin) AND (ci.fin > co.debut )))) ";
+		    WHERE o = $orga_id AND ((ci.debut < co.fin) AND (ci.fin > co.debut )))) ";
 		    
 		    // Compatibilité équipe/niveau de confiance
 		    // On retourne les créneaux pour lesquels
@@ -182,7 +181,7 @@ class CreneauRepository extends EntityRepository
 		    $dql .= "AND (ehc.valeur <= ".$equipe->getConfiance()->getValeur()." OR c.equipeHint = ".$equipe->getId().")";
 	       
 	       	// on vérifie s'il y a une consigne d'orga
-	       	$dql .= "AND (c.orgaHint IS NULL OR c.orgaHint = $orgaId) ";
+	       	$dql .= "AND (c.orgaHint IS NULL OR c.orgaHint = $orga_id) ";
 	    }
 		
 		// on dé-duplique
