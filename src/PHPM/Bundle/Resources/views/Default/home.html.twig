@@ -20,7 +20,7 @@
 		<div class="row-fluid">
 			<div class="span4">
 	          <h2>Mes Informations</h2>
-	          <p><em>Veuillez vous assurer que ces informations sont à jour.</em></p>
+	          <p><em>Assures-toi que ces informations sont à jour.</em></p>
 		          <div class="well">
 		          <h3>{{ entitiesMacro.orga(app.user) }}</h3>
 		          <p>{{ app.user.email }} - {{ app.user.telephone }}</p>
@@ -48,7 +48,7 @@
 	          			{% if (statsOrga.taches.orga[0] + statsOrga.taches.equipe[0]) > 0 %}
 			<div class="alert alert-block alert-error fade in">
 	            <a class="close" data-dismiss="alert" href="#">×</a>
-	            <h4 class="alert-heading">Il vous reste des fiches tâches à rédiger.</h4>
+	            <h4 class="alert-heading">Il te reste des fiches tâches à rédiger.</h4>
 	        </div>
 			{% endif %}
 	          <h3>Statistiques</h3>
@@ -56,8 +56,8 @@
 				    <thead>
 				        <tr> 
 				        	<td></td>
-				            <th>Vous</th>
-				            <th>Votre équipe</th>
+				            <th>Toi</th>
+				            <th>Ton équipe</th>
 				        </tr>
 				    </thead>
 				    <tbody>
@@ -88,7 +88,7 @@
 			<div class="alert alert-block alert-error fade in">
 	            <a class="close" data-dismiss="alert" href="#">×</a>
 	            <h4 class="alert-heading">Aucun charisme !</h4>
-	            <p>Vous n'avez pas encore renseigné vos disponibilités.</p>
+	            <p>Tu n'as pas encore renseigné vos disponibilités.</p>
 				<p><a class="btn" href="{{ path('orga_inscriptionhard',{'id':app.user.id }) }}">Renseigner mes disponibilités »</a></p>
 	        </div>
 			{% else %}
@@ -96,7 +96,7 @@
 						<div class="alert alert-block  fade in">
 				            <a class="close" data-dismiss="alert" href="#">×</a>
 				            <h4 class="alert-heading">Faible charisme !</h4>
-				            <p>Vous avez renseigné peu de disponibilités.</p>
+				            <p>Tu as renseigné peu de disponibilités.</p>
 				            <p><a class="btn" href="{{ path('orga_inscriptionhard',{'id':app.user.id }) }}">Ajouter des disponibilités</a></p>
 				        </div>
 				{% endif %}
