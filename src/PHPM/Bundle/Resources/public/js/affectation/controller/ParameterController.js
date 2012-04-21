@@ -25,7 +25,7 @@ ParameterController.prototype = {
 	 */
 	getData: function() {
 		pmAffectation.models.parameter.getData(
-			pmAffectation.controllers.parameter.callbackCategories,
+			pmAffectation.controllers.parameter.callbackEquipes,
 			pmAffectation.controllers.parameter.callbackNiveaux,
 			pmAffectation.controllers.parameter.callbackPermis
 			);
@@ -52,12 +52,12 @@ ParameterController.prototype = {
 			$('#filtre_tache_permis').append('<option value="'+_iPermis+'">'+pmAffectation.data.parameter.permis[_iPermis]+'</option>');
 		}
 	},
-	callbackCategories: function() {
-		pmAffectation.data.parameter.categorie = pmAffectation.models.parameter.getCategories();
+	callbackEquipes: function() {
+		pmAffectation.data.parameter.equipes = pmAffectation.models.parameter.getEquipes();
 		
 		// ajoute les options correspondantes dans le menu déroulant
-		for (_iCategorie in pmAffectation.data.parameter.categorie) {
-			$('#filtre_tache_categorie').append('<option value="'+_iCategorie+'">'+pmAffectation.data.parameter.categorie[_iCategorie].nom+'</option>');
+		for (_iEquipe in pmAffectation.data.parameter.equipes) {
+			$('#filtre_tache_equipe').append('<option value="'+_iEquipe+'">'+pmAffectation.data.parameter.equipes[_iEquipe]+'</option>');
 		}
 	},
 	

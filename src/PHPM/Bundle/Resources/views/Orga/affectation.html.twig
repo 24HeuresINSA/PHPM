@@ -46,7 +46,7 @@
 		pmAffectation.urls.orgas = "{{ url('orga_query_json') }}";
 		pmAffectation.urls.creneaux = "{{ url('creneau_query_json') }}";
 		pmAffectation.urls.taches = "{{ url('tache_query_json') }}";
-		pmAffectation.urls.categories = "{{ url('categorie', {'_format' : 'json'}) }}";
+		pmAffectation.urls.equipes = "{{ url('equipe', {'_format' : 'json'}) }}";
 		pmAffectation.urls.niveaux = "{{ url('confiance', {'_format' : 'json'}) }}";
 		pmAffectation.urls.plages = "{{ url('config_get', {'string' : 'manifestation_plages'} ) }}";
 		pmAffectation.urls.permis = "{{ url('config_get', {'string' : 'manifestation_permis_libelles'} ) }}";	
@@ -176,8 +176,8 @@
 								</select>
 							</li>
 							<li>
-								<select name="tache_categorie" id="filtre_tache_categorie">
-									<option value="-1" selected>Toutes les catégories</option>
+								<select name="tache_equipe" id="filtre_tache_equipe">
+									<option value="-1" selected>Toutes les équipes</option>
 									<!-- le reste sera mis en place dynamiquement -->
 								</select>
 							</li>

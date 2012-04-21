@@ -111,21 +111,25 @@ class CreneauRepository extends EntityRepository
 		
 	}
 	
-	public function getCreneauxCompatibleWithCriteria($niveau_confiance, $permis, $duree, $orgaId, $plage, $jour, $date_time)
+	public function getCreneauxCompatibleWithCriteria($niveau_confiance, $permis, $equipe, $duree, $orgaId, $plage, $jour, $date_time)
 	{
 		// bien filtrer pour ne prendre que les tâches prêtes pour affectation (statut = 3)
 		// viré le reliquat "confiance"
 	    $dql = 'SELECT c, eh, ehc FROM PHPMBundle:Creneau c JOIN c.plageHoraire p JOIN p.tache t LEFT JOIN c.equipeHint eh LEFT JOIN eh.confiance ehc
 	     LEFT JOIN c.orgaHint oh WHERE c.disponibilite IS NULL AND t.statut = 3 ';
-	
-	    if ($permis != '') {
-	    	$dql .= "AND t.permisNecessaire = $permis ";
-		}
 	   
 	    if ($niveau_confiance != '') {
 	    	$valeurConfianceMin = $this->getEntityManager()->createQuery("SELECT c FROM PHPMBundle:Confiance c WHERE c.id = $niveau_confiance")->getSingleResult()->getValeur();
 	    	
 	    	$dql .= "AND ehc.valeur = $valeurConfianceMin "; // comportement strict
+		}
+		
+		if ($permis != '') {
+	    	$dql .= "AND t.permisNecessaire = $permis ";
+		}
+		
+		if ($equipe != '') {
+			$dql .= "AND eh.id = $equipe ";
 		}
 	    
 		// Filtre sur la durée, on utilise une fonction DQL custom

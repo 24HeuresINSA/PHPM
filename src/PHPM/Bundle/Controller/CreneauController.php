@@ -211,9 +211,9 @@ class CreneauController extends Controller
     	$request = $this->getRequest();
     
     	//on recupère les paramètres passés en post
-    	$permis = $request->request->get('permis', '');
     	$niveau_confiance = $request->request->get('confiance_id', '');
-//     	$categorie = $request->request->get('categorie_id', '');
+		$permis = $request->request->get('permis', '');
+     	$equipe = $request->request->get('equipe_id', '');
     	$duree = $request->request->get('duree', '');
     	$orgaId = $request->request->get('orga_id', '');
     	$plage = $request->request->get('plage_id', '');
@@ -225,7 +225,7 @@ class CreneauController extends Controller
 		}
     
     	$em = $this->getDoctrine()->getEntityManager();
-    	$entities = $em->getRepository('PHPMBundle:Creneau')->getCreneauxCompatibleWithCriteria($niveau_confiance, $permis, $duree, $orgaId, $plage, $jour, $date_time);
+    	$entities = $em->getRepository('PHPMBundle:Creneau')->getCreneauxCompatibleWithCriteria($niveau_confiance, $permis, $equipe, $duree, $orgaId, $plage, $jour, $date_time);
 		
 		// nécessaire pour la suite, la priorité
     	if ($orgaId != '') {
