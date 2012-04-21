@@ -213,9 +213,9 @@ class CreneauController extends Controller
     	//on recupère les paramètres passés en post
     	$niveau_confiance = $request->request->get('confiance_id', '');
 		$permis = $request->request->get('permis', '');
-     	$equipe = $request->request->get('equipe_id', '');
+     	$equipe_id = $request->request->get('equipe_id', '');
     	$duree = $request->request->get('duree', '');
-    	$orgaId = $request->request->get('orga_id', '');
+    	$orga_id = $request->request->get('orga_id', '');
     	$plage = $request->request->get('plage_id', '');
 		$jour = $request->request->get('jour', '');
     	$date_time = $request->request->get('date_time', '');
@@ -225,12 +225,12 @@ class CreneauController extends Controller
 		}
     
     	$em = $this->getDoctrine()->getEntityManager();
-    	$entities = $em->getRepository('PHPMBundle:Creneau')->getCreneauxCompatibleWithCriteria($niveau_confiance, $permis, $equipe, $duree, $orgaId, $plage, $jour, $date_time);
+    	$entities = $em->getRepository('PHPMBundle:Creneau')->getCreneauxCompatibleWithCriteria($niveau_confiance, $permis, $equipe_id, $duree, $orga_id, $plage, $jour, $date_time);
 		
 		// nécessaire pour la suite, la priorité
-    	if ($orgaId != '') {
-    		$orga =  $em->createQuery("SELECT o FROM PHPMBundle:Orga o WHERE o.id = $orgaId")->getSingleResult();
-    		$equipe = $orga->getEquipe();
+    	if ($orga_id != '') {
+    		$orga =  $em->createQuery("SELECT o FROM PHPMBundle:Orga o WHERE o.id = $orga_id")->getSingleResult();
+    		$equipe_orga = $orga->getEquipe();
     	}
 	    			
     	$creneauArray = array();
@@ -240,7 +240,7 @@ class CreneauController extends Controller
     		$priorite = '';
     		if ($creneau->getOrgaHint() != null) {
     			$priorite = 'orga';
-    		} else if (isset($equipe) && $creneau->getEquipeHint() == $equipe) {
+    		} else if ($creneau->getEquipeHint() == $equipe_orga) {
     			$priorite = 'equipe';
     		}
 			
