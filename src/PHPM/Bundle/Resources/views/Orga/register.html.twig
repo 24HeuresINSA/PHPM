@@ -1,28 +1,12 @@
 {% extends "PHPMBundle:Orga:layout.html.twig"  %}
-{% set pageTitle = 'Hard' %}
+{% set pageTitle = 'Inscription' %}
 
-{% block style %}
-{{ parent() }}
-			{% stylesheets 'bundles/phpm/css/registerHard.css' filter='cssrewrite'  %}
-				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
-			{% endstylesheets %}
-{% endblock %}
 
 {% block content %}
-
-
 <form action="{{ path('orga_registerprocess') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
         <button type="submit">S'inscrire</button>
     </p>
 </form>
-
-
-
-
 {% endblock %}
-
-{% block actions %}
-{% endblock %}
-    
