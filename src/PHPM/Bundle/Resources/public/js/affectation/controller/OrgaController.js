@@ -86,7 +86,7 @@ OrgaController.prototype = {
 				(val.prenom && pmUtils.removeDiacritics(val.prenom.substr(0, str.length).toLowerCase()) == str) || 
 				(val.surnom && pmUtils.removeDiacritics(val.surnom.substr(0, str.length).toLowerCase()) == str)
 			);
-		}, true);
+		});
 		
 		if ($.isEmptyObject(_orgas) === true) {
 			$('#liste_orgas').html('<div class="alert">Aucun orga correspondant !</div>');
