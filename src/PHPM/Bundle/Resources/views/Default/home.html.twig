@@ -20,7 +20,7 @@
 		<div class="row-fluid">
 			<div class="span4">
 	          <h2>Mes Informations</h2>
-	          <p><em>Assures-toi que ces informations sont à jour.</em></p>
+	          <p><em>Assure-toi que ces informations sont à jour.</em></p>
 		          <div class="well">
 		          <h3>{{ entitiesMacro.orga(app.user) }}</h3>
 		          <p>{{ app.user.email }} - {{ app.user.telephone }}</p>
@@ -79,7 +79,7 @@
 				    </tbody>
 				</table>
 			
-	          <p><a class="btn" href="#">Accéder aux fiches tâches »</a></p>
+	          <p><a class="btn" href="{{ path('tache',{'orgaid': app.user.id}) }}">Accéder aux fiches tâches »</a></p>
 	    	</div>
 	    	
 			<div class="span4">
