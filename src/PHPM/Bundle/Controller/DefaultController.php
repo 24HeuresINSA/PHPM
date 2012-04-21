@@ -95,22 +95,7 @@ class DefaultController extends Controller
                 
                 
                 
-                if($user->getPrivileges()==2)
-                {
-                    $options = array('ROLE_ADMIN');
-                }
-                elseif($user->getPrivileges()==1)
-                {
-                    $options = array('ROLE_USER');
-                }
-                elseif($user->getPrivileges()==0)
-                {
-                	$options = array('ROLE_VISITOR');
-                }
-                
-                
-                $token = new UsernamePasswordToken($user, null, 'main', $options);
-                $this->get('security.context')->setToken($token);
+                $this->get('security.context')->setToken($this->generateUserToken($user));
                 
                 
                 
@@ -125,6 +110,26 @@ class DefaultController extends Controller
     return array("m"=>'error');
          
          
+    }
+    
+    public function generateUserToken(\PHPM\Bundle\Entity\Orga $user){
+    	
+    	if($user->getPrivileges()==2)
+    	{
+    		$options = array('ROLE_ADMIN');
+    	}
+    	elseif($user->getPrivileges()==1)
+    	{
+    		$options = array('ROLE_USER');
+    	}
+    	elseif($user->getPrivileges()==0)
+    	{
+    		$options = array('ROLE_VISITOR');
+    	}
+    	
+    	
+    	return  new UsernamePasswordToken($user, null, 'main', $options);
+    	
     }
     
 }

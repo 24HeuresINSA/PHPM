@@ -24,6 +24,10 @@ use PHPM\Bundle\Entity\Orga;
 use PHPM\Bundle\Entity\Disponibilite;
 use PHPM\Bundle\Form\OrgaType;
 
+
+
+
+
 /**
  * Orga controller.
  *
@@ -150,8 +154,8 @@ class OrgaController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
             $em->flush();
-    
-            return $this->redirect($this->generateUrl('login', array('registered' => 1)));
+            
+            return $this->redirect($this->generateUrl('login'));
     
         }
     
