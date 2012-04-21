@@ -1,6 +1,6 @@
 @media all {
 
-#phpm_bundle_inscriptionhardtype > div{
+#phpm_bundle_inputdispostype > div{
 	
 	float:left;
 	margin-right: 1em;
@@ -12,14 +12,14 @@
 	
 	margin-top: 1em;
 }
-#phpm_bundle_inscriptionhardtype > div:last-child{
+#phpm_bundle_inputdispostype > div:last-child{
 	
 	float:none;
 	clear:both;
 	
 	
 }
-#phpm_bundle_inscriptionhardtype{
+#phpm_bundle_inputdispostype{
 	float: left;
 	border-radius : 5px;
 	background:#eaeaea;

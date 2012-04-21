@@ -4,7 +4,7 @@ namespace PHPM\Bundle\Controller;
 
 use PHPM\Bundle\Entity\DisponibiliteInscription;
 
-use PHPM\Bundle\Form\InscriptionHardType;
+use PHPM\Bundle\Form\InputDisposType;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -317,10 +317,10 @@ class OrgaController extends Controller
 	/**
 	 * Inscription Hard
 	 *
-	 * @Route("/{id}/inscriptionhard", name="orga_inscriptionhard")
+	 * @Route("/{id}/inputdispos", name="orga_inputdispos")
 	 * @Template
 	 */
-	public function inscriptionhardAction($id)
+	public function inputDisposAction($id)
 	{
 	    $request = $this->getRequest();
 	    $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
@@ -350,7 +350,7 @@ class OrgaController extends Controller
 	    foreach ($queryResult as $entity){
 	    	$DIs[$entity->getMission()->getId()][\IntlDateFormatter::create(null, \IntlDateFormatter::MEDIUM, \IntlDateFormatter::SHORT,null,null,'EEEE d MMMM')->format($entity->getDebut())][$entity->getId()]=$entity;
 	    }
-	    $form = $this->createForm(new InscriptionHardType($admin));
+	    $form = $this->createForm(new InputDisposType($admin));
 	    
 	    
 	

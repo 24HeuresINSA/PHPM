@@ -8,7 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 use PHPM\Bundle\Form\DisponibiliteInscriptionType;
 
-class InscriptionHardType extends AbstractType
+class InputDisposType extends AbstractType
 {
     
     protected $admin;
@@ -40,6 +40,6 @@ class InscriptionHardType extends AbstractType
 
     public function getName()
     {
-        return 'phpm_bundle_inscriptionhardtype';
+        return 'phpm_bundle_inputdispostype';
     }
 }

@@ -141,7 +141,7 @@
 						{{ _self.navBarItem('Utilisation du matériel','analyse_usageMateriel') }}
 				    </ul>
 				</li>
-				{{ _self.navBarItem('Mes Disponibilités','orga_inscriptionhard',{'id':app.user.id }) }}
+				{{ _self.navBarItem('Mes Disponibilités','orga_inputdispos',{'id':app.user.id }) }}
        			{{ _self.navBarItem('Charisme','orga_charisme') }}
        		{% endif %}
        		{% if is_granted('ROLE_VISITOR') %}	

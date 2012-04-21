@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block content %}
-    <form action="{{ path('orga_inscriptionhard',{'id':orga.id }) }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('orga_inputdispos',{'id':orga.id }) }}" method="post" {{ form_enctype(form) }}>
 	    <div class="row-fluid">       
 	    	<div class="page-header">
 	         	<h1>Disponibilités de {{ orga.prenom }} {{ orga.nom }}</h1>
@@ -37,8 +37,8 @@
 							{% for e in d %}<div>
 						            <label class="checkbox {% if e.statut == 1 %}statut1{% endif %}">
 					    			{{ e.debut |format_datetime('HH:mm')}} <i class="icon-arrow-right"></i> {{ e.fin |format_datetime('HH:mm')}}
-					    			<input class="shiftkeybox"type="checkbox" name="phpm_bundle_inscriptionhardtype[disponibiliteInscriptionItems][{{ e.id }}]"
-					    			id="phpm_bundle_inscriptionhardtype_disponibiliteInscriptionItems_{{ e.id }}" value="{{ e.id }}"
+					    			<input class="shiftkeybox"type="checkbox" name="phpm_bundle_inputdispostype[disponibiliteInscriptionItems][{{ e.id }}]"
+					    			id="phpm_bundle_inputdispostype_disponibiliteInscriptionItems_{{ e.id }}" value="{{ e.id }}"
 					    			{% if e in orga.disponibilitesInscription %}checked="checked"{% endif %} 
 					    			{% if (e.statut == 0 or (e.statut==1 and e in orga.disponibilitesInscription)) and not is_granted('ROLE_ADMIN') %}disabled{% endif %}
 					    			>
