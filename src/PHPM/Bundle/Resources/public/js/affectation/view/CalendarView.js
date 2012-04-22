@@ -51,6 +51,9 @@ CalendarView.prototype = {
 		
 		$('#calendar').append(_htmlBarreDates+'</div><div class="jours" id="jours">'+_htmlHours+_htmlJours+'</div>');
 		
+		// on sélectionne le bon quart d'heure
+		$('#'+pmAffectation.current['quart_heure']).addClass('current');
+		
 		if (Object.keys(pmAffectation.data.calendar.plage).length != 0) {
 			pmAffectation.views.calendar.setBoutonsPlage();
 			
