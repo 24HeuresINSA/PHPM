@@ -31,6 +31,7 @@ OrgaModel.prototype = {
 		($.isNumeric(pmAffectation.current.orga.confiance) === true) && (pmAffectation.current.orga.confiance != -1) && (_params.confiance_id = pmAffectation.current.orga.confiance);
 		($.isNumeric(pmAffectation.current.orga.permis) === true) && (pmAffectation.current.orga.permis != -1) && (_params.permis = pmAffectation.current.orga.permis);
 		($.isNumeric(pmAffectation.current.orga.age) === true) && (pmAffectation.current.orga.age != -1) && (_params.age = pmAffectation.current.orga.age);
+		($.isNumeric(pmAffectation.current.orga.equipe) === true) && (pmAffectation.current.orga.equipe != -1) && (_params.equipe_id = pmAffectation.current.orga.equipe);
 		
 		$.ajax({
 			url: pmAffectation.urls.orgas,

@@ -19,8 +19,8 @@ CreneauView.prototype = {
 		
 		// filtres : bind les events
 		$('#filtre_tache_confiance').change(function() {pmAffectation.controllers.creneau.clickFilter('confiance', $('#filtre_tache_confiance').val());});
-		$('#filtre_tache_permis').change(function() {pmAffectation.controllers.creneau.clickFilter('permis', $('#filtre_tache_permis').val());});
 		$('#filtre_tache_equipe').change(function() {pmAffectation.controllers.creneau.clickFilter('equipe', $('#filtre_tache_equipe').val());});
+		$('#filtre_tache_permis').change(function() {pmAffectation.controllers.creneau.clickFilter('permis', $('#filtre_tache_permis').val());});
 		$('#filtre_tache_duree').change(function() {pmAffectation.controllers.creneau.clickFilter('duree', $('#filtre_tache_duree').val());});
 		
 		// la champ de recherche (caché)

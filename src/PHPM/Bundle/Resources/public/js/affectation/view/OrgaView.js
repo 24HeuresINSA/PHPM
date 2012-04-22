@@ -22,6 +22,7 @@ OrgaView.prototype = {
 		
 		// filtres : bind les events
 		$('#filtre_orga_confiance').change(function() { pmAffectation.controllers.orga.clickFilter('confiance', $('#filtre_orga_confiance').val()); });
+		$('#filtre_orga_equipe').change(function() {pmAffectation.controllers.orga.clickFilter('equipe', $('#filtre_orga_equipe').val());});
 		$('#filtre_orga_permis').change(function() { pmAffectation.controllers.orga.clickFilter('permis', $('#filtre_orga_permis').val()); });
 		$('#filtre_orga_age').change(function() { pmAffectation.controllers.orga.clickFilter('age', $('#filtre_orga_age').val()); });
 		
@@ -39,6 +40,7 @@ OrgaView.prototype = {
 	 */
 	setFilters: function() {
 		(pmAffectation.current.orga.confiance !== undefined) && ($('#filtre_orga_confiance').val(pmAffectation.current.orga.confiance));
+		(pmAffectation.current.orga.orga !== undefined) && ($('#filtre_orga_equipe').val(pmAffectation.current.orga.equipe));
 		(pmAffectation.current.orga.permis !== undefined) && ($('#filtre_orga_permis').val(pmAffectation.current.orga.permis));
 		(pmAffectation.current.orga.age !== undefined) && ($('#filtre_orga_age').val(pmAffectation.current.orga.age));
 	},
