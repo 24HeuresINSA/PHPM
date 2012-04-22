@@ -6,6 +6,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 
 /**
@@ -194,10 +195,10 @@ class Orga implements UserInterface
     protected $lastActivity;
     
     /**
-     * @var bool $celibataire
-     *
-     * @ORM\Column(name="celibataire", type="boolean", nullable=true)
-     */
+    * @var smallint $celibataire
+    * @Assert\Choice(choices = {"0", "1"})
+    * @ORM\Column(name="celibataire", type="smallint", nullable="true")
+    */
     protected $celibataire;
     
     /**
@@ -287,7 +288,25 @@ class Orga implements UserInterface
 
     
 
-    
+    public function generateUserToken(){
+    	 
+    	if($this->getPrivileges()==2)
+    	{
+    		$options = array('ROLE_ADMIN');
+    	}
+    	elseif($this->getPrivileges()==1)
+    	{
+    		$options = array('ROLE_USER');
+    	}
+    	elseif($this->getPrivileges()==0)
+    	{
+    		$options = array('ROLE_VISITOR');
+    	}
+    	 
+    	 
+    	return  new UsernamePasswordToken($this, null, 'main', $options);
+    	 
+    }
 
     public function getRoles()
     {
@@ -797,10 +816,11 @@ class Orga implements UserInterface
         return $this->groupesTacheResponsable;
     }
 
+
     /**
      * Set celibataire
      *
-     * @param boolean $celibataire
+     * @param smallint $celibataire
      */
     public function setCelibataire($celibataire)
     {
@@ -810,7 +830,7 @@ class Orga implements UserInterface
     /**
      * Get celibataire
      *
-     * @return boolean 
+     * @return smallint 
      */
     public function getCelibataire()
     {

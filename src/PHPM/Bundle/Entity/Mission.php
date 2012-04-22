@@ -37,6 +37,12 @@ class Mission
     protected $ordre;
     
     /**
+     * @var smallint $confianceMiin
+     * @ORM\Column(name="confianceMin", type="smallint")
+     */
+    protected $confianceMin;
+    
+    /**
      * @var text $description
      *
      * @ORM\Column(name="description", type="text", nullable=true)
@@ -146,5 +152,25 @@ class Mission
     public function __toString()
     {
     	return $this->getNom() ;
+    }
+
+    /**
+     * Set confianceMin
+     *
+     * @param smallint $confianceMin
+     */
+    public function setConfianceMin($confianceMin)
+    {
+        $this->confianceMin = $confianceMin;
+    }
+
+    /**
+     * Get confianceMin
+     *
+     * @return smallint 
+     */
+    public function getConfianceMin()
+    {
+        return $this->confianceMin;
     }
 }

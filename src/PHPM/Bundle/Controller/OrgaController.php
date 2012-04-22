@@ -2,6 +2,8 @@
 
 namespace PHPM\Bundle\Controller;
 
+use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
+
 use PHPM\Bundle\Entity\DisponibiliteInscription;
 
 use PHPM\Bundle\Form\InputDisposType;
@@ -23,6 +25,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PHPM\Bundle\Entity\Orga;
 use PHPM\Bundle\Entity\Disponibilite;
 use PHPM\Bundle\Form\OrgaType;
+use PHPM\Bundle\Form\OrgaSoftType;
 
 
 
@@ -123,7 +126,7 @@ class OrgaController extends Controller
         $entity->setEmail($email);
         $entity->setStatut(0);
         
-        
+
         
         $form   = $this->createForm(new OrgaType(false,$config,$confianceCode), $entity);
     
@@ -158,6 +161,80 @@ class OrgaController extends Controller
         		'confianceCode'=>$confianceCode,
         		'email' =>$email
         );
+    }
+    
+    /**
+     * Displays a form to create a new Orga Soft entity.
+     *
+     * @Route("/inscriptionorgasoft", name="orga_registersoft")
+     *
+     * @Template()
+     */
+    public function registerSoftAction(){
+    	 
+    	 
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$config = $e=$this->get('config.extension');
+    	$request = $this->getRequest();
+    	
+    	$equipeSoft = $em->getRepository('PHPMBundle:Equipe')->find(1);
+    	$entity = new Orga();
+    	$entity->setStatut(0);
+    	$form   = $this->createForm(new OrgaSoftType($config), $entity);
+    
+//     	$tableauDi = array();
+    	
+    	
+//     	$diResult = $em->createQuery("SELECT d FROM PHPMBundle:DisponibiliteInscription d WHERE d.mission=10 ORDER BY d.debut")
+//     	->getResult();
+    	
+//     	$prevjour='';
+//     	foreach ($diResult as $di){
+//     		$jour = $di->getDebut()->format('d m');
+// //     		if($prevjour !=$jour){
+// //     			$tableauDi[$jour]=array(0=>0,2=>0,4=>0,6=>0,8=>0,10=>0,12=>0,14=>0,16=>0,18=>0,20=>0,22=>0);
+// //     			$prevjour=$jour;
+// //     		}
+//     		$heure = $di->getDebut()->format('G');
+//     		$tableauDi[$jour][$heure] = $di->getId();
+    		 
+//     	}
+//     	var_dump($tableauDi);
+    	
+    	
+    	
+    	
+    
+    	if ($this->get('request')->getMethod() == 'POST') {
+    		$form->bindRequest($request);
+    		$data = $form->getData();
+    		 
+    		 
+    		if ($form->isValid()) {
+    			$entity->setPrivileges(0);
+    			$entity->setEquipe($equipeSoft);
+    			$entity->setLastActivity(new \DateTime());
+    			$em->persist($entity);
+    			$em->flush();
+    			 
+    			$this->get('security.context')->setToken($entity->generateUserToken());
+    			
+    			return $this->redirect($this->generateUrl('orga_inputdispos',array('id'=>$entity->getId())));
+    			 
+    		}
+    		 
+    		 
+    		 
+    		 
+    	}
+    
+    
+    
+    
+    	return array(
+    			'entity' => $entity,
+    			'form'   => $form->createView()
+    	);
     }
     
     /**
@@ -364,8 +441,9 @@ class OrgaController extends Controller
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user != $orga) {
             throw new AccessDeniedException();
         }
+        $confianceOrga=$orga->getEquipe()->getConfiance()->getValeur();
 	    
-	    $groupesDIresult = $this->getDoctrine()->getEntityManager()->createQuery("SELECT g FROM PHPMBundle:Mission g ORDER BY g.ordre")->getResult();
+	    $groupesDIresult = $this->getDoctrine()->getEntityManager()->createQuery("SELECT g FROM PHPMBundle:Mission g WHERE g.confianceMin <= $confianceOrga ORDER BY g.ordre")->getResult();
 	    $groupesDI = array();
 	     
 	    foreach ($groupesDIresult as $entity){
@@ -373,7 +451,7 @@ class OrgaController extends Controller
 	    }
 
 	    
-	    $queryResult = $this->getDoctrine()->getEntityManager()->createQuery("SELECT d FROM PHPMBundle:DisponibiliteInscription d ORDER BY d.debut")->getResult();
+	    $queryResult = $this->getDoctrine()->getEntityManager()->createQuery("SELECT d FROM PHPMBundle:DisponibiliteInscription d JOIN d.mission m WHERE m.confianceMin <= $confianceOrga ORDER BY d.debut")->getResult();
 	    $DIs = array();
 	    
 	    foreach ($queryResult as $entity){
@@ -409,6 +487,11 @@ class OrgaController extends Controller
 	            	
 	            }
 	            $em->flush();
+	         	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+	         		return $this->redirect($this->generateUrl('orga_thankyou'));
+            
+	            }
+	            
 	            $form = $this->createForm(new InputDisposType($admin,$em,$orga));
 	        }
 	    }
@@ -579,6 +662,29 @@ class OrgaController extends Controller
 	    return new Response();
 	    
 	    
+	}
+	
+	/**
+	 * Thank You!
+	 *
+	 * @Route("/thankyou", name="orga_thankyou")
+	 * @Template()
+	 */
+	public function thankYouAction()
+	{
+		
+		if (false === $this->get('security.context')->isGranted('ROLE_VISITOR')) {
+			throw new AccessDeniedException();
+		}
+		
+		
+		$em = $this->getDoctrine()->getEntityManager();
+		$user = $this->get('security.context')->getToken()->getUser();
+		$stats = $em->getRepository('PHPMBundle:Orga')->getStats($user);
+		
+		$this->get('request')->getSession()->invalidate();
+		$this->get("security.context")->setToken(new AnonymousToken(null, 'anon'));
+		return array('orga'=>$user,'stats' => $stats);
 	}
 	
 	

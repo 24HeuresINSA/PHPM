@@ -93,7 +93,7 @@ class DefaultController extends Controller
                     return array('m'=>'notfound', 'email'=>$email);
                 }
                 
-                $this->get('security.context')->setToken($this->generateUserToken($user));
+                $this->get('security.context')->setToken($user->generateUserToken());
                 
 
                 return $this->redirect($this->generateUrl('accueil'));
@@ -106,24 +106,6 @@ class DefaultController extends Controller
          
     }
     
-    public function generateUserToken(\PHPM\Bundle\Entity\Orga $user){
-    	
-    	if($user->getPrivileges()==2)
-    	{
-    		$options = array('ROLE_ADMIN');
-    	}
-    	elseif($user->getPrivileges()==1)
-    	{
-    		$options = array('ROLE_USER');
-    	}
-    	elseif($user->getPrivileges()==0)
-    	{
-    		$options = array('ROLE_VISITOR');
-    	}
-    	
-    	
-    	return  new UsernamePasswordToken($user, null, 'main', $options);
-    	
-    }
+
     
 }

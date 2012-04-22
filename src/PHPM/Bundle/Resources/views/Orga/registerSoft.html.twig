@@ -1,0 +1,267 @@
+{% extends "PHPMBundle:Orga:layout.html.twig"  %}
+{% set pageTitle = 'Inscription Orga Soft' %}
+
+
+
+{% block body %}
+<form class="form-horizontal" action="{{ path('orga_registersoft') }}" method="post" {{ form_enctype(form) }}>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<h1>Inscription Orga Soft</h1>
+		<hr>
+	</div>
+	
+	<div class="row-fluid">
+		<div class="well">
+			<fieldset>
+			    <legend>Renseignements Obligatoires</legend>
+				    <div class="control-group">
+					{{ form_widget(form.prenom) }} {{ form_widget(form.nom) }}<br>
+				    </div>
+
+				    <div class="control-group {% if form_errors(form.email)|length > 0 %}error{% endif %}">
+			            <div class="">
+			              {{ form_widget(form.email) }}
+			              <span class="help-inline">{{ form_errors(form.email) }} </span>
+			            </div>
+         			</div>
+         			
+         			<div class="control-group {% if form_errors(form.telephone)|length > 0 %}error{% endif %}">
+			            <div class="">
+			              {{ form_widget(form.telephone) }}
+			              <span class="help-inline">{{ form_errors(form.telephone) }} </span>
+			            </div>
+         			</div>
+			</fieldset>
+		</div>
+		<div class="well">
+			<fieldset>
+		    	<legend>Renseignements Supplémentaires</legend>
+			    {{ form_widget(form.surnom) }}
+			    {{ form_widget(form.departement) }}<br>
+			    {{ form_widget(form.dateDeNaissance) }}
+				{{ form_widget(form.datePermis) }}<br>
+		        Célibataire            
+		        <label class="radio inline">
+		          <input type="radio" name="phpm_bundle_orgatype[celibataire]" id="inlineCheckbox1" value="1"> Oui
+		        </label>
+		        <label class="radio inline">
+		          <input type="radio" name="phpm_bundle_orgatype[celibataire]" value="0"> Non
+		        </label>
+		
+			</fieldset>
+		</div>
+{# 		<div class="well">#}
+{# 			<fieldset>#}
+{# 		    	<legend>Tes Disponibilités</legend>#}
+{# 				<table class="table table-condensed table-bordered">#}
+{# 					<thead>#}
+{# 					<tr>#}
+{# 	                    <th></th>#}
+{# 	                    <th>0h - 2h</th>#}
+{# 	                    <th>2h - 4h</th>#}
+{# 	                    <th>4h - 6h</th>#}
+{# 	                    <th>6h - 8h</th>#}
+{# 	                    <th>8h - 10h</th>#}
+{# 	                    <th>10h - 12h</th>#}
+{# 	                    <th>12h - 14h</th>#}
+{# 	                    <th>14h - 16h</th>#}
+{# 	                    <th>16h - 18h</th>#}
+{# 	                    <th>18h - 20h</th>#}
+{# 	                    <th>20h - 22h</th>#}
+{# 	                    <th>22 - 0h</th>#}
+
+{#                 	</tr>#}
+{# 					</thead>#}
+{# 					<tbody>#}
+{# 					{% for key,line in tabDI %}#}
+{# 					<tr>#}
+{# 					<td>{{ key }}</td>#}
+{# 						{% for i in range(0, 22, 2) %}#}
+{# 						<td>#}
+{# 						{% for h,id in line%}#}
+{# 						{% if h == i %}#}
+{# 						{{ id }}#}
+{# 						{% endif %}#}
+{# 						{% endfor %}#}
+{# 						</td>#}
+{# 						{% endfor %}#}
+{# 						</tr>#}
+{# 					{% endfor %}#}
+					
+{# 					<tr>#}
+{# 						<td>Lundi 21 mai</td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 					</tr>#}
+{# 					<tr>#}
+{# 						<td>Mardi 22 mai</td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 					</tr>#}
+{# 					<tr>#}
+{# 						<td>Mercredi 23 mai</td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 					</tr>#}
+{# 					<tr>#}
+{# 						<td>Jeudi 24 mai</td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 					</tr>#}
+{# 					<tr>#}
+{# 						<td>Vendredi 25 mai</td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 					</tr>#}
+{# 					<tr style="">#}
+{# 						<td>Samedi 26 mai</td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 					</tr>#}
+{# 					<tr>#}
+{# 						<td>Dimanche 27 mai</td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 					</tr>#}
+{# 					<tr>#}
+{# 						<td>Lundi 28 mai</td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 					</tr>#}
+{# 					<tr>#}
+{# 						<td>Mardi 29 mai</td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 					</tr>#}
+{# 					<tr>#}
+{# 						<td>Lundi 21 mai</td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 						<td></td>#}
+{# 					</tr>#}
+{# 					</tbody>#}
+				
+{# 				</table>#}
+		
+{# 			</fieldset>#}
+{# 		</div>#}
+		<div class="well">
+			<fieldset>
+		    	<legend>Noms des potes avec qui tu veux bosser</legend>
+
+		
+			</fieldset>
+		</div>
+    </div>
+    
+    <div class="form-fluid">
+			<div class="form-actions">
+				<button class="btn btn-success" type="submit">Continuer »</button>
+			</div>
+	</div>
+    
+    {{ form_widget(form._token) }}
+</div>
+</form>
+
+{% endblock %}

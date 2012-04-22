@@ -83,6 +83,7 @@
         {% endblock %}
     </head>
     <body>
+    {% block body %}
     
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
@@ -185,7 +186,7 @@
 {% if is_granted('ROLE_VISITOR') %}
 	{% render "PHPMBundle:Orga:updateLastActivity"  %}
 {% endif %}
-	      
+	      {% endblock %}
 	</body>
 </html>
 
