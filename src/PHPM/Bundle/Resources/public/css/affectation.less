@@ -171,7 +171,7 @@ footer {
       height: 100%;
       border-right: 1px solid #333;
       text-align: center;
-      background: #BBB;
+      background: Gainsboro;
       overflow: hidden;
       .border-box();
       
@@ -209,11 +209,11 @@ footer {
         line-height: @heightHeure;
         text-align: center;
         
-        &:nth-of-type(even) {
-          background: #BBB;
-        }
         &:nth-of-type(odd) {
-          background: #DDD;
+          background: whiteSmoke;
+        }
+        &:nth-of-type(even) {
+          background: Gainsboro;
         }
       }
     }
@@ -229,16 +229,17 @@ footer {
       /* heure */
       .heure {
         &:nth-of-type(odd) {
-          background: rgba(0, 0, 0, 0.12);
+          background: whiteSmoke;
         }
         &:nth-of-type(even) {
-          background: rgba(0, 0, 0, 0.2);
+          background: Gainsboro;
         }
        
         /* quart d'heure */
         .quart_heure {
           width: 100%;
-          height: @heightHeure / 4 - 1; // 1px de bordure
+          height: @heightHeure / 4;
+          .border-box();
           
           // quart d'heure disponible, clair
           &.free {
@@ -247,7 +248,7 @@ footer {
           }
           // le quart d'heure sur lequel on vient de cliquer a un petit indicateur
           &.current {
-            border-top: 1px solid red !important;
+            border-top: 2px solid OrangeRed !important;
           }
           
           // l'ordre des bordures comptes, la plus épaisse dessus
