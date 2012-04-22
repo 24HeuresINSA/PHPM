@@ -84,7 +84,7 @@ CreneauView.prototype = {
 			// handler de click
 			$('#tache_'+_iCreneau).bind('click', {idCreneau: _creneaux[_iCreneau]['id'], idTache: _creneaux[_iCreneau]['tache_id']}, function(e) {
 				if (e.altKey) {
-					// Shift + click : affiche la page pour modifier le créneau
+					// Alt + click : affiche la page pour modifier le créneau
 					var _popup = window.open(pmAffectation.urls.creneauMaker+'/'+e.data.idTache, '');
 					
 					// à la fermeture, refresh la liste des créneaux

@@ -183,16 +183,6 @@ PmUtils.prototype = {
 		pmUtils.setPourcentWidth('#sidebar_tache');
 	},
 	
-	/*
-	 * Fonction disant aux popups (modaux)
-	 * de se fermer quand on clique ailleurs
-	 */
-	setPopupClose: function() {
-		$(".ui-widget-overlay").click (function () {
-		    $('#popup').dialog('close');
-		});
-	},
-	
 
 	/* ******************** */
 	/* ***** JOURNAL ****** */

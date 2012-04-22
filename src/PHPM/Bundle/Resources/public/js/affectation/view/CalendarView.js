@@ -216,30 +216,37 @@ CalendarView.prototype = {
 		var _creneau = pmAffectation.data.orgas[obj.data.idOrga]['disponibilites'][obj.data.idDispo]['creneaux'][obj.data.idCreneau];
 		
 		// on prépare le contenu du pop-up
-		var _html = '<ul>' +
-					'<li><a href="'+pmAffectation.url+'tache/'+_creneau.tache.id+'/show" target="_blank">Tâche n°'+_creneau.tache.id+'</a></li>'+
-					'<li>'+_creneau.tache.nom+'</li>'+
-					'<li>'+_creneau.tache.lieu+'</li>'+
-					'<li>'+_creneau.debut.getMyTime()+' - '+_creneau.fin.getMyTime()+'</li>'+
-					'<li><button id="desaffect_'+obj.data.idCreneau+'">Désaffecter</button></li>'+
-					'</ul>';
+		var _html = '<div class="modal hide fade creneau_details" id="creneau_details">'+
+					'<div class="modal-header"><a class="close" data-dismiss="modal">×</a>'+
+					'<h3>Détails du créneau n°'+obj.data.idCreneau+'</h3></div>'+
+					'<div class="modal-body"><ul>'+
+					'<li><a href="'+pmAffectation.url+'tache/'+_creneau.tache.id+'/edit" target="_blank">Tâche n°'+_creneau.tache.id+'</a></li>'+
+					'<li><strong>'+_creneau.tache.nom+'</strong></li>'+
+					'<li>Lieu : '+_creneau.tache.lieu+'</li>'+
+					'<li>'+_creneau.debut.getThisFormat('d/m H:I')+' - '+_creneau.fin.getThisFormat('d/m H:I')+'</li>'+
+					'</ul></div><div class="modal-footer">'+
+					'<button class="btn btn-warning" id="creneaumaker_'+obj.data.idCreneau+'" data-dismiss="modal">Ouvrir dans CréneauMaker</button>'+
+					'<button class="btn btn-danger" id="desaffect_'+obj.data.idCreneau+'" data-dismiss="modal">Désaffecter</button>'+
+    				'<a href="#" class="btn" data-dismiss="modal">Fermer</a></div></div>';
 		
-		// on l'ouvre
-		$('<div id="popup">'+_html+'</div>').dialog({
-			closeText: 'fermer',
-			close: function() {$('#popup').remove();}, // sur le close, on détruit le DOM, évite certains bugs
-			dialogClass: 'creneau_details popup',
-			draggable: false,
-			modal: true, // certes, mais on a un handler qui le ferme si on clique ailleurs
-			position: [obj.pageX-150, obj.pageY],
-			resizable: false,
-			title: 'Créneau n°'+obj.data.idCreneau
-		});
-		
-		// bouton, lien pour la désaffectation - setter quand le popup est visible
-		$('#desaffect_'+obj.data.idCreneau).button().click(function() {	pmAffectation.controllers.creneau.desAffectation(obj.data.idCreneau, obj.data.idOrga) });
-		
-		pmUtils.setPopupClose(); // pour sa fermeture, un seul popup à la fois
+		// on l'ouvre - modal de Twitter Bootstrap
+		// et on détruit le DOM quand on le ferme
+		$(_html).modal().on('shown', function() {
+			// bouton, lien pour la désaffectation - setter quand le popup est visible
+			$('#desaffect_'+obj.data.idCreneau).bind('click', {idCreneau: obj.data.idCreneau, idOrga: obj.data.idOrga}, function(obj) {
+				pmAffectation.controllers.creneau.desAffectation(obj.data.idCreneau, obj.data.idOrga);
+			});
+			$('#creneaumaker_'+obj.data.idCreneau).bind('click', {idTache: _creneau.tache.id}, function(obj) {
+				var _popup = window.open(pmAffectation.urls.creneauMaker+'/'+obj.data.idTache, '');
+						
+				// à la fermeture, refresh la liste des créneaux
+				// unload est firé au chargement (unload de about:blank),
+				// on attache le vrai handler qu'après le chargement initial donc
+				_popup.onunload = function() {
+					_popup.bind('unload', pmAffectation.controllers.orga.getData());
+				};
+			});
+		}).on('hidden', function() { $('#creneau_details').remove(); });
 	},
 
 	/* 

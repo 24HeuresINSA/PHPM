@@ -73,7 +73,7 @@ OrgaView.prototype = {
 			// handler de click
 			$('#orga_'+_iOrga).bind('click', {id: _iOrga}, function(e) {
 				if (e.altKey) {
-					// Shift + click : affiche les infos détaillées de l'orga
+					// Alt + click : affiche les infos détaillées de l'orga
 					pmAffectation.views.orga.viewOrgaDetails({id: e.data.id});
 				} else {
 					// sinon on click sur l'orga
