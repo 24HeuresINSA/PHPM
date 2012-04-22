@@ -194,6 +194,13 @@ class Orga implements UserInterface
     protected $lastActivity;
     
     /**
+     * @var bool $celibataire
+     *
+     * @ORM\Column(name="celibataire", type="boolean", nullable=true)
+     */
+    protected $celibataire;
+    
+    /**
      * @ORM\OneToMany(targetEntity="Creneau", mappedBy="orgaHint")
      */
     protected $creneauxHint;
@@ -788,5 +795,25 @@ class Orga implements UserInterface
     public function getGroupesTacheResponsable()
     {
         return $this->groupesTacheResponsable;
+    }
+
+    /**
+     * Set celibataire
+     *
+     * @param boolean $celibataire
+     */
+    public function setCelibataire($celibataire)
+    {
+        $this->celibataire = $celibataire;
+    }
+
+    /**
+     * Get celibataire
+     *
+     * @return boolean 
+     */
+    public function getCelibataire()
+    {
+        return $this->celibataire;
     }
 }
