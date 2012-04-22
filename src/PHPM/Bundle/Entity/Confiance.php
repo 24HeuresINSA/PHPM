@@ -46,6 +46,14 @@ class Confiance
      */
     protected $couleur;
     
+    /**
+     * @var string $code
+     *
+     * @ORM\Column(name="code", type="string", length=255)
+     * @Assert\NotBlank()
+     */
+    protected $code;
+    
     
     /**
     * @ORM\OneToMany(targetEntity="Equipe", mappedBy="confiance")
@@ -181,5 +189,25 @@ class Confiance
     public function getEquipes()
     {
         return $this->equipes;
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string 
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 }
