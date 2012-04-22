@@ -53,7 +53,7 @@ CreneauController.prototype = {
 	},
 	// callback
 	callbackAffectation: function() {
-		pmMessage.success("Affectation réalisée");
+		pmMessage.success('Affectation réalisée !');
 		
 		// on recharge le planning de cet orga (et du coup la liste des tous les orgas)
 		pmAffectation.controllers.orga.getData();
@@ -99,11 +99,7 @@ CreneauController.prototype = {
 	},
 	// callback
 	callbackDesaffectation: function() {
-		pmMessage.success("Désaffectation réalisée");
-		
-		// ferme l'éventuel popup
-		$('#popup').dialog('close');
-		$('#popup').remove();
+		pmMessage.success('Désaffectation réalisée !');
 
 		// on recharge le planning de cet orga (et du coup la liste des tous les orgas)
 		pmAffectation.controllers.orga.getData();
