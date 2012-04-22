@@ -61,7 +61,7 @@ CreneauView.prototype = {
 					break;
 				case 'equipe':
 					if (pmAffectation.data.parameter.equipes[_creneaux[_iCreneau]['equipe']].toLowerCase() 
-						!= pmAffectation.data.parameter.niveau[_creneaux[_iCreneau]['confiance']]['nom'].toLowerCase()) {
+						!= pmAffectation.data.parameter.confiance[_creneaux[_iCreneau]['confiance']]['nom'].toLowerCase()) {
 						_priorite = ' <span class="label label-inverse">'+pmAffectation.data.parameter.equipes[_creneaux[_iCreneau]['equipe']].toLowerCase()+'</span>';
 					}
 					break;
@@ -70,8 +70,8 @@ CreneauView.prototype = {
 					break;
 			}
 			
-			var _confiance = 	'<span class="label" style="background-color: '+pmAffectation.data.parameter.niveau[_creneaux[_iCreneau]['confiance']]['couleur']+';">'+
-								pmAffectation.data.parameter.niveau[_creneaux[_iCreneau]['confiance']]['nom'].toLowerCase()+'</span>';
+			var _confiance = 	'<span class="label" style="background-color: '+pmAffectation.data.parameter.confiance[_creneaux[_iCreneau]['confiance']]['couleur']+';">'+
+								pmAffectation.data.parameter.confiance[_creneaux[_iCreneau]['confiance']]['nom'].toLowerCase()+'</span>';
 			
 			var _html = '<div class="item tache" id="tache_'+_iCreneau+'" idCreneau="'+_creneaux[_iCreneau]['id']+'">'+
 						_creneaux[_iCreneau]['nom']+' - '+_creneaux[_iCreneau]['lieu']+' ('+

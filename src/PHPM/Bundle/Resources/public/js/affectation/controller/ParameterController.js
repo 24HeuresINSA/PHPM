@@ -35,12 +35,12 @@ ParameterController.prototype = {
 	 * Callbacks
 	 */
 	callbackNiveaux: function() {
-		pmAffectation.data.parameter.niveau = pmAffectation.models.parameter.getNiveaux();
+		pmAffectation.data.parameter.confiance = pmAffectation.models.parameter.getNiveaux();
 		
 		// ajoute les options correspondantes dans les menus déroulants
-		for (_iNiveau in pmAffectation.data.parameter.niveau) {
-			$('#filtre_orga_confiance').append('<option value="'+_iNiveau+'">Orga '+pmAffectation.data.parameter.niveau[_iNiveau]['nom']+'</option>');
-			$('#filtre_tache_confiance').append('<option value="'+_iNiveau+'">Orga '+pmAffectation.data.parameter.niveau[_iNiveau]['nom']+'</option>');
+		for (_iNiveau in pmAffectation.data.parameter.confiance) {
+			$('#filtre_orga_confiance').append('<option value="'+_iNiveau+'">Orga '+pmAffectation.data.parameter.confiance[_iNiveau]['nom']+'</option>');
+			$('#filtre_tache_confiance').append('<option value="'+_iNiveau+'">Orga '+pmAffectation.data.parameter.confiance[_iNiveau]['nom']+'</option>');
 		}
 	},
 	callbackPermis: function() {

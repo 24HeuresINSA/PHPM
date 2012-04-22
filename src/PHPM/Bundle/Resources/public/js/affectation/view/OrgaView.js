@@ -54,11 +54,11 @@ OrgaView.prototype = {
 		
 		for (var _iOrga in _orgas) {
 			// on affiche l'équipe et la confiance
-			var _equipes = ' <span class="label" style="background-color: '+pmAffectation.data.parameter.niveau[_orgas[_iOrga]['confiance']]['couleur']+';">'+
-								pmAffectation.data.parameter.niveau[_orgas[_iOrga]['confiance']]['nom'].toLowerCase()+'</span>';
+			var _equipes = ' <span class="label" style="background-color: '+pmAffectation.data.parameter.confiance[_orgas[_iOrga]['confiance']]['couleur']+';">'+
+								pmAffectation.data.parameter.confiance[_orgas[_iOrga]['confiance']]['nom'].toLowerCase()+'</span>';
 			if (pmAffectation.data.parameter.equipes[_orgas[_iOrga]['equipe']].toLowerCase()
-				!= pmAffectation.data.parameter.niveau[_orgas[_iOrga]['confiance']]['nom'].toLowerCase()) {
-				_equipes = ' <span class="label label-info">'+pmAffectation.data.parameter.equipes[_orgas[_iOrga]['equipe']].toLowerCase()+'</span>';
+				!= pmAffectation.data.parameter.confiance[_orgas[_iOrga]['confiance']]['nom'].toLowerCase()) {
+				_equipes += ' <span class="label label-info">'+pmAffectation.data.parameter.equipes[_orgas[_iOrga]['equipe']].toLowerCase()+'</span>';
 			}
 			
 			var _html = '<div class="item orga" id="orga_'+_iOrga+'" idOrga="'+_iOrga+'">'+
