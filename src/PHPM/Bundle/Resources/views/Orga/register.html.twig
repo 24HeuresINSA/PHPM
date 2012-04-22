@@ -3,7 +3,7 @@
 
 
 {% block content %}
-<form action="{{ path('orga_registerprocess') }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('orga_register',{'confianceCode':confianceCode,'email':email}) }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
         <button type="submit">S'inscrire</button>

@@ -37,6 +37,14 @@ class Confiance
      * @Assert\NotBlank()
      */
     protected $valeur;
+    
+    /**
+     * @var smallint $privileges
+     *
+     * @ORM\Column(name="privileges", type="smallint")
+     * @Assert\NotBlank()
+     */
+    protected $privileges;
 
     /**
      * @var string $couleur
@@ -209,5 +217,25 @@ class Confiance
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Set privileges
+     *
+     * @param smallint $privileges
+     */
+    public function setPrivileges($privileges)
+    {
+        $this->privileges = $privileges;
+    }
+
+    /**
+     * Get privileges
+     *
+     * @return smallint 
+     */
+    public function getPrivileges()
+    {
+        return $this->privileges;
     }
 }

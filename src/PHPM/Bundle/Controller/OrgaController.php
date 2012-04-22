@@ -103,19 +103,19 @@ class OrgaController extends Controller
     /**
      * Displays a form to create a new Orga Hard entity.
      *
-     * @Route("/register", name="orga_register")
+     * @Route("/register/{email}/{confianceCode}/{equipeId}",  defaults={"email"="none","equipeId"="-1"}, name="orga_register")
      * 
      * @Template()
      */
-    public function registerAction()
+    public function registerAction($email,$confianceCode,$equipeId)
     {
+    	
+    	
         $em = $this->getDoctrine()->getEntityManager();
         $config = $e=$this->get('config.extension');
         $request = $this->getRequest();
-        $confianceId= $request->request->get('confiance', '');
-        $email = $request->request->get('email', '');
         
-        if ($confianceId=='' || $email=='') {
+        if ($confianceCode=='') {
             throw new AccessDeniedException();
         }
         
@@ -123,11 +123,40 @@ class OrgaController extends Controller
         $entity->setEmail($email);
         $entity->setStatut(0);
         
-        $form   = $this->createForm(new OrgaType(false,$config), $entity);
+        
+        
+        $form   = $this->createForm(new OrgaType(false,$config,$confianceCode), $entity);
     
+        
+        if ($this->get('request')->getMethod() == 'POST') {
+        	$form->bindRequest($request);
+        	$data = $form->getData();
+        	
+	        if ($form->isValid()) {
+	        	$equipe = $data->getEquipe();
+	            $entity->setPrivileges($equipe->getConfiance()->getPrivileges());
+	        	
+	        	
+	            $em->persist($entity);
+	            $em->flush();
+	            
+	            return $this->redirect($this->generateUrl('login'));
+	    
+	        }
+        	
+        	
+        	
+        	
+        }
+        
+        
+        
+        
         return array(
                 'entity' => $entity,
-                'form'   => $form->createView()
+                'form'   => $form->createView(),
+        		'confianceCode'=>$confianceCode,
+        		'email' =>$email
         );
     }
     
@@ -216,9 +245,9 @@ class OrgaController extends Controller
             throw $this->createNotFoundException('Unable to find Orga entity.');
         }
 
-        
-
-        $editForm = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN'),$config), $entity);
+        $confianceCode=$entity->getEquipe()->getConfiance()->getCode();
+		
+        $editForm = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN'),$config,$confianceCode), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -249,9 +278,9 @@ class OrgaController extends Controller
             throw new AccessDeniedException();
         }
         
-
+        $confianceCode=$entity->getEquipe()->getConfiance()->getCode();
         $config = $e=$this->get('config.extension');
-        $editForm   = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN'),$config), $entity);
+        $editForm   = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN'),$config,$confianceCode), $entity);
         
 
         $request = $this->getRequest();

@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class EquipeRepository extends EntityRepository
 {
+	public function findAllWithConfianceCode($code)
+	{
+	
+		return  $this->createQueryBuilder('e')
+		
+		->join('e.confiance', 'c')
+		->where('c.code = :code')
+			  ->setParameter('code', $code);
+				
+	
+	
+	}
 }

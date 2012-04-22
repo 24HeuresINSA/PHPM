@@ -4,15 +4,18 @@ namespace PHPM\Bundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
+use PHPM\Bundle\Entity\EquipeRepository;
 
 class OrgaType extends AbstractType
 {
     protected $admin;
     protected $config;
-    function __construct($admin,$config){
+    protected $forcedConfiance;
+    function __construct($admin,$config,$forcedConfiance){
         
             $this->config =$config;
             $this->admin =$admin;
+            $this->forcedConfiance=$forcedConfiance;
     }
     
     
@@ -48,10 +51,19 @@ class OrgaType extends AbstractType
                     'PC'=>'PC','GMC'=>'GMC','GMD'=>'GMD', 'GMPP'=>'GMPP', 'IF'=>'IF', 'SGM'=>'SGM',
                     'GI'=>'GI', 'GE'=>'GE', 'TC'=>'TC', 'GCU'=>'GCU', 'BIM'=>'BIM', 'BIOCH'=>'BIOCH', 'GEN'=>'GEN', 'Autre'=>'Autre' 
                     )))
-            ->add('equipe',null,array('label'=>'Équipe'))
+            
             ->add('commentaire')
             
     	    ;
+    	    
+    	    if($this->forcedConfiance){
+    	    	$code=$this->forcedConfiance;
+    	    	$builder->add('equipe','entity',array('label'=>'Équipe',
+    	    			'class' => 'PHPMBundle:Equipe',
+    	    			'query_builder' => function(EquipeRepository $er)use($code){return $er->findAllWithConfianceCode($code);}));
+    	    }
+    	    
+    	    
     	if($this->admin){
         $builder
 			
