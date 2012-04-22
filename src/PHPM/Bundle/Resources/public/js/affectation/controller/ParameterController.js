@@ -57,6 +57,7 @@ ParameterController.prototype = {
 		
 		// ajoute les options correspondantes dans le menu déroulant
 		for (_iEquipe in pmAffectation.data.parameter.equipes) {
+			$('#filtre_orga_equipe').append('<option value="'+_iEquipe+'">'+pmAffectation.data.parameter.equipes[_iEquipe]+'</option>');
 			$('#filtre_tache_equipe').append('<option value="'+_iEquipe+'">'+pmAffectation.data.parameter.equipes[_iEquipe]+'</option>');
 		}
 	},
