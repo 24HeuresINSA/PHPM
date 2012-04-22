@@ -478,12 +478,14 @@ class OrgaController extends Controller
 		$orgaArray = array();
 		//création du Json de retour selon le modèle définit dans la spec (cf wiki)
 		foreach ($entities as $orga) {
-			$a = array();
+			$equipe = $orga->getEquipe();
+			
+			$dispos = array();
 			foreach ($orga->getDisponibilites() as $dispo)
 			{
 				if ($dispo->toArrayOrgaWebService() != null)
 				{
-					$a[$dispo->getId()] = $dispo->toArrayOrgaWebService();
+					$dispos[$dispo->getId()] = $dispo->toArrayOrgaWebService();
 				}			
 			}
 
@@ -491,12 +493,13 @@ class OrgaController extends Controller
 			        	"nom" => $orga->getNom(),
 			        	"prenom" => $orga->getPrenom(),
 			        	"surnom" => $orga->getSurnom(),
-						"confiance" => $orga->getEquipe()->getConfiance()->getId(),
+						"confiance" => $equipe->getConfiance()->getId(),
+						"equipe" => $equipe->getId(),
 // 						"permis"=>$orga->getPermis(),
 			    		"dateDeNaissance" => $orga->getDateDeNaissance()->format('Y-m-d H:i:s'),
 			    		"departement" => $orga->getDepartement(),
 			    		"commentaire" => $orga->getCommentaire(), 	
-			        	"disponibilites" => $a
+			        	"disponibilites" => $dispos
 						);
 		}
 		
