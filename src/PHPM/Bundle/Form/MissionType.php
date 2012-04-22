@@ -13,6 +13,7 @@ class MissionType extends AbstractType
             ->add('nom')
             ->add('ordre',null,array('label'=>'Ordre de Tri'))
             ->add('description')
+            ->add('confianceMin')
         ;
     }
 

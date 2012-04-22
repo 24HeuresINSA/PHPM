@@ -19,6 +19,7 @@
 			       		<th>Ordre de tri</th>
 			            <th>Nom</th>
 			            <th>Description</th>
+			            <th>Confiance Minimun</th>
 			            <th>Actions</th>
 			        </tr>
 			    </thead>
@@ -28,6 +29,7 @@
 			           	   <td>{{ e.ordre }}</td>
 			           	   <td>{{ e.nom }}</td>
 			           	   <td>{{ e.description }}</td>
+			           	   <td>{{ e.confianceMin }}</td>
 			               <td>
 			               <a class="btn" href="{{ path('mission_edit', { 'id': e.id }) }}"><i class="icon-pencil"></i> Éditer</a>
 					       <a class="btn  btn-danger" href="{{ path('mission_delete', { 'id': e.id }) }}"><i class="icon-remove"></i> Supprimer</a>
