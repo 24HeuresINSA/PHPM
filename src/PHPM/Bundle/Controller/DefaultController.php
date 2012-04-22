@@ -78,7 +78,7 @@ class DefaultController extends Controller
                 return array("registered"=>$registered);
     
             } elseif($openid->mode == 'cancel') {
-                return array("m"=>'error');
+                exit;
             } else {
 //                 $message= 'User ' . ($openid->validate() ? $openid->identity . ' has ' : 'has not ') . 'logged in.';
                 $attrs = $openid->getAttributes();
@@ -93,21 +93,15 @@ class DefaultController extends Controller
                     return array('m'=>'notfound', 'email'=>$email);
                 }
                 
-                
-                
                 $this->get('security.context')->setToken($this->generateUserToken($user));
-                
-                
                 
 
                 return $this->redirect($this->generateUrl('accueil'));
             }
         } catch(ErrorException $e) {
-            return array("m"=>'error');
+            exit;
         }
     
-         
-    return array("m"=>'error');
          
          
     }
