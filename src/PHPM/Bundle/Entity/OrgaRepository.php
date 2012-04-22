@@ -26,37 +26,28 @@ class OrgaRepository extends EntityRepository
 // 		if ($permis != '') {
 // 			$dql.=" AND o.permis = '$permis'";
 // 		}
-		if ($maxDateNaissance != '')
-		{
+		if ($maxDateNaissance !== '') {
 			$dql.=" AND o.dateDeNaissance <= '$maxDateNaissance'";
 		}
-		if ($niveau_confiance != '')
-		{
-			$dql.=" AND e.confiance >= '$niveau_confiance'";
+		
+		if ($niveau_confiance !== '') {
+			$dql.=" AND e.confiance = '$niveau_confiance'";
 		}
-		if ($plage_id != '')
-		{
+		
+		if ($plage_id !== '') {
 			$pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation_plages')->getValue(),TRUE);
 			$plage= $pref[$plage_id];
 			$fin=$plage["fin"];
 			$debut=$plage["debut"];
 			$dql.=" AND d.debut < '$fin' AND d.fin > '$debut'";
 		}
-		if ($creneau != '')
-		{
+		
+		if ($creneau !== '') {
 			//test sur l'overlap des créneaux
 			$dql.=" AND (o.id NOT IN (SELECT oi.id FROM PHPMBundle:Orga as oi JOIN oi.disponibilites di JOIN di.creneaux ci, PHPMBundle:Creneau cref where cref.id = '$creneau' AND (ci.debut < cref.fin) AND (ci.fin > cref.debut ) ))";
 			//test sur la dispo qui est pas nul
 			$dql.=" AND (c.disponibilite IS NULL)";
 		}
-		
-		
-// 		printf($dql);
-// 		printf("                                                          ");
-		
-// 		$q = $this->getEntityManager()->createQuery($dql);
-//  		var_dump($q->getArrayResult());
-//  		exit();
 		
 		$q = $this->getEntityManager()->createQuery($dql);
 		return $q->execute();
