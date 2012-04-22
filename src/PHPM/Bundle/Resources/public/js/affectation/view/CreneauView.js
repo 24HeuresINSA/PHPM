@@ -82,10 +82,10 @@ CreneauView.prototype = {
 			$('#liste_taches').append(_html);
 			
 			// handler de click
-			$('#tache_'+_iCreneau).bind('click', {idCreneau: _creneaux[_iCreneau]['tache_id']}, function(e) {
+			$('#tache_'+_iCreneau).bind('click', {idCreneau: _creneaux[_iCreneau]['id'], idTache: _creneaux[_iCreneau]['tache_id']}, function(e) {
 				if (e.altKey) {
 					// Shift + click : affiche la page pour modifier le créneau
-					var _popup = window.open(pmAffectation.urls.creneauMaker+'/'+e.data.idCreneau, '');
+					var _popup = window.open(pmAffectation.urls.creneauMaker+'/'+e.data.idTache, '');
 					
 					// à la fermeture, refresh la liste des créneaux
 					// unload est firé au chargement (unload de about:blank),
