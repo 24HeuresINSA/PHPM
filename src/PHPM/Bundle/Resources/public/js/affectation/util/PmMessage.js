@@ -19,10 +19,10 @@ PmMessage.prototype = {
 	 * Afficher un message de succès
 	 */
 	success: function(str) {
-		$("#message_affection").show();
-		$('#message_affection').html('<div class="success">'+str+'</div>');
+		$('#message').show();
+		$('#message').html('<div class="alert alert-success"><a class="close" data-dismiss="alert">×</a>'+str+'</div>');
 		
-		setTimeout(function() {$("#message_affection").fadeOut(2000, 'linear')}, 5000); // effet opaque 5s puis disparait en 2
+		setTimeout(function() {$('#message').fadeOut(2000, 'linear')}, 5000); // effet opaque 5s puis disparait en 2
 	},
 	
 	/*
@@ -31,9 +31,9 @@ PmMessage.prototype = {
 	alert: function(str) {
 		console.error(str);
 		
-		$("#message_affection").show();
-		$('#message_affection').html('<div class="alert">'+str+'</div>');
+		$('#message').show();
+		$('#message').html('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a>'+str+'</div>');
 		
-		setTimeout(function() {$("#message_affection").fadeOut(2000, 'linear')}, 5000); // effet opaque 5s puis disparait en 2
+		setTimeout(function() {$('#message').fadeOut(2000, 'linear')}, 5000); // effet opaque 5s puis disparait en 2
 	},
 }

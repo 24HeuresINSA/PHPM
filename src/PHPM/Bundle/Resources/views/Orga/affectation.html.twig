@@ -52,11 +52,11 @@
 		pmAffectation.urls.permis = "{{ url('config_get', {'string' : 'manifestation_permis_libelles'} ) }}";
 		pmAffectation.urls.creneauMaker = "{{ url('creneaumaker_tache', {'id' : ''}) }}";	
     </script>
-	
 	<div class="affectation-wrapper">
-		<!-- contiendra les éventuels messages à afficher -->
-		<div class="message_affection" id="message_affection"></div>
-		
+		<div class="message" id="message">
+			<!-- contiendra les éventuels messages à afficher -->
+		</div>
+				
 		<div class="menu_calendar" id ="menu_calendar">		
 			<div class="btn-group" id="boutons_plage" data-toggle="buttons-radio"></div>
 			
