@@ -9,6 +9,8 @@ INSERT INTO `Config` (`id`, `field`, `label`, `value`, `hint`) VALUES
 (8, 'animations_db_path', 'Chemin vers la BDD des anims', '/var/www/animaker/Backend/Data/DB/DB.sqlite', 'Chemin absolu vers la base SQLite des animations, au format Animaker. Laisser nul sinon.'),
 (9, 'manifestation_edition', 'Numéro de l''édition', '38', NULL),
 (10, 'phpm_contenu_page_principale', 'Contenu de la page principale', '<h1>PHPlanningMaker<h2><p>Gestion des ressources humaines.</p>', '')
+(11, 'phpm_orgasoft_inscription_returnURL', 'URL de retour  inscription orga', 'http://www.24heures.org/orga', NULL),
+(12, 'manifestation_admin_email', 'Email de l''administrateur', 'orga@24heures.org', NULL)
 ;
 
 INSERT INTO `Confiance` (`id`, `nom`, `valeur`, `couleur`) VALUES
