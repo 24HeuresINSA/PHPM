@@ -13,28 +13,29 @@ use Doctrine\ORM\EntityRepository;
 class TacheRepository extends EntityRepository
 {
 	
-	public function getTacheWithCriteria($duree, $permis, $niveau_confiance, $plage, $bloc)
+	public function getTacheWithCriteria($duree, $permis, $plage)
 	{
 		$dql = "SELECT t FROM PHPMBundle:Tache t JOIN t.plagesHoraire p JOIN p.creneaux c WHERE c.disponibilite IS NULL";
 	
-		if ($duree != '') {
-			$dql.= " AND ((c.fin - c.debut) < '$duree' )";
+		if ($duree !== '') {
+			$dql .= " AND ((c.fin - c.debut) < '$duree' )";
 		}
 // 		if($categorie !='')
 // 		{
 // 			$andx->add($qb->expr()->eq('t.categorie_id',$categorie));
 // 		}
-		if ($permis != '') {
-			$dql.= " AND t.permisNecessaire >= '$permis'";
+		if ($permis !== '') {
+			$dql .= " AND t.permisNecessaire >= '$permis'";
 		}
 // 		if($age !='')
 // 		{
 // 			$andx->add($qb->expr()->gte('t.ageNecessaire',$age));
 // 		}
-		if ($niveau_confiance != '') {
+		/*if ($niveau_confiance !== '') {
 			$dql.= " AND t.confiance_id >= '$niveau_confiance'";
-		}
-		if ($plage != '') {
+		}*/
+		
+		if ($plage !== '') {
 		    $pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation_plages')->getValue(),TRUE);
 		    $plage= $pref[$plage];
 		    $debut = $plage['debut'];
