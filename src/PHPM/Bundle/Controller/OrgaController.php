@@ -676,12 +676,20 @@ class OrgaController extends Controller
 		
 		if (false === $this->get('security.context')->isGranted('ROLE_VISITOR')) {
 			throw new AccessDeniedException();
-		}
-		
+		}		
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$user = $this->get('security.context')->getToken()->getUser();
 		$stats = $em->getRepository('PHPMBundle:Orga')->getStats($user);
+		
+		$message = \Swift_Message::newInstance()
+		->setSubject('Inscription orga soft 24 Heures de l\'INSA')
+		->setFrom('orga@24heures.org')
+		->setReplyTo('orga@24heures.org')
+		->setTo($user->getEmail())
+ 		->setBody($this->renderView('PHPMBundle:Orga:emailConfirmationSoft.html.twig', array('orga' => $user)), 'text/html')
+		;
+		$this->get('mailer')->send($message);
 		
 		$this->get('request')->getSession()->invalidate();
 		$this->get("security.context")->setToken(new AnonymousToken(null, 'anon'));
