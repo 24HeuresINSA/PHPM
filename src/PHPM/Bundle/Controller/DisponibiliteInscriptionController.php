@@ -56,12 +56,27 @@ class DisponibiliteInscriptionController extends Controller
         		$mission = $data['mission'];
         		$statut = $data['statut'];
         		$pointsCharisme = $data['pointsCharisme'];
+        		$confiance = $data['confiance'];
         		
         		foreach ($data['disponibiliteInscriptionItems'] as $di){
         			
         			if($param['action']=='delete'){
         				 $em->remove($di);
         			
+        			}
+        			
+        			if($param['action']=='affect'){
+        				
+        				foreach($confiance->getEquipes() as $equipe)
+        				{
+
+        					foreach ($equipe->getOrgas() as $orga)
+        					{
+        						$orga->addDisponibiliteInscription($di);
+        						$di->addOrga($orga);
+        					}
+        					
+        				}
         			}
         			
         			if($param['action']=='edit'){

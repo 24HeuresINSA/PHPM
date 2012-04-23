@@ -56,6 +56,12 @@ class DisponibiliteInscriptionListType extends AbstractType
         								'required'=> false,
         								'attr' => array('placeHolder'=>'Changer les points de charisme')
         						))
+		        ->add('confiance', 'entity',
+		        array(	'class' => 'PHPMBundle:Confiance',
+		                								'label' => 'Affecter les orgas',
+		                								'empty_value' => 'Affecter les orgas',
+		                								'required'=> false
+		        ))
         				
         ;
      
