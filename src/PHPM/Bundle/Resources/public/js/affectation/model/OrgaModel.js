@@ -24,7 +24,6 @@ OrgaModel.prototype = {
 		// construit les paramètres que l'on va envoyer, -1 est le wildcart
 		var _params = {
 			plage_id: pmAffectation.current.plage, // on fournit toujours la plage, la base
-			bloc: 0 // et le bloc, par défaut le 1er
 		};
 		
 		// filtres

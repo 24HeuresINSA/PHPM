@@ -483,7 +483,7 @@ class TacheController extends Controller
 				"creneaux" => $creneaux,
 				"permisNecessaire" => $entity->getPermisNecessaire());
 				
-				$taches[$entity->getId()] = $tacheArray;
+			$taches[$entity->getId()] = $tacheArray;
 		}
 	
     	$response = new Response();
