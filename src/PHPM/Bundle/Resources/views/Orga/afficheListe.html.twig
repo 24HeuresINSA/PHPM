@@ -10,7 +10,7 @@
             <th>Date de permis</th>
             <th>Com'</th>
             <th width="10em">Départ</th>
-            <th>Commentaire</th>
+            <th>Divers</th>
             <th>Dernière activité</th>            
             <th>Privilèges</th>
             <th>Actions</th>
@@ -29,7 +29,10 @@
             <td>{{ entity.departement }}</td>
             <td>
             {% if entity.commentaire %}
-            <a class="btn  btn-info apopover" href="#" rel="popover" data-content="{{ entity.commentaire }}" data-original-title="Commentaire">Afficher</a>
+            <a class="btn  btn-info apopover" href="#" rel="popover" data-content="{{ entity.commentaire }}" data-original-title="Commentaire">Commentaire</a>
+            {% endif %}
+            {% if entity.amis %}
+            <a class="btn  btn-info apopover" href="#" rel="popover" data-content="{{ entity.amis }}" data-original-title="Amis">Amis</a>
             {% endif %}
             </td>
             <td>{{ entity.lastActivity|format_date('dd MMM Y') }}</td>

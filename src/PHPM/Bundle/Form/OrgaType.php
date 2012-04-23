@@ -53,6 +53,7 @@ class OrgaType extends AbstractType
                     )))
             
             ->add('commentaire')
+            ->add('amis')
             ->add('celibataire','choice',array(	'label'=>'Célib\'?',
             									'required'=>false,
             									'choices'=>array('0'=>'Non','1'=>'Oui'),

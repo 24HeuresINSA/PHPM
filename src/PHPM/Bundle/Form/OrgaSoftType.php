@@ -57,6 +57,7 @@ class OrgaSoftType extends AbstractType
                     )))
             
             ->add('commentaire',null,array('label'=>'Commentaires'))
+            ->add('amis',null,array('label'=>'Nom des orgas avec qui tu veux bosser'))
             ->add('celibataire','choice',array(	'label'=>'Célib\'?',
             									'required'=>false,
             									'expanded'=>true,

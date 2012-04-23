@@ -121,6 +121,13 @@ class Orga implements UserInterface
      * @ORM\Column(name="commentaire", type="text", nullable=true)
      */
     protected $commentaire;
+    
+    /**
+     * @var text $amis
+     *
+     * @ORM\Column(name="amis", type="text", nullable=true)
+     */
+    protected $amis;
 
 //     /**
 //      * @var smallint $permis
@@ -835,5 +842,25 @@ class Orga implements UserInterface
     public function getCelibataire()
     {
         return $this->celibataire;
+    }
+
+    /**
+     * Set amis
+     *
+     * @param text $amis
+     */
+    public function setAmis($amis)
+    {
+        $this->amis = $amis;
+    }
+
+    /**
+     * Get amis
+     *
+     * @return text 
+     */
+    public function getAmis()
+    {
+        return $this->amis;
     }
 }
