@@ -333,9 +333,16 @@ PmUtils.prototype = {
 	 * Orga -> Créneau ou Tache -> Orga
 	 */
 	setMode: function(mode) {
+		pmAffectation.current.mode = mode;
+		
 		if (mode === 'orga') {
-			//$('#boutons_tache').hide();
-			//$('#boutons_orga').show();
+			pmAffectation.current.tache.id = -1;
+			
+			// on filtre les boutons
+			$('#boutons_orga_nav').show();
+			$('#boutons_tache_nav').hide();
+			$('bouton_orga_detail').show();
+			$('bouton_tache_detail').hide();
 			$('#bouton_mode_orga').button('toggle');
 			
 			// on va chercher la colonne orgas
@@ -346,9 +353,14 @@ PmUtils.prototype = {
 			pmAffectation.controllers.creneau = new CreneauController();
 			// pas besoin d'aller chercher des données dedans
 		} else if (mode === 'tache') {
-			//$('#boutons_orga').hide();
-			//$('#boutons_tache').show();
-			$('#bouton_mode_plage').button('toggle');
+			pmAffectation.current.orga.id == -1;
+			
+			// on filtre les boutons
+			$('#boutons_orga_nav').hide();
+			$('#boutons_tache_nav').show();
+			$('bouton_orga_detail').hide();
+			$('bouton_tache_detail').show();
+			$('#bouton_mode_tache').button('toggle');
 			
 			// on va chercher la colonne tache
 			pmAffectation.controllers.tache = new TacheController();

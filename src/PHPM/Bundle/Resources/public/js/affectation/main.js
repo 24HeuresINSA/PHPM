@@ -23,7 +23,7 @@
 	pmAffectation.current.plage = 1; // par défaut on est sur la plage 0
 	pmAffectation.current.quart_heure = -1; // wildcart
 	pmAffectation.current.creneau = {};
-	pmAffectation.current.tache = {};
+	pmAffectation.current.tache = {id: -1};
 	pmAffectation.current.mode = 'orga';
 	
 	// log de toutes les affectations/désaffectations réalisées
@@ -61,10 +61,9 @@ $(document).ready(function() {
 	
 	// 2 : setter le calendar
 	// on récupère les plages via une requête synchrone
-	// comme c'est les 1ères dates qu'on a, on check le fuseau horaire de l'utilisateur
 	pmAffectation.controllers.calendar = new CalendarController();
 	pmAffectation.controllers.calendar.getData();
-	// lorsque la vue calendier est settée, il va redimensionner l'appli et retirer le spinner
+	// lorsque la vue calendrier est settée, il va redimensionner l'appli et retirer le spinner
 	
 	// 3 : on set le mode
 	// et cela va appeler les bons contrôlleurs, orga & créneau ou tache & orga
