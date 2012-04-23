@@ -480,8 +480,6 @@ class TacheController extends Controller
 				"id" => $entity->getId(),
 				"nom" => $entity->getNom(),
 				"lieu" => $entity->getLieu(),
-//				"confiance" => $entity->getConfiance()->getId(),
-// 				"categorie" => $entity->getCategorie()->getId(),
 				"creneaux" => $creneaux,
 				"permisNecessaire" => $entity->getPermisNecessaire());
 				
