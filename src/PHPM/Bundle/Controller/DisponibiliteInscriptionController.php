@@ -69,11 +69,12 @@ class DisponibiliteInscriptionController extends Controller
         				
         				foreach($confiance->getEquipes() as $equipe)
         				{
-
         					foreach ($equipe->getOrgas() as $orga)
         					{
-        						$orga->addDisponibiliteInscription($di);
-        						$di->addOrga($orga);
+        						if (!($orga->getDisponibilitesInscription()->contains($di)))
+        						{	
+        							$orga->addDisponibiliteInscription($di);
+        						}
         					}
         					
         				}
