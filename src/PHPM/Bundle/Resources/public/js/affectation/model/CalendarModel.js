@@ -67,4 +67,33 @@ CalendarModel.prototype = {
 		return _plages;
 	},
 
+	/*
+	 * Réalise la (dés)affectation entre un créneau et un orga
+	 * @param 'sens' : 'affecter' ou 'desaffecter'
+	 * On gère 2 callbacks différents, c'est plus robuste
+	 */
+	affecterCreneau: function(sens, idCreneau, idOrga, callBack) {
+		if (sens === 'affecter') {
+			this.callBackAffectation = callBack;
+		} else {
+			this.callBackDesaffectation = callBack;
+		}
+		
+		$.ajax({
+			url: pmAffectation.url+pmAffectation.paths.affecter+idCreneau+'/'+sens+'/'+idOrga,
+			dataType: 'text',
+			success: function(data) {pmAffectation.models.calendar.affectationSuccess(data, sens)},
+			error: pmAffectation.models.calendar.requestError,
+			type: 'POST'
+		});	
+	},
+	// les callbacks
+	affectationSuccess: function(data, sens) {
+		// on test ce qui le serveur nous a retourné
+		if (data == "OK") {
+			(sens === 'affecter') ? pmAffectation.models.calendar.callBackAffectation() : pmAffectation.models.calendar.callBackDesaffectation();
+		} else {
+			pmMessage.alert("Impossible de réaliser l'opération : "+data);
+		}
+	},
 }

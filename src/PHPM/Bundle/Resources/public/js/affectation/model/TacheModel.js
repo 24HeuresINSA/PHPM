@@ -27,9 +27,10 @@ TacheModel.prototype = {
 		};
 		
 		// filtres
-		($.isNumeric(pmAffectation.current.tache.confiance) === true) && (pmAffectation.current.tache.confiance != -1) && (_params.confiance_id = pmAffectation.current.tache.confiance);
+		// TODOs
+		//($.isNumeric(pmAffectation.current.tache.confiance) === true) && (pmAffectation.current.tache.confiance != -1) && (_params.confiance_id = pmAffectation.current.tache.confiance);
 		($.isNumeric(pmAffectation.current.tache.duree) === true) && (pmAffectation.current.tache.duree != -1) && (_params.duree = pmAffectation.current.tache.duree);
-		($.isNumeric(pmAffectation.current.tache.categorie) === true) && (pmAffectation.current.tache.categorie != -1) && (_params.categorie_id = pmAffectation.current.tache.categorie);
+		//($.isNumeric(pmAffectation.current.tache.categorie) === true) && (pmAffectation.current.tache.categorie != -1) && (_params.categorie_id = pmAffectation.current.tache.categorie);
 		($.isNumeric(pmAffectation.current.tache.permis) === true) && (pmAffectation.current.tache.permis != -1) && (_params.permis = pmAffectation.current.tache.permis);
 		
 		$.ajax({
@@ -51,7 +52,7 @@ TacheModel.prototype = {
 		pmAffectation.models.tache.callBack();
 	},
 	requestError: function(data, statusText) {
-		pmMessage.alert("Impossible de faire l'opération : " + statusText);
+		pmMessage.alert("Impossible de récupérer les tâches : " + statusText);
 	},
 	
 	/*
@@ -73,6 +74,8 @@ TacheModel.prototype = {
 			for (var _iCreneau in _tache['creneaux']) {
 				_tache['creneaux'][_iCreneau]['debut'] = new Date(_tache['creneaux'][_iCreneau]['debut']['date']);
 				_tache['creneaux'][_iCreneau]['fin'] = new Date(_tache['creneaux'][_iCreneau]['fin']['date']);
+				
+				// TODO : donner des couleurs aux créneaux
 			}
 			
 			_taches[_iTache] = _tache;

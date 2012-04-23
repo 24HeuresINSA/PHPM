@@ -49,7 +49,7 @@ CreneauController.prototype = {
 		pmUtils.logAction('affectation', obj.idCreneau, obj.idOrga);
 		
 		// on appelle le webservice
-		pmAffectation.models.creneau.affecterCreneau('affecter', obj.idCreneau, obj.idOrga, pmAffectation.controllers.creneau.callbackAffectation);
+		pmAffectation.models.calendar.affecterCreneau('affecter', obj.idCreneau, obj.idOrga, pmAffectation.controllers.creneau.callbackAffectation);
 	},
 	// callback
 	callbackAffectation: function() {
@@ -95,7 +95,7 @@ CreneauController.prototype = {
 		pmUtils.logAction('desaffectation', idCreneau, idOrga);
 		
 		// on appelle le webservice
-		pmAffectation.models.creneau.affecterCreneau('desaffecter', idCreneau, idOrga, pmAffectation.controllers.creneau.callbackDesaffectation);
+		pmAffectation.models.calendar.affecterCreneau('desaffecter', idCreneau, idOrga, pmAffectation.controllers.creneau.callbackDesaffectation);
 	},
 	// callback
 	callbackDesaffectation: function() {
