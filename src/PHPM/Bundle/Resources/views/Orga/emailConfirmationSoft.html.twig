@@ -1,3 +1,2 @@
 <h1>Bonjour {{ orga.prenom }} !</h1>
-<p>Ton inscription en tant qu'orga soft {{ manifestation_organisation_nom }} a bien été prise en compte.</p>
-<p>Si tu as des questions, ou que tu veux modifier tes disponibilités, envoies un mail à <a href="mailto:{{ manifestation_admin_email }}">{{ manifestation_admin_email }}</a> ou répond à cet email.</p>
+{{ phpm_contenu_mail_confirmation_soft|raw }}
