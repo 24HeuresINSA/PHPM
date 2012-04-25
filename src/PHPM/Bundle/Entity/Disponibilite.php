@@ -120,7 +120,7 @@ class Disponibilite
      *
      * @param PHPM\Bundle\Entity\Orga $orga
      */
-    public function setOrga(\PHPM\Bundle\Entity\Orga $orga)
+    public function setOrga($orga)
     {
         $this->orga = $orga;
     }
@@ -217,5 +217,6 @@ class Disponibilite
     	return $disponibilite;
     
     }
+    
     
 }
