@@ -14,7 +14,8 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PHPM\Bundle\Entity\OrgaRepository")
- * @UniqueEntity(fields={"email","telephone"})
+ * @UniqueEntity(fields={"email"}, message="Un orga possédant cet email est déjà inscrit.")
+ * @UniqueEntity(fields={"telephone"}, message="Un orga possédant ce numéro de téléphone est déjà inscrit.")
  */
 class Orga implements UserInterface
 {
@@ -38,7 +39,7 @@ class Orga implements UserInterface
      * @var string $nom
      *
      * @ORM\Column(name="nom", type="string", length=255)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Le nom de l'orga ne doit pas être vide.")
      */
     protected $nom;
 
@@ -46,7 +47,7 @@ class Orga implements UserInterface
      * @var string $prenom
      *
      * @ORM\Column(name="prenom", type="string", length=255)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Le prénom de l'orga ne doit pas être vide.")
      */
     protected $prenom;
     
@@ -62,7 +63,7 @@ class Orga implements UserInterface
      * @var string $telephone
      *
      * @ORM\Column(name="telephone", type="string", length=255, unique=true)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Veuillez renseigner un numéro de portable valide.")
      * @Assert\Regex(
      *     pattern="/^0[67][0-9]{8}$/",
      *     message="Veuillez renseigner un numéro de portable valide."
@@ -75,7 +76,8 @@ class Orga implements UserInterface
      *
      * @ORM\Column(name="email", type="string", length=255, unique=true)
      * 
-     * @Assert\Email(     * 
+     * @Assert\Email(
+     * 	   message = L'email doît être valide.
      *     checkMX = true
      * )
      */
@@ -86,7 +88,7 @@ class Orga implements UserInterface
      *
      * @ORM\Column(name="dateDeNaissance", type="date")
      * 
-     * @Assert\Date()
+     * @Assert\Date("La date de naissance doît être valide")
      */
     protected $dateDeNaissance;
     
@@ -95,7 +97,7 @@ class Orga implements UserInterface
      *
      * @ORM\Column(name="datePermis", type="date", nullable=true)
      *
-     * @Assert\Date()
+     * @Assert\Date("La date de permis doît être valide")
      */
     protected $datePermis;
 
