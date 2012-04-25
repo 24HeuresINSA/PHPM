@@ -1,2 +1,8 @@
 <h1>Bonjour {{ orga.prenom }} !</h1>
 {{ phpm_contenu_mail_confirmation_soft|raw }}
+<h2>Tu as indiqué être disponible sur les créneaux suivants :</h2>
+<ul>
+{% for dispo in orga.disponibilites %}
+<li>{{ dispo.debut | format_datetime('EEEE dd MMM HH:mm') }} <i class="icon-arrow-right"></i> {{ dispo.fin | format_datetime('EEEE dd HH:mm') }}</li>
+{% endfor %}
+</ul>
