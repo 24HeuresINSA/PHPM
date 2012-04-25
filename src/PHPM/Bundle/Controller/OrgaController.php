@@ -691,7 +691,7 @@ class OrgaController extends Controller
 		
 		$message = \Swift_Message::newInstance()
 		->setSubject('Inscription orga soft 24 Heures de l\'INSA')
-		->setFrom('orga@24heures.org')
+		->setFrom(array('orga@24heures.org' => 'Orga 24H INSA'))
 		->setReplyTo('orga@24heures.org')
 		->setTo($user->getEmail())
  		->setBody($this->renderView('PHPMBundle:Orga:emailConfirmationSoft.html.twig', array('orga' => $user)), 'text/html')
