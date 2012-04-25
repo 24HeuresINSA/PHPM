@@ -22,7 +22,7 @@ class DefaultController extends Controller
     {
     	$em = $this->getDoctrine()->getEntityManager();
     	$pref = $em->getRepository('PHPMBundle:Config')->findOneByField('phpm_config_initiale');
-    	
+    	$config = $this->get('config.extension');
     	
     	if (!$pref){
     	return $this->redirect($this->generateUrl('config_initiale'));
@@ -30,12 +30,15 @@ class DefaultController extends Controller
     	
     	$user=$this->get('security.context')->getToken()->getUser();
     	
-    	if ($this->get('security.context')->isGranted('ROLE_VISITOR')) {
+    	if ($this->get('security.context')->isGranted('ROLE_USER')) {
     		$statsUser=$em->getRepository('PHPMBundle:Orga')->getStats($user);
     		$statsUser['taches']=$em->getRepository('PHPMBundle:Tache')->getOrgaStats($user);
     		return array('statsOrga'=>$statsUser);
+    	}else{
+    		$redirectURL = $config->getValue('manifestation_permis_libelles');
+    		return $this->redirect('http://www.24heures.org/orga');
     	}
-    	return array();
+    	
     	
     	
         
@@ -95,7 +98,7 @@ class DefaultController extends Controller
                 
                 $this->get('security.context')->setToken($user->generateUserToken());
                 
-
+				
                 return $this->redirect($this->generateUrl('accueil'));
             }
         } catch(ErrorException $e) {
