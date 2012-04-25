@@ -84,7 +84,7 @@ class Orga implements UserInterface
     /**
      * @var date $dateDeNaissance
      *
-     * @ORM\Column(name="dateDeNaissance", type="date", nullable=true)
+     * @ORM\Column(name="dateDeNaissance", type="date")
      * 
      * @Assert\Date()
      */
@@ -153,7 +153,7 @@ class Orga implements UserInterface
     protected $equipesResponsable;
     
     /**
-     * @ORM\OneToMany(targetEntity="Disponibilite", mappedBy="orga", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Disponibilite", mappedBy="orga", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $disponibilites;
     
@@ -291,7 +291,57 @@ class Orga implements UserInterface
     			"disponibilites" => $a);
     
     }
+    
+    public function addDIstoDisponibilites(){
+    	foreach ($this->getDisponibilitesInscription() as $di)
+    	{
+    	var_dump($di->getId());	
+    	
+    	$absorbed=false;
+    	foreach($this->getDisponibilites()as $dispo){    		
+    		if(($di->getDebut()<=$dispo->getFin())&&($di->getFin()>=$dispo->getFin())){
+    			$dispo->setFin($di->getFin());
+    			$absorbed=true;
+    		}
+    		if(($di->getDebut()<=$dispo->getDebut())&&($di->getFin()>=$dispo->getDebut())){
+    			$dispo->setDebut($di->getDebut());
+    			$absorbed=true;
+    		}
+    	}
+    	if(!$absorbed){
+    		$dispo = new Disponibilite();
+    		$dispo->setDebut($di->getDebut());
+    		$dispo->setFin($di->getFin());
+    		$dispo->setOrga($this);
+    		$this->addDisponibilite($dispo);
+    	}
+    	}
+    	
+    }
 
+    public function cleanDisponibilites(){
+    	
+    	foreach($this->getDisponibilites()as $d1){
+    		foreach($this->getDisponibilites()as $d2){
+    			if($d1==$d2){
+    				continue;
+    			}
+    	
+    			if(($d1->getDebut()<=$d2->getFin())&&($d1->getFin()>=$d2->getFin())){
+    				$d2->setFin($d1->getFin());
+    				if($d1->getDebut()<=$d2->getDebut()){
+    					$d2->setDebut($d1->getDebut());
+    				}
+    				foreach ($d1->getCreneaux() as $c){
+    					$c->setDisponibilite($d2);
+    				}
+    				$this->getDisponibilites()->removeElement($d1);
+    				$d1->setOrga(null);
+    			}
+    		}
+    	
+    	}
+    }
 
     
 

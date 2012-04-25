@@ -26,9 +26,8 @@ class OrgaRepository extends EntityRepository
 // 		if ($permis != '') {
 // 			$dql.=" AND o.permis = '$permis'";
 // 		}
-		if ($maxDateNaissance !== '') {
+		
 			$dql .=" AND o.dateDeNaissance <= '$maxDateNaissance'";
-		}
 		
 		if ($niveau_confiance !== '') {
 			$dql .=" AND e.confiance = '$niveau_confiance'";

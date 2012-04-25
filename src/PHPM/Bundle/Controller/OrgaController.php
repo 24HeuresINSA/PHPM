@@ -488,6 +488,11 @@ class OrgaController extends Controller
 	            }
 	            $em->flush();
 	         	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+	         		//Auto convert DI to dispos for softs
+	         		$orga->addDIstoDisponibilites();
+	         		$orga->cleanDisponibilites();
+	         		$em->flush();
+	         		
 	         		return $this->redirect($this->generateUrl('orga_thankyou'));
             
 	            }
@@ -542,22 +547,24 @@ class OrgaController extends Controller
 		
 		//on recupère les paramètres passés en post
 		$permis = $request->request->get('permis', '');
-		$age = $request->request->get('age', '0');
+		$age = $request->request->get('age', '');
 		$plage_id = $request->request->get('plage_id', '');
 		$niveau_confiance = $request->request->get('confiance_id', '');
+		$request->request->get('creneau_id', '');
 		$maxDateNaissance = new \DateTime();
 		$creneau = $request->request->get('creneau_id', '');
 		$equipe_id = $request->request->get('equipe_id', '');
 		
+		
 		if ($age != '') 
 		{ 
-			// petite conversion pour changer l'age en date de naissance
+			// petite conversion pour changer l'age en date de naissance max
 			$maxDateNaissance->modify('-'.$age.' year');
 		}
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		// on appelle la fonction qui va faire la requête SQL et nous renvoyer le resultat
-		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis, $maxDateNaissance->format('Y-m-d'), $plage_id, $niveau_confiance, $creneau, $equipe_id);
+		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis,$maxDateNaissance->format("Y-m-d H:i:s"), $plage_id, $niveau_confiance, $creneau, $equipe_id);
 		
 		$orgaArray = array();
 		//création du Json de retour selon le modèle définit dans la spec (cf wiki)

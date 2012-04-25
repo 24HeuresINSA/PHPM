@@ -37,7 +37,7 @@ class OrgaSoftType extends AbstractType
             ->add('email',null,array('label'=>'Adresse email','attr' => array('placeHolder'=>'Adresse email')))
             ->add('dateDeNaissance', 'birthday', array(
                     'label'=>'Date de naissance',
-            		'required'=>false,
+            		'required'=>true,
                     'years'=>$years,
                     'widget' => 'single_text',
                     'attr'=>array('class'=>'birthdaydp','placeHolder'=>'Date de Naissance'),
