@@ -77,7 +77,7 @@ class Orga implements UserInterface
      * @ORM\Column(name="email", type="string", length=255, unique=true)
      * 
      * @Assert\Email(
-     * 	   message = L'email doît être valide.
+     * 	   message = "L'email doît être valide.",
      *     checkMX = true
      * )
      */
@@ -88,7 +88,7 @@ class Orga implements UserInterface
      *
      * @ORM\Column(name="dateDeNaissance", type="date")
      * 
-     * @Assert\Date("La date de naissance doît être valide")
+     * @Assert\Date(message="La date de naissance doît être valide")
      */
     protected $dateDeNaissance;
     
@@ -97,7 +97,7 @@ class Orga implements UserInterface
      *
      * @ORM\Column(name="datePermis", type="date", nullable=true)
      *
-     * @Assert\Date("La date de permis doît être valide")
+     * @Assert\Date(message="La date de permis doît être valide")
      */
     protected $datePermis;
 
