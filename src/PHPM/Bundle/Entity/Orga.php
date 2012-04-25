@@ -295,26 +295,24 @@ class Orga implements UserInterface
     public function addDIstoDisponibilites(){
     	foreach ($this->getDisponibilitesInscription() as $di)
     	{
-    	var_dump($di->getId());	
-    	
-    	$absorbed=false;
-    	foreach($this->getDisponibilites()as $dispo){    		
-    		if(($di->getDebut()<=$dispo->getFin())&&($di->getFin()>=$dispo->getFin())){
-    			$dispo->setFin($di->getFin());
-    			$absorbed=true;
-    		}
-    		if(($di->getDebut()<=$dispo->getDebut())&&($di->getFin()>=$dispo->getDebut())){
-    			$dispo->setDebut($di->getDebut());
-    			$absorbed=true;
-    		}
-    	}
-    	if(!$absorbed){
-    		$dispo = new Disponibilite();
-    		$dispo->setDebut($di->getDebut());
-    		$dispo->setFin($di->getFin());
-    		$dispo->setOrga($this);
-    		$this->addDisponibilite($dispo);
-    	}
+	    	$absorbed=false;
+	    	foreach($this->getDisponibilites()as $dispo){    		
+	    		if(($di->getDebut()<=$dispo->getFin())&&($di->getFin()>=$dispo->getFin())){
+	    			$dispo->setFin($di->getFin());
+	    			$absorbed=true;
+	    		}
+	    		if(($di->getDebut()<=$dispo->getDebut())&&($di->getFin()>=$dispo->getDebut())){
+	    			$dispo->setDebut($di->getDebut());
+	    			$absorbed=true;
+	    		}
+	    	}
+	    	if(!$absorbed){
+	    		$dispo = new Disponibilite();
+	    		$dispo->setDebut($di->getDebut());
+	    		$dispo->setFin($di->getFin());
+	    		$dispo->setOrga($this);
+	    		$this->addDisponibilite($dispo);
+	    	}
     	}
     	
     }
