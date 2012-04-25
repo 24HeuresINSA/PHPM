@@ -30,16 +30,17 @@ class DefaultController extends Controller
     	
     	$user=$this->get('security.context')->getToken()->getUser();
     	
-    	if ($this->get('security.context')->isGranted('ROLE_USER')) {
+    	if ($this->get('security.context')->isGranted('ROLE_VISITOR')) {
     		$statsUser=$em->getRepository('PHPMBundle:Orga')->getStats($user);
     		$statsUser['taches']=$em->getRepository('PHPMBundle:Tache')->getOrgaStats($user);
     		return array('statsOrga'=>$statsUser);
-    	}else{
+    	}
+    	return array();
+    	
+    	if (!$this->get('security.context')->isGranted('ROLE_USER') && $this->get('security.context')->isGranted('ROLE_VISITOR')) {
     		$redirectURL = $config->getValue('manifestation_permis_libelles');
     		return $this->redirect('http://www.24heures.org/orga');
     	}
-    	
-    	
     	
         
     }
@@ -56,6 +57,7 @@ class DefaultController extends Controller
     {
     
         $em = $this->getDoctrine()->getEntityManager();
+        $config = $this->get('config.extension');
     	$pref = $em->getRepository('PHPMBundle:Config')->findOneByField('server_baseurl');
     	if($pref)
     	    $serverurl = $pref->getvalue();
@@ -93,12 +95,14 @@ class DefaultController extends Controller
                 $user = $em->getRepository('PHPMBundle:Orga')->findOneByEmail($email);
                 
                 if (!$user) {
-                    return array('m'=>'notfound', 'email'=>$email);
+                    $redirectURL = $config->getValue('manifestation_permis_libelles');
+    				return $this->redirect('http://www.24heures.org/orga');
                 }
                 
                 $this->get('security.context')->setToken($user->generateUserToken());
                 
-				
+
+
                 return $this->redirect($this->generateUrl('accueil'));
             }
         } catch(ErrorException $e) {
