@@ -3,7 +3,23 @@
 {% use "PHPMBundle::index.html.twig" %}
 
 {% block content %}
-	{% include 'PHPMBundle:Orga:afficheListe.html.twig' %}
+<div class="row-fluid">
+	<div class="span2">
+		<ul class="nav nav-list">
+			<li class="nav-header">Orgas</li>
+			<li{% if app.request.get('statut') ==0  %} class="active" {% endif %}>
+			    <a href="{{ path('orga', {'statut':0}) }}"><i class="icon-ban-circle"></i> Non validé</a>
+			</li>
+			<li{% if app.request.get('statut') == 1 %} class="active" {% endif %}>
+			    <a href="{{ path('orga', {'statut':1}) }}"><i class="icon-ok-circle"></i> Déjà validé</a>
+			</li>
+		</ul>
+	</div>
+	<div class="span10">
+		{% include 'PHPMBundle:Orga:afficheListe.html.twig' %}
+	</div>
+</div>
+
 {% endblock %}
 
 {% block actions %}

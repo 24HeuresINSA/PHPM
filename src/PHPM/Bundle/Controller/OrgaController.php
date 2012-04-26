@@ -39,7 +39,7 @@ use PHPM\Bundle\Form\OrgaSoftType;
 class OrgaController extends Controller
 {
 	 /**
-     * Lists all Orga entities.
+     * 
      *
 	 * @Route("/affectation", name="orga_affectation")
      * @Route("/affectation/", name="orga_affectation")
@@ -64,17 +64,23 @@ class OrgaController extends Controller
     /**
      * Lists all Orga entities.
      *
-     * @Route("/", name="orga")
+     * @Route("/index/{statut}/",defaults={"statut"="0"}, name="orga")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($statut)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('PHPMBundle:Orga')->findAll();
+        $orgasDQL = "SELECT o FROM PHPMBundle:Orga as o WHERE o.statut = $statut";
+        
+        
+        $entities =$em
+        ->createQuery($orgasDQL)
+        ->getResult();
+        
 
         return array('entities' => $entities);
     }
