@@ -57,6 +57,7 @@ class DisponibiliteInscriptionController extends Controller
         		$statut = $data['statut'];
         		$pointsCharisme = $data['pointsCharisme'];
         		$confiance = $data['confiance'];
+        		$confianceDesaffect = $data['confiance2'];
         		
         		foreach ($data['disponibiliteInscriptionItems'] as $di){
         			
@@ -79,6 +80,24 @@ class DisponibiliteInscriptionController extends Controller
         					
         				}
         			}
+        			
+        			
+        			if($param['action']=='desaffect'){
+        			 
+        				foreach($confianceDesaffect->getEquipes() as $equipe)
+        				{
+        		        	foreach ($equipe->getOrgas() as $orga)
+        					{
+        						if ($orga->getDisponibilitesInscription()->contains($di))
+        						{	
+        							$orga->getDisponibilitesInscription()->removeElement($di);
+        						}
+        			
+        				     }
+        				 }
+        		
+        			}
+        			
         			
         			if($param['action']=='edit'){
       				

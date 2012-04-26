@@ -62,7 +62,12 @@ class DisponibiliteInscriptionListType extends AbstractType
 		                								'empty_value' => 'Affecter les orgas',
 		                								'required'=> false
 		        ))
-        				
+		        ->add('confiance2', 'entity',
+		        array(	'class' => 'PHPMBundle:Confiance',
+        		                						'label' => 'Désaffecter les orgas',
+        		                						'empty_value' => 'Désaffecter les orgas',
+        		                						'required'=> false
+		        ))
         ;
      
 
