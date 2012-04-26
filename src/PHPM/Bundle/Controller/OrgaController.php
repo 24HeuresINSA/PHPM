@@ -64,7 +64,7 @@ class OrgaController extends Controller
     /**
      * Lists all Orga entities.
      *
-     * @Route("/index/{statut}/{confiance}",defaults={"statut"="0", "confiance"="all"}, name="orga")
+     * @Route("/index/{statut}/{confiance}",defaults={"statut"="1", "confiance"="all"}, name="orga")
      * @Template()
      */
     public function indexAction($statut, $confiance)
@@ -79,7 +79,7 @@ class OrgaController extends Controller
         ->getResult();
         
         
-        $orgasDQL = "SELECT o,e FROM PHPMBundle:Orga o JOIN o.equipe e JOIN e.confiance c WHERE o.statut = $statut";
+        $orgasDQL = "SELECT o,e FROM PHPMBundle:Orga o JOIN o.equipe e JOIN e.confiance c LEFT JOIN o.disponibilites d WHERE o.statut = $statut";
         
         if ($confiance !='all'){
         	$orgasDQL .= " AND c.id = $confiance";

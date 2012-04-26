@@ -2,27 +2,23 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Nom</th>
-            <th>Telephone</th>
-            <th>Email</th>
+            <th>Orga</th>
             <th>Date de Naissance</th>
             <th>Date de permis</th>
             <th>Com'</th>
             <th width="10em">Départ</th>
-            <th>Divers</th>
-            <th>Dernière activité</th>            
+            <th>Divers</th>          
             <th>Privilèges</th>
+            {% if app.request.get('statut') ==0  %}<th>Disponibilités</th>{% endif %}
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         {%  for entity in entities %}
         <tr>
-            <td>{{ entity.id }}</td>
-            <td>{{ entity.prenom }} {{ entity.nom }}{% if entity.surnom  %} ({{ entity.surnom }}){% endif %}</td>
-            <td>{{ entity.telephone }}</td>
-            <td>{{ entitiesMacro.orgaEmail(entity.email) }}</td>
+            <td>{{ entitiesMacro.orga(entity) }}<br>
+            {{ entity.telephone }}<br>
+            {{ entitiesMacro.orgaEmail(entity.email) }}</td>
             <td>{% if entity.dateDeNaissance %}{{ entity.dateDeNaissance|format_date('dd MMM Y') }}{% endif%}</td>
             <td>{% if entity.datePermis %}{{ entity.datePermis|format_date('dd MMM Y') }}{% endif%}</td>
             <td>{{ entitiesMacro.equipe(entity.equipe) }}</td>
@@ -30,13 +26,26 @@
             <td>
             {% if entity.commentaire %}
             <a class="btn  btn-info apopover" href="#" rel="popover" data-content="{{ entity.commentaire }}" data-original-title="Commentaire">Commentaire</a>
+            <br>
             {% endif %}
             {% if entity.amis %}
             <a class="btn  btn-info apopover" href="#" rel="popover" data-content="{{ entity.amis }}" data-original-title="Amis">Amis</a>
             {% endif %}
             </td>
-            <td>{{ entity.lastActivity|format_date('dd MMM Y') }}</td>
             <td>{{ entitiesMacro.orgaPrivileges(entity.privileges) }}</td>
+            {% if app.request.get('statut') ==0  %}
+             	<td>
+	             	<ul>
+	             	{% for dispo in entity.disponibilites %}
+	             	
+	             	<li>{{ dispo.debut |format_datetime('EEEE dd MMM HH:mm') }}
+	             	->
+	             	{{ dispo.fin |format_datetime('EEEE dd MMM HH:mm') }}
+	             	</li>
+	             	{% endfor %}
+	             	</ul>
+             	</td>
+            {% endif %}
             <td>
 	            <span>
 		            <a href="{{ path('orga_edit', { 'id': entity.id }) }}">Éditer</a>
