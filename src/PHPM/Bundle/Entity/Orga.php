@@ -161,7 +161,7 @@ class Orga implements UserInterface
     
     /**
     * @var smallint $statut
-    * @Assert\Choice(choices = {"0", "1"})
+    * @Assert\Choice(choices = {"-1", "0", "1"})
     * @ORM\Column(name="statut", type="smallint")
     */
     protected $statut;
