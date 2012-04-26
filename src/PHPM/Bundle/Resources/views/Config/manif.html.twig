@@ -100,6 +100,7 @@
 		            <th>Nom</th>
 		            <th>Valeur</th>
 		            <th>Couleur</th>
+		            <th>Code d'Inscription</th>
 		            <th>Privileges</th>
 		        </thead>
 		        <tbody>
@@ -110,6 +111,7 @@
 				    <td>{{ form_row(i.nom) }}</td>
 				    <td>{{ form_row(i.valeur, {'label':'false'}) }}</td>
 				    <td>{{ form_row(i.couleur, {'label':'false'}) }}</td>
+				    <td>{{ form_row(i.code) }}</td>
 				    <td>{{ form_row(i.privileges) }}</td>
 				    <td><a class="btn btn-danger" href="{{ path('confiance_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a></td>
 				    </tr>

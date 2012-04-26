@@ -14,6 +14,7 @@ class ConfianceType extends AbstractType
             ->add('valeur')
             ->add('couleur')
             ->add('privileges')
+            ->add('code')
         ;
     }
     
