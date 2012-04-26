@@ -64,25 +64,34 @@ class OrgaController extends Controller
     /**
      * Lists all Orga entities.
      *
-     * @Route("/index/{statut}/",defaults={"statut"="0"}, name="orga")
+     * @Route("/index/{statut}/{confiance}",defaults={"statut"="0", "confiance"="all"}, name="orga")
      * @Template()
      */
-    public function indexAction($statut)
+    public function indexAction($statut, $confiance)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
         $em = $this->getDoctrine()->getEntityManager();
 
-        $orgasDQL = "SELECT o FROM PHPMBundle:Orga as o WHERE o.statut = $statut";
+        $confiances =$em
+        ->createQuery("SELECT c FROM PHPMBundle:Confiance c")
+        ->getResult();
         
+        
+        $orgasDQL = "SELECT o,e FROM PHPMBundle:Orga o JOIN o.equipe e JOIN e.confiance c WHERE o.statut = $statut";
+        
+        if ($confiance !='all'){
+        	$orgasDQL .= " AND c.id = $confiance";
+        }
         
         $entities =$em
         ->createQuery($orgasDQL)
         ->getResult();
         
 
-        return array('entities' => $entities);
+        return array('confiances' => $confiances, 
+        			'entities' => $entities);
     }
 
  
