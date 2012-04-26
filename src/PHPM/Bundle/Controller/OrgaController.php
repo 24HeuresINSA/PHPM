@@ -423,6 +423,34 @@ class OrgaController extends Controller
 
         return $this->redirect($this->generateUrl('orga'));
     }
+    
+    
+    /**
+    * Change le statut d'un orga
+    *
+    * @Route("/{id}/statut/{statut}/", name="orga_change_statut")
+    *
+    */
+    public function changeStatutAction($id, $statut)
+    {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
+    	 
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$entity = $em->getRepository('PHPMBundle:Orga')->find($id);
+    
+    	if (!$entity) {
+    		throw $this->createNotFoundException('Unable to find Orga entity.');
+    	}
+    	
+    	$entity->setStatut($statut);
+    	
+    	$em->flush();
+    
+    
+    	return $this->redirect($this->getRequest()->headers->get('referer'));
+    }
 
     private function createDeleteForm($id)
     {
