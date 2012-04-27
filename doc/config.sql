@@ -8,12 +8,14 @@ INSERT INTO `Config` (`id`, `field`, `label`, `value`, `hint`) VALUES
 (7, 'manifestation_permis_libelles', 'Libellés des permis', '{"0": "Pas de permis","1": "Permis - de 2 ans","2": "Permis de + de 2 ans" }', 'Objet JSON. Exemple : "{"0": "Pas de permis","1": "Permis - de 2 ans","2": "Permis de + de 2 ans" }"'),
 (8, 'animations_db_path', 'Chemin vers la BDD des anims', '/var/www/animaker/Backend/Data/DB/DB.sqlite', 'Chemin absolu vers la base SQLite des animations, au format Animaker. Laisser nul sinon.'),
 (9, 'manifestation_edition', 'Numéro de l''édition', '38', NULL),
-(10, 'phpm_contenu_page_principale', 'Contenu de la page principale', '<h1>PHPlanningMaker<h2><p>Gestion des ressources humaines.</p>', '')
+(10, 'phpm_contenu_page_principale', 'Contenu de la page principale', '<h1>PHPlanningMaker<h2><p>Gestion des ressources humaines.</p>', ''),
 (11, 'phpm_orgasoft_inscription_returnURL', 'URL de retour  inscription orga', 'http://www.24heures.org/orga', NULL),
-(12, 'manifestation_admin_email', 'Email de l''administrateur', 'orga@24heures.org', NULL)
-;
+(12, 'manifestation_admin_email', 'Email de l''administrateur', 'orga@24heures.org', NULL),
+(13, 'phpm_contenu_mail_confirmation_soft', 'Contenu du mail de confirmation soft', '<p>Ton inscription en tant qu''Orga Soft  pour la 38<sup>e</sup> édition des 24 Heures de l''INSA a bien été prise en compte.</p>\r\n<p>Pour toute question, envoies un email à <a href="mailto:orga@24heures.org">orga@24heures.org</a> ou répond à cet email.</p>\r\n<p>Merci beaucoup de ton aide et à très bientôt sur la manif'' !</p>\r\n<p><em>Maud et Adam.</em></p>', ''),
+(14, 'manifestation_charisme_minimum', 'Charisme minimum pour s''inscrire', '30', NULL),
+(15, 'phpm_inscription_disponibilites_consignes', 'Consignes concernant les disponibilités', '<p>\r\n<b>Tu dois sélectionner au moins 6h d''Orga, soit 3 créneaux de 2h.</b>\r\nC''est un minimum, plus tu mets de disponibilités, plus tu gagnes de charisme !</p>', '');
 
 INSERT INTO `Confiance` (`id`, `nom`, `valeur`, `couleur`) VALUES
 (1, 'Soft', 100, 'blue'),
-(2, 'Confiance', 500, 'vert'),
+(2, 'Confiance', 500, 'green'),
 (3, 'Hard', 1000, 'orange');
