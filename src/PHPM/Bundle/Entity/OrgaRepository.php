@@ -88,7 +88,7 @@ class OrgaRepository extends EntityRepository
 		->getResult();
 		
 		$nonValidated = $this->getEntityManager()
-		->createQuery("SELECT count(o) FROM PHPMBundle:Orga o JOIN o.equipe e WHERE e.id =0")
+		->createQuery("SELECT count(o) FROM PHPMBundle:Orga o JOIN o.equipe e WHERE e.id =1 AND o.statut =0")
 		
 		->getSingleScalarResult();
 		
