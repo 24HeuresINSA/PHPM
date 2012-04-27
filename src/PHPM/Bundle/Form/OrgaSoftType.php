@@ -48,6 +48,10 @@ class OrgaSoftType extends AbstractType
                             'widget' => 'single_text',
                             'format' => 'yyyy-MM-dd',
                             'attr'=>array('class'=>'datep','placeHolder'=>'Date d\'obtention du permis B')))
+           ->add('anneeEtudes','choice',array(	'label'=>'Année d\'études',
+                            			'required'=>false,
+                            			'empty_value' => 'Année d\'études',
+                            			'choices'=>array(1=>1,2,3,4,5,6,7,8,0=>'Autre')))
             ->add('departement','choice',array(	'label'=>'Département INSA',
             									'required'=>false,
             									'empty_value' => 'Département INSA',

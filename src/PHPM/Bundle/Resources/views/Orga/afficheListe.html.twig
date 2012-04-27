@@ -22,7 +22,7 @@
             <td>{% if entity.dateDeNaissance %}{{ entity.dateDeNaissance|format_date('dd MMM Y') }}{% endif%}</td>
             <td>{% if entity.datePermis %}{{ entity.datePermis|format_date('dd MMM Y') }}{% endif%}</td>
             <td>{{ entitiesMacro.equipe(entity.equipe) }}</td>
-            <td>{{ entity.departement }}</td>
+            <td>{{ entity.anneeEtudes }}{{ entity.departement }}</td>
             <td>
             {% if entity.commentaire %}
             <a class="btn  btn-info apopover" href="#" rel="popover" data-content="{{ entity.commentaire }}" data-original-title="Commentaire">Commentaire</a>

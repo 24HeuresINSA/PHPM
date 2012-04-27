@@ -27,7 +27,7 @@
 				    <div class="control-group {% if form_errors(form.email)|length > 0 %}error{% endif %}">
 			            <div class="">
 			              {{ form_widget(form.email) }}
-			              <span class="help-inline">INSA de préférence.{{ form_errors(form.email) }} </span>
+			              <span class="help-inline">Adresse mail INSA de préférence.{{ form_errors(form.email) }} </span>
 			            </div>
          			</div>
          			
@@ -50,11 +50,17 @@
 		<div class="well">
 			<fieldset>
 		    	<legend>Renseignements Supplémentaires</legend>
-			    {{ form_widget(form.surnom) }}
+			    <div class="control-group {% if form_errors(form.surnom)|length > 0 %}error{% endif %}">
+			            <div class="">
+			              {{ form_widget(form.surnom) }}
+			              <span class="help-inline">{{ form_errors(form.surnom) }} </span>
+			            </div>
+         		</div>
          			<div class="control-group {% if form_errors(form.departement)|length > 0 %}error{% endif %}">
 			            <div class="">
+			              {{ form_widget(form.anneeEtudes) }}
 			              {{ form_widget(form.departement) }}
-			              <span class="help-inline">{{ form_errors(form.departement) }} </span>
+			              <span class="help-inline">{{ form_errors(form.departement) }}<br> {{ form_errors(form.anneeEtudes) }} </span>
 			            </div>
          			</div>
          			<div class="control-group {% if form_errors(form.datePermis)|length > 0 %}error{% endif %}">

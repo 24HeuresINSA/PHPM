@@ -33,7 +33,7 @@
 			        non titulaire
 			        {% endif%}<br>
 			        <b>Département : </b>
-			        {{ app.user.departement }}<br>		        
+					{{ app.user.anneeEtudes }}{{ app.user.departement }}<br>		        
 			      </dl>
 		          <p><a class="btn" href="{{ path('orga_edit',{'id':app.user.id }) }}">Modifier mes informations »</a></p>
 		    	</div>

@@ -102,6 +102,12 @@ class Orga implements UserInterface
     protected $datePermis;
 
     /**
+     * @ORM\Column(type="string", length=1, name="anneeEtudes",nullable=true)
+     * @Assert\Choice(choices = {0,1,2,3,4,5,6,7,8} , message = "Année d'études invalide. ")
+     */
+    protected $anneeEtudes;
+    
+    /**
      * @var string $departement
      *
      * @ORM\Column(name="departement", type="string", length=255, nullable=true)
@@ -912,5 +918,25 @@ class Orga implements UserInterface
     public function getAmis()
     {
         return $this->amis;
+    }
+
+    /**
+     * Set anneeEtudes
+     *
+     * @param string $anneeEtudes
+     */
+    public function setAnneeEtudes($anneeEtudes)
+    {
+        $this->anneeEtudes = $anneeEtudes;
+    }
+
+    /**
+     * Get anneeEtudes
+     *
+     * @return string 
+     */
+    public function getAnneeEtudes()
+    {
+        return $this->anneeEtudes;
     }
 }
