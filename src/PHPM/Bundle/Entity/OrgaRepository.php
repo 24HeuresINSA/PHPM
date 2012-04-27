@@ -77,13 +77,13 @@ class OrgaRepository extends EntityRepository
 		->getSingleScalarResult();
 		
 		$totalpc = $this->getEntityManager()
-		->createQuery("SELECT sum(d.pointsCharisme)FROM PHPMBundle:Orga o JOIN o.disponibilitesInscription d")
+		->createQuery("SELECT sum(d.pointsCharisme)FROM PHPMBundle:Orga o JOIN o.disponibilitesInscription d WHERE o.statut >=0")
 		
 		->getSingleScalarResult();
 		
 		
 		$DIs = $this->getEntityManager()
-		->createQuery("SELECT o  , sum(d.pointsCharisme) as pc FROM PHPMBundle:Orga o JOIN o.disponibilitesInscription d GROUP BY o.id ORDER BY pc DESC")
+		->createQuery("SELECT o  , sum(d.pointsCharisme) as pc FROM PHPMBundle:Orga o JOIN o.disponibilitesInscription d WHERE o.statut >=0 GROUP BY o.id ORDER BY pc DESC")
 	
 		->getResult();
 		

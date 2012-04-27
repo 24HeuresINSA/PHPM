@@ -693,16 +693,16 @@ class OrgaController extends Controller
 	    $data = $em->getRepository('PHPMBundle:Orga')->findAll();
 	
 	    $departs = $em
-	    ->createQuery("SELECT o.departement, sum(d.pointsCharisme) as pc FROM PHPMBundle:Orga o LEFT JOIN o.disponibilitesInscription d GROUP BY o.departement ORDER BY pc DESC  ")
+	    ->createQuery("SELECT o.departement, sum(d.pointsCharisme) as pc FROM PHPMBundle:Orga o LEFT JOIN o.disponibilitesInscription d  WHERE o.statut >=0 GROUP BY o.departement ORDER BY pc DESC  ")
 	    ->getResult();
 	    
 	
 	    $orgas = $em
-	    ->createQuery("SELECT o, sum(d.pointsCharisme) as pc FROM PHPMBundle:Orga o JOIN o.disponibilitesInscription d GROUP BY o.id ORDER BY pc DESC")
+	    ->createQuery("SELECT o, sum(d.pointsCharisme) as pc FROM PHPMBundle:Orga o JOIN o.disponibilitesInscription d  WHERE o.statut >=0 GROUP BY o.id ORDER BY pc DESC")
 	    ->getResult();
 	    
 	    $equipes = $em
-	    ->createQuery("SELECT e, sum(d.pointsCharisme) as pc FROM PHPMBundle:Equipe e LEFT JOIN e.orgas o LEFT JOIN o.disponibilitesInscription d GROUP BY e ORDER BY pc DESC  ")
+	    ->createQuery("SELECT e, sum(d.pointsCharisme) as pc FROM PHPMBundle:Equipe e LEFT JOIN e.orgas o LEFT JOIN o.disponibilitesInscription d  WHERE o.statut >=0 GROUP BY e ORDER BY pc DESC  ")
 	    ->getResult();
 	
 	    return array('stats' => $stats,
