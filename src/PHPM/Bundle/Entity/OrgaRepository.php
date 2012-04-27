@@ -87,6 +87,11 @@ class OrgaRepository extends EntityRepository
 	
 		->getResult();
 		
+		$nonValidated = $this->getEntityManager()
+		->createQuery("SELECT count(o) FROM PHPMBundle:Orga o JOIN o.equipe e WHERE e.id =1")
+		
+		->getSingleScalarResult();
+		
 		$rang=1;
 		$nbOrgas = count($DIs);
 		
@@ -94,12 +99,12 @@ class OrgaRepository extends EntityRepository
 			$orgaDI=$row[0];
 			$pc=$row['pc'];
 			if ($orgaDI==$orga){
-				return array('rangCharisme'=>$rang,'nbOrgas'=>$nbOrgas,'PCOrga'=>$pc,'PCTotal'=>$totalpc, 'PCMax'=>$pcmax)
+				return array('rangCharisme'=>$rang,'nbOrgas'=>$nbOrgas,'PCOrga'=>$pc,'PCTotal'=>$totalpc, 'PCMax'=>$pcmax,'nonValidated'=>$nonValidated)
 				;
 			}
 			$rang++;
 		}
-		return(array('rangCharisme'=>-1,'nbOrgas'=>$nbOrgas,'PCOrga'=>0,'PCTotal'=>$totalpc,'PCMax'=>$pcmax));
+		return(array('rangCharisme'=>-1,'nbOrgas'=>$nbOrgas,'PCOrga'=>0,'PCTotal'=>$totalpc,'PCMax'=>$pcmax,'nonValidated'=>$nonValidated));
 	
 	
 	}

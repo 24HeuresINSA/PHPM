@@ -50,7 +50,7 @@ class OrgaType extends AbstractType
            	->add('anneeEtudes','choice',array(	'label'=>'Année d\'études',
                             			'required'=>false,
                             			'choices'=>array(1=>1,2,3,4,5,6,7,8,0=>'Autre')))
-            ->add('departement','choice',array('label'=>'Département INSA', 'choices'=>array(
+            ->add('departement','choice',array('label'=>'Département INSA', 'required'=>false, 'choices'=>array(
                     'PC'=>'PC','GMC'=>'GMC','GMD'=>'GMD', 'GMPP'=>'GMPP', 'IF'=>'IF', 'SGM'=>'SGM',
                     'GI'=>'GI', 'GE'=>'GE', 'TC'=>'TC', 'GCU'=>'GCU', 'BIM'=>'BIM', 'BIOCH'=>'BIOCH', 'GEN'=>'GEN', 'Autre'=>'Autre' 
                     )))
