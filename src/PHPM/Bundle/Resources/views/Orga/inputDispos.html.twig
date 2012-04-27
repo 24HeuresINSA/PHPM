@@ -21,12 +21,18 @@
 	    
 	    <div class="row-fluid"> 
 		    <div class="well">
-	         		<p>Plus tu mets de disponibilités, plus tu gagnes de charisme !</p>
+	         		{{ phpm_inscription_disponibilites_consignes | raw }}
 		    {% if is_granted('ROLE_USER') %}
 		    	<em>Les créneaux oranges ne sont plus modifiables une fois cochés.</em>
 		    {% endif %}	
 		    {{ form_errors(form) }}
+		    
 		    </div>
+		    {% if charismeInsuffisant is defined%}
+		       	<div class="alert alert-block alert-error fade in">
+		            <h4 class="alert-heading">Attention : Tu n'as pas rempli assez de disponibilités.</h4>
+		    </div>
+		        {% endif %}
 		    {% for categorie,di_jour in entities%}
 		    <div style="display:inline-block; margin-right: 2em" class="well">
 				<h3>{{ (missions[categorie]).nom }}</h3>

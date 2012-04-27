@@ -460,6 +460,7 @@ class OrgaController extends Controller
 	    $em = $this->getDoctrine()->getEntityManager();
 	    $orga =  $em->getRepository('PHPMBundle:Orga')->find($id);
 	    $user = $this->get('security.context')->getToken()->getUser();
+	    $config = $e=$this->get('config.extension');
 
 	    if (!$orga) {
             throw $this->createNotFoundException('Unable to find Orga entity.');
@@ -494,11 +495,29 @@ class OrgaController extends Controller
 	        $form->bindRequest($request);
 	        $data=$form->getData();
 	        $submittedDI=$data['disponibiliteInscriptionItems'];
+	        
 	        if ($form->isValid()) {
 	        	
 	        	$allDI = $this->getDoctrine()->getEntityManager()->createQuery("SELECT d FROM PHPMBundle:DisponibiliteInscription d")->getResult();
 	        	
+	        	$minCharisme = $config->getValue('manifestation_charisme_minimum');
 	        	
+	        	$totalCharisme = 0;
+	        	
+	        	foreach ($submittedDI as $di)
+	            {
+	               $totalCharisme+=$di->getPointsCharisme();
+	            }
+	            
+	            if ($totalCharisme<$minCharisme){
+	            	return array( 'form' => $form->createView(),
+	            			'entities' => $DIs,
+	            			'missions' => $groupesDI,
+	            			'orga'=>$orga,
+	            			'charismeInsuffisant'=>true
+	            			);
+	            }
+
 	            foreach ($allDI as $di)
 	            {
 	                 
@@ -528,6 +547,7 @@ class OrgaController extends Controller
 	            
 	            $form = $this->createForm(new InputDisposType($admin,$em,$orga));
 	        }
+	        
 	    }
 	    
 	    return array( 	'form' => $form->createView(),
