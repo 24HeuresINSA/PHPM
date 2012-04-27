@@ -181,44 +181,28 @@ class OrgaController extends Controller
     /**
      * Displays a form to create a new Orga Soft entity.
      *
-     * @Route("/inscriptionorgasoft", name="orga_registersoft")
+     * @Route("/inscriptionorgasoft/{equipeId}/{confianceCode}/{libelle}", defaults={"libelle"="", "confianceCode"="","equipeId"="1"}, name="orga_registersoft")
      *
      * @Template()
      */
-    public function registerSoftAction(){
-    	 
+    public function registerSoftAction($confianceCode,$equipeId){
     	 
     	$em = $this->getDoctrine()->getEntityManager();
     	$config = $e=$this->get('config.extension');
     	$request = $this->getRequest();
     	
-    	$equipeSoft = $em->getRepository('PHPMBundle:Equipe')->find(1);
+    	$equipe = $em->getRepository('PHPMBundle:Equipe')->find($equipeId);
+    	
+    	if (!$equipe || $equipe->getConfiance()->getCode() !=$confianceCode) {
+    		throw new AccessDeniedException();
+    	}
+    	
     	$entity = new Orga();
     	$entity->setStatut(0);
+    	$entity->setEquipe($equipe);
     	$form   = $this->createForm(new OrgaSoftType($config), $entity);
+    	
     
-//     	$tableauDi = array();
-    	
-    	
-//     	$diResult = $em->createQuery("SELECT d FROM PHPMBundle:DisponibiliteInscription d WHERE d.mission=10 ORDER BY d.debut")
-//     	->getResult();
-    	
-//     	$prevjour='';
-//     	foreach ($diResult as $di){
-//     		$jour = $di->getDebut()->format('d m');
-// //     		if($prevjour !=$jour){
-// //     			$tableauDi[$jour]=array(0=>0,2=>0,4=>0,6=>0,8=>0,10=>0,12=>0,14=>0,16=>0,18=>0,20=>0,22=>0);
-// //     			$prevjour=$jour;
-// //     		}
-//     		$heure = $di->getDebut()->format('G');
-//     		$tableauDi[$jour][$heure] = $di->getId();
-    		 
-//     	}
-//     	var_dump($tableauDi);
-    	
-    	
-    	
-    	
     
     	if ($this->get('request')->getMethod() == 'POST') {
     		$form->bindRequest($request);
@@ -226,8 +210,8 @@ class OrgaController extends Controller
     		 
     		 
     		if ($form->isValid()) {
-    			$entity->setPrivileges(0);
-    			$entity->setEquipe($equipeSoft);
+    			$entity->setPrivileges($equipe->getConfiance()->getPrivileges());
+    			$entity->setEquipe($equipe);
     			$entity->setLastActivity(new \DateTime());
     			$em->persist($entity);
     			$em->flush();

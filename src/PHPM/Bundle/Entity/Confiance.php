@@ -57,8 +57,7 @@ class Confiance
     /**
      * @var string $code
      *
-     * @ORM\Column(name="code", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="code", type="string", length=255, nullable=true)
      */
     protected $code;
     

@@ -4,10 +4,15 @@
 
 
 {% block body %}
-<form class="form-horizontal" action="{{ path('orga_registersoft') }}" method="post" {{ form_enctype(form) }}>
+<form class="form-horizontal" action="{{ path('orga_registersoft',{'confianceCode':app.request.get('confianceCode'),'equipeId':app.request.get('equipeId')}) }}" method="post" {{ form_enctype(form) }}>
 <div class="container-fluid">
 	<div class="row-fluid">
-		<h1>Inscription Orga Soft - {{ manifestation_nom }}</h1>
+		<h1>Inscription Orga
+		{% if app.request.get('confianceCode') != "" %} {{ app.request.get('libelle') }}{% else %} {{ entity.equipe }} {% endif %}
+		 - {{ manifestation_nom }}</h1>
+		{% if app.request.get('confianceCode') != "" %}
+		Le lien qui t'a été donné est strictement personnel, ne le donnes à personne.
+		{% endif %}
 		<hr>
 	</div>
 	
