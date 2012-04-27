@@ -13,6 +13,9 @@
 			<li{% if app.request.get('statut') == 1 %} class="active" {% endif %}>
 			    <a href="{{ path('orga', {'statut':1, 'confiance':app.request.get('confiance')}) }}"><i class="icon-ok-circle"></i> Déjà validé</a>
 			</li>
+			<li{% if app.request.get('statut') == -1 %} class="active" {% endif %}>
+			    <a href="{{ path('orga', {'statut':-1, 'confiance':app.request.get('confiance')}) }}"><i class="icon-fire"></i> Supprimé</a>
+			</li>
 			<li class="divider"></li>
 			<li class="nav-header">Confiance</li>
 		
