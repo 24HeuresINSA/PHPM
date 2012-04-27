@@ -59,7 +59,8 @@ class OrgaSoftType extends AbstractType
                     'PC'=>'PC','GMC'=>'GMC','GMD'=>'GMD', 'GMPP'=>'GMPP', 'IF'=>'IF', 'SGM'=>'SGM',
                     'GI'=>'GI', 'GE'=>'GE', 'TC'=>'TC', 'GCU'=>'GCU', 'BIM'=>'BIM', 'BIOCH'=>'BIOCH', 'GEN'=>'GEN', 'Autre'=>'Autre' 
                     )))
-            
+            ->add('groupePC',null,array('label'=>'Nom',
+            							'attr'=>array('placeHolder'=>'Groupe (Premier Cycle)')))            
             ->add('commentaire',null,array('label'=>'Commentaires'))
             ->add('amis',null,array('label'=>'Nom des orgas avec qui tu veux bosser'))
             ->add('celibataire','choice',array(	'label'=>'Célib\'?',

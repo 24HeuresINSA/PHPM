@@ -54,6 +54,8 @@ class OrgaType extends AbstractType
                     'PC'=>'PC','GMC'=>'GMC','GMD'=>'GMD', 'GMPP'=>'GMPP', 'IF'=>'IF', 'SGM'=>'SGM',
                     'GI'=>'GI', 'GE'=>'GE', 'TC'=>'TC', 'GCU'=>'GCU', 'BIM'=>'BIM', 'BIOCH'=>'BIOCH', 'GEN'=>'GEN', 'Autre'=>'Autre' 
                     )))
+            ->add('groupePC',null,array('label'=>'Groupe (Premier Cycle Uniquement)',
+            							'attr'=>array('placeHolder'=>'Groupe (si Premier Cycle)')))   
             
             ->add('commentaire')
             ->add('amis')

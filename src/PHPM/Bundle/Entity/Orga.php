@@ -108,6 +108,11 @@ class Orga implements UserInterface
     protected $anneeEtudes;
     
     /**
+     * @ORM\Column(type="smallint", length=1, name="groupePC",nullable=true)
+     */
+    protected $groupePC;
+    
+    /**
      * @var string $departement
      *
      * @ORM\Column(name="departement", type="string", length=255, nullable=true)
@@ -938,5 +943,25 @@ class Orga implements UserInterface
     public function getAnneeEtudes()
     {
         return $this->anneeEtudes;
+    }
+
+    /**
+     * Set groupePC
+     *
+     * @param smallint $groupePC
+     */
+    public function setGroupePC($groupePC)
+    {
+        $this->groupePC = $groupePC;
+    }
+
+    /**
+     * Get groupePC
+     *
+     * @return smallint 
+     */
+    public function getGroupePC()
+    {
+        return $this->groupePC;
     }
 }
