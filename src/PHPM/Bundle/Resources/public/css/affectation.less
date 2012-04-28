@@ -13,6 +13,10 @@
 @clientHeight: @contentHeight - @menuHeight - 3px; // le restant de la page
 @joursHeight: 24 * @heightHeure;
 
+// des couleurs
+@grisPale: #F2F2F2;
+@grisMoyen: #D8D8D8;
+
 /*
  * Mixins
  */
@@ -172,7 +176,7 @@ footer {
       height: 100%;
       border-right: 1px solid #333;
       text-align: center;
-      background: Gainsboro;
+      background: @grisMoyen;
       overflow: hidden;
       .border-box();
       
@@ -211,10 +215,10 @@ footer {
         text-align: center;
         
         &:nth-of-type(odd) {
-          background: whiteSmoke;
+          background: @grisPale;
         }
         &:nth-of-type(even) {
-          background: Gainsboro;
+          background: @grisMoyen;
         }
       }
     }
@@ -230,10 +234,10 @@ footer {
       /* heure */
       .heure {
         &:nth-of-type(odd) {
-          background: whiteSmoke;
+          background: @grisPale;
         }
         &:nth-of-type(even) {
-          background: Gainsboro;
+          background: @grisMoyen;
         }
        
         /* quart d'heure */
