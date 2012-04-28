@@ -634,7 +634,7 @@ class OrgaController extends Controller
 			        	"prenom" => $orga[0]->getPrenom(),
 			        	"surnom" => $orga[0]->getSurnom(),
 						"confiance" => $equipe->getConfiance()->getId(),
-						"charisme" => $orga['charisme'],
+						"nbDispos" => $orga['nbDispos'],
 						"equipe" => $equipe->getId(),
 // 						"permis"=>$orga->getPermis(),
 			    		"dateDeNaissance" => $orga[0]->getDateDeNaissance()->format('Y-m-d H:i:s'),

@@ -21,7 +21,7 @@ class OrgaRepository extends EntityRepository
 		//le distinct est là à cause du creneau_id, en attendant qu'il soit mieux codé ^ ^
 		
 		// (le JOIN plante)ancienne) requête (148b2848650e5c3af0bff2685054605d5ee10944)
-		$dql = "SELECT o, SUM(di.pointsCharisme) charisme FROM PHPMBundle:Orga AS o LEFT JOIN o.disponibilitesInscription di JOIN o.disponibilites d JOIN o.equipe e WHERE o.statut=1 AND d.orga != 0";
+		$dql = "SELECT o, COUNT(d.id) nbDispos FROM PHPMBundle:Orga AS o JOIN o.disponibilites d JOIN o.equipe e WHERE o.statut=1 AND d.orga != 0";
 		
 // 		if ($permis != '') {
 // 			$dql.=" AND o.permis = '$permis'";
@@ -53,7 +53,7 @@ class OrgaRepository extends EntityRepository
 		}
 		
 		// on trie par nombre de points de charisme
-		$dql .= "ORDER BY charisme DESC";
+		$dql .= "ORDER BY nbDispos DESC";
 		
 		$q = $this->getEntityManager()->createQuery($dql);
 		return $q->execute();
