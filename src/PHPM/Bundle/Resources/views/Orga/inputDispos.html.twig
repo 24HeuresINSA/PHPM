@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block content %}
+{% if (app.request.get('new')==true) %}
 <script>
 function unloadMess(){
 mess = "Attention, tes changements n'ont pas été enregistrés";
@@ -17,7 +18,8 @@ window.onbeforeunload = (on) ? unloadMess : null;
 }
 setBunload(true);
 </script>
-    <form onsubmit="javascript:setBunload(false);" action="{{ path('orga_inputdispos',{'id':orga.id }) }}" method="post" {{ form_enctype(form) }}>
+{% endif %}
+    <form {% if (app.request.get('new')==true) %}onsubmit="javascript:setBunload(false);"{% endif %} action="{{ path('orga_inputdispos',{'id':orga.id }) }}" method="post" {{ form_enctype(form) }}>
 	    <div class="row-fluid">       
 	    	<div class="page-header">
 	         	{% if is_granted('ROLE_ADMIN') %}

@@ -218,7 +218,7 @@ class OrgaController extends Controller
     			 
     			$this->get('security.context')->setToken($entity->generateUserToken());
     			
-    			return $this->redirect($this->generateUrl('orga_inputdispos',array('id'=>$entity->getId())));
+    			return $this->redirect($this->generateUrl('orga_inputdispos',array('id'=>$entity->getId(),"new"=>true)));
     			 
     		}
     		 
@@ -538,8 +538,6 @@ class OrgaController extends Controller
 	            $em->flush();
 	         	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
 
-
-	         		
 	         		return $this->redirect($this->generateUrl('orga_thankyou'));
             
 	            }
