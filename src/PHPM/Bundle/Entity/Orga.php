@@ -398,17 +398,17 @@ class Orga implements UserInterface
     				$dispo->setFin($di->getDebut());
     			}
     			elseif(($di->getDebut()>$dispo->getDebut())&&($di->getFin()<$dispo->getFin())){
-    				
+    				print($dispo->getId());
+    				print(" ");
+    				print($di->getId());
+    				print("scinder");
     				foreach ($dispo->getCreneaux() as $creneau){
     					if(($creneau->getDebut()<$di->getFin())&&($creneau->getFin()>$di->getDebut())){
     						$dispo->getCreneaux()->removeElement($creneau);
     						$creneau->setDisponibilite(null);
     					}
     				}
-    				print($dispo->getId());
-    				print(" ");
-    				print($di->getId());
-    				print("scinder");
+    				
     				
     				$nd = new Disponibilite();
     				$nd->setDebut($di->getFin());
