@@ -21,24 +21,24 @@ class OrgaRepository extends EntityRepository
 		//le distinct est là à cause du creneau_id, en attendant qu'il soit mieux codé ^ ^
 		
 		// (le JOIN plante)ancienne) requête (148b2848650e5c3af0bff2685054605d5ee10944)
-		$dql = "Select o From PHPMBundle:Orga as o JOIN o.disponibilites d JOIN o.equipe e WHERE o.statut=1 AND d.orga != 0";
+		$dql = "SELECT o, SUM(di.pointsCharisme) charisme FROM PHPMBundle:Orga AS o LEFT JOIN o.disponibilitesInscription di JOIN o.disponibilites d JOIN o.equipe e WHERE o.statut=1 AND d.orga != 0";
 		
 // 		if ($permis != '') {
 // 			$dql.=" AND o.permis = '$permis'";
 // 		}
 		
-			$dql .=" AND o.dateDeNaissance <= '$maxDateNaissance'";
+			$dql .= " AND o.dateDeNaissance <= '$maxDateNaissance'";
 		
 		if ($niveau_confiance !== '') {
-			$dql .=" AND e.confiance = '$niveau_confiance'";
+			$dql .= " AND e.confiance = '$niveau_confiance'";
 		}
 		
 		if ($plage_id !== '') {
 			$pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation_plages')->getValue(),TRUE);
-			$plage= $pref[$plage_id];
-			$fin=$plage["fin"];
-			$debut=$plage["debut"];
-			$dql .=" AND d.debut < '$fin' AND d.fin > '$debut'";
+			$plage = $pref[$plage_id];
+			$fin = $plage["fin"];
+			$debut = $plage["debut"];
+			$dql .= " AND d.debut < '$fin' AND d.fin > '$debut'";
 		}
 		
 		if ($creneau !== '') {
@@ -51,6 +51,9 @@ class OrgaRepository extends EntityRepository
 		if ($equipe_id !== '') {
 			$dql .= " AND e.id = $equipe_id ";
 		}
+		
+		// on trie par nombre de points de charisme
+		$dql .= "ORDER BY charisme DESC";
 		
 		$q = $this->getEntityManager()->createQuery($dql);
 		return $q->execute();
