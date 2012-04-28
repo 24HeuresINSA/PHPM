@@ -51,7 +51,7 @@ class Creneau
     protected $fin;
     
     /**
-    * @ORM\ManyToOne(targetEntity="Disponibilite", inversedBy="creneaux")
+    * @ORM\ManyToOne(targetEntity="Disponibilite", inversedBy="creneaux",cascade={"persist", "remove"})
     * @ORM\JoinColumn(name="disponibilite_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
     * @Assert\Valid
     */

@@ -365,7 +365,9 @@ class Orga implements UserInterface
     				print(" ");
     				print($di->getId());
     				print("rem");
+    				print("remc");
     				$this->removeDisponibilite($dispo);
+    				print("rem");
     			}
     			elseif(($di->getDebut()<=$dispo->getDebut())&&($di->getFin()>$dispo->getDebut())){
     				print($dispo->getId());
@@ -430,6 +432,7 @@ class Orga implements UserInterface
     					print("merde...");
 
     			}
+    			print("mm");
     			print("\n");
     			
     			
@@ -808,6 +811,8 @@ class Orga implements UserInterface
      */
     public function removeDisponibilite(\PHPM\Bundle\Entity\Disponibilite $disponibilite)
     {
+    				print("remc");
+
     	foreach ($disponibilite->getCreneaux() as $creneau){
 				$disponibilite->getCreneaux()->removeElement($creneau);
 				$creneau->setDisponibilite(null);
