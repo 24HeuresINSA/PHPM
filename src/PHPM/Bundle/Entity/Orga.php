@@ -166,7 +166,7 @@ class Orga implements UserInterface
     protected $equipesResponsable;
     
     /**
-     * @ORM\OneToMany(targetEntity="Disponibilite", mappedBy="orga", cascade={"all"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Disponibilite", mappedBy="orga", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $disponibilites;
     
@@ -365,9 +365,7 @@ class Orga implements UserInterface
     				print(" ");
     				print($di->getId());
     				print("rem");
-    				print("remc");
     				$this->removeDisponibilite($dispo);
-    				print("rem");
     			}
     			elseif(($di->getDebut()<=$dispo->getDebut())&&($di->getFin()>$dispo->getDebut())){
     				print($dispo->getId());
@@ -400,17 +398,17 @@ class Orga implements UserInterface
     				$dispo->setFin($di->getDebut());
     			}
     			elseif(($di->getDebut()>$dispo->getDebut())&&($di->getFin()<$dispo->getFin())){
-    				print($dispo->getId());
-    				print(" ");
-    				print($di->getId());
-    				print("scinder");
+    				
     				foreach ($dispo->getCreneaux() as $creneau){
     					if(($creneau->getDebut()<$di->getFin())&&($creneau->getFin()>$di->getDebut())){
     						$dispo->getCreneaux()->removeElement($creneau);
     						$creneau->setDisponibilite(null);
     					}
     				}
-    				
+    				print($dispo->getId());
+    				print(" ");
+    				print($di->getId());
+    				print("scinder");
     				
     				$nd = new Disponibilite();
     				$nd->setDebut($di->getFin());
@@ -432,7 +430,6 @@ class Orga implements UserInterface
     					print("merde...");
 
     			}
-    			print("mm");
     			print("\n");
     			
     			
@@ -811,8 +808,6 @@ class Orga implements UserInterface
      */
     public function removeDisponibilite(\PHPM\Bundle\Entity\Disponibilite $disponibilite)
     {
-    				print("remc");
-
     	foreach ($disponibilite->getCreneaux() as $creneau){
 				$disponibilite->getCreneaux()->removeElement($creneau);
 				$creneau->setDisponibilite(null);
