@@ -57,7 +57,7 @@ class Disponibilite
     protected $orga;
 
     /**
-    * @ORM\OneToMany(targetEntity="Creneau", mappedBy="disponibilite", cascade={"persist", "remove"})
+    * @ORM\OneToMany(targetEntity="Creneau", mappedBy="disponibilite", cascade={"all"})
     */
     protected $creneaux;
 

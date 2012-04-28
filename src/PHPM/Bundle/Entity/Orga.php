@@ -166,7 +166,7 @@ class Orga implements UserInterface
     protected $equipesResponsable;
     
     /**
-     * @ORM\OneToMany(targetEntity="Disponibilite", mappedBy="orga", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Disponibilite", mappedBy="orga", cascade={"all"}, orphanRemoval=true)
      */
     protected $disponibilites;
     
@@ -810,6 +810,7 @@ class Orga implements UserInterface
     {
     	foreach ($disponibilite->getCreneaux() as $creneau){
 				$disponibilite->getCreneaux()->removeElement($creneau);
+				$creneau->setDisponibilite(null);
 
     			}
     	
