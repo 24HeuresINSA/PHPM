@@ -528,18 +528,17 @@ class OrgaController extends Controller
 	            		}
 	            	}else{
 	            		if($admin || ($di->getStatut() == 2)){
-	            			$orga->getDisponibilitesInscription()->removeElement($di);
+	            			$orga->removeDisponibiliteInscription($di);
 	            		}
 	            		
 	            	}
 	            	
 	            }
+	            $orga->cleanDisponibilites();
 	            $em->flush();
 	         	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-	         		//Auto convert DI to dispos for softs
-	         		$orga->addDIstoDisponibilites();
-	         		$orga->cleanDisponibilites();
-	         		$em->flush();
+
+
 	         		
 	         		return $this->redirect($this->generateUrl('orga_thankyou'));
             

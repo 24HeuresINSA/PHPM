@@ -329,6 +329,113 @@ class Orga implements UserInterface
     	}
     	
     }
+    
+    public function addDIToDisponibilites(\PHPM\Bundle\Entity\DisponibiliteInscription $di){
+    		$absorbed=false;
+    		foreach($this->getDisponibilites()as $dispo){
+    			if(($di->getDebut()<=$dispo->getFin())&&($di->getFin()>=$dispo->getFin())){
+    				$dispo->setFin($di->getFin());
+    				$absorbed=true;
+    			}
+    			if(($di->getDebut()<=$dispo->getDebut())&&($di->getFin()>=$dispo->getDebut())){
+    				$dispo->setDebut($di->getDebut());
+    				$absorbed=true;
+    			}			
+    			
+    		}
+    		if(!$absorbed){
+    			$dispo = new Disponibilite();
+    			$dispo->setDebut($di->getDebut());
+    			$dispo->setFin($di->getFin());
+    			$dispo->setOrga($this);
+    			$this->addDisponibilite($dispo);
+    		}
+    }
+    
+    public function removeDIFromDisponibilites(\PHPM\Bundle\Entity\DisponibiliteInscription $di){    	
+    		foreach($this->getDisponibilites()as $dispo){
+
+    			if($di->getFin()<=$dispo->getDebut()){
+    				
+    			}
+    			elseif($di->getDebut()>=$dispo->getFin()){
+    			}
+    			elseif(($di->getDebut()<=$dispo->getDebut())&&($di->getFin()>=$dispo->getFin())){
+    				print($dispo->getId());
+    				print(" ");
+    				print($di->getId());
+    				print("rem");
+    				$this->removeDisponibilite($dispo);
+    			}
+    			elseif(($di->getDebut()<=$dispo->getDebut())&&($di->getFin()>$dispo->getDebut())){
+    				print($dispo->getId());
+    				print(" ");
+    				print($di->getId());
+    				print("redimD");
+    				
+    				foreach ($dispo->getCreneaux() as $creneau){
+    					if(($creneau->getDebut()<$di->getFin())&&($creneau->getFin()>$di->getDebut())){
+							$dispo->getCreneaux()->removeElement($creneau);
+							$creneau->setDisponibilite(null);
+    					}
+    				}
+    				
+    				$dispo->setDebut($di->getFin());
+    			}
+    			elseif(($di->getDebut()<$dispo->getFin())&&($di->getFin()>=$dispo->getFin())){
+    				print($dispo->getId());
+    				print(" ");
+    				print($di->getId());
+    				print("redimF");
+    				
+    				foreach ($dispo->getCreneaux() as $creneau){
+    					if(($creneau->getDebut()<$di->getFin())&&($creneau->getFin()>$di->getDebut())){
+    						$dispo->getCreneaux()->removeElement($creneau);
+    						$creneau->setDisponibilite(null);
+    					}
+    				}
+    				
+    				$dispo->setFin($di->getDebut());
+    			}
+    			elseif(($di->getDebut()>$dispo->getDebut())&&($di->getFin()<$dispo->getFin())){
+    				
+    				foreach ($dispo->getCreneaux() as $creneau){
+    					if(($creneau->getDebut()<$di->getFin())&&($creneau->getFin()>$di->getDebut())){
+    						$dispo->getCreneaux()->removeElement($creneau);
+    						$creneau->setDisponibilite(null);
+    					}
+    				}
+    				print($dispo->getId());
+    				print(" ");
+    				print($di->getId());
+    				print("scinder");
+    				
+    				$nd = new Disponibilite();
+    				$nd->setDebut($di->getFin());
+    				$nd->setFin($dispo->getFin());
+    				$dispo->setFin($di->getDebut());
+    				
+    				foreach ($dispo->getCreneaux() as $creneau){
+    					if($creneau->getDebut()>=$di->getFin()){
+    						$creneau->setDisponibilite($nd);
+    					}
+    				}
+    				
+    				
+    				$nd->setOrga($this);
+    				$this->addDisponibilite($nd);
+    				
+    				
+    			}else{
+    					print("merde...");
+
+    			}
+    			print("\n");
+    			
+    			
+    			
+    		}
+    }
 
     public function cleanDisponibilites(){
     	
@@ -346,7 +453,7 @@ class Orga implements UserInterface
     				foreach ($d1->getCreneaux() as $c){
     					$c->setDisponibilite($d2);
     				}
-    				$this->getDisponibilites()->removeElement($d1);
+    				$this->removeDisponibilite($d1);
     				$d1->setOrga(null);
     			}
     		}
@@ -693,6 +800,22 @@ class Orga implements UserInterface
     {
         $this->disponibilites[] = $disponibilites;
     }
+    
+    /**
+     * remove disponibilite
+     *
+     * @param PHPM\Bundle\Entity\Disponibilite $disponibilite
+     */
+    public function removeDisponibilite(\PHPM\Bundle\Entity\Disponibilite $disponibilite)
+    {
+    	foreach ($disponibilite->getCreneaux() as $creneau){
+				$disponibilite->getCreneaux()->removeElement($creneau);
+
+    			}
+    	
+    	$this->getDisponibilites()->removeElement($disponibilite);
+    		
+    }
 
     /**
      * Get disponibilites
@@ -711,7 +834,21 @@ class Orga implements UserInterface
      */
     public function addDisponibiliteInscription(\PHPM\Bundle\Entity\DisponibiliteInscription $disponibilitesInscription)
     {
-        $this->disponibilitesInscription[] = $disponibilitesInscription;
+        
+    	$this->disponibilitesInscription[] = $disponibilitesInscription;
+    	$this->addDIToDisponibilites($disponibilitesInscription);
+    }
+    
+    /**
+     * Remove disponibilitesInscription
+     *
+     * @param PHPM\Bundle\Entity\DisponibiliteInscription $disponibilitesInscription
+     */
+    public function removeDisponibiliteInscription(\PHPM\Bundle\Entity\DisponibiliteInscription $disponibiliteInscription)
+    {
+    
+    	$this->getDisponibilitesInscription()->removeElement($disponibiliteInscription);
+    	$this->removeDIFromDisponibilites($disponibiliteInscription);
     }
 
     /**
