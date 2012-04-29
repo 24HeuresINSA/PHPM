@@ -219,7 +219,7 @@ CalendarView.prototype = {
 	 * sur lequel on vient de cliquer
 	 */
 	showDetails: function(obj) {
-		var _creneau = pmAffectation.data.orgas[obj.data.idOrga]['disponibilites'][obj.data.idDispo]['creneaux'][obj.data.idCreneau];
+		var _creneau = pmUtils.find(pmAffectation.data.orgas, 'id', obj.data.idOrga)['disponibilites'][obj.data.idDispo]['creneaux'][obj.data.idCreneau];
 		
 		// on prépare le contenu du pop-up
 		var _html = '<div class="modal hide creneau_details" id="creneau_details">'+
