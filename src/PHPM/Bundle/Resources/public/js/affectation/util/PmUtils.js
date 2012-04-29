@@ -382,6 +382,19 @@ PmUtils.prototype = {
 	    
 	    return str;
 	},
+	
+	/*
+	 * Fonction pour rechercher dans un tableau d'objets
+	 * le 1er qui a la valeur "value" à l'attribut "key"
+	 * est retourné
+	 */
+	find: function(obj, key, value) {
+		for (var _item in obj) {
+			if (obj[_item][key] && obj[_item][key] == value) {
+				return obj[_item];
+			}
+		}
+	}
 		
 };
 
