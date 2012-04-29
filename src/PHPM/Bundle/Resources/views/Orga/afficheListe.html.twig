@@ -9,7 +9,7 @@
             <th width="10em">Départ</th>
             <th>Divers</th>          
             <th>Privilèges</th>
-            {% if app.request.get('statut') ==0  %}<th>Disponibilités</th>{% endif %}
+            <th>Disponibilités</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -33,7 +33,6 @@
             {% endif %}
             </td>
             <td>{{ entitiesMacro.orgaPrivileges(entity.privileges) }}</td>
-            {% if app.request.get('statut') ==0  %}
              	<td>
 	             	<ul>
 	             	{% for dispo in entity.disponibilites %}
@@ -45,7 +44,7 @@
 	             	{% endfor %}
 	             	</ul>
              	</td>
-            {% endif %}
+
             <td>
 	            <span>
 	            	{% if app.request.get('statut') ==0  %}
@@ -60,13 +59,15 @@
 			            <li><a href="{{ path('orga_edit', { 'id': entity.id })  }}"><i class="icon-pencil"></i> Éditer</a></li>
 			            <li><a href="{{ path('orga_inputdispos', { 'id': entity.id }) }}"><i class="icon-calendar"></i>Dispos</a></li>
 			            <li><a href="{{ path('orga_affectation', { 'orga_id': entity.id }) }}"><i class="icon-book"></i>Affecter</a></li>
-			            <li><a href="{{ path('orga_change_statut', { 'id': entity.id, 'statut': -1 }) }}"><i class="icon-fire"></i>Supprimer</a></li>
+			            <li><a href="{{ path('orga_change_statut', { 'id': entity.id, 'statut': -1 }) }}">Mettre en attente</a></li>
+			         	<li><a href="{{ path('orga_gendispo', { 'id': entity.id}) }}">Regénérer les disponibilités</a></li>
 			         	
 			          </ul>
 			          </div>
 			          {% endif %}
 			          {% if app.request.get('statut') ==-1  %}
 			          <a class="btn btn-success" href="{{ path('orga_change_statut', { 'id': entity.id, 'statut': 0 }) }}">Restaurer</a>
+			          <a class="btn btn-danger"href="{{ path('orga_delete', { 'id': entity.id }) }}">Supprimer</a>
 			          {% endif %}
 			        
             		

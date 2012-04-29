@@ -23,7 +23,6 @@ class DefaultController extends Controller
     	$em = $this->getDoctrine()->getEntityManager();
     	$pref = $em->getRepository('PHPMBundle:Config')->findOneByField('phpm_config_initiale');
     	$config = $this->get('config.extension');
-    	
     	if (!$pref){
     	return $this->redirect($this->generateUrl('config_initiale'));
     	}
@@ -36,7 +35,7 @@ class DefaultController extends Controller
     		return array('statsOrga'=>$statsUser);
     	}
     	return array();
-    	
+
     	if (!$this->get('security.context')->isGranted('ROLE_USER') && $this->get('security.context')->isGranted('ROLE_VISITOR')) {
     		$redirectURL = $config->getValue('manifestation_permis_libelles');
     		return $this->redirect('http://www.24heures.org/orga');

@@ -405,7 +405,7 @@ class OrgaController extends Controller
             $em->flush();
         
 
-        return $this->redirect($this->generateUrl('orga'));
+        return $this->redirect($this->getRequest()->headers->get('referer'));
     }
     
     
@@ -748,6 +748,49 @@ class OrgaController extends Controller
 		$this->get('request')->getSession()->invalidate();
 		$this->get("security.context")->setToken(new AnonymousToken(null, 'anon'));
 		return array('orga'=>$user,'stats' => $stats);
+	}
+	
+	/**
+	 * Manually generate DI -> Dispo
+	 *
+	 * @Route("/{id}/genDispo", name="orga_gendispo")
+	 */
+	public function genDispoAction($id)
+	{
+	
+		if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+			throw new AccessDeniedException();
+		}
+		
+		$em = $this->getDoctrine()->getEntityManager();
+		$orga = $em->getRepository('PHPMBundle:Orga')->find($id);
+		
+		if (!$orga ) {
+			throw $this->createNotFoundException('Unable to find Orga.');
+		}
+		 
+		$allDI = $em->createQuery("SELECT d FROM PHPMBundle:DisponibiliteInscription d")->getResult();
+	    	        	
+
+            foreach ($allDI as $di)
+            {
+            		if($orga->getDisponibilitesInscription()->contains($di)){
+            			$orga->addDIToDisponibilites($di);
+            		}else{
+            			$orga->removeDIFromDisponibilites($di);
+            		}
+            		
+            	
+            	
+            }
+	            $orga->cleanDisponibilites();
+	            $em->flush();
+		 
+		
+		
+		return $this->redirect($this->getRequest()->headers->get('referer'));
+	
+		
 	}
 	
 	
