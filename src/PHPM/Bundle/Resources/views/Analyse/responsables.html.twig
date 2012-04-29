@@ -27,18 +27,18 @@
             </tr>
         </thead>
         <tbody>
-        {% for t in o.tachesResponsable %}
-			{% for ph in t.plagesHoraire %}
+        {% for b in o.besoinsOrgaHint %}
+			
 
             <tr>
-            	<td>{{ t.groupeTache.nom }} / {{ entitiesMacro.tache(t) }}</td>
+            	<td>{{ b.plageHoraire.tache.groupeTache.nom }} / {{ entitiesMacro.tache(b.plageHoraire.tache) }}</td>
             	<td>
-                	{{ ph.debut | format_datetime('EEEE dd MMM Y HH:mm') }} <i class="icon-arrow-right"></i> {{ ph.fin | format_datetime('EEEE dd MMM Y HH:mm') }}
+                	{{ b.plageHoraire.debut | format_datetime('EEEE dd MMM Y HH:mm') }} <i class="icon-arrow-right"></i> {{ b.plageHoraire.fin | format_datetime('EEEE dd MMM Y HH:mm') }}
                 </td>
                 
                
             </tr>
-			{% endfor %}
+			
 		{% endfor %}
 		
         </tbody>

@@ -793,6 +793,49 @@ class OrgaController extends Controller
 		
 	}
 	
+	/**
+	 * Convert respNecessaire->Bo.OrgaHint
+	 *
+	 * @Route("/convertresp", name="orga_convert_resp")
+	 */
+	public function convertRespAction()
+	{
+	
+		if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+			throw new AccessDeniedException();
+		}
+	
+		$em = $this->getDoctrine()->getEntityManager();
+	
+		$phs = $em
+		->createQuery("SELECT ph FROM PHPMBundle:PlageHoraire ph")
+		->getResult();
+		 
+		foreach ($phs as $ph){
+			if($ph->getRespNecessaire()){
+				var_dump($ph->getId());
+				$bo = new BesoinOrga();
+				$bo->setOrgaHint($ph->getTache()->getResponsable());
+				$bo->setPlageHoraire($ph);
+				$ph->setRespNecessaire(false);
+				$em->persist($bo);
+		
+			}
+		}
+		 
+		 
+		
+		 
+		
+		 
+		$em->flush();
+	
+		return $this->redirect($this->getRequest()->headers->get('referer'));
+	
+	
+	}
+	
+	
 	
 		
 }

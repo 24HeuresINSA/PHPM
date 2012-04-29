@@ -132,13 +132,17 @@ class AnalyseController extends Controller
     
     	$em = $this->getDoctrine()->getEntityManager();
     
-    	$respDQL = "SELECT o,t,p FROM PHPMBundle:Orga o JOIN o.tachesResponsable t JOIN t.plagesHoraire p WHERE p.respNecessaire = 1 AND t.statut >2  ORDER BY o.nom, p.debut";
-    
+    	$respDQL = "SELECT o,bo FROM PHPMBundle:Orga o 
+		JOIN o.besoinsOrgaHint bo   ";
+//     	$orgaDQL = "SELECT o,bo,ph FROM PHPMBundle:Orga o JOIN o.besoinsOrgaHint bo JOIN bo.plageHoraire ph ";
+    	 
     	 
     	$respResult = $em
     	->createQuery($respDQL)
     	->getResult();
-    	 
+
+
+    	
     
     	return array('respResult'=>$respResult);
     }
