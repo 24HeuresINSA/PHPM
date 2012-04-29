@@ -79,7 +79,7 @@ class OrgaController extends Controller
         ->getResult();
         
         
-        $orgasDQL = "SELECT o,e,d FROM PHPMBundle:Orga o JOIN o.equipe e JOIN e.confiance c LEFT JOIN o.disponibilites d WHERE o.statut = $statut ORDER BY o.lastActivity DESC";
+        $orgasDQL = "SELECT o,e,d FROM PHPMBundle:Orga o JOIN o.equipe e JOIN e.confiance c LEFT JOIN o.disponibilites d WHERE o.statut = $statut ORDER BY o.lastActivity DESC, o.debut";
         
         if ($confiance !='all'){
         	$orgasDQL .= " AND c.id = $confiance";
