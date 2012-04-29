@@ -208,7 +208,7 @@ CalendarView.prototype = {
 		.bind('click', {idOrga: orga['id'], idDispo: idDispo, idCreneau: idCreneau}, pmAffectation.controllers.calendar.clickCreneau);
 		
 		// set la taille - et -10px à cause du padding vertical de 5px
-		$('#creneau_'+idCreneau+'_'+nbJour).height(duree/60/60*40-10+'px');
+		$('#creneau_'+idCreneau+'_'+nbJour).height(duree/60/60*40+'px');
 		
 		// on lui met une couleur fonction du n° de la tâche
 		$('#creneau_'+idCreneau+'_'+nbJour).css('background', orga['disponibilites'][idDispo]['creneaux'][idCreneau]['tache']['couleur']);
