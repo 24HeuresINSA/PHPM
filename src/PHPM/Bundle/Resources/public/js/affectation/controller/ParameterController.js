@@ -26,8 +26,7 @@ ParameterController.prototype = {
 	getData: function() {
 		pmAffectation.models.parameter.getData(
 			pmAffectation.controllers.parameter.callbackEquipes,
-			pmAffectation.controllers.parameter.callbackNiveaux,
-			pmAffectation.controllers.parameter.callbackPermis
+			pmAffectation.controllers.parameter.callbackNiveaux
 			);
 	},
 	
@@ -41,15 +40,6 @@ ParameterController.prototype = {
 		for (_iNiveau in pmAffectation.data.parameter.confiance) {
 			$('#filtre_orga_confiance').append('<option value="'+_iNiveau+'">Orga '+pmAffectation.data.parameter.confiance[_iNiveau]['nom']+'</option>');
 			$('#filtre_tache_confiance').append('<option value="'+_iNiveau+'">Orga '+pmAffectation.data.parameter.confiance[_iNiveau]['nom']+'</option>');
-		}
-	},
-	callbackPermis: function() {
-		pmAffectation.data.parameter.permis = pmAffectation.models.parameter.getPermis();
-		
-		// ajoute les options correspondantes dans les menu déroulants
-		for (_iPermis in pmAffectation.data.parameter.permis) {
-			$('#filtre_orga_permis').append('<option value="'+_iPermis+'">'+pmAffectation.data.parameter.permis[_iPermis]+'</option>');
-			$('#filtre_tache_permis').append('<option value="'+_iPermis+'">'+pmAffectation.data.parameter.permis[_iPermis]+'</option>');
 		}
 	},
 	callbackEquipes: function() {

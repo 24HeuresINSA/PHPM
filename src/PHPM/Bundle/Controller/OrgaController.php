@@ -593,7 +593,7 @@ class OrgaController extends Controller
 		$request = $this->getRequest();
 		
 		//on recupère les paramètres passés en post
-		$permis = $request->request->get('permis', '');
+		$annee_permis = $request->request->get('annee_permis', '');
 		$age = $request->request->get('age', '');
 		$plage_id = $request->request->get('plage_id', '');
 		$niveau_confiance = $request->request->get('confiance_id', '');
@@ -611,7 +611,7 @@ class OrgaController extends Controller
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		// on appelle la fonction qui va faire la requête SQL et nous renvoyer le resultat
-		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($permis,$maxDateNaissance->format("Y-m-d H:i:s"), $plage_id, $niveau_confiance, $creneau, $equipe_id);
+		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($annee_permis, $maxDateNaissance->format("Y-m-d H:i:s"), $plage_id, $niveau_confiance, $creneau, $equipe_id);
 		
 		$orgaArray = array();
 		//création du Json de retour selon le modèle définit dans la spec (cf wiki)

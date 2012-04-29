@@ -14,7 +14,7 @@ use PHPM\Bundle\Entity\Config;
  */
 class OrgaRepository extends EntityRepository
 {
-	public function getOrgasWithCriteria($permis, $maxDateNaissance, $plage_id, $niveau_confiance, $creneau, $equipe_id)
+	public function getOrgasWithCriteria($annee_permis, $maxDateNaissance, $plage_id, $niveau_confiance, $creneau, $equipe_id)
 	{
 		// la requête ci-dessous plante (plus exactement le JOIN) : à corriger
 		//$dql = "Select Distinct o From PHPMBundle:Orga as o JOIN o.disponibilites d JOIN d.creneaux c Where o.statut=1";
@@ -23,11 +23,17 @@ class OrgaRepository extends EntityRepository
 		// (le JOIN plante)ancienne) requête (148b2848650e5c3af0bff2685054605d5ee10944)
 		$dql = "SELECT o, SUM(di.pointsCharisme) charisme FROM PHPMBundle:Orga AS o JOIN o.disponibilitesInscription di JOIN o.disponibilites d JOIN o.equipe e WHERE o.statut=1 AND d.orga != 0";
 		
-// 		if ($permis != '') {
-// 			$dql.=" AND o.permis = '$permis'";
-// 		}
+ 		if ($annee_permis !== '') {
+ 			if ($annee_permis == 0) {
+ 				$dql .= " AND o.datePermis IS NOT NULL";
+ 			} else if (is_numeric($annee_permis)) {
+	 			$now = new \DateTime();
+	 			$dql .= " AND o.datePermis <= '".$now->sub(new \DateInterval('P'.$annee_permis.'Y'))->format('Y-m-d')."'";
+ 			}
+ 		}
 		
-			$dql .= " AND o.dateDeNaissance <= '$maxDateNaissance'";
+		// filtre sur la date de naissance
+		$dql .= " AND o.dateDeNaissance <= '$maxDateNaissance'";
 		
 		if ($niveau_confiance !== '') {
 			$dql .= " AND e.confiance = '$niveau_confiance'";

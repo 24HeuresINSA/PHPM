@@ -19,10 +19,9 @@ ParameterModel.prototype = {
 	/*
 	 * Lance les requêtes
 	 */
-	getData: function(callbackEquipes, callbackNiveaux, callbackPermis) {
+	getData: function(callbackEquipes, callbackNiveaux) {
 		pmAffectation.models.parameter.callbackEquipes = callbackEquipes;
 		pmAffectation.models.parameter.callbackNiveaux = callbackNiveaux;
-		pmAffectation.models.parameter.callbackPermis = callbackPermis;
 		
 		// pour les équipes
 		$.ajax({
@@ -43,16 +42,6 @@ ParameterModel.prototype = {
 			type: 'GET',
 			async: false
 		});
-		
-		// pour les niveaux de permis
-		$.ajax({
-			url: pmAffectation.urls.permis,
-			dataType: 'json',
-			success: pmAffectation.models.parameter.requestSuccessPermis,
-			error: pmAffectation.models.parameter.requestError,
-			type: 'GET',
-			async: false
-		});
 	},
 	
 	/*
@@ -68,11 +57,6 @@ ParameterModel.prototype = {
 	
 		pmAffectation.models.parameter.callbackNiveaux();
 	},
-	requestSuccessPermis: function(data) {
-		pmAffectation.models.parameter.data.permis = data;
-	
-		pmAffectation.models.parameter.callbackPermis();
-	},
 	requestError: function(data, statusText) {
 		pmMessage.alert("Impossible de récupérer les paramètres : " + statusText);
 	},
@@ -87,9 +71,5 @@ ParameterModel.prototype = {
 	// récupère les niveaux de confiance des orgas
 	getNiveaux: function() {
 		return pmAffectation.models.parameter.data.niveaux;
-	},
-	// récupère les permis
-	getPermis: function() {
-		return pmAffectation.models.parameter.data.permis;
 	}
 }
