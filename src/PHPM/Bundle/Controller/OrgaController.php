@@ -783,6 +783,7 @@ class OrgaController extends Controller
             	
             	
             }
+            	$em->flush();
 	            $orga->cleanDisponibilites();
 	            $em->flush();
 		 
