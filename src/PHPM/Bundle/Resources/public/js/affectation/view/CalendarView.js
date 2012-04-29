@@ -127,9 +127,12 @@ CalendarView.prototype = {
 							&& pmAffectation.data.orgas[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'] >= pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()) {
 							// c'est bon, on trim les dates
 							// -1 sur la date de fin pour ne pas avoir de problèmes quand un créneau finit à minuit
-							var _debutCreneau = new Date(Math.max(pmAffectation.data.orgas[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'].getTime(), pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()));
-							var _finCreneau = new Date(Math.min(pmAffectation.data.orgas[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'].getTime(), pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime())-1);	
-
+							var _debutCreneau = new Date(Math.max(pmAffectation.data.orgas[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'].getTime(), 
+																	pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()));
+							// faut pas oublier de rajouter 1j, car les plages sont définies comme date du jour 00:00:00
+							var _finCreneau = new Date(Math.min(pmAffectation.data.orgas[obj.id]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'].getTime(), 
+																pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()+86400000)-1);
+														
 							var _nbJour = 0; // compteur du nombre de jours
 							var _todayMidnight = new Date(_debutCreneau); // bien forcer la recopie
 							_todayMidnight.setHours(0, 0, 0, 0);
@@ -191,7 +194,7 @@ CalendarView.prototype = {
 	// place un créneau
 	placeCreneau: function(idOrga, idDispo, idCreneau, dateDebut, duree, nbJour) {
 		var _prefixe = (nbJour !== 0) ? '>> ' : '';
-		
+				
 		var _html = '<div id="creneau_'+idCreneau+'_'+nbJour+'" class="creneau" orga="'+idOrga+
 				'" disponibilite="'+idDispo+'" creneau="'+idCreneau+'_'+nbJour+'">'+_prefixe+
 				pmAffectation.data.orgas[idOrga]['disponibilites'][idDispo]['creneaux'][idCreneau]['tache']['nom']+'</div>';
