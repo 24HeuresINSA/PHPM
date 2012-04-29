@@ -11,7 +11,7 @@
     <form class="form-horizontal" action="{{ path('tache_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
     	<div class="row-fluid">       
         	<div class="page-header">
-	        	<h1 class="statut{{ form.entity.vars.value.statut }} my-inline-h">Tâche : {{form.entity.vars.value.nom }}</h1>
+	        	<h1 class="statut{{ form.entity.vars.value.statut }} my-inline-h">Tâche n°{{form.entity.vars.value.id }} : {{form.entity.vars.value.nom }}</h1>
 	        	&nbsp;
 	            <a class="btn btn-mini my-inline-btn" href="{{ path('groupetache_edit', { 'id': entity.groupetache.id }) }}" ><i class="icon-share-alt"></i> {{ entity.groupetache.nom }}</a>
         	</div>
