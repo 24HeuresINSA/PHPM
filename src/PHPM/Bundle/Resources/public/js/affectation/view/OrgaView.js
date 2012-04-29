@@ -65,7 +65,7 @@ OrgaView.prototype = {
 			
 			var _html = '<div class="item orga" id="orga_'+_iOrga+'" idOrga="'+_iOrga+'">'+
 						 _orgas[_iOrga]['prenom']+' '+_orgas[_iOrga]['nom'];
-			(_orgas[_iOrga]['surnom'] !== undefined) && (_html += ' ('+_orgas[_iOrga]['surnom']+')')
+			(_orgas[_iOrga]['surnom'] !== null) && (_html += ' ('+_orgas[_iOrga]['surnom']+')')
 			_html += _equipes+'</div>';
 			
 			$('#liste_orgas').append(_html);
