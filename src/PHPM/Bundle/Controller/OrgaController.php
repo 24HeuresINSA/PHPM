@@ -26,7 +26,7 @@ use PHPM\Bundle\Entity\Orga;
 use PHPM\Bundle\Entity\Disponibilite;
 use PHPM\Bundle\Form\OrgaType;
 use PHPM\Bundle\Form\OrgaSoftType;
-
+use PHPM\Bundle\Entity\BesoinOrga;
 
 
 
