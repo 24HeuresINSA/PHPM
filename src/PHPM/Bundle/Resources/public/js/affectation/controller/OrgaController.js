@@ -35,7 +35,7 @@ OrgaController.prototype = {
 		
 		// si aucun orga n'est sélectionné, on choisit le 1er
 		if (pmAffectation.current.mode === 'orga' && pmAffectation.current.orga.id == -1 && Object.keys(pmAffectation.data.orgas)[0]  !== undefined) {
-			pmAffectation.current.orga.id = Object.keys(pmAffectation.data.orgas)[0];
+			pmAffectation.current.orga.id = pmAffectation.data.orgas[0]['id'];
 			
 			pmHistory.setUrlParam(); // maj de l'url
 		}

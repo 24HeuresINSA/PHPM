@@ -63,7 +63,7 @@ OrgaView.prototype = {
 				_equipes += ' <span class="label label-info">'+pmAffectation.data.parameter.equipes[_orgas[_iOrga]['equipe']].toLowerCase()+'</span>';
 			}
 			
-			var _html = '<div class="item orga" id="orga_'+_iOrga+'" indexOrga="'+_iOrga+'" idOrga="'+_orgas[_iOrga]['id']+'">'+
+			var _html = '<div class="item orga" id="orga_'+_orgas[_iOrga]['id']+'" idOrga="'+_orgas[_iOrga]['id']+'">'+
 						 _orgas[_iOrga]['prenom']+' '+_orgas[_iOrga]['nom'];
 			(_orgas[_iOrga]['surnom'] !== null) && (_html += ' ('+_orgas[_iOrga]['surnom']+')')
 			_html += _equipes+'</div>';
@@ -71,7 +71,7 @@ OrgaView.prototype = {
 			$('#liste_orgas').append(_html);
 			
 			// handler de click
-			$('#orga_'+_iOrga).bind('click', {id: _iOrga}, function(e) {
+			$('#orga_'+_orgas[_iOrga]['id']).bind('click', {id: _orgas[_iOrga]['id']}, function(e) {
 				if (e.altKey) {
 					// Alt + click : affiche les infos détaillées de l'orga
 					pmAffectation.views.orga.viewOrgaDetails({id: e.data.id});
