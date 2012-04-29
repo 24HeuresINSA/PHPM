@@ -149,8 +149,8 @@
 	        	{% if statsOrga.nonValidated > 0%}
 		       	<div class="alert alert-block alert-info fade in">
 		            <a class="close" data-dismiss="alert" href="#">×</a>
-		            <h4 class="alert-heading">Il reste {{ statsOrga.nonValidated }} orgas soft non validés.</h4>
-		            <a class="btn" href="{{ path('orga', {'statut':0 ,'confiance':1}) }}">Afficher la liste »</a>
+		            <h4 class="alert-heading">Il reste {{ statsOrga.nonValidated }} orgas non validés.</h4>
+		            <a class="btn" href="{{ path('orga', {'statut':0}) }}">Afficher la liste »</a>
 		        </div>
 		        {% endif %}
 	       </div>
