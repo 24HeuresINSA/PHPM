@@ -63,7 +63,7 @@ OrgaView.prototype = {
 				_equipes += ' <span class="label label-info">'+pmAffectation.data.parameter.equipes[_orgas[_iOrga]['equipe']].toLowerCase()+'</span>';
 			}
 			
-			var _html = '<div class="item orga" id="orga_'+_iOrga+'" idOrga="'+_iOrga+'">'+
+			var _html = '<div class="item orga" id="orga_'+_iOrga+'" indexOrga="'+_iOrga+'" idOrga="'+_orgas[_iOrga]['id']+'">'+
 						 _orgas[_iOrga]['prenom']+' '+_orgas[_iOrga]['nom'];
 			(_orgas[_iOrga]['surnom'] !== null) && (_html += ' ('+_orgas[_iOrga]['surnom']+')')
 			_html += _equipes+'</div>';

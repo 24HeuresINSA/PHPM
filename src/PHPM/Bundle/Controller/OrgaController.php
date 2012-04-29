@@ -627,7 +627,8 @@ class OrgaController extends Controller
 				}			
 			}
 
-			$orgaArray[$orga[0]->getId()] = array(
+			$orgaArray[] = array(
+						"id" => $orga[0]->getId(),
 			        	"nom" => $orga[0]->getNom(),
 			        	"prenom" => $orga[0]->getPrenom(),
 			        	"surnom" => $orga[0]->getSurnom(),

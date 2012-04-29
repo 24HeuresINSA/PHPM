@@ -102,6 +102,7 @@ CalendarView.prototype = {
 	/*
 	 * Va setter les quart d'heure "free" :
 	 * orga disponible sur ce créneau OU créneau de tâche à attribuer
+	 * attention, c'est un index de tableau que l'on passe dans obj.id, pas le vrai ID de l'orga
 	 */
 	setFrees: function(obj) {
 		// on supprime tout
@@ -110,7 +111,7 @@ CalendarView.prototype = {
 		$('.creneau').remove();
 		
 		if (obj.type === 'orga') {
-			if (pmAffectation.data.orgas[obj.id] !== undefined) { // check si l'orga existe bien
+			if ( [obj.id] !== undefined) { // check si l'orga existe bien
 				for (var _iDispo in pmAffectation.data.orgas[obj.id]['disponibilites']) {
 					// astuce importante : on force la copie en re-créant un objet Date
 					var _debut = new Date(pmAffectation.data.orgas[obj.id]['disponibilites'][_iDispo]['debut'].getTime());

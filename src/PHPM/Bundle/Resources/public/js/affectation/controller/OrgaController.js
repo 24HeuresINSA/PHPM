@@ -65,6 +65,7 @@ OrgaController.prototype = {
 		
 		pmAffectation.controllers.creneau.getData(); // récupère les taches à jour
 		
+		// on passe un index (dans le tableau) et pas le vrai ID de l'orga
 		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga.id});
 	},
 	// changement de la valeur d'un filtre
