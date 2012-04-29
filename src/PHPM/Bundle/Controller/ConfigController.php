@@ -332,13 +332,13 @@ COMMIT;
 	
 		
 		$configItems = $em->getRepository('PHPMBundle:Config')->findAll();
-		$lieuItems = $em->getRepository('PHPMBundle:Lieu')->findAll();
-		$equipeItems = $em->getRepository('PHPMBundle:Equipe')->findAll();
+// 		$lieuItems = $em->getRepository('PHPMBundle:Lieu')->findAll();
+		$equipeItems = $em->createQuery("SELECT e,r,c FROM PHPMBundle:Equipe e JOIN e.responsable r JOIN e.confiance c ")->getResult();
 		$confianceItems = $em->getRepository('PHPMBundle:Confiance')->findAll();
 		$materielItems = $em->createQuery("SELECT m FROM PHPMBundle:Materiel m ORDER BY m.categorie ")->getResult();
 		$data = array(
 		        'configItems'=>$configItems,
-		        'lieuItems'=>$lieuItems,
+// 		        'lieuItems'=>$lieuItems,
 		        'equipeItems'=>$equipeItems,
 		        'confianceItems'=>$confianceItems,
 		        'materielItems'=>$materielItems
@@ -365,7 +365,8 @@ COMMIT;
 
 		}
 
-		return array(	'form' => $form->createView(),
+		return array(	
+				'form' => $form->createView(),
 						'valid' => $valid);
 
 	}
