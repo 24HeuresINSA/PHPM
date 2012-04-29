@@ -118,6 +118,31 @@ class AnalyseController extends Controller
     	return array('bmResult'=>$bmResult);
     }
     
+    /**
+     * Rapport responsables
+     *
+     * @Route("/responsables", name="analyse_responsables")
+     * @Template()
+     */
+    public function responsablesAction()
+    {
+    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+    		throw new AccessDeniedException();
+    	}
+    
+    	$em = $this->getDoctrine()->getEntityManager();
+    
+    	$respDQL = "SELECT o,t,p FROM PHPMBundle:Orga o JOIN o.tachesResponsable t JOIN t.plagesHoraire p WHERE p.respNecessaire = 1 AND t.statut >2  ORDER BY o.nom, p.debut";
+    
+    	 
+    	$respResult = $em
+    	->createQuery($respDQL)
+    	->getResult();
+    	 
+    
+    	return array('respResult'=>$respResult);
+    }
+    
     
     
 }

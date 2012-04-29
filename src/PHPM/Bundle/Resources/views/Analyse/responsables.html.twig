@@ -1,0 +1,52 @@
+{% extends "PHPMBundle::layout.html.twig"  %}
+{% set pageTitle = 'Utilisation du Matériel' %}
+{% use "PHPMBundle::index.html.twig" %}
+
+{% block pageHeader %}
+{% endblock %}
+
+{% block content %}
+
+<div class="row-fluid">       
+        	<div class="page-header">
+	        	<h1>Rapport d'occupation des responsables</h1>
+	            <p>Données générées à partir des fiches tâches.</p>
+	        </div>
+</div>
+<div class="row-fluid"> 
+
+{% for o in respResult %}
+ <h2>{{ entitiesMacro.orga(o) }}</h2>
+ <hr>
+
+	<table class="table table-condensed">
+        <thead>
+        	<tr>
+	        	<th>Tâche</th>
+	            <th>Horaires</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for t in o.tachesResponsable %}
+			{% for ph in t.plagesHoraire %}
+
+            <tr>
+            	<td>{{ t.groupeTache.nom }} / {{ entitiesMacro.tache(t) }}</td>
+            	<td>
+                	{{ ph.debut | format_datetime('EEEE dd MMM Y HH:mm') }} <i class="icon-arrow-right"></i> {{ ph.fin | format_datetime('EEEE dd MMM Y HH:mm') }}
+                </td>
+                
+               
+            </tr>
+			{% endfor %}
+		{% endfor %}
+		
+        </tbody>
+    </table>
+{% endfor %}
+
+
+</div>
+   
+
+{% endblock %}
