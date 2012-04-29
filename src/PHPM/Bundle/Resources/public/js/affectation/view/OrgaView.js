@@ -82,7 +82,9 @@ OrgaView.prototype = {
 			});
 		}
 		
-		$("#orga_"+pmAffectation.current.orga.id).addClass('current'); // met le focus là où il faut
+		// on s'occupe de l'orga sélectionné
+		$('#orga_'+pmAffectation.current.orga.id).addClass('current'); // focus
+		$('#liste_orgas').scrollTop($('#orga_'+pmAffectation.current.orga.id).position().top-100);// scroll
 	},
 	
 	/*
