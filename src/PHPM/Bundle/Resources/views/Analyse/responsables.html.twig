@@ -27,6 +27,7 @@
             </tr>
         </thead>
         <tbody>
+        {% set prev=0 %}
         {% for b in o.besoinsOrgaHint %}
 			
 
@@ -34,11 +35,14 @@
             	<td>{{ b.plageHoraire.tache.groupeTache.nom }} / {{ entitiesMacro.tache(b.plageHoraire.tache) }}</td>
             	<td>
                 	{{ b.plageHoraire.debut | format_datetime('EEEE dd MMM Y HH:mm') }} <i class="icon-arrow-right"></i> {{ b.plageHoraire.fin | format_datetime('EEEE dd MMM Y HH:mm') }}
+                {% if b.plageHoraire.debut.timestamp < prev %}
+                <b>CONFLIT</b>{% endif %}
+                
                 </td>
                 
                
             </tr>
-			
+		{% set prev=b.plageHoraire.fin.timestamp %}	
 		{% endfor %}
 		
         </tbody>
