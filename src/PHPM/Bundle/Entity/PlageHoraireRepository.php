@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class PlageHoraireRepository extends EntityRepository
 {
+	public function getConflictingPlages(\PHPM\Bundle\Entity\Orga $orga)
+	{
+		$orgaId = $orga->getId();
+	return $this->getEntityManager()
+	->createQuery("SELECT ph,t,g FROM PHPMBundle:PlageHoraire ph JOIN ph.besoinsOrga bo JOIN bo.orgaHint o JOIN ph.tache t
+			JOIN t.groupeTache g
+			WHERE o.id = $orgaId AND t.statut >=0 AND ph NOT IN
+				( SELECT ph1 FROM PHPMBundle:PlageHoraire ph1 JOIN ph1.besoinsOrga bo1 JOIN bo1.orgaHint o1
+				WHERE (ph1.debut > ph.fin and ph1.fin < ph.debut) AND o1 = $orgaId)
+			ORDER BY ph.debut		")
+			->getArrayResult();
+	}
 }
