@@ -216,7 +216,7 @@ CalendarView.prototype = {
 		var _creneau = pmAffectation.data.orgas[obj.data.idOrga]['disponibilites'][obj.data.idDispo]['creneaux'][obj.data.idCreneau];
 		
 		// on prépare le contenu du pop-up
-		var _html = '<div class="modal hide fade creneau_details" id="creneau_details">'+
+		var _html = '<div class="modal hide creneau_details" id="creneau_details">'+
 					'<div class="modal-header"><a class="close" data-dismiss="modal">×</a>'+
 					'<h3>Détails du créneau n°'+obj.data.idCreneau+'</h3></div>'+
 					'<div class="modal-body"><ul>'+
@@ -231,22 +231,22 @@ CalendarView.prototype = {
 		
 		// on l'ouvre - modal de Twitter Bootstrap
 		// et on détruit le DOM quand on le ferme
-		$(_html).modal().on('shown', function() {
-			// bouton, lien pour la désaffectation - setter quand le popup est visible
-			$('#desaffect_'+obj.data.idCreneau).bind('click', {idCreneau: obj.data.idCreneau, idOrga: obj.data.idOrga}, function(obj) {
-				pmAffectation.controllers.creneau.desAffectation(obj.data.idCreneau, obj.data.idOrga);
-			});
-			$('#creneaumaker_'+obj.data.idCreneau).bind('click', {idTache: _creneau.tache.id}, function(obj) {
-				var _popup = window.open(pmAffectation.urls.creneauMaker+'/'+obj.data.idTache, '');
-						
-				// à la fermeture, refresh la liste des créneaux
-				// unload est firé au chargement (unload de about:blank),
-				// on attache le vrai handler qu'après le chargement initial donc
-				_popup.onunload = function() {
-					_popup.bind('unload', pmAffectation.controllers.orga.getData());
-				};
-			});
-		}).on('hidden', function() { $('#creneau_details').remove(); });
+		$(_html).modal();
+		
+		// bouton, lien pour la désaffectation - setter quand le popup est visible
+		$('#desaffect_'+obj.data.idCreneau).bind('click', {idCreneau: obj.data.idCreneau, idOrga: obj.data.idOrga}, function(obj) {
+			pmAffectation.controllers.creneau.desAffectation(obj.data.idCreneau, obj.data.idOrga);
+		});
+		$('#creneaumaker_'+obj.data.idCreneau).bind('click', {idTache: _creneau.tache.id}, function(obj) {
+			var _popup = window.open(pmAffectation.urls.creneauMaker+'/'+obj.data.idTache, '');
+					
+			// à la fermeture, refresh la liste des créneaux
+			// unload est firé au chargement (unload de about:blank),
+			// on attache le vrai handler qu'après le chargement initial donc
+			_popup.onunload = function() {
+				_popup.bind('unload', pmAffectation.controllers.orga.getData());
+			};
+		});
 	},
 
 	/* 

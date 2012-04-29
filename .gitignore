@@ -24,3 +24,5 @@ src/PHPM/Bundle/Controller/TestController.php
 
 # Aptana-specific
 .project
+
+.htaccess
