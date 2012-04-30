@@ -44,7 +44,7 @@ OrgaController.prototype = {
 		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga.id});
 		
 		// force la mise à jour des créneaux - tous ceux pouvant aller à cet orga
-		pmAffectation.controllers.creneau.getData();
+		(pmAffectation.current.mode === 'orga') && (pmAffectation.controllers.creneau.getData());
 	},
 	
 	/*

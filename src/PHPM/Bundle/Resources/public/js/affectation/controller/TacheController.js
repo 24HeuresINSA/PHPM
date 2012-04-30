@@ -44,7 +44,7 @@ TacheController.prototype = {
 		pmAffectation.views.calendar.setFrees({type: 'tache', id: pmAffectation.current.tache.id});
 		
 		// force la mise à jour des orgas - tous ceux pouvant aller à cette tâche
-		pmAffectation.controllers.orga.getData();
+		//pmAffectation.controllers.orga.getData();
 	},
 	
 	/*

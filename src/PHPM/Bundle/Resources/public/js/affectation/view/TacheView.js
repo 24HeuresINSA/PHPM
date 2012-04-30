@@ -61,7 +61,7 @@ TacheView.prototype = {
 			$('#liste_taches').append(_html);
 			
 			// handler de click
-			$('#tache_'+_iTache).bind('click', {idTache: _taches[_iTache]['id']}, function(e) {
+			$('#tache_'+_taches[_iTache]['id']).bind('click', {idTache: _taches[_iTache]['id']}, function(e) {
 				if (e.altKey) {
 					// Alt + click : affiche les infos détaillées de la tâche
 					pmAffectation.views.tache.viewTacheDetails({id: e.data.idTache});
