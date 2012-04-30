@@ -81,11 +81,11 @@ $(function() {
 		select: function(event, ui) {
 			// on va sur la bonne page lors de la sélection
 			if (ui.item.type === 'orga') {
-				window.location.href = app_orga_url + ui.item.id + '/edit';
+				window.location.href = app_orga_edit_url.replace(new RegExp('(_ID_)', 'g'), ui.item.id);
 			} else if (ui.item.type === 'tache') {
-				window.location.href = app_tache_url + ui.item.id + '/edit';
+				window.location.href = app_tache_edit_url.replace(new RegExp('(_ID_)', 'g'), ui.item.id);
 			} else if (ui.item.type === 'groupe_tache') {
-				window.location.href = app_groupetache_url + ui.item.id + '/edit';
+				window.location.href = app_groupetache_edit_url.replace(new RegExp('(_ID_)', 'g'), ui.item.id);
 			}
 		}
 	});
