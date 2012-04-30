@@ -55,13 +55,13 @@ TacheView.prototype = {
 		$('#liste_taches').removeClass('spinner_medium');
 		
 		for (var _iTache in _taches) {
-			var _html = '<div class="item tache" id="tache_'+_iTache+'" idTache="'+_iTache+'">'+
+			var _html = '<div class="item tache" id="tache_'+_taches[_iTache]['id']+'" idTache="'+_taches[_iTache]['id']+'">'+
 						_taches[_iTache]['nom']+' ('+_taches[_iTache]['lieu']+')</div>';
 			
 			$('#liste_taches').append(_html);
 			
 			// handler de click
-			$('#tache_'+_iTache).bind('click', {idTache: _iTache}, function(e) {
+			$('#tache_'+_iTache).bind('click', {idTache: _taches[_iTache]['id']}, function(e) {
 				if (e.altKey) {
 					// Alt + click : affiche les infos détaillées de la tâche
 					pmAffectation.views.tache.viewTacheDetails({id: e.data.idTache});

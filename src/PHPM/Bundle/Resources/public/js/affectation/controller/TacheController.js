@@ -12,7 +12,7 @@ TacheController.prototype = {
 	 * Constructeur
 	 */
 	initialize: function() {
-		pmAffectation.data.tache = {};
+		pmAffectation.data.taches = {};
 		pmAffectation.models.tache = new TacheModel();
 		pmAffectation.views.tache = new TacheView();
 	},
