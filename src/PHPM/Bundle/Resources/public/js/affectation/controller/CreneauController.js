@@ -2,7 +2,7 @@
  * Page Affectation
  * Controlleur pour les créneaux
  * 
- * Une chsoe à savoir : on bosse dans un colonne qui s'appelle "liste_taches"
+ * Une chose à savoir : on bosse dans un colonne qui s'appelle "liste_taches"
  */
 function CreneauController() {
 	// on lance juste le constructeur

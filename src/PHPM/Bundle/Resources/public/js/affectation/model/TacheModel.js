@@ -47,6 +47,8 @@ TacheModel.prototype = {
 	 * Récup les résultats
 	 */
 	requestSuccess: function(data) {
+		// attention, on reçoit un tableau (l'ordre compte)
+		
 		pmAffectation.models.tache.data = data;
 	
 		pmAffectation.models.tache.callBack();

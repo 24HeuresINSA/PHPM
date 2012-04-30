@@ -475,15 +475,14 @@ class TacheController extends Controller
 			foreach ($entity->getPlagesHoraire() as $creneau) {
 				$creneaux[$creneau->getId()] = $creneau->toSimpleArray();
 			}
-			
-			$tacheArray = array(
-				"id" => $entity->getId(),
-				"nom" => $entity->getNom(),
-				"lieu" => $entity->getLieu(),
-				"creneaux" => $creneaux,
-				"permisNecessaire" => $entity->getPermisNecessaire());
-				
-			$taches[$entity->getId()] = $tacheArray;
+
+			$taches[] = array(
+						"id" => $entity->getId(),
+						"nom" => $entity->getNom(),
+						"lieu" => $entity->getLieu(),
+						"creneaux" => $creneaux,
+						"permisNecessaire" => $entity->getPermisNecessaire()
+						);
 		}
 	
     	$response = new Response();

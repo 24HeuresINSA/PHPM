@@ -46,6 +46,8 @@ OrgaModel.prototype = {
 	 * Récup les résultats
 	 */
 	requestSuccess: function(data) {
+		// attention, on reçoit un tableau (l'ordre compte)
+		
 		pmAffectation.models.orga.data = data;
 	
 		pmAffectation.models.orga.callBack();
