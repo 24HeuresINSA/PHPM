@@ -34,7 +34,7 @@ OrgaController.prototype = {
 		pmAffectation.data.orgas = pmAffectation.models.orga.getOrgas();
 		
 		// si aucun orga n'est sélectionné, on choisit le 1er
-		if (pmAffectation.current.mode === 'orga' && pmAffectation.current.orga.id == -1 && Object.keys(pmAffectation.data.orgas)[0]  !== undefined) {
+		if (pmAffectation.current.mode === 'orga' && pmAffectation.current.orga.id == -1 && pmAffectation.data.orgas[0]  !== undefined) {
 			pmAffectation.current.orga.id = pmAffectation.data.orgas[0]['id'];
 			
 			pmHistory.setUrlParam(); // maj de l'url
@@ -44,7 +44,7 @@ OrgaController.prototype = {
 		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga.id});
 		
 		// force la mise à jour des créneaux - tous ceux pouvant aller à cet orga
-		pmAffectation.controllers.creneau.getData();
+		(pmAffectation.current.mode === 'orga') && (pmAffectation.controllers.creneau.getData());
 	},
 	
 	/*
@@ -65,7 +65,6 @@ OrgaController.prototype = {
 		
 		pmAffectation.controllers.creneau.getData(); // récupère les taches à jour
 		
-		// on passe un index (dans le tableau) et pas le vrai ID de l'orga
 		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga.id});
 	},
 	// changement de la valeur d'un filtre

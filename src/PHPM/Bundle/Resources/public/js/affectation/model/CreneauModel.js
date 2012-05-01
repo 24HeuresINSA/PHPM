@@ -51,7 +51,7 @@ CreneauModel.prototype = {
 	requestSuccess: function(data) {
 		// attention, on reçoit un tableau (l'ordre compte)
 		
-		pmAffectation.models.creneau.data = data;;
+		pmAffectation.models.creneau.data = data;
 	
 		pmAffectation.models.creneau.callBack();
 	},

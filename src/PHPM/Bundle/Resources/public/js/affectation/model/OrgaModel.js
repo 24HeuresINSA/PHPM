@@ -32,6 +32,9 @@ OrgaModel.prototype = {
 		($.isNumeric(pmAffectation.current.orga.age) === true) && (pmAffectation.current.orga.age != -1) && (_params.age = pmAffectation.current.orga.age);
 		($.isNumeric(pmAffectation.current.orga.equipe) === true) && (pmAffectation.current.orga.equipe != -1) && (_params.equipe_id = pmAffectation.current.orga.equipe);
 		
+		// filtres pour le sens tâches ->
+		($.isNumeric(pmAffectation.current.tache.id) === true) && (pmAffectation.current.tache.id != -1) && (_params.equipe_id = pmAffectation.current.orga.equipe);
+
 		$.ajax({
 			url: pmAffectation.urls.orgas,
 			dataType: 'json',
@@ -46,6 +49,8 @@ OrgaModel.prototype = {
 	 * Récup les résultats
 	 */
 	requestSuccess: function(data) {
+		// attention, on reçoit un tableau (l'ordre compte)
+		
 		pmAffectation.models.orga.data = data;
 	
 		pmAffectation.models.orga.callBack();

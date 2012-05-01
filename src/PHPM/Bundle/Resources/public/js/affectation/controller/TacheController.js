@@ -12,8 +12,7 @@ TacheController.prototype = {
 	 * Constructeur
 	 */
 	initialize: function() {
-		pmAffectation.data.tache = {};
-
+		pmAffectation.data.taches = {};
 		pmAffectation.models.tache = new TacheModel();
 		pmAffectation.views.tache = new TacheView();
 	},
@@ -35,8 +34,8 @@ TacheController.prototype = {
 		pmAffectation.data.taches = pmAffectation.models.tache.getTaches();
 		
 		// si aucun orga n'est sélectionné, on choisit le 1er
-		if (pmAffectation.current.mode === 'tache' && pmAffectation.current.tache.id == -1 && Object.keys(pmAffectation.data.taches)[0]  !== undefined) {
-			pmAffectation.current.tache.id = Object.keys(pmAffectation.data.taches)[0];
+		if (pmAffectation.current.mode === 'tache' && pmAffectation.current.tache.id == -1 && pmAffectation.data.taches[0]  !== undefined) {
+			pmAffectation.current.tache.id = pmAffectation.data.taches[0]['id'];
 			
 			pmHistory.setUrlParam(); // maj de l'url
 		}
@@ -45,7 +44,7 @@ TacheController.prototype = {
 		pmAffectation.views.calendar.setFrees({type: 'tache', id: pmAffectation.current.tache.id});
 		
 		// force la mise à jour des orgas - tous ceux pouvant aller à cette tâche
-		pmAffectation.controllers.orga.getData();
+		//pmAffectation.controllers.orga.getData();
 	},
 	
 	/*
@@ -63,6 +62,8 @@ TacheController.prototype = {
 
 		pmAffectation.current.tache.id = obj.id;
 		pmHistory.setUrlParam(); // maj de l'url
+		
+		pmAffectation.controllers.orga.getData(); // récupère les orgas à jour
 		
 		pmAffectation.views.calendar.setFrees({type: 'tache', id: pmAffectation.current.tache.id});
 	},
