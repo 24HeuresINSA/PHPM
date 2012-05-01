@@ -675,12 +675,20 @@ class OrgaController extends Controller
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser() != $orga) {
         	throw new AccessDeniedException();
         }
+        
+        $em = $this->getDoctrine()->getEntityManager();
+        $creneaux = $em->createQuery("SELECT c,p,t,g,r,bm,m FROM PHPMBundle:Creneau c  JOIN c.disponibilite d  JOIN d.orga o 
+        		 JOIN c.plageHoraire p  JOIN p.tache t JOIN t.groupeTache g JOIN t.responsable r  LEFT JOIN t.besoinsMateriel bm LEFT JOIN bm.materiel m
+        		WHERE o.id = :oid
+        		 ORDER BY c.debut")
+        ->setParameter('oid',$orga->getId())
+        ->getArrayResult();
+             
 	    
-	    $em = $this->getDoctrine()->getEntityManager();
-	
 	    
-	    
-	    return array('orga' => $orga);
+	    return array('orga' => $orga,
+	    		'creneaux'=>$creneaux
+	    		);
 	}
 	
 	

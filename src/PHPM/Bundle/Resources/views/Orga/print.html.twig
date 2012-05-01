@@ -19,8 +19,8 @@ width:600pt;
 
 <h1>{{ entitiesMacro.orga(orga) }}</h1><em>Attention : planning non définitif</em>
 
-{% for dispo in orga.disponibilites %}
-	{% for creneau in dispo.creneaux %}
+
+	{% for creneau in creneaux %}
 
 
 
@@ -58,7 +58,7 @@ width:600pt;
  
 	{% endfor %}
  
-{% endfor %}
+
 
 
 
