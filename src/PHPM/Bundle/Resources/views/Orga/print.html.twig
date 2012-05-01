@@ -1,0 +1,66 @@
+{% extends "PHPMBundle::layout.html.twig"  %}
+{% set pageTitle = 'Impression Planning' %}
+
+{% block pageStyle %}
+{{ parent() }}
+body{
+width:600pt;
+}
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet/less" href="{{ asset('bundles/phpm/css/print.less') }}" type="text/css" media="all" />
+{{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+<div class="row-fluid " >
+
+<h1>{{ entitiesMacro.orga(orga) }}</h1><em>Attention : planning non définitif</em>
+
+{% for dispo in orga.disponibilites %}
+	{% for creneau in dispo.creneaux %}
+
+
+
+	  
+	  <div class="creneau">
+	  <div class="infos">
+	  <div class="horaires"><h4>{{ creneau.debut | format_datetime('EEEE dd MMM Y HH:mm') }}
+	  	-> {{ creneau.fin | format_datetime('EEEE dd MMM Y HH:mm') }}</h4>
+	  	</div>
+	  	
+	  <div class="lieu"><h4>{{ creneau.plageHoraire.tache.lieu }}</h4></div>
+	 </div>
+	 	<div class="infos">
+	 		<div class="titre"><h3>{{ creneau.plageHoraire.tache.groupeTache.nom }} / {{ creneau.plageHoraire.tache.nom }}</h3></div>
+	 		<b>Responsable : </b>{{ entitiesMacro.orga(creneau.plageHoraire.tache.responsable) }} 
+	 									{{ creneau.plageHoraire.tache.responsable.telephone }}
+	 	</div>
+	  <div class="consignes">
+	    <h4>Consignes</h4>{{ creneau.plageHoraire.tache.consignes |raw}}
+	  </div>
+	  <div class="consignes">
+	    <h4>Matériel Nécessaire</h4>
+			{% for bm in creneau.plageHoraire.tache.besoinsMateriel %}
+	    		{% if bm.quantite > 0 %}
+			{{ bm.materiel.nom }},
+			{% endif %}
+	    	{% endfor %}
+	  </div>
+	  
+	   
+	  
+	
+		</div>
+
+ 
+	{% endfor %}
+ 
+{% endfor %}
+
+
+
+</div>
+{% endblock %}

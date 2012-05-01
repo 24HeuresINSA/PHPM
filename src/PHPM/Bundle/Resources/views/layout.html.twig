@@ -22,13 +22,17 @@
 			{# Twitter Bootstrap Code #}
 				<link rel="stylesheet" href="{{ asset('lib/bootstrap/css/bootstrap.min.css') }}" type="text/css" />
 				<style type="text/css">
-			      body {
-			        padding-top: 60px;
-			        padding-bottom: 40px;
-			      }
-			      .sidebar-nav {
-			        padding: 9px 0;
-			      }
+					{% block pageStyle %}
+					
+				      body {
+				        padding-top: 60px;
+				        padding-bottom: 40px;
+				      }
+				      .sidebar-nav {
+				        padding: 9px 0;
+				      }
+				    
+				    {% endblock %}
 			    </style>
 				<link rel="stylesheet" href="{{ asset('lib/bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" />
         
