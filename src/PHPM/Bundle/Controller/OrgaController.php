@@ -776,10 +776,11 @@ class OrgaController extends Controller
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		
-		if($id = "all"){
-			$orgas = $em->createQuery("SELECT o FROM PHPMBundle:Orga o")->getResult();
+// 		if($id = "all"){
+// 			$orgas = $em->createQuery("SELECT o FROM PHPMBundle:Orga o")->getResult();
 			
-		}else{
+// 		}else
+		{
 		$orgas = $em->getRepository('PHPMBundle:Orga')->find($id);
 		
 		if (!$orgas ) {
