@@ -321,6 +321,10 @@ class OrgaController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Orga entity.');
         }
+        
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser() != $entity) {
+        	throw new AccessDeniedException();
+        }
 
         $confianceCode=$entity->getEquipe()->getConfiance()->getCode();
 		
@@ -653,23 +657,30 @@ class OrgaController extends Controller
 	}
 	
 	/**
-	 * Print all orga plannings.
+	 * Print orga planning.
 	 *
-	 * @Route("/plannings/print", name="orga_plannings_impression")
+	 * @Route("/{id}/print", name="orga_print")
 	 * @Template()
 	 */
-	public function plannings_impressionAction()
+	public function printAction($id)
 	{
-	    if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-	        throw new AccessDeniedException();
-	    }
+	    $em = $this->getDoctrine()->getEntityManager();
+        $config = $e=$this->get('config.extension');
+        $orga = $em->getRepository('PHPMBundle:Orga')->find($id);
+
+        if (!$orga) {
+            throw $this->createNotFoundException('Unable to find Orga entity.');
+        }
+        
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser() != $orga) {
+        	throw new AccessDeniedException();
+        }
 	    
 	    $em = $this->getDoctrine()->getEntityManager();
 	
 	    
-	    $entities = $em->getRepository('PHPMBundle:Orga')->findAll();
 	    
-	    return array('entities' => $entities);
+	    return array('orga' => $orga);
 	}
 	
 	
@@ -783,15 +794,20 @@ class OrgaController extends Controller
 		foreach ($orgas as $orga){
             foreach ($allDI as $di)
             {
-            		if($orga->getDisponibilitesInscription()->contains($di)){
-            			$orga->addDIToDisponibilites($di);
-            		}else{
+            		if(!$orga->getDisponibilitesInscription()->contains($di)){
+            			
             			$orga->removeDIFromDisponibilites($di);
             		}
             		
-            	
-            	
             }
+            foreach ($allDI as $di)
+            {
+            	if($orga->getDisponibilitesInscription()->contains($di)){
+            		$orga->addDIToDisponibilites($di);
+            	}
+            	 
+            }
+            
             	$em->flush();
 	            $orga->cleanDisponibilites();
 	            $em->flush();
