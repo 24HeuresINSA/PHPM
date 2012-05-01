@@ -297,14 +297,14 @@ class CreneauController extends Controller
     		return $response;
     	}
     	$dispo = $em->getRepository('PHPMBundle:Disponibilite')->getContainingDisponibilite($orga, $creneau);
-    	if (($dispo)==NULL) {
+    	if (count($dispo)==0) {
     		$response->setContent(json_encode("L' orga n'est pas disponible sur ce créneau."));
     		return $response;
     	}
     	
     	
     		
-    		$creneau->setDisponibilite($dispo);
+    		$creneau->setDisponibilite($dispo[0]);
     		$em->flush();
     		$response->setContent('OK');
     	

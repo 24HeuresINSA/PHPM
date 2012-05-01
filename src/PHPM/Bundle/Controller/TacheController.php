@@ -263,23 +263,39 @@ class TacheController extends Controller
                         
                         ->getResult();
                         
-                        if(!array_key_exists(0, $bms)){
-                            $bm= new BesoinMateriel();
-                            $bm->setTache($entity);
-                            $m = $em->createQuery("SELECT m FROM PHPMBundle:Materiel  m  WHERE  m.id=:mid")
-                            ->setParameter('mid',$key)
-                            ->getSingleResult();
-                            $bm->setMateriel($m);
-                            $em->persist($bm);
-                            
-                            
-                            
+                        if(($value*1)!=0){
+	                        if(!array_key_exists(0, $bms)){ //Le bm liant m et t n'existe pas
+	                            $bm= new BesoinMateriel();
+	                            $bm->setTache($entity);
+	                            $m = $em->createQuery("SELECT m FROM PHPMBundle:Materiel  m  WHERE  m.id=:mid")
+	                            ->setParameter('mid',$key)
+	                            ->getSingleResult();
+	                            $bm->setMateriel($m);
+	                            $em->persist($bm);
+	                            
+	                            
+	                            
+	                        }else{
+	                            $bm=$bms[0];
+	                        }
+	                        
+	                        $bm->setQuantite($value*1);
+	                        $entity->addBesoinMateriel($bm);
+	                        
                         }else{
-                            $bm=$bms[0];
+                        	if(array_key_exists(0, $bms)){ //Le bm liant m et t n'existe pas
+                        		$bm=$bms[0];
+                        		$entity->getBesoinsMateriel()->removeElement($bm);
+                        		$m = $em->createQuery("SELECT m FROM PHPMBundle:Materiel  m  WHERE  m.id=:mid")
+                        		->setParameter('mid',$key)
+                        		->getSingleResult();
+                        		$m->getBesoinsMateriel()->removeElement($bm);
+                        		$em->remove($bm);                        		 
+                        		 
+                        		 
+                        	}
+                        	
                         }
-                        
-                        $bm->setQuantite($value*1);
-                        $entity->addBesoinMateriel($bm);
                         
                         
                         
