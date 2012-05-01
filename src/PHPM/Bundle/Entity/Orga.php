@@ -861,6 +861,22 @@ class Orga implements UserInterface
     {
         return $this->disponibilitesInscription;
     }
+    
+    /**
+     * Get charisme
+     *
+     * 
+     */
+    public function getCharisme()
+    {
+    	$charisme = 0;
+    	foreach ($this->disponibilitesInscription as $di)
+    	{
+    		$charisme+=$di->getPointsCharisme();
+    		
+    	}
+    	return $charisme;
+    }
 
     /**
      * Set equipe

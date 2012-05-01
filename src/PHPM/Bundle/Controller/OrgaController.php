@@ -513,6 +513,7 @@ class OrgaController extends Controller
 	            {
 	               $totalCharisme+=$di->getPointsCharisme();
 	            }
+	            $totalCharisme+=$orga->getCharisme();
 	            
 	            if ($totalCharisme<$minCharisme){
 	            	return array( 'form' => $form->createView(),
