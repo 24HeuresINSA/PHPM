@@ -313,14 +313,13 @@ class CreneauController extends Controller
     	
     	
     }
-    
     /**
     *
     *
-    * @Route("/{cid}/desaffecter/{oid}", name="creneau_desaffecter")
+    * @Route("/{cid}/desaffecter{_format}/{oid}", defaults={"oid"="0","_format"=".html"},requirements={"_format"=".html|"}, name="creneau_desaffecter")
     *
     */
-    public function desaffecterCreneau($cid)
+    public function desaffecterCreneau($cid,$_format)
     {
     	//on desaffecte un creneau à un orga
     	//à ne pas utiliser, on ne va quand même pas enlever du boulot à quelqu'un.
@@ -337,8 +336,13 @@ class CreneauController extends Controller
 
     	$creneau->setDisponibilite(null);
     	$em->flush();
+    	if($_format==".html"){
+    		return $this->redirect($this->getRequest()->headers->get('referer'));
+    		
+    	}else{
     	$response->setContent('OK');
     	return $response;
+    	}
     	 
     
     	 

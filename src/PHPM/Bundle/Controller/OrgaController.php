@@ -823,7 +823,7 @@ class OrgaController extends Controller
 	/**
 	 * Convert respNecessaire->Bo.OrgaHint
 	 *
-	 * @Route("/convertresp", name="orga_convert_resp")
+	 * @Route("/convertresp",  name="orga_convert_resp")
 	 */
 	public function convertRespAction()
 	{
@@ -858,6 +858,80 @@ class OrgaController extends Controller
 		$em->flush();
 	
 		return $this->redirect($this->getRequest()->headers->get('referer'));
+	
+	
+	}
+	
+	/**
+	 * Auto affect Orga using orga Hints
+	 *
+	 * @Route("/{id}/affectHints", name="orga_affectHint")
+	 * @Template()
+	 */
+	public function affectHintsAction($id)
+	{
+	
+		if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+			throw new AccessDeniedException();
+		}
+		$em = $this->getDoctrine()->getEntityManager();
+		$orga = $em->getRepository('PHPMBundle:Orga')->find($id);
+		$validator = $this->get('validator');
+		
+		
+		if (!$orga ) {
+			throw $this->createNotFoundException('Unable to find Orga.');
+		}
+		
+		$messages = array();
+		
+		$creneaux = $em
+	    ->createQuery("SELECT c  FROM PHPMBundle:Creneau c JOIN c.orgaHint o JOIN c.plageHoraire p JOIN p.tache t WHERE o.id = :id AND t.statut = 3")
+	    ->setParameter('id', $id)
+	    ->getResult();
+		
+		
+		foreach($creneaux as $creneau){
+			$cid=$creneau->getId();
+			$messages[$cid]=array('creneau'=>$creneau);
+			if($creneau->getDisponibilite() != null){
+					$creneau->getDisponibilite()->getOrga()->getPrenom();
+					$messages[$cid]['msg']='Créneau déjà affecté à '.$creneau->getDisponibilite()->getOrga()->getPrenom()
+					.' '.$creneau->getDisponibilite()->getOrga()->getNom().'.';
+
+			}else{
+				
+					
+				$dispos = $em->getRepository('PHPMBundle:Disponibilite')->getContainingDisponibilite($orga, $creneau);
+				
+				
+				
+				if (count($dispos)==0) {
+					$messages[$cid]['msg']="L' orga n'est pas disponible sur ce créneau.";
+					
+				}else{
+					$creneau->setDisponibilite($dispos[0]);
+					$errors = $validator->validate($creneau);
+					if(count($errors) > 0){
+						$messages[$cid]['msg']="Impossible d'affecter : ";
+						foreach ($errors as $error){
+							$messages[$cid]['msg'].=$error->getMessage().' ';
+						}
+						
+					
+					}else{
+						$messages[$cid]['msg']="Affecté.";
+						
+					}
+					
+				}
+				
+			}
+			
+		}		
+	
+
+		return array('messages'=>$messages,'orga'=>$orga);
 	
 	
 	}

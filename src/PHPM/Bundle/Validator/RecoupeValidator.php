@@ -75,20 +75,20 @@ public function isValid($entity, Constraint $constraint)
             
             
     	}elseif ($entity instanceof Creneau){
-    	    $pid=$entity->getDisponibilite()->getOrga()->getId();
-            $tid=$entity->getPlageHoraire()->getTache()->getId();
-    	    $dql = 'SELECT (count(d)) FROM PHPMBundle:Disponibilite d, PHPMBundle:Creneau c, PHPMBundle:PlageHoraire p, PHPMBundle:Tache t
-    	     WHERE c.disponibilite = d AND c.plageHoraire = p AND p.tache = t AND d.orga = :pid AND (c.debut < :fin ) AND (c.fin > :debut) AND c.id!=:id AND t.id!=:tid';
-    	    $message= $constraint->messageCreneau;
+    		$message= $constraint->messageCreneau;
+    		
+    		$oid=$entity->getDisponibilite()->getOrga()->getId();
+    	    $dql = 'SELECT (count(c)) FROM PHPMBundle:Orga o JOIN o.disponibilites d JOIN d.creneaux c WHERE (c.debut < :fin ) AND (c.fin > :debut) AND o.id =:oid';
             
             $result = $this->em
-                ->createQuery($dql)
-                ->setParameter('id', $id)
-                ->setParameter('pid', $pid)
-                ->setParameter('tid', $tid)
-                ->setParameter('debut', $debut)
-                ->setParameter('fin', $fin)
-                ->getSingleScalarResult();
+            ->createQuery($dql)
+            ->setParameter('debut', $debut)
+            ->setParameter('fin', $fin)
+            ->setParameter('oid', $oid)
+            ->getSingleScalarResult();
+            
+            
+            
             
     	}else{
     		
@@ -103,7 +103,6 @@ public function isValid($entity, Constraint $constraint)
     		$this->setMessage($message);
     		return FALSE;
     	}
-    	
     	
     	
 			
