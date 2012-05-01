@@ -181,6 +181,22 @@ class OrgaRepository extends EntityRepository
 		->getResult();	
 	}
 	
+	public function findAllWithConfianceValueMin($value)
+	{
+	
+		return  $this->createQueryBuilder('o')
+		->join('o.equipe', 'e')
+		->join('e.confiance', 'c')
+		->where('c.valeur >= :value')
+		->orderBy('o.nom')
+		->setParameter('value', $value);
+	
+	
+	
+	}
+	
+	
+	
 //	getOrgasWithCriteriaTache numéro 2 pour gérer le tache id
 /*
 public function getOrgasWithCompatibleTache($tache_id)

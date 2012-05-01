@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use PHPM\Bundle\Form\BesoinMaterielType;
 use PHPM\Bundle\Entity\Tache;
+use PHPM\Bundle\Entity\OrgaRepository;
 
 class TacheType extends AbstractType
 {
@@ -30,10 +31,21 @@ class TacheType extends AbstractType
 	{
 		$libellesPermis = json_decode($this->config->getValue('manifestation_permis_libelles'), true);
 
+		$minConfianceResp = $this->config->getValue('manifestation_orga_responsableconfiancemin');
+		
+		
+		
 		$i = $builder->create('entity', 'form', array('label' => " ", 'required' => false, 'data_class' => 'PHPM\Bundle\Entity\Tache', 'error_bubbling' => true, "read_only" => $this -> rOnly));
 		$i
-		// -> add('groupeTache', 'entity', array('class' => 'PHPMBundle:GroupeTache'))
-		->add('nom')->add('consignes')->add('lieu')->add('consignes')->add('permisNecessaire', 'choice', array('label' => 'Permis Nécessaire', 'choices' => $libellesPermis))->add('responsable')->add('materielSupplementaire');
+		->add('nom')
+		->add('consignes')
+		->add('lieu')
+		->add('consignes')
+		->add('permisNecessaire', 'choice', array('label' => 'Permis Nécessaire', 'choices' => $libellesPermis))
+		->add('responsable','entity',array(
+				'class' => 'PHPMBundle:Orga',
+				'query_builder' => function(OrgaRepository $or)use($minConfianceResp){return $or->findAllWithConfianceValueMin($minConfianceResp);}))
+		->add('materielSupplementaire');
 
 		//         $i->add('plagesHoraire','collection',array('type' => new PlageHoraireType(),'allow_add' => true,'allow_delete' => true,
 		//                 'by_reference' => false,
