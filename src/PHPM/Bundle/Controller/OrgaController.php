@@ -667,7 +667,7 @@ class OrgaController extends Controller
 	    $em = $this->getDoctrine()->getEntityManager();
         $config = $e=$this->get('config.extension');
         
-        $debut = new \DateTime($config->getValue('phpm_planning_debut'));
+        $debut = new \DateTime();
         $fin = new \DateTime($config->getValue('phpm_planning_fin'));
         
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser()->getId() != $orga->getId()) {

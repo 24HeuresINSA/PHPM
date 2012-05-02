@@ -199,6 +199,7 @@
 	    	{% if is_granted('ROLE_VISITOR') and planning[0] is defined %}	
 			<div class="span{% if is_granted('ROLE_ADMIN') %}8{% else %}12{% endif %}">
 	        	<h2>Planning prévisionnel</h2>
+	        		Planning valable du {{ debutPlanning | format_datetime('EEEE dd MMM Y HH:mm') }} au  {{ finPlanning | format_datetime('EEEE dd MMM Y HH:mm') }}.
 					<table class="table well">
 						<thead>
 						<tr>

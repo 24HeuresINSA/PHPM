@@ -35,12 +35,14 @@ class DefaultController extends Controller
 //     		$conflictingPlages=$em->getRepository('PHPMBundle:PlageHoraire')-> getConflictingPlages($user);
 
     		$config = $e=$this->get('config.extension');    		
-    		$debutPlanning = new \DateTime($config->getValue('phpm_planning_debut'));
+    		$debutPlanning = new \DateTime();
     		$finPlanning = new \DateTime($config->getValue('phpm_planning_fin'));
     		$planning=$em->getRepository('PHPMBundle:Orga')->getPlanning($user->getId(),$debutPlanning,$finPlanning);
     		
     		return array('statsOrga'=>$statsUser,
-    				'planning'=>$planning
+    				'planning'=>$planning,
+    				'debutPlanning'=>$debutPlanning,
+    				'finPlanning'=>$finPlanning
     				);
     	}
     	return array();
