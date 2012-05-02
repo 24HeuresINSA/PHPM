@@ -136,7 +136,7 @@
 							{{ _self.navBarItem('Mes Fiches','tache',{'orgaid': app.user.id}) }}
 							{{ _self.navBarItem('Celles de ma com\'','tache',{'equipeid': app.user.equipe.id}) }}
 							{{ _self.navBarItem('Groupes de tâches','groupetache',{'orgaid': app.user.id}) }}
-							{{ _self.navBarItem('Recherche des conflits','analyse_plagesorga',{'orgaid': app.user.id}) }}
+							
 							{% endif %}
 					    </ul>
 					</li>
@@ -151,6 +151,7 @@
 							{{ _self.navBarItem('Occupation des orgas','analyse_plagesorga') }}
 					    </ul>
 					</li>
+					{{ _self.navBarItem('Recherche des conflits','analyse_plagesorga',{'orgaid': app.user.id}) }}
 					{{ _self.navBarItem('Mes Disponibilités','orga_inputdispos',{'id':app.user.id }) }}
 	       			{{ _self.navBarItem('Charisme','orga_charisme') }}
 	       		{% endif %}
