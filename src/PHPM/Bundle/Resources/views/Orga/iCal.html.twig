@@ -1,0 +1,35 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//hacksw/handcal//NONSGML v1.0//EN
+BEGIN:VTIMEZONE
+TZID:Europe/Paris
+X-LIC-LOCATION:Europe/Paris
+BEGIN:DAYLIGHT
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+TZNAME:CEST
+DTSTART:19700329T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+TZNAME:CET
+DTSTART:19701025T030000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+END:VTIMEZONE
+{% for d in orga.disponibilites %}
+{% for creneau in d.creneaux %}
+BEGIN:VEVENT
+UID:{{ creneau.id  }}@{{ server_baseurl }}
+ORGANIZER;CN=John Doe:MAILTO:john.doe@example.com
+DTSTAMP:{{ creneau.debut | format_datetime('YYYYMMdd') }}T{{ creneau.debut | format_datetime('HHmmSS') }}Z
+DTSTART:{{ creneau.debut | format_datetime('YYYYMMdd') }}T{{ creneau.debut | format_datetime('HHmmSS') }}Z
+DTEND:{{ creneau.fin | format_datetime('YYYYMMdd') }}T{{ creneau.fin | format_datetime('HHmmSS') }}Z
+LOCATION:{{ creneau.plageHoraire.tache.lieu  }}
+SUMMARY:{{ creneau.plageHoraire.tache.nom  }}
+END:VEVENT
+{% endfor %}
+{% endfor %}
+END:VCALENDAR
