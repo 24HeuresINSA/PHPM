@@ -203,8 +203,8 @@ class OrgaRepository extends EntityRepository
 					c.plageHoraire p JOIN p.tache t JOIN t.groupeTache g JOIN t.responsable r  LEFT JOIN t.besoinsMateriel bm LEFT JOIN bm.materiel m
 					WHERE c.fin >= :debut AND c.debut <= :fin
 					ORDER BY o.nom,d.debut, c.debut")
-					->setParameter('debut', $debut)
-					->setParameter('fin', $fin)
+					->setParameter('debut', $debut->format('Y-m-d H:i:s'))
+					->setParameter('fin', $fin->format('Y-m-d H:i:s'))
 					->getArrayResult();
 		}else{
 			return  $this->getEntityManager()->createQuery("SELECT o,d,c,p,t,g,r,bm,m FROM PHPMBundle:Orga o JOIN o.disponibilites d JOIN d.creneaux c JOIN
@@ -212,8 +212,8 @@ class OrgaRepository extends EntityRepository
 					WHERE o.id = :oid AND c.fin >= :debut AND c.debut <= :fin
 					ORDER BY o.nom,d.debut, c.debut")
 					->setParameter('oid',$orga_id)
-					->setParameter('debut', $debut)
-					->setParameter('fin', $fin)
+					->setParameter('debut', $debut->format('Y-m-d H:i:s')
+					->setParameter('fin', $fin->format('Y-m-d H:i:s')
 					->getArrayResult();
 		}
 	
