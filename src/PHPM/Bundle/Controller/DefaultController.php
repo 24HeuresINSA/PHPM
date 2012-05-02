@@ -32,9 +32,8 @@ class DefaultController extends Controller
     	if ($this->get('security.context')->isGranted('ROLE_VISITOR')) {
     		$statsUser=$em->getRepository('PHPMBundle:Orga')->getStats($user);
     		$statsUser['taches']=$em->getRepository('PHPMBundle:Tache')->getOrgaStats($user);
-    		$conflictingPlages=$em->getRepository('PHPMBundle:PlageHoraire')-> getConflictingPlages($user);
-    		return array('statsOrga'=>$statsUser,
-    						'conflictingPlages'=>$conflictingPlages
+//     		$conflictingPlages=$em->getRepository('PHPMBundle:PlageHoraire')-> getConflictingPlages($user);
+    		return array('statsOrga'=>$statsUser
     				);
     	}
     	return array();

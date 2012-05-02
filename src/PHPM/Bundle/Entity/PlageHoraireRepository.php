@@ -12,16 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class PlageHoraireRepository extends EntityRepository
 {
-	public function getConflictingPlages(\PHPM\Bundle\Entity\Orga $orga)
-	{
-		$orgaId = $orga->getId();
-	return $this->getEntityManager()
-	->createQuery("SELECT ph,t,g FROM PHPMBundle:PlageHoraire ph JOIN ph.besoinsOrga bo JOIN bo.orgaHint o JOIN ph.tache t
-			JOIN t.groupeTache g
-			WHERE o.id = $orgaId AND t.statut >=0 AND ph NOT IN
-				( SELECT ph1 FROM PHPMBundle:PlageHoraire ph1 JOIN ph1.besoinsOrga bo1 JOIN bo1.orgaHint o1
-				WHERE (ph1.debut > ph.fin and ph1.fin < ph.debut) AND o1 = $orgaId)
-			ORDER BY ph.debut		")
-			->getArrayResult();
-	}
+// 	public function getConflictingPlages(\PHPM\Bundle\Entity\Orga $orga)
+// 	{
+// 		$orgaId = $orga->getId();
+// 	var_dump($this->getEntityManager()
+// 	->createQuery("SELECT ph,t,g FROM PHPMBundle:PlageHoraire ph JOIN ph.besoinsOrga bo JOIN bo.orgaHint o JOIN ph.tache t
+// 			JOIN t.groupeTache g
+// 			WHERE o.id = $orgaId AND t.statut >=0 AND ph.id NOT IN
+// 			( SELECT ph1.id FROM PHPMBundle:PlageHoraire ph1 JOIN ph1.besoinsOrga bo1 JOIN bo1.orgaHint o1 JOIN ph1.tache t1
+// 				WHERE (ph1.debut > ph.fin or ph1.fin < ph.debut) AND ph.id != ph1.id AND o1.id = $orgaId AND t1.statut >=0)
+// 			ORDER BY ph.debut		")
+// 			->getArrayResult());
+	
+// 	}
 }

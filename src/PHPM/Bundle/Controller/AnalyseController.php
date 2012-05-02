@@ -121,22 +121,28 @@ class AnalyseController extends Controller
     /**
      * Rapport responsables
      *
-     * @Route("/responsables", name="analyse_responsables")
+     * @Route("/plagesorga/{orgaid}", defaults={"orgaid"="all"}, name="analyse_plagesorga")
      * @Template()
      */
-    public function responsablesAction()
+    public function plagesOrgaAction($orgaid)
     {
     	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
     		throw new AccessDeniedException();
     	}
-    
-    	$em = $this->getDoctrine()->getEntityManager();
-    
-
-    	$respDQL = "SELECT o,bo,p,t,g FROM PHPMBundle:Orga o
-    	JOIN o.besoinsOrgaHint bo  JOIN bo.plageHoraire p JOIN p.tache t JOIN t.groupeTache g  WHERE t.statut >=2
-    	ORDER BY o.nom, p.debut ";
     	
+    	$em = $this->getDoctrine()->getEntityManager();
+    	
+    	if ($orgaid=='all') {
+    		$respDQL = "SELECT o,bo,p,t,g FROM PHPMBundle:Orga o
+    		JOIN o.besoinsOrgaHint bo  JOIN bo.plageHoraire p JOIN p.tache t JOIN t.groupeTache g  WHERE t.statut >=2
+    		ORDER BY o.nom, p.debut ";
+    	}else{
+    		
+    		$respDQL = "SELECT o,bo,p,t,g FROM PHPMBundle:Orga o
+    		JOIN o.besoinsOrgaHint bo  JOIN bo.plageHoraire p JOIN p.tache t JOIN t.groupeTache g  WHERE t.statut >=0 AND o.id = $orgaid
+    		ORDER BY o.nom, p.debut ";
+    	}
+    
     	
     	$respResult = $em
     	->createQuery($respDQL)
