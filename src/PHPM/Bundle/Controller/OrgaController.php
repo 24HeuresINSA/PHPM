@@ -656,6 +656,7 @@ class OrgaController extends Controller
     	return $response;
 	}
 	
+
 	/**
 	 * Print orga planning.
 	 *
@@ -682,6 +683,28 @@ class OrgaController extends Controller
 	    		);
 	}
 	
+	
+	/**
+	 * iCal orga planning.
+	 *
+	 * @Route("/{orgaid}/planning.ics",  name="orga_ical")
+	 * @Template()
+	 */
+	public function iCalAction($orgaid)
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$config = $e=$this->get('config.extension');
+	
+		$debut = new \DateTime();
+		$fin = new \DateTime($config->getValue('phpm_planning_fin'));
+	
+		$em = $this->getDoctrine()->getEntityManager();
+		$orgas = $em->getRepository('PHPMBundle:Orga')-> getPlanning($orgaid,$debut,$fin);
+		 
+		 
+		return array('orga' => $orgas[0],'debut'=>$debut, 'fin'=>$fin
+		);
+	}
 	
 	/**
 	 * Charisme .
