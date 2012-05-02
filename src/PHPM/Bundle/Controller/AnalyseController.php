@@ -134,7 +134,7 @@ class AnalyseController extends Controller
     	
     	if ($orgaid=='all') {
     		$respDQL = "SELECT o,bo,p,t,g FROM PHPMBundle:Orga o
-    		JOIN o.besoinsOrgaHint bo  JOIN bo.plageHoraire p JOIN p.tache t JOIN t.groupeTache g  WHERE t.statut >=2
+    		JOIN o.besoinsOrgaHint bo  JOIN bo.plageHoraire p JOIN p.tache t JOIN t.groupeTache g  WHERE t.statut >=0
     		ORDER BY o.nom, p.debut ";
     	}else{
     		
