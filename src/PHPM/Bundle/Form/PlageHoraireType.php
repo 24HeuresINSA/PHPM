@@ -44,7 +44,6 @@ class PlageHoraireType extends AbstractType
             ->add('creneauUnique', null, array('label'=>'Créneau Unique (pas de découpage)'))
             ->add('dureeCreneau', 'choice', array('label'=>'Durée d\'un créneau', 'choices'=>$choixDurees))
             ->add('recoupementCreneau', 'choice', array('label'=>'Recoupement entre deux créneaux consécutifs (en sec.)', 'choices' => $choixRC ))
-			->add('respNecessaire', null, array('label'=>'Le responsable de la tâche doit être présent'))
 			->add('besoinsOrga','collection', array('type' => new BesoinOrgaType($this->config),
 													'allow_add' => true,
 													'allow_delete' => true,
