@@ -37,10 +37,10 @@ class DefaultController extends Controller
     		$config = $e=$this->get('config.extension');    		
     		$debutPlanning = new \DateTime($config->getValue('phpm_planning_debut'));
     		$finPlanning = new \DateTime($config->getValue('phpm_planning_fin'));
-    		$planning=$em->getRepository('PHPMBundle:Orga')->getPlanning(7,$debutPlanning,$finPlanning);
+    		$planning=$em->getRepository('PHPMBundle:Orga')->getPlanning($user->getId(),$debutPlanning,$finPlanning);
     		
     		return array('statsOrga'=>$statsUser,
-    				'planning'=>$planning[0]
+    				'planning'=>$planning
     				);
     	}
     	return array();

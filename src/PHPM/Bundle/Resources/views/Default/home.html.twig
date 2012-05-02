@@ -50,7 +50,7 @@
 					(groupe {{ app.user.groupePC }})
 			        {% endif %}<br>		        
 			      </dl>
-		          <p><a class="btn" href="{{ path('orga_edit',{'id':app.user.id }) }}">Modifier mes informations »</a></p>
+		          <p><a class="btn" href="{{ path('orga_edit',{'id':app.user.id }) }}"><i class="icon-pencil"></i> Modifier mes informations »</a></p>
 		    	</div>
 	    	</div>
 	    
@@ -132,7 +132,7 @@
 					    </tbody>
 					</table>
 					
-	          <p><a class="btn" href="{{ path('tache',{'orgaid': app.user.id}) }}">Accéder aux fiches tâches »</a></p>
+	          <p><a class="btn" href="{{ path('tache',{'orgaid': app.user.id}) }}"><i class="icon-file"></i> Accéder aux fiches tâches »</a></p>
 	    	</div>
 	    	
 	    	
@@ -149,7 +149,7 @@
 	            <a class="close" data-dismiss="alert" href="#">×</a>
 	            <h4 class="alert-heading">Aucun charisme !</h4>
 	            <p>Tu n'as pas encore renseigné tes disponibilités.</p>
-				<p><a class="btn" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}">Renseigner mes disponibilités »</a></p>
+				<p><a class="btn" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Renseigner mes disponibilités »</a></p>
 	        </div>
 			{% else %}
 				{% if statsOrga.nbOrgas != 0 and statsOrga.PCOrga<(statsOrga.PCTotal/statsOrga.nbOrgas) %}
@@ -157,7 +157,7 @@
 				            <a class="close" data-dismiss="alert" href="#">×</a>
 				            <h4 class="alert-heading">Faible charisme !</h4>
 				            <p>Tu as renseigné peu de disponibilités.</p>
-				            <p><a class="btn" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}">Ajouter des disponibilités</a></p>
+				            <p><a class="btn" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Ajouter des disponibilités</a></p>
 				        </div>
 				{% endif %}
 				<div class="well">
@@ -174,7 +174,7 @@
 				    	</p>
 				    </div>			
 				</div>
-				<div class="btn-toolbar"><a class="btn btn-primary" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}">Modifier mes disponibilités »</a>
+				<div class="btn-toolbar"><a class="btn btn-primary" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Modifier mes disponibilités »</a>
 				<a class="btn" href="{{ path('orga_charisme') }}">Statistiques Charisme »</a></div>
 			{% endif %}
 			{% endif %}
@@ -191,33 +191,34 @@
 		       	<div class="alert alert-block alert-info fade in">
 		            <a class="close" data-dismiss="alert" href="#">×</a>
 		            <h4 class="alert-heading">Il reste {{ statsOrga.nonValidated }} orgas non validés.</h4>
-		            <a class="btn" href="{{ path('orga', {'statut':0}) }}">Afficher la liste »</a>
+		            <a class="btn" href="{{ path('orga', {'statut':0}) }}"><i class="icon-list"></i> Afficher la liste »</a>
 		        </div>
 		        {% endif %}
 	       </div>
 	    	{% endif %}
-	    	{% if is_granted('ROLE_VISITOR') and planning|length > 0%}	
+	    	{% if is_granted('ROLE_VISITOR') and planning[0] is defined %}	
 			<div class="span{% if is_granted('ROLE_ADMIN') %}8{% else %}12{% endif %}">
 	        	<h2>Planning prévisionnel</h2>
 					<table class="table well">
 						<thead>
 						<tr>
-							<th>Horaires</th><th>Tâche</th>
+							<th>Horaires</th><th>Tâche</th><th>Lieu</th>
 						</tr>
 						<tbody>
-							{% for d in planning.disponibilites %}
+							{% for d in planning[0].disponibilites %}
 								{% for creneau in d.creneaux %}
 									<tr>
 									<td>{{ creneau.debut | format_datetime('EEEE dd MMM Y HH:mm') }}
 	  									-> {{ creneau.fin | format_datetime('EEEE dd MMM HH:mm') }}</td>
 	  								<td>{{ creneau.plageHoraire.tache.groupeTache.nom }} / {{ creneau.plageHoraire.tache.nom }}</td>
+	  								<td>{{ creneau.plageHoraire.tache.lieu }}</td>
 									</tr>
 								{% endfor %}
 							{% endfor %}
 						</tbody>
 					
 					</table>
-					<a class="btn" href="{{ path('orga_print', {'orgaid':app.user.id }) }}">Imprimer mon planning »</a>
+					<a class="btn" href="{{ path('orga_print', {'orgaid':app.user.id }) }}"><i class="icon-print"></i> Imprimer mon planning »</a>
 
 
 	  
