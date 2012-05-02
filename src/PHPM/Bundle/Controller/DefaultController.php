@@ -33,7 +33,14 @@ class DefaultController extends Controller
     		$statsUser=$em->getRepository('PHPMBundle:Orga')->getStats($user);
     		$statsUser['taches']=$em->getRepository('PHPMBundle:Tache')->getOrgaStats($user);
 //     		$conflictingPlages=$em->getRepository('PHPMBundle:PlageHoraire')-> getConflictingPlages($user);
-    		return array('statsOrga'=>$statsUser
+
+    		$config = $e=$this->get('config.extension');    		
+    		$debutPlanning = new \DateTime($config->getValue('phpm_planning_debut'));
+    		$finPlanning = new \DateTime($config->getValue('phpm_planning_fin'));
+    		$planning=$em->getRepository('PHPMBundle:Orga')->getPlanning(7,$debutPlanning,$finPlanning);
+    		
+    		return array('statsOrga'=>$statsUser,
+    				'planning'=>$planning[0]
     				);
     	}
     	return array();

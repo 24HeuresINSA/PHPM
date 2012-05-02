@@ -196,6 +196,60 @@
 		        {% endif %}
 	       </div>
 	    	{% endif %}
+	    	{% if is_granted('ROLE_VISITOR') and planning|length > 0%}	
+			<div class="span{% if is_granted('ROLE_ADMIN') %}8{% else %}12{% endif %}">
+	        	<h2>Planning prévisionnel</h2>
+					<table class="table well">
+						<thead>
+						<tr>
+							<th>Horaires</th><th>Tâche</th>
+						</tr>
+						<tbody>
+							{% for d in planning.disponibilites %}
+								{% for creneau in d.creneaux %}
+									<tr>
+									<td>{{ creneau.debut | format_datetime('EEEE dd MMM Y HH:mm') }}
+	  									-> {{ creneau.fin | format_datetime('EEEE dd MMM HH:mm') }}</td>
+	  								<td>{{ creneau.plageHoraire.tache.groupeTache.nom }} / {{ creneau.plageHoraire.tache.nom }}</td>
+									</tr>
+								{% endfor %}
+							{% endfor %}
+						</tbody>
+					
+					</table>
+					<a class="btn" href="{{ path('orga_print', {'orgaid':app.user.id }) }}">Imprimer mon planning »</a>
+
+
+	  
+{# 	  <h4></h4>#}
+{# 	  	</div>#}
+	  	
+{# 	  <div class="lieu"><h4>{{ creneau.plageHoraire.tache.lieu }}</h4></div>#}
+{# 	 </div>#}
+{# 	 	<div class="infos">#}
+{# 	 		<div class="titre"><h3>{{ creneau.plageHoraire.tache.groupeTache.nom }} / {{ creneau.plageHoraire.tache.nom }}</h3></div>#}
+{# 	 		<b>Responsable : </b>{{ entitiesMacro.orga(creneau.plageHoraire.tache.responsable) }} #}
+{# 	 									{{ creneau.plageHoraire.tache.responsable.telephone }}#}
+{# 	 	</div>#}
+{# 	  <div class="consignes">#}
+{# 	    <h4>Consignes</h4>{{ creneau.plageHoraire.tache.consignes |raw}}#}
+{# 	  </div>#}
+{# 	  <div class="consignes">#}
+{# 	    <h4>Matériel Nécessaire</h4>#}
+{# 			{% for bm in creneau.plageHoraire.tache.besoinsMateriel %}#}
+{# 	    		{% if bm.quantite > 0 %}#}
+{# 			{{ bm.materiel.nom }},#}
+{# 			{% endif %}#}
+{# 	    	{% endfor %}#}
+
+
+{#  	{% endfor %}#}
+{# 	{% endfor %}#}
+{# 		        {% endif %}#}
+
+	  
+	       </div>
+	    	{% endif %}
 
 	</div>		
 	

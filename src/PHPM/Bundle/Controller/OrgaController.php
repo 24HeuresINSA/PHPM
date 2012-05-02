@@ -659,7 +659,7 @@ class OrgaController extends Controller
 	/**
 	 * Print orga planning.
 	 *
-	 * @Route("/{orgaid}/print",  defaults={"orga"="all"}, name="orga_print")
+	 * @Route("/{orgaid}/print",  defaults={"orgaid"="all"}, name="orga_print")
 	 * @Template()
 	 */
 	public function printAction($orgaid)
