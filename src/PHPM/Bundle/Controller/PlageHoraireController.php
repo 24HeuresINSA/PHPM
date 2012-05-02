@@ -107,7 +107,8 @@ class PlageHoraireController extends Controller
     {
         $entity  = new PlageHoraire();
         $request = $this->getRequest();
-        $form    = $this->createForm(new PlageHoraireType(), $entity);
+        $config = $e=$this->get('config.extension');
+        $form    = $this->createForm(new PlageHoraireType($config), $entity);
 
         $form->bindRequest($request);
         
@@ -174,14 +175,14 @@ class PlageHoraireController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
-
+        $config = $this->get('config.extension');
         $entity = $em->getRepository('PHPMBundle:PlageHoraire')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find PlageHoraire entity.');
         }
 
-        $editForm = $this->createForm(new PlageHoraireType(), $entity);
+        $editForm = $this->createForm(new PlageHoraireType($config), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -200,14 +201,14 @@ class PlageHoraireController extends Controller
     public function updateAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
-
+        $config = $this->get('config.extension');
         $entity = $em->getRepository('PHPMBundle:PlageHoraire')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find PlageHoraire entity.');
         }
 
-        $editForm   = $this->createForm(new PlageHoraireType(), $entity);
+        $editForm   = $this->createForm(new PlageHoraireType($config), $entity);
         $deleteForm = $this->createDeleteForm($id);
         
 

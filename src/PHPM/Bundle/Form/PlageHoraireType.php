@@ -7,6 +7,16 @@ use Symfony\Component\Form\FormBuilder;
 
 class PlageHoraireType extends AbstractType
 {
+	
+	protected $config;
+	
+	function __construct($config)
+	{
+	
+		$this->config = $config;
+	
+	}
+	
     public function buildForm(FormBuilder $builder, array $options) {
         $choixDurees= array();
         
@@ -35,7 +45,7 @@ class PlageHoraireType extends AbstractType
             ->add('dureeCreneau', 'choice', array('label'=>'Durée d\'un créneau', 'choices'=>$choixDurees))
             ->add('recoupementCreneau', 'choice', array('label'=>'Recoupement entre deux créneaux consécutifs (en sec.)', 'choices' => $choixRC ))
 			->add('respNecessaire', null, array('label'=>'Le responsable de la tâche doit être présent'))
-			->add('besoinsOrga','collection', array('type' => new BesoinOrgaType(),
+			->add('besoinsOrga','collection', array('type' => new BesoinOrgaType($this->config),
 													'allow_add' => true,
 													'allow_delete' => true,
 									                'by_reference' => false,
