@@ -24,7 +24,7 @@ width:600pt;
 {% endif %}
 <div class="orga">
 <h1>{{ entitiesMacro.orga(orga) }}</h1>
-{{ phpm_planning_message |raw }} Planning valable du {{ debut | format_datetime('EEEE dd MMM Y HH:mm') }} au  {{ fin | format_datetime('EEEE dd MMM Y HH:mm) }}.
+{{ phpm_planning_message |raw }} Planning valable du {{ debut | format_datetime('EEEE dd MMM Y HH:mm') }} au  {{ fin | format_datetime('EEEE dd MMM Y HH:mm') }}.
 
 
 	{% for d in orga.disponibilites %}
