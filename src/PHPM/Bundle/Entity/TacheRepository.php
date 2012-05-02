@@ -51,7 +51,7 @@ class TacheRepository extends EntityRepository
 	public function search($s)
 	{
 		return $this->getEntityManager()
-		->createQuery("SELECT t FROM PHPMBundle:Tache t WHERE t.nom LIKE :s")
+		->createQuery("SELECT t FROM PHPMBundle:Tache t WHERE t.nom LIKE :s AND t.statut != '-1'")
 		->setParameter('s', "%".$s."%")
 		->getResult();
 	}

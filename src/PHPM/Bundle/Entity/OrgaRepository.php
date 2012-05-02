@@ -176,7 +176,7 @@ class OrgaRepository extends EntityRepository
 	public function search($s)
 	{
 		return $this->getEntityManager()
-		->createQuery("SELECT o FROM PHPMBundle:Orga o WHERE (o.nom LIKE :s OR o.prenom LIKE :s OR o.surnom LIKE :s OR o.telephone LIKE :s OR o.email LIKE :s)")
+		->createQuery("SELECT o FROM PHPMBundle:Orga o WHERE (o.nom LIKE :s OR o.prenom LIKE :s OR o.surnom LIKE :s OR o.telephone LIKE :s OR o.email LIKE :s) AND o.statut != '-1'")
 		->setParameter('s', "%".$s."%")
 		->getResult();	
 	}
