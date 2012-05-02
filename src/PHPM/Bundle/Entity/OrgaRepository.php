@@ -201,7 +201,7 @@ class OrgaRepository extends EntityRepository
 		if($orga_id == 'all'){
 			return  $this->getEntityManager()->createQuery("SELECT o,d,c,p,t,g,r,bm,m FROM PHPMBundle:Orga o JOIN o.disponibilites d JOIN d.creneaux c JOIN
 					c.plageHoraire p JOIN p.tache t JOIN t.groupeTache g JOIN t.responsable r  LEFT JOIN t.besoinsMateriel bm LEFT JOIN bm.materiel m
-					WHERE c.debut >= :debut AND c.fin <= :fin
+					WHERE c.fin >= :debut AND c.debut <= :fin
 					ORDER BY o.nom,d.debut, c.debut")
 					->setParameter('debut', $debut)
 					->setParameter('fin', $fin)
@@ -209,7 +209,7 @@ class OrgaRepository extends EntityRepository
 		}else{
 			return  $this->getEntityManager()->createQuery("SELECT o,d,c,p,t,g,r,bm,m FROM PHPMBundle:Orga o JOIN o.disponibilites d JOIN d.creneaux c JOIN
 					c.plageHoraire p JOIN p.tache t JOIN t.groupeTache g JOIN t.responsable r  LEFT JOIN t.besoinsMateriel bm LEFT JOIN bm.materiel m
-					WHERE o.id = :oid AND c.debut >= :debut AND c.fin <= :fin
+					WHERE o.id = :oid AND c.fin >= :debut AND c.debut <= :fin
 					ORDER BY o.nom,d.debut, c.debut")
 					->setParameter('oid',$orga_id)
 					->setParameter('debut', $debut)
