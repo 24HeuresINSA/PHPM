@@ -63,47 +63,47 @@
 		            <h4 class="alert-heading">Il te reste des fiches tâches à rédiger.</h4>
 		        </div>
 			{% endif %}
-{# 			{% if conflictingPlages | length >0 %}#}
-{# 					<div class="alert alert-block alert-error fade in">#}
-{# 		            <a class="close" data-dismiss="alert" href="#">×</a>#}
-{# 		            <h4 class="alert-heading">Tu dois être présent sur plusieurs tâches à la fois.</h4>#}
-{# 		            <a class="btn" data-toggle="modal" href="#conflictingPlagesModal" >Afficher les tâches en conflit »</a>#}
-{# 					</div>#}
-{# 					<div id="conflictingPlagesModal" class="modal hide" style="display: none; left:10%;width:80%;margin:-250px 0 0 0px ">#}
-{# 			            <div class="modal-header">#}
-{# 			              <button class="close" data-dismiss="modal">×</button>#}
-{# 			              <h3>Tâches en conflit</h3>#}
-{# 			            </div>#}
-{# 			            <div class="modal-body">#}
-{# 			              <table class="table table-condensed">#}
-{# 						    	<thead>#}
-{# 						    	<tr>#}
-{# 						    	<td>Tâche</td>#}
-{# 						    	<th>Horaires</th>#}
+			{% if conflictingPlages | length >0 %}
+					<div class="alert alert-block alert-error fade in">
+		            <a class="close" data-dismiss="alert" href="#">×</a>
+		            <h4 class="alert-heading">Tu dois être présent sur plusieurs tâches à la fois.</h4>
+		            <a class="btn" data-toggle="modal" href="#conflictingPlagesModal" >Afficher les tâches en conflit »</a>
+					</div>
+					<div id="conflictingPlagesModal" class="modal hide" style="display: none; left:10%;width:80%;margin:-250px 0 0 0px ">
+			            <div class="modal-header">
+			              <button class="close" data-dismiss="modal">×</button>
+			              <h3>Tâches en conflit</h3>
+			            </div>
+			            <div class="modal-body">
+			              <table class="table table-condensed">
+						    	<thead>
+						    	<tr>
+						    	<td>Tâche</td>
+						    	<th>Horaires</th>
 						    	 
-{# 						    	</tr>#}
-{# 						    	</thead>#}
-{# 						    	<tbody>#}
-{# 						    	{% for cp in conflictingPlages %}#}
-{# 						    		<tr class="">#}
-{# 						    		<td>{{ cp.tache.groupeTache.nom }} / {{ entitiesMacro.tache(cp.tache) }}</td>#}
-{# 						    		<td>{{ cp.debut | format_datetime('EEEE dd MMM Y HH:mm') }}#}
-{# 						    		<i class="icon-arrow-right"></i>#}
-{# 						    		{{ cp.fin | format_datetime('EEEE dd MMM HH:mm') }}#}
-{# 						    		</td>#}
-{# 						    		</tr>#}
-{# 						    		{% endfor %}#}
-{# 						    		</tbody>#}
-{# 					    	</table>#}
-{# 			            </div>#}
-{# 		            <div class="modal-footer">#}
-{# 		            <a href="#" class="btn" data-dismiss="modal">Fermer</a>#}
-{# 		              <a class="btn btn-primary" href="{{ path('tache',{'orgaid': app.user.id}) }}">Accéder aux fiches tâches »</a>#}
-{# 		            </div>#}
-{#           </div>#}
+						    	</tr>
+						    	</thead>
+						    	<tbody>
+						    	{% for cp in conflictingPlages %}
+						    		<tr class="">
+						    		<td>{{ cp.tache.groupeTache.nom }} / {{ entitiesMacro.tache(cp.tache) }}</td>
+						    		<td>{{ cp.debut | format_datetime('EEEE dd MMM Y HH:mm') }}
+						    		<i class="icon-arrow-right"></i>
+						    		{{ cp.fin | format_datetime('EEEE dd MMM HH:mm') }}
+						    		</td>
+						    		</tr>
+						    		{% endfor %}
+						    		</tbody>
+					    	</table>
+			            </div>
+		            <div class="modal-footer">
+		            <a href="#" class="btn" data-dismiss="modal">Fermer</a>
+		              <a class="btn btn-primary" href="{{ path('tache',{'orgaid': app.user.id}) }}">Accéder aux fiches tâches »</a>
+		            </div>
+          </div>
 		        
 			
-{# 			{% endif %}#}
+			{% endif %}
 		          <h3>Statistiques</h3>
 			          <table class="table table-condensed">
 					    <thead>
