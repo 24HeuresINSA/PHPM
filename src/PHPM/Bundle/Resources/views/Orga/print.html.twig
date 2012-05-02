@@ -16,11 +16,17 @@ width:600pt;
 
 {% block body %}
 <div class="row-fluid " >
+{% for key,orga in orgas %}
+{% if key!=0 %}
+<div class="pagebreak"></div>
+{% endif %}
+<div class="orga">
+<h1>{{ entitiesMacro.orga(orga) }}</h1>
+{{ phpm_planning_message |raw }} Planning valable du {{ debut | format_datetime('EEEE dd MMM Y') }} au  {{ fin | format_datetime('EEEE dd MMM Y') }}.
 
-<h1>{{ entitiesMacro.orga(orga) }}</h1><em>Attention : planning non définitif</em>
 
-
-	{% for creneau in creneaux %}
+	{% for d in orga.disponibilites %}
+	{% for creneau in d.creneaux %}
 
 
 
@@ -55,12 +61,13 @@ width:600pt;
 	
 		</div>
 
- 
+ 	{% endfor %}
 	{% endfor %}
  
 
+</div>
 
-
+	{% endfor %}
 
 </div>
 {% endblock %}

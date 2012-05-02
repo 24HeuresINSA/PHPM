@@ -13,7 +13,11 @@ INSERT INTO `Config` (`id`, `field`, `label`, `value`, `hint`) VALUES
 (12, 'manifestation_admin_email', 'Email de l''administrateur', 'orga@24heures.org', NULL),
 (13, 'phpm_contenu_mail_confirmation_soft', 'Contenu du mail de confirmation soft', '<p>Ton inscription en tant qu''Orga Soft  pour la 38<sup>e</sup> édition des 24 Heures de l''INSA a bien été prise en compte.</p>\r\n<p>Pour toute question, envoies un email à <a href="mailto:orga@24heures.org">orga@24heures.org</a> ou répond à cet email.</p>\r\n<p>Merci beaucoup de ton aide et à très bientôt sur la manif'' !</p>\r\n<p><em>Maud et Adam.</em></p>', ''),
 (14, 'manifestation_charisme_minimum', 'Charisme minimum pour s''inscrire', '30', NULL),
-(15, 'phpm_inscription_disponibilites_consignes', 'Consignes concernant les disponibilités', '<p>\r\n<b>Tu dois sélectionner au moins 6h d''Orga, soit 3 créneaux de 2h.</b>\r\nC''est un minimum, plus tu mets de disponibilités, plus tu gagnes de charisme !</p>', '');
+(15, 'phpm_inscription_disponibilites_consignes', 'Consignes concernant les disponibilités', '<p>\r\n<b>Tu dois sélectionner au moins 6h d''Orga, soit 3 créneaux de 2h.</b>\r\nC''est un minimum, plus tu mets de disponibilités, plus tu gagnes de charisme !</p>', ''),
+(16, 'manifestation_orga_plagehoraireconfiancemin', 'Confiance minimale pour être désigné dans une plage horaire', '500', NULL),
+(17, 'phpm_planning_message', 'Message affiché sur les plannings', '<em>Attention : planning non définitif.\r\n</em>', ''),
+(18, 'phpm_planning_debut', 'Heure de début des plannings', '12-05-02 00:00:00', ''),
+(19, 'phpm_planning_fin', 'Heure de début des plannings', '13-05-05 00:00:00', '');
 
 INSERT INTO `Confiance` (`id`, `nom`, `valeur`, `couleur`) VALUES
 (1, 'Soft', 100, 'blue'),

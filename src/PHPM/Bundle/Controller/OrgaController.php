@@ -283,7 +283,7 @@ class OrgaController extends Controller
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
-        $config = $e=$this->get('config.extension');
+        $config = $this->get('config.extension');
         
         $entity  = new Orga();
         $request = $this->getRequest();
@@ -659,35 +659,26 @@ class OrgaController extends Controller
 	/**
 	 * Print orga planning.
 	 *
-	 * @Route("/{id}/print", name="orga_print")
+	 * @Route("/{orgaid}/print",  defaults={"orga"="all"}, name="orga_print")
 	 * @Template()
 	 */
-	public function printAction($id)
+	public function printAction($orgaid)
 	{
 	    $em = $this->getDoctrine()->getEntityManager();
         $config = $e=$this->get('config.extension');
-        $orga = $em->getRepository('PHPMBundle:Orga')->find($id);
-
-        if (!$orga) {
-            throw $this->createNotFoundException('Unable to find Orga entity.');
-        }
         
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser() != $orga) {
+        $debut = new \DateTime($config->getValue('phpm_planning_debut'));
+        $fin = new \DateTime($config->getValue('phpm_planning_fin'));
+        
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser()->getId() != $orga->getId()) {
         	throw new AccessDeniedException();
         }
         
         $em = $this->getDoctrine()->getEntityManager();
-        $creneaux = $em->createQuery("SELECT c,p,t,g,r,bm,m FROM PHPMBundle:Creneau c  JOIN c.disponibilite d  JOIN d.orga o 
-        		 JOIN c.plageHoraire p  JOIN p.tache t JOIN t.groupeTache g JOIN t.responsable r  LEFT JOIN t.besoinsMateriel bm LEFT JOIN bm.materiel m
-        		WHERE o.id = :oid
-        		 ORDER BY c.debut")
-        ->setParameter('oid',$orga->getId())
-        ->getArrayResult();
+        $orgas = $em->getRepository('PHPMBundle:Orga')-> getPlanning($orgaid,$debut,$fin);
              
 	    
-	    
-	    return array('orga' => $orga,
-	    		'creneaux'=>$creneaux
+	    return array('orgas' => $orgas,'debut'=>$debut, 'fin'=>$fin
 	    		);
 	}
 	
@@ -943,6 +934,8 @@ class OrgaController extends Controller
 	
 	
 	}
+	
+	
 	
 	
 	

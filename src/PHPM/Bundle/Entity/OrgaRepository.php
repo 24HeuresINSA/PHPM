@@ -195,6 +195,30 @@ class OrgaRepository extends EntityRepository
 	
 	}
 	
+	public function getPlanning($orga_id = 'all',\DateTime $debut, \DateTime $fin){
+	
+		
+		if($orga_id == 'all'){
+			return  $this->getEntityManager()->createQuery("SELECT o,d,c,p,t,g,r,bm,m FROM PHPMBundle:Orga o JOIN o.disponibilites d JOIN d.creneaux c JOIN
+					c.plageHoraire p JOIN p.tache t JOIN t.groupeTache g JOIN t.responsable r  LEFT JOIN t.besoinsMateriel bm LEFT JOIN bm.materiel m
+					WHERE c.debut >= :debut AND c.fin <= :fin
+					ORDER BY o.nom,d.debut, c.debut")
+					->setParameter('debut', $debut)
+					->setParameter('fin', $fin)
+					->getArrayResult();
+		}else{
+			return  $this->getEntityManager()->createQuery("SELECT o,d,c,p,t,g,r,bm,m FROM PHPMBundle:Orga o JOIN o.disponibilites d JOIN d.creneaux c JOIN
+					c.plageHoraire p JOIN p.tache t JOIN t.groupeTache g JOIN t.responsable r  LEFT JOIN t.besoinsMateriel bm LEFT JOIN bm.materiel m
+					WHERE o.id = :oid AND c.debut >= :debut AND c.fin <= :fin
+					ORDER BY o.nom,d.debut, c.debut")
+					->setParameter('oid',$orga_id)
+					->setParameter('debut', $debut)
+					->setParameter('fin', $fin)
+					->getArrayResult();
+		}
+	
+	}
+	
 	
 	
 //	getOrgasWithCriteriaTache numéro 2 pour gérer le tache id
