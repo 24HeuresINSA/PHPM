@@ -120,7 +120,7 @@ CalendarView.prototype = {
 					var _fin = _orga['disponibilites'][_iDispo]['fin'];
 					
 					// on appelle une fonction qui va placer les disponibilités
-					pmAffectation.views.calendar.placeDisponibilites(_debut, _fin);
+					pmAffectation.views.calendar.placeDisponibilitesOrga(_debut, _fin);
 
 					// on place les créneaux - j'ai passé 4 heures à optimiser le truc, fais gaffe à ce que tu touches
 					for (var _iCreneau in _orga['disponibilites'][_iDispo]['creneaux']) {
@@ -159,7 +159,7 @@ CalendarView.prototype = {
 					var _fin = _tache['creneaux'][_iCreneau]['fin'];
 					
 					// on appelle une fonction qui va placer les créneaux non affectés
-					pmAffectation.views.calendar.placeDisponibilites(_debut, _fin);
+					pmAffectation.views.calendar.placeCreneauxTache(_debut, _fin);
 	
 					// on place les créneaux - j'ai passé 4 heures à optimiser le truc, fais gaffe à ce que tu touches
 					/*for (var _iCreneau in _orga['disponibilites'][_iDispo]['creneaux']) {
@@ -190,8 +190,8 @@ CalendarView.prototype = {
 			}
 		}
 	},
-	// place une disponibilite
-	placeDisponibilites: function(dateDebut, dateFin) {
+	// place une disponibilite (mode orga)
+	placeDisponibilitesOrga: function(dateDebut, dateFin) {
 		// on place les dispos, avec la classe et le click
 		for (var _iDts = dateDebut; _iDts.getTime() < dateFin.getTime(); _iDts.setTime(_iDts.getTime()+15*60*1000)) {
 			var _dateComplete = _iDts.getFullYear()+'-'+_iDts.getPMonth()+'-'+_iDts.getPDate();
@@ -206,6 +206,22 @@ CalendarView.prototype = {
 			.bind('click', {}, pmAffectation.controllers.calendar.clickQuartHeure);
 		}
 	},
+	// place un créneau (mode tâche)
+	placeCreneauxTache: function(dateDebut, dateFin, idCreneau) {
+		// on place les dispos, avec la classe et le click
+		for (var _iDts = dateDebut; _iDts.getTime() < dateFin.getTime(); _iDts.setTime(_iDts.getTime()+15*60*1000)) {
+			var _dateComplete = _iDts.getFullYear()+'-'+_iDts.getPMonth()+'-'+_iDts.getPDate();
+			
+			// on rend le titre du jour incliquable
+			$('#titre_date_'+_dateComplete).unbind('click');
+			// TOOD rendre titre des jours cliquable
+			
+			// sélection des quarts d'heure suivant les attributs de temps de plus en plus précis
+			$('.jour[jour="'+_dateComplete+'"] > .heure[heure="'+_iDts.getHours()
+			+'"] > .quart_heure[minute="'+_iDts.getMinutes()+'"]').addClass('free')
+			.bind('click', {idCreneau: idCreneau}, pmAffectation.controllers.calendar.clickCreneauTache);
+		}
+	},	
 	// place un créneau
 	placeCreneau: function(orga, idDispo, idCreneau, dateDebut, duree, nbJour) {
 		var _prefixe = (nbJour !== 0) ? '>> ' : '';

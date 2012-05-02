@@ -15,7 +15,7 @@ class GroupeTacheRepository extends EntityRepository
 	public function search($s)
 	{
 		return $this->getEntityManager()
-		->createQuery("SELECT g FROM PHPMBundle:GroupeTache g WHERE g.nom LIKE :s")
+		->createQuery("SELECT g FROM PHPMBundle:GroupeTache g WHERE g.nom LIKE :s AND g.statut != '-1'")
 		->setParameter('s', "%".$s."%")
 		->getResult();
 	}
