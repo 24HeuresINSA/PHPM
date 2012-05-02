@@ -212,8 +212,8 @@ class OrgaRepository extends EntityRepository
 					WHERE o.id = :oid AND c.fin >= :debut AND c.debut <= :fin
 					ORDER BY o.nom,d.debut, c.debut")
 					->setParameter('oid',$orga_id)
-					->setParameter('debut', $debut->format('Y-m-d H:i:s')
-					->setParameter('fin', $fin->format('Y-m-d H:i:s')
+					->setParameter('debut', $debut->format('Y-m-d H:i:s'))
+					->setParameter('fin', $fin->format('Y-m-d H:i:s'))
 					->getArrayResult();
 		}
 	
