@@ -182,6 +182,7 @@ class CreneauMakerController extends Controller
     }
     
     /**
+     * Deletes all generated creneaux for one ph
      * @Route("/deleteallph/{id}", name="creneaumaker_deleteallph")
      */
     public function deleteallphAction($id)
@@ -238,6 +239,11 @@ class CreneauMakerController extends Controller
     		throw new \Exception("La tâche doit être validée");
     	}
     
+    	foreach ($entity->getPlagesHoraire() as $ph){
+	    	foreach ($ph->getCreneaux() as $creneau){
+	    		$em->remove($creneau);
+	    	}
+    	}
    	
     	$commentaire = new Commentaire();
     	$commentaire->setAuteur($user);
