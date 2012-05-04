@@ -73,9 +73,13 @@ setBunload(true);
 		
 		
 		<div class="form-fluid">
+		{% if is_granted('ROLE_USER')%}
+			Suite à la DSI qui bug, tu ne peux pas modifier tes dispos ce soir. Reviens demain !
+			{% else %}
 			<div class="form-actions">
 				<button class="btn btn-primary" type="submit" name="action" value="save" >Valider</button>
-				</div>
+			</div>
+			{% endif %}
 	    </div>
 
 
