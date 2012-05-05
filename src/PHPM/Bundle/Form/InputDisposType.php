@@ -11,14 +11,7 @@ use PHPM\Bundle\Form\DisponibiliteInscriptionType;
 class InputDisposType extends AbstractType
 {
     
-    protected $admin;
-
-    function __construct($admin){
-        
-
-            $this->admin =$admin;
-    }
-    
+      
     public function buildForm(FormBuilder $builder, array $options)
     {
        
