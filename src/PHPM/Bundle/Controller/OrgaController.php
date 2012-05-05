@@ -528,7 +528,7 @@ class OrgaController extends Controller
 	            {
 	                 
 	            	if($submittedDI->contains($di)){
-	            		if(!$orga->getDisponibilitesInscription()->contains($di) && ($this->get('security.context')->isGranted('ROLE_ADMIN') || ($di->getStatut() > 0))){
+	            		if(!$orga->getDisponibilitesInscription()->contains($di) && ($this->get('security.context')->isGranted('ROLE_ADMIN') || ($di->getStatut() > 0)) && ($di->getDebut() > new \DateTime())){
 	            			$orga->addDisponibiliteInscription($di);
 	            			$di->addOrga($orga);
 	            		}
