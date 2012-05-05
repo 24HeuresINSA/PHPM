@@ -60,11 +60,11 @@ class CreneauController extends Controller
 //             throw $this->createNotFoundException('Unable to find Creneau entity.');
 //         }
 
-//         $deleteForm = $this->createDeleteForm($id);
+//         
 
 //         return array(
 //             'entity'      => $entity,
-//             'delete_form' => $deleteForm->createView(),        );
+//                     );
 //     }
 
 //     /**
@@ -130,12 +130,12 @@ class CreneauController extends Controller
         }
 
         $editForm = $this->createForm(new CreneauType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            
         );
     }
 
@@ -157,7 +157,7 @@ class CreneauController extends Controller
         }
 
         $editForm   = $this->createForm(new CreneauType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        
 
         $request = $this->getRequest();
 
@@ -173,7 +173,7 @@ class CreneauController extends Controller
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            
         );
     }
 

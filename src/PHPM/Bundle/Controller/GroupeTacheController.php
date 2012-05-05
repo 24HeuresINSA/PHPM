@@ -90,11 +90,11 @@ class GroupeTacheController extends Controller
             throw $this->createNotFoundException('Unable to find GroupeTache entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        
 
         return array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+                    );
     }
 
     /**
@@ -186,7 +186,7 @@ class GroupeTacheController extends Controller
         $taches = $em->getRepository('PHPMBundle:Tache')->getNonDeletedTaches($id);
 
         $editForm = $this->createForm(new GroupeTacheType($admin,$config), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        
 
         return array(
             'entity'      => $entity,

@@ -120,7 +120,7 @@ class MissionController extends Controller
         }
 
         $editForm   = $this->createForm(new MissionType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        
 
         $request = $this->getRequest();
 

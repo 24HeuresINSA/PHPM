@@ -55,11 +55,11 @@ class MaterielController extends Controller
             throw $this->createNotFoundException('Unable to find Materiel entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        
 
         return array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+                    );
     }
 
     /**

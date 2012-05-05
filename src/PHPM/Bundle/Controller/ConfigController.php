@@ -38,10 +38,10 @@ class ConfigController extends Controller {
 					->createNotFoundException('Unable to find Config entity.');
 		}
 
-		$deleteForm = $this->createDeleteForm($id);
+		
 
 		return array('entity' => $entity,
-				'delete_form' => $deleteForm->createView(),);
+				);
 	}
 	
 	/**
@@ -132,11 +132,11 @@ class ConfigController extends Controller {
 		}
 
 		$editForm = $this->createForm(new ConfigType(), $entity);
-		$deleteForm = $this->createDeleteForm($id);
+		
 
 		return array('entity' => $entity,
 				'edit_form' => $editForm->createView(),
-				'delete_form' => $deleteForm->createView(),);
+				);
 	}
 
 	/**
@@ -157,7 +157,7 @@ class ConfigController extends Controller {
 		}
 
 		$editForm = $this->createForm(new ConfigType(), $entity);
-		$deleteForm = $this->createDeleteForm($id);
+		
 
 		$request = $this->getRequest();
 
@@ -176,7 +176,7 @@ class ConfigController extends Controller {
 
 		return array('entity' => $entity,
 				'edit_form' => $editForm->createView(),
-				'delete_form' => $deleteForm->createView(),);
+				);
 	}
 
 	/**

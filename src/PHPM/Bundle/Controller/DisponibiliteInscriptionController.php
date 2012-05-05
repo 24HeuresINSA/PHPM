@@ -207,11 +207,11 @@ class DisponibiliteInscriptionController extends Controller
             throw $this->createNotFoundException('Unable to find DisponibiliteInscription entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        
 
         return array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+                    );
     }
 
     /**
@@ -286,12 +286,12 @@ class DisponibiliteInscriptionController extends Controller
         }
 
         $editForm = $this->createForm(new DisponibiliteInscriptionType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            
         );
     }
 

@@ -49,9 +49,7 @@ class BesoinMaterielController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+        return array('entity'      => $entity);
     }
 
     /**
@@ -117,12 +115,10 @@ class BesoinMaterielController extends Controller
         }
 
         $editForm = $this->createForm(new BesoinMaterielType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         );
     }
 
@@ -144,7 +140,6 @@ class BesoinMaterielController extends Controller
         }
 
         $editForm   = $this->createForm(new BesoinMaterielType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
 
@@ -159,8 +154,7 @@ class BesoinMaterielController extends Controller
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         );
     }
 

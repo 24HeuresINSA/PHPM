@@ -174,7 +174,7 @@ class TacheController extends Controller
         
         $editForm = $this->createForm(new TacheType($admin, $em, $config, $rOnly), $defaultValues);
 //         $besoinsForm = $this->createForm(new TacheBesoinsType(false,$em,$config,$entity));
-        $deleteForm = $this->createDeleteForm($id);
+        
         
         return array(
             'entity' => $entity,

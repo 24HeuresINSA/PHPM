@@ -63,11 +63,11 @@ class EquipeController extends Controller
             throw $this->createNotFoundException('Unable to find Equipe entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        
 
         return array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+                    );
     }
 
     /**
@@ -133,12 +133,12 @@ class EquipeController extends Controller
         }
 
         $editForm = $this->createForm(new EquipeType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            
         );
     }
 
@@ -160,7 +160,7 @@ class EquipeController extends Controller
         }
 
         $editForm   = $this->createForm(new EquipeType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        
 
         $request = $this->getRequest();
 
@@ -176,7 +176,7 @@ class EquipeController extends Controller
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            
         );
     }
 

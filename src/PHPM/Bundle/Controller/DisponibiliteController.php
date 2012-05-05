@@ -50,11 +50,11 @@ class DisponibiliteController extends Controller
 //             throw $this->createNotFoundException('Unable to find Disponibilite entity.');
 //         }
 
-//         $deleteForm = $this->createDeleteForm($id);
+//         
 
 //         return array(
 //             'entity'      => $entity,
-//             'delete_form' => $deleteForm->createView(),        );
+//                     );
 //     }
 
 //     /**
@@ -120,12 +120,12 @@ class DisponibiliteController extends Controller
 //         }
 
 //         $editForm = $this->createForm(new DisponibiliteType(), $entity);
-//         $deleteForm = $this->createDeleteForm($id);
+//         
 
 //         return array(
 //             'entity'      => $entity,
 //             'edit_form'   => $editForm->createView(),
-//             'delete_form' => $deleteForm->createView(),
+//             
 //         );
 //     }
 
@@ -147,7 +147,7 @@ class DisponibiliteController extends Controller
 //         }
 
 //         $editForm   = $this->createForm(new DisponibiliteType(), $entity);
-//         $deleteForm = $this->createDeleteForm($id);
+//         
 
 //         $request = $this->getRequest();
 
@@ -163,7 +163,7 @@ class DisponibiliteController extends Controller
 //         return array(
 //             'entity'      => $entity,
 //             'edit_form'   => $editForm->createView(),
-//             'delete_form' => $deleteForm->createView(),
+//             
 //         );
 //     }
 

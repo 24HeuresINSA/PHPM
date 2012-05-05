@@ -58,7 +58,7 @@ class PlageHoraireController extends Controller
 
         return array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+                    );
     }
 
     /**

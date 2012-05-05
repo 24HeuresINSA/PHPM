@@ -63,11 +63,11 @@ class CategorieController extends Controller
             throw $this->createNotFoundException('Unable to find Categorie entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        
 
         return array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+                    );
     }
 
     /**
@@ -133,12 +133,12 @@ class CategorieController extends Controller
         }
 
         $editForm = $this->createForm(new CategorieType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            
         );
     }
 
@@ -160,7 +160,7 @@ class CategorieController extends Controller
         }
 
         $editForm   = $this->createForm(new CategorieType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        
 
         $request = $this->getRequest();
 
@@ -176,7 +176,7 @@ class CategorieController extends Controller
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            
         );
     }
 
