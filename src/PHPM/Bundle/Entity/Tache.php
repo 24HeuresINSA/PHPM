@@ -59,7 +59,7 @@ class Tache
     * @var smallint $permisNecessaire
     *
     * @ORM\Column(name="permisNecessaire", type="smallint")
-    * @Assert\Min(limit = "0")
+    * 
     */
     protected $permisNecessaire;
   
