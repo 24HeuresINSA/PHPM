@@ -402,7 +402,7 @@ PmUtils.prototype = {
 	 */
 	hexToRgba: function(hex, opacity) {
 		if (hex.charAt(0) === '#' && hex.length === 7 && opacity) {
-			return 'rgba('+parseInt(hex.substring(1,3),16)+','+parseInt(hex.substring(3,5),16)+','+parseInt(hex.substring(5,7),16)+','+opacity+')';
+			return 'rgba('+parseInt(hex.substring(1,3),16)+','+parseInt(hex.substring(3,5),16)+','+parseInt(hex.substring(5,7),16)+','+String(opacity)+')';
 		}
 		
 		// sinon on n'est pas sur de quoi il s'agit !
