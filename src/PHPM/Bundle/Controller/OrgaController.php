@@ -617,11 +617,11 @@ class OrgaController extends Controller
 			$equipe = $orga[0]->getEquipe();
 			
 			$dispos = array();
-			foreach ($orga[0]->getDisponibilites() as $dispo)
-			{
-				if ($dispo->toArrayOrgaWebService() != null)
-				{
-					$dispos[$dispo->getId()] = $dispo->toArrayOrgaWebService();
+			foreach ($orga[0]->getDisponibilites() as $dispo) {
+				$_disp = $dispo->toArrayOrgaWebService();
+				
+				if ($_disp !== null) {
+					$dispos[$dispo->getId()] = $_disp;
 				}			
 			}
 
