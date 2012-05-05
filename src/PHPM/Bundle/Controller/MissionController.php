@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PHPM\Bundle\Entity\Mission;
 use PHPM\Bundle\Form\MissionType;
+use Symfony\Component\Security\Acl\Exception\Exception;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Mission controller.
@@ -26,6 +28,9 @@ class MissionController extends Controller
      */
     public function newAction()
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $entity = new Mission();
         $form   = $this->createForm(new MissionType(), $entity);
 
@@ -44,6 +49,9 @@ class MissionController extends Controller
      */
     public function createAction()
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $entity  = new Mission();
         $request = $this->getRequest();
         $form    = $this->createForm(new MissionType(), $entity);
@@ -72,6 +80,9 @@ class MissionController extends Controller
      */
     public function editAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:Mission')->find($id);
@@ -97,6 +108,9 @@ class MissionController extends Controller
      */
     public function updateAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:Mission')->find($id);
@@ -133,27 +147,23 @@ class MissionController extends Controller
     public function deleteAction($id)
     {
 
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
+       	$em = $this->getDoctrine()->getEntityManager();
+        $entity = $em->getRepository('PHPMBundle:Mission')->find($id);
 
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('PHPMBundle:Mission')->find($id);
+        if (!$entity) {
+             throw $this->createNotFoundException('Unable to find Mission entity.');
+        }
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Mission entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-            return $this->redirect($this->generateUrl('mission'));
+        $em->remove($entity);
+        $em->flush();
+        return $this->redirect($this->generateUrl('mission'));
         
 
         
     }
 
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
-    }
+   
 }

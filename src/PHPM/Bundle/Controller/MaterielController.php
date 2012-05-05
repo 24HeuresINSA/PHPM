@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PHPM\Bundle\Entity\Materiel;
 use PHPM\Bundle\Form\MaterielType;
+use Symfony\Component\Security\Acl\Exception\Exception;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Materiel controller.
@@ -24,6 +26,9 @@ class MaterielController extends Controller
      */
     public function indexAction()
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
 
         $entities = $em->getRepository('PHPMBundle:Materiel')->findAll();
@@ -39,7 +44,10 @@ class MaterielController extends Controller
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
+    	$em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:Materiel')->find($id);
 
@@ -62,6 +70,9 @@ class MaterielController extends Controller
      */
     public function newAction()
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $entity = new Materiel();
         $form   = $this->createForm(new MaterielType(), $entity);
 
@@ -80,6 +91,9 @@ class MaterielController extends Controller
      */
     public function createAction()
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $entity  = new Materiel();
         $request = $this->getRequest();
         $form    = $this->createForm(new MaterielType(), $entity);
@@ -108,6 +122,9 @@ class MaterielController extends Controller
      */
     public function editAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:Materiel')->find($id);
@@ -117,12 +134,10 @@ class MaterielController extends Controller
         }
 
         $editForm = $this->createForm(new MaterielType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         );
     }
 
@@ -135,6 +150,9 @@ class MaterielController extends Controller
      */
     public function updateAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:Materiel')->find($id);
@@ -144,7 +162,7 @@ class MaterielController extends Controller
         }
 
         $editForm   = $this->createForm(new MaterielType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        
 
         $request = $this->getRequest();
 
@@ -159,8 +177,7 @@ class MaterielController extends Controller
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         );
     }
 
@@ -172,28 +189,24 @@ class MaterielController extends Controller
      */
     public function deleteAction($id)
     {
-        
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $request = $this->getRequest();
 
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('PHPMBundle:Materiel')->find($id);
+        $em = $this->getDoctrine()->getEntityManager();
+        $entity = $em->getRepository('PHPMBundle:Materiel')->find($id);
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Materiel entity.');
-            }
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Materiel entity.');
+        }
 
-            $em->remove($entity);
-            $em->flush();
+        $em->remove($entity);
+        $em->flush();
         
 
         return $this->redirect($this->generateUrl('config'));
     }
 
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
-    }
+    
 }

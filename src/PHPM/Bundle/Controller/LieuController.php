@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PHPM\Bundle\Entity\Lieu;
 use PHPM\Bundle\Form\LieuType;
+use Symfony\Component\Security\Acl\Exception\Exception;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Lieu controller.
@@ -24,6 +26,9 @@ class LieuController extends Controller
      */
     public function indexAction()
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
 
         $entities = $em->getRepository('PHPMBundle:Lieu')->findAll();
@@ -39,6 +44,9 @@ class LieuController extends Controller
      */
     public function showAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:Lieu')->find($id);
@@ -62,6 +70,9 @@ class LieuController extends Controller
      */
     public function newAction()
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $entity = new Lieu();
         $form   = $this->createForm(new LieuType(), $entity);
 
@@ -80,6 +91,9 @@ class LieuController extends Controller
      */
     public function createAction()
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $entity  = new Lieu();
         $request = $this->getRequest();
         $form    = $this->createForm(new LieuType(), $entity);
@@ -108,6 +122,9 @@ class LieuController extends Controller
      */
     public function editAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:Lieu')->find($id);
@@ -135,6 +152,9 @@ class LieuController extends Controller
      */
     public function updateAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:Lieu')->find($id);
@@ -144,7 +164,6 @@ class LieuController extends Controller
         }
 
         $editForm   = $this->createForm(new LieuType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
 
@@ -159,8 +178,7 @@ class LieuController extends Controller
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         );
     }
 
@@ -172,29 +190,22 @@ class LieuController extends Controller
      */
     public function deleteAction($id)
     {
-           $request = $this->getRequest();
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
+    	$request = $this->getRequest();
 
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('PHPMBundle:Lieu')->find($id);
+        $em = $this->getDoctrine()->getEntityManager();
+        $entity = $em->getRepository('PHPMBundle:Lieu')->find($id);
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Lieu entity.');
-                
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Lieu entity.');
             }
 
-            $em->remove($entity);
-            $em->flush();
+        $em->remove($entity);
+        $em->flush();
         
-        
-
         return $this->redirect($this->generateUrl('config'));
     }
 
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
-    }
 }

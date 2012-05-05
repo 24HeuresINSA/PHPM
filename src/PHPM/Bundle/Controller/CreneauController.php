@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Security\Acl\Exception\Exception;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use PHPM\Bundle\Entity\Creneau;
 use PHPM\Bundle\Form\CreneauType;
 use PHPM\Bundle\Validator\QuartHeure;
@@ -19,62 +21,68 @@ use PHPM\Bundle\Validator\QuartHeure;
  */
 class CreneauController extends Controller
 {
-    /**
-     * Lists all Creneau entities.
-     *
-     * @Route("/", name="creneau")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getEntityManager();
+//     /**
+//      * Lists all Creneau entities.
+//      *
+//      * @Route("/", name="creneau")
+//      * @Template()
+//      */
+//     public function indexAction()
+//     {
+//     	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+//     		throw new AccessDeniedException();
+//     	}
+//         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('PHPMBundle:Creneau')->findAll();
+//         $entities = $em->getRepository('PHPMBundle:Creneau')->findAll();
 
-        return array('entities' => $entities);
-    }
+//         return array('entities' => $entities);
+//     }
 
-    /**
-     * Finds and displays a Creneau entity.
-     *
-     * @Route("/{id}/show", name="creneau_show")
-     * @Template()
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
+//     /**
+//      * Finds and displays a Creneau entity.
+//      *
+//      * @Route("/{id}/show", name="creneau_show")
+//      * @Template()
+//      */
+//     public function showAction($id)
+//     {
+//     	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+//     		throw new AccessDeniedException();
+//     	}
+//         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('PHPMBundle:Creneau')->find($id);
+//         $entity = $em->getRepository('PHPMBundle:Creneau')->find($id);
 		
 
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Creneau entity.');
-        }
+//         if (!$entity) {
+//             throw $this->createNotFoundException('Unable to find Creneau entity.');
+//         }
 
-        $deleteForm = $this->createDeleteForm($id);
+//         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
-    }
+//         return array(
+//             'entity'      => $entity,
+//             'delete_form' => $deleteForm->createView(),        );
+//     }
 
-    /**
-     * Displays a form to create a new Creneau entity.
-     *
-     * @Route("/new", name="creneau_new")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new Creneau();
-        $form   = $this->createForm(new CreneauType(), $entity);
+//     /**
+//      * Displays a form to create a new Creneau entity.
+//      *
+//      * @Route("/new", name="creneau_new")
+//      * @Template()
+//      */
+//     public function newAction()
+//     {
+//         $entity = new Creneau();
+//         $form   = $this->createForm(new CreneauType(), $entity);
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        );
-    }
+//         return array(
+//             'entity' => $entity,
+//             'form'   => $form->createView()
+//         );
+//     }
 
     /**
      * Creates a new Creneau entity.
@@ -192,16 +200,8 @@ class CreneauController extends Controller
         return $this->redirect($this->generateUrl('creneaumaker_tache',array('id'=>$entity->getPlageHoraire()->getTache()->getId())));
     }
 
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
-    }
-
     /**
-    * Lists all Creneaux entities according to post criteria.
+    * List all Creneaux entities according to post criteria.
     *
     * @Route("/query.json", name="creneau_query_json")
     * @Method("post")
@@ -344,7 +344,6 @@ class CreneauController extends Controller
     	return $response;
     	}
     	 
-    
     	 
     	 
     }

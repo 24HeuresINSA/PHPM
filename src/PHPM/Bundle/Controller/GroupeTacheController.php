@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PHPM\Bundle\Entity\GroupeTache;
 use PHPM\Bundle\Form\GroupeTacheType;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * GroupeTache controller.
@@ -66,11 +67,7 @@ class GroupeTacheController extends Controller
         		'groupes' => $groupes
         		
         		);
-        
 
-        
-
-        return array('entities'=>$entities);
     }
 
     /**

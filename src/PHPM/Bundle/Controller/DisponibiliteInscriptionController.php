@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PHPM\Bundle\Entity\DisponibiliteInscription;
 use PHPM\Bundle\Form\DisponibiliteInscription\DisponibiliteInscriptionType;
+use Symfony\Component\Security\Acl\Exception\Exception;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * DisponibiliteInscription controller.
@@ -26,6 +28,9 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function indexAction()
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
     	$request = $this->get('request');
     	
     	$param = $request->request->all();
@@ -173,6 +178,9 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function missionsAction()
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
     	$em = $this->getDoctrine()->getEntityManager();
     
     	$entities = $em->getRepository('PHPMBundle:Mission')->findAll();
@@ -188,6 +196,9 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function showAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:DisponibiliteInscription')->find($id);
@@ -211,6 +222,9 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function newAction()
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $entity = new DisponibiliteInscription();
         $form   = $this->createForm(new DisponibiliteInscriptionType(), $entity);
 
@@ -229,6 +243,9 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function createAction()
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $entity  = new DisponibiliteInscription();
         $request = $this->getRequest();
         $form    = $this->createForm(new DisponibiliteInscriptionType(), $entity);
@@ -257,6 +274,9 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function editAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:DisponibiliteInscription')->find($id);
@@ -284,6 +304,9 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function updateAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:DisponibiliteInscription')->find($id);
@@ -293,7 +316,6 @@ class DisponibiliteInscriptionController extends Controller
         }
 
         $editForm   = $this->createForm(new DisponibiliteInscriptionType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
 
@@ -308,8 +330,7 @@ class DisponibiliteInscriptionController extends Controller
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         );
     }
 
@@ -321,6 +342,9 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function deleteAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
             $em = $this->getDoctrine()->getEntityManager();
             $entity = $em->getRepository('PHPMBundle:DisponibiliteInscription')->find($id);
 
@@ -334,13 +358,7 @@ class DisponibiliteInscriptionController extends Controller
         
     }
 
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
-    }
+
     
     
     /**
@@ -351,6 +369,9 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function statsAction($permis)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
     
         //         $entities = $em->getRepository('PHPMBundle:DisponibiliteInscription')->findAllWithOrgacount();
@@ -369,6 +390,9 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function arrayAction()
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
         
         

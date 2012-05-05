@@ -11,6 +11,8 @@ use PHPM\Bundle\Form\PlageHoraireType;
 use PHPM\Bundle\Entity\Creneau;
 use PHPM\Bundle\Validator\QuartHeure;
 use PHPM\Bundle\Validator\PlageHoraireRecoupe;
+use Symfony\Component\Security\Acl\Exception\Exception;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * PlageHoraire controller.
@@ -19,20 +21,20 @@ use PHPM\Bundle\Validator\PlageHoraireRecoupe;
  */
 class PlageHoraireController extends Controller
 {
-    /**
-     * Lists all PlageHoraire entities.
-     *
-     * @Route("/", name="plagehoraire")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getEntityManager();
+//     /**
+//      * Lists all PlageHoraire entities.
+//      *
+//      * @Route("/", name="plagehoraire")
+//      * @Template()
+//      */
+//     public function indexAction()
+//     {
+//         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('PHPMBundle:PlageHoraire')->findAll();
+//         $entities = $em->getRepository('PHPMBundle:PlageHoraire')->findAll();
 
-        return array('entities' => $entities);
-    }
+//         return array('entities' => $entities);
+//     }
 
     /**
      * Finds and displays a PlageHoraire entity.
@@ -42,6 +44,9 @@ class PlageHoraireController extends Controller
      */
     public function showAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:PlageHoraire')->find($id);
@@ -65,6 +70,9 @@ class PlageHoraireController extends Controller
      */
     public function newAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
         $config = $e=$this->get('config.extension');
         $tache=$em->getRepository('PHPMBundle:Tache')->find($id);
@@ -105,6 +113,9 @@ class PlageHoraireController extends Controller
      */
     public function createAction()
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+    		throw new AccessDeniedException();
+    	}
         $entity  = new PlageHoraire();
         $request = $this->getRequest();
         $config = $e=$this->get('config.extension');
@@ -151,6 +162,9 @@ class PlageHoraireController extends Controller
      */
     public function newTacheAction($idtache)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+    		throw new AccessDeniedException();
+    	}
     	$em = $this->getDoctrine()->getEntityManager();
 
         $tache = $em->getRepository('PHPMBundle:Tache')->find($idtache);
@@ -174,6 +188,9 @@ class PlageHoraireController extends Controller
      */
     public function editAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
         $config = $this->get('config.extension');
         $entity = $em->getRepository('PHPMBundle:PlageHoraire')->find($id);
@@ -200,6 +217,9 @@ class PlageHoraireController extends Controller
      */
     public function updateAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
         $config = $this->get('config.extension');
         $entity = $em->getRepository('PHPMBundle:PlageHoraire')->find($id);
@@ -245,7 +265,9 @@ class PlageHoraireController extends Controller
      */
     public function deleteAction($id)
     {
-       
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
             $em = $this->getDoctrine()->getEntityManager();
             $entity = $em->getRepository('PHPMBundle:PlageHoraire')->find($id);
 
@@ -265,110 +287,5 @@ class PlageHoraireController extends Controller
 
     }
 
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
-    }
-	
-    /**
-     * creation de créneau à partir de la duréer de la plage horaire et du recoupement
-     *
-     * @Route("/{id}/creationCreneau", name="plagehoraire_creationCreneau")
-     * 
-     */	
-		
-	public function creationCreneauAction($id)   
-	{	
-// 		TODO: Complete interface with review	
-// 		$em = $this->getDoctrine()->getEntityManager();  
-//         $entity = $em->getRepository('PHPMBundle:PlageHoraire')->find($id);
-// 		$arrayCreneauCree = array();
-		
-//         if (!$entity) {
-//             throw $this->createNotFoundException('Unable to find PlageHoraire entity.');
-//         }
-		
-// 		$nbCreneauACreerPourOrga = $entity->getnbOrgasNecessaires();
-            
-// 			// suppression des creneaux déjà  existant
-			
-// 			$creneauxASupprimer = $em->getRepository('PHPMBundle:Creneau')->findByPlageHoraire($entity->getId());
-			
-// 			foreach ($creneauxASupprimer as $creneauASupprimer) {
-				
-			
-// 					$nouvelID = $creneauASupprimer->getId();
-					
-// 					$em->remove($creneauASupprimer);
-					
-// 				}
-            
-//             while (!$nbCreneauACreerPourOrga == 0)
-//             {
-// 			if ( ( $entity->getdureeCreneau() +  $entity->getrecoupementCreneau()) > ( $entity->getfin()->getTimestamp() -  $entity->getdebut()->getTimestamp()) )	
-// 			 {
 
-// 				$nouveauCreneau = new Creneau();
-				
-// 				$nouveauCreneau->setPlageHoraire($entity);			
-				
-				
-// 				$debutDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getdebut()->getTimestamp()) ); // permet d'avoir le bon format pour le stocker dans la BDD				
-// 				$finDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getfin()->getTimestamp()) ); // permet d'avoir le bon format pour le stocker dans la BDD				
-					
-// 				$nouveauCreneau->setDebut(new \DateTime("20$debutDesCreneauxDate"));
-// 				$nouveauCreneau->setFin(new \DateTime("20$finDesCreneauxDate"));
-                
-// 				$em->persist($nouveauCreneau);
-            
-// 			 }
-			
-// 			else 
-// 			 {
-// 				$tempsRestantAAffecter = ($entity->getfin()->getTimestamp() - $entity->getdebut()->getTimestamp() );
-// 				$debutDesCreneaux = $entity->getdebut()->getTimestamp();
-// 				while ( ($entity->getdureeCreneau() + $entity->getrecoupementCreneau()) < $tempsRestantAAffecter)
-// 					{
-// 						$nouveauCreneau = new Creneau();
-// 						$nouveauCreneau->setPlageHoraire($entity);			
-						
-// 						$debutDesCreneauxDate = date ('y-m-d H:i:s', $debutDesCreneaux); // permet d'avoir le bon format pour le stocker dans la BDD
-// 						$finDuCreneauDate = ($debutDesCreneaux + $entity->getdureeCreneau() + $entity->getrecoupementCreneau() );
-// 						$finDuCreneauDate = date ('y-m-d H:i:s', $finDuCreneauDate);
-					
-						
-// 						$nouveauCreneau->setDebut(new \DateTime("20$debutDesCreneauxDate"));					
-// 						$nouveauCreneau->setFin(new \DateTime("20$finDuCreneauDate"));
-						
-						
-// 						$tempsRestantAAffecter = ($tempsRestantAAffecter- ($entity->getdureeCreneau()));
-// 						$debutDesCreneaux += $entity->getdureeCreneau();					
-						
-// 						$em->persist($nouveauCreneau);								
-// 					}
-// 				if ($tempsRestantAAffecter > 0)	
-// 					{
-// 						$nouveauCreneau = new Creneau();
-				
-// 						$nouveauCreneau->setPlageHoraire($entity);			
-						
-// 						$debutDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getfin()->getTimestamp() - $tempsRestantAAffecter) ); // permet d'avoir le bon format pour le stocker dans la BDD				
-// 						$finDesCreneauxDate = date ('y-m-d H:i:s', ($entity->getfin()->getTimestamp()) ); // permet d'avoir le bon format pour le stocker dans la BDD									
-				
-// 						$nouveauCreneau->setDebut(new \DateTime("20$debutDesCreneauxDate"));
-// 						$nouveauCreneau->setFin(new \DateTime("20$finDesCreneauxDate"));
-						
-// 						$em->persist($nouveauCreneau);
-						
-// 					}
-// 			}
-//         $nbCreneauACreerPourOrga --;
-// 		}	
-//          $em->flush();
-//          return $this->redirect($this->generateUrl('plagehoraire_show', array('id' => $entity->getId())));
-	
-	}
 }

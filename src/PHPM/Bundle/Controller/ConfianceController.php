@@ -58,6 +58,9 @@ class ConfianceController extends Controller
      */
     public function showAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:Confiance')->find($id);
@@ -81,6 +84,9 @@ class ConfianceController extends Controller
      */
     public function newAction()
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $entity = new Confiance();
         $form   = $this->createForm(new ConfianceType(), $entity);
 
@@ -99,6 +105,9 @@ class ConfianceController extends Controller
      */
     public function createAction()
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $entity  = new Confiance();
         $request = $this->getRequest();
         $form    = $this->createForm(new ConfianceType(), $entity);
@@ -127,6 +136,9 @@ class ConfianceController extends Controller
      */
     public function editAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:Confiance')->find($id);
@@ -154,6 +166,9 @@ class ConfianceController extends Controller
      */
     public function updateAction($id)
     {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('PHPMBundle:Confiance')->find($id);
@@ -192,16 +207,16 @@ class ConfianceController extends Controller
     public function deleteAction($id)
     {
        
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('PHPMBundle:Confiance')->find($id);
+       $em = $this->getDoctrine()->getEntityManager();
+       $entity = $em->getRepository('PHPMBundle:Confiance')->find($id);
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Confiance entity.');
-            }
+       if (!$entity) {
+           throw $this->createNotFoundException('Unable to find Confiance entity.');
+       }
 
-            $em->remove($entity);
-            $em->flush();
-        
+       $em->remove($entity);
+       $em->flush();
+   
 
         return $this->redirect($this->generateUrl('config'));
     }
