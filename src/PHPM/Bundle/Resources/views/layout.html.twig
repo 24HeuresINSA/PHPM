@@ -152,8 +152,10 @@
 							{{ _self.navBarItem('Occupation des orgas','analyse_plagesorga') }}
 					    </ul>
 					</li>
+					{% if not is_granted('ROLE_ADMIN') %}
 					{{ _self.navBarItem('Recherche des conflits','analyse_plagesorga',{'orgaid': app.user.id}) }}
 					{{ _self.navBarItem('Mes Disponibilités','orga_inputdispos',{'id':app.user.id }) }}
+					{% endif %}
 	       			{{ _self.navBarItem('Charisme','orga_charisme') }}
 	       		{% endif %}
 	       		{% if is_granted('ROLE_VISITOR') %}	
