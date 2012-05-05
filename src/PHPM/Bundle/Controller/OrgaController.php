@@ -461,7 +461,6 @@ class OrgaController extends Controller
 	public function inputDisposAction($id)
 	{
 	    $request = $this->getRequest();
-	    $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
 	    $em = $this->getDoctrine()->getEntityManager();
 	    $orga =  $em->getRepository('PHPMBundle:Orga')->find($id);
 	    $user = $this->get('security.context')->getToken()->getUser();
@@ -492,7 +491,7 @@ class OrgaController extends Controller
 	    	$fmt =  new \IntlDateFormatter(null ,\IntlDateFormatter::FULL, \IntlDateFormatter::FULL,    null,null,'EEEE d MMMM'  );
 	    	$DIs[$entity->getMission()->getId()][$fmt->format($entity->getDebut()->getTimestamp())][$entity->getId()]=$entity;
 	    }
-	    $form = $this->createForm(new InputDisposType($admin));
+	    $form = $this->createForm(new InputDisposType());
 	    
 	    
 	
@@ -528,7 +527,7 @@ class OrgaController extends Controller
 	            {
 	                 
 	            	if($submittedDI->contains($di)){
-	            		if(!$orga->getDisponibilitesInscription()->contains($di) && ($admin || ($di->getStatut() > 0))){
+	            		if(!$orga->getDisponibilitesInscription()->contains($di) && ($this->get('security.context')->isGranted('ROLE_ADMIN') || ($di->getStatut() > 0))){
 	            			$orga->addDisponibiliteInscription($di);
 	            			$di->addOrga($orga);
 	            		}
@@ -543,7 +542,7 @@ class OrgaController extends Controller
             
 	            }
 	            
-	            $form = $this->createForm(new InputDisposType($admin,$em,$orga));
+	            $form = $this->createForm(new InputDisposType());
 	        }
 	        
 	    }

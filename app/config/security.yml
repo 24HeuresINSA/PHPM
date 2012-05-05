@@ -38,6 +38,7 @@ security:
              - { path: ^/orga/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY}
              - { path: ^/groupetache/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY}
              - { path: ^/tache/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+             - { path: ^/autologin, roles: IS_AUTHENTICATED_ANONYMOUSLY}
              - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
              - { path: ^/config/initiale, roles: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }

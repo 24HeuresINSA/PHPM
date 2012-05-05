@@ -17,9 +17,40 @@
     <tbody>
         {%  for entity in entities %}
         <tr>
-            <td>{{ entitiesMacro.orga(entity) }}<br>
-            {{ entity.telephone }}<br>
-            {{ entitiesMacro.orgaEmail(entity.email) }}</td>
+            <td>
+	            {{ entitiesMacro.orga(entity) }}<br>
+	            {{ entity.telephone }}<br>
+	            {{ entitiesMacro.orgaEmail(entity.email) }}<br>
+            
+           		
+	            	{% if app.request.get('statut') ==0  %}
+            			<a class="btn btn-success" href="{{ path('orga_change_statut', { 'id': entity.id, 'statut': 1 }) }}">Valider</a>
+            		{% endif %}
+            		{% if app.request.get('statut') !=-1  %}
+	            	<div class = "btn-group">
+			        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>
+			          
+			        <ul class="dropdown-menu">
+			            <li><a href="{{ path('orga_edit', { 'id': entity.id })  }}"><i class="icon-pencil"></i> Éditer</a></li>
+			            <li><a href="{{ path('orga_inputdispos', { 'id': entity.id }) }}"><i class="icon-calendar"></i>Dispos</a></li>
+			            <li><a href="{{ path('orga_affectation', { 'orga_id': entity.id }) }}"><i class="icon-book"></i>Affecter</a></li>
+			            <li><a href="{{ path('orga_print', { 'id': entity.id })  }}"><i class="icon-print"></i> Imprimer le planning</a></li>
+			            <li><a href="{{ path('autologin', { 'id': entity.id, 'loginkey': (entity.id)|phpm_crypt }) }}">Se connecter en tant que cet orga.</a></li>
+			            <li><a href="{{ path('orga_change_statut', { 'id': entity.id, 'statut': -1 }) }}">Mettre en attente</a></li>
+			         	<li><a href="{{ path('orga_gendispo', { 'id': entity.id}) }}">Regénérer les disponibilités</a></li>
+					</ul>
+					</div>
+		         
+	          {% endif %}
+	          {% if app.request.get('statut') ==-1  %}
+	          <a class="btn btn-success" href="{{ path('orga_change_statut', { 'id': entity.id, 'statut': 0 }) }}">Restaurer</a>
+	          <a class="btn btn-danger"href="{{ path('orga_delete', { 'id': entity.id }) }}">Supprimer</a>
+	          {% endif %}
+			        
+            		
+		           
+	            
+            </td>
             <td>{% if entity.dateDeNaissance %}{{ entity.dateDeNaissance|format_date('dd MMM Y') }}{% endif%}</td>
             <td>{% if entity.datePermis %}{{ entity.datePermis|format_date('dd MMM Y') }}{% endif%}</td>
             <td>{{ entitiesMacro.equipe(entity.equipe) }}</td>
@@ -47,36 +78,7 @@
 	             	</ul>
              	</td>
 
-            <td>
-	            <span>
-	            	{% if app.request.get('statut') ==0  %}
-	            		<a class="btn btn-success" href="{{ path('orga_change_statut', { 'id': entity.id, 'statut': 1 }) }}">Valider</a>
-	            	{% endif %}
-	            	{% if app.request.get('statut') !=-1  %}
-	            	<div class="btn-group">
-			          <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>
-			          
-			          <ul class="dropdown-menu">
-			            
-			            <li><a href="{{ path('orga_edit', { 'id': entity.id })  }}"><i class="icon-pencil"></i> Éditer</a></li>
-			            <li><a href="{{ path('orga_inputdispos', { 'id': entity.id }) }}"><i class="icon-calendar"></i>Dispos</a></li>
-			            <li><a href="{{ path('orga_affectation', { 'orga_id': entity.id }) }}"><i class="icon-book"></i>Affecter</a></li>
-			            <li><a href="{{ path('orga_print', { 'id': entity.id })  }}"><i class="icon-print"></i> Imprimer le planning</a></li>
-			            <li><a href="{{ path('orga_change_statut', { 'id': entity.id, 'statut': -1 }) }}">Mettre en attente</a></li>
-			         	<li><a href="{{ path('orga_gendispo', { 'id': entity.id}) }}">Regénérer les disponibilités</a></li>
-			         	
-			          </ul>
-			          </div>
-			          {% endif %}
-			          {% if app.request.get('statut') ==-1  %}
-			          <a class="btn btn-success" href="{{ path('orga_change_statut', { 'id': entity.id, 'statut': 0 }) }}">Restaurer</a>
-			          <a class="btn btn-danger"href="{{ path('orga_delete', { 'id': entity.id }) }}">Supprimer</a>
-			          {% endif %}
-			        
-            		
-		            
-	            </span>
-            </td>
+           
         </tr>
         {%   endfor %}
     </tbody>

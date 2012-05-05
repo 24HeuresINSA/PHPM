@@ -52,11 +52,42 @@ class DefaultController extends Controller
 
     	if (!$this->get('security.context')->isGranted('ROLE_USER') && $this->get('security.context')->isGranted('ROLE_VISITOR')) {
     		$redirectURL = $config->getValue('manifestation_permis_libelles');
-    		return $this->redirect('http://www.24heures.org/orga');
+    		return $this->redirect($config->getValue('phpm_orgasoft_inscription_returnURL'));
     	}
     	
         
     }
+    
+    /**
+     * Link login
+     *
+     * @Route("/autologin/{id}/{loginkey}",requirements={"loginkey" = ".+"}, name="autologin")
+     *
+     */
+    public function autologinAction($id,$loginkey)
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$config = $this->get('config.extension');
+    	
+    	$user = $em->getRepository('PHPMBundle:Orga')->findOneById($id);
+    	$secretSalt=$config->getValue('phpm_secret_salt');
+    	if ((!$user)||($loginkey!==crypt($secretSalt.$id, 24))) {
+    		return $this->redirect($config->getValue('phpm_orgasoft_inscription_returnURL'));
+    	}
+    	
+    	$this->get('security.context')->setToken($user->generateUserToken());
+    	
+    	if($this->get('security.context')->isGranted('ROLE_USER')){
+    		return $this->redirect($this->generateUrl('accueil'));
+    		
+    	}else{
+    		return $this->redirect($this->generateUrl('orga_inputdispos',array('id'=>$user->getId())));
+    	}
+    	
+    	
+    	
+    }
+    
     
     
     /**
@@ -109,7 +140,7 @@ class DefaultController extends Controller
                 
                 if (!$user) {
                     $redirectURL = $config->getValue('manifestation_permis_libelles');
-    				return $this->redirect('http://www.24heures.org/orga');
+    				return $this->redirect($config->getValue('phpm_orgasoft_inscription_returnURL'));
                 }
                 
                 $this->get('security.context')->setToken($user->generateUserToken());

@@ -20,7 +20,8 @@ class ConfigExtension extends \Twig_Extension {
     public function getFilters() {
         return array(
             'permis'     => new \Twig_Filter_Method($this, 'permis'),
-        	'statutDI'     => new \Twig_Filter_Method($this, 'statutDI')
+        	'statutDI'     => new \Twig_Filter_Method($this, 'statutDI'),
+        	'phpm_crypt'     => new \Twig_Filter_Method($this, 'phpm_crypt')
  
         );
     }
@@ -36,6 +37,11 @@ class ConfigExtension extends \Twig_Extension {
     public function statutDI($key) {
     	$libelles = array('0'=>'Verrouillé', '1'=>'Cochable Uniquement', '2'=>'Cochable/Décochable');
     	return $libelles[$key];
+    }
+    
+    public function phpm_crypt($string) {
+    	
+    	return crypt($this->configs['phpm_secret_salt'].$string, 24);
     }
 
     public function getValue($field)
