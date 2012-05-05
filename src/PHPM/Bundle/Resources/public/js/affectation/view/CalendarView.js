@@ -22,6 +22,15 @@ CalendarView.prototype = {
 		$('#calendar').empty();
 		$('#client').removeClass('spinner_large');
 		
+		if (Object.keys(pmAffectation.data.calendar.plage).length !== 0) {
+			if ($('#boutons_plage').html() === '') {
+				pmAffectation.views.calendar.setBoutonsPlage();
+			}
+			
+			// on met le bon effet sur le bon bouton
+			$('#bouton_plage_'+pmAffectation.current.plage).button('toggle');
+		}
+		
 		// calcule le nombre de jours - il faut passer par les TS, +1
 		var _nbJours = (pmAffectation.data.calendar.plage[plage]['fin'].getTime()-pmAffectation.data.calendar.plage[plage]['debut'].getTime())/(24*60*60*1000)+1;
 		
@@ -53,13 +62,6 @@ CalendarView.prototype = {
 		
 		// on sélectionne le bon quart d'heure
 		$('#'+pmAffectation.current['quart_heure']).addClass('current');
-		
-		if (Object.keys(pmAffectation.data.calendar.plage).length != 0) {
-			pmAffectation.views.calendar.setBoutonsPlage();
-			
-			// on met le bon effet sur le bon bouton
-			$('#bouton_plage_'+pmAffectation.current.plage).button('toggle');
-		}
 		
 		// on redimensionne l'app comme il faut
 		pmUtils.setAppHeight();
