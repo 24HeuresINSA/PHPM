@@ -18,7 +18,6 @@
 	          <h2>Mes Informations</h2>
 		       {% if not app.user.anneeEtudes or not app.user.departement or (not app.user.groupePC and (app.user.anneeEtudes == 1 or app.user.anneeEtudes == 2))%}
 		       	<div class="alert alert-block alert-error fade in">
-		            <a class="close" data-dismiss="alert" href="#">×</a>
 		            <h4 class="alert-heading">Tu n'a pas renseigné les informations suivantes :</h4>
 		            <ul>
 		            {% if not app.user.anneeEtudes%}<li>Année d'études</li>{% endif %}
