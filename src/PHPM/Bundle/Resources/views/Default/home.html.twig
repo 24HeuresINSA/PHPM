@@ -58,7 +58,6 @@
 	          <h2>Fiches Tâches</h2>
 	          {% if (statsOrga.taches.orga[0] + statsOrga.taches.equipe[0]) > 0 %}
 				<div class="alert alert-block alert-error fade in">
-		            <a class="close" data-dismiss="alert" href="#">×</a>
 		            <h4 class="alert-heading">Il te reste des fiches tâches à rédiger.</h4>
 		        </div>
 			{% endif %}
@@ -139,13 +138,11 @@
 	          <h2>Disponibilités</h2>
 	       {% if statsOrga.PCMax ==0 %}
 	       	<div class="alert alert-block alert-info fade in">
-	            <a class="close" data-dismiss="alert" href="#">×</a>
 	            <h4 class="alert-heading">Il n'est pas encore possible de renseigner de disponibilités.</h4>
 	        </div>
 	       {% else %}
 	    	{% if statsOrga.PCOrga==0 and statsOrga.PCMax>0%}
 			<div class="alert alert-block alert-error fade in">
-	            <a class="close" data-dismiss="alert" href="#">×</a>
 	            <h4 class="alert-heading">Aucun charisme !</h4>
 	            <p>Tu n'as pas encore renseigné tes disponibilités.</p>
 				<p><a class="btn" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Renseigner mes disponibilités »</a></p>
@@ -188,7 +185,6 @@
 	        	<h2>Gestion des Inscriptions</h2>
 	        	{% if statsOrga.nonValidated > 0%}
 		       	<div class="alert alert-block alert-info fade in">
-		            <a class="close" data-dismiss="alert" href="#">×</a>
 		            <h4 class="alert-heading">Il reste {{ statsOrga.nonValidated }} orgas non validés.</h4>
 		            <a class="btn" href="{{ path('orga', {'statut':0}) }}"><i class="icon-list"></i> Afficher la liste »</a>
 		        </div>
