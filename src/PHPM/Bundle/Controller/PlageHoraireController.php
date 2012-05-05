@@ -261,7 +261,7 @@ class PlageHoraireController extends Controller
      */
     public function deleteAction($id)
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
     		throw new AccessDeniedException();
     	}
             $em = $this->getDoctrine()->getEntityManager();
