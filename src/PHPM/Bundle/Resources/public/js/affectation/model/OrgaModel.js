@@ -82,14 +82,14 @@ OrgaModel.prototype = {
 			for (var _iDispo in this.data[_iOrga]['disponibilites']) {
 				// créneaux, encore un niveau
 				for (var _iCreneau in this.data[_iOrga]['disponibilites'][_iDispo]['creneaux']) {
-					this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut']);
-					this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin']);
+					_orga['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut']);
+					_orga['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin']);
 				
-					this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['couleur'] = pmUtils.hexToRgba(this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['couleur'], 0.5);
+					_orga['disponibilites'][_iDispo]['creneaux'][_iCreneau]['couleur'] = pmUtils.hexToRgba(this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['couleur'], 0.6);
 				}
 				
-				this.data[_iOrga]['disponibilites'][_iDispo]['debut'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['debut']);
-				this.data[_iOrga]['disponibilites'][_iDispo]['fin'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['fin']);
+				_orga['disponibilites'][_iDispo]['debut'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['debut']);
+				_orga['disponibilites'][_iDispo]['fin'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['fin']);
 			}
 		
 			_orgas[_iOrga] = _orga;
