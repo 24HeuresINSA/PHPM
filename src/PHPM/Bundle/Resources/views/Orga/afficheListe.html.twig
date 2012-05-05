@@ -8,8 +8,7 @@
             <th>Com'</th>
             <th width="10em">Départ</th>
             <th>Dernière Activité</th>
-            <th>Divers</th>          
-            <th>Privilèges</th>
+            <th>Divers</th>
             <th>Disponibilités</th>
         </tr>
     </thead>
@@ -17,7 +16,7 @@
         {%  for entity in entities %}
         <tr>
             <td>
-	            {{ entitiesMacro.orga(entity) }}<br>
+	            {{ entitiesMacro.orga(entity) }} {{ entitiesMacro.orgaPrivileges(entity.privileges) }}<br>
 	            {{ entity.telephone }}<br>
 	            {{ entitiesMacro.orgaEmail(entity.email) }}<br>
             
@@ -64,7 +63,7 @@
             <a class="btn  btn-info apopover" href="#" rel="popover" data-content="{{ entity.amis }}" data-original-title="Amis">Amis</a>
             {% endif %}
             </td>
-            <td>{{ entitiesMacro.orgaPrivileges(entity.privileges) }}</td>
+            
              	<td>
 	             	<ul>
 	             	{% for dispo in entity.disponibilites %}
