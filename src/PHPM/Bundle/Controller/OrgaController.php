@@ -519,7 +519,8 @@ class OrgaController extends Controller
 	            			'entities' => $DIs,
 	            			'missions' => $groupesDI,
 	            			'orga'=>$orga,
-	            			'charismeInsuffisant'=>true
+	            			'charismeInsuffisant'=>true,
+	            			'now'=> new \DateTime()
 	            			);
 	            }
 
@@ -550,7 +551,9 @@ class OrgaController extends Controller
 	    return array( 	'form' => $form->createView(),
 	    				'entities' => $DIs,
 	    				'missions' => $groupesDI,
-	    				'orga'=>$orga); 
+	    				'orga'=>$orga,
+	    				'now'=> new \DateTime()
+	    		); 
 	}
 
 	
