@@ -77,7 +77,7 @@ CreneauController.prototype = {
 				(val.nom && pmUtils.removeDiacritics(val.nom.substr(0, str.length).toLowerCase()) == str) || 
 				(val.lieu && pmUtils.removeDiacritics(val.lieu.substr(0, str.length).toLowerCase()) == str) 
 			);
-		}, true);
+		});
 		
 		if ($.isEmptyObject(_creneaux) === true) {
 			$('#liste_taches').html('<div class="alert">Aucun créneau correspondant !</div>');
