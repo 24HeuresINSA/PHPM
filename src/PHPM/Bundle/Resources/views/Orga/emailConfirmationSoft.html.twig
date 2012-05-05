@@ -1,8 +1,11 @@
 <h1>Bonjour {{ orga.prenom }} !</h1>
 {{ phpm_contenu_mail_confirmation_soft|raw }}
+
 <h2>Tu as indiqué être disponible sur les créneaux suivants :</h2>
+<b><a href="{{ url('autologin', { 'id': orga.id, 'loginkey': (orga.id)|phpm_crypt }) }}">Cliques ici si tu veux ajouter d'autres disponibilités.</a></b>
 <ul>
 {% for dispo in orga.disponibilites %}
 <li>{{ dispo.debut | format_datetime('EEEE dd MMM HH:mm') }} -> {{ dispo.fin | format_datetime('EEEE dd HH:mm') }}</li>
 {% endfor %}
 </ul>
+
