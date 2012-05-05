@@ -671,6 +671,7 @@ class OrgaController extends Controller
         
         $em = $this->getDoctrine()->getEntityManager();
         $orgas = $em->getRepository('PHPMBundle:Orga')-> getPlanning($orgaid,$debut,$fin);
+        
              
 	    
 	    return array('orgas' => $orgas,'debut'=>$debut, 'fin'=>$fin

@@ -29,6 +29,7 @@ width:600pt;
 
 	{% for d in orga.disponibilites %}
 	{% for creneau in d.creneaux %}
+	
 
 
 
@@ -43,20 +44,30 @@ width:600pt;
 	 </div>
 	 	<div class="infos">
 	 		<div class="titre"><h3>{{ creneau.plageHoraire.tache.groupeTache.nom }} / {{ creneau.plageHoraire.tache.nom }}</h3></div>
+	 		{% if creneau.plageHoraire.creneaux| length > 1 %}
+		 		<b>Avec : </b>
+		 		{% for c2 in creneau.plageHoraire.creneaux if  c2.id != creneau.id %}
+		 			{{ entitiesMacro.orga(c2.disponibilite.orga) }}
+		 		{% endfor %}
+				<br>
+	 		{% endif %}
 	 		<b>Responsable : </b>{{ entitiesMacro.orga(creneau.plageHoraire.tache.responsable) }} 
-	 									{{ creneau.plageHoraire.tache.responsable.telephone }}
+	 									{{ creneau.plageHoraire.tache.responsable.telephone }}<br>
+	 		
+
+	 									
 	 	</div>
 	  <div class="consignes">
 	    <h4>Consignes</h4>{{ creneau.plageHoraire.tache.consignes |raw}}
 	  </div>
-	  <div class="consignes">
-	    <h4>Matériel Nécessaire</h4>
-			{% for bm in creneau.plageHoraire.tache.besoinsMateriel %}
-	    		{% if bm.quantite > 0 %}
-			{{ bm.materiel.nom }},
-			{% endif %}
-	    	{% endfor %}
-	  </div>
+	  {% if creneau.plageHoraire.tache.besoinsMateriel | length >0 %}
+		  <div class="consignes">
+		    <h4>Matériel Nécessaire</h4>
+				{% for bm in creneau.plageHoraire.tache.besoinsMateriel if bm.quantite > 0 %}
+					{{ bm.materiel.nom }},
+		    	{% endfor %}
+		  </div>
+	  {% endif %}
 	  
 	   
 	  
