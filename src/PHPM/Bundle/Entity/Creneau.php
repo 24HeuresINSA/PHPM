@@ -180,12 +180,14 @@ class Creneau
     }
     public function toArrayOrgaWebService()
     {
-    	
+    	$tache = $this->getPlageHoraire()->getTache();
+		
     	$creneauArray = array(
     					"debut" => $this->getDebut()->format('Y-m-d H:i:s'),
     					"fin" => $this->getFin()->format('Y-m-d H:i:s'), 
     					"duree" => $this->getDuree(), 
-    					"tache" => $this->getPlageHoraire()->getTache()->toArrayOrgaWebService()
+    					"tache" => $tache->toArrayOrgaWebService(),
+						"couleur" => $tache->getGroupeTache()->getEquipe()->getCouleur()
     					);
     	return $creneauArray;
     

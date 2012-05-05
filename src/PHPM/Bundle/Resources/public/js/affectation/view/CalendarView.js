@@ -239,7 +239,7 @@ CalendarView.prototype = {
 		$('#creneau_'+idCreneau+'_'+nbJour).height(duree/60/60*40+'px');
 		
 		// on lui met une couleur fonction du n° de la tâche
-		$('#creneau_'+idCreneau+'_'+nbJour).css('background', orga['disponibilites'][idDispo]['creneaux'][idCreneau]['tache']['couleur']);
+		$('#creneau_'+idCreneau+'_'+nbJour).css('background', orga['disponibilites'][idDispo]['creneaux'][idCreneau]['couleur']);
 	},
 	
 	/*

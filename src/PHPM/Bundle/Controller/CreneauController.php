@@ -253,6 +253,7 @@ class CreneauController extends Controller
     			        	"nom" => $tache->getNom(),
     						"lieu" => $tache->getLieu(),
 	   						"equipe" => $equipe->getId(),
+	   						"equipe_couleur" => $equipe->getCouleur(),
 				    		"debut" => $creneau->getDebut(),
 				    		"fin" => $creneau->getFin(),
     			        	"duree" => $creneau->getDuree(),

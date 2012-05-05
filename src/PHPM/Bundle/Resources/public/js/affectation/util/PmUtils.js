@@ -394,6 +394,19 @@ PmUtils.prototype = {
 				return obj[_item];
 			}
 		}
+	},
+	
+	/*
+	 * Permet de convertir un code couleur hexadécimal
+	 * en valeur RGBA avec la bonne opacité
+	 */
+	hexToRgba: function(hex, opacity) {
+		if (hex.charAt(0) === '#' && hex.length === 7 && opacity) {
+			return 'rgba('+parseInt(hex.substring(1,3),16)+','+parseInt(hex.substring(3,5),16)+','+parseInt(hex.substring(5,7),16)+','+opacity+')';
+		}
+		
+		// sinon on n'est pas sur de quoi il s'agit !
+		return hex;
 	}
 		
 };

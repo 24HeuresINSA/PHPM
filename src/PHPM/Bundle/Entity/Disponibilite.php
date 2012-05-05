@@ -201,21 +201,16 @@ class Disponibilite
     public function toArrayOrgaWebService()
     {
     	
-    	$disponibilite =
+    	$disponibilite = array(
+							"debut" => $this->getDebut()->format('Y-m-d H:i:s'),
+							"fin" => $this->getFin()->format('Y-m-d H:i:s'),
+    					);
     	
-    	array(
-    	                	"debut" => $this->getDebut()->format('Y-m-d H:i:s'),
-    	                	"fin" => $this->getFin()->format('Y-m-d H:i:s'),
-    	);
-    	
-    	foreach ($this->getCreneaux() as $entity)
+    	foreach ($this->getCreneaux() as $entity) {
     		$disponibilite["creneaux"][$entity->getId()] = $entity->toArrayOrgaWebService();
-    	
-    		
-    	
+		}
     	
     	return $disponibilite;
-    
     }
     
     
