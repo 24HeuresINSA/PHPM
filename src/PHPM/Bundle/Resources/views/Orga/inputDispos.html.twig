@@ -58,7 +58,8 @@ setBunload(true);
 					    			<input class="shiftkeybox"type="checkbox" name="phpm_bundle_inputdispostype[disponibiliteInscriptionItems][{{ e.id }}]"
 					    			id="phpm_bundle_inputdispostype_disponibiliteInscriptionItems_{{ e.id }}" value="{{ e.id }}"
 					    			{% if e in orga.disponibilitesInscription %}checked="checked"{% endif %} 
-					    			{% if (e.statut == 0 or (e.statut==1 and e in orga.disponibilitesInscription)) and not is_granted('ROLE_ADMIN') %}disabled{% endif %}
+{# 					    			{% if (e.statut == 0 or (e.statut==1 and e in orga.disponibilitesInscription)) and not is_granted('ROLE_ADMIN') %}disabled{% endif %}#}
+					    			{% if e in orga.disponibilitesInscription %}disabled{% endif %}
 					    			>
 					               </label></div>
 							{% endfor %}
@@ -73,13 +74,9 @@ setBunload(true);
 		
 		
 		<div class="form-fluid">
-		{% if is_granted('ROLE_USER')%}
-			Suite à la DSI qui bug, tu ne peux pas modifier tes dispos ce soir. Reviens demain !
-			{% else %}
 			<div class="form-actions">
 				<button class="btn btn-primary" type="submit" name="action" value="save" >Valider</button>
 			</div>
-			{% endif %}
 	    </div>
 
 

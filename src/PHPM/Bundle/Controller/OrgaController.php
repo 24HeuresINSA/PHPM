@@ -532,11 +532,6 @@ class OrgaController extends Controller
 	            			$orga->addDisponibiliteInscription($di);
 	            			$di->addOrga($orga);
 	            		}
-	            	}else{
-	            		if($admin || ($di->getStatut() == 2)){
-	            			$orga->removeDisponibiliteInscription($di);
-	            		}
-	            		
 	            	}
 	            	
 	            }
