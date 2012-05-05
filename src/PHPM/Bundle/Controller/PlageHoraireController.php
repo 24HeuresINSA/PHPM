@@ -55,7 +55,6 @@ class PlageHoraireController extends Controller
             throw $this->createNotFoundException('Unable to find PlageHoraire entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
@@ -200,7 +199,6 @@ class PlageHoraireController extends Controller
         }
 
         $editForm = $this->createForm(new PlageHoraireType($config), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
