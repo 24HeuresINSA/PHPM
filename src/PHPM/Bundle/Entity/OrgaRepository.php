@@ -54,7 +54,7 @@ class OrgaRepository extends EntityRepository
 		}
 		
 		// on trie par nombre de points de charisme
-		$dql .= "GROUP BY o.id ORDER BY charisme DESC";
+		$dql .= "GROUP BY o.id, d.id, e.id ORDER BY charisme DESC";
 		
 		$q = $this->getEntityManager()->createQuery($dql);
 		return $q->execute();
