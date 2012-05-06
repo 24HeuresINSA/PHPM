@@ -45,8 +45,8 @@ class OrgaRepository extends EntityRepository
 		if ($creneau !== '') {
 			// test sur l'overlap des créneaux
 			$dql .=" AND (o.id NOT IN (SELECT oi.id FROM PHPMBundle:Orga as oi JOIN oi.disponibilites di JOIN di.creneaux ci, PHPMBundle:Creneau cref where cref.id = '$creneau' AND (ci.debut < cref.fin) AND (ci.fin > cref.debut ) ))";
-			// test sur la dispo qui est pas nul
-			$dql .=" AND (c.disponibilite IS NULL) ";
+			// test sur la dispo qui est nul : le créneau n'est pas affecté
+			$dql .=" AND c.disponibilite IS NULL ";
 		}
 		
 		if ($equipe_id !== '') {

@@ -71,7 +71,10 @@ PmHistory.prototype = {
 					// sinon faut tester, voir si on met à jour la valeur
 					switch (_iParam) {
 						case 'orga':
-							if (pmUtils.areEquals(_params['orga'], pmAffectation.current['orga']) === false) {
+							if (pmUtils.areEquals(_params['orga']['id'], pmAffectation.current['orga']['id']) === false) {
+								pmAffectation.current['orga'] = _params['orga'];
+								(pmHistory.refreshData === true) && (pmAffectation.controllers.orga.getDispos());
+							} else if (pmUtils.areEquals(_params['orga'], pmAffectation.current['orga']) === false) {
 								pmAffectation.current['orga'] = _params['orga'];
 								(pmHistory.refreshData === true) && (pmAffectation.controllers.orga.getData());
 							}
