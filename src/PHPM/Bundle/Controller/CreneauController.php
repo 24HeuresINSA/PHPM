@@ -240,7 +240,7 @@ class CreneauController extends Controller
     		$priorite = '';
     		if ($creneau->getOrgaHint() != null) {
     			$priorite = 'orga';
-    		} else if ($creneau->getEquipeHint() === $equipe_orga) {
+    		} else if (isset($equipe_orga) && $creneau->getEquipeHint() === $equipe_orga) {
     			$priorite = 'equipe';
     		}
 			
