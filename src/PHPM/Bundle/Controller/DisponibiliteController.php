@@ -11,6 +11,8 @@ use PHPM\Bundle\Form\DisponibiliteType;
 use PHPM\Bundle\Validator\QuartHeure;
 use Symfony\Component\Security\Acl\Exception\Exception;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\Response;
+
 
 /**
  * Disponibilite controller.
@@ -215,5 +217,30 @@ class DisponibiliteController extends Controller
 //         );
 //     }
 	
-	
+	/**
+	* Lists all dispo of an Orga entity
+	*
+	* @Route("/query.json", name="dispo_query_json")
+	* @Method("get")
+	*/
+	public function queryJsonAction()
+	{
+		$request = $this->getRequest();
+		
+		// on recupère les paramètres passés en post
+		$orga_id = $request->get('orga', '');
+		$plage_id = $request->get('plage_id', '');
+
+		$em = $this->getDoctrine()->getEntityManager();
+		// on appelle la fonction qui va faire la requête SQL et nous renvoyer le resultat
+		$entities = $em->getRepository('PHPMBundle:Disponibilite')->getOrgaDispo($orga_id, $plage_id);
+				
+		// magie, on a rien à faire comme mise en forme !
+    	
+    	$response = new Response();
+    	$response->setContent(json_encode($entities));
+		$response->headers->set('Content-Type', 'application/json');
+    	
+    	return $response;
+	}
 }

@@ -3,6 +3,7 @@
 namespace PHPM\Bundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * DisponibiliteRepository
@@ -27,5 +28,39 @@ class DisponibiliteRepository extends EntityRepository
 		->getResult();
 		
 	
+	}
+	
+	// récupère les dispos d'un orga sur une plage donnée
+	// le 1er paramètre est obligatoire
+	public function getOrgaDispo($orga_id, $plage_id)
+	{
+		$rsm = new ResultSetMapping;
+		$rsm->addEntityResult('PHPMBundle:Disponibilite', 'd');
+		$rsm->addFieldResult('d', 'id', 'id');
+		$rsm->addFieldResult('d', 'debut', 'debut');
+		$rsm->addFieldResult('d', 'fin', 'fin');
+		$rsm->addJoinedEntityResult('PHPMBundle:Creneau', 'c', 'd', 'creneaux');
+		$rsm->addFieldResult('c', 'cid', 'id');
+		$rsm->addFieldResult('c', 'cd', 'debut');
+		$rsm->addFieldResult('c', 'cf', 'fin');
+		
+		$sql = 'SELECT d.id, d.debut, d.fin, c.id AS cid, c.debut AS cd, c.fin AS cf 
+				FROM Disponibilite d 
+				LEFT OUTER JOIN Creneau c ON c.disponibilite_id = d.id
+				WHERE d.orga_id = ?';
+				
+		if ($plage_id !== '') {
+			$pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation_plages')->getValue(), TRUE);
+			$plage = $pref[$plage_id];
+			$fin = $plage["fin"];
+			$debut = $plage["debut"];
+
+			$sql .= " AND d.debut < '$fin' AND d.fin > '$debut'";
+		}
+		
+		$query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+		$query->setParameter(1, $orga_id); // PDO \o/
+		
+		return $query->getArrayResult();
 	}
 }
