@@ -56,7 +56,7 @@ CreneauController.prototype = {
 		pmMessage.success('<strong>Affectation réalisée !</strong>');
 		
 		// on recharge le planning de cet orga (et du coup la liste des tous les orgas)
-		pmAffectation.controllers.orga.getData();
+		pmAffectation.controllers.orga.getDispos();
 		pmAffectation.controllers.creneau.getData(); // et aussi les créneaux dispos
 	},
 	// changement de la valeur d'un filtre
@@ -102,7 +102,7 @@ CreneauController.prototype = {
 		pmMessage.success('<strong>Désaffectation réalisée !</strong>');
 
 		// on recharge le planning de cet orga (et du coup la liste des tous les orgas)
-		pmAffectation.controllers.orga.getData();
+		pmAffectation.controllers.orga.getDispos();
 		pmAffectation.controllers.creneau.getData(); // et aussi les créneaux dispos
 	},
 	

@@ -113,41 +113,39 @@ CalendarView.prototype = {
 		$('.creneau').remove();
 		
 		if (obj.type === 'orga') {
-			var _orga = pmUtils.find(pmAffectation.data.orgas, 'id', obj.id);
-			
-			if (_orga !== undefined) { // check si l'orga existe bien
-				for (var _iDispo in _orga['disponibilites']) {
-					// astuce importante : on force la copie en re-créant un objet Date
-					var _debut = new Date(_orga['disponibilites'][_iDispo]['debut'].getTime());
-					var _fin = _orga['disponibilites'][_iDispo]['fin'];
-					
-					// on appelle une fonction qui va placer les disponibilités
-					pmAffectation.views.calendar.placeDisponibilitesOrga(_debut, _fin);
+			var _dispo = pmAffectation.data.dispos;
 
-					// on place les créneaux - j'ai passé 4 heures à optimiser le truc, fais gaffe à ce que tu touches
-					for (var _iCreneau in _orga['disponibilites'][_iDispo]['creneaux']) {
-						// on vérifie si on est bien sur la bonne plage horaire, trim au besoin
-						// comparaison "croisée" : permet de tenir compte des créneaux à cheval
-						if (pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'] <= _orga['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'] 
-							&& _orga['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'] >= pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()) {
-							// c'est bon, on trim les dates
-							// -1 sur la date de fin pour ne pas avoir de problèmes quand un créneau finit à minuit
-							var _debutCreneau = new Date(Math.max(_orga['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'].getTime(), 
-																	pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()));
-							// faut pas oublier de rajouter 1j, car les plages sont définies comme date du jour 00:00:00
-							var _finCreneau = new Date(Math.min(_orga['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'].getTime(), 
-																pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()+86400000)-1);
-														
-							var _nbJour = 0; // compteur du nombre de jours
-							var _todayMidnight = new Date(_debutCreneau); // bien forcer la recopie
-							_todayMidnight.setHours(0, 0, 0, 0);
-							
-							do {
-								_todayMidnight.setDate(_debutCreneau.getDate()+1)
-								pmAffectation.views.calendar.placeCreneau(_orga, _iDispo, _iCreneau, _debutCreneau, (Math.min(_todayMidnight.getTime(), _finCreneau)-_debutCreneau)/1000, _nbJour++);
-								_debutCreneau = new Date(_todayMidnight); // bien forcer la recopie
-							} while (_debutCreneau.getDate() <= _finCreneau.getDate())
-						}
+			for (var _iDispo in _dispo) {
+				// astuce importante : on force la copie en re-créant un objet Date
+				var _debut = new Date(_dispo[_iDispo]['debut'].getTime());
+				var _fin = _dispo[_iDispo]['fin'];
+				
+				// on appelle une fonction qui va placer les disponibilités
+				pmAffectation.views.calendar.placeDisponibilitesOrga(_debut, _fin);
+
+				// on place les créneaux - j'ai passé 4 heures à optimiser le truc, fais gaffe à ce que tu touches
+				for (var _iCreneau in _dispo[_iDispo]['creneaux']) {
+					// on vérifie si on est bien sur la bonne plage horaire, trim au besoin
+					// comparaison "croisée" : permet de tenir compte des créneaux à cheval
+					if (pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'] <= _dispo[_iDispo]['creneaux'][_iCreneau]['fin'] 
+						&& _dispo[_iDispo]['creneaux'][_iCreneau]['fin'] >= pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()) {
+						// c'est bon, on trim les dates
+						// -1 sur la date de fin pour ne pas avoir de problèmes quand un créneau finit à minuit
+						var _debutCreneau = new Date(Math.max(_dispo[_iDispo]['creneaux'][_iCreneau]['debut'].getTime(), 
+																pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()));
+						// faut pas oublier de rajouter 1j, car les plages sont définies comme date du jour 00:00:00
+						var _finCreneau = new Date(Math.min(_dispo[_iDispo]['creneaux'][_iCreneau]['fin'].getTime(), 
+															pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()+86400000)-1);
+													
+						var _nbJour = 0; // compteur du nombre de jours
+						var _todayMidnight = new Date(_debutCreneau); // bien forcer la recopie
+						_todayMidnight.setHours(0, 0, 0, 0);
+												
+						do {
+							_todayMidnight.setDate(_debutCreneau.getDate()+1)
+							pmAffectation.views.calendar.placeCreneauOrga(pmAffectation.current.orga.id, _dispo, _iDispo, _iCreneau, _debutCreneau, (Math.min(_todayMidnight.getTime(), _finCreneau)-_debutCreneau)/1000, _nbJour++);
+							_debutCreneau = new Date(_todayMidnight); // bien forcer la recopie
+						} while (_debutCreneau.getDate() <= _finCreneau.getDate())
 					}
 				}
 			}
@@ -224,24 +222,23 @@ CalendarView.prototype = {
 			.bind('click', {idCreneau: idCreneau}, pmAffectation.controllers.calendar.clickCreneauTache);
 		}
 	},	
-	// place un créneau
-	placeCreneau: function(orga, idDispo, idCreneau, dateDebut, duree, nbJour) {
+	// place un créneau (mode orga)
+	placeCreneauOrga: function(idOrga, dispo, idDispo, idCreneau, dateDebut, duree, nbJour) {
 		var _prefixe = (nbJour !== 0) ? '>> ' : '';
 				
-		var _html = '<div id="creneau_'+idCreneau+'_'+nbJour+'" class="creneau" orga="'+orga['id']+
-				'" disponibilite="'+idDispo+'" creneau="'+idCreneau+'_'+nbJour+'">'+_prefixe+
-				orga['disponibilites'][idDispo]['creneaux'][idCreneau]['tache']['nom']+'</div>';
+		var _html = '<div id="creneau_'+dispo[idDispo]['creneaux'][idCreneau]['id']+'_'+nbJour+'" class="creneau" orga="'+idOrga+
+				'" disponibilite="'+dispo[idDispo]['id']+'" creneau="'+dispo[idDispo]['creneaux'][idCreneau]['id']+'_'+nbJour+'">'+_prefixe+
+				dispo[idDispo]['creneaux'][idCreneau]['plageHoraire']['tache']['nom']+'</div>';
 		
 		// on le rajoute, supprime le handler précédent et en rajoute un
 		$('.jour[jour="'+dateDebut.getFullYear()+'-'+dateDebut.getPMonth()+'-'+dateDebut.getPDate()+'"] > .heure[heure="'+
 		dateDebut.getHours()+'"] > .quart_heure[minute="'+dateDebut.getMinutes()+'"]').append(_html).off('click')
-		.bind('click', {idOrga: orga['id'], idDispo: idDispo, idCreneau: idCreneau}, pmAffectation.controllers.calendar.clickCreneau);
+		.bind('click', {idOrga: idOrga, indexDispo: idDispo, indexCreneau: idCreneau}, pmAffectation.controllers.calendar.clickCreneau);
 		
 		// set la taille - et -10px à cause du padding vertical de 5px
-		$('#creneau_'+idCreneau+'_'+nbJour).height(duree/60/60*40+'px');
-		
-		// on lui met une couleur fonction du n° de la tâche
-		$('#creneau_'+idCreneau+'_'+nbJour).css('background', orga['disponibilites'][idDispo]['creneaux'][idCreneau]['couleur']);
+		$('#creneau_'+dispo[idDispo]['creneaux'][idCreneau]['id']+'_'+nbJour).height(Math.round(duree/60/60*40)+'px');
+				
+		$('#creneau_'+dispo[idDispo]['creneaux'][idCreneau]['id']+'_'+nbJour).css('background', dispo[idDispo]['creneaux'][idCreneau]['couleur']);
 	},
 	
 	/*
@@ -249,20 +246,20 @@ CalendarView.prototype = {
 	 * sur lequel on vient de cliquer
 	 */
 	showDetails: function(obj) {
-		var _creneau = pmUtils.find(pmAffectation.data.orgas, 'id', obj.data.idOrga)['disponibilites'][obj.data.idDispo]['creneaux'][obj.data.idCreneau];
+		var _creneau = pmAffectation.data.dispos[obj.data.indexDispo]['creneaux'][obj.data.indexCreneau];
 		
 		// on prépare le contenu du pop-up
 		var _html = '<div class="modal hide creneau_details" id="creneau_details">'+
 					'<div class="modal-header"><a class="close" data-dismiss="modal">×</a>'+
-					'<h3>Détails du créneau n°'+obj.data.idCreneau+'</h3></div>'+
+					'<h3>Détails du créneau n°'+pmAffectation.data.dispos[obj.data.indexDispo]['creneaux'][obj.data.indexCreneau]['id']+'</h3></div>'+
 					'<div class="modal-body"><ul>'+
-					'<li><a href="'+pmAffectation.url+'tache/'+_creneau.tache.id+'/edit" target="_blank">Tâche n°'+_creneau.tache.id+'</a></li>'+
-					'<li><strong>'+_creneau.tache.nom+'</strong></li>'+
-					'<li>Lieu : '+_creneau.tache.lieu+'</li>'+
+					'<li><a href="'+pmAffectation.url+'tache/'+_creneau.plageHoraire.tache.id+'/edit" target="_blank">Tâche n°'+_creneau.plageHoraire.tache.id+'</a></li>'+
+					'<li><strong>'+_creneau.plageHoraire.tache.nom+'</strong></li>'+
+					'<li>Lieu : '+_creneau.plageHoraire.tache.lieu+'</li>'+
 					'<li>'+_creneau.debut.getThisFormat('d/m H:I')+' - '+_creneau.fin.getThisFormat('d/m H:I')+'</li>'+
 					'</ul></div><div class="modal-footer">'+
-					'<button class="btn btn-warning" id="creneaumaker_'+obj.data.idCreneau+'" data-dismiss="modal">Ouvrir dans CréneauMaker</button>'+
-					'<button class="btn btn-danger" id="desaffect_'+obj.data.idCreneau+'" data-dismiss="modal">Désaffecter</button>'+
+					'<button class="btn btn-warning" id="creneaumaker_'+obj.data.indexCreneau+'" data-dismiss="modal">Ouvrir dans CréneauMaker</button>'+
+					'<button class="btn btn-danger" id="desaffect_'+obj.data.indexCreneau+'" data-dismiss="modal">Désaffecter</button>'+
     				'<a href="#" class="btn" data-dismiss="modal">Fermer</a></div></div>';
 		
 		// on l'ouvre - modal de Twitter Bootstrap
@@ -270,10 +267,10 @@ CalendarView.prototype = {
 		$(_html).modal();
 		
 		// bouton, lien pour la désaffectation - setter quand le popup est visible
-		$('#desaffect_'+obj.data.idCreneau).bind('click', {idCreneau: obj.data.idCreneau, idOrga: obj.data.idOrga}, function(obj) {
+		$('#desaffect_'+obj.data.indexCreneau).bind('click', {idCreneau: pmAffectation.data.dispos[obj.data.indexDispo]['creneaux'][obj.data.indexCreneau]['id'], idOrga: obj.data.idOrga}, function(obj) {
 			pmAffectation.controllers.creneau.desAffectation(obj.data.idCreneau, obj.data.idOrga);
 		});
-		$('#creneaumaker_'+obj.data.idCreneau).bind('click', {idTache: _creneau.tache.id}, function(obj) {
+		$('#creneaumaker_'+obj.data.indexCreneau).bind('click', {idTache: pmAffectation.data.dispos[obj.data.indexDispo]['creneaux'][obj.data.indexCreneau]['plageHoraire']['tache']['id']}, function(obj) {
 			var _popup = window.open(pmAffectation.urls.creneauMaker+'/'+obj.data.idTache, '');
 					
 			// à la fermeture, refresh la liste des créneaux

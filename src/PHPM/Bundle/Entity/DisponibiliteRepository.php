@@ -43,10 +43,21 @@ class DisponibiliteRepository extends EntityRepository
 		$rsm->addFieldResult('c', 'cid', 'id');
 		$rsm->addFieldResult('c', 'cd', 'debut');
 		$rsm->addFieldResult('c', 'cf', 'fin');
+		$rsm->addJoinedEntityResult('PHPMBundle:PlageHoraire', 'p', 'c', 'plageHoraire');
+		$rsm->addFieldResult('p', 'pi', 'id');
+		$rsm->addJoinedEntityResult('PHPMBundle:Tache', 't', 'p', 'tache');
+		$rsm->addFieldResult('t', 'ti', 'id');
+		$rsm->addFieldResult('t', 'tn', 'nom');
+		$rsm->addFieldResult('t', 'tl', 'lieu');
+		$rsm->addJoinedEntityResult('PHPMBundle:GroupeTache', 'g', 't', 'groupeTache');
+		$rsm->addFieldResult('g', 'ge', 'id');
 		
-		$sql = 'SELECT d.id, d.debut, d.fin, c.id AS cid, c.debut AS cd, c.fin AS cf 
+		$sql = 'SELECT d.id, d.debut, d.fin, c.id AS cid, c.debut AS cd, c.fin AS cf, p.id AS pi, t.id AS ti, t.nom AS tn, t.lieu AS tl, g.equipe_id AS ge
 				FROM Disponibilite d 
 				LEFT OUTER JOIN Creneau c ON c.disponibilite_id = d.id
+				LEFT OUTER JOIN PlageHoraire p ON c.plageHoraire_id = p.id
+				LEFT OUTER JOIN Tache t ON p.tache_id = t.id
+				LEFT OUTER JOIN GroupeTache g ON t.groupetache_id = g.id
 				WHERE d.orga_id = ?';
 				
 		if ($plage_id !== '') {

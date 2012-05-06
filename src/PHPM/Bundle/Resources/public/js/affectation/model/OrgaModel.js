@@ -44,6 +44,24 @@ OrgaModel.prototype = {
 			type: 'POST'
 		});
 	},
+	getDataDispos: function(callBackDispos) {
+		pmAffectation.models.orga.callBackDispos = callBackDispos;
+				
+		// construit les paramètres que l'on va envoyer, -1 est le wildcart
+		var _params = {
+			plage_id: pmAffectation.current.plage, // on fournit toujours la plage, la base
+			orga_id: pmAffectation.current.orga.id
+		};
+		
+		$.ajax({
+			url: 'http://localhost:8888/PHPM/web/app_dev.php/disponibilite/query.json',
+			dataType: 'json',
+			data: _params,
+			success: pmAffectation.models.orga.requestSuccessDispos,
+			error: pmAffectation.models.orga.requestError,
+			type: 'POST'
+		});
+	},
 	
 	/*
 	 * Récup les résultats
@@ -54,6 +72,11 @@ OrgaModel.prototype = {
 		pmAffectation.models.orga.data = data;
 	
 		pmAffectation.models.orga.callBack();
+	},
+	requestSuccessDispos: function(data) {
+		pmAffectation.models.orga.dataDispo = data;
+	
+		pmAffectation.models.orga.callBackDispos();
 	},
 	requestError: function(data, statusText) {
 		pmMessage.alert("Impossible de récupérer les orgas : " + statusText);
@@ -75,26 +98,45 @@ OrgaModel.prototype = {
 				_orga[_iChamp] = this.data[_iOrga][_iChamp];
 			}
 			
-			// de la date de naissance
+			// "conversion" de la date de naissance
 			_orga['dateDeNaissance'] = new Date(this.data[_iOrga]['dateDeNaissance']);
-			
-			// disponibilités, cela devient physique
-			for (var _iDispo in this.data[_iOrga]['disponibilites']) {
-				// créneaux, encore un niveau
-				for (var _iCreneau in this.data[_iOrga]['disponibilites'][_iDispo]['creneaux']) {
-					_orga['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut']);
-					_orga['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin']);
-				
-					_orga['disponibilites'][_iDispo]['creneaux'][_iCreneau]['couleur'] = pmUtils.hexToRgba(this.data[_iOrga]['disponibilites'][_iDispo]['creneaux'][_iCreneau]['couleur'], 0.6);
-				}
-				
-				_orga['disponibilites'][_iDispo]['debut'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['debut']);
-				_orga['disponibilites'][_iDispo]['fin'] = new Date(this.data[_iOrga]['disponibilites'][_iDispo]['fin']);
-			}
 		
 			_orgas[_iOrga] = _orga;
 		}
 		
 		return _orgas;
+	},
+	getDispos: function() {
+		var _dispos = {};
+		
+		// traitement des orgas
+		for (var _iDispo in this.dataDispo) {
+			var _dispo = {};
+			
+			// récupère toutes les données
+			for (var _iChamp in this.dataDispo[_iDispo]) {
+				_dispo[_iChamp] = this.dataDispo[_iDispo][_iChamp];
+			}
+			
+			// re-traitement de plusieurs champs
+			_dispo['debut'] = new Date(this.dataDispo[_iDispo]['debut']['date']);
+			_dispo['fin'] = new Date(this.dataDispo[_iDispo]['fin']['date']);
+			
+			// créneaux, encore un niveau
+			for (var _iCreneau in this.dataDispo[_iDispo]['creneaux']) {
+				_dispo['creneaux'][_iCreneau]['debut'] = new Date(this.dataDispo[_iDispo]['creneaux'][_iCreneau]['debut']['date']);
+				_dispo['creneaux'][_iCreneau]['fin'] = new Date(this.dataDispo[_iDispo]['creneaux'][_iCreneau]['fin']['date']);
+			
+				_dispo['creneaux'][_iCreneau]['couleur'] = pmUtils.hexToRgba(
+					pmAffectation.data.parameter.equipes[this.dataDispo[_iDispo]['creneaux'][_iCreneau]['plageHoraire']['tache']['groupeTache']['id']]['couleur']
+					, 0.6);
+			}
+			
+			//console.log(_dispo);
+		
+			_dispos[_iDispo] = _dispo;
+		}
+		
+		return _dispos;
 	}
 }

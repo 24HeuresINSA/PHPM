@@ -58,9 +58,9 @@ OrgaView.prototype = {
 			// on affiche l'équipe et la confiance
 			var _equipes = ' <span class="label" style="background-color: '+pmAffectation.data.parameter.confiance[_orgas[_iOrga]['confiance']]['couleur']+';">'+
 								pmAffectation.data.parameter.confiance[_orgas[_iOrga]['confiance']]['nom'].toLowerCase()+'</span>';
-			if (pmAffectation.data.parameter.equipes[_orgas[_iOrga]['equipe']].toLowerCase()
+			if (pmAffectation.data.parameter.equipes[_orgas[_iOrga]['equipe']]['nom'].toLowerCase()
 				!= pmAffectation.data.parameter.confiance[_orgas[_iOrga]['confiance']]['nom'].toLowerCase()) {
-				_equipes += ' <span class="label label-info">'+pmAffectation.data.parameter.equipes[_orgas[_iOrga]['equipe']].toLowerCase()+'</span>';
+				_equipes += ' <span class="label label-info">'+pmAffectation.data.parameter.equipes[_orgas[_iOrga]['equipe']]['nom'].toLowerCase()+'</span>';
 			}
 			
 			var _html = '<div class="item orga" id="orga_'+_orgas[_iOrga]['id']+'" idOrga="'+_orgas[_iOrga]['id']+'">'+

@@ -25,6 +25,14 @@ OrgaController.prototype = {
 		$('#liste_orgas').addClass('spinner_medium');
 		
 		pmAffectation.models.orga.getData(pmAffectation.controllers.orga.callbackOrgas);
+		
+		// si un orga est déjà sélectionné, on va chercher le reste en parallèle
+		if (pmAffectation.current.mode === 'orga' && pmAffectation.current.orga.id != -1) {
+			this.getDispos(); // dispos
+		}
+	},
+	getDispos: function() {
+		pmAffectation.models.orga.getDataDispos(pmAffectation.controllers.orga.callbackDispos);
 	},
 	
 	/*
@@ -38,13 +46,18 @@ OrgaController.prototype = {
 			pmAffectation.current.orga.id = pmAffectation.data.orgas[0]['id'];
 			
 			pmHistory.setUrlParam(); // maj de l'url
+			
+			this.getDispos(); // on va chercher ses dispos
 		}
 		
 		pmAffectation.views.orga.setOrgas();
-		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga.id});
 		
-		// force la mise à jour des créneaux - tous ceux pouvant aller à cet orga
 		(pmAffectation.current.mode === 'orga') && (pmAffectation.controllers.creneau.getData());
+	},
+	callbackDispos: function() {
+		pmAffectation.data.dispos = pmAffectation.models.orga.getDispos();
+		
+		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga.id});
 	},
 	
 	/*

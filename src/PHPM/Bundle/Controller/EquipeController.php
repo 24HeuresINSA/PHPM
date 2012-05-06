@@ -37,12 +37,17 @@ class EquipeController extends Controller
             return array('entities' => $entities);
         }
         
-        if($format=='json'){
+        if ($format === 'json') {
             $a = array();
-            foreach ($entities as $entity){
-                $a[$entity->getId()] = $entity->getNom();
+            foreach ($entities as $entity) {
+                $a[$entity->getId()] = array(
+                							'id' => $entity->getId(),
+                							'nom' => $entity->getNom(),
+                							'couleur' => $entity->getCouleur()
+										);
             
             }
+			
             return array('response'=>$a);
         }
     }

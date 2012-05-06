@@ -221,20 +221,21 @@ class DisponibiliteController extends Controller
 	* Lists all dispo of an Orga entity
 	*
 	* @Route("/query.json", name="dispo_query_json")
-	* @Method("get")
+	* @Method("post")
 	*/
 	public function queryJsonAction()
 	{
 		$request = $this->getRequest();
 		
 		// on recupère les paramètres passés en post
-		$orga_id = $request->get('orga', '');
-		$plage_id = $request->get('plage_id', '');
+		$orga_id = $request->request->get('orga_id', '');
+		$plage_id = $request->request->get('plage_id', '');
 
 		$em = $this->getDoctrine()->getEntityManager();
 		// on appelle la fonction qui va faire la requête SQL et nous renvoyer le resultat
 		$entities = $em->getRepository('PHPMBundle:Disponibilite')->getOrgaDispo($orga_id, $plage_id);
-				
+		
+		//var_dump($entities);
 		// magie, on a rien à faire comme mise en forme !
     	
     	$response = new Response();
