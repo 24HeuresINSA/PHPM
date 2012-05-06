@@ -150,6 +150,9 @@
 							{{ _self.navBarItem('Statistiques','analyse_stats') }}
 							{{ _self.navBarItem('Utilisation du matériel','analyse_usageMateriel') }}
 							{{ _self.navBarItem('Occupation des orgas','analyse_plagesorga') }}
+							{% if is_granted('ROLE_ADMIN') %}
+							{{ _self.navBarItem('Besoins en orgas','analyse_besoinsorga') }}
+							{% endif %}
 					    </ul>
 					</li>
 					{% if not is_granted('ROLE_ADMIN') %}

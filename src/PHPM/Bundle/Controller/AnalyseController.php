@@ -154,6 +154,86 @@ class AnalyseController extends Controller
     	return array('respResult'=>$respResult);
     }
     
+    /**
+     * Rapport besoinsOrga
+     *
+     * @Route("/besoinsorga/{plageId}/{interval}", defaults={"plageId"=0,"interval"=900}, name="analyse_besoinsorga")
+     * @Template()
+     */
+    public function besoinsOrgaAction($plageId,$interval)
+    {
+    	
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    		throw new AccessDeniedException();
+    	}
+    	 
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$config = $this->get('config.extension');
+    	
+    	
+    	
+    	$plages = json_decode($config->getValue('manifestation_plages'), TRUE);
+    	$plage= $plages[$plageId];
+    	$debutPlage = new \DateTime($plage['debut']);
+    	$finPlage = new \DateTime($plage['fin']);
+    	
+    	
+    	
+    	$result = array();
+    	$id=0;
+    	$debut=$debutPlage;
+    	$fin=clone $debutPlage;
+    	$fin->add(new \DateInterval('PT'.($interval).'S'));
+    	$days=array();
+    	
+    	
+    	$dayFormatter= new  \IntlDateFormatter(null ,\IntlDateFormatter::FULL, \IntlDateFormatter::FULL,    null,null,'EEEE d MMMM'  );
+    	$timeFormatter= new  \IntlDateFormatter(null ,\IntlDateFormatter::FULL, \IntlDateFormatter::FULL,    null,null,'HH:mm'  );
+    	 
+    	while ($debut<$finPlage){
+
+    		
+    		
+    		$a = $em
+    		->createQuery("SELECT count(c) FROM PHPMBundle:Creneau c JOIN c.disponibilite d WHERE c.debut < :fin AND c.fin > :debut")
+    		->setParameter('debut', $debut->format('Y-m-d H:i:s'))
+    		->setParameter('fin', $fin->format('Y-m-d H:i:s'))
+    		->getSingleScalarResult();
+    		
+    		$t = $em
+    		->createQuery("SELECT count(c) FROM PHPMBundle:Creneau c WHERE c.debut < :fin AND c.fin > :debut")
+    		->setParameter('debut', $debut->format('Y-m-d H:i:s'))
+    		->setParameter('fin', $fin->format('Y-m-d H:i:s'))
+    		->getSingleScalarResult();
+    		
+    		$o = $em
+    		->createQuery("SELECT count(di) FROM PHPMBundle:DisponibiliteInscription di JOIN di.orgas o WHERE di.debut < :fin AND di.fin > :debut")
+    		->setParameter('debut', $debut->format('Y-m-d H:i:s'))
+    		->setParameter('fin', $fin->format('Y-m-d H:i:s'))
+    		->getSingleScalarResult();
+    	
+    		$row = array('debut'=>$debut->format('Y-m-d H:i:s'),'fin'=>$fin->format('Y-m-d H:i:s'),'data'=>"$o/$t ($a)");
+    		
+    		$result[$timeFormatter->format($debut).' - '.$timeFormatter->format($fin)][$debut->format('d')]= $row;
+	    	
+	    	$id++;
+	    	$days[$debut->format('d')]=$dayFormatter->format($debut);
+	    	$debut->add(new \DateInterval('PT'.($interval).'S'));	
+	    	$fin->add(new \DateInterval('PT'.($interval).'S'));
+	    	
+	    	
+    	
+    	}
+    
+    	return array('result'=>$result,
+    				'days'=>$days,
+    				'debutPlage'=>$debutPlage,
+    				'finPlage'=>$finPlage,
+    				'plages'=>$plages
+    			
+    			);
+    }
+    
     
     
 }
