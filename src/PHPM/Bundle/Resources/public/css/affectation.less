@@ -28,12 +28,20 @@
   box-sizing: border-box; /* Opera/IE 8+ */
 }
 .h-flex-box {
-  display: -webkit-box;
-  -webkit-box-orient: horizontal;
-  display: -moz-box;
-  -moz-box-orient: horizontal;
   display: box;
+  display: -webkit-box;
+  display: -moz-box;
   box-orient: horizontal;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+}
+.center-flex-box {
+  box-pack: center;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  box-align: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
 }
 .flex (@flex: 1) {
   width: 1px; // permet de s'assurer que flex prend la main
@@ -144,13 +152,15 @@ footer {
  */
 .menu_calendar {
 	width: 100%;
+	.h-flex-box();
+  .center-flex-box();
 	.border-box();
-	padding: 10px 20%;
+	padding: 10px 0;
 	border-bottom: 1px solid #666;
 	margin: 0;
 	
 	div {
-	  float: left;
+	  //float: left;
 	  margin: 0 5px;
 	}
 }
@@ -261,6 +271,7 @@ footer {
         .quart_heure {
           width: 100%;
           height: @heightHeure / 4;
+          .h-flex-box();
           .border-box();
           
           // quart d'heure disponible, clair
@@ -295,6 +306,7 @@ footer {
             padding: 5px 0; // attention si la valeur est changée, aller répercuter dans CalendarView.js -> placeCreneau
             text-align: center;
             overflow: hidden;
+            .flex();
             .border-box();
           }
         }
