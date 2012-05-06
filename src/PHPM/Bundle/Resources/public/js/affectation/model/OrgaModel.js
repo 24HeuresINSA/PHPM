@@ -54,7 +54,7 @@ OrgaModel.prototype = {
 		};
 		
 		$.ajax({
-			url: 'http://localhost:8888/PHPM/web/app_dev.php/disponibilite/query.json',
+			url: pmAffectation.urls.dispos,
 			dataType: 'json',
 			data: _params,
 			success: pmAffectation.models.orga.requestSuccessDispos,
