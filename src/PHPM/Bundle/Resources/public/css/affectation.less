@@ -27,6 +27,20 @@
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
   box-sizing: border-box; /* Opera/IE 8+ */
 }
+.h-flex-box {
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  display: box;
+  box-orient: horizontal;
+}
+.flex (@flex: 1) {
+  width: 1px; // permet de s'assurer que flex prend la main
+   -webkit-box-flex: @flex;
+  -moz-box-flex: @flex;
+  box-flex: @flex;
+}
 
 /*
  * Override
@@ -169,15 +183,16 @@ footer {
     width: 100%;
     padding-left: 40px;
     padding-right: 8px; // pour récupérer l'espace pour la scrollbar de jours
+    .h-flex-box();
     .border-box();
 	  
     .titre_date {
-      float: left;
       height: 100%;
       border-right: 1px solid #333;
       text-align: center;
       background: @grisMoyen;
       overflow: hidden;
+      .flex();
       .border-box();
       
       &:last-of-type {
@@ -195,6 +210,7 @@ footer {
     padding-left: 40px;
     position: relative; // replace le référentiel
     .border-box();
+    .h-flex-box();
     
     /* barre des heures */
     .hours {
@@ -227,9 +243,10 @@ footer {
     .jour {
       height: @joursHeight;
       // width setté dynamiquement
-      float: left;
+      //float: left;
       border-right: 1px solid #666;
       .border-box();
+      .flex();
             
       /* heure */
       .heure {
