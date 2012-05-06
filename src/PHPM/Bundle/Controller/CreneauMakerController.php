@@ -237,11 +237,6 @@ class CreneauMakerController extends Controller
     		throw new \Exception("La tâche doit être validée");
     	}
     
-    	foreach ($entity->getPlagesHoraire() as $ph){
-	    	foreach ($ph->getCreneaux() as $creneau){
-	    		$em->remove($creneau);
-	    	}
-    	}
    	
     	$commentaire = new Commentaire();
     	$commentaire->setAuteur($user);

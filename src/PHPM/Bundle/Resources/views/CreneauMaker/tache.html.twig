@@ -39,20 +39,17 @@
 	                {% endfor %}
                 </div>
 		    	{% if ph.creneaux.count > 0 %}
-		    		{% if tache.statut == 2 %}
-					    <div class="well">
-					    	<a class="btn btn-danger" href="{{ path('creneaumaker_deleteallph', { 'id': ph.id }) }}"><i class="icon-remove"></i> Supprimer tous les créneaux</a>
-					    </div>
-				    {% endif %}
+				    <div class="well">
+				    	<a class="btn btn-danger" href="{{ path('creneaumaker_deleteallph', { 'id': ph.id }) }}"><i class="icon-remove"></i> Supprimer tous les créneaux</a>
+				    </div>
 					<table class="table table-condensed">
 				        <thead>
 				            <th>Créneau</th>
 				            <th>Orga Nécessaire</th>
 				            <th>Équipe nécessaire</th>
 				            <th>Orga Affecté</th>
-				            {% if tache.statut == 2 %}
-				            	<th>Actions</th>
-				            {% endif %}
+				            <th>Actions</th>
+				            
 				        </thead>
 				        <tbody>
 						{% for c in ph.creneaux %}
@@ -81,12 +78,16 @@
 					                	-
 					                {% endif %}
 				                </td>
-				                {% if tache.statut == 2 %}
+				                
 					                <td>
 						                <a class="btn " href="{{ path('creneau_edit', { 'id': c.id }) }}"><i class="icon-pencil"></i> Éditer</a>
+						                {% if  c.disponibilite is not null%}
+						                <a class="btn  btn-warning" href="{{ path('creneau_desaffecter', { 'cid': c.id }) }}"> Désaffecter</a>
+						                {% else %}
 						                <a class="btn  btn-danger" href="{{ path('creneau_delete', { 'id': c.id }) }}"><i class="icon-remove"></i> Supprimer</a>
+					                	{% endif %}
 					                </td>
-				                {% endif %}
+				                
 				            </tr>
 				        {% endfor %}
 				        </tbody>
@@ -94,11 +95,11 @@
 			    {% else %}
 				    <div class="alert alert-info">
 				    	Cette plage horaire ne comporte pas de créneaux.
-						{% if tache.statut == 2 %}
+						
 						    <div class="pad10">
 						    	<a class="btn btn-primary" href="{{ path('creneaumaker_genererph', { 'id': ph.id }) }}"><i class="icon-plus"></i> Générer</a>
 							</div>
-						{% endif %}
+						
 				    </div>
 		    	{% endif %}	
 	    	</div>
