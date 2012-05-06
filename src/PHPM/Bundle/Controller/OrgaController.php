@@ -655,7 +655,7 @@ class OrgaController extends Controller
         $debut = new \DateTime();
         $fin = new \DateTime($config->getValue('phpm_planning_fin'));
         
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser()->getId() != $orga->getId()) {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser()->getId() != $orgaid) {
         	throw new AccessDeniedException();
         }
         
