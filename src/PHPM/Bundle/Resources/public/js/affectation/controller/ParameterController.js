@@ -59,18 +59,18 @@ ParameterController.prototype = {
 		// taille des sidebars
 		var _ssOrga = pmUtils.getLocalStorage('SizeSidebarOrga');
 		if (_ssOrga !== undefined) {
-			pmUtils.resizeCalendar($('#sidebar_orga').width()-_ssOrga);
+			pmLayout.resizeCalendar($('#sidebar_orga').width()-_ssOrga);
 			
 			$('#sidebar_orga').width(_ssOrga);
-			pmUtils.setPourcentWidth('#sidebar_orga');
+			pmLayout.setPourcentWidth('#sidebar_orga');
 		}
 		
 		var _ssTache = pmUtils.getLocalStorage('SizeSidebarTache');
 		if (_ssTache !== undefined) {
-			pmUtils.resizeCalendar($('#sidebar_tache').width()-_ssTache);
+			pmLayout.resizeCalendar($('#sidebar_tache').width()-_ssTache);
 			
 			$('#sidebar_tache').width(_ssTache);
-			pmUtils.setPourcentWidth('#sidebar_tache');
+			pmLayout.setPourcentWidth('#sidebar_tache');
 		}
 	}
 	

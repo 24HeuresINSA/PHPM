@@ -64,7 +64,7 @@ CalendarView.prototype = {
 		$('#'+pmAffectation.current['quart_heure']).addClass('current');
 		
 		// on redimensionne l'app comme il faut
-		pmUtils.setAppHeight();
+		pmLayout.setAppHeight();
 	},
 	// fabrique un jour
 	makeADay: function(date, jourSemaine, nbJours) {
