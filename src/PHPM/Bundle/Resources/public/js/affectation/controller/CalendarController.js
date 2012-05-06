@@ -75,8 +75,8 @@ CalendarController.prototype = {
 		
 		this.resetDateHeure(true); // on ce paramètre
 		pmAffectation.views.calendar.setPlage(plageId);
-		pmAffectation.controllers.orga.getDispos(); // mise à jour de l'orga également
-		pmAffectation.controllers.creneau.empty(); // vide la colonne creneau - deviendra peut-être inutile si on prend un orga par défaut
+		pmAffectation.controllers.orga.getDispos(); // mise à jour de l'orga
+		pmAffectation.controllers.creneau.getData(); // et des créneaux également
 		
 		pmHistory.setUrlParam(); // maj de l'url
 	},
