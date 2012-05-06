@@ -10,6 +10,7 @@
 	
 	// utilitaires
 	pmUtils = new PmUtils();
+	pmLayout = new PmLayout();
 	pmHistory = new PmHistory();
 	pmMessage = new PmMessage();
 	
@@ -49,7 +50,7 @@ $(document).ready(function() {
 	$('#client').addClass('spinner_large'); // au cas où le chargement soit vraiment très très long
 	
 	// 0 : setter le layout et récupérer les paramètres dans l'Url
-	pmUtils.setResizeableSidebars();
+	pmLayout.setResizeableSidebars();
 	// 0.5 : travail sur l'historique
 	pmHistory.initHistoryListener(); 
 	pmHistory.parseUrlParam(); // un peu bizarre : parfois faut le faire, parfois pas
