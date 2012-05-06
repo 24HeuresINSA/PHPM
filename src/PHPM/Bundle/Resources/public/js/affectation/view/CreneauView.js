@@ -60,9 +60,9 @@ CreneauView.prototype = {
 					_priorite = ' <span class="label label-important">orga</span>';
 					break;
 				case 'equipe':
-					if (pmAffectation.data.parameter.equipes[_creneaux[_iCreneau]['equipe']].toLowerCase() 
+					if (pmAffectation.data.parameter.equipes[_creneaux[_iCreneau]['equipe']]['nom'].toLowerCase() 
 						!= pmAffectation.data.parameter.confiance[_creneaux[_iCreneau]['confiance']]['nom'].toLowerCase()) {
-						_priorite = ' <span class="label label-inverse">'+pmAffectation.data.parameter.equipes[_creneaux[_iCreneau]['equipe']].toLowerCase()+'</span>';
+						_priorite = ' <span class="label label-inverse">'+pmAffectation.data.parameter.equipes[_creneaux[_iCreneau]['equipe']]['nom'].toLowerCase()+'</span>';
 					}
 					break;
 				case 'confiance':
