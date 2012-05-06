@@ -4,7 +4,7 @@ git pull origin master
 bin/vendors install
 cd vendor/TwitterBootstrap
 make bootstrap
-cp -R bootstrap ../../web/lib/
+cp -r bootstrap ../../web/lib/
 cd ../../
 app/console assets:install web --symlink
 app/console cache:clear --env=prod
