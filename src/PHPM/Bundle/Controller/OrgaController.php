@@ -604,8 +604,7 @@ class OrgaController extends Controller
 		$equipe_id = $request->request->get('equipe_id', '');
 		
 		
-		if ($age != '') 
-		{ 
+		if ($age !== '') { 
 			// petite conversion pour changer l'age en date de naissance max
 			$maxDateNaissance->modify('-'.$age.' year');
 		}
@@ -618,15 +617,6 @@ class OrgaController extends Controller
 		//création du Json de retour selon le modèle définit dans la spec (cf wiki)
 		foreach ($entities as $orga) {
 			$equipe = $orga[0]->getEquipe();
-			
-			$dispos = array();
-			foreach ($orga[0]->getDisponibilites() as $dispo) {
-				$_disp = $dispo->toArrayOrgaWebService();
-				
-				if ($_disp !== null) {
-					$dispos[$dispo->getId()] = $_disp;
-				}			
-			}
 
 			$orgaArray[] = array(
 						"id" => $orga[0]->getId(),
@@ -639,8 +629,7 @@ class OrgaController extends Controller
 // 						"permis"=>$orga->getPermis(),
 			    		"dateDeNaissance" => $orga[0]->getDateDeNaissance()->format('Y-m-d H:i:s'),
 			    		"departement" => $orga[0]->getDepartement(),
-			    		"commentaire" => $orga[0]->getCommentaire(), 	
-			        	"disponibilites" => $dispos
+			    		"commentaire" => $orga[0]->getCommentaire()
 						);
 		}
 		
