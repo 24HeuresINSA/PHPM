@@ -924,7 +924,7 @@ class OrgaController extends Controller
 						foreach ($errors as $error){
 							$messages[$cid]['msg'].=$error->getMessage().' ';
 						}
-						
+						$creneau->setDisponibilite(null);
 					
 					}else{
 						$messages[$cid]['msg']="Affecté.";
