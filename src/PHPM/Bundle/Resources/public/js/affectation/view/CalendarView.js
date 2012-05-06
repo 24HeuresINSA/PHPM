@@ -249,26 +249,25 @@ CalendarView.prototype = {
 		// on prépare le contenu du pop-up
 		var _html = '<div class="modal hide creneau_details" id="creneau_details">'+
 					'<div class="modal-header"><a class="close" data-dismiss="modal">×</a>'+
-					'<h3>Détails du créneau n°'+pmAffectation.data.dispos[obj.data.indexDispo]['creneaux'][obj.data.indexCreneau]['id']+'</h3></div>'+
+					'<h3>Détails du créneau n°'+_creneau.id+'</h3></div>'+
 					'<div class="modal-body"><ul>'+
 					'<li><a href="'+pmAffectation.url+'tache/'+_creneau.plageHoraire.tache.id+'/edit" target="_blank">Tâche n°'+_creneau.plageHoraire.tache.id+'</a></li>'+
 					'<li><strong>'+_creneau.plageHoraire.tache.nom+'</strong></li>'+
 					'<li>Lieu : '+_creneau.plageHoraire.tache.lieu+'</li>'+
 					'<li>'+_creneau.debut.getThisFormat('d/m H:I')+' - '+_creneau.fin.getThisFormat('d/m H:I')+'</li>'+
 					'</ul></div><div class="modal-footer">'+
-					'<button class="btn btn-warning" id="creneaumaker_'+obj.data.indexCreneau+'" data-dismiss="modal">Ouvrir dans CréneauMaker</button>'+
-					'<button class="btn btn-danger" id="desaffect_'+obj.data.indexCreneau+'" data-dismiss="modal">Désaffecter</button>'+
+					'<button class="btn btn-warning" id="creneaumaker_'+_creneau.id+'" data-dismiss="modal">Ouvrir dans CréneauMaker</button>'+
+					'<button class="btn btn-danger" id="desaffect_'+_creneau.id+'" data-dismiss="modal">Désaffecter</button>'+
     				'<a href="#" class="btn" data-dismiss="modal">Fermer</a></div></div>';
 		
 		// on l'ouvre - modal de Twitter Bootstrap
-		// et on détruit le DOM quand on le ferme
 		$(_html).modal();
 		
 		// bouton, lien pour la désaffectation - setter quand le popup est visible
-		$('#desaffect_'+obj.data.indexCreneau).bind('click', {idCreneau: pmAffectation.data.dispos[obj.data.indexDispo]['creneaux'][obj.data.indexCreneau]['id'], idOrga: obj.data.idOrga}, function(obj) {
+		$('#desaffect_'+_creneau.id).bind('click', {idCreneau: _creneau['id'], idOrga: obj.data.idOrga}, function(obj) {
 			pmAffectation.controllers.creneau.desAffectation(obj.data.idCreneau, obj.data.idOrga);
 		});
-		$('#creneaumaker_'+obj.data.indexCreneau).bind('click', {idTache: pmAffectation.data.dispos[obj.data.indexDispo]['creneaux'][obj.data.indexCreneau]['plageHoraire']['tache']['id']}, function(obj) {
+		$('#creneaumaker_'+_creneau.id).bind('click', {idTache: _creneau['plageHoraire']['tache']['id']}, function(obj) {
 			var _popup = window.open(pmAffectation.urls.creneauMaker+'/'+obj.data.idTache, '');
 					
 			// à la fermeture, refresh la liste des créneaux
