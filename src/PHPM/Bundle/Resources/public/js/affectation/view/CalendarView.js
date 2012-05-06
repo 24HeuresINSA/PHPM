@@ -50,10 +50,8 @@ CalendarView.prototype = {
 			var _dateComplete = _date.getThisFormat('Y-m-d');
 
 			// on fait déjà la barre de titre
-			// handler de click via le onClick, seule solution comme le DOM n'est pas encore construit
-			// onClick="pmAffectation.controllers.calendar.clickJour(\''+_dateComplete+'\')"
-			_htmlBarreDates += '<div class="titre_date" jour="'+_dateComplete+'" id="titre_date_'+_dateComplete+'" '
-								+'style="width: '+100/_nbJours+'%;">'+pmUtils.jours[_date.getDay()]+' '+_date.getThisFormat('d/m') +'</div>';
+			_htmlBarreDates += '<div class="titre_date" jour="'+_dateComplete+'" id="titre_date_'+_dateComplete+'">'+
+								pmUtils.jours[_date.getDay()]+' '+_date.getThisFormat('d/m') +'</div>';
 		
 			_htmlJours += this.makeADay(_dateComplete, _date.getDay(), _nbJours);
 		}
@@ -68,7 +66,7 @@ CalendarView.prototype = {
 	},
 	// fabrique un jour
 	makeADay: function(date, jourSemaine, nbJours) {
-		var _html = '<div class="jour" id="jour_'+date+'" jour="'+date+'" style="width: '+100/nbJours+'%;">';
+		var _html = '<div class="jour" id="jour_'+date+'" jour="'+date+'">';
 		
 		for (var _i=0;_i<24;_i++) {
 			_html += '<div class="heure" id="heure_'+date+'-'+_i+'" heure="'+_i+'">';
