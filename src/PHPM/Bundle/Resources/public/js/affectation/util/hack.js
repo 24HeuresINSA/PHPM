@@ -18,6 +18,8 @@ $.fn.exists = function () {
 
 /*
  * Surcharge des objets Javascript par des méthodes perso
+ * Surcharger le prototype Date est ok,
+ * RIGOUREUSEMENT INTERDIT de surchargeur Object
  */
 
 /*
