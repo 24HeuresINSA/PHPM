@@ -603,7 +603,6 @@ class OrgaController extends Controller
 		$creneau = $request->request->get('creneau_id', '');
 		$equipe_id = $request->request->get('equipe_id', '');
 		
-		
 		if ($age !== '') { 
 			// petite conversion pour changer l'age en date de naissance max
 			$maxDateNaissance->modify('-'.$age.' year');

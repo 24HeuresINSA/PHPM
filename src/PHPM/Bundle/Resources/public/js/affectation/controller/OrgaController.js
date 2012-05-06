@@ -24,12 +24,12 @@ OrgaController.prototype = {
 		$('#liste_orgas').empty();
 		$('#liste_orgas').addClass('spinner_medium');
 		
-		pmAffectation.models.orga.getData(pmAffectation.controllers.orga.callbackOrgas);
-		
 		// si un orga est déjà sélectionné, on va chercher le reste en parallèle
 		if (pmAffectation.current.mode === 'orga' && pmAffectation.current.orga.id != -1) {
 			this.getDispos(); // dispos
 		}
+		
+		pmAffectation.models.orga.getData(pmAffectation.controllers.orga.callbackOrgas);
 	},
 	getDispos: function() {
 		pmAffectation.models.orga.getDataDispos(pmAffectation.controllers.orga.callbackDispos);
