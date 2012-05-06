@@ -34,8 +34,6 @@ PmLayout.prototype = {
 	},
 	// fonction appelée lorsqu'on touche au calendrier
 	setResizeableApp: function() {
-		ici();
-		
 		window.onresize = this.setAppHeight;
 		
 		this.setAppHeight();
