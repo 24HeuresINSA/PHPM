@@ -115,7 +115,7 @@ class CreneauRepository extends EntityRepository
 	{
 		// bien filtrer pour ne prendre que les tâches prêtes pour affectation (statut = 3)
 		// viré le reliquat "confiance"
-	    $dql = 'SELECT c, eh, ehc FROM PHPMBundle:Creneau c JOIN c.plageHoraire p JOIN p.tache t LEFT JOIN c.equipeHint eh LEFT JOIN eh.confiance ehc
+	    $dql = 'SELECT c, eh, ehc FROM PHPMBundle:Creneau c JOIN c.plageHoraire p JOIN p.tache t JOIN t.groupeTache g JOIN g.equipe e LEFT JOIN c.equipeHint eh LEFT JOIN eh.confiance ehc
 	     LEFT JOIN c.orgaHint oh WHERE c.disponibilite IS NULL AND t.statut = 3 ';
 	   
 	    if ($niveau_confiance !== '') {
@@ -129,7 +129,7 @@ class CreneauRepository extends EntityRepository
 		}
 		
 		if ($equipe !== '') {
-			$dql .= "AND eh.id = $equipe ";
+			$dql .= "AND e.id = $equipe ";
 		}
 	    
 		// Filtre sur la durée, on utilise une fonction DQL custom
