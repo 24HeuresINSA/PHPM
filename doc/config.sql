@@ -17,7 +17,8 @@ INSERT INTO `Config` (`id`, `field`, `label`, `value`, `hint`) VALUES
 (16, 'manifestation_orga_plagehoraireconfiancemin', 'Confiance minimale pour être désigné dans une plage horaire', '500', NULL),
 (17, 'phpm_planning_message', 'Message affiché sur les plannings', '<em>Attention : planning non définitif.\r\n</em>', ''),
 (18, 'phpm_planning_fin', 'Heure de début des plannings', '13-05-05 00:00:00', ''),
-(19, 'phpm_secret_salt', 'Clé secrète pour générer les URL de login', 'xxxx', NULL)
+(19, 'phpm_secret_salt', 'Clé secrète pour générer les URL de login', 'xxxx', NULL),
+(20, 'phpm_tache_heure_limite_validation', 'Heure limite pour envoyer les fiches tâches en validation', '2012-05-06 20:00:00', NULL)
 ;
 
 INSERT INTO `Confiance` (`id`, `nom`, `valeur`, `couleur`) VALUES

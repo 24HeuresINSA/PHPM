@@ -162,13 +162,21 @@ class TacheController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $config  =$this->get('config.extension');
         $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
-
+	
         $entity = $em->getRepository('PHPMBundle:Tache')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Tache entity.');
         }
+        
+        if($config->getValue('phpm_tache_heure_limite_validation')){
+        	$heureLimite=$config->getValue('phpm_tache_heure_limite_validation');
+        	$deadlinePassed = (new \DateTime($heureLimite) < new \DateTime());
+        }else{
+        	$deadlinePassed=false;
+        }
 
+       
         $defaultValues = array('entity' => $entity, 'Materiel' => $entity->getMateriel(), "commentaire" => '');
         $rOnly = (($entity->getStatut()>=1 ) && (!$admin)) || ($entity->getStatut()==3 );
         
@@ -180,7 +188,8 @@ class TacheController extends Controller
             'entity' => $entity,
             'form' => $editForm->createView(),
             'admin' => $admin,
-            'rOnly'=>$rOnly
+            'rOnly'=>$rOnly,
+        	'deadlinePassed'=>$deadlinePassed
         );
     }
 
@@ -205,7 +214,15 @@ class TacheController extends Controller
         $prevStatut= $entity->getStatut();
         $user = $this->get('security.context')->getToken()->getUser();
         $rOnly = (($entity->getStatut()>=1 ) && (!$admin)) || ($entity->getStatut()==3 );
-
+        if($config->getValue('phpm_tache_heure_limite_validation')){
+        	$heureLimite=$config->getValue('phpm_tache_heure_limite_validation');
+        	$deadlinePassed = (new \DateTime($heureLimite) < new \DateTime());
+        }else{
+        	$deadlinePassed=false;
+        }
+        
+		
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Tache entity.');
         }
@@ -342,7 +359,8 @@ class TacheController extends Controller
             'entity'      => $entity,
             'form'   => $editForm->createView(),
             'valid' => $valid,
-             'rOnly'=>$rOnly
+            'rOnly'=>$rOnly,
+        	'deadlinePassed'=>$deadlinePassed
         );
     }
     

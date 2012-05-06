@@ -37,15 +37,22 @@ class DefaultController extends Controller
     		$statsUser['taches']=$em->getRepository('PHPMBundle:Tache')->getOrgaStats($user);
 //     		$conflictingPlages=$em->getRepository('PHPMBundle:PlageHoraire')-> getConflictingPlages($user);
 
-    		$config = $e=$this->get('config.extension');    		
+    		$config =$this->get('config.extension');    		
     		$debutPlanning = new \DateTime();
     		$finPlanning = new \DateTime($config->getValue('phpm_planning_fin'));
     		$planning=$em->getRepository('PHPMBundle:Orga')->getPlanning($user->getId(),$debutPlanning,$finPlanning);
     		
+    		$deadlineFT=$config->getValue('phpm_tache_heure_limite_validation');
+    			
+    		
+    		
+    		
+    		
     		return array('statsOrga'=>$statsUser,
     				'planning'=>$planning,
     				'debutPlanning'=>$debutPlanning,
-    				'finPlanning'=>$finPlanning
+    				'finPlanning'=>$finPlanning,
+    				'deadlineFT'=>$deadlineFT
     				);
     	}
     	return array();

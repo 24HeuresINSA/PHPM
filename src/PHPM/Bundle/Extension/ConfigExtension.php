@@ -46,7 +46,12 @@ class ConfigExtension extends \Twig_Extension {
 
     public function getValue($field)
     {
+    	if(array_key_exists($field, $this->configs)){
         return $this->configs[$field];
+    	}
+    	
+    	return null;
+    	
     }
     
     public function getName()
