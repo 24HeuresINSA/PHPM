@@ -264,17 +264,17 @@ CalendarView.prototype = {
 		$(_html).modal();
 		
 		// bouton, lien pour la désaffectation - setter quand le popup est visible
-		$('#desaffect_'+_creneau.id).bind('click', {idCreneau: _creneau['id'], idOrga: obj.data.idOrga}, function(obj) {
+		$('#desaffect_'+_creneau.id).on('click', {idCreneau: _creneau['id'], idOrga: obj.data.idOrga}, function(obj) {
 			pmAffectation.controllers.creneau.desAffectation(obj.data.idCreneau, obj.data.idOrga);
 		});
-		$('#creneaumaker_'+_creneau.id).bind('click', {idTache: _creneau['plageHoraire']['tache']['id']}, function(obj) {
+		$('#creneaumaker_'+_creneau.id).on('click', {idTache: _creneau['plageHoraire']['tache']['id']}, function(obj) {			
 			var _popup = window.open(pmAffectation.urls.creneauMaker+'/'+obj.data.idTache, '');
 					
 			// à la fermeture, refresh la liste des créneaux
 			// unload est firé au chargement (unload de about:blank),
 			// on attache le vrai handler qu'après le chargement initial donc
 			_popup.onunload = function() {
-				_popup.bind('unload', pmAffectation.controllers.orga.getData());
+				_popup.bind('unload', pmAffectation.controllers.orga.getDispos());
 			};
 		});
 	},
