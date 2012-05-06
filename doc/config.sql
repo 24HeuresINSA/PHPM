@@ -16,7 +16,9 @@ INSERT INTO `Config` (`id`, `field`, `label`, `value`, `hint`) VALUES
 (15, 'phpm_inscription_disponibilites_consignes', 'Consignes concernant les disponibilités', '<p>\r\n<b>Tu dois sélectionner au moins 6h d''Orga, soit 3 créneaux de 2h.</b>\r\nC''est un minimum, plus tu mets de disponibilités, plus tu gagnes de charisme !</p>', ''),
 (16, 'manifestation_orga_plagehoraireconfiancemin', 'Confiance minimale pour être désigné dans une plage horaire', '500', NULL),
 (17, 'phpm_planning_message', 'Message affiché sur les plannings', '<em>Attention : planning non définitif.\r\n</em>', ''),
-(18, 'phpm_planning_fin', 'Heure de début des plannings', '13-05-05 00:00:00', '');
+(18, 'phpm_planning_fin', 'Heure de début des plannings', '13-05-05 00:00:00', ''),
+(19, 'phpm_secret_salt', 'Clé secrète pour générer les URL de login', 'xxxx', NULL)
+;
 
 INSERT INTO `Confiance` (`id`, `nom`, `valeur`, `couleur`) VALUES
 (1, 'Soft', 100, 'blue'),
