@@ -157,10 +157,10 @@ class AnalyseController extends Controller
     /**
      * Rapport besoinsOrga
      *
-     * @Route("/besoinsorga/{plageId}/{interval}", defaults={"plageId"=0,"interval"=900}, name="analyse_besoinsorga")
+     * @Route("/besoinsorga/{plageId}/{showBonusOrgas}", defaults={"plageId"=0,"showBonusOrgas"=false}, name="analyse_besoinsorga")
      * @Template()
      */
-    public function besoinsOrgaAction($plageId,$interval)
+    public function besoinsOrgaAction($plageId,$showBonusOrgas)
     {
     	
     	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
@@ -183,7 +183,7 @@ class AnalyseController extends Controller
     	$id=0;
     	$debut=$debutPlage;
     	$fin=clone $debutPlage;
-    	$fin->add(new \DateInterval('PT'.($interval).'S'));
+    	$fin->add(new \DateInterval('PT'.(900).'S'));
     	$days=array();
     	
     	
@@ -194,32 +194,85 @@ class AnalyseController extends Controller
 
     		
     		
-    		$a = $em
-    		->createQuery("SELECT count(c) FROM PHPMBundle:Creneau c JOIN c.disponibilite d WHERE c.debut < :fin AND c.fin > :debut")
-    		->setParameter('debut', $debut->format('Y-m-d H:i:s'))
-    		->setParameter('fin', $fin->format('Y-m-d H:i:s'))
-    		->getSingleScalarResult();
     		
     		$t = $em
     		->createQuery("SELECT count(c) FROM PHPMBundle:Creneau c WHERE c.debut < :fin AND c.fin > :debut")
     		->setParameter('debut', $debut->format('Y-m-d H:i:s'))
     		->setParameter('fin', $fin->format('Y-m-d H:i:s'))
     		->getSingleScalarResult();
+
+    		if($showBonusOrgas || $t!=0){
+    			$o = $em
+    			->createQuery("SELECT count(di) FROM PHPMBundle:DisponibiliteInscription di JOIN di.orgas o WHERE di.debut < :fin AND di.fin > :debut")
+    			->setParameter('debut', $debut->format('Y-m-d H:i:s'))
+    			->setParameter('fin', $fin->format('Y-m-d H:i:s'))
+    			->getSingleScalarResult();
+    			
+    			 
+    		}else{
+    			$o=false;
+    		}
     		
-    		$o = $em
-    		->createQuery("SELECT count(di) FROM PHPMBundle:DisponibiliteInscription di JOIN di.orgas o WHERE di.debut < :fin AND di.fin > :debut")
-    		->setParameter('debut', $debut->format('Y-m-d H:i:s'))
-    		->setParameter('fin', $fin->format('Y-m-d H:i:s'))
-    		->getSingleScalarResult();
+    		
+    		if($t!=0){
+	    		$a = $em
+	    		->createQuery("SELECT count(c) FROM PHPMBundle:Creneau c JOIN c.disponibilite d WHERE c.debut < :fin AND c.fin > :debut")
+	    		->setParameter('debut', $debut->format('Y-m-d H:i:s'))
+	    		->setParameter('fin', $fin->format('Y-m-d H:i:s'))
+	    		->getSingleScalarResult();
+	    	}else{
+	    			$a=false;
+	    	}
+	    		
+	    		
+	    	if($o==0){
+	    		$color="white";
+	    		$data="";
+	    	}else{
+	    		if($t==0){
+	    			$data="+$o";
+	    			$color="#CCE0FF";
+	    		}else{
+		    		if($o>$t){
+		    			$g=255;
+		    			$r=$b=128;
+		    		}elseif($o==$t){
+		    			$g=255;
+		    			$r=$b=200;
+		    		}elseif($o/$t<.75){
+		    			$r=255;
+		    			$g=$b=0;
+		    		}else{
+		    			$r=255;
+		    			$g=$b=round(192*($o/$t));
+		    		}
+		    		$color="rgb($r,$g,$b)";
+		    		$data="$o/$t ($a)";
+	    		}
+	    		
+	    		
+	    		if($a===false){
+	    			
+	    		}
+	    		
+	    	}
+	    	
+	    	
+	    	
+    		
+    		
     	
-    		$row = array('debut'=>$debut->format('Y-m-d H:i:s'),'fin'=>$fin->format('Y-m-d H:i:s'),'data'=>"$o/$t ($a)");
+    		
+    		
+    		
+    		$row = array('debut'=>$debut->format('Y-m-d H:i:s'),'fin'=>$fin->format('Y-m-d H:i:s'),'data'=>$data,'color'=>$color);
     		
     		$result[$timeFormatter->format($debut).' - '.$timeFormatter->format($fin)][$debut->format('d')]= $row;
 	    	
 	    	$id++;
 	    	$days[$debut->format('d')]=$dayFormatter->format($debut);
-	    	$debut->add(new \DateInterval('PT'.($interval).'S'));	
-	    	$fin->add(new \DateInterval('PT'.($interval).'S'));
+	    	$debut->add(new \DateInterval('PT'.(900).'S'));	
+	    	$fin->add(new \DateInterval('PT'.(900).'S'));
 	    	
 	    	
     	
@@ -227,9 +280,11 @@ class AnalyseController extends Controller
     
     	return array('result'=>$result,
     				'days'=>$days,
+    				'plageId'=>$plageId,
     				'debutPlage'=>$debutPlage,
     				'finPlage'=>$finPlage,
-    				'plages'=>$plages
+    				'plages'=>$plages,
+    				'showBonusOrgas'=>$showBonusOrgas
     			
     			);
     }

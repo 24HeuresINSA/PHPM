@@ -5,6 +5,7 @@
 {% block pageHeader %}
 {% endblock %}
 
+
 {% block content %}
 
 <div class="row-fluid">       
@@ -17,8 +18,13 @@
 	<div class="btn-toolbar">
 		<div class="btn-group">
 			{% for id,plage in plages %}
-				<a class="btn" href="{{ path('analyse_besoinsorga', { 'plageId': id }) }}">{{ plage.debut | format_datetime('EEEE dd MMM') }} <i class="icon-arrow-right"></i> {{ plage.fin | format_datetime('EEEE dd MMM Y') }}</a>
+				<a class="btn{% if plageId == id %} active{% endif %}"
+				
+				 href="{{ path('analyse_besoinsorga', { 'plageId': id,'showBonusOrgas':showBonusOrgas }) }}">{{ plage.debut | format_datetime('EEEE dd MMM') }} <i class="icon-arrow-right"></i> {{ plage.fin | format_datetime('EEEE dd MMM Y') }}</a>
 			{% endfor %}
+		</div>
+		<div class="btn-group">
+			<a class="btn{% if showBonusOrgas %} active{% endif %}" href="{{ path('analyse_besoinsorga', { 'plageId': plageId,'showBonusOrgas':not showBonusOrgas }) }}">Afficher les orgas supplémentaires</a>
 		</div>
 	</div>
 	<table class="table table-condensed table-bordered">
@@ -35,7 +41,7 @@
 			{% for h,row in result %}
 	            <tr><th>{{ h }}</th>
 	            	{% for j,c in row %}
-	            	<td>
+	            	<td style="background-color: {{ c.color }}">
 			           {{ c.data }}
 			        </td>
 		        	{% endfor %}
