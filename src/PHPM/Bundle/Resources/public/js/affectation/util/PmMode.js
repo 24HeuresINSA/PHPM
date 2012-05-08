@@ -34,7 +34,6 @@ PmMode.prototype = {
 		
 		if (pmAffectation.current.mode === 'orga') {
 			pmAffectation.current.tache.id = -1;
-			
 			pmHistory.setUrlParam();
 			
 			// on filtre les boutons
@@ -53,12 +52,11 @@ PmMode.prototype = {
 			// pas besoin d'aller chercher des données dedans
 			
 			// on met à jour les références
-			this.master.update = pmAffectation.controllers.orga.getData();
-			this.calendar.update = pmAffectation.controllers.orga.getDispos();
-			this.slave.update = pmAffectation.controllers.creneau.getData();
+			this.master.update = function() { pmAffectation.controllers.orga.getData() };
+			this.calendar.update = function() { pmAffectation.controllers.orga.getDispos() };
+			this.slave.update = function() { pmAffectation.controllers.creneau.getData() };
 		} else if (pmAffectation.current.mode === 'tache') {
 			pmAffectation.current.orga.id == -1;
-			
 			pmHistory.setUrlParam();
 			
 			// on filtre les boutons
@@ -77,9 +75,9 @@ PmMode.prototype = {
 			// pas besoin d'aller chercher des données dedans
 			
 			// on met à jour les références
-			this.master.update = pmAffectation.controllers.tache.getData();
-			this.calendar.update = pmAffectation.controllers.tache.getCreneaux();
-			this.slave.update = pmAffectation.controllers.orga.getData();
+			this.master.update = function() { pmAffectation.controllers.tache.getData() };
+			this.calendar.update = function() { pmAffectation.controllers.tache.getCreneaux() };
+			this.slave.update = function() { pmAffectation.controllers.orga.getData() };
 		}
 	},
 }
