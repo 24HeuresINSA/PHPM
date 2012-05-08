@@ -47,6 +47,7 @@ class DisponibiliteInscriptionController extends Controller
         );
         $form    = $this->createForm(new DisponibiliteInscriptionListType($admin, $config));
 
+        
         if ($this->get('request')->getMethod() == 'POST') {
         	$form->bindRequest($request);
         	$data = $form->getData();
@@ -166,6 +167,7 @@ class DisponibiliteInscriptionController extends Controller
         	$entities = $em->createQuery($entitiesQuery)->getResult();
         }
 		
+        
         return array('entities' => $entities,
         		'form'=>$form->createView());
     }
