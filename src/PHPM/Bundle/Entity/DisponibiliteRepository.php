@@ -57,7 +57,7 @@ class DisponibiliteRepository extends EntityRepository
 				LEFT OUTER JOIN Creneau c ON c.disponibilite_id = d.id
 				LEFT OUTER JOIN PlageHoraire p ON c.plageHoraire_id = p.id
 				LEFT OUTER JOIN Tache t ON p.tache_id = t.id
-				JOIN GroupeTache g ON t.groupetache_id = g.id
+				LEFT OUTER JOIN GroupeTache g ON t.groupetache_id = g.id
 				WHERE d.orga_id = ?';
 				
 		if ($plage_id !== '') {
