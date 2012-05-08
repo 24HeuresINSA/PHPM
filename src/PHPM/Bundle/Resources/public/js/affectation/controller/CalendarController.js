@@ -101,10 +101,6 @@ CalendarController.prototype = {
 	},
 	// clic sur un bouton de mode ou init
 	changeMode: function(obj) {
-		pmUtils.setMode(obj.data.mode);
-		
-		// mise à jour des globales
-		pmAffectation.current.mode = obj.data.mode;
-		pmHistory.setUrlParam();
+		pmMode.setMode(obj.data.mode);
 	},
 }

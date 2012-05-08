@@ -229,50 +229,6 @@ PmUtils.prototype = {
 	},
 	
 	/*
-	 * Set le mode de l'application :
-	 * Orga -> Créneau ou Tache -> Orga
-	 */
-	setMode: function(mode) {
-		pmAffectation.current.mode = mode;
-		
-		if (mode === 'orga') {
-			pmAffectation.current.tache.id = -1;
-			
-			// on filtre les boutons
-			$('#boutons_orga_nav').show();
-			$('#boutons_tache_nav').hide();
-			$('bouton_orga_detail').show();
-			$('bouton_tache_detail').hide();
-			$('#bouton_mode_orga').button('toggle');
-			
-			// on va chercher la colonne orgas
-			pmAffectation.controllers.orga = new OrgaController();
-			pmAffectation.controllers.orga.getData();
-	
-			// colonne tache - dedans on met des créneaux
-			pmAffectation.controllers.creneau = new CreneauController();
-			// pas besoin d'aller chercher des données dedans
-		} else if (mode === 'tache') {
-			pmAffectation.current.orga.id == -1;
-			
-			// on filtre les boutons
-			$('#boutons_orga_nav').hide();
-			$('#boutons_tache_nav').show();
-			$('bouton_orga_detail').hide();
-			$('bouton_tache_detail').show();
-			$('#bouton_mode_tache').button('toggle');
-			
-			// on va chercher la colonne tache
-			pmAffectation.controllers.tache = new TacheController();
-			pmAffectation.controllers.tache.getData();
-	
-			// colonne orga
-			pmAffectation.controllers.orga = new OrgaController();
-			// pas besoin d'aller chercher des données dedans
-		}
-	},
-	
-	/*
 	 * Permet de virer les accents d'une chaîne
 	 */
 	removeDiacritics: function(str) {
