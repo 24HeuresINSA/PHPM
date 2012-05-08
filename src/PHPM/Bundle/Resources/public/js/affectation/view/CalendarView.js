@@ -277,13 +277,5 @@ CalendarView.prototype = {
 				_popup.bind('unload', pmAffectation.controllers.orga.getDispos());
 			};
 		});
-	},
-
-	/* 
-	 * Set les boutons pour changer de mode
-	 */
-	initMode: function() {
-		$('#bouton_mode_orga').bind('click', {mode: 'orga'}, pmAffectation.controllers.calendar.changeMode);
-		$('#bouton_mode_tache').bind('click', {mode: 'tache'}, pmAffectation.controllers.calendar.changeMode);
-	},
+	}
 }

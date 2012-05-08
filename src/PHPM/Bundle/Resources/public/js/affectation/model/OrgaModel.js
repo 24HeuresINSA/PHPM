@@ -19,7 +19,7 @@ OrgaModel.prototype = {
 	 * Lance les requêtes
 	 */
 	getData: function(callBack) {
-		pmAffectation.models.orga.callBack = callBack;
+		this.callBack = callBack;
 				
 		// construit les paramètres que l'on va envoyer, -1 est le wildcart
 		var _params = {
@@ -45,7 +45,7 @@ OrgaModel.prototype = {
 		});
 	},
 	getDataDispos: function(callBackDispos) {
-		pmAffectation.models.orga.callBackDispos = callBackDispos;
+		this.callBackDispos = callBackDispos;
 				
 		// construit les paramètres que l'on va envoyer, -1 est le wildcart
 		var _params = {
@@ -131,8 +131,6 @@ OrgaModel.prototype = {
 					pmAffectation.data.parameter.equipes[this.dataDispo[_iDispo]['creneaux'][_iCreneau]['plageHoraire']['tache']['groupeTache']['id']]['couleur']
 					, 0.6);
 			}
-			
-			//console.log(_dispo);
 		
 			_dispos[_iDispo] = _dispo;
 		}

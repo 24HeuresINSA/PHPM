@@ -13,6 +13,7 @@
 	pmLayout = new PmLayout();
 	pmHistory = new PmHistory();
 	pmMessage = new PmMessage();
+	pmMode = new PmMode();
 	
 	// stockage des données
 	pmAffectation.data = {};
@@ -68,8 +69,8 @@ $(document).ready(function() {
 	
 	// 3 : on set le mode
 	// et cela va appeler les bons contrôlleurs, orga & créneau ou tache & orga
-	pmAffectation.views.calendar.initMode();
-	pmUtils.setMode(pmAffectation.current.mode);
+	pmMode.setBoutons();
+	pmMode.setMode();
 	
 	// last step : à partir de maintenant, les modifs du hash provoquent la mise à jour des données
 	pmHistory.refreshData = true;

@@ -29,10 +29,10 @@ OrgaController.prototype = {
 			this.getDispos(); // dispos
 		}
 		
-		pmAffectation.models.orga.getData(pmAffectation.controllers.orga.callbackOrgas);
+		pmAffectation.models.orga.getData(this.callbackOrgas);
 	},
 	getDispos: function() {
-		pmAffectation.models.orga.getDataDispos(pmAffectation.controllers.orga.callbackDispos);
+		pmAffectation.models.orga.getDataDispos(this.callbackDispos);
 	},
 	
 	/*
@@ -115,6 +115,6 @@ OrgaController.prototype = {
 		pmAffectation.data.orgas = {};
 		
 		$('#liste_orgas').empty();
-	},
+	}
 
 }

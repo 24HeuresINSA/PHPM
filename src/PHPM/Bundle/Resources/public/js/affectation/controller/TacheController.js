@@ -24,7 +24,15 @@ TacheController.prototype = {
 		$('#liste_taches').empty();
 		$('#liste_taches').addClass('spinner_medium');
 		
-		pmAffectation.models.tache.getData(pmAffectation.controllers.tache.callbackTaches);
+		// si une tâche est déjà sélectionnée, on va chercher le reste en parallèle
+		if (pmAffectation.current.mode === 'tache' && pmAffectation.current.tache.id != -1) {
+			this.getCreneaux(); // dispos
+		}
+		
+		pmAffectation.models.tache.getData(this.callbackTaches);
+	},
+	getCreneaux: function() {
+		pmAffectation.models.tache.getDataCreneaux(this.callbackCreneaux);
 	},
 	
 	/*
@@ -33,18 +41,23 @@ TacheController.prototype = {
 	callbackTaches: function() {
 		pmAffectation.data.taches = pmAffectation.models.tache.getTaches();
 		
-		// si aucun orga n'est sélectionné, on choisit le 1er
+		// si aucune tâche n'est sélectionnée, on choisit la 1ère
 		if (pmAffectation.current.mode === 'tache' && pmAffectation.current.tache.id == -1 && pmAffectation.data.taches[0]  !== undefined) {
 			pmAffectation.current.tache.id = pmAffectation.data.taches[0]['id'];
 			
 			pmHistory.setUrlParam(); // maj de l'url
+			
+			this.getCreneaux(); // on va chercher ses créneaux
 		}
 		
 		pmAffectation.views.tache.setTaches();
-		pmAffectation.views.calendar.setFrees({type: 'tache', id: pmAffectation.current.tache.id});
 		
-		// force la mise à jour des orgas - tous ceux pouvant aller à cette tâche
-		//pmAffectation.controllers.orga.getData();
+		(pmAffectation.current.mode === 'tache') && (pmAffectation.controllers.orga.getData());
+	},
+	callbackCreneaux: function() {
+		pmAffectation.data.creneaux = pmAffectation.models.tache.getCreneaux();
+		
+		pmAffectation.views.calendar.setFrees({type: 'tache', id: pmAffectation.current.tache.id});
 	},
 	
 	/*
@@ -55,7 +68,7 @@ TacheController.prototype = {
 		$("#tache_"+pmAffectation.current.tache.id).removeClass('current');
 		$("#tache_"+obj.id).addClass('current');
 		
-		pmAffectation.controllers.orga.empty(); // vide la colonne creneau
+		pmAffectation.controllers.orga.empty(); // vide la colonne orga
 		
 		// on de-set le quart d'heure et le jour
 		pmAffectation.controllers.calendar.resetDateHeure(true);
@@ -101,6 +114,6 @@ TacheController.prototype = {
 		pmAffectation.data.taches = {};
 		
 		$('#liste_taches').empty();
-	},
+	}
 
 }

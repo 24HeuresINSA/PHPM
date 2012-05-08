@@ -506,16 +506,10 @@ class TacheController extends Controller
 		// creation du json de retour
 		$taches = array();
 		foreach ($entities as $entity) {
-			$creneaux = array();
-			foreach ($entity->getPlagesHoraire() as $creneau) {
-				$creneaux[$creneau->getId()] = $creneau->toSimpleArray();
-			}
-
 			$taches[] = array(
 						"id" => $entity->getId(),
 						"nom" => $entity->getNom(),
 						"lieu" => $entity->getLieu(),
-						"creneaux" => $creneaux,
 						"permisNecessaire" => $entity->getPermisNecessaire()
 						);
 		}
