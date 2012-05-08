@@ -270,6 +270,33 @@ class CreneauController extends Controller
     	return $response;
     }
 
+	/**
+	* Lists all creneaux of a Tache entity
+	*
+	* @Route("/query_tache_creneaux.json", name="tache_creneaux_query_json")
+	* @Method("post")
+	*/
+	public function queryCreneauxJsonAction()
+	{
+		$request = $this->getRequest();
+		
+		// on recupère les paramètres passés en post
+		$tache_id = $request->request->get('tache_id', '');
+		$plage_id = $request->request->get('plage_id', '');
+		
+		$em = $this->getDoctrine()->getEntityManager();
+		// on appelle la fonction qui va faire la requête SQL et nous renvoyer le resultat
+		$entities = $em->getRepository('PHPMBundle:Creneau')->getTacheCreneau($tache_id, $plage_id);
+		
+		// magie, on a rien à faire comme mise en forme !
+    	
+    	$response = new Response();
+    	$response->setContent(json_encode($entities));
+		$response->headers->set('Content-Type', 'application/json');
+    	
+    	return $response;
+	}
+
     /**
     * 
     *

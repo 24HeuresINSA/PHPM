@@ -50,7 +50,7 @@ class DisponibiliteRepository extends EntityRepository
 		$rsm->addFieldResult('t', 'tn', 'nom');
 		$rsm->addFieldResult('t', 'tl', 'lieu');
 		$rsm->addJoinedEntityResult('PHPMBundle:GroupeTache', 'g', 't', 'groupeTache');
-		$rsm->addFieldResult('g', 'ge', 'id');
+		$rsm->addFieldResult('g', 'ge', 'id'); // bien garder id, le referredBY name
 		
 		$sql = 'SELECT d.id, d.debut, d.fin, c.id AS cid, c.debut AS cd, c.fin AS cf, p.id AS pi, t.id AS ti, t.nom AS tn, t.lieu AS tl, g.equipe_id AS ge
 				FROM Disponibilite d 

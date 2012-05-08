@@ -194,6 +194,49 @@ class CreneauRepository extends EntityRepository
 		
 	    return $query->getResult();
 	}
+	
+
+	// récupère les créneaux d'une tache sur une plage donnée
+	// le 1er paramètre est obligatoire
+	public function getTacheCreneau($tache_id, $plage_id)
+	{
+		$rsm = new ResultSetMapping;
+		$rsm->addEntityResult('PHPMBundle:Creneau', 'c');
+		$rsm->addEntityResult('PHPMBundle:Tache', 't');
+		$rsm->addFieldResult('c', 'id', 'id');
+		$rsm->addFieldResult('c', 'debut', 'debut');
+		$rsm->addFieldResult('c', 'fin', 'fin');
+		$rsm->addFieldResult('c', 'disponibilite_id', 'id');
+		$rsm->addFieldResult('c', 'equipeHint_id', 'id');
+		$rsm->addFieldResult('c', 'orgaHint_id', 'id');
+		$rsm->addFieldResult('c', 'plageHoraire_id', 'id');
+		$rsm->addJoinedEntityResult('PHPMBundle:PlageHoraire', 'p', 'c', 'plageHoraire');
+		$rsm->addFieldResult('p', 'pi', 'id');
+		$rsm->addJoinedEntityResult('PHPMBundle:Tache', 't', 'p', 'tache');
+		$rsm->addFieldResult('t', 'ti', 'id');
+		$rsm->addFieldResult('t', 'tn', 'nom');
+		$rsm->addFieldResult('t', 'tl', 'lieu');
+		
+		$sql = 'SELECT c.id, c.debut, c.fin, c.disponibilite_id, c.equipeHint_id, c.orgaHint_id, p.id AS pi, t.id AS ti, t.nom AS tn, t.lieu AS tl
+				FROM Creneau c
+				JOIN PlageHoraire p ON c.plageHoraire_id = p.id
+				JOIN Tache t ON p.tache_id = t.id
+				WHERE t.id = ?';
+				
+		if ($plage_id !== '') {
+			$pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation_plages')->getValue(), TRUE);
+			$plage = $pref[$plage_id];
+			$fin = $plage["fin"];
+			$debut = $plage["debut"];
+
+			$sql .= " AND c.debut < '$fin' AND c.fin > '$debut'";
+		}
+		
+		$query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+		$query->setParameter(1, $tache_id); // PDO \o/
+		
+		return $query->getArrayResult();
+	}
 		
 	
 }
