@@ -34,6 +34,8 @@ OrgaModel.prototype = {
 		
 		// filtres pour le sens tâches ->
 		($.isNumeric(pmAffectation.current.tache.id) === true) && (pmAffectation.current.tache.id != -1) && (_params.equipe_id = pmAffectation.current.orga.equipe);
+		// TODO : relire ligne précédente
+		($.isNumeric(pmAffectation.current.creneau.id) === true) && (pmAffectation.current.creneau.id != -1) && (_params.creneau_id = pmAffectation.current.creneau.id);
 
 		$.ajax({
 			url: pmAffectation.urls.orgas,

@@ -228,10 +228,13 @@ CalendarView.prototype = {
 		var _html = '<div id="creneau_'+creneaux[idCreneau]['id']+'_'+nbJour+'" class="'+_class+'">'+
 					_prefixe+creneaux[idCreneau]['plageHoraire']['tache']['nom']+'</div>';
 		
-		// on le rajoute, supprime le handler précédent et en rajoute un
+		// TODO : relire : on le rajoute, supprime le handler précédent et en rajoute un
 		$('.jour[jour="'+dateDebut.getFullYear()+'-'+dateDebut.getPMonth()+'-'+dateDebut.getPDate()+'"] > .heure[heure="'+
 		dateDebut.getHours()+'"] > .quart_heure[minute="'+dateDebut.getMinutes()+'"]').append(_html).off('click')
-		.on('click', {indexCreneau: idCreneau}, pmAffectation.controllers.calendar.clickCreneau);
+		.on('click', {idCreneau: creneaux[idCreneau]['id']}, function(obj) {
+			pmAffectation.current.creneau.id = obj.data.idCreneau;
+			pmMode.slave.update();
+		});
 		
 		// mise en forme
 		$('#creneau_'+creneaux[idCreneau]['id']+'_'+nbJour).height(Math.round(duree/60/60*40)+'px')
