@@ -106,7 +106,7 @@ class AnalyseController extends Controller
     	$em = $this->getDoctrine()->getEntityManager();
     	 
     	$bmDQL = "SELECT m,bm,t,p,g FROM PHPMBundle:Materiel m JOIN m.besoinsMateriel bm JOIN bm.tache t JOIN t.plagesHoraire p LEFT JOIN t.groupeTache g
-    	 WHERE  bm.quantite <> 0 AND t.statut >= 2 ORDER BY p.debut
+    	 WHERE  bm.quantite <> 0 AND t.statut >= 0 ORDER BY p.debut
     	 ";
     	    	
     	
