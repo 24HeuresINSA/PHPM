@@ -219,7 +219,8 @@ class CreneauRepository extends EntityRepository
 				FROM Creneau c
 				JOIN PlageHoraire p ON c.plageHoraire_id = p.id
 				JOIN Tache t ON p.tache_id = t.id
-				WHERE t.id = ?';
+				WHERE t.id = ?
+				GROUP BY c.debut, c.fin, eid, oid';
 				
 		if ($plage_id !== '') {
 			$pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation_plages')->getValue(), TRUE);

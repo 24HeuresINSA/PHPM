@@ -104,87 +104,80 @@ CalendarView.prototype = {
 	 * orga disponible sur ce créneau OU créneau de tâche à attribuer
 	 * attention, c'est un index de tableau que l'on passe dans obj.id, pas le vrai ID de l'orga
 	 */
-	setFrees: function(obj) {
+	setDispos: function() {
 		// on supprime tout
 		$('.quart_heure').removeClass('free');
-		$('.quart_heure').off(); // click handlers
+		$('.quart_heure').off('click'); // click handlers
 		$('.creneau').remove();
 		
-		if (obj.type === 'orga') {
-			var _dispo = pmAffectation.data.dispos;
+		var _dispos = pmAffectation.data.dispos;
 
-			for (var _iDispo in _dispo) {
-				// astuce importante : on force la copie en re-créant un objet Date
-				var _debut = new Date(_dispo[_iDispo]['debut'].getTime());
-				var _fin = _dispo[_iDispo]['fin'];
-				
-				// on appelle une fonction qui va placer les disponibilités
-				pmAffectation.views.calendar.placeDisponibilitesOrga(_debut, _fin);
+		for (var _iDispo in _dispos) {
+			// astuce importante : on force la copie en re-créant un objet Date
+			var _debut = new Date(_dispos[_iDispo]['debut'].getTime());
+			var _fin = _dispos[_iDispo]['fin'];
+			
+			// on appelle une fonction qui va placer les disponibilités
+			pmAffectation.views.calendar.placeDisponibilitesOrga(_debut, _fin);
 
-				// on place les créneaux - j'ai passé 4 heures à optimiser le truc, fais gaffe à ce que tu touches
-				for (var _iCreneau in _dispo[_iDispo]['creneaux']) {
-					// on vérifie si on est bien sur la bonne plage horaire, trim au besoin
-					// comparaison "croisée" : permet de tenir compte des créneaux à cheval
-					if (pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'] <= _dispo[_iDispo]['creneaux'][_iCreneau]['fin'] 
-						&& _dispo[_iDispo]['creneaux'][_iCreneau]['fin'] >= pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()) {
-						// c'est bon, on trim les dates
-						// -1 sur la date de fin pour ne pas avoir de problèmes quand un créneau finit à minuit
-						var _debutCreneau = new Date(Math.max(_dispo[_iDispo]['creneaux'][_iCreneau]['debut'].getTime(), 
-																pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()));
-						// faut pas oublier de rajouter 1j, car les plages sont définies comme date du jour 00:00:00
-						var _finCreneau = new Date(Math.min(_dispo[_iDispo]['creneaux'][_iCreneau]['fin'].getTime(), 
-															pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()+86400000)-1);
-													
-						var _nbJour = 0; // compteur du nombre de jours
-						var _todayMidnight = new Date(_debutCreneau); // bien forcer la recopie
-						_todayMidnight.setHours(0, 0, 0, 0);
+			// on place les créneaux - j'ai passé 4 heures à optimiser le truc, fais gaffe à ce que tu touches
+			for (var _iCreneau in _dispos[_iDispo]['creneaux']) {
+				// on vérifie si on est bien sur la bonne plage horaire, trim au besoin
+				// comparaison "croisée" : permet de tenir compte des créneaux à cheval
+				if (pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'] < _dispos[_iDispo]['creneaux'][_iCreneau]['fin'] 
+					&& _dispos[_iDispo]['creneaux'][_iCreneau]['debut'] < pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin']) {
+					// c'est bon, on trim les dates
+					// -1 sur la date de fin pour ne pas avoir de problèmes quand un créneau finit à minuit
+					var _debutCreneau = new Date(Math.max(_dispos[_iDispo]['creneaux'][_iCreneau]['debut'].getTime(), 
+															pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()));
+					// faut pas oublier de rajouter 1j, car les plages sont définies comme date du jour 00:00:00
+					var _finCreneau = new Date(Math.min(_dispos[_iDispo]['creneaux'][_iCreneau]['fin'].getTime(), 
+														pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()+86400000)-1);
 												
-						do {
-							_todayMidnight.setDate(_debutCreneau.getDate()+1)
-							pmAffectation.views.calendar.placeCreneauOrga(pmAffectation.current.orga.id, _dispo, _iDispo, _iCreneau, _debutCreneau, (Math.min(_todayMidnight.getTime(), _finCreneau)-_debutCreneau)/1000, _nbJour++);
-							_debutCreneau = new Date(_todayMidnight); // bien forcer la recopie
-						} while (_debutCreneau.getDate() <= _finCreneau.getDate())
-					}
+					var _nbJour = 0; // compteur du nombre de jours
+					var _todayMidnight = new Date(_debutCreneau); // bien forcer la recopie
+					_todayMidnight.setHours(0, 0, 0, 0);
+											
+					do {
+						_todayMidnight.setDate(_debutCreneau.getDate()+1)
+						pmAffectation.views.calendar.placeCreneauOrga(pmAffectation.current.orga.id, _dispos, _iDispo, _iCreneau, _debutCreneau, (Math.min(_todayMidnight.getTime(), _finCreneau)-_debutCreneau)/1000, _nbJour++);
+						_debutCreneau = new Date(_todayMidnight); // bien forcer la recopie
+					} while (_debutCreneau.getDate() <= _finCreneau.getDate())
 				}
 			}
-		} else if (obj.type === 'tache') {
-			var _tache = pmUtils.find(pmAffectation.data.taches, 'id', obj.id);
-			
-			if (_tache !== undefined) {
-				for (var _iCreneau in _tache['creneaux']) {
-					// astuce importante : on force la copie en re-créant un objet Date
-					var _debut = new Date(_tache['creneaux'][_iCreneau]['debut'].getTime());
-					var _fin = _tache['creneaux'][_iCreneau]['fin'];
-					
-					// on appelle une fonction qui va placer les créneaux non affectés
-					pmAffectation.views.calendar.placeCreneauxTache(_debut, _fin);
-	
-					// on place les créneaux - j'ai passé 4 heures à optimiser le truc, fais gaffe à ce que tu touches
-					/*for (var _iCreneau in _orga['disponibilites'][_iDispo]['creneaux']) {
-						// on vérifie si on est bien sur la bonne plage horaire, trim au besoin
-						// comparaison "croisée" : permet de tenir compte des créneaux à cheval
-						if (pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'] <= _orga['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'] 
-							&& _orga['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'] >= pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()) {
-							// c'est bon, on trim les dates
-							// -1 sur la date de fin pour ne pas avoir de problèmes quand un créneau finit à minuit
-							var _debutCreneau = new Date(Math.max(_orga['disponibilites'][_iDispo]['creneaux'][_iCreneau]['debut'].getTime(), 
-																	pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()));
-							// faut pas oublier de rajouter 1j, car les plages sont définies comme date du jour 00:00:00
-							var _finCreneau = new Date(Math.min(_orga['disponibilites'][_iDispo]['creneaux'][_iCreneau]['fin'].getTime(), 
-																pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()+86400000)-1);
-														
-							var _nbJour = 0; // compteur du nombre de jours
-							var _todayMidnight = new Date(_debutCreneau); // bien forcer la recopie
-							_todayMidnight.setHours(0, 0, 0, 0);
-							
-							do {
-								_todayMidnight.setDate(_debutCreneau.getDate()+1)
-								pmAffectation.views.calendar.placeCreneau(_orga, _iDispo, _iCreneau, _debutCreneau, (Math.min(_todayMidnight.getTime(), _finCreneau)-_debutCreneau)/1000, _nbJour++);
-								_debutCreneau = new Date(_todayMidnight); // bien forcer la recopie
-							} while (_debutCreneau.getDate() <= _finCreneau.getDate())
-						}
-					}*/
-				}
+		}
+	},
+	// place les créneaux (mode tache)
+	setCreneaux: function() {
+		// on supprime tout
+		$('.quart_heure').removeClass('free');
+		$('.quart_heure').off('click'); // click handlers
+		$('.creneau').remove();
+		
+		var _creneaux = pmAffectation.data.creneauxTaches;
+		
+		for (var _iCreneau in _creneaux) {
+			// on vérifie si on est bien sur la bonne plage horaire, trim au besoin
+			// comparaison "croisée" : permet de tenir compte des créneaux à cheval
+			if (pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'] < _creneaux[_iCreneau]['fin']
+				&& _creneaux[_iCreneau]['debut'] < pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin']) {
+				// c'est bon, on trim les dates
+				// -1 sur la date de fin pour ne pas avoir de problèmes quand un créneau finit à minuit
+				var _debutCreneau = new Date(Math.max(_creneaux[_iCreneau]['debut'].getTime(), 
+														pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()));
+				// faut pas oublier de rajouter 1j, car les plages sont définies comme date du jour 00:00:00
+				var _finCreneau = new Date(Math.min(_creneaux[_iCreneau]['fin'].getTime(), 
+													pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()+86400000)-1);
+											
+				var _nbJour = 0; // compteur du nombre de jours
+				var _todayMidnight = new Date(_debutCreneau); // bien forcer la recopie
+				_todayMidnight.setHours(0, 0, 0, 0);
+										
+				do {
+					_todayMidnight.setDate(_debutCreneau.getDate()+1)
+					pmAffectation.views.calendar.placeCreneauTache(_creneaux, _iCreneau, _debutCreneau, (Math.min(_todayMidnight.getTime(), _finCreneau)-_debutCreneau)/1000, _nbJour++);
+					_debutCreneau = new Date(_todayMidnight); // bien forcer la recopie
+				} while (_debutCreneau.getDate() <= _finCreneau.getDate())
 			}
 		}
 	},
@@ -204,40 +197,47 @@ CalendarView.prototype = {
 			.bind('click', {}, pmAffectation.controllers.calendar.clickQuartHeure);
 		}
 	},
-	// place un créneau (mode tâche)
-	placeCreneauxTache: function(dateDebut, dateFin, idCreneau) {
-		// on place les dispos, avec la classe et le click
-		for (var _iDts = dateDebut; _iDts.getTime() < dateFin.getTime(); _iDts.setTime(_iDts.getTime()+15*60*1000)) {
-			var _dateComplete = _iDts.getFullYear()+'-'+_iDts.getPMonth()+'-'+_iDts.getPDate();
-			
-			// on rend le titre du jour incliquable
-			$('#titre_date_'+_dateComplete).unbind('click');
-			// TOOD rendre titre des jours cliquable
-			
-			// sélection des quarts d'heure suivant les attributs de temps de plus en plus précis
-			$('.jour[jour="'+_dateComplete+'"] > .heure[heure="'+_iDts.getHours()
-			+'"] > .quart_heure[minute="'+_iDts.getMinutes()+'"]').addClass('free')
-			.bind('click', {idCreneau: idCreneau}, pmAffectation.controllers.calendar.clickCreneauTache);
-		}
-	},	
 	// place un créneau (mode orga)
-	placeCreneauOrga: function(idOrga, dispo, idDispo, idCreneau, dateDebut, duree, nbJour) {
+	placeCreneauOrga: function(idOrga, dispos, idDispo, idCreneau, dateDebut, duree, nbJour) {
 		var _prefixe = (nbJour !== 0) ? '>> ' : '';
 				
-		var _html = '<div id="creneau_'+dispo[idDispo]['creneaux'][idCreneau]['id']+'_'+nbJour+'" class="creneau" orga="'+idOrga+
-				'" disponibilite="'+dispo[idDispo]['id']+'" creneau="'+dispo[idDispo]['creneaux'][idCreneau]['id']+'_'+nbJour+'">'+_prefixe+
-				dispo[idDispo]['creneaux'][idCreneau]['plageHoraire']['tache']['nom']+'</div>';
+		var _html = '<div id="creneau_'+dispos[idDispo]['creneaux'][idCreneau]['id']+'_'+nbJour+'" class="creneau">'+
+					_prefixe+dispos[idDispo]['creneaux'][idCreneau]['plageHoraire']['tache']['nom']+'</div>';
 		
 		// on le rajoute, supprime le handler précédent et en rajoute un
 		$('.jour[jour="'+dateDebut.getFullYear()+'-'+dateDebut.getPMonth()+'-'+dateDebut.getPDate()+'"] > .heure[heure="'+
 		dateDebut.getHours()+'"] > .quart_heure[minute="'+dateDebut.getMinutes()+'"]').append(_html).off('click')
-		.bind('click', {idOrga: idOrga, indexDispo: idDispo, indexCreneau: idCreneau}, pmAffectation.controllers.calendar.clickCreneau);
+		.on('click', {indexDispo: idDispo, indexCreneau: idCreneau}, pmAffectation.controllers.calendar.clickCreneau);
 		
-		// set la taille - et -10px à cause du padding vertical de 5px
-		$('#creneau_'+dispo[idDispo]['creneaux'][idCreneau]['id']+'_'+nbJour).height(Math.round(duree/60/60*40)+'px');
-				
-		$('#creneau_'+dispo[idDispo]['creneaux'][idCreneau]['id']+'_'+nbJour).css('background', dispo[idDispo]['creneaux'][idCreneau]['couleur']);
+		// mise en forme
+		$('#creneau_'+dispos[idDispo]['creneaux'][idCreneau]['id']+'_'+nbJour).height(Math.round(duree/60/60*40)+'px')
+			.css('background', dispos[idDispo]['creneaux'][idCreneau]['couleur']);
 	},
+	// place un créneau (mode tâche)
+	placeCreneauTache: function(creneaux, idCreneau, dateDebut, duree, nbJour) {
+		var _prefixe = (nbJour !== 0) ? '>> ' : '';
+		
+		// on regarde s'il est affecté ou pas
+		var _opacite = 0.4;
+		var _class = 'creneau';
+		if (creneaux[idCreneau]['did']) {
+			_opacite = 0.8;
+			_class += ' affecte';
+		}
+				
+		var _html = '<div id="creneau_'+creneaux[idCreneau]['id']+'_'+nbJour+'" class="'+_class+'">'+
+					_prefixe+creneaux[idCreneau]['plageHoraire']['tache']['nom']+'</div>';
+		
+		// on le rajoute, supprime le handler précédent et en rajoute un
+		$('.jour[jour="'+dateDebut.getFullYear()+'-'+dateDebut.getPMonth()+'-'+dateDebut.getPDate()+'"] > .heure[heure="'+
+		dateDebut.getHours()+'"] > .quart_heure[minute="'+dateDebut.getMinutes()+'"]').append(_html).off('click')
+		.on('click', {indexCreneau: idCreneau}, pmAffectation.controllers.calendar.clickCreneau);
+		
+		// mise en forme
+		$('#creneau_'+creneaux[idCreneau]['id']+'_'+nbJour).height(Math.round(duree/60/60*40)+'px')
+			.css('background', pmUtils.hexToRgba(creneaux[idCreneau]['couleur'], _opacite));
+	},
+
 	
 	/*
 	 * Ouvre un tooltip avec le détails du créneau

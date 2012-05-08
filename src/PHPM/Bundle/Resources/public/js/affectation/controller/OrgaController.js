@@ -57,7 +57,7 @@ OrgaController.prototype = {
 	callbackDispos: function() {
 		pmAffectation.data.dispos = pmAffectation.models.orga.getDispos();
 		
-		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga.id});
+		pmAffectation.views.calendar.setDispos();
 	},
 	
 	/*
@@ -67,18 +67,18 @@ OrgaController.prototype = {
 	clickHandler: function(obj) {
 		$("#orga_"+pmAffectation.current.orga.id).removeClass('current');
 		$("#orga_"+obj.id).addClass('current');
-		
+
 		pmAffectation.controllers.creneau.empty(); // vide la colonne creneau
-		
+
 		// on de-set le quart d'heure et le jour
 		pmAffectation.controllers.calendar.resetDateHeure(true);
 
 		pmAffectation.current.orga.id = obj.id;
 		pmHistory.setUrlParam(); // maj de l'url
-		
+
 		pmAffectation.controllers.creneau.getData(); // récupère les taches à jour
-		
-		pmAffectation.views.calendar.setFrees({type: 'orga', id: pmAffectation.current.orga.id});
+
+		pmAffectation.views.calendar.setDispos();
 	},
 	// changement de la valeur d'un filtre
 	clickFilter: function(nomFiltre, valeurFiltre) {

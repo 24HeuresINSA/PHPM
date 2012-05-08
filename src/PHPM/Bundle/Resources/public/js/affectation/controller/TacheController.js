@@ -55,9 +55,9 @@ TacheController.prototype = {
 		(pmAffectation.current.mode === 'tache') && (pmAffectation.controllers.orga.getData());
 	},
 	callbackCreneaux: function() {
-		pmAffectation.data.creneaux = pmAffectation.models.tache.getCreneaux();
+		pmAffectation.data.creneauxTaches = pmAffectation.models.tache.getCreneaux();
 		
-		pmAffectation.views.calendar.setFrees({type: 'tache', id: pmAffectation.current.tache.id});
+		pmAffectation.views.calendar.setCreneaux();
 	},
 	
 	/*
@@ -67,18 +67,18 @@ TacheController.prototype = {
 	clickHandler: function(obj) {
 		$("#tache_"+pmAffectation.current.tache.id).removeClass('current');
 		$("#tache_"+obj.id).addClass('current');
-		
+
 		pmAffectation.controllers.orga.empty(); // vide la colonne orga
-		
+
 		// on de-set le quart d'heure et le jour
 		pmAffectation.controllers.calendar.resetDateHeure(true);
 
 		pmAffectation.current.tache.id = obj.id;
 		pmHistory.setUrlParam(); // maj de l'url
-		
+
 		pmAffectation.controllers.orga.getData(); // récupère les orgas à jour
-		
-		pmAffectation.views.calendar.setFrees({type: 'tache', id: pmAffectation.current.tache.id});
+
+		pmAffectation.views.calendar.setCreneaux();
 	},
 	// changement de la valeur d'un filtre
 	clickFilter: function(nomFiltre, valeurFiltre) {

@@ -110,9 +110,7 @@ TacheModel.prototype = {
 	},
 	getCreneaux: function() {
 		var _creneaux = {};
-		
-		console.log(this.dataCreneaux);
-		
+				
 		// traitement des taches
 		for (var _iCreneau in this.dataCreneaux) {
 			var _creneau = {};
@@ -126,14 +124,13 @@ TacheModel.prototype = {
 			_creneau['fin'] = new Date(_creneau['fin']['date']);
 			
 			// on détermine la "priorité" du créneau encore, et met une couleur en fonction
-			var _couleur;
 			if (_creneau['oid']) {
-				_couleur = '#000000';
+				_creneau['couleur'] = '#000000';
 			} else if (_creneau['eid']) {
-				_couleur = pmAffectation.data.parameter.equipes[_creneau['eid']]['couleur'];
+				_creneau['couleur'] = pmAffectation.data.parameter.equipes[_creneau['eid']]['couleur'];
 			} else {
 				// dans ce cas une erreur a été faite, personne ne doit être affecté sur la fiche tâche !
-				_couleur = 'red';
+				_creneau['couleur'] = 'red';
 			}
 
 			_creneaux[_iCreneau] = _creneau;
