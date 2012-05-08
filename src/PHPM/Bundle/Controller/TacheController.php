@@ -260,6 +260,7 @@ class TacheController extends Controller
             
             if($param['action']=='delete'){
                 $entity->setStatut(-1);
+                $entity->removeAllCreneaux();
                 $texteCommentaire=$texteCommentaire."<b>&rarr;Fiche supprimée.</b>";
             }
             if($param['action']=='restore'){
@@ -454,6 +455,8 @@ class TacheController extends Controller
     	if (!$entity) {
     		throw $this->createNotFoundException('Unable to find Tache entity.');
     	}
+    	
+    	$entity->removeAllCreneaux();
     		
     	$entity->setStatut(-1);
     	$commentaire = new Commentaire();

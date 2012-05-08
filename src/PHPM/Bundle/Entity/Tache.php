@@ -517,4 +517,14 @@ class Tache
     {
         return $this->lieu;
     }
+    
+    public function removeAllCreneaux(){
+    	foreach ($this->getPlagesHoraire() as $ph){
+    		foreach ($ph->getCreneaux() as $creneau){
+    			$creneau->setPlageHoraire(null);
+    		}
+    	}
+    
+    	
+    }
 }

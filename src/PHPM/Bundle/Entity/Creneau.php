@@ -154,7 +154,7 @@ class Creneau
      *
      * @param PHPM\Bundle\Entity\PlageHoraire $plageHoraire
      */
-    public function setPlageHoraire(\PHPM\Bundle\Entity\PlageHoraire $plageHoraire)
+    public function setPlageHoraire($plageHoraire)
     {
         $this->plageHoraire = $plageHoraire;
     }

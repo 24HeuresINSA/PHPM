@@ -81,7 +81,7 @@ class PlageHoraire
     protected $respNecessaire;
     
     /**
-    * @ORM\OneToMany(targetEntity="Creneau", mappedBy="plageHoraire")
+    * @ORM\OneToMany(targetEntity="Creneau", mappedBy="plageHoraire", orphanRemoval=true)
     */
     protected $creneaux;
     
