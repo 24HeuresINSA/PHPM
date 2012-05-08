@@ -526,6 +526,17 @@ class OrgaController extends Controller
 
 	            foreach ($allDI as $di)
 	            {
+	            
+	            	if(!$submittedDI->contains($di)){
+	            		if($orga->getDisponibilitesInscription()->contains($di) && ($this->get('security.context')->isGranted('ROLE_ADMIN')) && ($di->getDebut() > new \DateTime())){
+	            			$orga->removeDisponibiliteInscription($di);
+	            		}
+	            	}
+	            
+	            }
+	            
+	            foreach ($allDI as $di)
+	            {
 	                 
 	            	if($submittedDI->contains($di)){
 	            		if(!$orga->getDisponibilitesInscription()->contains($di) && ($this->get('security.context')->isGranted('ROLE_ADMIN') || ($di->getStatut() > 0)) && ($di->getDebut() > new \DateTime())){
@@ -535,7 +546,9 @@ class OrgaController extends Controller
 	            	}
 	            	
 	            }
+	            var_dump('clean');
 	            $orga->cleanDisponibilites();
+	            var_dump('clean');
 	            $em->flush();
 	         	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
 

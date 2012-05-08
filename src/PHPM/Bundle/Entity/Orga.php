@@ -361,37 +361,26 @@ class Orga implements UserInterface
     			elseif($di->getDebut()>=$dispo->getFin()){
     			}
     			elseif(($di->getDebut()<=$dispo->getDebut())&&($di->getFin()>=$dispo->getFin())){
-    				print($dispo->getId());
-    				print(" ");
-    				print($di->getId());
-    				print("rem");
     				$this->removeDisponibilite($dispo);
     			}
     			elseif(($di->getDebut()<=$dispo->getDebut())&&($di->getFin()>$dispo->getDebut())){
-    				print($dispo->getId());
-    				print(" ");
-    				print($di->getId());
-    				print("redimD");
     				
     				foreach ($dispo->getCreneaux() as $creneau){
     					if(($creneau->getDebut()<$di->getFin())&&($creneau->getFin()>$di->getDebut())){
-							$dispo->getCreneaux()->removeElement($creneau);
-							$creneau->setDisponibilite(null);
+							var_dump('deja affecté a '.$creneau->getId());
+							return false;
     					}
     				}
     				
     				$dispo->setDebut($di->getFin());
     			}
     			elseif(($di->getDebut()<$dispo->getFin())&&($di->getFin()>=$dispo->getFin())){
-    				print($dispo->getId());
-    				print(" ");
-    				print($di->getId());
-    				print("redimF");
     				
     				foreach ($dispo->getCreneaux() as $creneau){
     					if(($creneau->getDebut()<$di->getFin())&&($creneau->getFin()>$di->getDebut())){
-    						$dispo->getCreneaux()->removeElement($creneau);
-    						$creneau->setDisponibilite(null);
+    						var_dump('deja affecté a '.$creneau->getId());
+    						return false;
+    						
     					}
     				}
     				
@@ -401,8 +390,8 @@ class Orga implements UserInterface
     				
     				foreach ($dispo->getCreneaux() as $creneau){
     					if(($creneau->getDebut()<$di->getFin())&&($creneau->getFin()>$di->getDebut())){
-    						$dispo->getCreneaux()->removeElement($creneau);
-    						$creneau->setDisponibilite(null);
+    						var_dump('deja affecté a '.$creneau->getId());
+    						return false;
     					}
     				}
     				print($dispo->getId());
@@ -429,12 +418,17 @@ class Orga implements UserInterface
     			}else{
     					print("merde...");
 
+    					var_dump($dispo->getDebut());
+    					var_dump($dispo->getFin());
+    					var_dump($di->getDebut());
+    					var_dump($di->getFin());
     			}
     			print("\n");
     			
     			
     			
     		}
+    		return true;
     }
 
     public function cleanDisponibilites(){
@@ -808,11 +802,11 @@ class Orga implements UserInterface
      */
     public function removeDisponibilite(\PHPM\Bundle\Entity\Disponibilite $disponibilite)
     {
-    	foreach ($disponibilite->getCreneaux() as $creneau){
-				$disponibilite->getCreneaux()->removeElement($creneau);
-				$creneau->setDisponibilite(null);
+//     	foreach ($disponibilite->getCreneaux() as $creneau){
+// 				$disponibilite->getCreneaux()->removeElement($creneau);
+// 				$creneau->setDisponibilite(null);
 
-    			}
+//     			}
     	
     	$this->getDisponibilites()->removeElement($disponibilite);
     		
@@ -847,9 +841,9 @@ class Orga implements UserInterface
      */
     public function removeDisponibiliteInscription(\PHPM\Bundle\Entity\DisponibiliteInscription $disponibiliteInscription)
     {
-    
+    	if($this->removeDIFromDisponibilites($disponibiliteInscription)){
     	$this->getDisponibilitesInscription()->removeElement($disponibiliteInscription);
-    	$this->removeDIFromDisponibilites($disponibiliteInscription);
+    	}
     }
 
     /**
