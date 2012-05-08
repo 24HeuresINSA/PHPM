@@ -32,6 +32,8 @@ PmMode.prototype = {
 	setMode: function(mode) {
 		(mode) && (pmAffectation.current.mode = mode);
 		
+		// TODO : off les bind
+		
 		if (pmAffectation.current.mode === 'orga') {
 			pmAffectation.current.tache.id = -1;
 			pmHistory.setUrlParam();

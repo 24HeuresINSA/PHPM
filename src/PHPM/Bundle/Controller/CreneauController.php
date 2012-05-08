@@ -289,7 +289,7 @@ class CreneauController extends Controller
 		$entities = $em->getRepository('PHPMBundle:Creneau')->getTacheCreneau($tache_id, $plage_id);
 		
 		// magie, on a rien à faire comme mise en forme !
-    	
+		
     	$response = new Response();
     	$response->setContent(json_encode($entities));
 		$response->headers->set('Content-Type', 'application/json');

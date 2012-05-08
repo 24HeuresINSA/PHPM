@@ -79,6 +79,15 @@ PmHistory.prototype = {
 								(pmHistory.refreshData === true) && (pmAffectation.controllers.orga.getData());
 							}
 							break;
+						case 'tache':
+							if (pmUtils.areEquals(_params['tache']['id'], pmAffectation.current['tache']['id']) === false) {
+								pmAffectation.current['tache'] = _params['tache'];
+								(pmHistory.refreshData === true) && (pmAffectation.controllers.tache.getCreneaux());
+							} else if (pmUtils.areEquals(_params['tache'], pmAffectation.current['tache']) === false) {
+								pmAffectation.current['tache'] = _params['tache'];
+								(pmHistory.refreshData === true) && (pmAffectation.controllers.tache.getData());
+							}
+							break;
 						case 'plage':
 							if (pmUtils.areEquals(_params['plage'], pmAffectation.current['plage']) === false) {
 								pmAffectation.current['plage'] = _params['plage'];

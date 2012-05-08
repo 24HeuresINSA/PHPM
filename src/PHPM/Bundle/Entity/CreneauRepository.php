@@ -202,14 +202,12 @@ class CreneauRepository extends EntityRepository
 	{
 		$rsm = new ResultSetMapping;
 		$rsm->addEntityResult('PHPMBundle:Creneau', 'c');
-		$rsm->addEntityResult('PHPMBundle:Tache', 't');
 		$rsm->addFieldResult('c', 'id', 'id');
 		$rsm->addFieldResult('c', 'debut', 'debut');
 		$rsm->addFieldResult('c', 'fin', 'fin');
-		$rsm->addFieldResult('c', 'disponibilite_id', 'id');
-		$rsm->addFieldResult('c', 'equipeHint_id', 'id');
-		$rsm->addFieldResult('c', 'orgaHint_id', 'id');
-		$rsm->addFieldResult('c', 'plageHoraire_id', 'id');
+		$rsm->addMetaResult('c', 'did', 'did');
+		$rsm->addMetaResult('c', 'eid', 'eid');
+		$rsm->addMetaResult('c', 'oid', 'oid');
 		$rsm->addJoinedEntityResult('PHPMBundle:PlageHoraire', 'p', 'c', 'plageHoraire');
 		$rsm->addFieldResult('p', 'pi', 'id');
 		$rsm->addJoinedEntityResult('PHPMBundle:Tache', 't', 'p', 'tache');
@@ -217,7 +215,7 @@ class CreneauRepository extends EntityRepository
 		$rsm->addFieldResult('t', 'tn', 'nom');
 		$rsm->addFieldResult('t', 'tl', 'lieu');
 		
-		$sql = 'SELECT c.id, c.debut, c.fin, c.disponibilite_id, c.equipeHint_id, c.orgaHint_id, p.id AS pi, t.id AS ti, t.nom AS tn, t.lieu AS tl
+		$sql = 'SELECT c.id, c.debut, c.fin, c.disponibilite_id AS did, c.equipeHint_id AS eid, c.orgaHint_id AS oid, p.id AS pi, t.id AS ti, t.nom AS tn, t.lieu AS tl
 				FROM Creneau c
 				JOIN PlageHoraire p ON c.plageHoraire_id = p.id
 				JOIN Tache t ON p.tache_id = t.id

@@ -42,6 +42,24 @@ TacheModel.prototype = {
 			type: 'POST'
 		});
 	},
+	getDataCreneaux: function(callBackCreneaux) {
+		this.callBackCreneaux = callBackCreneaux;
+				
+		// construit les paramètres que l'on va envoyer, -1 est le wildcart
+		var _params = {
+			plage_id: pmAffectation.current.plage, // on fournit toujours la plage, la base
+			tache_id: pmAffectation.current.tache.id
+		};
+		
+		$.ajax({
+			url: pmAffectation.urls.creneauxTaches,
+			dataType: 'json',
+			data: _params,
+			success: pmAffectation.models.tache.requestSuccessCreneaux,
+			error: pmAffectation.models.tache.requestError,
+			type: 'POST'
+		});
+	},
 	
 	/*
 	 * Récup les résultats
@@ -52,6 +70,11 @@ TacheModel.prototype = {
 		pmAffectation.models.tache.data = data;
 	
 		pmAffectation.models.tache.callBack();
+	},
+	requestSuccessCreneaux: function(data) {
+		pmAffectation.models.tache.dataCreneaux = data;
+	
+		pmAffectation.models.tache.callBackCreneaux();
 	},
 	requestError: function(data, statusText) {
 		pmMessage.alert("Impossible de récupérer les tâches : " + statusText);
@@ -85,5 +108,38 @@ TacheModel.prototype = {
 		
 		return _taches;
 	},
+	getCreneaux: function() {
+		var _creneaux = {};
+		
+		console.log(this.dataCreneaux);
+		
+		// traitement des taches
+		for (var _iCreneau in this.dataCreneaux) {
+			var _creneau = {};
+			
+			// récupère toutes les données
+			for (var _iChamp in this.dataCreneaux[_iCreneau]) {
+				_creneau[_iChamp] = this.dataCreneaux[_iCreneau][_iChamp];
+			}
+			
+			_creneau['debut'] = new Date(_creneau['debut']['date']);
+			_creneau['fin'] = new Date(_creneau['fin']['date']);
+			
+			// on détermine la "priorité" du créneau encore, et met une couleur en fonction
+			var _couleur;
+			if (_creneau['oid']) {
+				_couleur = '#000000';
+			} else if (_creneau['eid']) {
+				_couleur = pmAffectation.data.parameter.equipes[_creneau['eid']]['couleur'];
+			} else {
+				// dans ce cas une erreur a été faite, personne ne doit être affecté sur la fiche tâche !
+				_couleur = 'red';
+			}
+
+			_creneaux[_iCreneau] = _creneau;
+		}
+		
+		return _creneaux;
+	}
 
 }
