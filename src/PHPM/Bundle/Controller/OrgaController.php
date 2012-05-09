@@ -956,7 +956,32 @@ class OrgaController extends Controller
 	
 	}
 	
+	/**
+	*
+	*
+	* @Route("/export", name="orga_export")
+	* @Template()
+	*/
+	public function exportAction()
+	{
+		if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+			throw new AccessDeniedException();
+		}
 	
+		$em = $this->getDoctrine()->getEntityManager();
+	
+	
+		
+	
+		$orgas = $em
+		->createQuery("SELECT o,d,e FROM PHPMBundle:Orga o JOIN o.disponibilites d JOIN o.equipe e WHERE o.statut >=0")
+		->getArrayResult();
+	
+
+	
+		return array( 'orgas' => $orgas	);
+		
+	}
 	
 	
 	

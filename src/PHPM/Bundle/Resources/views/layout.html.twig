@@ -113,6 +113,7 @@
 					    <ul class="dropdown-menu">
 					    	{% if is_granted('ROLE_ADMIN') %}
 					    		{{ _self.navBarItem('Liste','orga') }}
+					    		{{ _self.navBarItem('ListeHTML','orga_export') }}
 								{{ _self.navBarItem('Créneaux d\'inscription','disponibiliteinscription') }}
 								{{ _self.navBarItem('Missions','mission') }}
 								{{ _self.navBarItem('Plannings','orga_print',{'orgaid':'all'}) }}
