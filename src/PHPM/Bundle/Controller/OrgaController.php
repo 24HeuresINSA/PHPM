@@ -613,7 +613,7 @@ class OrgaController extends Controller
 		$plage_id = $request->request->get('plage_id', '');
 		$niveau_confiance = $request->request->get('confiance_id', '');
 		$maxDateNaissance = new \DateTime();
-		$creneau = $request->request->get('creneau_id', '');
+		$creneau_id = $request->request->get('creneau_id', '');
 		$equipe_id = $request->request->get('equipe_id', '');
 		
 		if ($age !== '') { 
@@ -622,8 +622,13 @@ class OrgaController extends Controller
 		}
 		
 		$em = $this->getDoctrine()->getEntityManager();
-		// on appelle la fonction qui va faire la requête SQL et nous renvoyer le resultat
-		$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($annee_permis, $maxDateNaissance->format("Y-m-d H:i:s"), $plage_id, $niveau_confiance, $creneau, $equipe_id);
+		
+		// on peut avoir 2 usages assez différents, donc 2 fonctions dans le repo
+		if ($creneau_id === '') {
+			$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($annee_permis, $maxDateNaissance->format("Y-m-d H:i:s"), $plage_id, $niveau_confiance, $equipe_id);
+		} else {
+			$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasCompatibleWithCreneau($creneau_id);			
+		}
 		
 		$orgaArray = array();
 		//création du Json de retour selon le modèle définit dans la spec (cf wiki)

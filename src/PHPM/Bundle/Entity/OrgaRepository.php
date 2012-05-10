@@ -14,7 +14,7 @@ use PHPM\Bundle\Entity\Config;
  */
 class OrgaRepository extends EntityRepository
 {
-	public function getOrgasWithCriteria($annee_permis, $maxDateNaissance, $plage_id, $niveau_confiance, $creneau, $equipe_id)
+	public function getOrgasWithCriteria($annee_permis, $maxDateNaissance, $plage_id, $niveau_confiance, $equipe_id)
 	{
 		$dql = "SELECT o, SUM(di.pointsCharisme) charisme FROM PHPMBundle:Orga AS o JOIN o.disponibilitesInscription di JOIN o.disponibilites d JOIN o.equipe e WHERE o.statut=1";
 		
@@ -42,15 +42,6 @@ class OrgaRepository extends EntityRepository
 			$dql .= " AND d.debut < '$fin' AND d.fin > '$debut'";
 		}
 		
-		if ($creneau !== '') {
-			// 1 - on regarde s'il est dispo à ce moment-là
-			$dql .= " AND o.id IN (SELECT oi.id FROM PHPMBundle:Orga AS oi JOIN oi.disponibilites dis, PHPMBundle:Creneau cref " . 
-					"WHERE cref.id = '$creneau' AND (dis.debut <= cref.debut) AND (dis.fin >= cref.fin))";
-			// test sur l'overlap des créneaux : l'orga n'est pas affecté sur cette plage
-			$dql .= " AND o.id NOT IN (SELECT org.id FROM PHPMBundle:Creneau AS cr JOIN cr.disponibilite disp JOIN disp.orga org, " . 
-					" PHPMBundle:Creneau cre WHERE cre.id = '$creneau' AND (cr.debut < cre.fin) AND (cr.fin > cre.debut))";
-		}
-		
 		if ($equipe_id !== '') {
 			$dql .= " AND e.id = $equipe_id ";
 		}
@@ -58,6 +49,26 @@ class OrgaRepository extends EntityRepository
 		// on trie par nombre de points de charisme
 		$dql .= "GROUP BY o.id, d.id, e.id ORDER BY charisme DESC";
 		
+		$q = $this->getEntityManager()->createQuery($dql);
+		return $q->execute();
+	}
+
+
+	// sort la liste des orgas compatibles avec un créneau
+	public function getOrgasCompatibleWithCreneau($creneau_id)
+	{
+		// on regarde successivement :
+		// s'il est dispo à ce moment-là
+		// s'il a le bon niveau de confiance/équipe TODO
+		// s'il n'est pas déjà affecté
+		$dql = 	"SELECT o, SUM(di.pointsCharisme) charisme FROM PHPMBundle:Orga AS o JOIN o.disponibilites d " . 
+				" JOIN o.disponibilitesInscription di JOIN o.equipe e, PHPMBundle:Creneau AS c LEFT OUTER JOIN c.orgaHint oh LEFT OUTER JOIN c.equipeHint eh " . 
+				"WHERE c.id = '$creneau_id' AND (d.debut <= c.debut) AND (d.fin >= c.fin) " . 
+				"AND (o.id = oh.id OR e.id = eh.id) " . 
+				"AND o.id NOT IN (SELECT org.id FROM PHPMBundle:Creneau AS cr JOIN cr.disponibilite dis JOIN dis.orga org, " . 
+				"PHPMBundle:Creneau cre WHERE cre.id = '$creneau_id' AND (cr.debut < cre.fin) AND (cr.fin > cre.debut)) " . 
+				"GROUP BY o.id, d.id, e.id ORDER BY charisme DESC";
+				
 		$q = $this->getEntityManager()->createQuery($dql);
 		return $q->execute();
 	}
