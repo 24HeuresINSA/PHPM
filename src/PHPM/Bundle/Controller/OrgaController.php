@@ -546,14 +546,13 @@ class OrgaController extends Controller
 	            	}
 	            	
 	            }
-	            var_dump('clean');
-	            $orga->cleanDisponibilites();
-	            var_dump('clean');
-	            $em->flush();
-	         	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
 
+	            $orga->cleanDisponibilites();
+				
+	            $em->flush();
+	
+	         	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
 	         		return $this->redirect($this->generateUrl('orga_thankyou'));
-            
 	            }
 	            
 	            $form = $this->createForm(new InputDisposType());
