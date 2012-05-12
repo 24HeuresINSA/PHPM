@@ -64,10 +64,15 @@ CalendarController.prototype = {
 		// on va chercher les creneaux
 		pmAffectation.controllers.creneau.getData();
 	},
-	// clic sur un créneau
-	clickCreneau: function(obj) {		
+	// clic sur un créneau (mode Orga)
+	clickCreneauOrga: function(obj) {		
 		// on demande à la vue un joli popup avec les détails
 		pmAffectation.views.calendar.showDetails(obj);
+	},
+	// click sur un BesoinOrga
+	clickBesoinOrga: function(obj) {
+		pmAffectation.current.creneau.id = obj.data.idCreneau;
+		pmMode.slave.update();
 	},
 	// clic sur les boutons pour changer de plage
 	changePlage: function(plageId) {
