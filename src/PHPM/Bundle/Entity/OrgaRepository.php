@@ -59,12 +59,12 @@ class OrgaRepository extends EntityRepository
 	{
 		// on regarde successivement :
 		// s'il est dispo à ce moment-là
-		// s'il a le bon niveau de confiance/équipe TODO
+		// s'il a le bon niveau de confiance/équipe
 		// s'il n'est pas déjà affecté
 		$dql = 	"SELECT o, SUM(di.pointsCharisme) charisme FROM PHPMBundle:Orga AS o JOIN o.disponibilites d " . 
 				" JOIN o.disponibilitesInscription di JOIN o.equipe e, PHPMBundle:Creneau AS c LEFT OUTER JOIN c.orgaHint oh LEFT OUTER JOIN c.equipeHint eh " . 
 				"WHERE c.id = '$creneau_id' AND (d.debut <= c.debut) AND (d.fin >= c.fin) " . 
-				"AND (o.id = oh.id OR e.id = eh.id) " . 
+				"AND ((c.orgaHint IS NOT NULL AND oh.id = o.id) OR eh.id = e.id) " . 
 				"AND o.id NOT IN (SELECT org.id FROM PHPMBundle:Creneau AS cr JOIN cr.disponibilite dis JOIN dis.orga org, " . 
 				"PHPMBundle:Creneau cre WHERE cre.id = '$creneau_id' AND (cr.debut < cre.fin) AND (cr.fin > cre.debut)) " . 
 				"GROUP BY o.id, d.id, e.id ORDER BY charisme DESC";
