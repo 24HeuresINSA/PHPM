@@ -166,7 +166,7 @@ class Orga implements UserInterface
     protected $equipesResponsable;
     
     /**
-     * @ORM\OneToMany(targetEntity="Disponibilite", mappedBy="orga", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Disponibilite", mappedBy="orga",indexBy="id", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $disponibilites;
     
