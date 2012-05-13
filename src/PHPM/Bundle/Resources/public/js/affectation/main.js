@@ -21,11 +21,8 @@
 	// infos courantes
 	pmAffectation.current = {}; // sera stocké dans l'url
 	// bien mettre des valeurs par défaut aux paramètres
-	pmAffectation.current.orga = {id: -1};
+	pmUtils.setDefault();
 	pmAffectation.current.plage = 1; // par défaut on est sur la plage 0
-	pmAffectation.current.quart_heure = -1; // wildcart
-	pmAffectation.current.creneau = {id: -1};
-	pmAffectation.current.tache = {id: -1};
 	pmAffectation.current.mode = 'orga';
 	
 	// log de toutes les affectations/désaffectations réalisées

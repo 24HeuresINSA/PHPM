@@ -207,7 +207,7 @@ CalendarView.prototype = {
 		// on le rajoute, supprime le handler précédent et en rajoute un
 		$('.jour[jour="'+dateDebut.getFullYear()+'-'+dateDebut.getPMonth()+'-'+dateDebut.getPDate()+'"] > .heure[heure="'+
 		dateDebut.getHours()+'"] > .quart_heure[minute="'+dateDebut.getMinutes()+'"]').append(_html).off('click')
-		.on('click', {indexDispo: idDispo, indexCreneau: idCreneau}, pmAffectation.controllers.calendar.clickCreneau);
+		.on('click', {indexDispo: idDispo, indexCreneau: idCreneau, idOrga: idOrga}, pmAffectation.controllers.calendar.clickCreneauOrga);
 		
 		// mise en forme
 		$('#creneau_'+dispos[idDispo]['creneaux'][idCreneau]['id']+'_'+nbJour).height(Math.round(duree/60/60*40)+'px')
@@ -216,25 +216,29 @@ CalendarView.prototype = {
 	// place un créneau (mode tâche)
 	placeCreneauTache: function(creneaux, idCreneau, dateDebut, duree, nbJour) {
 		var _prefixe = (nbJour !== 0) ? '>> ' : '';
-		
+				
 		// on regarde s'il est affecté ou pas
+		// pour un peu d'optimisation il faut faire un gros if
 		var _opacite = 0.4;
-		var _class = 'creneau';
+		var _html;
+		
 		if (creneaux[idCreneau]['did']) {
 			_opacite = 0.8;
-			_class += ' affecte';
+			
+			// il faut passer par un onclick, le on de jQuery de mange avec les flex-box
+			_html = '<div id="creneau_'+creneaux[idCreneau]['id']+'_'+nbJour+'" class="creneau affecte"'+
+						'onclick="pmAffectation.controllers.calendar.clickCreneauTache({indexCreneau: '+
+						idCreneau+', idCreneau: '+creneaux[idCreneau]['id']+', affecte: true}, event)">'+
+						_prefixe+creneaux[idCreneau]['plageHoraire']['tache']['nom']+'</div>';
+		} else {
+			_html = '<div id="creneau_'+creneaux[idCreneau]['id']+'_'+nbJour+'" class="creneau"'+
+						'onclick="pmAffectation.controllers.calendar.clickCreneauTache({indexCreneau: '+
+						idCreneau+', idCreneau: '+creneaux[idCreneau]['id']+', affecte: false}, event)">'+
+						_prefixe+creneaux[idCreneau]['plageHoraire']['tache']['nom']+'</div>';
 		}
-				
-		var _html = '<div id="creneau_'+creneaux[idCreneau]['id']+'_'+nbJour+'" class="'+_class+'">'+
-					_prefixe+creneaux[idCreneau]['plageHoraire']['tache']['nom']+'</div>';
-		
-		// TODO : relire : on le rajoute, supprime le handler précédent et en rajoute un
+
 		$('.jour[jour="'+dateDebut.getFullYear()+'-'+dateDebut.getPMonth()+'-'+dateDebut.getPDate()+'"] > .heure[heure="'+
-		dateDebut.getHours()+'"] > .quart_heure[minute="'+dateDebut.getMinutes()+'"]').append(_html).off('click')
-		.on('click', {idCreneau: creneaux[idCreneau]['id']}, function(obj) {
-			pmAffectation.current.creneau.id = obj.data.idCreneau;
-			pmMode.slave.update();
-		});
+		dateDebut.getHours()+'"] > .quart_heure[minute="'+dateDebut.getMinutes()+'"]').append(_html);
 		
 		// mise en forme
 		$('#creneau_'+creneaux[idCreneau]['id']+'_'+nbJour).height(Math.round(duree/60/60*40)+'px')
@@ -247,7 +251,7 @@ CalendarView.prototype = {
 	 * sur lequel on vient de cliquer
 	 */
 	showDetails: function(obj) {
-		var _creneau = pmAffectation.data.dispos[obj.data.indexDispo]['creneaux'][obj.data.indexCreneau];
+		var _creneau = (obj.data.indexDispo) ? pmAffectation.data.dispos[obj.data.indexDispo]['creneaux'][obj.data.indexCreneau] : pmAffectation.data.creneauxTaches[obj.data.indexCreneau];
 		
 		// on prépare le contenu du pop-up
 		var _html = '<div class="modal hide creneau_details" id="creneau_details">'+
@@ -259,17 +263,21 @@ CalendarView.prototype = {
 					'<li>Lieu : '+_creneau.plageHoraire.tache.lieu+'</li>'+
 					'<li>'+_creneau.debut.getThisFormat('d/m H:I')+' - '+_creneau.fin.getThisFormat('d/m H:I')+'</li>'+
 					'</ul></div><div class="modal-footer">'+
-					'<button class="btn btn-warning" id="creneaumaker_'+_creneau.id+'" data-dismiss="modal">Ouvrir dans CréneauMaker</button>'+
-					'<button class="btn btn-danger" id="desaffect_'+_creneau.id+'" data-dismiss="modal">Désaffecter</button>'+
-    				'<a href="#" class="btn" data-dismiss="modal">Fermer</a></div></div>';
+					'<button class="btn btn-warning" id="creneaumaker_'+_creneau.id+'" data-dismiss="modal">Ouvrir dans CréneauMaker</button>';
+					
+		(obj.data.idOrga) && (_html += '<button class="btn btn-danger" id="desaffect_'+_creneau.id+'" data-dismiss="modal">Désaffecter</button>');
+		
+    	_html += '<a href="#" class="btn" data-dismiss="modal">Fermer</a></div></div>';
 		
 		// on l'ouvre - modal de Twitter Bootstrap
 		$(_html).modal();
 		
 		// bouton, lien pour la désaffectation - setter quand le popup est visible
-		$('#desaffect_'+_creneau.id).on('click', {idCreneau: _creneau['id'], idOrga: obj.data.idOrga}, function(obj) {
-			pmAffectation.controllers.creneau.desAffectation(obj.data.idCreneau, obj.data.idOrga);
-		});
+		if (obj.data.idOrga) {
+			$('#desaffect_'+_creneau.id).on('click', {idCreneau: _creneau['id'], idOrga: obj.data.idOrga}, function(obj) {
+				pmAffectation.controllers.creneau.desAffectation(obj.data.idCreneau, obj.data.idOrga);
+			});
+		}
 		$('#creneaumaker_'+_creneau.id).on('click', {idTache: _creneau['plageHoraire']['tache']['id']}, function(obj) {
 			var _popup = window.open(pmAffectation.urls.creneauMaker+'/'+obj.data.idTache, '');
 					

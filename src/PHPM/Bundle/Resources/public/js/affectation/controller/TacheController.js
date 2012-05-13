@@ -23,6 +23,7 @@ TacheController.prototype = {
 	getData: function() {
 		$('#liste_taches').empty();
 		$('#liste_taches').addClass('spinner_medium');
+		pmAffectation.controllers.orga.empty(); // vide la colonne orga
 		
 		// si une tâche est déjà sélectionnée, on va chercher le reste en parallèle
 		if (pmAffectation.current.mode === 'tache' && pmAffectation.current.tache.id != -1) {
@@ -51,8 +52,6 @@ TacheController.prototype = {
 		}
 		
 		pmAffectation.views.tache.setTaches();
-		
-		(pmAffectation.current.mode === 'tache') && (pmAffectation.controllers.orga.getData());
 	},
 	callbackCreneaux: function() {
 		pmAffectation.data.creneauxTaches = pmAffectation.models.tache.getCreneaux();
@@ -68,15 +67,13 @@ TacheController.prototype = {
 		$("#tache_"+pmAffectation.current.tache.id).removeClass('current');
 		$("#tache_"+obj.id).addClass('current');
 
-		pmAffectation.controllers.orga.empty(); // vide la colonne orga
-
 		// on de-set le quart d'heure et le jour
 		pmAffectation.controllers.calendar.resetDateHeure(true);
+		
+		pmAffectation.controllers.orga.empty(); // vide la colonne orga
 
 		pmAffectation.current.tache.id = obj.id;
 		pmHistory.setUrlParam(); // maj de l'url
-
-		pmAffectation.controllers.orga.getData(); // récupère les orgas à jour
 
 		pmAffectation.views.calendar.setCreneaux();
 	},

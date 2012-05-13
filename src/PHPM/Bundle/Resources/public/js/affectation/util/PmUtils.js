@@ -263,6 +263,17 @@ PmUtils.prototype = {
 		
 		// sinon on n'est pas sur de quoi il s'agit !
 		return hex;
+	},
+	
+	/*
+	 * Met les valeurs par défaut des paramètres
+	 */
+	setDefault: function() {
+		pmAffectation.current.orga = {id: -1};
+		pmAffectation.current.jour = -1;
+		pmAffectation.current.quart_heure = -1; // wildcart
+		pmAffectation.current.creneau = {id: -1};
+		pmAffectation.current.tache = {id: -1};
 	}
 		
 };
