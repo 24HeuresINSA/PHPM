@@ -24,6 +24,7 @@
 	pmAffectation.current.orga = {id: -1};
 	pmAffectation.current.plage = 1; // par défaut on est sur la plage 0
 	pmAffectation.current.quart_heure = -1; // wildcart
+	pmAffectation.current.jour = -1;
 	pmAffectation.current.creneau = {id: -1};
 	pmAffectation.current.tache = {id: -1};
 	pmAffectation.current.mode = 'orga';

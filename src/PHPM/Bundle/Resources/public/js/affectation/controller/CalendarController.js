@@ -77,7 +77,7 @@ CalendarController.prototype = {
 		} else {
 			pmAffectation.current.creneau.id = obj.idCreneau;
 			pmHistory.setUrlParam(); // maj de l'url
-			pmMode.slave.update();
+			pmAffectation.controllers.orga.getData();
 		}
 	},
 	// clic sur les boutons pour changer de plage
