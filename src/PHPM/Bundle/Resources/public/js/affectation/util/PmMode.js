@@ -70,13 +70,13 @@ PmMode.prototype = {
 			$('bouton_tache_detail').show();
 			$('#bouton_mode_tache').button('toggle');
 			
-			// on va chercher la colonne tache
-			pmAffectation.controllers.tache = new TacheController();
-			pmAffectation.controllers.tache.getData();
-	
-			// colonne orga
+			// 1 - colonne orga
 			pmAffectation.controllers.orga = new OrgaController();
 			// pas besoin d'aller chercher des données dedans
+			
+			// 2 - on va chercher la colonne tache
+			pmAffectation.controllers.tache = new TacheController();
+			pmAffectation.controllers.tache.getData();
 			
 			// on met à jour les références
 			this.master.update = function() { pmAffectation.controllers.tache.getData() };

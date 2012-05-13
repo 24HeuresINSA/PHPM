@@ -71,6 +71,8 @@ CalendarController.prototype = {
 	},
 	// clic sur un créneau (mode Tâche)
 	clickCreneauTache: function(obj, e) {
+		pmAffectation.controllers.orga.empty(); // vide la colonne orga
+
 		if (obj.affecte == true || e.altKey) {
 			// on demande à la vue un joli popup avec les détails
 			pmAffectation.views.calendar.showDetails({data: obj});
