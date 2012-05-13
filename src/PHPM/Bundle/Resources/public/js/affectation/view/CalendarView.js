@@ -216,27 +216,29 @@ CalendarView.prototype = {
 	// place un créneau (mode tâche)
 	placeCreneauTache: function(creneaux, idCreneau, dateDebut, duree, nbJour) {
 		var _prefixe = (nbJour !== 0) ? '>> ' : '';
-		
+				
 		// on regarde s'il est affecté ou pas
 		// pour un peu d'optimisation il faut faire un gros if
 		var _opacite = 0.4;
+		var _html;
+		
 		if (creneaux[idCreneau]['did']) {
 			_opacite = 0.8;
 			
-			var _html = '<div id="creneau_'+creneaux[idCreneau]['id']+'_'+nbJour+'" class="creneau affecte">'+
+			// il faut passer par un onclick, le on de jQuery de mange avec les flex-box
+			_html = '<div id="creneau_'+creneaux[idCreneau]['id']+'_'+nbJour+'" class="creneau affecte"'+
+						'onclick="pmAffectation.controllers.calendar.clickCreneauTache({indexCreneau: '+
+						idCreneau+', idCreneau: '+creneaux[idCreneau]['id']+', affecte: true}, event)">'+
 						_prefixe+creneaux[idCreneau]['plageHoraire']['tache']['nom']+'</div>';
-			
-			$('.jour[jour="'+dateDebut.getFullYear()+'-'+dateDebut.getPMonth()+'-'+dateDebut.getPDate()+'"] > .heure[heure="'+
-			dateDebut.getHours()+'"] > .quart_heure[minute="'+dateDebut.getMinutes()+'"]').append(_html).off('click')
-			.on('click', {indexCreneau: idCreneau}, this.showDetails);
 		} else {
-			var _html = '<div id="creneau_'+creneaux[idCreneau]['id']+'_'+nbJour+'" class="creneau">'+
+			_html = '<div id="creneau_'+creneaux[idCreneau]['id']+'_'+nbJour+'" class="creneau"'+
+						'onclick="pmAffectation.controllers.calendar.clickCreneauTache({indexCreneau: '+
+						idCreneau+', idCreneau: '+creneaux[idCreneau]['id']+', affecte: false}, event)">'+
 						_prefixe+creneaux[idCreneau]['plageHoraire']['tache']['nom']+'</div>';
-			
-			$('.jour[jour="'+dateDebut.getFullYear()+'-'+dateDebut.getPMonth()+'-'+dateDebut.getPDate()+'"] > .heure[heure="'+
-			dateDebut.getHours()+'"] > .quart_heure[minute="'+dateDebut.getMinutes()+'"]').append(_html).off('click')
-			.on('click', {idCreneau: creneaux[idCreneau]['id']}, pmAffectation.controllers.calendar.clickBesoinOrga);
 		}
+
+		$('.jour[jour="'+dateDebut.getFullYear()+'-'+dateDebut.getPMonth()+'-'+dateDebut.getPDate()+'"] > .heure[heure="'+
+		dateDebut.getHours()+'"] > .quart_heure[minute="'+dateDebut.getMinutes()+'"]').append(_html);
 		
 		// mise en forme
 		$('#creneau_'+creneaux[idCreneau]['id']+'_'+nbJour).height(Math.round(duree/60/60*40)+'px')
