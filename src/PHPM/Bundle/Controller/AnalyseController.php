@@ -234,8 +234,14 @@ class AnalyseController extends Controller
 	    			$color="#CCE0FF";
 	    		}else{
 		    		if($o>$t){
-		    			$g=255;
-		    			$r=$b=128;
+		    			if($a==$t){
+		    				$r=50;
+		    				$g=128;
+		    				$b=255;
+		    			}else{
+			    			$g=255;
+			    			$r=$b=128;
+		    			}
 		    		}elseif($o==$t){
 		    			$g=255;
 		    			$r=$b=200;
@@ -289,6 +295,43 @@ class AnalyseController extends Controller
     			);
     }
     
+    /**
+     * Rapport tâches
+     *
+     * @Route("/taches/{groupeid}", defaults={"groupeid"="all"}, name="analyse_taches")
+     * @Template()
+     */
+    public function tachesAction($groupeid)
+    {
+    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+    		throw new AccessDeniedException();
+    	}
+    	 
+    	$em = $this->getDoctrine()->getEntityManager();
+
+    	if ($groupeid=='all') {
+    		$tacheDQL = "SELECT g,t,p,c,d,o FROM PHPMBundle:GroupeTache g JOIN g.taches t
+    		JOIN t.plagesHoraire p JOIN p.creneaux c LEFT OUTER JOIN c.disponibilite d JOIN d.orga o 
+    		 ORDER BY g.id ";
+    		$tacheResult = $em->createQuery($tacheDQL)->getArrayResult();
+    		return array('tacheResult'=>$tacheResult);
+    	}else{
+    		$tacheDQL = "SELECT g,t,p,c,d,o FROM PHPMBundle:GroupeTache g JOIN g.taches t
+    		JOIN t.plagesHoraire p JOIN p.creneaux c LEFT OUTER JOIN c.disponibilite d JOIN d.orga o 
+    		WHERE g.id = :groupeId ORDER BY g.id ";
+    		$tacheResult = $em->createQuery($tacheDQL)->setParameter('groupeId', $groupeid)->getArrayResult();
+    		$groupe= $em->getRepository('PHPMBundle:GroupeTache')->find($groupeid);
+    		 
+    		if (!$groupe) {
+    			throw $this->createNotFoundException('GroupeTache inconnu.');
+    		}
+    		return array('tacheResult'=>$tacheResult,'groupe'=>$groupe);
+    		 
+    	}
+	
+    
+    	
+    }
     
     
 }

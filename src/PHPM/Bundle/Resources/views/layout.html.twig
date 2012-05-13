@@ -150,9 +150,10 @@
 					    <ul class="dropdown-menu">
 							{{ _self.navBarItem('Statistiques','analyse_stats') }}
 							{{ _self.navBarItem('Utilisation du matériel','analyse_usageMateriel') }}
-							{{ _self.navBarItem('Occupation des orgas','analyse_plagesorga') }}
+							{{ _self.navBarItem('Orgas requis','analyse_plagesorga') }}
 							{% if is_granted('ROLE_ADMIN') %}
 							{{ _self.navBarItem('Besoins en orgas','analyse_besoinsorga') }}
+							{{ _self.navBarItem('Orgas affectés','analyse_taches') }}
 							{% endif %}
 					    </ul>
 					</li>
