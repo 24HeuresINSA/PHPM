@@ -91,7 +91,7 @@ PmHistory.prototype = {
 						case 'plage':
 							if (pmUtils.areEquals(_params['plage'], pmAffectation.current['plage']) === false) {
 								pmAffectation.current['plage'] = _params['plage'];
-								(pmHistory.refreshData === true) && (pmAffectation.controllers.calendar.getData());
+								// on n'a pas de maj à faire ici
 							}
 							break;
 						case 'quart_heure':
