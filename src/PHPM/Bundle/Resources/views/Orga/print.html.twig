@@ -28,11 +28,11 @@ width:600pt;
 
 
 	{% for d in orga.disponibilites %}
-	{% for creneau in d.creneaux %}
+	{% for creneau in d.creneaux if creneau%}
 	
 	  <div class="creneau">
 	  <div class="infos">
-	  <div class="horaires"><h4>{{ creneau.debut | format_datetime('EEEE dd MMM Y HH:mm') }}
+	  <div class="horaires"><h4>{{ creneau.id }} {{ creneau.debut | format_datetime('EEEE dd MMM Y HH:mm') }}
 	  	-> {{ creneau.fin | format_datetime('EEEE dd MMM Y HH:mm') }}</h4>
 	  	</div>
 	  	

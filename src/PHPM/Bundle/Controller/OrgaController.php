@@ -691,7 +691,24 @@ class OrgaController extends Controller
         
         $em = $this->getDoctrine()->getEntityManager();
         $orgas = $em->getRepository('PHPMBundle:Orga')-> getPlanning($orgaid,$debut,$fin);
-        
+        foreach ($orgas as &$orga){
+        	foreach ($orga['disponibilites'] as &$disponibilite){
+        		$prevCreneau = null;
+        		foreach ($disponibilite['creneaux'] as $id => &$creneau){
+        			if($creneau['plageHoraire']['tache'] == $prevCreneau['plageHoraire']['tache']){
+        				$prevCreneau['fin']= $creneau['fin'];
+        				var_dump($prevCreneau['id']);
+        				unset($disponibilite['creneaux'][$id]);
+        				
+        			}
+        			
+        			$prevCreneau=&$creneau;
+//         			$creneau['fin']=  new \DateTime();
+        		}
+        		unset($creneau);
+        		unset($prevCreneau);
+        	}
+        }
              
 	    
 	    return array('orgas' => $orgas,'debut'=>$debut, 'fin'=>$fin
