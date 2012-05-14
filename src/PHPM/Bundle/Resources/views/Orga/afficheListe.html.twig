@@ -37,7 +37,6 @@
 			            {% endif %}
 			            <li><a href="{{ path('autologin', { 'id': entity.id, 'loginkey': (entity.id)|phpm_crypt }) }}">Se connecter en tant que cet orga.</a></li>
 			            <li><a href="{{ path('orga_change_statut', { 'id': entity.id, 'statut': -1 }) }}">Mettre en attente</a></li>
-			         	<li><a href="{{ path('orga_gendispo', { 'id': entity.id}) }}">Regénérer les disponibilités</a></li>
 					</ul>
 					</div>
 					{% if entity.commentaire %}

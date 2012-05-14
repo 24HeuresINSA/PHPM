@@ -808,62 +808,62 @@ class OrgaController extends Controller
 		return array('orga'=>$user,'stats' => $stats);
 	}
 	
-	/**
-	 * Manually generate DI -> Dispo
-	 *
-	 * @Route("/{id}/genDispo", name="orga_gendispo")
-	 */
-	public function genDispoAction($id)
-	{
+// 	/**
+// 	 * Manually generate DI -> Dispo
+// 	 *
+// 	 * @Route("/{id}/genDispo", name="orga_gendispo")
+// 	 */
+// 	public function genDispoAction($id)
+// 	{
 	
-		if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-			throw new AccessDeniedException();
-		}
+// 		if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+// 			throw new AccessDeniedException();
+// 		}
 		
-		$em = $this->getDoctrine()->getEntityManager();
+// 		$em = $this->getDoctrine()->getEntityManager();
 		
-// 		if($id = "all"){
-// 			$orgas = $em->createQuery("SELECT o FROM PHPMBundle:Orga o")->getResult();
+// // 		if($id = "all"){
+// // 			$orgas = $em->createQuery("SELECT o FROM PHPMBundle:Orga o")->getResult();
 			
-// 		}else
-		{
-		$orgas = $em->getRepository('PHPMBundle:Orga')->find($id);
+// // 		}else
+// 		{
+// 		$orgas = $em->getRepository('PHPMBundle:Orga')->find($id);
 		
-		if (!$orgas ) {
-			throw $this->createNotFoundException('Unable to find Orga.');
-		}
+// 		if (!$orgas ) {
+// 			throw $this->createNotFoundException('Unable to find Orga.');
+// 		}
 		
-		}
+// 		}
 		 
-		$allDI = $em->createQuery("SELECT d FROM PHPMBundle:DisponibiliteInscription d")->getResult();
+// 		$allDI = $em->createQuery("SELECT d FROM PHPMBundle:DisponibiliteInscription d")->getResult();
 	    	        	
-		foreach ($orgas as $orga){
-            foreach ($allDI as $di)
-            {
-            		if(!$orga->getDisponibilitesInscription()->contains($di)){
+// 		foreach ($orgas as $orga){
+//             foreach ($allDI as $di)
+//             {
+//             		if(!$orga->getDisponibilitesInscription()->contains($di)){
             			
-            			$orga->removeDIFromDisponibilites($di);
-            		}
+//             			$orga->removeDIFromDisponibilites($di);
+//             		}
             		
-            }
-            foreach ($allDI as $di)
-            {
-            	if($orga->getDisponibilitesInscription()->contains($di)){
-            		$orga->addDIToDisponibilites($di);
-            	}
+//             }
+//             foreach ($allDI as $di)
+//             {
+//             	if($orga->getDisponibilitesInscription()->contains($di)){
+//             		$orga->addDIToDisponibilites($di);
+//             	}
             	 
-            }
+//             }
             
-            	$em->flush();
-	            $orga->cleanDisponibilites();
-	            $em->flush();
-		}
+//             	$em->flush();
+// 	            $orga->cleanDisponibilites();
+// 	            $em->flush();
+// 		}
 		
 		
-		return $this->redirect($this->getRequest()->headers->get('referer'));
+// 		return $this->redirect($this->getRequest()->headers->get('referer'));
 	
 		
-	}
+// 	}
 	
 	/**
 	 * Convert respNecessaire->Bo.OrgaHint
