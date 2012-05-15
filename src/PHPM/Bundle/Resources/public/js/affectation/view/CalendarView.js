@@ -211,7 +211,7 @@ CalendarView.prototype = {
 		
 		// mise en forme
 		$('#creneau_'+dispos[idDispo]['creneaux'][idCreneau]['id']+'_'+nbJour).height(Math.round(duree/60/60*40)+'px')
-			.css('background', dispos[idDispo]['creneaux'][idCreneau]['couleur']);
+			.css('background', pmUtils.hexToRgba(dispos[idDispo]['creneaux'][idCreneau]['couleur'], 0.6));
 	},
 	// place un créneau (mode tâche)
 	placeCreneauTache: function(creneaux, idCreneau, dateDebut, duree, nbJour) {

@@ -74,7 +74,7 @@ CreneauView.prototype = {
 								pmAffectation.data.parameter.confiance[_creneaux[_iCreneau]['confiance']]['nom'].toLowerCase()+'</span>';
 			
 			var _html = '<div class="item tache" id="tache_'+_iCreneau+'" idCreneau="'+_creneaux[_iCreneau]['id']+'">'+
-						'<span class="badge" style="background-color: '+_creneaux[_iCreneau]['equipe_couleur']+'">'+
+						'<span class="badge" style="background-color: '+pmUtils.hexToRgba(_creneaux[_iCreneau]['equipe_couleur'], 0.7)+'">'+
 						_creneaux[_iCreneau]['tache_id']+'</span> '+
 						_creneaux[_iCreneau]['nom']+' - '+_creneaux[_iCreneau]['lieu']+' ('+
 						_creneaux[_iCreneau]['debut'].getThisFormat('j')+' : '+

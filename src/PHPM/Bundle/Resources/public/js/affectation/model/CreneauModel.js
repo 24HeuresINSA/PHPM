@@ -78,7 +78,7 @@ CreneauModel.prototype = {
 			_creneau['debut'] = new Date(_creneau['debut']['date']);
 			_creneau['fin'] = new Date(_creneau['fin']['date']);
 			
-			_creneau['equipe_couleur'] = pmUtils.hexToRgba(_creneau['equipe_couleur'], 0.6);
+			_creneau['equipe_couleur'] = _creneau['equipe_couleur'];
 			
 			_creneaux.push(_creneau);
 		}

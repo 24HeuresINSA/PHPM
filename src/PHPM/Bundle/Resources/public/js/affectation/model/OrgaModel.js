@@ -129,9 +129,7 @@ OrgaModel.prototype = {
 				_dispo['creneaux'][_iCreneau]['debut'] = new Date(this.dataDispo[_iDispo]['creneaux'][_iCreneau]['debut']['date']);
 				_dispo['creneaux'][_iCreneau]['fin'] = new Date(this.dataDispo[_iDispo]['creneaux'][_iCreneau]['fin']['date']);
 			
-				_dispo['creneaux'][_iCreneau]['couleur'] = pmUtils.hexToRgba(
-					pmAffectation.data.parameter.equipes[this.dataDispo[_iDispo]['creneaux'][_iCreneau]['plageHoraire']['tache']['groupeTache']['id']]['couleur']
-					, 0.6);
+				_dispo['creneaux'][_iCreneau]['couleur'] = pmAffectation.data.parameter.equipes[this.dataDispo[_iDispo]['creneaux'][_iCreneau]['plageHoraire']['tache']['groupeTache']['id']]['couleur'];
 			}
 		
 			_dispos[_iDispo] = _dispo;
