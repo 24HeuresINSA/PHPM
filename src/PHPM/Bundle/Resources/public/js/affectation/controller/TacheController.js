@@ -46,6 +46,8 @@ TacheController.prototype = {
 		if (pmAffectation.current.mode === 'tache' && pmAffectation.current.tache.id == -1 && pmAffectation.data.taches[0]  !== undefined) {
 			pmAffectation.current.tache.id = pmAffectation.data.taches[0]['id'];
 			
+			$("#tache_"+pmAffectation.current.tache.id).addClass('current');
+			
 			pmHistory.setUrlParam(); // maj de l'url
 			
 			this.getCreneaux(); // on va chercher ses créneaux

@@ -31,13 +31,11 @@ PmMode.prototype = {
 	 */
 	setMode: function(mode, setDefault) {
 		(mode) && (pmAffectation.current.mode = mode);
-		
+				
 		// TODO : off les bind
 		
-		if (setDefault === true) {
-			pmUtils.setDefault();
-			pmHistory.setUrlParam();
-		}
+		(setDefault === true) && (pmUtils.setDefault());
+		pmHistory.setUrlParam();
 		
 		if (pmAffectation.current.mode === 'orga') {
 			// on filtre les boutons

@@ -45,6 +45,8 @@ OrgaController.prototype = {
 		if (pmAffectation.current.mode === 'orga' && pmAffectation.current.orga.id == -1 && pmAffectation.data.orgas[0]  !== undefined) {
 			pmAffectation.current.orga.id = pmAffectation.data.orgas[0]['id'];
 			
+			$("#orga_"+pmAffectation.current.orga.id).addClass('current');
+			
 			pmHistory.setUrlParam(); // maj de l'url
 			
 			this.getDispos(); // on va chercher ses dispos

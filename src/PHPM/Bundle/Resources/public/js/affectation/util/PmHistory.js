@@ -63,7 +63,6 @@ PmHistory.prototype = {
 		}
 		
 		if (_hash.substr(0, 6) == 'param&') { // parseur - on a reconnu notre format
-			console.log("hash reconnu");
 			var _str = decodeURIComponent(_hash.substr(6, _hash.length)); // petite décodage du format URL nécessaire
 			
 			// on décode ça (fonction cf hack.js)
@@ -100,6 +99,12 @@ PmHistory.prototype = {
 								// on n'a pas de maj à faire ici
 							}
 							break;
+						case 'mode':
+							if (pmUtils.areEquals(_params['mode'], pmAffectation.current['mode']) === false) {
+								pmAffectation.current['mode'] = _params['mode'];
+								// on n'a pas de maj à faire ici
+							}
+							break;
 						case 'quart_heure':
 							if (pmUtils.areEquals(_params['quart_heure'], pmAffectation.current['quart_heure']) === false) {
 								pmAffectation.current['quart_heure'] = _params['quart_heure'];
@@ -123,7 +128,6 @@ PmHistory.prototype = {
 			}
 		} else {
 			// sinon, soit c'était vide soit c'était de la bullshit, on écrase avec ce qu'il faut
-			console.warn("hash non reconnu");
 			pmHistory.setUrlParam();
 		}
 	},
