@@ -141,11 +141,11 @@ class CreneauRepository extends EntityRepository
 	    if ($plage !== '') {
 		    $pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation_plages')->getValue(), TRUE);
 		    $plage= $pref[$plage];
-		    $debut = new \DateTime($plage['debut']);
-		    $fin = new \DateTime($plage['fin']);
+		    $debut = $plage['debut'];
+		    $fin = $plage['fin'];
 			
 			// attention, Symfony2 prend le $jour 00:00:00 ! donc il faut ajouter 24h à la fin
-		    $dql .= "AND (c.debut <= '".$fin->add(new \DateInterval('P1D'))->format('Y-m-d')."') AND (c.fin >= '".$debut->format('Y-m-d')."') ";
+			$dql .= "AND DATE_DIFF('$fin', c.debut) >= 0 AND DATE_DIFF(c.fin, '$debut') >= 0 ";
 	    }
 	    
 		if ($jour !== '') {

@@ -39,7 +39,9 @@ class OrgaRepository extends EntityRepository
 			$plage = $pref[$plage_id];
 			$fin = $plage["fin"];
 			$debut = $plage["debut"];
-			$dql .= " AND d.debut < '$fin' AND d.fin > '$debut'";
+			// attention à ne pas oublier les deriers jours, puisque DQL cast les date en datetime à 00:00:00 !
+			// utiliser un DATE_DIFF est bien plus rapide que de passer par un DateTime auquel on rajoute 1 jour
+			$dql .= " AND DATE_DIFF('$fin', d.debut) >= 0 AND DATE_DIFF(d.fin, '$debut') >= 0";
 		}
 		
 		if ($equipe_id !== '') {

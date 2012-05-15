@@ -40,7 +40,7 @@ class TacheRepository extends EntityRepository
 		    $plage= $pref[$plage];
 		    $debut = $plage['debut'];
 		    $fin = $plage['fin'];
-		    $dql.= " AND (c.debut <= '$fin') AND (c.fin >='$debut') ";
+			$dql .= " AND DATE_DIFF('$fin', c.debut) >= 0 AND DATE_DIFF(c.fin, '$debut') >= 0";
 		}
 		
 		$query = $this->getEntityManager()->createQuery($dql);
