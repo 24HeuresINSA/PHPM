@@ -31,7 +31,9 @@ PmHistory.prototype = {
 	
 	    // on va écouter le changement d'adresse, dessus on reparse
 	    History.Adapter.bind(window, 'anchorchange', function() { // Adapté pour utiliser anchorchange, sur le hash, au lieu de statechange (popstate marche aussi)
-	        pmHistory.parseUrlParam(true);
+	        if (pmAffectation.noHashChange === true) {
+	        	pmHistory.parseUrlParam();
+	        }
 	    });
 	},
 	
@@ -58,6 +60,7 @@ PmHistory.prototype = {
 		}
 		
 		if (_hash.substr(0, 6) == 'param&') { // parseur - on a reconnu notre format
+			console.log("hash reconnu");
 			var _str = decodeURIComponent(_hash.substr(6, _hash.length)); // petite décodage du format URL nécessaire
 			
 			// on décode ça (fonction cf hack.js)
@@ -133,10 +136,12 @@ PmHistory.prototype = {
 		
 		// Jquery goodness for sérialiser rapidemment (et en profondeur)
 		// bien préciser 'data' et 'title' dans History.pushState, sinon elle peut bugguer
-		var _newHash = '#param&' + $.param(_current);
+		var _newHash = escape('#param&'+$.param(_current));
 		
 		// à savoir : History.js unescape le hash, mais pas l'état et le titre,
 		// qui peuvent le faire planter aléatoirement
-        History.pushState({params: escape(_newHash)}, "Etat " + escape(_newHash), _newHash);
+		pmAffectation.noHashChange = false;
+        History.pushState({params: _newHash}, "Etat " + _newHash, _newHash);
+        pmAffectation.noHashChange = true;
 	},
 }
