@@ -51,7 +51,6 @@ $(document).ready(function() {
 	pmLayout.setResizeableSidebars();
 	// 0.5 : travail sur l'historique
 	pmHistory.initHistoryListener(); 
-	pmHistory.parseUrlParam(); // un peu bizarre : parfois faut le faire, parfois pas
 	
 	// 1 : lancer les requêtes pour les paramètres
 	// requêtes synchrones car nécessaire partout dans l'appli
@@ -71,5 +70,4 @@ $(document).ready(function() {
 	
 	// last step : à partir de maintenant, les modifs du hash provoquent la mise à jour des données
 	pmHistory.refreshData = true;
-	pmHistory.parseUrlParam(); // il faut le relancer, juste pour le quart d'heure
 });

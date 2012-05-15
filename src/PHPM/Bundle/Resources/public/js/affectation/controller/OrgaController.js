@@ -76,6 +76,7 @@ OrgaController.prototype = {
 		pmAffectation.current.orga.id = obj.id;
 		pmHistory.setUrlParam(); // maj de l'url
 
+		this.getDispos();
 		pmAffectation.controllers.creneau.getData(); // récupère les taches à jour
 
 		pmAffectation.views.calendar.setDispos();

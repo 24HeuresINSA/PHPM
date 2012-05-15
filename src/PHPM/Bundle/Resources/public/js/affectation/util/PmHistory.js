@@ -31,10 +31,13 @@ PmHistory.prototype = {
 	
 	    // on va écouter le changement d'adresse, dessus on reparse
 	    History.Adapter.bind(window, 'anchorchange', function() { // Adapté pour utiliser anchorchange, sur le hash, au lieu de statechange (popstate marche aussi)
-	        if (pmAffectation.noHashChange === true) {
+	        if (pmAffectation.hashChange === true) {
 	        	pmHistory.parseUrlParam();
 	        }
 	    });
+	    
+	    // on va parser les paramètres
+	    this.parseUrlParam();
 	},
 	
 	/*
@@ -74,7 +77,7 @@ PmHistory.prototype = {
 					// sinon faut tester, voir si on met à jour la valeur
 					switch (_iParam) {
 						case 'orga':
-							if (pmUtils.areEquals(_params['orga']['id'], pmAffectation.current['orga']['id']) === false) {
+							if (_params['orga']['id'] != -1 && pmUtils.areEquals(_params['orga']['id'], pmAffectation.current['orga']['id']) === false) {
 								pmAffectation.current['orga'] = _params['orga'];
 								(pmHistory.refreshData === true) && (pmAffectation.controllers.orga.getDispos());
 							} else if (pmUtils.areEquals(_params['orga'], pmAffectation.current['orga']) === false) {
@@ -83,7 +86,7 @@ PmHistory.prototype = {
 							}
 							break;
 						case 'tache':
-							if (pmUtils.areEquals(_params['tache']['id'], pmAffectation.current['tache']['id']) === false) {
+							if (pmAffectation.current['tache']['id'] !== undefined && pmUtils.areEquals(_params['tache']['id'], pmAffectation.current['tache']['id']) === false) {
 								pmAffectation.current['tache'] = _params['tache'];
 								(pmHistory.refreshData === true) && (pmAffectation.controllers.tache.getCreneaux());
 							} else if (pmUtils.areEquals(_params['tache'], pmAffectation.current['tache']) === false) {
@@ -102,11 +105,11 @@ PmHistory.prototype = {
 								pmAffectation.current['quart_heure'] = _params['quart_heure'];
 								
 								// on simule un click, bien plus simple, trop d'opés à réaliser sinon
-								if (pmHistory.refreshData === true) {
+								/*if (pmHistory.refreshData === true) {
 									pmAffectation.controllers.calendar.clickQuartHeure({
 										currentTarget: {id: pmAffectation.current['quart_heure']}
 									});
-								}
+								}*/
 							}
 							break;
 						default:
@@ -120,6 +123,7 @@ PmHistory.prototype = {
 			}
 		} else {
 			// sinon, soit c'était vide soit c'était de la bullshit, on écrase avec ce qu'il faut
+			console.warn("hash non reconnu");
 			pmHistory.setUrlParam();
 		}
 	},
@@ -140,8 +144,8 @@ PmHistory.prototype = {
 		
 		// à savoir : History.js unescape le hash, mais pas l'état et le titre,
 		// qui peuvent le faire planter aléatoirement
-		pmAffectation.noHashChange = false;
+		pmAffectation.hashChange = false;
         History.pushState({params: _newHash}, "Etat " + _newHash, _newHash);
-        pmAffectation.noHashChange = true;
+        pmAffectation.hashChange = true;
 	},
 }

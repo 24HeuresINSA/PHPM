@@ -29,17 +29,17 @@ PmMode.prototype = {
 	 * Set le mode de l'application :
 	 * Orga -> Créneau ou Tache -> Orga
 	 */
-	setMode: function(mode) {
+	setMode: function(mode, setDefault) {
 		(mode) && (pmAffectation.current.mode = mode);
 		
 		// TODO : off les bind
 		
-		pmUtils.setDefault();
+		if (setDefault === true) {
+			pmUtils.setDefault();
+			pmHistory.setUrlParam();
+		}
 		
 		if (pmAffectation.current.mode === 'orga') {
-			pmAffectation.current.tache.id = -1;
-			pmHistory.setUrlParam();
-			
 			// on filtre les boutons
 			$('#boutons_orga_nav').show();
 			$('#boutons_tache_nav').hide();
@@ -60,9 +60,6 @@ PmMode.prototype = {
 			this.calendar.update = function() { pmAffectation.controllers.orga.getDispos() };
 			this.slave.update = function() { pmAffectation.controllers.creneau.getData() };
 		} else if (pmAffectation.current.mode === 'tache') {
-			pmAffectation.current.orga.id == -1;
-			pmHistory.setUrlParam();
-			
 			// on filtre les boutons
 			$('#boutons_orga_nav').hide();
 			$('#boutons_tache_nav').show();
