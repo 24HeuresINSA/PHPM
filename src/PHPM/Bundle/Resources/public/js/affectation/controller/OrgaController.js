@@ -78,8 +78,6 @@ OrgaController.prototype = {
 
 		this.getDispos();
 		pmAffectation.controllers.creneau.getData(); // récupère les taches à jour
-
-		pmAffectation.views.calendar.setDispos();
 	},
 	// changement de la valeur d'un filtre
 	clickFilter: function(nomFiltre, valeurFiltre) {

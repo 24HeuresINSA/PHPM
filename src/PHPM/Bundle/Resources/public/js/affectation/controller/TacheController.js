@@ -74,8 +74,8 @@ TacheController.prototype = {
 
 		pmAffectation.current.tache.id = obj.id;
 		pmHistory.setUrlParam(); // maj de l'url
-
-		pmAffectation.views.calendar.setCreneaux();
+		
+		this.getCreneaux();
 	},
 	// changement de la valeur d'un filtre
 	clickFilter: function(nomFiltre, valeurFiltre) {
