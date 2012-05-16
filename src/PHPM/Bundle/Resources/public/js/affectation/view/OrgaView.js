@@ -77,7 +77,7 @@ OrgaView.prototype = {
 					pmAffectation.views.orga.viewOrgaDetails({id: e.data.id});
 				} else {
 					// sinon on click sur l'orga
-					pmAffectation.controllers.orga.clickHandler({id: e.data.id});
+					pmMode.orgaClick({id: e.data.id});
 				}
 			});
 		}

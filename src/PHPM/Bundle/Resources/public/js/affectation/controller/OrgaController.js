@@ -65,8 +65,8 @@ OrgaController.prototype = {
 	/*
 	 * Handlers
 	 */
-	// clic sur un orga
-	clickHandler: function(obj) {
+	// clic sur un orga, mode orga
+	chargerListeOrgas: function(obj) {
 		$("#orga_"+pmAffectation.current.orga.id).removeClass('current');
 		$("#orga_"+obj.id).addClass('current');
 
@@ -80,6 +80,18 @@ OrgaController.prototype = {
 
 		this.getDispos();
 		pmAffectation.controllers.creneau.getData(); // récupère les taches à jour
+	},
+	// clic sur un orga, mode tâche
+	affecterOrga: function(obj) {
+		// on demande l'affectation
+		pmAffectation.models.calendar.affecterCreneau('affecter', pmAffectation.current.creneau.id, obj.id, pmAffectation.controllers.orga.callbackAffectation);
+	},
+	callbackAffectation: function() {
+		pmMessage.success('<strong>Affectation réalisée !</strong>');
+		
+		// on recharge le planning de cet orga (et du coup la liste des tous les orgas)
+		pmAffectation.controllers.tache.getCreneaux();
+		pmAffectation.controllers.orga.getData();
 	},
 	// changement de la valeur d'un filtre
 	clickFilter: function(nomFiltre, valeurFiltre) {

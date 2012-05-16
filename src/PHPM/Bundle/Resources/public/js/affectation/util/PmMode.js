@@ -11,6 +11,7 @@ function PmMode() {
 	this.master = {};
 	this.slave = {};
 	this.calendar = {};
+	this.orgaClick = {};
 }
 	
 /*
@@ -57,6 +58,7 @@ PmMode.prototype = {
 			this.master.update = function() { pmAffectation.controllers.orga.getData() };
 			this.calendar.update = function() { pmAffectation.controllers.orga.getDispos() };
 			this.slave.update = function() { pmAffectation.controllers.creneau.getData() };
+			this.orgaClick = function(obj) { pmAffectation.controllers.orga.chargerListeOrgas(obj); }
 		} else if (pmAffectation.current.mode === 'tache') {
 			// on filtre les boutons
 			$('#boutons_orga_nav').hide();
@@ -77,6 +79,7 @@ PmMode.prototype = {
 			this.master.update = function() { pmAffectation.controllers.tache.getData() };
 			this.calendar.update = function() { pmAffectation.controllers.tache.getCreneaux() };
 			this.slave.update = function() { pmAffectation.controllers.orga.getData() };
+			this.orgaClick = function(obj) { pmAffectation.controllers.orga.affecterOrga(obj); }
 		}
 	},
 }
