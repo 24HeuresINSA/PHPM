@@ -155,12 +155,12 @@ CalendarView.prototype = {
 		$('.creneau').remove();
 		
 		var _creneaux = pmAffectation.data.creneauxTaches;
-		
+				
 		for (var _iCreneau in _creneaux) {
 			// on vérifie si on est bien sur la bonne plage horaire, trim au besoin
 			// comparaison "croisée" : permet de tenir compte des créneaux à cheval
 			if (pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'] < _creneaux[_iCreneau]['fin']
-				&& _creneaux[_iCreneau]['debut'] < pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin']) {
+				&& _creneaux[_iCreneau]['debut'].getTime() < pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()+86400000) {
 				// c'est bon, on trim les dates
 				// -1 sur la date de fin pour ne pas avoir de problèmes quand un créneau finit à minuit
 				var _debutCreneau = new Date(Math.max(_creneaux[_iCreneau]['debut'].getTime(), 
