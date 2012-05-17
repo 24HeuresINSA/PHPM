@@ -178,10 +178,19 @@ class CreneauRepository extends EntityRepository
 		    // On retourne les créneaux pour lesquels
 		    // 1 - L'orga est dans l'équipe equipeHint
 		    // OU 2 - l'orga a une confiance supérieure ou égale à celle de l'équipeHint 
-		    $dql .= "AND (ehc.valeur < ".$equipe->getConfiance()->getValeur()." OR c.equipeHint = ".$equipe->getId().")";
+		    $dql .= "AND (ehc.valeur < ".$equipe->getConfiance()->getValeur()." OR c.equipeHint = ".$equipe->getId().") ";
 	       
 	       	// on vérifie s'il y a une consigne d'orga
 	       	$dql .= "AND (c.orgaHint IS NULL OR c.orgaHint = $orga_id) ";
+			
+			// compatibilité avec le permis (ou non) de l'orga
+			if (!$orga->getDatePermis()) {
+				$dql .= "AND t.permisNecessaire = -1 ";
+			} else {
+				$now = new \DateTime();
+				$diff = $now->diff($orga->getDatePermis());// on calcule le nombre d'année du permis
+				$dql .= 'AND t.permisNecessaire <= '.$diff->format('%y').' ';
+			}
 	    }
 		
 		// on dé-duplique
