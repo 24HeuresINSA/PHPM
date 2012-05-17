@@ -66,7 +66,7 @@ class DisponibiliteRepository extends EntityRepository
 			$fin = $plage["fin"];
 			$debut = $plage["debut"];
 
-			$sql .= " AND DATE(d.debut) <= '$fin' AND DATE(d.fin) > '$debut'";
+			$sql .= " AND DATE(d.debut) <= DATE('$fin') AND DATE(d.fin) >= DATE('$debut')";
 		}
 		
 		$query = $this->getEntityManager()->createNativeQuery($sql, $rsm);

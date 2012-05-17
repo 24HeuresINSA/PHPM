@@ -242,7 +242,7 @@ class CreneauRepository extends EntityRepository
 			$fin = $plage["fin"];
 			$debut = $plage["debut"];
 
-			$sql .= " AND c.debut < '$fin' AND c.fin > '$debut'";
+			$sql .= " AND DATE(c.debut) <= DATE('$fin') AND DATE(c.fin) >= DATE('$debut')";
 		}
 
 		$sql .= ' GROUP BY c.debut, c.fin, eid, oid, (did IS NOT NULL)';
