@@ -32,7 +32,10 @@ TacheView.prototype = {
 		// on écoute lorsque des caractères sont tapés - keyup sinon on ne peut pas lire la valeur
 		$('#champ_tache_rechercher').off('keyup').on('keyup', function(event) { pmAffectation.controllers.tache.filterList($('#champ_tache_rechercher').val()); });
 		// mochement, on attend 50 ms, sinon on ne peut pas focuser un élément en display: none...
-		$('#bouton_tache_rechercher').off('click').on('click', function(event) { setInterval(function() { $('#champ_tache_rechercher').focus(); }, 50); });
+		$('#bouton_tache_rechercher').off('click').on('click', function(event) {
+			$('#bouton_tache_rechercher').val('');
+			setInterval(function() { $('#champ_tache_rechercher').focus(); }, 50);
+		});
 	},
 	
 	/*
