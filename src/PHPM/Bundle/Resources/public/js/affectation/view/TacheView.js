@@ -13,26 +13,26 @@ TacheView.prototype = {
 	 */
 	initialize: function() {
 		// on écoute les boutons
-		$('#bouton_tache_prev').click(function() { $('#tache_'+pmAffectation.current.tache.id).prev().click(); });
-		$('#bouton_tache_next').click(function() { $('#tache_'+pmAffectation.current.tache.id).next().click(); });
-		$('#bouton_tache_refresh').click(function() { pmAffectation.controllers.tache.getData(); });
-		$('#bouton_tache_detail').click(function() { pmAffectation.views.tache.viewTacheDetails({id: pmAffectation.current.tache.id}); });
+		$('#bouton_tache_prev').off('click').on('click', function() { $('#tache_'+pmAffectation.current.tache.id).prev().click(); });
+		$('#bouton_tache_next').off('click').on('click', function() { $('#tache_'+pmAffectation.current.tache.id).next().click(); });
+		$('#bouton_tache_refresh').off('click').on('click', function() { pmAffectation.controllers.tache.getData(); });
+		$('#bouton_tache_detail').off('click').on('click', function() { pmAffectation.views.tache.viewTacheDetails({id: pmAffectation.current.tache.id}); });
 		
 		this.setFilters(); // met les bonnes valeurs dans les filtres
 		
 		// filtres : bind les events
-		$('#filtre_tache_confiance').change(function() {pmAffectation.controllers.tache.clickFilter('confiance', $('#filtre_tache_confiance').val());});
-		$('#filtre_tache_permis').change(function() {pmAffectation.controllers.tache.clickFilter('permis', $('#filtre_tache_permis').val());});
-		$('#filtre_tache_categorie').change(function() {pmAffectation.controllers.tache.clickFilter('categorie', $('#filtre_tache_categorie').val());});
-		$('#filtre_tache_duree').change(function() {pmAffectation.controllers.tache.clickFilter('duree', $('#filtre_tache_duree').val());});
+		$('#filtre_tache_confiance').off('change').on('change', function() {pmAffectation.controllers.tache.clickFilter('confiance', $('#filtre_tache_confiance').val());});
+		$('#filtre_tache_permis').off('change').on('change', function() {pmAffectation.controllers.tache.clickFilter('permis', $('#filtre_tache_permis').val());});
+		$('#filtre_tache_categorie').off('change').on('change', function() {pmAffectation.controllers.tache.clickFilter('categorie', $('#filtre_tache_categorie').val());});
+		$('#filtre_tache_duree').off('change').on('change', function() {pmAffectation.controllers.tache.clickFilter('duree', $('#filtre_tache_duree').val());});
 		
 		// la champ de recherche (caché)
 		// on doit empêcher la fermeture du dropdown du champ de recherche
-		$('#champ_tache_rechercher').click(function(event) { event.stopImmediatePropagation(); });
+		$('#champ_tache_rechercher').off('click').on('click', function(event) { event.stopImmediatePropagation(); });
 		// on écoute lorsque des caractères sont tapés - keyup sinon on ne peut pas lire la valeur
-		$('#champ_tache_rechercher').keyup(function(event) { pmAffectation.controllers.tache.filterList($('#champ_tache_rechercher').val()); });
+		$('#champ_tache_rechercher').off('keyup').on('keyup', function(event) { pmAffectation.controllers.tache.filterList($('#champ_tache_rechercher').val()); });
 		// mochement, on attend 50 ms, sinon on ne peut pas focuser un élément en display: none...
-		$('#bouton_tache_rechercher').bind('click', function(event) { setInterval(function() { $('#champ_tache_rechercher').focus(); }, 50); })
+		$('#bouton_tache_rechercher').off('click').on('click', function(event) { setInterval(function() { $('#champ_tache_rechercher').focus(); }, 50); });
 	},
 	
 	/*

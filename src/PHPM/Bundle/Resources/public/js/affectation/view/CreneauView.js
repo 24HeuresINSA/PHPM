@@ -13,23 +13,23 @@ CreneauView.prototype = {
 	 */
 	initialize: function() {
 		// écoute des boutons
-		$('#bouton_tache_refresh').click(function() { pmAffectation.controllers.creneau.getData(); });
+		$('#bouton_tache_refresh').off('click').on('click', function() { pmAffectation.controllers.creneau.getData(); });
 		
 		this.setFilters(); // met les bonnes valeurs dans les filtres
 		
 		// filtres : bind les events
-		$('#filtre_tache_confiance').change(function() { pmAffectation.controllers.creneau.clickFilter('confiance', $('#filtre_tache_confiance').val()); });
-		$('#filtre_tache_equipe').change(function() { pmAffectation.controllers.creneau.clickFilter('equipe', $('#filtre_tache_equipe').val()); });
-		$('#filtre_tache_permis').change(function() { pmAffectation.controllers.creneau.clickFilter('permis', $('#filtre_tache_permis').val()); });
-		$('#filtre_tache_duree').change(function() { pmAffectation.controllers.creneau.clickFilter('duree', $('#filtre_tache_duree').val()); });
+		$('#filtre_tache_confiance').off('change').on('change', function() { pmAffectation.controllers.creneau.clickFilter('confiance', $('#filtre_tache_confiance').val()); });
+		$('#filtre_tache_equipe').off('change').on('change', function() { pmAffectation.controllers.creneau.clickFilter('equipe', $('#filtre_tache_equipe').val()); });
+		$('#filtre_tache_permis').off('change').on('change', function() { pmAffectation.controllers.creneau.clickFilter('permis', $('#filtre_tache_permis').val()); });
+		$('#filtre_tache_duree').off('change').on('change', function() { pmAffectation.controllers.creneau.clickFilter('duree', $('#filtre_tache_duree').val()); });
 		
 		// la champ de recherche (caché)
 		// on doit empêcher la fermeture du dropdown du champ de recherche
-		$('#champ_tache_rechercher').click(function(event) { event.stopImmediatePropagation(); });
+		$('#champ_tache_rechercher').off('click').on('click', function(event) { event.stopImmediatePropagation(); });
 		// on écoute lorsque des caractères sont tapés - keyup sinon on ne peut pas lire la valeur
-		$('#champ_tache_rechercher').keyup(function(event) { pmAffectation.controllers.creneau.filterList($('#champ_tache_rechercher').val()); });
+		$('#champ_tache_rechercher').off('keyup').on('keyup', function(event) { pmAffectation.controllers.creneau.filterList($('#champ_tache_rechercher').val()); });
 		// mochement, on attend 50 ms, sinon on ne peut pas focuser un élément en display: none...
-		$('#bouton_tache_rechercher').bind('click', function(event) { setInterval(function() { $('#champ_tache_rechercher').focus(); }, 50); })
+		$('#bouton_tache_rechercher').off('click').on('click', function(event) { setInterval(function() { $('#champ_tache_rechercher').focus(); }, 50); });
 	},
 	
 	/*
