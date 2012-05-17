@@ -32,10 +32,7 @@ OrgaView.prototype = {
 		// on écoute lorsque des caractères sont tapés - keyup sinon on ne peut pas lire la valeur
 		$('#champ_orga_rechercher').off('keyup').on('keyup', function(event) { pmAffectation.controllers.orga.filterList($('#champ_orga_rechercher').val()); });
 		// mochement, on attend 50 ms, sinon on ne peut pas focuser un élément en display: none...
-		$('#bouton_orga_rechercher').off('click').on('click', function(event) {
-			$('#champ_orga_rechercher').val('');
-			setInterval(function() { $('#champ_orga_rechercher').focus(); }, 50);
-		});
+		$('#bouton_orga_rechercher').off('click').on('click', function(event) {	setInterval(function() { $('#champ_orga_rechercher').focus(); }, 50); });
 	},
 	
 	/*

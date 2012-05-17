@@ -54,6 +54,12 @@ TacheController.prototype = {
 		pmAffectation.views.tache.setTaches();
 		
 		$("#tache_"+pmAffectation.current.tache.id).addClass('current');
+		
+		// s'il y avait un filtre de recherche, on le re-set
+		if ($('#champ_tache_rechercher').val() != '') {
+			$('#bouton_tache_rechercher').click();
+			pmAffectation.controllers.tache.filterList($('#champ_tache_rechercher').val());
+		}
 	},
 	callbackCreneaux: function() {
 		pmAffectation.data.creneauxTaches = pmAffectation.models.tache.getCreneaux();

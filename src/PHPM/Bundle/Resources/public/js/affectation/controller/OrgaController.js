@@ -55,6 +55,12 @@ OrgaController.prototype = {
 		$("#orga_"+pmAffectation.current.orga.id).addClass('current');
 		
 		(pmAffectation.current.mode === 'orga') && (pmAffectation.controllers.creneau.getData());
+		
+		// s'il y avait un filtre de recherche, on le re-set
+		if ($('#champ_orga_rechercher').val() != '') {
+			$('#bouton_orga_rechercher').click();
+			pmAffectation.controllers.orga.filterList($('#champ_orga_rechercher').val());
+		}
 	},
 	callbackDispos: function() {
 		pmAffectation.data.dispos = pmAffectation.models.orga.getDispos();

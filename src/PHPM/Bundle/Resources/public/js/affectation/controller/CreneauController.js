@@ -38,6 +38,12 @@ CreneauController.prototype = {
 		pmAffectation.data.creneaux = pmAffectation.models.creneau.getCreneaux();
 		
 		pmAffectation.views.creneau.setCreneaux();
+		
+		// s'il y avait un filtre de recherche, on le re-set
+		if ($('#champ_tache_rechercher').val() != '') {
+			$('#bouton_tache_rechercher').click();
+			pmAffectation.controllers.creneau.filterList($('#champ_tache_rechercher').val());
+		}
 	},
 	
 	/*
