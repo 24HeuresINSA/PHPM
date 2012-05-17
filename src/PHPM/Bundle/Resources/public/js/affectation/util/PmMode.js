@@ -32,8 +32,10 @@ PmMode.prototype = {
 	 */
 	setMode: function(mode, setDefault) {
 		(mode) && (pmAffectation.current.mode = mode);
-				
-		// TODO : off les bind
+
+		// on oublie pas les filtres de recherche !
+		$('#champ_orga_rechercher').val('');
+		$('#champ_tache_rechercher').val('');
 		
 		(setDefault === true) && (pmUtils.setDefault());
 		pmHistory.setUrlParam();
