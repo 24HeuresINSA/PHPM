@@ -495,7 +495,6 @@ class TacheController extends Controller
 		$request = $this->getRequest();
 		
 		//on recupere les paramètres passés en post
-		$duree = $request->request->get('duree', '');
 		// $categorie= $request->request->get('categorie_id', ''); // TODO
 		$permis = $request->request->get('permisNecessaire', '');
 		// $age= $request->request->get('ageNecessaire', '0'); // TODO
@@ -504,7 +503,7 @@ class TacheController extends Controller
 	
 		$em = $this->getDoctrine()->getEntityManager();
 		// création de la requête SQL et récupération de son retour
-		$entities = $em->getRepository('PHPMBundle:Tache')->getTacheWithCriteria($duree, $permis, $plage);
+		$entities = $em->getRepository('PHPMBundle:Tache')->getTacheWithCriteria($permis, $plage);
 		
 		// creation du json de retour
 		$taches = array();
