@@ -13,13 +13,10 @@ use Doctrine\ORM\EntityRepository;
 class TacheRepository extends EntityRepository
 {
 	
-	public function getTacheWithCriteria($duree, $permis, $plage)
+	public function getTacheWithCriteria($permis, $plage)
 	{
 		$dql = "SELECT t FROM PHPMBundle:Tache t JOIN t.plagesHoraire p JOIN p.creneaux c WHERE 1=1";
 	
-		if ($duree !== '') {
-			$dql .= " AND ((c.fin - c.debut) < '$duree' )";
-		}
 // 		if($categorie !='')
 // 		{
 // 			$andx->add($qb->expr()->eq('t.categorie_id',$categorie));
