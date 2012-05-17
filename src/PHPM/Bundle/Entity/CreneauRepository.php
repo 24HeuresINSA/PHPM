@@ -246,7 +246,7 @@ class CreneauRepository extends EntityRepository
 			$sql .= " AND c.debut < '$fin' AND c.fin > '$debut'";
 		}
 
-		$sql .= ' GROUP BY c.debut, c.fin, eid, oid, did';
+		$sql .= ' GROUP BY c.debut, c.fin, eid, oid, (did IS NOT NULL)';
 		
 		$query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
 		$query->setParameter(1, $tache_id); // PDO \o/
