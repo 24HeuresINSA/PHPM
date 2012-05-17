@@ -632,13 +632,14 @@ class OrgaController extends Controller
 			$maxDateNaissance = new \DateTime();
 			// petite conversion pour changer l'age en date de naissance max
 			$maxDateNaissance->modify('-'.$age.' year');
+			$maxDateNaissance = $maxDateNaissance->format("Y-m-d H:i:s");
 		}
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		// on peut avoir 2 usages assez différents, donc 2 fonctions dans le repo
 		if ($creneau_id === '') {
-			$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($annee_permis, $maxDateNaissance->format("Y-m-d H:i:s"), $plage_id, $niveau_confiance, $equipe_id);
+			$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasWithCriteria($annee_permis, $maxDateNaissance, $plage_id, $niveau_confiance, $equipe_id);
 		} else {
 			$entities = $em->getRepository('PHPMBundle:Orga')->getOrgasCompatibleWithCreneau($creneau_id);			
 		}
