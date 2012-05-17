@@ -234,8 +234,8 @@ class CreneauRepository extends EntityRepository
 				FROM Creneau c
 				JOIN PlageHoraire p ON c.plageHoraire_id = p.id
 				JOIN Tache t ON p.tache_id = t.id
-				WHERE t.id = ?
-				GROUP BY c.debut, c.fin, eid, oid';
+				WHERE t.id = ?';
+		
 				
 		if ($plage_id !== '') {
 			$pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation_plages')->getValue(), TRUE);
@@ -245,6 +245,8 @@ class CreneauRepository extends EntityRepository
 
 			$sql .= " AND c.debut < '$fin' AND c.fin > '$debut'";
 		}
+
+		$sql .= ' GROUP BY c.debut, c.fin, eid, oid, did';
 		
 		$query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
 		$query->setParameter(1, $tache_id); // PDO \o/
