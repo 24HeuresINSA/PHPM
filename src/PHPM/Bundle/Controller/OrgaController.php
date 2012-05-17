@@ -624,11 +624,12 @@ class OrgaController extends Controller
 		$age = $request->request->get('age', '');
 		$plage_id = $request->request->get('plage_id', '');
 		$niveau_confiance = $request->request->get('confiance_id', '');
-		$maxDateNaissance = new \DateTime();
+		$maxDateNaissance = '';
 		$creneau_id = $request->request->get('creneau_id', '');
 		$equipe_id = $request->request->get('equipe_id', '');
 		
-		if ($age !== '') { 
+		if ($age !== '') {
+			$maxDateNaissance = new \DateTime();
 			// petite conversion pour changer l'age en date de naissance max
 			$maxDateNaissance->modify('-'.$age.' year');
 		}

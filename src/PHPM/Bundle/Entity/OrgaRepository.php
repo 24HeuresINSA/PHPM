@@ -19,10 +19,8 @@ class OrgaRepository extends EntityRepository
 		$dql = "SELECT o, SUM(di.pointsCharisme) charisme FROM PHPMBundle:Orga AS o JOIN o.disponibilitesInscription di JOIN o.disponibilites d JOIN o.equipe e WHERE o.statut=1";
 		
 		// filtre sur la date de naissance
-		$dql .= " AND o.dateDeNaissance <= '$maxDateNaissance'";
-		
-		if ($niveau_confiance !== '') {
-			$dql .= " AND e.confiance = '$niveau_confiance'";
+		if ($maxDateNaissance !== '') {
+			$dql .= " AND o.dateDeNaissance <= '$maxDateNaissance'";
 		}
 		
 		if ($plage_id !== '') {
@@ -49,6 +47,10 @@ class OrgaRepository extends EntityRepository
 	 			$dql .= " AND o.datePermis <= '".$now->sub(new \DateInterval('P'.$annee_permis.'Y'))->format('Y-m-d')."'";
  			}
  		}
+		
+		if ($niveau_confiance !== '') {
+			$dql .= " AND e.confiance = '$niveau_confiance'";
+		}
 		
 		if ($equipe_id !== '') {
 			$dql .= " AND e.id = $equipe_id ";
