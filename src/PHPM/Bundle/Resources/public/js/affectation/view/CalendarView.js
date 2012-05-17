@@ -131,7 +131,7 @@ CalendarView.prototype = {
 					var _debutCreneau = new Date(Math.max(_dispos[_iDispo]['creneaux'][_iCreneau]['debut'].getTime(), 
 															pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()));
 					var _finCreneau = new Date(Math.min(_dispos[_iDispo]['creneaux'][_iCreneau]['fin'].getTime(), 
-														pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()));
+														pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime())-1);
 												
 					var _nbJour = 0; // compteur du nombre de jours
 					var _todayMidnight = new Date(_debutCreneau); // bien forcer la recopie
