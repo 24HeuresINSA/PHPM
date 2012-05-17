@@ -734,27 +734,26 @@ class OrgaController extends Controller
 		}
 		$request = $this->get('request');
 	
-		$pDebut = $request->request->get('debut');
-		$pFin= $request->request->get('fin');
-// 		$equipeid= $request->request->get('equipe');
-// 		$orgaid= $request->request->get('orga');
+		$data=$request->get('form');
+		
+		$pDebut = $data['debut'];
+		$pFin= $data['fin'];
+		$equipeid= $data['equipe'];
+		$orgaid= $data['orga'];
 
-		$equipeid=$orgaid='all';
 
 		
 		$debut = new \DateTime();
 		$fin = new \DateTime($config->getValue('phpm_planning_fin'));
 	
 	
-		if ($this->get('security.context')->isGranted('ROLE_ADMIN') ) {
-	
-			if($pDebut!=false){
-				$debut = new \DateTime($pDebut);
-			}
-			if($pFin!=false){
-				$fin = new \DateTime($pFin);
-			}
+		if($pDebut!=false){
+			$debut = new \DateTime($pDebut);
 		}
+		if($pFin!=false){
+			$fin = new \DateTime($pFin);
+		}
+
 	
 		$em = $this->getDoctrine()->getEntityManager();
 		$orgas = $em->getRepository('PHPMBundle:Orga')-> getPlanning($orgaid,$equipeid,$debut,$fin);
