@@ -27,6 +27,13 @@
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
   box-sizing: border-box; /* Opera/IE 8+ */
 }
+// utiliser la fonction CSS3 calc
+.height-calc(@size) {
+  height: -moz-calc(@size);
+  height: -webkit-calc(@size);
+  height: calc(@size);
+}
+// utiliser les Flex-Box
 .h-flex-box {
   display: box;
   display: -webkit-box;
@@ -375,6 +382,7 @@ footer {
   
   .liste {
     width: 100%;
+    .height-calc(~"100% - 40px"); // merci CSS3 !
     overflow-x: hidden; // normalement il n'y en a pas
     overflow-y: scroll;
     border-top: 1px solid #333;
