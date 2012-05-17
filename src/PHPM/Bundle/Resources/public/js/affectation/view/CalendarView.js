@@ -285,7 +285,7 @@ CalendarView.prototype = {
 		// unload est firé au chargement (unload de about:blank),
 		// on attache le vrai handler qu'après le chargement initial donc
 		_popup.onunload = function() {
-			_popup.bind('unload', pmAffectation.controllers.orga.getDispos());
+			_popup.bind('unload', pmMode.calendar.update());
 		};
 	}
 	
