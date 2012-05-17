@@ -164,9 +164,8 @@ CalendarView.prototype = {
 				// -1 sur la date de fin pour ne pas avoir de problèmes quand un créneau finit à minuit
 				var _debutCreneau = new Date(Math.max(_creneaux[_iCreneau]['debut'].getTime(), 
 														pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()));
-				// faut pas oublier de rajouter 1j, car les plages sont définies comme date du jour 00:00:00
 				var _finCreneau = new Date(Math.min(_creneaux[_iCreneau]['fin'].getTime(), 
-													pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()));
+													pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime())-1);
 											
 				var _nbJour = 0; // compteur du nombre de jours
 				var _todayMidnight = new Date(_debutCreneau); // bien forcer la recopie
