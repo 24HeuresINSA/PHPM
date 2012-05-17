@@ -762,10 +762,9 @@ class OrgaController extends Controller
 			foreach ($orga['disponibilites'] as &$disponibilite){
 				$prevCreneau = null;
 				foreach ($disponibilite['creneaux'] as $id => &$creneau){
-					if($creneau['plageHoraire']['tache'] == $prevCreneau['plageHoraire']['tache']){
+					if(($creneau['plageHoraire']['tache'] == $prevCreneau['plageHoraire']['tache'])&&($creneau['debut'] == $prevCreneau['fin'])){
 						$prevCreneau['fin']= $creneau['fin'];
-						unset($disponibilite['creneaux'][$id]);
-	
+						unset($disponibilite['creneaux'][$id]);	
 					}
 					 
 					$prevCreneau=&$creneau;
