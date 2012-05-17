@@ -213,10 +213,10 @@ class OrgaRepository extends EntityRepository
 	
 	}
 	
-	public function getPlanning($orga_id = 'all',\DateTime $debut, \DateTime $fin){
+	public function getPlanning($orga_id = 'all',$equipe_id = 'all',\DateTime $debut, \DateTime $fin){
 	
-		
 		if($orga_id == 'all'){
+			if($equipe_id == 'all'){
 			return $this->getEntityManager()->createQuery("SELECT o,d,c,p,t,g,r,bm,m,c2,d2,o2 FROM PHPMBundle:Orga o JOIN o.disponibilites d JOIN d.creneaux c JOIN
 					c.plageHoraire p JOIN p.tache t JOIN t.groupeTache g JOIN t.responsable r  LEFT JOIN t.besoinsMateriel bm LEFT JOIN bm.materiel m
 					JOIN p.creneaux c2 JOIN c2.disponibilite d2 JOIN d2.orga o2 
@@ -226,6 +226,18 @@ class OrgaRepository extends EntityRepository
 					->setParameter('debut', $debut->format('Y-m-d H:i:s'))
 					->setParameter('fin', $fin->format('Y-m-d H:i:s'))
 					->getArrayResult();
+			}else{
+				return $this->getEntityManager()->createQuery("SELECT o,d,c,p,t,g,r,bm,m,c2,d2,o2,e FROM PHPMBundle:Orga o JOIN o.disponibilites d JOIN d.creneaux c JOIN
+						c.plageHoraire p JOIN p.tache t JOIN t.groupeTache g JOIN t.responsable r  LEFT JOIN t.besoinsMateriel bm LEFT JOIN bm.materiel m
+						JOIN p.creneaux c2 JOIN c2.disponibilite d2 JOIN d2.orga o2 JOIN o.equipe e
+						WHERE c.fin >= :debut AND c.debut <= :fin AND e.id = :eid
+						AND c2.debut = c.debut AND c2.fin = c.fin
+						ORDER BY o.nom,d.debut, c.debut")
+						->setParameter('eid',$equipe_id)
+						->setParameter('debut', $debut->format('Y-m-d H:i:s'))
+						->setParameter('fin', $fin->format('Y-m-d H:i:s'))
+						->getArrayResult();
+			}
 			
 		}else{
 			return  $this->getEntityManager()->createQuery("SELECT o,d,c,p,t,g,r,bm,m,c2,d2,o2 FROM PHPMBundle:Orga o JOIN o.disponibilites d JOIN d.creneaux c JOIN

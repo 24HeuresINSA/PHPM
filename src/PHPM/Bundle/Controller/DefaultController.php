@@ -40,7 +40,7 @@ class DefaultController extends Controller
     		$config =$this->get('config.extension');    		
     		$debutPlanning = new \DateTime();
     		$finPlanning = new \DateTime($config->getValue('phpm_planning_fin'));
-    		$planning=$em->getRepository('PHPMBundle:Orga')->getPlanning($user->getId(),$debutPlanning,$finPlanning);
+    		$planning=$em->getRepository('PHPMBundle:Orga')->getPlanning($user->getId(),null,$debutPlanning,$finPlanning);
     		
     		$deadlineFT=$config->getValue('phpm_tache_heure_limite_validation');
     			

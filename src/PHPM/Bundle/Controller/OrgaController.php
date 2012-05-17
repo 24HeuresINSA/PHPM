@@ -684,22 +684,22 @@ class OrgaController extends Controller
 	    $em = $this->getDoctrine()->getEntityManager();
         $config = $e=$this->get('config.extension');
         
-        $debut = new \DateTime();
-        $fin = new \DateTime($config->getValue('phpm_planning_fin'));
-        
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser()->getId() != $orgaid) {
         	throw new AccessDeniedException();
         }
         
+        $debut = new \DateTime();
+        $fin = new \DateTime($config->getValue('phpm_planning_fin'));
+
+        
         $em = $this->getDoctrine()->getEntityManager();
-        $orgas = $em->getRepository('PHPMBundle:Orga')-> getPlanning($orgaid,$debut,$fin);
+        $orgas = $em->getRepository('PHPMBundle:Orga')-> getPlanning($orgaid,'all',$debut,$fin);
         foreach ($orgas as &$orga){
         	foreach ($orga['disponibilites'] as &$disponibilite){
         		$prevCreneau = null;
         		foreach ($disponibilite['creneaux'] as $id => &$creneau){
         			if($creneau['plageHoraire']['tache'] == $prevCreneau['plageHoraire']['tache']){
         				$prevCreneau['fin']= $creneau['fin'];
-        				var_dump($prevCreneau['id']);
         				unset($disponibilite['creneaux'][$id]);
         				
         			}
@@ -716,6 +716,72 @@ class OrgaController extends Controller
 	    return array('orgas' => $orgas,'debut'=>$debut, 'fin'=>$fin
 	    		);
 	}
+	
+	/**
+	 * Print orga planning, custom
+	 *
+	 * @Route("/plannings",  name="orga_plannings")
+	 * @Template("PHPMBundle:Orga:print.html.twig")
+	 */
+	public function planningsAction()
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$config = $e=$this->get('config.extension');
+		
+	
+		if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') ) {
+			throw new AccessDeniedException();
+		}
+		$request = $this->get('request');
+	
+		$pDebut = $request->request->get('debut');
+		$pFin= $request->request->get('fin');
+// 		$equipeid= $request->request->get('equipe');
+// 		$orgaid= $request->request->get('orga');
+
+		$equipeid=$orgaid='all';
+
+		
+		$debut = new \DateTime();
+		$fin = new \DateTime($config->getValue('phpm_planning_fin'));
+	
+	
+		if ($this->get('security.context')->isGranted('ROLE_ADMIN') ) {
+	
+			if($pDebut!=false){
+				$debut = new \DateTime($pDebut);
+			}
+			if($pFin!=false){
+				$fin = new \DateTime($pFin);
+			}
+		}
+	
+		$em = $this->getDoctrine()->getEntityManager();
+		$orgas = $em->getRepository('PHPMBundle:Orga')-> getPlanning($orgaid,$equipeid,$debut,$fin);
+		foreach ($orgas as &$orga){
+			foreach ($orga['disponibilites'] as &$disponibilite){
+				$prevCreneau = null;
+				foreach ($disponibilite['creneaux'] as $id => &$creneau){
+					if($creneau['plageHoraire']['tache'] == $prevCreneau['plageHoraire']['tache']){
+						$prevCreneau['fin']= $creneau['fin'];
+						unset($disponibilite['creneaux'][$id]);
+	
+					}
+					 
+					$prevCreneau=&$creneau;
+					//         			$creneau['fin']=  new \DateTime();
+				}
+				unset($creneau);
+				unset($prevCreneau);
+			}
+		}
+		 
+		 
+		return array('orgas' => $orgas,'debut'=>$debut, 'fin'=>$fin
+		);
+	}
+	
+	
 	
 	
 	/**

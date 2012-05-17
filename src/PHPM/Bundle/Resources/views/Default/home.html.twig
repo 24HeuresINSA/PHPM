@@ -153,6 +153,16 @@
 		            <a class="btn" href="{{ path('orga', {'statut':0}) }}"><i class="icon-list"></i> Afficher la liste »</a>
 		        </div>
 		        {% endif %}
+		        <h2>Impression des Plannings</h2>
+		       	<div class="alert alert-block alert-info fade in">
+					<form name="input" action="{{ path('orga_plannings') }}" method="post">
+					<label for="debut">Date de début</label>
+					<input type="text" name="debut" value="{{ 'now' | format_datetime('Y-MM-dd') }}" />
+					<label for="fin">Date de fin</label>
+					<input type="text" name="fin" placeholder="Date de fin"/>
+					<input class="btn btn-primary" type="submit" value="Imprimer" />
+					</form>
+		        </div>
 	       </div>
 	    	{% endif %}
 	    	{% if is_granted('ROLE_VISITOR') and planning[0] is defined %}	
