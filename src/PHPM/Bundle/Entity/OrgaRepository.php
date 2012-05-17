@@ -18,15 +18,6 @@ class OrgaRepository extends EntityRepository
 	{
 		$dql = "SELECT o, SUM(di.pointsCharisme) charisme FROM PHPMBundle:Orga AS o JOIN o.disponibilitesInscription di JOIN o.disponibilites d JOIN o.equipe e WHERE o.statut=1";
 		
- 		if ($annee_permis !== '') {
- 			if ($annee_permis == 0) {
- 				$dql .= " AND o.datePermis IS NOT NULL";
- 			} else if (is_numeric($annee_permis)) {
-	 			$now = new \DateTime();
-	 			$dql .= " AND o.datePermis <= '".$now->sub(new \DateInterval('P'.$annee_permis.'Y'))->format('Y-m-d')."'";
- 			}
- 		}
-		
 		// filtre sur la date de naissance
 		$dql .= " AND o.dateDeNaissance <= '$maxDateNaissance'";
 		
@@ -43,6 +34,21 @@ class OrgaRepository extends EntityRepository
 			// utiliser un DATE_DIFF est bien plus rapide que de passer par un DateTime auquel on rajoute 1 jour
 			$dql .= " AND DATE_DIFF('$fin', d.debut) >= 0 AND DATE_DIFF(d.fin, '$debut') >= 0";
 		}
+		
+		// on le fait ici pour récupérer la variable $debut
+ 		if ($annee_permis !== '') {
+ 			if ($annee_permis == 0) {
+ 				$dql .= " AND o.datePermis IS NOT NULL";
+ 			} else if (is_numeric($annee_permis)) {
+ 				if (isset($debut)) {
+					$now = new \DateTime($debut);
+				} else {
+					$now = new \DateTime();
+				}
+				
+	 			$dql .= " AND o.datePermis <= '".$now->sub(new \DateInterval('P'.$annee_permis.'Y'))->format('Y-m-d')."'";
+ 			}
+ 		}
 		
 		if ($equipe_id !== '') {
 			$dql .= " AND e.id = $equipe_id ";

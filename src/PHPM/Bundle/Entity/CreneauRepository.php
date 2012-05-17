@@ -187,7 +187,13 @@ class CreneauRepository extends EntityRepository
 			if (!$orga->getDatePermis()) {
 				$dql .= "AND t.permisNecessaire = -1 ";
 			} else {
-				$now = new \DateTime();
+				// si on a une plage de définie, on utilise son 1er jour au lieu de la date !
+				if (isset($debut)) {
+					$now = new \DateTime($debut);
+				} else {
+					$now = new \DateTime();
+				}
+				
 				$diff = $now->diff($orga->getDatePermis());// on calcule le nombre d'année du permis
 				$dql .= 'AND t.permisNecessaire <= '.$diff->format('%y').' ';
 			}
