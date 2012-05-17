@@ -62,6 +62,11 @@ CalendarModel.prototype = {
 									debut: new Date(this.data[unePlage]["debut"]),
 									fin: new Date(this.data[unePlage]["fin"])
 								};
+								
+			// on rajoute "presque" un jour à la date de fin, 
+			// car on inclue le jour entier, jusqu'à 23:59
+			// évitant plein de calculs et de bugs
+			_plages[unePlage]['fin'].setTime(_plages[unePlage]['fin'].getTime()+86400000-1);
 		}
 		
 		return _plages;

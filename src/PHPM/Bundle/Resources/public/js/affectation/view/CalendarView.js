@@ -31,9 +31,9 @@ CalendarView.prototype = {
 			$('#bouton_plage_'+pmAffectation.current.plage).button('toggle');
 		}
 		
-		// calcule le nombre de jours - il faut passer par les TS, +1
-		var _nbJours = (pmAffectation.data.calendar.plage[plage]['fin'].getTime()-pmAffectation.data.calendar.plage[plage]['debut'].getTime())/(24*60*60*1000)+1;
-		
+		// calcule le nombre de jours - il faut passer par les TS
+		var _nbJours = (pmAffectation.data.calendar.plage[plage]['fin'].getTime()-pmAffectation.data.calendar.plage[plage]['debut'].getTime())/(24*60*60*1000);
+
 		// on va tout mettre en attente dans des variables et appender comme on veut à la fin
 		var _htmlBarreDates = '<div id="titres" class="titres">';
 		var _htmlJours = '';
@@ -130,9 +130,8 @@ CalendarView.prototype = {
 					// -1 sur la date de fin pour ne pas avoir de problèmes quand un créneau finit à minuit
 					var _debutCreneau = new Date(Math.max(_dispos[_iDispo]['creneaux'][_iCreneau]['debut'].getTime(), 
 															pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()));
-					// faut pas oublier de rajouter 1j, car les plages sont définies comme date du jour 00:00:00
 					var _finCreneau = new Date(Math.min(_dispos[_iDispo]['creneaux'][_iCreneau]['fin'].getTime(), 
-														pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()+86400000)-1);
+														pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()));
 												
 					var _nbJour = 0; // compteur du nombre de jours
 					var _todayMidnight = new Date(_debutCreneau); // bien forcer la recopie
@@ -160,14 +159,14 @@ CalendarView.prototype = {
 			// on vérifie si on est bien sur la bonne plage horaire, trim au besoin
 			// comparaison "croisée" : permet de tenir compte des créneaux à cheval
 			if (pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'] < _creneaux[_iCreneau]['fin']
-				&& _creneaux[_iCreneau]['debut'].getTime() < pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()+86400000) {
+				&& _creneaux[_iCreneau]['debut'].getTime() < pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()) {
 				// c'est bon, on trim les dates
 				// -1 sur la date de fin pour ne pas avoir de problèmes quand un créneau finit à minuit
 				var _debutCreneau = new Date(Math.max(_creneaux[_iCreneau]['debut'].getTime(), 
 														pmAffectation.data.calendar.plage[pmAffectation.current.plage]['debut'].getTime()));
 				// faut pas oublier de rajouter 1j, car les plages sont définies comme date du jour 00:00:00
 				var _finCreneau = new Date(Math.min(_creneaux[_iCreneau]['fin'].getTime(), 
-													pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()+86400000)-1);
+													pmAffectation.data.calendar.plage[pmAffectation.current.plage]['fin'].getTime()));
 											
 				var _nbJour = 0; // compteur du nombre de jours
 				var _todayMidnight = new Date(_debutCreneau); // bien forcer la recopie
