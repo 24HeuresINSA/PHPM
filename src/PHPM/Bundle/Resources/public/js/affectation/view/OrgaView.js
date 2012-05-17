@@ -13,26 +13,26 @@ OrgaView.prototype = {
 	 */
 	initialize: function() {
 		// on écoute les boutons
-		$('#bouton_orga_prev').click(function() { $('#orga_'+pmAffectation.current.orga.id).prev().click(); });
-		$('#bouton_orga_next').click(function() { $('#orga_'+pmAffectation.current.orga.id).next().click(); });
-		$('#bouton_orga_refresh').click(function() { pmAffectation.controllers.orga.getData(); });
-		$('#bouton_orga_detail').click(function() { pmAffectation.views.orga.viewOrgaDetails({id: pmAffectation.current.orga.id}); });
+		$('#bouton_orga_prev').off('click').on('click', function() { $('#orga_'+pmAffectation.current.orga.id).prev().click(); });
+		$('#bouton_orga_next').off('click').on('click', function() { $('#orga_'+pmAffectation.current.orga.id).next().click(); });
+		$('#bouton_orga_refresh').off('click').on('click', function() { pmAffectation.controllers.orga.getData(); });
+		$('#bouton_orga_detail').off('click').on('click', function() { pmAffectation.views.orga.viewOrgaDetails({id: pmAffectation.current.orga.id}); });
 		
 		this.setFilters(); // met les bonnes valeurs dans les filtres
 		
 		// filtres : bind les events
-		$('#filtre_orga_confiance').change(function() { pmAffectation.controllers.orga.clickFilter('confiance', $('#filtre_orga_confiance').val()); });
-		$('#filtre_orga_equipe').change(function() {pmAffectation.controllers.orga.clickFilter('equipe', $('#filtre_orga_equipe').val());});
-		$('#filtre_orga_permis').change(function() { pmAffectation.controllers.orga.clickFilter('permis', $('#filtre_orga_permis').val()); });
-		$('#filtre_orga_age').change(function() { pmAffectation.controllers.orga.clickFilter('age', $('#filtre_orga_age').val()); });
+		$('#filtre_orga_confiance').off('change').on('change', function() { pmAffectation.controllers.orga.clickFilter('confiance', $('#filtre_orga_confiance').val()); });
+		$('#filtre_orga_equipe').off('change').on('change', function() {pmAffectation.controllers.orga.clickFilter('equipe', $('#filtre_orga_equipe').val());});
+		$('#filtre_orga_permis').off('change').on('change', function() { pmAffectation.controllers.orga.clickFilter('permis', $('#filtre_orga_permis').val()); });
+		$('#filtre_orga_age').off('change').on('change', function() { pmAffectation.controllers.orga.clickFilter('age', $('#filtre_orga_age').val()); });
 		
 		// la champ de recherche (caché)
 		// on doit empêcher la fermeture du dropdown du champ de recherche
-		$('#champ_orga_rechercher').click(function(event) { event.stopImmediatePropagation(); });
+		$('#champ_orga_rechercher').off('click').on('click', function(event) { event.stopImmediatePropagation(); });
 		// on écoute lorsque des caractères sont tapés - keyup sinon on ne peut pas lire la valeur
-		$('#champ_orga_rechercher').keyup(function(event) { pmAffectation.controllers.orga.filterList($('#champ_orga_rechercher').val()); });
+		$('#champ_orga_rechercher').off('keyup').on('keyup', function(event) { pmAffectation.controllers.orga.filterList($('#champ_orga_rechercher').val()); });
 		// mochement, on attend 50 ms, sinon on ne peut pas focuser un élément en display: none...
-		$('#bouton_orga_rechercher').bind('click', function(event) { setInterval(function() { $('#champ_orga_rechercher').focus(); }, 50); });
+		$('#bouton_orga_rechercher').off('click').on('click', function(event) { setInterval(function() { $('#champ_orga_rechercher').focus(); }, 50); });
 	},
 	
 	/*
