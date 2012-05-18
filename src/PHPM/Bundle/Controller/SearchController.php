@@ -19,7 +19,7 @@ class SearchController extends Controller
      */
     public function searchAction()
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
     		throw new AccessDeniedException();
     	}
         $request = $this->getRequest();
