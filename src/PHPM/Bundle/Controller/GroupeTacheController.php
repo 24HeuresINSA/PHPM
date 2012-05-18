@@ -247,7 +247,7 @@ class GroupeTacheController extends Controller
             	$tache->setNom("Tâche sans nom");
             	$tache->setStatut(0);
             	$tache->setResponsable($entity->getResponsable());
-            	$tache->setPermisNecessaire(0);
+            	$tache->setPermisNecessaire(-1);
             	$tache->setLieu($entity->getLieu());
             	$em->persist($tache);
             	$em->flush();
