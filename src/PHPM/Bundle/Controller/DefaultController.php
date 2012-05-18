@@ -32,6 +32,15 @@ class DefaultController extends Controller
     	
     	$user=$this->get('security.context')->getToken()->getUser();
     	
+    	if (!$this->get('security.context')->isGranted('ROLE_VISITOR')) {
+    		return array();
+    	}
+    	
+    	if (!$this->get('security.context')->isGranted('ROLE_USER')) {
+
+    	}
+    	
+    	
     	if ($this->get('security.context')->isGranted('ROLE_VISITOR')) {
     		$statsUser=$em->getRepository('PHPMBundle:Orga')->getStats($user);
     		$statsUser['taches']=$em->getRepository('PHPMBundle:Tache')->getOrgaStats($user);
@@ -73,12 +82,8 @@ class DefaultController extends Controller
     				'printPlanningForm'=>$printPlanningForm->createView()
     				);
     	}
-    	return array();
+    	
 
-    	if (!$this->get('security.context')->isGranted('ROLE_USER') && $this->get('security.context')->isGranted('ROLE_VISITOR')) {
-    		$redirectURL = $config->getValue('manifestation_permis_libelles');
-    		return $this->redirect($config->getValue('phpm_orgasoft_inscription_returnURL'));
-    	}
     	
         
     }
