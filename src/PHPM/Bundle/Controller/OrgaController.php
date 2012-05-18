@@ -560,6 +560,10 @@ class OrgaController extends Controller
 
 	            $orga->cleanDisponibilites();
 				
+	            if($orga->getStatut()==2){
+	            	$orga->setStatut(1);
+	            }
+	            
 	            $em->flush();
 	
 	         	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
