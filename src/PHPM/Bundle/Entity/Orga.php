@@ -222,13 +222,6 @@ class Orga implements UserInterface
     protected $celibataire;
     
     /**
-     * @var smallint $planningEnvoye
-     * @Assert\Choice(choices = {"0", "1"})
-     * @ORM\Column(name="planningEnvoye", type="smallint")
-     */
-    protected $planningEnvoye;
-    
-    /**
      * @ORM\OneToMany(targetEntity="Creneau", mappedBy="orgaHint")
      */
     protected $creneauxHint;
@@ -1118,25 +1111,5 @@ class Orga implements UserInterface
     public function getGroupePC()
     {
         return $this->groupePC;
-    }
-
-    /**
-     * Set planningEnvoye
-     *
-     * @param smallint $planningEnvoye
-     */
-    public function setPlanningEnvoye($planningEnvoye)
-    {
-        $this->planningEnvoye = $planningEnvoye;
-    }
-
-    /**
-     * Get planningEnvoye
-     *
-     * @return smallint 
-     */
-    public function getPlanningEnvoye()
-    {
-        return $this->planningEnvoye;
     }
 }
