@@ -1,5 +1,5 @@
 {% extends "PHPMBundle:Tache:layout.html.twig"  %}
-{% set pageTitle = 'Edition de la tâche' %}
+{% set pageTitle = form.entity.vars.value.id~'-'~form.entity.vars.value.nom %}
 {% use "PHPMBundle::edit.html.twig" %}
 
 {% form_theme form _self %}
