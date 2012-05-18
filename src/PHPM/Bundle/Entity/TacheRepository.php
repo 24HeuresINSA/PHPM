@@ -15,7 +15,7 @@ class TacheRepository extends EntityRepository
 	
 	public function getTacheWithCriteria($permis, $plage)
 	{
-		$dql = "SELECT t FROM PHPMBundle:Tache t JOIN t.plagesHoraire p JOIN p.creneaux c WHERE 1=1";
+		$dql = "SELECT t FROM PHPMBundle:Tache t JOIN t.plagesHoraire p JOIN p.creneaux c WHERE t.statut=3";
 	
 // 		if($categorie !='')
 // 		{
