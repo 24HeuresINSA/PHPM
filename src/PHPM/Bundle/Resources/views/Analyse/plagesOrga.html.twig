@@ -19,15 +19,9 @@
  <h2>{{ entitiesMacro.orga(o) }}</h2>
  {% if is_granted('ROLE_ADMIN') %}
  <div class="btn-toolbar">
-<a class="btn btn-primary" href="{{ path('orga_affectHint', { 'id': o.id })  }}"><i class="icon-print"></i> Auto affecter les créneaux de l'orga</a>
-<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>
-<ul class="dropdown-menu">
-            <li><a href="{{ path('orga_edit', { 'id': o.id })  }}"><i class="icon-pencil"></i> Éditer</a></li>
-            <li><a href="{{ path('orga_inputdispos', { 'id': o.id }) }}"><i class="icon-calendar"></i>Dispos</a></li>
-            <li><a href="{{ path('orga_affectation', { 'orga_id': o.id }) }}"><i class="icon-book"></i>Affecter</a></li>
-            <li><a href="{{ path('orga_print', { 'id': o.id })  }}"><i class="icon-print"></i> Imprimer le planning</a></li>
-			          	
- </ul>
+<a class="btn btn-primary" href="{{ path('orga_affectHint', { 'id': o.id })  }}"> Auto affecter les créneaux de l'orga</a>
+<a class="btn" href="{{ path('orga_edit', { 'id': o.id })  }}"><i class="icon-pencil"></i> Éditer</a>
+
 
 </div>
 {% endif %}
