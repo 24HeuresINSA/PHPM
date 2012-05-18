@@ -184,7 +184,8 @@ class CreneauRepository extends EntityRepository
 	       	$dql .= "AND (c.orgaHint IS NULL OR c.orgaHint = $orga_id) ";
 			
 			// compatibilité avec le permis (ou non) de l'orga
-			if (!$orga->getDatePermis()) {
+			// commenté à la demande de l'humain 24
+			/*if (!$orga->getDatePermis()) {
 				$dql .= "AND t.permisNecessaire = -1 ";
 			} else {
 				// si on a une plage de définie, on utilise son 1er jour au lieu de la date !
@@ -196,7 +197,7 @@ class CreneauRepository extends EntityRepository
 				
 				$diff = $now->diff($orga->getDatePermis());// on calcule le nombre d'année du permis
 				$dql .= 'AND t.permisNecessaire <= '.$diff->format('%y').' ';
-			}
+			}*/
 	    }
 		
 		// on dé-duplique
