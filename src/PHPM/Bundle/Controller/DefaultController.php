@@ -38,6 +38,7 @@ class DefaultController extends Controller
     	
     	if (!$this->get('security.context')->isGranted('ROLE_USER')) {
 
+    		$config->getValue('manifestation_permis_libelles');
     	}
     	
     	
@@ -46,7 +47,7 @@ class DefaultController extends Controller
     		$statsUser['taches']=$em->getRepository('PHPMBundle:Tache')->getOrgaStats($user);
 //     		$conflictingPlages=$em->getRepository('PHPMBundle:PlageHoraire')-> getConflictingPlages($user);
 
-    		$config =$this->get('config.extension');    		
+    		   		
     		$debutPlanning = new \DateTime();
     		$finPlanning = new \DateTime($config->getValue('phpm_planning_fin'));
     		$planning=$em->getRepository('PHPMBundle:Orga')->getPlanning($user->getId(),null,$debutPlanning,$finPlanning);
@@ -107,12 +108,8 @@ class DefaultController extends Controller
     	
     	$this->get('security.context')->setToken($user->generateUserToken());
     	
-    	if($this->get('security.context')->isGranted('ROLE_USER')){
     		return $this->redirect($this->generateUrl('accueil'));
-    		
-    	}else{
-    		return $this->redirect($this->generateUrl('orga_inputdispos',array('id'=>$user->getId())));
-    	}
+    	
     	
     	
     	
