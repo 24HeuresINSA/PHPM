@@ -19,6 +19,9 @@ class SearchController extends Controller
      */
     public function searchAction()
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+    		throw new AccessDeniedException();
+    	}
     	
         $request = $this->getRequest();
 		
@@ -26,11 +29,8 @@ class SearchController extends Controller
 		
 		$em = $this->getDoctrine()->getEntityManager();
 
-		if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-			$orgas=array();
-		}else{
-        	$orgas = $em->getRepository('PHPMBundle:Orga')->search($searchString);
-		}
+
+        $orgas = $em->getRepository('PHPMBundle:Orga')->search($searchString);
 		$taches = $em->getRepository('PHPMBundle:Tache')->search($searchString);
 		$groupe_taches = $em->getRepository('PHPMBundle:GroupeTache')->search($searchString);
 		

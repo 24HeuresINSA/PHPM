@@ -103,7 +103,7 @@
 	          <a class="brand" href="{{ path('accueil') }}">PHPlanningMaker</a>
 	          <div class="nav-collapse in" style="height: auto; ">
 	            <ul class="nav">
-	 			{% if is_granted('ROLE_ADMIN') %}
+	 			
 	 				
 	 				<li class="dropdown" id="menu_topnav_inscriptions">
 					    <a class="dropdown-toggle" data-toggle="dropdown" href="#menu_topnav_inscriptions">
@@ -111,15 +111,15 @@
 					      <b class="caret"></b>
 					    </a>
 					    <ul class="dropdown-menu">
-					    	{% if is_granted('ROLE_ADMIN') %}
-					    		{{ _self.navBarItem('Liste','orga') }}
+				    		{{ _self.navBarItem('Liste','orga') }}
+				    		{% if is_granted('ROLE_ADMIN') %}
 					    		{{ _self.navBarItem('ListeHTML','orga_export') }}
 								{{ _self.navBarItem('Créneaux d\'inscription','disponibiliteinscription') }}
 								{{ _self.navBarItem('Missions','mission') }}
 							{% endif %}
 					    </ul>
 					</li>
-	       			
+	       		{% if is_granted('ROLE_ADMIN') %}	
 	       			{{ _self.navBarItem('Affectation','orga_affectation') }}
 	       			{{ _self.navBarItem('Configuration','config') }}
 	       		{% endif %}

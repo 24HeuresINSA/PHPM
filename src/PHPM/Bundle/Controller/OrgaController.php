@@ -69,7 +69,7 @@ class OrgaController extends Controller
      */
     public function indexAction($statut, $confiance)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
             throw new AccessDeniedException();
         }
         $em = $this->getDoctrine()->getEntityManager();
