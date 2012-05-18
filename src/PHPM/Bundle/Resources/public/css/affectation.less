@@ -33,6 +33,11 @@
   height: -webkit-calc(@size);
   height: calc(@size);
 }
+.width-calc(@size) {
+  width: -moz-calc(@size);
+  width: -webkit-calc(@size);
+  width: calc(@size);
+}
 // utiliser les Flex-Box
 .h-flex-box {
   display: box;
@@ -189,7 +194,7 @@ footer {
  */
 .calendar {
   float: left;
-  width: 60%;
+  .width-calc(~"100% - 600px"); // merci CSS3 !
   height: 100%;
   .border-box();
 	
@@ -337,10 +342,11 @@ footer {
  * Barres latérales
  */
 .sidebar {
-  width: 20%;
+  width: 300px;
   height: 100%;
   overflow: hidden;
   .border-box();
+  background: #fff;
   
   // bug, Chrome affiche sinon une scrollbar vide ?
   ::-webkit-scrollbar {
@@ -429,7 +435,6 @@ footer {
 	right: 0 !important;
 	border-left: 1px solid #003366;
 	border-right: 1px solid #fff; // que les 2 scrollbars ne soient pas collées
-	overflow-y: scroll;
 	.border-box();
 	
   .boutons_tache {}

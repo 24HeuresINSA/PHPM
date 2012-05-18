@@ -66,7 +66,7 @@ PmLayout.prototype = {
 	resizeHandler: function(event, ui) {
 		$('#calendar').css('visibility', 'visible'); // raffiche
 		
-		pmLayout.resizeCalendar(ui.originalSize.width-ui.size.width);
+		pmLayout.resizeCalendar();
 		
 		// on stock ces tailles dans les paramètres de l'utilisateur
 		// volontairement on travaille en pixels
@@ -74,15 +74,13 @@ PmLayout.prototype = {
 		pmUtils.setLocalStorage('SizeSidebarTache', $('#sidebar_tache').width());
 	},
 	// resize le calendar et tout ce qui va avec
-	resizeCalendar: function(deltaTaille) {
-		// on convertit tout en % pour mieux gérer le redimensionnement de la fenêtre
-		// 1 px de décalage qui vient de je ne sais où, juste le rajouter
-		var _newWidth = ($('#calendar').width()+deltaTaille+1)/$('.affectation-wrapper').width()*100;
-		$('#calendar').width(_newWidth+'%');
-
-		// même chose pour les sidebars
-		pmLayout.setPourcentWidth('#sidebar_orga');
-		pmLayout.setPourcentWidth('#sidebar_tache');
+	resizeCalendar: function() {
+		// on ne dira jamais assez merci à CSS3 !
+		// 8px pour la scrollbar
+		var _width = $("#sidebar_orga").width()+$("#sidebar_tache").width()+8;
+		$('#calendar').width('-moz-calc(100% - '+_width+'px)');
+		$('#calendar').width('-webkit-calc(100% - '+_width+'px)');
+		$('#calendar').width('calc(100% - '+_width+'px)');
 	},
 	
 	/* ******************** */
