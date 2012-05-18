@@ -361,6 +361,7 @@ class CreneauController extends Controller
     		$response->setContent(json_encode($err->getMessageTemplate()));
     		return $response;
     	}
+    	$orga=$creneau->getDisponibilite()->getOrga();
     	
     	if($orga->getStatut()==2){
     		$orga->setStatut(1);
