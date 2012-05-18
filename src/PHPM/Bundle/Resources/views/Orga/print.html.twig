@@ -24,7 +24,7 @@ width:600pt;
 {% endif %}
 <div class="orga">
 <h1>{{ entitiesMacro.orga(orga) }}</h1>
-{{ phpm_planning_message |raw }} Planning valable du {{ debut | format_datetime('EEEE dd MMM Y HH:mm') }} au  {{ fin | format_datetime('EEEE dd MMM Y HH:mm') }}.
+{{ phpm_planning_message |raw }} Planning valable du {{ debut | format_datetime('EEEE dd MMM HH:mm') }} au  {{ fin | format_datetime('EEEE dd MMM HH:mm') }}.
 
 
 	{% for d in orga.disponibilites %}
@@ -32,14 +32,14 @@ width:600pt;
 	
 	  <div class="creneau">
 	  <div class="infos">
-	  <div class="horaires"><h4>{{ creneau.id }} {{ creneau.debut | format_datetime('EEEE dd MMM Y HH:mm') }}
-	  	-> {{ creneau.fin | format_datetime('EEEE dd MMM Y HH:mm') }}</h4>
+	  <div class="horaires"><h2>{{ creneau.debut | format_datetime('EEEE dd MMM HH:mm') }}
+	  	-> {{ creneau.fin | format_datetime('EEEE dd MMM HH:mm') }}</h2>
 	  	</div>
 	  	
-	  <div class="lieu"><h4>{{ creneau.plageHoraire.tache.lieu }}</h4></div>
+	  <div class="lieu"><h2>{{ creneau.plageHoraire.tache.lieu }}</h2></div>
 	 </div>
 	 	<div class="infos">
-	 		<div class="titre"><h3>{{ creneau.plageHoraire.tache.groupeTache.nom }} / {{ creneau.plageHoraire.tache.nom }}</h3></div>
+	 		<div class="titre"><h2>{{ creneau.plageHoraire.tache.groupeTache.nom }} / {{ creneau.plageHoraire.tache.nom }}</h2></div>
 	 		{% if creneau.plageHoraire.creneaux| length > 1 %}
 		 		<b>Avec : </b>
 		 		{% for c2 in creneau.plageHoraire.creneaux if  c2.id != creneau.id %}
