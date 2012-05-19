@@ -24,9 +24,9 @@ END:VTIMEZONE
 BEGIN:VEVENT
 UID:{{ creneau.id  }}@{{ server_baseurl }}
 ORGANIZER;CN="{{ manifestation_organisation_nom }}":MAILTO:{{ manifestation_admin_email }}
-DTSTAMP:{{ creneau.debut | format_datetime('YYYYMMdd') }}T{{ creneau.debut | format_datetime('HHmmSS') }}Z
-DTSTART:{{ creneau.debut | format_datetime('YYYYMMdd') }}T{{ creneau.debut | format_datetime('HHmmSS') }}Z
-DTEND:{{ creneau.fin | format_datetime('YYYYMMdd') }}T{{ creneau.fin | format_datetime('HHmmSS') }}Z
+DTSTAMP:{{ creneau.debut | format_datetime('YYYYMMdd') }}T{{ creneau.debut | format_datetime('HHmmSS') }}
+DTSTART:{{ creneau.debut | format_datetime('YYYYMMdd') }}T{{ creneau.debut | format_datetime('HHmmSS') }}
+DTEND:{{ creneau.fin | format_datetime('YYYYMMdd') }}T{{ creneau.fin | format_datetime('HHmmSS') }}
 LOCATION: .
 SUMMARY:{{ creneau.plageHoraire.tache.nom  }}
 END:VEVENT
