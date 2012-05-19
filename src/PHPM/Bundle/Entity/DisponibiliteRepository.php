@@ -55,9 +55,9 @@ class DisponibiliteRepository extends EntityRepository
 		$sql = 'SELECT d.id, d.debut, d.fin, c.id AS cid, c.debut AS cd, c.fin AS cf, p.id AS pi, t.id AS ti, t.nom AS tn, t.lieu AS tl, g.equipe_id AS ge
 				FROM Disponibilite d 
 				LEFT OUTER JOIN Creneau c ON c.disponibilite_id = d.id
-				JOIN PlageHoraire p ON c.plageHoraire_id = p.id
-				JOIN Tache t ON p.tache_id = t.id
-				JOIN GroupeTache g ON t.groupetache_id = g.id
+				LEFT OUTER JOIN PlageHoraire p ON c.plageHoraire_id = p.id
+				LEFT OUTER JOIN Tache t ON p.tache_id = t.id
+				LEFT OUTER JOIN GroupeTache g ON t.groupetache_id = g.id
 				WHERE d.orga_id = ?';
 				
 		if ($plage_id !== '') {
