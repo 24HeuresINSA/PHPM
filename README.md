@@ -1,5 +1,7 @@
 PHPlanningMaker
 ===============
+Version 1.0b2
+
 
 1) Required Configuration
 -------------------------
