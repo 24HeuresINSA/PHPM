@@ -801,8 +801,8 @@ class OrgaController extends Controller
 	/**
 	 * iCal orga planning.
 	 *
-	 * @Route("/{orgaid}/planning.ics",  name="orga_ical")
-	 * @Template()
+	 * @Route("/export/{orgaid}/planning.ics",  name="orga_ical")
+	 * 
 	 */
 	public function iCalAction($orgaid)
 	{
@@ -813,11 +813,16 @@ class OrgaController extends Controller
 		$fin = new \DateTime($config->getValue('phpm_planning_fin'));
 	
 		$em = $this->getDoctrine()->getEntityManager();
-		$orgas = $em->getRepository('PHPMBundle:Orga')-> getPlanning($orgaid,$debut,$fin);
+		$orgas = $em->getRepository('PHPMBundle:Orga')-> getPlanning($orgaid,null,$debut,$fin);
 		 
 		 
-		return array('orga' => $orgas[0],'debut'=>$debut, 'fin'=>$fin
-		);
+		$content = $this->renderView('PHPMBundle:Orga:planning.ics.twig', array('orga' => $orgas[0],'debut'=>$debut, 'fin'=>$fin));
+		$response = new Response($content);
+		$response->headers->set('Content-Type', 'text/calendar');
+		
+		return $response;
+		
+		
 	}
 	
 	/**

@@ -23,7 +23,7 @@ END:VTIMEZONE
 {% for creneau in d.creneaux %}
 BEGIN:VEVENT
 UID:{{ creneau.id  }}@{{ server_baseurl }}
-ORGANIZER;CN=John Doe:MAILTO:john.doe@example.com
+ORGANIZER;CN="{{ manifestation_organisation_nom }}":MAILTO:{{ manifestation_admin_email }}
 DTSTAMP:{{ creneau.debut | format_datetime('YYYYMMdd') }}T{{ creneau.debut | format_datetime('HHmmSS') }}Z
 DTSTART:{{ creneau.debut | format_datetime('YYYYMMdd') }}T{{ creneau.debut | format_datetime('HHmmSS') }}Z
 DTEND:{{ creneau.fin | format_datetime('YYYYMMdd') }}T{{ creneau.fin | format_datetime('HHmmSS') }}Z
