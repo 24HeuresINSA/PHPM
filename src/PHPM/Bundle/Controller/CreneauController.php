@@ -363,7 +363,7 @@ class CreneauController extends Controller
     	}
     	$orga=$creneau->getDisponibilite()->getOrga();
     	
-    	if($orga->getStatut()==2){
+    	if ($orga->getStatut() === 2) {
     		$orga->setStatut(1);
     	}
 
