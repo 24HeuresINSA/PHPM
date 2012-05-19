@@ -187,7 +187,7 @@
 					<table class="table well">
 						<thead>
 						<tr>
-							<th>Horaires</th><th>Tâche</th><th>Avec</th><th>Lieu</th>
+							<th>Horaires</th><th>Tâche</th><th>Lieu</th>
 						</tr>
 						<tbody>
 							{% for d in planning[0].disponibilites %}
@@ -196,11 +196,6 @@
 									<td>{{ creneau.debut | format_datetime('EEEE dd MMM Y HH:mm') }}
 	  									-> {{ creneau.fin | format_datetime('EEEE dd MMM HH:mm') }}</td>
 	  								<td>{{ creneau.plageHoraire.tache.groupeTache.nom }} / {{ creneau.plageHoraire.tache.nom }}</td>
-	  								<td>
-									{% for c2 in creneau.plageHoraire.creneaux if  c2.id != creneau.id %}
-							 			{{ entitiesMacro.orga(c2.disponibilite.orga) }}, 
-							 		{% endfor %}
-							 		</td>
 	  								<td>{{ creneau.plageHoraire.tache.lieu }}</td>
 									</tr>
 								{% endfor %}
