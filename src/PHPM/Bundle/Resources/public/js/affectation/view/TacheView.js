@@ -21,7 +21,6 @@ TacheView.prototype = {
 		this.setFilters(); // met les bonnes valeurs dans les filtres
 		
 		// filtres : bind les events
-		$('#filtre_tache_confiance').off('change').on('change', function() {pmAffectation.controllers.tache.clickFilter('confiance', $('#filtre_tache_confiance').val());});
 		$('#filtre_tache_permis').off('change').on('change', function() {pmAffectation.controllers.tache.clickFilter('permis', $('#filtre_tache_permis').val());});
 		$('#filtre_tache_equipe').off('change').on('change', function() {pmAffectation.controllers.tache.clickFilter('equipe', $('#filtre_tache_equipe').val());});
 		

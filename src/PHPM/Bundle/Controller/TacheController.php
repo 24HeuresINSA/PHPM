@@ -497,12 +497,11 @@ class TacheController extends Controller
 		//on recupere les paramètres passés en post
 		$equipe = $request->request->get('equipe_id', '');
 		$permis = $request->request->get('permisNecessaire', '');
-		//$niveau_confiance= $request->request->get('confiance_id', ''); // TODO
 		$plage = $request->request->get('plage_id', '');
 	
 		$em = $this->getDoctrine()->getEntityManager();
 		// création de la requête SQL et récupération de son retour
-		$entities = $em->getRepository('PHPMBundle:Tache')->getTacheWithCriteria($permis, $plage, $equipe);
+		$entities = $em->getRepository('PHPMBundle:Tache')->getTacheWithCriteria($plage, $permis, $equipe);
 		
 		// creation du json de retour
 		$taches = array();

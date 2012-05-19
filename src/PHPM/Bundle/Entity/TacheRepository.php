@@ -13,21 +13,10 @@ use Doctrine\ORM\EntityRepository;
 class TacheRepository extends EntityRepository
 {
 	
-	public function getTacheWithCriteria($permis, $plage, $equipe)
+	public function getTacheWithCriteria($plage, $permis, $equipe)
 	{
 		$dqlS = 'SELECT t FROM PHPMBundle:Tache t JOIN t.plagesHoraire p JOIN p.creneaux c';
 		$dqlW = ' WHERE t.statut=3';
-
-		if ($permis !== '') {
-			$dqlW .= " AND t.permisNecessaire >= '$permis'";
-		}
-// 		if($age !='')
-// 		{
-// 			$andx->add($qb->expr()->gte('t.ageNecessaire',$age));
-// 		}
-		/*if ($niveau_confiance !== '') {
-			$dql.= " AND t.confiance_id >= '$niveau_confiance'";
-		}*/
 		
 		if ($plage !== '') {
 		    $pref = json_decode($this->getEntityManager()->getRepository('PHPMBundle:Config')->findOneByField('manifestation_plages')->getValue(),TRUE);
@@ -35,6 +24,10 @@ class TacheRepository extends EntityRepository
 		    $debut = $plage['debut'];
 		    $fin = $plage['fin'];
 			$dqlW .= " AND DATE_DIFF('$fin', c.debut) >= 0 AND DATE_DIFF(c.fin, '$debut') >= 0";
+		}
+		
+		if ($permis !== '') {
+			$dqlW .= " AND t.permisNecessaire >= '$permis'";
 		}
 		
 		if ($equipe !== '') {
