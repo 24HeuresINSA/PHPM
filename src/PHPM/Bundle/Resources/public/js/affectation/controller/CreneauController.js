@@ -112,6 +112,7 @@ CreneauController.prototype = {
 		pmAffectation.controllers.creneau.getData(); // et aussi les créneaux dispos
 		
 		// on dé-star l'orga
+		// le WS s'occupe de faire la modif dans le base
 		$('#bouton_orga_statut > i').removeClass().addClass('icon-star-empty');
 		$("#orga_"+pmAffectation.current.orga.id).removeClass('star');
 	},
