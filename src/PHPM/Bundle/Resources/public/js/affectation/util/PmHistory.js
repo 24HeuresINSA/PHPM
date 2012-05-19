@@ -37,7 +37,7 @@ PmHistory.prototype = {
 	 * va les mettre au bon endroit & relance ce qu'il faut
 	 */
 	parseUrlParam: function() {
-		var _hash = History.getHash(); // le hash est ce qui suit le # (non inclus)
+		var _hash = window.location.hash; // le hash est ce qui suit le # (non inclus)
 		
 		// on récupère les éventuels paramètres passés en GET
 		if (location.search !== '') {
@@ -50,11 +50,11 @@ PmHistory.prototype = {
 			}
 			
 			// on re-set les paramètres
-			History.replaceState('Paramètre GET parsé', 'Paramètre GET parsé', History.getState().url.split("?")[0]);
+			history.replaceState('Paramètre GET parsé', 'Paramètre GET parsé', window.location.search.split("?")[0]);
 		}
 		
-		if (_hash.substr(0, 6) == 'param&') { // parseur - on a reconnu notre format
-			var _str = decodeURIComponent(_hash.substr(6, _hash.length)); // petite décodage du format URL nécessaire
+		if (_hash.substr(0, 7) == '#param&') { // parseur - on a reconnu notre format
+			var _str = decodeURIComponent(_hash.substr(7, _hash.length)); // petite décodage du format URL nécessaire
 			
 			// on décode ça (fonction cf hack.js)
 			var _params = $.deparam(_str);
