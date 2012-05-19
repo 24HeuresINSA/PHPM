@@ -16,7 +16,7 @@ class OrgaRepository extends EntityRepository
 {
 	public function getOrgasWithCriteria($annee_permis, $maxDateNaissance, $plage_id, $niveau_confiance, $equipe_id)
 	{
-		$dql = "SELECT o, SUM(di.pointsCharisme) charisme FROM PHPMBundle:Orga AS o JOIN o.disponibilitesInscription di JOIN o.disponibilites d JOIN o.equipe e WHERE o.statut=1";
+		$dql = "SELECT o, SUM(di.pointsCharisme) charisme FROM PHPMBundle:Orga AS o JOIN o.disponibilitesInscription di JOIN o.disponibilites d JOIN o.equipe e WHERE o.statut>=1";
 		
 		// filtre sur la date de naissance
 		if ($maxDateNaissance !== '') {
@@ -73,7 +73,7 @@ class OrgaRepository extends EntityRepository
 		// s'il n'est pas déjà affecté
 		$dql = 	"SELECT o, SUM(di.pointsCharisme) charisme FROM PHPMBundle:Orga AS o JOIN o.disponibilites d " . 
 				" JOIN o.disponibilitesInscription di JOIN o.equipe e, PHPMBundle:Creneau AS c LEFT OUTER JOIN c.orgaHint oh LEFT OUTER JOIN c.equipeHint eh " . 
-				"WHERE c.id = '$creneau_id' AND (d.debut <= c.debut) AND (d.fin >= c.fin) " . 
+				"WHERE c.id = '$creneau_id' AND (d.debut <= c.debut) AND (d.fin >= c.fin) AND o.statut=1 " . 
 				"AND ((c.orgaHint IS NOT NULL AND oh.id = o.id) OR eh.id = e.id) " . 
 				"AND o.id NOT IN (SELECT org.id FROM PHPMBundle:Creneau AS cr JOIN cr.disponibilite dis JOIN dis.orga org, " . 
 				"PHPMBundle:Creneau cre WHERE cre.id = '$creneau_id' AND (cr.debut < cre.fin) AND (cr.fin > cre.debut)) " . 
