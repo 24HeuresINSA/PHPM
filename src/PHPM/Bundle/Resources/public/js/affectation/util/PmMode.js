@@ -46,7 +46,7 @@ PmMode.prototype = {
 			$('#boutons_tache_nav').hide();
 			$('#bouton_orga_detail').show();
 			$('#bouton_tache_detail').hide();
-			$('#filtre_tache_duree').show();
+			$('#filtre_tache_duree').parent().show();
 			$('#bouton_mode_orga').button('toggle');
 			
 			// on va chercher la colonne orgas
@@ -68,7 +68,7 @@ PmMode.prototype = {
 			$('#boutons_tache_nav').show();
 			$('#bouton_orga_detail').hide();
 			$('#bouton_tache_detail').show();
-			$('#filtre_tache_duree').hide();
+			$('#filtre_tache_duree').parent().hide();
 			$('#bouton_mode_tache').button('toggle');
 			
 			// 1 - colonne orga
