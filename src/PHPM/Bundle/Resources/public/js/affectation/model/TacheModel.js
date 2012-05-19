@@ -30,7 +30,7 @@ TacheModel.prototype = {
 		// TODOs
 		//($.isNumeric(pmAffectation.current.tache.confiance) === true) && (pmAffectation.current.tache.confiance != -1) && (_params.confiance_id = pmAffectation.current.tache.confiance);
 		//($.isNumeric(pmAffectation.current.tache.duree) === true) && (pmAffectation.current.tache.duree != -1) && (_params.duree = pmAffectation.current.tache.duree);
-		//($.isNumeric(pmAffectation.current.tache.categorie) === true) && (pmAffectation.current.tache.categorie != -1) && (_params.categorie_id = pmAffectation.current.tache.categorie);
+		($.isNumeric(pmAffectation.current.tache.equipe) === true) && (pmAffectation.current.tache.equipe != -1) && (_params.equipe_id = pmAffectation.current.tache.equipe);
 		($.isNumeric(pmAffectation.current.tache.permis) === true) && (pmAffectation.current.tache.permis != -1) && (_params.permis = pmAffectation.current.tache.permis);
 		
 		$.ajax({

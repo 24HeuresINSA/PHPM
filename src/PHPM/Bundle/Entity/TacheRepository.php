@@ -13,16 +13,13 @@ use Doctrine\ORM\EntityRepository;
 class TacheRepository extends EntityRepository
 {
 	
-	public function getTacheWithCriteria($permis, $plage)
+	public function getTacheWithCriteria($permis, $plage, $equipe)
 	{
-		$dql = "SELECT t FROM PHPMBundle:Tache t JOIN t.plagesHoraire p JOIN p.creneaux c WHERE t.statut=3";
-	
-// 		if($categorie !='')
-// 		{
-// 			$andx->add($qb->expr()->eq('t.categorie_id',$categorie));
-// 		}
+		$dqlS = 'SELECT t FROM PHPMBundle:Tache t JOIN t.plagesHoraire p JOIN p.creneaux c';
+		$dqlW = ' WHERE t.statut=3';
+
 		if ($permis !== '') {
-			$dql .= " AND t.permisNecessaire >= '$permis'";
+			$dqlW .= " AND t.permisNecessaire >= '$permis'";
 		}
 // 		if($age !='')
 // 		{
@@ -37,10 +34,15 @@ class TacheRepository extends EntityRepository
 		    $plage= $pref[$plage];
 		    $debut = $plage['debut'];
 		    $fin = $plage['fin'];
-			$dql .= " AND DATE_DIFF('$fin', c.debut) >= 0 AND DATE_DIFF(c.fin, '$debut') >= 0";
+			$dqlW .= " AND DATE_DIFF('$fin', c.debut) >= 0 AND DATE_DIFF(c.fin, '$debut') >= 0";
 		}
 		
-		$query = $this->getEntityManager()->createQuery($dql);
+		if ($equipe !== '') {
+			$dqlS .= ' JOIN t.groupeTache g JOIN g.equipe e';
+			$dqlW .= " AND e.id = '$equipe'";
+		}
+		
+		$query = $this->getEntityManager()->createQuery($dqlS.$dqlW);
 		
 		return $query->getResult();
 	}
