@@ -16,25 +16,16 @@ function PmHistory() {
  */
 PmHistory.prototype = {
 	/*
-	 * Init
-	 * Set l'event listener sur le changelment d'url
-	 * Pas mal de code repris du Github officiel d'History.js (GH)
+	 * Init :
+	 * Set l'event listener sur le changement d'url
 	 */ 
-	initHistoryListener: function() {
-	    History = window.History; // Note: We are using a capital H instead of a lower h
-	    
-	    if (! History.enabled) {
-	         // History.js is disabled for this browser.
-	         // This is because we can optionally choose to support HTML4 browsers or not.
-	        return false;
-	    }
-	
+	initHistoryListener: function() {	
 	    // on va écouter le changement d'adresse, dessus on reparse
-	    History.Adapter.bind(window, 'anchorchange', function() { // Adapté pour utiliser anchorchange, sur le hash, au lieu de statechange (popstate marche aussi)
+	    window.onhashchange = function() {
 	        if (pmAffectation.hashChange === true) {
 	        	pmHistory.parseUrlParam();
 	        }
-	    });
+	    };
 	    
 	    // on va parser les paramètres
 	    this.parseUrlParam();
@@ -78,7 +69,7 @@ PmHistory.prototype = {
 						case 'orga':
 							if (_params['orga']['id'] != -1 && pmUtils.areEquals(_params['orga']['id'], pmAffectation.current['orga']['id']) === false) {
 								pmAffectation.current['orga'] = _params['orga'];
-								(pmHistory.refreshData === true) && (pmAffectation.controllers.orga.getDispos());
+								(pmHistory.refreshData === true) && (pmAffectation.controllers.orga.getData());
 							} else if (pmUtils.areEquals(_params['orga'], pmAffectation.current['orga']) === false) {
 								pmAffectation.current['orga'] = _params['orga'];
 								(pmHistory.refreshData === true) && (pmAffectation.controllers.orga.getData());
@@ -87,7 +78,7 @@ PmHistory.prototype = {
 						case 'tache':
 							if (pmAffectation.current['tache']['id'] !== undefined && pmUtils.areEquals(_params['tache']['id'], pmAffectation.current['tache']['id']) === false) {
 								pmAffectation.current['tache'] = _params['tache'];
-								(pmHistory.refreshData === true) && (pmAffectation.controllers.tache.getCreneaux());
+								(pmHistory.refreshData === true) && (pmAffectation.controllers.tache.getData());
 							} else if (pmUtils.areEquals(_params['tache'], pmAffectation.current['tache']) === false) {
 								pmAffectation.current['tache'] = _params['tache'];
 								(pmHistory.refreshData === true) && (pmAffectation.controllers.tache.getData());
@@ -142,12 +133,12 @@ PmHistory.prototype = {
 		
 		// Jquery goodness for sérialiser rapidemment (et en profondeur)
 		// bien préciser 'data' et 'title' dans History.pushState, sinon elle peut bugguer
-		var _newHash = escape('#param&'+$.param(_current));
+		var _newHash = '#param&'+$.param(_current);
 		
-		// à savoir : History.js unescape le hash, mais pas l'état et le titre,
-		// qui peuvent le faire planter aléatoirement
+		// initialemengt on utilisait History.js
+		// mais il y a eu des plantages non-déterministes...
 		pmAffectation.hashChange = false;
-        History.pushState({params: _newHash}, "Etat " + _newHash, _newHash);
+        history.pushState({params: _newHash}, "Etat " + _newHash, _newHash);
         pmAffectation.hashChange = true;
 	},
 }
