@@ -27,8 +27,8 @@ ORGANIZER;CN="{{ manifestation_organisation_nom }}":MAILTO:{{ manifestation_admi
 DTSTAMP:{{ creneau.debut | format_datetime('YYYYMMdd') }}T{{ creneau.debut | format_datetime('HHmmSS') }}Z
 DTSTART:{{ creneau.debut | format_datetime('YYYYMMdd') }}T{{ creneau.debut | format_datetime('HHmmSS') }}Z
 DTEND:{{ creneau.fin | format_datetime('YYYYMMdd') }}T{{ creneau.fin | format_datetime('HHmmSS') }}Z
-LOCATION:j
-SUMMARY:{{ creneau.plageHoraire.tache.id  }}
+LOCATION: .
+SUMMARY:{{ creneau.plageHoraire.tache.nom  }}
 END:VEVENT
 {% endfor %}
 {% endfor %}
