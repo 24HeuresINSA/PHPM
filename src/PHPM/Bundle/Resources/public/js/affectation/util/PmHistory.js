@@ -105,16 +105,14 @@ PmHistory.prototype = {
 								// on n'a pas de maj à faire ici
 							}
 							break;
+						case 'jour':
+							if (pmUtils.areEquals(_params['jour'], pmAffectation.current['jour']) === false) {
+								pmAffectation.current['jour'] = _params['jour'];
+							}
+							break;
 						case 'quart_heure':
 							if (pmUtils.areEquals(_params['quart_heure'], pmAffectation.current['quart_heure']) === false) {
 								pmAffectation.current['quart_heure'] = _params['quart_heure'];
-								
-								// on simule un click, bien plus simple, trop d'opés à réaliser sinon
-								/*if (pmHistory.refreshData === true) {
-									pmAffectation.controllers.calendar.clickQuartHeure({
-										currentTarget: {id: pmAffectation.current['quart_heure']}
-									});
-								}*/
 							}
 							break;
 						default:
