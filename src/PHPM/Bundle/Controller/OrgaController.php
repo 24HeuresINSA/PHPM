@@ -428,8 +428,8 @@ class OrgaController extends Controller
     /**
     * Change le statut d'un orga
     *
-    * @Route("/{id}/statut/{statut}/", name="orga_change_statut")
-    *
+    * @Route("/{id}/changestatut.{_format}/{statut}/", defaults={"_format"="html"}, requirements={"_format"="html|json"}, name="orga_change_statut")
+    * 
     */
     public function changeStatutAction($id, $statut)
     {
@@ -443,13 +443,25 @@ class OrgaController extends Controller
     	if (!$entity) {
     		throw $this->createNotFoundException('Unable to find Orga entity.');
     	}
-    	
+    	 	
     	$entity->setStatut($statut);
-    	
     	$em->flush();
+    	
+    	$format = $this->get('request')->getRequestFormat();
+    	 
+    	if($format=='html'){
+    		 
+    		return $this->redirect($this->getRequest()->headers->get('referer'));
+    	}
+    	 
+    	if($format=='json'){
+    		$response = new Response();
+    		$response->setContent(json_encode("OK"));
+    		return $response;
+    	}
     
     
-    	return $this->redirect($this->getRequest()->headers->get('referer'));
+    	
     }
 
     private function createDeleteForm($id)
