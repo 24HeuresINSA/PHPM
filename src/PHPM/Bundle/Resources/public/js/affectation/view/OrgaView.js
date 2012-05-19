@@ -16,6 +16,7 @@ OrgaView.prototype = {
 		$('#bouton_orga_prev').off('click').on('click', function() { $('#orga_'+pmAffectation.current.orga.id).prev().click(); });
 		$('#bouton_orga_next').off('click').on('click', function() { $('#orga_'+pmAffectation.current.orga.id).next().click(); });
 		$('#bouton_orga_refresh').off('click').on('click', function() { pmAffectation.controllers.orga.getData(); });
+		$('#bouton_orga_statut').off('click').on('click', function() { pmAffectation.controllers.orga.changeStatut(pmAffectation.current.orga.id); });
 		$('#bouton_orga_detail').off('click').on('click', function() { pmAffectation.views.orga.viewOrgaDetails({id: pmAffectation.current.orga.id}); });
 		
 		this.setFilters(); // met les bonnes valeurs dans les filtres
@@ -63,7 +64,9 @@ OrgaView.prototype = {
 				_equipes += ' <span class="label label-info">'+pmAffectation.data.parameter.equipes[_orgas[_iOrga]['equipe']]['nom'].toLowerCase()+'</span>';
 			}
 			
-			var _html = '<div class="item orga" id="orga_'+_orgas[_iOrga]['id']+'" idOrga="'+_orgas[_iOrga]['id']+'">'+
+			var _class = (_orgas[_iOrga]['statut'] == 2) ? ' star' : ''; // suivant le statut
+			
+			var _html = '<div class="item orga'+_class+'" id="orga_'+_orgas[_iOrga]['id']+'" idOrga="'+_orgas[_iOrga]['id']+'">'+
 						 _orgas[_iOrga]['prenom']+' '+_orgas[_iOrga]['nom'];
 			(_orgas[_iOrga]['surnom'] !== null) && (_html += ' ('+_orgas[_iOrga]['surnom']+')')
 			_html += _equipes+'</div>';

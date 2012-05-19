@@ -53,6 +53,7 @@ OrgaController.prototype = {
 		pmAffectation.views.orga.setOrgas();
 		
 		$("#orga_"+pmAffectation.current.orga.id).addClass('current');
+		pmAffectation.controllers.orga.setOrgaStatut();
 		
 		(pmAffectation.current.mode === 'orga') && (pmAffectation.controllers.creneau.getData());
 		
@@ -86,6 +87,8 @@ OrgaController.prototype = {
 
 		this.getDispos();
 		pmAffectation.controllers.creneau.getData(); // récupère les taches à jour
+		
+		pmAffectation.controllers.orga.setOrgaStatut(); // set le bouton pour changer son statut
 	},
 	// clic sur un orga, mode tâche
 	affecterOrga: function(obj) {
@@ -119,14 +122,35 @@ OrgaController.prototype = {
 				(val.surnom && pmUtils.removeDiacritics(val.surnom.substr(0, str.length).toLowerCase()) == str)
 			);
 		});
-		
+
 		if ($.isEmptyObject(_orgas) === true) {
 			$('#liste_orgas').html('<div class="alert">Aucun orga correspondant !</div>');
 		} else {
 			pmAffectation.views.orga.setOrgas(_orgas);
 		}
 	},
-	
+	// change le statut d'un orga (star)
+	changeStatut: function(idOrga) {
+		var _orga = pmUtils.find(pmAffectation.data.orgas, 'id', idOrga);
+		
+		// on regarde son statut actuel, le change
+		_orga.statut = (_orga.statut == 1)? 2 : 1;
+
+		pmAffectation.models.orga.changeStatut(this.setOrgaStatut, idOrga, _orga.statut);
+	},
+	// la fonction suivante est aussi callback du WS changeStatut
+	setOrgaStatut: function() {
+		var _orga = pmUtils.find(pmAffectation.data.orgas, 'id', pmAffectation.current.orga.id);
+		
+		if (_orga.statut == 1) {
+			$('#bouton_orga_statut > i').removeClass().addClass('icon-star-empty');
+			$("#orga_"+_orga.id).removeClass('star');
+		} else {
+			$('#bouton_orga_statut > i').removeClass().addClass('icon-star');
+			$("#orga_"+_orga.id).addClass('star');
+		}
+	},
+
 	/*
 	 * Vide la colonne
 	 */
@@ -135,5 +159,4 @@ OrgaController.prototype = {
 		
 		$('#liste_orgas').empty();
 	}
-
 }

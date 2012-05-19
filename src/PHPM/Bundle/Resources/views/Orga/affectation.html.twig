@@ -43,6 +43,7 @@
     	// urls : adresses absolues
     	pmAffectation.urls = {};
 		pmAffectation.urls.orgas = "{{ url('orga_query_json') }}";
+		pmAffectation.urls.orgaChangeStatut = "{{ url('orga_change_statut', {'id': '_ID_', '_format': 'json', 'statut': '_STATUT_'}) }}";
 		pmAffectation.urls.dispos = "{{ url('dispo_query_json') }}";
 		pmAffectation.urls.creneaux = "{{ url('creneau_query_json') }}";
 		pmAffectation.urls.creneauxTaches = "{{ url('tache_creneaux_query_json') }}";
@@ -133,7 +134,11 @@
 					<div>
 						<button type="button" class="btn" id="bouton_orga_refresh"><i class="icon-refresh"></i></button>
 					</div>
-					
+
+					<div>
+						<button type="button" class="btn" id="bouton_orga_statut"><i class="icon-star-empty"></i></button>
+					</div>
+										
 					<div>
 						<button type="button" class="btn" id="bouton_orga_detail"><i class="icon-edit"></i></button>
 					</div>

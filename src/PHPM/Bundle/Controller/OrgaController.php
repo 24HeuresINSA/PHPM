@@ -675,6 +675,7 @@ class OrgaController extends Controller
 						"equipe" => $equipe->getId(),
 			    		"dateDeNaissance" => $orga[0]->getDateDeNaissance()->format('Y-m-d H:i:s'),
 			    		"departement" => $orga[0]->getDepartement(),
+			    		"statut" => $orga[0]->getStatut(),
 			    		"commentaire" => $orga[0]->getCommentaire()
 						);
 		}

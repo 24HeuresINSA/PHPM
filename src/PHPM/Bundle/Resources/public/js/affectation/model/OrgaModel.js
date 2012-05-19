@@ -64,6 +64,18 @@ OrgaModel.prototype = {
 			type: 'POST'
 		});
 	},
+	// permet de changer le statut d'un orga
+	changeStatut: function(callback, idOrga, nouveauStatut) {
+		this.callbackChangeStatut = callback;
+		
+		$.ajax({
+			url: pmAffectation.urls.orgaChangeStatut.replace(new RegExp('(_ID_)', 'g'), idOrga).replace(new RegExp('(_STATUT_)', 'g'), nouveauStatut),
+			dataType: 'json',
+			success: pmAffectation.models.orga.requestSuccessChangeStatut,
+			error: pmAffectation.models.orga.requestError,
+			type: 'GET'
+		});	
+	},
 	
 	/*
 	 * Récup les résultats
@@ -79,6 +91,13 @@ OrgaModel.prototype = {
 		pmAffectation.models.orga.dataDispo = data;
 	
 		pmAffectation.models.orga.callBackDispos();
+	},
+	requestSuccessChangeStatut: function(data) {
+		if (data === 'OK') {
+			pmAffectation.models.orga.callbackChangeStatut();
+		} else {
+			pmAffectation.models.orga.requestError(null, 'impossible de changer le statut de cet orga');
+		}
 	},
 	requestError: function(data, statusText) {
 		pmMessage.alert("Impossible de récupérer les orgas : " + statusText);
