@@ -45,6 +45,7 @@ PmMode.prototype = {
 			$('#boutons_orga_nav').show();
 			$('#boutons_tache_nav').hide();
 			$('#bouton_orga_detail').show();
+			$('#bouton_orga_statut').show();
 			$('#bouton_tache_detail').hide();
 			$('#filtre_tache_duree').parent().show();
 			$('#filtre_tache_confiance').parent().show();
@@ -68,6 +69,7 @@ PmMode.prototype = {
 			$('#boutons_orga_nav').hide();
 			$('#boutons_tache_nav').show();
 			$('#bouton_orga_detail').hide();
+			$('#bouton_orga_statut').hide();
 			$('#bouton_tache_detail').show();
 			$('#filtre_tache_duree').parent().hide();
 			$('#filtre_tache_confiance').parent().hide();
