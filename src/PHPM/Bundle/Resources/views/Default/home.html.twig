@@ -195,7 +195,7 @@
 									<tr>
 									<td>{{ creneau.debut | format_datetime('EEEE dd MMM Y HH:mm') }}
 	  									-> {{ creneau.fin | format_datetime('EEEE dd MMM HH:mm') }}</td>
-	  								<td>{{ creneau.plageHoraire.tache.groupeTache.nom }} / {{ creneau.plageHoraire.tache.nom }}</td>
+	  								<td>{{ creneau.plageHoraire.tache.groupeTache.nom }} / {{ entitiesMacro.tache(creneau.plageHoraire.tache) }}</td>
 	  								<td>{{ creneau.plageHoraire.tache.lieu }}</td>
 									</tr>
 								{% endfor %}
