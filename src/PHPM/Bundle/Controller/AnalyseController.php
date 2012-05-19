@@ -311,8 +311,9 @@ class AnalyseController extends Controller
 
     	if ($groupeid=='all') {
     		$tacheDQL = "SELECT g,t,p,c,d,o FROM PHPMBundle:GroupeTache g JOIN g.taches t
-    		JOIN t.plagesHoraire p JOIN p.creneaux c LEFT OUTER JOIN c.disponibilite d JOIN d.orga o 
+    		JOIN t.plagesHoraire p JOIN p.creneaux c LEFT JOIN c.disponibilite d LEFT JOIN d.orga o 
     		 ORDER BY g.id ";
+    		var_dump('d');
     		$tacheResult = $em->createQuery($tacheDQL)->getArrayResult();
     		return array('tacheResult'=>$tacheResult);
     	}else{
