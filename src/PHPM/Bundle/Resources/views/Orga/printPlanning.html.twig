@@ -1,0 +1,84 @@
+{% extends "PHPMBundle::layout.html.twig"  %}
+{% set pageTitle = 'Impression Planning' %}
+
+{% block pageStyle %}
+{{ parent() }}
+body{
+padding-top: 0px;
+padding-bottom: 0px;
+width:600pt;
+}
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet/less" href="{{ asset('bundles/phpm/css/print.less') }}" type="text/css" media="all" />
+{{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+<div class="row-fluid " >
+{% for key,orga in orgas %}
+{% if key!=0 %}
+<div class="pagebreak"></div>
+{% endif %}
+<div class="orga">
+<h1>{{ entitiesMacro.orga(orga) }}</h1>
+{{ phpm_planning_message |raw }} Planning valable du {{ debut | format_datetime('EEEE dd MMM HH:mm') }} au  {{ fin | format_datetime('EEEE dd MMM HH:mm') }}.
+
+
+	{% for d in orga.disponibilites %}
+	{% for creneau in d.creneaux if creneau%}
+	
+	  <div class="creneau">
+	  <div class="infos">
+	  <div class="horaires"><h2>{{ creneau.debut | format_datetime('EEEE dd MMM HH:mm') }}
+	  	-> {{ creneau.fin | format_datetime('EEEE dd MMM HH:mm') }}</h2>
+	  	</div>
+	  	
+	  <div class="lieu"><h2>{{ creneau.plageHoraire.tache.lieu }}</h2></div>
+	 </div>
+	 	<div class="infos">
+	 		<div class="titre"><h2>{{ creneau.plageHoraire.tache.groupeTache.nom }} / {{ creneau.plageHoraire.tache.nom }}</h2></div>
+	 		{% if creneau.plageHoraire.creneaux| length > 1 %}
+		 		<b>Avec : </b>
+		 		{% for c2 in creneau.plageHoraire.creneaux if  c2.id != creneau.id %}
+		 			{{ entitiesMacro.orga(c2.disponibilite.orga) }}
+		 		{% endfor %}
+				<br>
+	 		{% endif %}
+	 		<b>Responsable : </b>{{ entitiesMacro.orga(creneau.plageHoraire.tache.responsable) }} 
+	 									{{ creneau.plageHoraire.tache.responsable.telephone }}<br>
+	 		
+
+	 									
+	 	</div>
+	  {% if creneau.plageHoraire.tache.consignes  %}
+		  <div class="consignes">
+		    <h4>Consignes</h4>{{ creneau.plageHoraire.tache.consignes |raw}}
+		  </div>
+	  {% endif %}
+	  {% if creneau.plageHoraire.tache.besoinsMateriel | length >0 %}
+		  <div class="consignes">
+		    <h4>Matériel Nécessaire</h4>
+				{% for bm in creneau.plageHoraire.tache.besoinsMateriel if bm.quantite > 0 %}
+					{{ bm.materiel.nom }},
+		    	{% endfor %}
+		  </div>
+	  {% endif %}
+	  
+	   
+	  
+	
+		</div>
+
+ 	{% endfor %}
+	{% endfor %}
+ 
+
+</div>
+
+	{% endfor %}
+
+</div>
+{% endblock %}
