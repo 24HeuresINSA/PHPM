@@ -695,7 +695,7 @@ class OrgaController extends Controller
 	 * Print orga planning.
 	 *
 	 * @Route("/{orgaid}/print",  name="orga_print")
-	 * @Template()
+	 * @Template("PHPMBundle:Orga:printPlanning.html.twig")
 	 */
 	public function printAction($orgaid)
 	{
