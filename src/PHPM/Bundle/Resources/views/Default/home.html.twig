@@ -174,7 +174,8 @@
 					Orga : {{ form_widget(printPlanningForm.orga,  { 'attr': {'class': 'span2'} }) }} <b>OU</b>
 					Équipe : {{ form_widget(printPlanningForm.equipe,  { 'attr': {'class': 'span2'} }) }}
 					<br>
-					<input class="btn btn-primary" type="submit" value="Imprimer" />
+					<button class="btn btn-primary" type="submit" name="action" value="print" >Imprimer</button>
+					<button class="btn btn-primary" type="submit" name="action" value="show" >Afficher</button>
 					</fieldset>
 					</form>
 		        </div>
@@ -184,25 +185,7 @@
 			<div class="span{% if is_granted('ROLE_ADMIN') %}8{% else %}12{% endif %}">
 	        	<h2>Planning prévisionnel</h2>
 	        		Planning valable du {{ debutPlanning | format_datetime('EEEE dd MMM Y HH:mm') }} au  {{ finPlanning | format_datetime('EEEE dd MMM Y HH:mm') }}.
-					<table class="table well">
-						<thead>
-						<tr>
-							<th>Horaires</th><th>Tâche</th><th>Lieu</th>
-						</tr>
-						<tbody>
-							{% for d in planning[0].disponibilites %}
-								{% for creneau in d.creneaux %}
-									<tr>
-									<td>{{ creneau.debut | format_datetime('EEEE dd MMM Y HH:mm') }}
-	  									-> {{ creneau.fin | format_datetime('EEEE dd MMM HH:mm') }}</td>
-	  								<td>{{ creneau.plageHoraire.tache.groupeTache.nom }} / {{ entitiesMacro.tache(creneau.plageHoraire.tache) }}</td>
-	  								<td>{{ creneau.plageHoraire.tache.lieu }}</td>
-									</tr>
-								{% endfor %}
-							{% endfor %}
-						</tbody>
-					
-					</table>
+					{% include 'PHPMBundle:Orga:planningTable.html.twig' with {'disponibilites': planning[0].disponibilites}%}
 					<a class="btn btn-primary" href="{{ path('orga_print', {'orgaid':app.user.id }) }}"><i class="icon-print"></i> Imprimer mon planning »</a>
 					<a class="btn" href="https://www.google.com/calendar/render?cid={{ url('orga_ical', {'orgaid':app.user.id }) }}"><i class="icon-calendar"></i> Importer dans Google Agenda »</a>
 					
