@@ -147,7 +147,10 @@
 	    	<h2>Actions</h2>
 	    	<div class="span4">
 	    	<a class="btn {% if phpm_planning_visiteurs == 0 %}btn-primary {% endif %}btn-large" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Renseigner mes disponibilités »</a></p>
-	        {% if phpm_planning_visiteurs == 1 %}<a class="btn btn-primary btn-large" href="{{ path('orga_print', {'orgaid':app.user.id }) }}"><i class="icon-print"></i> Imprimer mon planning »</a>{% endif %}
+			{% if (planning[0] is defined) and  (phpm_planning_visiteurs ==1) %}
+	        <a class="btn btn-primary btn-large" href="{{ path('orga_print', {'orgaid':app.user.id }) }}"><i class="icon-print"></i> Imprimer mon planning »</a>
+	        {% endif %}
+	    	
 	    	</div>
 	    	{% endif %}
 			
@@ -181,7 +184,7 @@
 		        </div>
 	       </div>
 	    	{% endif %}
-	    	{% if is_granted('ROLE_VISITOR') and planning[0] is defined %}	
+	    	{% if (planning[0] is defined) and ((is_granted('ROLE_USER'))or(is_granted('ROLE_VISITOR') and (phpm_planning_visiteurs ==1))) %}	
 			<div class="span{% if is_granted('ROLE_ADMIN') %}8{% else %}12{% endif %}">
 	        	<h2>Planning prévisionnel</h2>
 	        		Planning valable du {{ debutPlanning | format_datetime('EEEE dd MMM Y HH:mm') }} au  {{ finPlanning | format_datetime('EEEE dd MMM Y HH:mm') }}.
