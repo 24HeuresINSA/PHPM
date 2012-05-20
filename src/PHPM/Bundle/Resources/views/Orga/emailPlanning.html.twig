@@ -1,0 +1,5 @@
+<h1>Salut {{ orga.prenom }} !</h1>
+{{ phpm_contenu_mail_planning|raw }}
+<h2><a href="{{ url('autologin', { 'id': orga.id, 'loginkey': (orga.id)|phpm_crypt }) }}">Clique ici pour accéder à ton planning.</a></h2>
+
+

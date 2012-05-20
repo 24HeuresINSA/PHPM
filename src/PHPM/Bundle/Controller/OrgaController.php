@@ -27,6 +27,7 @@ use PHPM\Bundle\Entity\Disponibilite;
 use PHPM\Bundle\Form\OrgaType;
 use PHPM\Bundle\Form\OrgaSoftType;
 use PHPM\Bundle\Entity\BesoinOrga;
+use PHPM\Bundle\Form\PrintPlanningType;
 
 
 
@@ -753,13 +754,19 @@ class OrgaController extends Controller
 		$param = $request->request->all();
 		$action=$param['action'];
 		
-		$data=$request->get('form');
+		$data=$request->get('phpm_bundle_printplanningtype');
 		
 		$pDebut = $data['debut'];
 		$pFin= $data['fin'];
 		$equipeid= $data['equipe'];
 		$orgaid= $data['orga'];
 
+
+		$orgai = $em->getRepository('PHPMBundle:Orga')->find($orgaid);
+		
+		$equipei = $em->getRepository('PHPMBundle:Orga')->find($equipeid);
+		
+		
 
 		
 		$debut = new \DateTime();
@@ -777,6 +784,24 @@ class OrgaController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		$orgas = $em->getRepository('PHPMBundle:Orga')-> getPlanning($orgaid,$equipeid,$debut,$fin);
 		foreach ($orgas as &$orga){
+			
+			if($action=='mail'){
+					
+				$timeFormatter= new  \IntlDateFormatter(null ,\IntlDateFormatter::FULL, \IntlDateFormatter::FULL,    null,null,'EEEE d MMMM HH:mm'  );
+				$subject='Planning Orga '.$timeFormatter->format($debut).' - '.$timeFormatter->format($fin);
+					
+				$message = \Swift_Message::newInstance()
+				->setSubject($subject)
+				->setFrom(array('orga@24heures.org' => 'Orga 24H INSA'))
+				->setReplyTo('orga@24heures.org')
+				->setTo($orga['email'])
+				->setBody($this->renderView('PHPMBundle:Orga:emailPlanning.html.twig', array('orga' => $orga)), 'text/html')
+				;
+				$this->get('mailer')->send($message);
+					
+			}
+			
+			
 			foreach ($orga['disponibilites'] as &$disponibilite){
 				$prevCreneau = null;
 				foreach ($disponibilite['creneaux'] as $id => &$creneau){
@@ -792,11 +817,19 @@ class OrgaController extends Controller
 				unset($prevCreneau);
 			}
 		}
+		
+		
+		
+
 		 
 		 
-		if($action=='show'){			 
-			return $this->render('PHPMBundle:Orga:showPlanning.html.twig', array('orgas' => $orgas,'debut'=>$debut, 'fin'=>$fin));				
+		if($action=='show'||$action=='mail'){	
+			$printPlanningForm = $this->createForm(new PrintPlanningType(), array('debut'=>$debut,'fin'=>$fin,'orga'=>$orgai,'equipe'=>$equipei));
+			return $this->render('PHPMBundle:Orga:showPlanning.html.twig', array('orgas' => $orgas,'debut'=>$debut, 'fin'=>$fin,'printPlanningForm'=>$printPlanningForm->createView()));				
 		}
+		
+		
+		
 		
 				 
 		return $this->render('PHPMBundle:Orga:printPlanning.html.twig', array('orgas' => $orgas,'debut'=>$debut, 'fin'=>$fin));	

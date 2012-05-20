@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PHPM\Bundle\Entity\Config;
+use PHPM\Bundle\Form\PrintPlanningType;
 
 
 class DefaultController extends Controller
@@ -54,23 +55,7 @@ class DefaultController extends Controller
     		
     		$deadlineFT=$config->getValue('phpm_tache_heure_limite_validation');
     			
-    		$printPlanningForm = $this->createFormBuilder(array('debut'=>new \DateTime(),'fin'=>new \DateTime()))
-			->add('debut','date',array(
-								'format' => 'yyyy-MM-dd',
-								'widget' => 'single_text',
-			                    'label'=>'Début',
-			                    'attr'=>array('class'=>'datep')))
-			->add('fin','date',array(
-								'format' => 'yyyy-MM-dd',
-								'widget' => 'single_text',
-	                    		'label'=>'Fin',
-	                    		'attr'=>array('class'=>'datep')))
-            ->add('orga', 'entity', array('label'=>'Orga',  'required'=> false,
-        			'class' => 'PHPMBundle:Orga'    			))
-        	->add('equipe', 'entity', array('label'=>'Équipe',  'required'=> false,
-        					'class' => 'PHPMBundle:Equipe'    			))
-
-    		->getForm();
+    		$printPlanningForm = $this->createForm(new PrintPlanningType(), array('debut'=>new \DateTime(),'fin'=>new \DateTime()));
     		
     		
     		

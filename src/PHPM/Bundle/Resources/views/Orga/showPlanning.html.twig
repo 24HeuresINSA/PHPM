@@ -21,7 +21,18 @@
 
 <div class="form-fluid">
 	<div class="form-actions">
-		
+					<form name="input" action="{{ path('orga_plannings') }}" method="post">
+						<fieldset>
+							Début : {{ form_widget(printPlanningForm.debut,  { 'attr': {'class': 'span2 datep'} }) }}
+							Fin : {{ form_widget(printPlanningForm.fin,  { 'attr': {'class': 'span2 datep'} }) }}
+							Orga : {{ form_widget(printPlanningForm.orga,  { 'attr': {'class': 'span2'} }) }} <b>OU</b>
+							Équipe : {{ form_widget(printPlanningForm.equipe,  { 'attr': {'class': 'span2'} }) }}
+							<br>
+							<button class="btn btn-primary" type="submit" name="action" value="show" >Afficher</button>
+							<button class="btn" type="submit" name="action" value="print" >Imprimer</button>
+							<button class="btn" type="submit" name="action" value="mail" >Notifier par mail</button>
+						</fieldset>
+					</form>
 	</div>
 </div>
    
