@@ -1,0 +1,29 @@
+{% extends "PHPMBundle::layout.html.twig"  %}
+{% set pageTitle = 'Aperçu des plannings' %}
+
+{% block pageHeader %}
+{% endblock %}
+
+{% block content %}
+
+<div class="row-fluid">       
+        	<div class="page-header">
+	        	<h1>Plannings du {{ debut | format_datetime('EEEE dd MMM HH:mm') }} au {{ fin | format_datetime('EEEE dd MMM HH:mm') }}.</h1>
+	        	{{ phpm_planning_message |raw }} 
+	        </div>
+</div>
+<div class="row-fluid"> 
+	{% for orga in orgas %}
+	<h2>{{ entitiesMacro.orga(orga) }}</h2>
+	{% include 'PHPMBundle:Orga:planningTable.html.twig' with {'disponibilites': orga.disponibilites}%}
+	{% endfor %}
+</div>
+
+<div class="form-fluid">
+	<div class="form-actions">
+		
+	</div>
+</div>
+   
+
+{% endblock %}

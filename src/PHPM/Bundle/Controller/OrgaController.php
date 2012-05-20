@@ -737,8 +737,8 @@ class OrgaController extends Controller
 	/**
 	 * Print orga planning, custom
 	 *
-	 * @Route("/plannings",  name="orga_plannings")
-	 * @Template("PHPMBundle:Orga:print.html.twig")
+	 * @Route("/plannings", name="orga_plannings")
+	 * 
 	 */
 	public function planningsAction()
 	{
@@ -750,7 +750,9 @@ class OrgaController extends Controller
 			throw new AccessDeniedException();
 		}
 		$request = $this->get('request');
-	
+		$param = $request->request->all();
+		$action=$param['action'];
+		
 		$data=$request->get('form');
 		
 		$pDebut = $data['debut'];
@@ -792,8 +794,15 @@ class OrgaController extends Controller
 		}
 		 
 		 
-		return array('orgas' => $orgas,'debut'=>$debut, 'fin'=>$fin
-		);
+		if($action=='show'){			 
+			return $this->render('PHPMBundle:Orga:showPlanning.html.twig', array('orgas' => $orgas,'debut'=>$debut, 'fin'=>$fin));				
+		}
+		
+				 
+		return $this->render('PHPMBundle:Orga:printPlanning.html.twig', array('orgas' => $orgas,'debut'=>$debut, 'fin'=>$fin));	
+		
+		
+
 	}
 	
 	
