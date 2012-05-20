@@ -19,7 +19,8 @@ INSERT INTO `Config` (`id`, `field`, `label`, `value`, `hint`) VALUES
 (18, 'phpm_planning_fin', 'Heure de début des plannings', '13-05-05 00:00:00', ''),
 (19, 'phpm_secret_salt', 'Clé secrète pour générer les URL de login', 'xxxx', NULL),
 (20, 'phpm_tache_heure_limite_validation', 'Heure limite pour envoyer les fiches tâches en validation', '2012-05-06 20:00:00', NULL),
-(21, 'phpm_planning_visiteurs', 'Autoriser les visiteurs à accéder à leur planning', 'false', '')
+(21, 'phpm_planning_visiteurs', 'Autoriser les visiteurs à accéder à leur planning', 'false', ''),
+(22, 'phpm_contenu_mail_planning', 'Contenu du mail de notification de planning', '<p>Ton planning est disponible.</p>\r\n<p><em>Maud et Adam.</em></p>', '');
 ;
 
 
