@@ -184,7 +184,7 @@
 		        </div>
 	       </div>
 	    	{% endif %}
-	    	{% if (planning[0] is defined) and ((is_granted('ROLE_USER'))or(is_granted('ROLE_VISITOR') and (phpm_planning_visiteurs ==1))) %}	
+	    	{% if (planning[0] is defined) and (is_granted('ROLE_USER')) %}	
 			<div class="span{% if is_granted('ROLE_ADMIN') %}8{% else %}12{% endif %}">
 	        	<h2>Planning prévisionnel</h2>
 	        		Planning valable du {{ debutPlanning | format_datetime('EEEE dd MMM Y HH:mm') }} au  {{ finPlanning | format_datetime('EEEE dd MMM Y HH:mm') }}.
