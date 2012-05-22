@@ -198,6 +198,11 @@ CalendarView.prototype = {
 	// place un créneau (mode orga)
 	placeCreneauOrga: function(idOrga, dispos, idDispo, idCreneau, dateDebut, duree, nbJour) {
 		var _prefixe = (nbJour !== 0) ? '>> ' : '';
+		
+		// protection du code : s'il n'y a plus de fiche tâche associée au créneau
+		if (dispos[idDispo]['creneaux'][idCreneau]['plageHoraire'] == null) {
+			return;
+		}
 				
 		var _html = '<div id="creneau_'+dispos[idDispo]['creneaux'][idCreneau]['id']+'_'+nbJour+'" class="creneau">'+
 					_prefixe+dispos[idDispo]['creneaux'][idCreneau]['plageHoraire']['tache']['nom']+'</div>';
