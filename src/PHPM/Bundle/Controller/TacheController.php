@@ -353,10 +353,8 @@ class TacheController extends Controller
         	return $this->redirect($this->generateUrl('plagehoraire_new', array('id' => $entity->getId())));
         }
 
-        $images = array('bundles/phpm/images/human.jpg','bundles/phpm/images/human2.jpg','bundles/phpm/images/human3.jpg');
-            
+                   
         return array(
-        		'imageu'=> $images[array_rand($images)],
             'entity'      => $entity,
             'form'   => $editForm->createView(),
             'valid' => $valid,
