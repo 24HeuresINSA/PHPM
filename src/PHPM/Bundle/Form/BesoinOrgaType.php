@@ -31,7 +31,7 @@ class BesoinOrgaType extends AbstractType
         			return $or->findAllWithConfianceValueMin($minConfianceOrgaHint);
         			}
         			))
-        	->add('equipe', null, array('label'=>'Équipe', 'empty_value' => '(orga précis)', 'required'=> false))        	
+        	->add('equipe', null, array('label'=>'Équipe', 'empty_value' => '(N'importe quelle équipe)', 'required'=> false))        	
             ->add('nbOrgasNecessaires', null, array('label' => 'Orgas nécessaires', 'attr' => array('min' => 1)));
     }
 
