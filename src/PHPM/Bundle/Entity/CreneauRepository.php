@@ -201,7 +201,7 @@ class CreneauRepository extends EntityRepository
 	    }
 		
 		// on dé-duplique
-		$dql .= "GROUP BY c.plageHoraire, c.equipeHint, c.orgaHint ";
+		$dql .= "GROUP BY c.plageHoraire, c.equipeHint, c.orgaHint, c.debut, c.fin";
 		
 		// l'order se fait ici, plus optimisé !
 		$dql .= "ORDER BY oh.id DESC, ehc.valeur DESC, c.debut ASC";
