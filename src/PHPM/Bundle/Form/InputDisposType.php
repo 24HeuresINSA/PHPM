@@ -5,14 +5,14 @@ namespace PHPM\Bundle\Form;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use PHPM\Bundle\Form\DisponibiliteInscriptionType;
 
 class InputDisposType extends AbstractType
 {
     
       
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
        
 

@@ -35,14 +35,14 @@ class Commentaire
 
     /**
     * @ORM\ManyToOne(targetEntity="Tache", inversedBy="Commentaires")
-    * @ORM\JoinColumn(name="tache_id", referencedColumnName="id",onDelete="CASCADE", onUpdate="CASCADE")
+    * @ORM\JoinColumn(name="tache_id", referencedColumnName="id",onDelete="CASCADE")
     * @Assert\Valid
     */
     protected $tache;
 
     /**
      * @ORM\ManyToOne(targetEntity="Orga", inversedBy="Commentaires")
-     * @ORM\JoinColumn(name="orga_id", referencedColumnName="id",onDelete="CASCADE", onUpdate="CASCADE")
+     * @ORM\JoinColumn(name="orga_id", referencedColumnName="id",onDelete="CASCADE")
      * @Assert\Valid
      */
     protected $auteur;

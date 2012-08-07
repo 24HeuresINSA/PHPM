@@ -34,7 +34,7 @@ class Equipe
     
     /**
      * @ORM\ManyToOne(targetEntity="Orga", inversedBy="equipesResponsable",cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE", nullable="true")
+     * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id",onDelete="SET NULL", nullable=true)
      * @Assert\Valid
      */
     protected $responsable;
@@ -60,7 +60,7 @@ class Equipe
     
     /**
      * @ORM\ManyToOne(targetEntity="Confiance", inversedBy="equipes")
-     * @ORM\JoinColumn(name="confiance_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+     * @ORM\JoinColumn(name="confiance_id", referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
     protected $confiance;

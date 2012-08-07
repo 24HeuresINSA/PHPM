@@ -2,7 +2,7 @@
 
 namespace PHPM\Bundle\Form\Config;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use PHPM\Bundle\Form\EventListener\ConfigFormSubscriber;
 use PHPM\Bundle\Form\Config\ConfigType;
 use PHPM\Bundle\Form\LieuType;
@@ -20,7 +20,7 @@ class ManifType extends AbstractType
         $this->admin = $admin;
     }
 
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
         $builder

@@ -3,7 +3,7 @@
 namespace PHPM\Bundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class PlageHoraireType extends AbstractType
 {
@@ -17,7 +17,7 @@ class PlageHoraireType extends AbstractType
 	
 	}
 	
-    public function buildForm(FormBuilder $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $choixDurees= array();
         
         for ($i=1;$i<=12;$i++){

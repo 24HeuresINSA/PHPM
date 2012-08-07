@@ -31,14 +31,14 @@ class BesoinOrga
 
     /**
     * @ORM\ManyToOne(targetEntity="PlageHoraire")
-    * @ORM\JoinColumn(name="plageHoraire_id", referencedColumnName="id",onDelete="CASCADE", onUpdate="CASCADE")
+    * @ORM\JoinColumn(name="plageHoraire_id", referencedColumnName="id",onDelete="CASCADE")
     * @Assert\Valid
     */
     protected $plageHoraire;
     
     /**
      * @ORM\ManyToOne(targetEntity="Equipe")
-     * @ORM\JoinColumn(name="equipe_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+     * @ORM\JoinColumn(name="equipe_id", referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
     protected $equipe;
@@ -46,14 +46,14 @@ class BesoinOrga
     /**
     * @var smallint $nbOrgasNecessaires
     *
-    * @ORM\Column(name="nbOrgasNecessaires", type="smallint", nullable="true")
+    * @ORM\Column(name="nbOrgasNecessaires", type="smallint", nullable=true)
     */
     protected $nbOrgasNecessaires;
     
     
     /**
      * @ORM\ManyToOne(targetEntity="Orga", inversedBy="besoinsOrgaHint")
-     * @ORM\JoinColumn(name="orgaHint_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+     * @ORM\JoinColumn(name="orgaHint_id", referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
     protected $orgaHint;

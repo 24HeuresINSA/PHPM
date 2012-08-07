@@ -36,21 +36,21 @@ class GroupeTache
 
     /**
      * @ORM\ManyToOne(targetEntity="Orga", inversedBy="groupesTacheResponsable")
-     * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+     * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
     protected $responsable;
 
     /**
      * @ORM\ManyToOne(targetEntity="Equipe", inversedBy="groupesTache")
-     * @ORM\JoinColumn(name="equipe_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+     * @ORM\JoinColumn(name="equipe_id", referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
     protected $equipe;
 
     //     /**
     //      * @ORM\ManyToOne(targetEntity="Lieu", inversedBy="groupestache")
-    //      * @ORM\JoinColumn(name="lieu_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+    //      * @ORM\JoinColumn(name="lieu_id", referencedColumnName="id",onDelete="SET NULL")
     //      * @Assert\Valid
     //      */
     //     protected $lieu;
@@ -66,7 +66,7 @@ class GroupeTache
     /**
      * @var integer $animLiee
      *
-     * @ORM\Column(name="animLiee", type="integer", nullable="true")
+     * @ORM\Column(name="animLiee", type="integer", nullable=true)
      */
     protected $animLiee;
 

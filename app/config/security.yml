@@ -44,4 +44,7 @@ security:
              - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/.*json, roles: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/.*, roles: ROLE_USER }               
-             - { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
+#             - { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
+jms_security_extra:
+    secure_all_services: false
+    expressions: true

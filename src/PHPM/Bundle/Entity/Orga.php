@@ -195,7 +195,7 @@ class Orga implements UserInterface
     
     /**
      * @ORM\ManyToOne(targetEntity="Equipe", inversedBy="orgas")
-     * @ORM\JoinColumn(name="equipe_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+     * @ORM\JoinColumn(name="equipe_id", referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
     protected $equipe;
@@ -217,7 +217,7 @@ class Orga implements UserInterface
     /**
     * @var smallint $celibataire
     * @Assert\Choice(choices = {"0", "1"})
-    * @ORM\Column(name="celibataire", type="smallint", nullable="true")
+    * @ORM\Column(name="celibataire", type="smallint", nullable=true)
     */
     protected $celibataire;
     
@@ -482,7 +482,7 @@ class Orga implements UserInterface
     	return array('ROLE_ADMIN');
     }
     
-    public function equals(UserInterface $user)
+    public function isEqualTo(UserInterface $user)
     {
     	return $user->getEmail() === $this->email;
     }

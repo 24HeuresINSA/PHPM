@@ -74,7 +74,7 @@ class DisponibiliteInscription
     
     /**
      * @ORM\ManyToOne(targetEntity="Mission", inversedBy="disponibilitesInscription")
-     * @ORM\JoinColumn(name="mission_id", referencedColumnName="id",onDelete="CASCADE", onUpdate="CASCADE")
+     * @ORM\JoinColumn(name="mission_id", referencedColumnName="id",onDelete="CASCADE")
      * @Assert\Valid
      */
     protected $mission;

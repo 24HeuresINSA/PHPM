@@ -53,28 +53,28 @@ class Creneau
     
     /**
     * @ORM\ManyToOne(targetEntity="Disponibilite", inversedBy="creneaux")
-    * @ORM\JoinColumn(name="disponibilite_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+    * @ORM\JoinColumn(name="disponibilite_id", referencedColumnName="id",onDelete="SET NULL")
     * @Assert\Valid
     */
     protected $disponibilite;
     
     /**
     * @ORM\ManyToOne(targetEntity="PlageHoraire", inversedBy="creneaux")
-    * @ORM\JoinColumn(name="plageHoraire_id", referencedColumnName="id",onDelete="CASCADE", onUpdate="CASCADE")
+    * @ORM\JoinColumn(name="plageHoraire_id", referencedColumnName="id",onDelete="CASCADE")
     * @Assert\Valid
     */
     protected $plageHoraire;
 
     /**
      * @ORM\ManyToOne(targetEntity="Equipe")
-     * @ORM\JoinColumn(name="equipeHint_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+     * @ORM\JoinColumn(name="equipeHint_id", referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
     protected $equipeHint;
     
     /**
      * @ORM\ManyToOne(targetEntity="Orga", inversedBy="creneauxHint")
-     * @ORM\JoinColumn(name="orgaHint_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+     * @ORM\JoinColumn(name="orgaHint_id", referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
     protected $orgaHint;

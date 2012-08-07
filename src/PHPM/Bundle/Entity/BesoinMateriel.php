@@ -29,14 +29,14 @@ class BesoinMateriel
     
     /**
     * @ORM\ManyToOne(targetEntity="Tache", inversedBy="besoinsMateriel")
-    * @ORM\JoinColumn(name="tache_id", referencedColumnName="id",onDelete="CASCADE", onUpdate="CASCADE")
+    * @ORM\JoinColumn(name="tache_id", referencedColumnName="id",onDelete="CASCADE")
     * @Assert\Valid
     */
     protected $tache;
     
     /**
     * @ORM\ManyToOne(targetEntity="Materiel", inversedBy="besoinsMateriel")
-    * @ORM\JoinColumn(name="materiel_id", referencedColumnName="id",onDelete="CASCADE", onUpdate="CASCADE")
+    * @ORM\JoinColumn(name="materiel_id", referencedColumnName="id",onDelete="CASCADE")
     * @Assert\Valid
     */
     

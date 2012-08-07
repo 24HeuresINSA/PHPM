@@ -3,7 +3,7 @@
 namespace PHPM\Bundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use PHPM\Bundle\Entity\EquipeRepository;
 
 class OrgaSoftType extends AbstractType
@@ -18,7 +18,7 @@ class OrgaSoftType extends AbstractType
     }
     
     
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $libellesPermis =  json_decode($this->config->getValue('manifestation_permis_libelles'),true);
         

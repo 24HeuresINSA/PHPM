@@ -75,7 +75,7 @@ class Tache
     
 //     /**
 //      * @ORM\ManyToOne(targetEntity="Lieu", inversedBy="taches")
-//      * @ORM\JoinColumn(name="lieu_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+//      * @ORM\JoinColumn(name="lieu_id", referencedColumnName="id",onDelete="SET NULL")
 //      * @Assert\Valid
 //      */
 //     protected $lieu;
@@ -83,14 +83,14 @@ class Tache
     
     /**
     * @ORM\ManyToOne(targetEntity="Orga", inversedBy="tachesResponsable")
-    * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+    * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id",onDelete="SET NULL")
     * @Assert\Valid
     */
     protected $responsable;
     
 //     /**
 //     * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="taches")
-//     * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id",onDelete="SET NULL", onUpdate="CASCADE")
+//     * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id",onDelete="SET NULL")
 //     * @Assert\Valid
 //     */
 //     protected $categorie;
@@ -105,7 +105,7 @@ class Tache
     
     /**
      * @ORM\ManyToOne(targetEntity="GroupeTache", inversedBy="taches")
-     * @ORM\JoinColumn(name="groupetache_id", referencedColumnName="id",onDelete="CASCADE", onUpdate="CASCADE")
+     * @ORM\JoinColumn(name="groupetache_id", referencedColumnName="id",onDelete="CASCADE")
      * @Assert\Valid
      */
     protected $groupeTache;

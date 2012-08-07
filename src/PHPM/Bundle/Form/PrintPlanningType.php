@@ -3,7 +3,7 @@
 namespace PHPM\Bundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use PHPM\Bundle\Entity\EquipeRepository;
 
 class PrintPlanningType extends AbstractType
@@ -18,7 +18,7 @@ class PrintPlanningType extends AbstractType
     }
     
     
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         
     	$builder

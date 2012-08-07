@@ -51,7 +51,7 @@ class Disponibilite
     
     /**
     * @ORM\ManyToOne(targetEntity="Orga", inversedBy="disponibilites")
-    * @ORM\JoinColumn(name="orga_id", referencedColumnName="id",onDelete="CASCADE", onUpdate="CASCADE")
+    * @ORM\JoinColumn(name="orga_id", referencedColumnName="id",onDelete="CASCADE")
     * @Assert\Valid
     */
     protected $orga;

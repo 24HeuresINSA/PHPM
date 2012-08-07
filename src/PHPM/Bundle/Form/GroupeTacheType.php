@@ -3,7 +3,7 @@
 namespace PHPM\Bundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use PHPM\Bundle\Entity\AnimLinker;
 
 class GroupeTacheType extends AbstractType
@@ -17,7 +17,7 @@ class GroupeTacheType extends AbstractType
         $this->admin =$admin;
     }
     
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $al = new AnimLinker($this->config->getValue('animations_db_path'),$this->config->getValue('manifestation_edition'));
         

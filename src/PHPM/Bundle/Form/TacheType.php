@@ -5,7 +5,7 @@ namespace PHPM\Bundle\Form;
 use PHPM\Bundle\Entity\BesoinMateriel;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use PHPM\Bundle\Form\BesoinMaterielType;
 use PHPM\Bundle\Entity\Tache;
@@ -27,7 +27,7 @@ class TacheType extends AbstractType
 		$this->rOnly = $rOnly;
 	}
 
-	public function buildForm(FormBuilder $builder, array $options)
+	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$libellesPermis = json_decode($this->config->getValue('manifestation_permis_libelles'), true);
 

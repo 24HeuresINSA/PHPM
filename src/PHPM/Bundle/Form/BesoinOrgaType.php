@@ -3,7 +3,7 @@
 namespace PHPM\Bundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use PHPM\Bundle\Entity\OrgaRepository;
 
 class BesoinOrgaType extends AbstractType
@@ -19,7 +19,7 @@ class BesoinOrgaType extends AbstractType
 		
 	}
 	
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
     	
     	$minConfianceOrgaHint = $this->config->getValue('manifestation_orga_plagehoraireconfiancemin');

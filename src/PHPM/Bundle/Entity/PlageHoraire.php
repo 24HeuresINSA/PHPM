@@ -92,7 +92,7 @@ class PlageHoraire
     
     /**
     * @ORM\ManyToOne(targetEntity="Tache", inversedBy="PlagesHoraires")
-    * @ORM\JoinColumn(name="tache_id", referencedColumnName="id",onDelete="CASCADE", onUpdate="CASCADE")
+    * @ORM\JoinColumn(name="tache_id", referencedColumnName="id",onDelete="CASCADE")
     * @Assert\Valid
     */
     protected $tache;

@@ -3,7 +3,7 @@
 namespace PHPM\Bundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 class TacheBesoinsType extends AbstractType
@@ -22,7 +22,7 @@ class TacheBesoinsType extends AbstractType
             $this->tache= $tache;
     }
     
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         
         $libellesPermis =  json_decode($this->config->getValue('manifestation_permis_libelles'),true);
