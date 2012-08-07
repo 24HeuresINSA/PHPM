@@ -41,7 +41,7 @@ class Commentaire
     protected $tache;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Orga", inversedBy="Commentaires")
+     * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Orga", inversedBy="Commentaires")
      * @ORM\JoinColumn(name="orga_id", referencedColumnName="id",onDelete="CASCADE")
      * @Assert\Valid
      */
@@ -113,9 +113,9 @@ class Commentaire
     /**
      * Set auteur
      *
-     * @param AssoMaker\PHPMBundle\Entity\Orga $auteur
+     * @param AssoMaker\BaseBundle\Entity\Orga $auteur
      */
-    public function setAuteur(\AssoMaker\PHPMBundle\Entity\Orga $auteur)
+    public function setAuteur(\AssoMaker\BaseBundle\Entity\Orga $auteur)
     {
         $this->auteur = $auteur;
     }
@@ -123,7 +123,7 @@ class Commentaire
     /**
      * Get auteur
      *
-     * @return AssoMaker\PHPMBundle\Entity\Orga 
+     * @return AssoMaker\BaseBundle\Entity\Orga 
      */
     public function getAuteur()
     {

@@ -1,0 +1,31 @@
+{% extends "AssoMakerBaseBundle:Confiance:layout.html.twig"  %}
+{% set pageTitle = 'Liste des Confiances' %}
+{% use "AssoMakerPHPMBundle::index.html.twig" %}
+
+{% block content %}
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Valeur</th>
+            <th>Couleur</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr style="cursor:pointer" onclick="window.location='{{ path('confiance_show', { 'id': entity.id }) }}'">
+            <td><a href="{{ path('confiance_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.nom }}</td>
+            <td>{{ entity.valeur }}</td>
+            <td>{{ entity.couleur }}</td>
+            <td>
+				{{ bouton.edit( path('confiance_edit', { 'id': entity.id }) ) }}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

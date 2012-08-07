@@ -35,14 +35,14 @@ class GroupeTache
     protected $taches;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Orga", inversedBy="groupesTacheResponsable")
+     * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Orga", inversedBy="groupesTacheResponsable")
      * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
     protected $responsable;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Equipe", inversedBy="groupesTache")
+     * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Equipe", inversedBy="groupesTache")
      * @ORM\JoinColumn(name="equipe_id", referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
@@ -149,9 +149,9 @@ class GroupeTache
     /**
      * Set responsable
      *
-     * @param AssoMaker\PHPMBundle\Entity\Orga $responsable
+     * @param AssoMaker\BaseBundle\Entity\Orga $responsable
      */
-    public function setResponsable(\AssoMaker\PHPMBundle\Entity\Orga $responsable)
+    public function setResponsable(\AssoMaker\BaseBundle\Entity\Orga $responsable)
     {
         $this->responsable = $responsable;
     }
@@ -159,7 +159,7 @@ class GroupeTache
     /**
      * Get responsable
      *
-     * @return AssoMaker\PHPMBundle\Entity\Orga
+     * @return AssoMaker\BaseBundle\Entity\Orga
      */
     public function getResponsable()
     {
@@ -169,9 +169,9 @@ class GroupeTache
     /**
      * Set equipe
      *
-     * @param AssoMaker\PHPMBundle\Entity\Equipe $equipe
+     * @param AssoMaker\BaseBundle\Entity\Equipe $equipe
      */
-    public function setEquipe(\AssoMaker\PHPMBundle\Entity\Equipe $equipe)
+    public function setEquipe(\AssoMaker\BaseBundle\Entity\Equipe $equipe)
     {
         $this->equipe = $equipe;
     }
@@ -179,7 +179,7 @@ class GroupeTache
     /**
      * Get equipe
      *
-     * @return AssoMaker\PHPMBundle\Entity\Equipe
+     * @return AssoMaker\BaseBundle\Entity\Equipe
      */
     public function getEquipe()
     {

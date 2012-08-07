@@ -16,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AssoMaker\PHPMBundle\Entity\Tache;
 use AssoMaker\PHPMBundle\Entity\Commentaire;
-use AssoMaker\PHPMBundle\Entity\Confiance;
+use AssoMaker\BaseBundle\Entity\Confiance;
 // use AssoMaker\PHPMBundle\Entity\Categorie;
 use AssoMaker\PHPMBundle\Form\TacheType;
 use AssoMaker\PHPMBundle\Form\TacheBesoinsType;
@@ -42,7 +42,7 @@ class TacheController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         
         $equipes =$em
-        ->createQuery("SELECT e FROM AssoMakerPHPMBundle:Equipe e")
+        ->createQuery("SELECT e FROM AssoMakerBaseBundle:Equipe e")
         ->getResult();
         
 		$tachesDQL = "SELECT t,l,r,g FROM AssoMakerPHPMBundle:Tache t LEFT JOIN t.groupeTache g JOIN g.equipe e JOIN t.responsable r LEFT JOIN t.commentaires l WHERE 1=1 ";

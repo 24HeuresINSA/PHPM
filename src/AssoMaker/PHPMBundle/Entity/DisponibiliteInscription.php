@@ -68,7 +68,7 @@ class DisponibiliteInscription
 
     /**
      * 
-     * @ORM\ManyToMany(targetEntity="Orga", mappedBy="disponibilitesInscription")
+     * @ORM\ManyToMany(targetEntity="AssoMaker\BaseBundle\Entity\Orga", mappedBy="disponibilitesInscription")
      */
     private $orgas;
     
@@ -138,9 +138,9 @@ class DisponibiliteInscription
     /**
      * Add orgas
      *
-     * @param AssoMaker\PHPMBundle\Entity\Orga $orgas
+     * @param AssoMaker\BaseBundle\Entity\Orga $orgas
      */
-    public function addOrga(\AssoMaker\PHPMBundle\Entity\Orga $orgas)
+    public function addOrga(\AssoMaker\BaseBundle\Entity\Orga $orgas)
     {
         $this->orgas[] = $orgas;
     }

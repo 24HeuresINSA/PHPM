@@ -21,7 +21,7 @@ class ConfianceType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-                'data_class' => 'AssoMaker\PHPMBundle\Entity\Confiance',
+                'data_class' => 'AssoMaker\BaseBundle\Entity\Confiance',
         );
     }
 

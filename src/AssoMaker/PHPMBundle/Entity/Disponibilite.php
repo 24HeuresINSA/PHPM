@@ -50,7 +50,7 @@ class Disponibilite
     protected $fin;
     
     /**
-    * @ORM\ManyToOne(targetEntity="Orga", inversedBy="disponibilites")
+    * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Orga", inversedBy="disponibilites")
     * @ORM\JoinColumn(name="orga_id", referencedColumnName="id",onDelete="CASCADE")
     * @Assert\Valid
     */
@@ -118,7 +118,7 @@ class Disponibilite
     /**
      * Set orga
      *
-     * @param AssoMaker\PHPMBundle\Entity\Orga $orga
+     * @param AssoMaker\BaseBundle\Entity\Orga $orga
      */
     public function setOrga($orga)
     {
@@ -128,7 +128,7 @@ class Disponibilite
     /**
      * Get orga
      *
-     * @return AssoMaker\PHPMBundle\Entity\Orga 
+     * @return AssoMaker\BaseBundle\Entity\Orga 
      */
     public function getOrga()
     {

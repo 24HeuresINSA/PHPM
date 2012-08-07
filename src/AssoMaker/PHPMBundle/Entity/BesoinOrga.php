@@ -37,7 +37,7 @@ class BesoinOrga
     protected $plageHoraire;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Equipe")
+     * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Equipe")
      * @ORM\JoinColumn(name="equipe_id", referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
@@ -52,7 +52,7 @@ class BesoinOrga
     
     
     /**
-     * @ORM\ManyToOne(targetEntity="Orga", inversedBy="besoinsOrgaHint")
+     * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Orga", inversedBy="besoinsOrgaHint")
      * @ORM\JoinColumn(name="orgaHint_id", referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
@@ -113,7 +113,7 @@ class BesoinOrga
     /**
      * Set equipe
      *
-     * @param AssoMaker\PHPMBundle\Entity\Equipe $equipe
+     * @param AssoMaker\BaseBundle\Entity\Equipe $equipe
      */
     public function setEquipe($equipe)
     {
@@ -123,7 +123,7 @@ class BesoinOrga
     /**
      * Get equipe
      *
-     * @return AssoMaker\PHPMBundle\Entity\Equipe 
+     * @return AssoMaker\BaseBundle\Entity\Equipe 
      */
     public function getEquipe()
     {
@@ -134,7 +134,7 @@ class BesoinOrga
     /**
      * Set orgaHint
      *
-     * @param AssoMaker\PHPMBundle\Entity\Orga $orgaHint
+     * @param AssoMaker\BaseBundle\Entity\Orga $orgaHint
      */
     public function setOrgaHint($orgaHint)
     {
@@ -144,7 +144,7 @@ class BesoinOrga
     /**
      * Get orgaHint
      *
-     * @return AssoMaker\PHPMBundle\Entity\Orga 
+     * @return AssoMaker\BaseBundle\Entity\Orga 
      */
     public function getOrgaHint()
     {

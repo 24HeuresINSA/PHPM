@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class PlageHoraireRepository extends EntityRepository
 {
-// 	public function getConflictingPlages(\AssoMaker\PHPMBundle\Entity\Orga $orga)
+// 	public function getConflictingPlages(\AssoMaker\BaseBundle\Entity\Orga $orga)
 // 	{
 // 		$orgaId = $orga->getId();
 // 	var_dump($this->getEntityManager()

@@ -44,14 +44,14 @@ class DefaultController extends Controller
     	
     	
     	if ($this->get('security.context')->isGranted('ROLE_VISITOR')) {
-    		$statsUser=$em->getRepository('AssoMakerPHPMBundle:Orga')->getStats($user);
+    		$statsUser=$em->getRepository('AssoMakerBaseBundle:Orga')->getStats($user);
     		$statsUser['taches']=$em->getRepository('AssoMakerPHPMBundle:Tache')->getOrgaStats($user);
 //     		$conflictingPlages=$em->getRepository('AssoMakerPHPMBundle:PlageHoraire')-> getConflictingPlages($user);
 
     		   		
     		$debutPlanning = new \DateTime();
     		$finPlanning = new \DateTime($config->getValue('phpm_planning_fin'));
-    		$planning=$em->getRepository('AssoMakerPHPMBundle:Orga')->getPlanning($user->getId(),null,$debutPlanning,$finPlanning);
+    		$planning=$em->getRepository('AssoMakerBaseBundle:Orga')->getPlanning($user->getId(),null,$debutPlanning,$finPlanning);
     		
     		$deadlineFT=$config->getValue('phpm_tache_heure_limite_validation');
     			
@@ -85,7 +85,7 @@ class DefaultController extends Controller
     	$em = $this->getDoctrine()->getEntityManager();
     	$config = $this->get('config.extension');
     	
-    	$user = $em->getRepository('AssoMakerPHPMBundle:Orga')->findOneById($id);
+    	$user = $em->getRepository('AssoMakerBaseBundle:Orga')->findOneById($id);
     	$secretSalt=$config->getValue('phpm_secret_salt');
     	if ((!$user)||($loginkey!==crypt($secretSalt.$id, 24))) {
     		return $this->redirect($config->getValue('phpm_orgasoft_inscription_returnURL'));
@@ -148,7 +148,7 @@ class DefaultController extends Controller
                 
                 $em = $this->getDoctrine()->getEntityManager();
                 
-                $user = $em->getRepository('AssoMakerPHPMBundle:Orga')->findOneByEmail($email);
+                $user = $em->getRepository('AssoMakerBaseBundle:Orga')->findOneByEmail($email);
                 
                 if (!$user) {
                     $redirectURL = $config->getValue('manifestation_permis_libelles');

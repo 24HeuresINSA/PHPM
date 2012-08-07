@@ -4,7 +4,7 @@ namespace AssoMaker\PHPMBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use AssoMaker\PHPMBundle\Entity\EquipeRepository;
+use AssoMaker\BaseBundle\Entity\EquipeRepository;
 
 class PrintPlanningType extends AbstractType
 {
@@ -33,9 +33,9 @@ class PrintPlanningType extends AbstractType
     					'label'=>'Fin',
     					'attr'=>array('class'=>'datep')))
     	->add('orga', 'entity', array('label'=>'Orga',  'required'=> false,
-    							'class' => 'AssoMakerPHPMBundle:Orga'    			))
+    							'class' => 'AssoMakerBaseBundle:Orga'    			))
     	->add('equipe', 'entity', array('label'=>'Équipe',  'required'=> false,
-    									'class' => 'AssoMakerPHPMBundle:Equipe'    			))				
+    									'class' => 'AssoMakerBaseBundle:Equipe'    			))				
     	;
     	    
     }

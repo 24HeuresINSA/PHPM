@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use AssoMaker\PHPMBundle\Form\BesoinMaterielType;
 use AssoMaker\PHPMBundle\Entity\Tache;
-use AssoMaker\PHPMBundle\Entity\OrgaRepository;
+use AssoMaker\BaseBundle\Entity\OrgaRepository;
 
 class TacheType extends AbstractType
 {
@@ -43,7 +43,7 @@ class TacheType extends AbstractType
 		->add('consignes')
 		->add('permisNecessaire', 'choice', array('label' => 'Permis Nécessaire', 'choices' => $libellesPermis))
 		->add('responsable','entity',array(
-				'class' => 'AssoMakerPHPMBundle:Orga',
+				'class' => 'AssoMakerBaseBundle:Orga',
 				'query_builder' => function(OrgaRepository $or)use($minConfianceResp){return $or->findAllWithConfianceValueMin($minConfianceResp);}))
 		->add('materielSupplementaire');
 

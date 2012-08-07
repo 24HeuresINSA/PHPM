@@ -188,7 +188,7 @@
 			<div class="span{% if is_granted('ROLE_ADMIN') %}8{% else %}12{% endif %}">
 	        	<h2>Planning prévisionnel</h2>
 	        		Planning valable du {{ debutPlanning | format_datetime('EEEE dd MMM Y HH:mm') }} au  {{ finPlanning | format_datetime('EEEE dd MMM Y HH:mm') }}.
-					{% include 'AssoMakerPHPMBundle:Orga:planningTable.html.twig' with {'disponibilites': planning[0].disponibilites}%}
+					{% include 'AssoMakerBaseBundle:Orga:planningTable.html.twig' with {'disponibilites': planning[0].disponibilites}%}
 					<a class="btn btn-primary" href="{{ path('orga_print', {'orgaid':app.user.id }) }}"><i class="icon-print"></i> Imprimer mon planning »</a>
 					<a class="btn" href="https://www.google.com/calendar/render?cid={{ url('orga_ical', {'orgaid':app.user.id }) }}"><i class="icon-calendar"></i> Importer dans Google Agenda »</a>
 					

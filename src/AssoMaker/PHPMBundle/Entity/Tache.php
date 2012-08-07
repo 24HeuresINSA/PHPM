@@ -82,7 +82,7 @@ class Tache
     
     
     /**
-    * @ORM\ManyToOne(targetEntity="Orga", inversedBy="tachesResponsable")
+    * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Orga", inversedBy="tachesResponsable")
     * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id",onDelete="SET NULL")
     * @Assert\Valid
     */
@@ -170,9 +170,9 @@ class Tache
     /**
      * Set confiance
      *
-     * @param AssoMaker\PHPMBundle\Entity\Confiance $confiance
+     * @param AssoMaker\BaseBundle\Entity\Confiance $confiance
      */
-    public function setConfiance(\AssoMaker\PHPMBundle\Entity\Confiance $confiance)
+    public function setConfiance(\AssoMaker\BaseBundle\Entity\Confiance $confiance)
     {
         $this->confiance = $confiance;
     }
@@ -180,7 +180,7 @@ class Tache
     /**
      * Get confiance
      *
-     * @return AssoMaker\PHPMBundle\Entity\Confiance
+     * @return AssoMaker\BaseBundle\Entity\Confiance
      */
     public function getConfiance()
     {
@@ -336,9 +336,9 @@ class Tache
     /**
      * Set responsable
      *
-     * @param AssoMaker\PHPMBundle\Entity\Orga $responsable
+     * @param AssoMaker\BaseBundle\Entity\Orga $responsable
      */
-    public function setResponsable(\AssoMaker\PHPMBundle\Entity\Orga $responsable)
+    public function setResponsable(\AssoMaker\BaseBundle\Entity\Orga $responsable)
     {
         $this->responsable = $responsable;
     }
@@ -346,7 +346,7 @@ class Tache
     /**
      * Get responsable
      *
-     * @return AssoMaker\PHPMBundle\Entity\Orga
+     * @return AssoMaker\BaseBundle\Entity\Orga
      */
     public function getResponsable()
     {

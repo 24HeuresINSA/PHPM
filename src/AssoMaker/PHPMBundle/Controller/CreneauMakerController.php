@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AssoMaker\PHPMBundle\Entity\Tache;
 use AssoMaker\PHPMBundle\Entity\Commentaire;
-use AssoMaker\PHPMBundle\Entity\Confiance;
+use AssoMaker\BaseBundle\Entity\Confiance;
 // use AssoMaker\PHPMBundle\Entity\Categorie;
 use AssoMaker\PHPMBundle\Form\TacheType;
 use AssoMaker\PHPMBundle\Form\TacheBesoinsType;

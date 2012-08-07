@@ -72,7 +72,7 @@ class AnalyseController extends Controller
     	 
     	 
     	$orgasResult = $em
-    	->createQuery("SELECT e.nom as equipe, count(o) as total FROM AssoMakerPHPMBundle:Orga o JOIN o.equipe e GROUP BY e ORDER BY total DESC")
+    	->createQuery("SELECT e.nom as equipe, count(o) as total FROM AssoMakerBaseBundle:Orga o JOIN o.equipe e GROUP BY e ORDER BY total DESC")
     	->getArrayResult();
     
     	$orgasStats = array();
@@ -133,12 +133,12 @@ class AnalyseController extends Controller
     	$em = $this->getDoctrine()->getEntityManager();
     	
     	if ($orgaid=='all') {
-    		$respDQL = "SELECT o,bo,p,t,g FROM AssoMakerPHPMBundle:Orga o
+    		$respDQL = "SELECT o,bo,p,t,g FROM AssoMakerBaseBundle:Orga o
     		JOIN o.besoinsOrgaHint bo  JOIN bo.plageHoraire p JOIN p.tache t JOIN t.groupeTache g  WHERE t.statut >=0
     		ORDER BY o.nom, p.debut ";
     	}else{
     		
-    		$respDQL = "SELECT o,bo,p,t,g FROM AssoMakerPHPMBundle:Orga o
+    		$respDQL = "SELECT o,bo,p,t,g FROM AssoMakerBaseBundle:Orga o
     		JOIN o.besoinsOrgaHint bo  JOIN bo.plageHoraire p JOIN p.tache t JOIN t.groupeTache g  WHERE t.statut >=0 AND o.id = $orgaid
     		ORDER BY o.nom, p.debut ";
     	}

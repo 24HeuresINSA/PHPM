@@ -333,8 +333,8 @@ COMMIT;
 		
 		$configItems = $em->getRepository('AssoMakerPHPMBundle:Config')->findAll();
 // 		$lieuItems = $em->getRepository('AssoMakerPHPMBundle:Lieu')->findAll();
-		$equipeItems = $em->createQuery("SELECT e,r,c FROM AssoMakerPHPMBundle:Equipe e JOIN e.responsable r JOIN e.confiance c ")->getResult();
-		$confianceItems = $em->getRepository('AssoMakerPHPMBundle:Confiance')->findAll();
+		$equipeItems = $em->createQuery("SELECT e,r,c FROM AssoMakerBaseBundle:Equipe e JOIN e.responsable r JOIN e.confiance c ")->getResult();
+		$confianceItems = $em->getRepository('AssoMakerBaseBundle:Confiance')->findAll();
 		$materielItems = $em->createQuery("SELECT m FROM AssoMakerPHPMBundle:Materiel m ORDER BY m.categorie ")->getResult();
 		$data = array(
 		        'configItems'=>$configItems,

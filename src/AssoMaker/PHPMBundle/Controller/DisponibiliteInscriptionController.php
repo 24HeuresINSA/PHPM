@@ -404,7 +404,7 @@ class DisponibiliteInscriptionController extends Controller
         ->getResult();
         
         $orgas = $em
-        ->createQuery("SELECT o FROM AssoMakerPHPMBundle:Orga o ORDER BY o.nom")
+        ->createQuery("SELECT o FROM AssoMakerBaseBundle:Orga o ORDER BY o.nom")
         ->getResult();
         
         foreach ($orgas as $orga){

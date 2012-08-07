@@ -229,7 +229,7 @@ class CreneauController extends Controller
 		
 		// nécessaire pour la suite, la priorité
     	if ($orga_id !== '') {
-    		$orga =  $em->createQuery("SELECT o FROM AssoMakerPHPMBundle:Orga o WHERE o.id = $orga_id")->getSingleResult();
+    		$orga =  $em->createQuery("SELECT o FROM AssoMakerBaseBundle:Orga o WHERE o.id = $orga_id")->getSingleResult();
     		$equipe_orga = $orga->getEquipe();
     	}
 	    			
@@ -319,7 +319,7 @@ class CreneauController extends Controller
     		return $response;
     	}
 		
-    	$orga = $em->getRepository('AssoMakerPHPMBundle:Orga')->find($oid);
+    	$orga = $em->getRepository('AssoMakerBaseBundle:Orga')->find($oid);
     	if (!$orga) {
     		$response->setContent(json_encode('Orga invalide.'));
     		return $response;

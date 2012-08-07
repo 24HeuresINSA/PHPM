@@ -4,7 +4,7 @@ namespace AssoMaker\PHPMBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use AssoMaker\PHPMBundle\Entity\OrgaRepository;
+use AssoMaker\BaseBundle\Entity\OrgaRepository;
 
 class BesoinOrgaType extends AbstractType
 {
@@ -26,7 +26,7 @@ class BesoinOrgaType extends AbstractType
     	
         $builder
         	->add('orgaHint', null, array('label'=>'Orga précis nécessaire', 'empty_value' => 'N\'importe qui', 'required'=> false,
-        			'class' => 'AssoMakerPHPMBundle:Orga',
+        			'class' => 'AssoMakerBaseBundle:Orga',
         			'query_builder' => function(OrgaRepository $or)use($minConfianceOrgaHint){
         			return $or->findAllWithConfianceValueMin($minConfianceOrgaHint);
         			}

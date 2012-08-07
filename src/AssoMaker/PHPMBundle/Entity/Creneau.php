@@ -66,14 +66,14 @@ class Creneau
     protected $plageHoraire;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Equipe")
+     * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Equipe")
      * @ORM\JoinColumn(name="equipeHint_id", referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
     protected $equipeHint;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Orga", inversedBy="creneauxHint")
+     * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Orga", inversedBy="creneauxHint")
      * @ORM\JoinColumn(name="orgaHint_id", referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
@@ -205,9 +205,9 @@ class Creneau
     /**
      * Set equipeHint
      *
-     * @param AssoMaker\PHPMBundle\Entity\Equipe $equipeHint
+     * @param AssoMaker\BaseBundle\Entity\Equipe $equipeHint
      */
-    public function setEquipeHint(\AssoMaker\PHPMBundle\Entity\Equipe $equipeHint)
+    public function setEquipeHint(\AssoMaker\BaseBundle\Entity\Equipe $equipeHint)
     {
         $this->equipeHint = $equipeHint;
     }
@@ -215,7 +215,7 @@ class Creneau
     /**
      * Get equipeHint
      *
-     * @return AssoMaker\PHPMBundle\Entity\Equipe 
+     * @return AssoMaker\BaseBundle\Entity\Equipe 
      */
     public function getEquipeHint()
     {
@@ -225,9 +225,9 @@ class Creneau
     /**
      * Set orgaHint
      *
-     * @param AssoMaker\PHPMBundle\Entity\Orga $orgaHint
+     * @param AssoMaker\BaseBundle\Entity\Orga $orgaHint
      */
-    public function setOrgaHint(\AssoMaker\PHPMBundle\Entity\Orga $orgaHint)
+    public function setOrgaHint(\AssoMaker\BaseBundle\Entity\Orga $orgaHint)
     {
         $this->orgaHint = $orgaHint;
     }
@@ -235,7 +235,7 @@ class Creneau
     /**
      * Get orgaHint
      *
-     * @return AssoMaker\PHPMBundle\Entity\Orga 
+     * @return AssoMaker\BaseBundle\Entity\Orga 
      */
     public function getOrgaHint()
     {

@@ -4,7 +4,7 @@ namespace AssoMaker\PHPMBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use AssoMaker\PHPMBundle\Entity\EquipeRepository;
+use AssoMaker\BaseBundle\Entity\EquipeRepository;
 
 class OrgaSoftType extends AbstractType
 {

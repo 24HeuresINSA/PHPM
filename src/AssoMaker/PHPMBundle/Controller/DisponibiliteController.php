@@ -203,7 +203,7 @@ class DisponibiliteController extends Controller
 //     {
 //         $em = $this->getDoctrine()->getEntityManager();
 
-//         $orga = $em->getRepository('AssoMakerPHPMBundle:Orga')->find($orgaid);	
+//         $orga = $em->getRepository('AssoMakerBaseBundle:Orga')->find($orgaid);	
 			
 //         $entity = new Disponibilite();
 // 		$entity->setOrga($orga);

@@ -78,7 +78,7 @@ public function isValid($entity, Constraint $constraint)
     		$message= $constraint->messageCreneau;
     		
     		$oid=$entity->getDisponibilite()->getOrga()->getId();
-    	    $dql = 'SELECT (count(c)) FROM AssoMakerPHPMBundle:Orga o JOIN o.disponibilites d JOIN d.creneaux c WHERE (c.debut < :fin ) AND (c.fin > :debut) AND o.id =:oid';
+    	    $dql = 'SELECT (count(c)) FROM AssoMakerBaseBundle:Orga o JOIN o.disponibilites d JOIN d.creneaux c WHERE (c.debut < :fin ) AND (c.fin > :debut) AND o.id =:oid';
             
             $result = $this->em
             ->createQuery($dql)

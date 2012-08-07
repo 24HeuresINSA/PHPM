@@ -20,7 +20,7 @@ class EquipeType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-                'data_class' => 'AssoMaker\PHPMBundle\Entity\Equipe',
+                'data_class' => 'AssoMaker\BaseBundle\Entity\Equipe',
         );
     }
 

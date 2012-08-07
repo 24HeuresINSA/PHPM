@@ -119,7 +119,7 @@ class CreneauRepository extends EntityRepository
 	     LEFT JOIN c.orgaHint oh WHERE c.disponibilite IS NULL AND t.statut = 3 ';
 	   
 	    if ($niveau_confiance !== '') {
-	    	$valeurConfianceMin = $this->getEntityManager()->createQuery("SELECT c FROM AssoMakerPHPMBundle:Confiance c WHERE c.id = $niveau_confiance")->getSingleResult()->getValeur();
+	    	$valeurConfianceMin = $this->getEntityManager()->createQuery("SELECT c FROM AssoMakerBaseBundle:Confiance c WHERE c.id = $niveau_confiance")->getSingleResult()->getValeur();
 	    	
 	    	$dql .= "AND ehc.valeur = $valeurConfianceMin "; // comportement strict
 		}
@@ -161,17 +161,17 @@ class CreneauRepository extends EntityRepository
 	    }
 
 	    if ($orga_id !== '') {
-	    	$orga =  $this->getEntityManager()->createQuery("SELECT o FROM AssoMakerPHPMBundle:Orga o WHERE o.id = $orga_id")->getSingleResult();
+	    	$orga =  $this->getEntityManager()->createQuery("SELECT o FROM AssoMakerBaseBundle:Orga o WHERE o.id = $orga_id")->getSingleResult();
 	    	$equipe = $orga->getEquipe();
 	    	
 	    	// on est dans les dispos de l'orga
 		    $dql .= "AND (c.id IN 
-		    (SELECT cin.id FROM AssoMakerPHPMBundle:Creneau cin, PHPMBundle:Orga oin JOIN oin.disponibilites doin 
+		    (SELECT cin.id FROM AssoMakerPHPMBundle:Creneau cin, AssoMakerBaseBundle:Orga oin JOIN oin.disponibilites doin 
 		    WHERE oin = $orga_id AND ((cin.debut >= doin.debut) AND (cin.fin <= doin.fin )))) ";
 			
 		    // pas sur un créneau déjà affecté
 		    $dql .= "AND (c.id NOT IN 
-		    (SELECT ci.id FROM AssoMakerPHPMBundle:Creneau ci, PHPMBundle:Orga o JOIN o.disponibilites do JOIN do.creneaux co 
+		    (SELECT ci.id FROM AssoMakerPHPMBundle:Creneau ci, AssoMakerBaseBundle:Orga o JOIN o.disponibilites do JOIN do.creneaux co 
 		    WHERE o = $orga_id AND ((ci.debut < co.fin) AND (ci.fin > co.debut )))) ";
 		    
 		    // Compatibilité équipe/niveau de confiance

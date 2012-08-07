@@ -1,0 +1,40 @@
+{% extends "AssoMakerPHPMBundle::layout.html.twig"  %}
+{% set pageTitle = 'Aperçu des plannings' %}
+
+{% block pageHeader %}
+{% endblock %}
+
+{% block content %}
+
+<div class="row-fluid">       
+        	<div class="page-header">
+	        	<h1>Plannings du {{ debut | format_datetime('EEEE dd MMM HH:mm') }} au {{ fin | format_datetime('EEEE dd MMM HH:mm') }}.</h1>
+	        	{{ phpm_planning_message |raw }} 
+	        </div>
+</div>
+<div class="row-fluid"> 
+	{% for orga in orgas %}
+	<h2>{{ entitiesMacro.orga(orga) }}</h2>
+	{% include 'AssoMakerBaseBundle:Orga:planningTable.html.twig' with {'disponibilites': orga.disponibilites}%}
+	{% endfor %}
+</div>
+
+<div class="form-fluid">
+	<div class="form-actions">
+					<form name="input" action="{{ path('orga_plannings') }}" method="post">
+						<fieldset>
+							Début : {{ form_widget(printPlanningForm.debut,  { 'attr': {'class': 'span2 datep'} }) }}
+							Fin : {{ form_widget(printPlanningForm.fin,  { 'attr': {'class': 'span2 datep'} }) }}
+							Orga : {{ form_widget(printPlanningForm.orga,  { 'attr': {'class': 'span2'} }) }} <b>OU</b>
+							Équipe : {{ form_widget(printPlanningForm.equipe,  { 'attr': {'class': 'span2'} }) }}
+							<br>
+							<button class="btn btn-primary" type="submit" name="action" value="show" >Afficher</button>
+							<button class="btn" type="submit" name="action" value="print" >Imprimer</button>
+							<button class="btn" type="submit" name="action" value="mail" >Notifier par mail</button>
+						</fieldset>
+					</form>
+	</div>
+</div>
+   
+
+{% endblock %}

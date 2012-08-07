@@ -10,7 +10,7 @@ security:
 
     providers:
         db:
-            entity: { class: AssoMakerPHPMBundle:Orga, property: email }
+            entity: { class: AssoMakerBaseBundle:Orga, property: email }
 
     firewalls:
         dev:

@@ -35,7 +35,7 @@ class GroupeTacheController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $equipes =$em
-        ->createQuery("SELECT e FROM AssoMakerPHPMBundle:Equipe e")
+        ->createQuery("SELECT e FROM AssoMakerBaseBundle:Equipe e")
         ->getResult();
         
 		$groupesDQL = "SELECT g,r,t FROM AssoMakerPHPMBundle:GroupeTache g LEFT JOIN g.equipe e JOIN g.responsable r JOIN g.taches t WHERE 1=1 ";

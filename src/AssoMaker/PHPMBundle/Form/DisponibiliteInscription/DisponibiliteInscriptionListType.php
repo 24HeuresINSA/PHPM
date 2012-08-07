@@ -57,13 +57,13 @@ class DisponibiliteInscriptionListType extends AbstractType
         								'attr' => array('placeHolder'=>'Changer les points de charisme')
         						))
 		        ->add('confiance', 'entity',
-		        array(	'class' => 'AssoMakerPHPMBundle:Confiance',
+		        array(	'class' => 'AssoMakerBaseBundle:Confiance',
 		                								'label' => 'Affecter les orgas',
 		                								'empty_value' => 'Affecter les orgas',
 		                								'required'=> false
 		        ))
 		        ->add('confiance2', 'entity',
-		        array(	'class' => 'AssoMakerPHPMBundle:Confiance',
+		        array(	'class' => 'AssoMakerBaseBundle:Confiance',
         		                						'label' => 'Désaffecter les orgas',
         		                						'empty_value' => 'Désaffecter les orgas',
         		                						'required'=> false

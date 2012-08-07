@@ -4,7 +4,7 @@ namespace AssoMaker\PHPMBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use AssoMaker\PHPMBundle\Entity\EquipeRepository;
+use AssoMaker\BaseBundle\Entity\EquipeRepository;
 
 class OrgaType extends AbstractType
 {
@@ -69,7 +69,7 @@ class OrgaType extends AbstractType
     	    if($this->forcedConfiance){
     	    	$code=$this->forcedConfiance;
     	    	$builder->add('equipe','entity',array('label'=>'Équipe',
-    	    			'class' => 'AssoMakerPHPMBundle:Equipe',
+    	    			'class' => 'AssoMakerBaseBundle:Equipe',
     	    			'query_builder' => function(EquipeRepository $er)use($code){return $er->findAllWithConfianceCode($code);}));
     	    }
     	    
@@ -79,7 +79,7 @@ class OrgaType extends AbstractType
 			
 			->add('statut', 'choice',array('choices'=>array('0'=>'Inscrit','1'=>'Validé','2'=>'Complétement affecté'), 'read_only'=>!$this->admin))
 			->add('privileges','choice',array('choices'=>array('0'=>'Visiteur','1'=>'Orga', '2'=>'Admin'),'read_only'=>!$this->admin))
-			->add('equipe','entity',array('label'=>'Équipe','class' => 'AssoMakerPHPMBundle:Equipe'));
+			->add('equipe','entity',array('label'=>'Équipe','class' => 'AssoMakerBaseBundle:Equipe'));
         
     	}
     }

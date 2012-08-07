@@ -1,0 +1,12 @@
+{% extends "AssoMakerBaseBundle:Confiance:layout.html.twig"  %}
+{% set pageTitle = 'Créer un niveau de confiance' %}
+{% use "AssoMakerPHPMBundle::new.html.twig" %}
+
+{% block content %}
+<form action="{{ path('confiance_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Valider</button>
+    </p>
+</form>
+{% endblock %}

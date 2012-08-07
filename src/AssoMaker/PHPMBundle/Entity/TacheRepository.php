@@ -56,7 +56,7 @@ class TacheRepository extends EntityRepository
 	    ->getResult();
 	}
 	
-	public function getOrgaStats(\AssoMaker\PHPMBundle\Entity\Orga $orga)
+	public function getOrgaStats(\AssoMaker\BaseBundle\Entity\Orga $orga)
 	{
 		$stats=array('orga'=>array("0"=>0,"1"=>0,"2"=>0),'equipe'=>array("0"=>0,"1"=>0,"2"=>0));
 		$orgaStats =  $this->getEntityManager()

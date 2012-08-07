@@ -1,3 +1,8 @@
+AssoMakerBaseBundle:
+    resource: "@AssoMakerBaseBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 AssoMakerPHPMBundle:
     resource: "@AssoMakerPHPMBundle/Controller/"
     type:     annotation

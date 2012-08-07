@@ -1,0 +1,118 @@
+{% extends "AssoMakerBaseBundle:Orga:layout.html.twig"  %}
+{% set pageTitle = 'Inscription Orga Soft' %}
+
+
+
+{% block body %}
+<script>
+function unloadMess(){
+mess = "Attention, tes changements n'ont pas été enregistrés";
+return mess;
+}
+function setBunload(on){
+window.onbeforeunload = (on) ? unloadMess : null;
+}
+setBunload(true);
+</script>
+<form class="form-horizontal" onsubmit="javascript:setBunload(false);" action="{{ path('orga_registersoft',{'confianceCode':app.request.get('confianceCode'),'equipeId':app.request.get('equipeId')}) }}" method="post" {{ form_enctype(form) }}>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<h1>Inscription Orga
+		{% if app.request.get('confianceCode') != "" %} {{ app.request.get('libelle') }}{% else %} {{ entity.equipe }} {% endif %}
+		 - {{ manifestation_nom }}</h1>
+		{% if app.request.get('confianceCode') != "" %}
+		Le lien qui t'a été donné est strictement personnel, ne le donnes à personne.
+		{% endif %}
+		<hr>
+	</div>
+	
+	<div class="row-fluid">
+		<div class="well">
+			<fieldset>
+			    <legend>Renseignements Obligatoires</legend>
+				    <div class="control-group">
+					{{ form_widget(form.prenom) }} {{ form_widget(form.nom) }}<br>
+				    </div>
+
+				    <div class="control-group {% if form_errors(form.email)|length > 0 %}error{% endif %}">
+			            <div class="">
+			              {{ form_widget(form.email) }}
+			              <span class="help-inline">Adresse mail INSA de préférence.{{ form_errors(form.email) }} </span>
+			            </div>
+         			</div>
+         			
+         			<div class="control-group {% if form_errors(form.telephone)|length > 0 %}error{% endif %}">
+			            <div class="">
+			              {{ form_widget(form.telephone) }}
+			              <span class="help-inline">Sans séparateurs : 0647682792 {{ form_errors(form.telephone) }} </span>
+			            </div>
+         			</div>
+         			<div class="control-group {% if form_errors(form.dateDeNaissance)|length > 0 %}error{% endif %}">
+			            <div class="">
+			              {{ form_widget(form.dateDeNaissance) }}
+			              <span class="help-inline">Format : 1990-12-31{{ form_errors(form.dateDeNaissance) }} </span>
+			            </div>
+         			</div>
+         			
+         			
+			</fieldset>
+		</div>
+		<div class="well">
+			<fieldset>
+		    	<legend>Renseignements Supplémentaires</legend>
+			    <div class="control-group {% if form_errors(form.surnom)|length > 0 %}error{% endif %}">
+			            <div class="">
+			              {{ form_widget(form.surnom) }}
+			              <span class="help-inline">{{ form_errors(form.surnom) }} </span>
+			            </div>
+         		</div>
+         			<div class="control-group {% if form_errors(form.departement)|length > 0 %}error{% endif %}">
+			            <div class="">
+			              {{ form_widget(form.anneeEtudes) }}
+			              {{ form_widget(form.departement) }}
+			              {{ form_widget(form.groupePC) }}
+			              <span class="help-inline">{{ form_errors(form.departement) }}<br> {{ form_errors(form.anneeEtudes) }} </span>
+			            </div>
+         			</div>
+         			<div class="control-group {% if form_errors(form.datePermis)|length > 0 %}error{% endif %}">
+			            <div class="">
+			              {{ form_widget(form.datePermis) }}
+			              <span class="help-inline">Format : 2010-12-31{{ form_errors(form.datePermis) }} </span>
+			            </div>
+         			</div>
+
+		        Célib' ?          
+		        <label class="radio inline">
+		          <input type="radio" name="phpm_bundle_orgatype[celibataire]" id="inlineCheckbox1" value="1"> Oui
+		        </label>
+		        <label class="radio inline">
+		          <input type="radio" name="phpm_bundle_orgatype[celibataire]" value="0"> Non
+		        </label>
+		
+			</fieldset>
+		</div>
+		<div class="well">
+			<fieldset>
+		    	<legend>Noms des potes avec qui tu veux bosser</legend>
+				<textarea id="phpm_bundle_orgatype_amis" name="phpm_bundle_orgatype[amis]" class="row-fluid"></textarea>
+		
+			</fieldset>
+			<fieldset>
+		    	<legend>Des commentaires ?</legend>
+				<textarea id="phpm_bundle_orgatype_commentaire" name="phpm_bundle_orgatype[commentaire]" class="row-fluid"></textarea>
+		
+			</fieldset>
+		</div>
+    </div>
+    
+    <div class="form-fluid">
+			<div class="form-actions">
+				<button class="btn btn-success" type="submit">Continuer »</button>
+			</div>
+	</div>
+    
+    {{ form_widget(form._token) }}
+</div>
+</form>
+
+{% endblock %}

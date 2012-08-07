@@ -30,7 +30,7 @@ class SearchController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 
 
-        $orgas = $em->getRepository('AssoMakerPHPMBundle:Orga')->search($searchString);
+        $orgas = $em->getRepository('AssoMakerBaseBundle:Orga')->search($searchString);
 		$taches = $em->getRepository('AssoMakerPHPMBundle:Tache')->search($searchString);
 		$groupe_taches = $em->getRepository('AssoMakerPHPMBundle:GroupeTache')->search($searchString);
 		
@@ -52,7 +52,7 @@ class SearchController extends Controller
 		
 		$em = $this->getDoctrine()->getEntityManager();
 
-        $orgas = $em->getRepository('AssoMakerPHPMBundle:Orga')->search($searchString);
+        $orgas = $em->getRepository('AssoMakerBaseBundle:Orga')->search($searchString);
 		$taches = $em->getRepository('AssoMakerPHPMBundle:Tache')->search($searchString);
 		$groupe_taches = $em->getRepository('AssoMakerPHPMBundle:GroupeTache')->search($searchString);
 		
