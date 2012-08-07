@@ -1,0 +1,22 @@
+{% extends "AssoMakerPHPMBundle:Categorie:layout.html.twig"  %}
+{% set pageTitle = 'Nouvelle Catégorie' %}
+{% use "AssoMakerPHPMBundle::new.html.twig" %}
+
+{% block content %}
+<form action="{{ path('categorie_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Valider</button>
+    </p>
+</form>
+{% endblock %}
+
+{% block menu_action %}
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('categorie') }}">
+            Revenir &agrave; la liste de cat&eacute;gories
+        </a>
+    </li>
+</ul>
+{% endblock %}

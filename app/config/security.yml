@@ -1,6 +1,6 @@
 security:
     encoders:
-        PHPM\Bundle\Entity\User: plaintext
+        AssoMaker\PHPMBundle\Entity\User: plaintext
 
 
     role_hierarchy:
@@ -10,7 +10,7 @@ security:
 
     providers:
         db:
-            entity: { class: PHPMBundle:Orga, property: email }
+            entity: { class: AssoMakerPHPMBundle:Orga, property: email }
 
     firewalls:
         dev:

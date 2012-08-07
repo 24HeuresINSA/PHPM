@@ -1,0 +1,110 @@
+{% extends "AssoMakerPHPMBundle::layout.html.twig"  %}
+{% set pageTitle = 'Classement Charisme' %}
+
+
+{% block pageHeader %}
+{% endblock %}
+
+{% block content %}
+<div class="row-fluid">       
+        	<div class="page-header">
+	        	<h1>Classement Charisme</h1>
+	        </div>
+</div>
+<div class="row-fluid">
+	{% if stats.PCMax ==0 %}
+       	<div class="alert alert-block alert-info fade in">
+            <h4 class="alert-heading">Il n'est pas encore possible de renseigner de disponibilités.</h4>
+        </div>
+	{% else %}
+		<div class="well">
+			<h2>Ton charisme :</h2>
+			<div class="progress progress-success progress-striped">
+		        <div id="barreCharisme" class="bar"></div>
+		        <script type="text/javascript">
+				$('#barreCharisme').attr('style',"width: {{ stats.PCOrga/stats.PCMax*100 }}%");
+		        </script>
+		    </div>
+		    <div style="text-align: center; font-size: x-large;">
+		    	<div >Points de charisme : {{ stats.PCOrga}}/{{stats.PCMax }}</div><br>
+		    	Classement : {{ stats.rangCharisme}}/{{stats.nbOrgas }}
+		    	</div>
+		
+		</div>
+</div>
+<div class="row-fluid">
+	<h2>Statistiques détaillées :</h2>
+</div>
+<div class="row-fluid">
+	<div class="span4">
+		<h3>Par orga</h3>
+		<table class="table">
+		    <thead>
+		        <tr> 
+		            <th>Charisme</th>
+		            <th>Orga</th>
+		            <th>Départ'</th>
+		            <th>Équipe'</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		   
+		        {%  for entity in orgas %}
+			        <tr {% if app.security.getToken().getUser() == entity.0 %} style = "color:red;" {% endif %}  >
+			        <td>{{ entity.pc}}</td>
+			        <td>{{ entitiesMacro.orga(entity.0) }}</td>
+			        <td>{{ entity.0.departement }} </td>
+			        <td>{{ entity.0.equipe }}</td>
+			        </tr>
+		        {%   endfor %}
+		    
+		    </tbody>
+		</table>
+	</div>
+	<div class="span4">
+		<h3>Par équipe</h3>
+		<table class="table">
+		    <thead>
+		        <tr> 
+		            <th>Charisme</th>
+		            <th>Équipe</th>
+		        </tr>
+		    </thead>
+	    <tbody>
+	   
+	        {%  for entity in equipes %}
+		        <tr {% if entity.0 == app.security.getToken().getUser().getEquipe()  %} style = "color:red;" {% endif %}  >
+		        <td>{{ entity.pc }}</td>
+		        <td>{{ entity.0.nom }}</td>
+		        </tr>
+	        {%   endfor %}
+	    
+	    </tbody>
+		</table>
+	</div>
+	<div class="span4">
+		<h3>Par département</h3>
+		<table class="table">
+		    <thead>
+		        <tr> 
+		            <th>Charisme</th>
+		            <th>Département</th>
+		        </tr>
+		    </thead>
+	    <tbody>
+	   
+	        {%  for entity in departs %}
+		        <tr{% if entity.departement == app.security.getToken().getUser().getDepartement()  %} style = "color:red;" {% endif %}>
+		        <td>{{ entity.pc }}</td>
+		        <td>{{ entity.departement }}</td>
+		        </tr>
+	        {%   endfor %}
+	    
+	    </tbody>
+		</table>
+	</div>
+	{% endif %}
+</div>
+
+
+{% endblock %}

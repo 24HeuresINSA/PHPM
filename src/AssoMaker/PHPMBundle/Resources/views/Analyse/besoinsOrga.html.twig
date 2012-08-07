@@ -1,0 +1,58 @@
+{% extends "AssoMakerPHPMBundle::layout.html.twig"  %}
+{% set pageTitle = 'Besoins en Orgas' %}
+{% use "AssoMakerPHPMBundle::index.html.twig" %}
+
+{% block pageHeader %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row-fluid">       
+        	<div class="page-header">
+	        	<h1>Rapport des besoins en orgas</h1>
+	            <p>orgas disponibles / orgas nécessaires (créneaux déjà affectés)</p>
+	        </div>
+</div>
+<div class="row-fluid"> 
+	<div class="btn-toolbar">
+		<div class="btn-group">
+			{% for id,plage in plages %}
+				<a class="btn{% if plageId == id %} active{% endif %}"
+				
+				 href="{{ path('analyse_besoinsorga', { 'plageId': id,'showBonusOrgas':showBonusOrgas }) }}">{{ plage.debut | format_datetime('EEEE dd MMM') }} <i class="icon-arrow-right"></i> {{ plage.fin | format_datetime('EEEE dd MMM Y') }}</a>
+			{% endfor %}
+		</div>
+		<div class="btn-group">
+			<a class="btn{% if showBonusOrgas %} active{% endif %}" href="{{ path('analyse_besoinsorga', { 'plageId': plageId,'showBonusOrgas':not showBonusOrgas }) }}">Afficher les orgas supplémentaires</a>
+		</div>
+	</div>
+	<table class="table table-condensed table-bordered">
+        <thead>
+        	<tr>
+        		<th></th>
+	            {% for day in days %}
+	            <th>{{ day }}</th>
+	            {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+	        
+			{% for h,row in result %}
+	            <tr><th>{{ h }}</th>
+	            	{% for j,c in row %}
+	            	<td style="background-color: {{ c.color }}">
+			           {{ c.data }}
+			        </td>
+		        	{% endfor %}
+		        </tr>
+			{% endfor %}
+        </tbody>
+    </table>
+
+
+
+</div>
+   
+
+{% endblock %}

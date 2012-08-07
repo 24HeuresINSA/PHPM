@@ -1,0 +1,12 @@
+{% extends "AssoMakerPHPMBundle::layout.html.twig"  %}
+{% set pageTitle = 'Créer une DI' %}
+{% use "AssoMakerPHPMBundle::new.html.twig" %}
+
+{% block content %}
+<form action="{{ path('disponibiliteinscription_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Valider</button>
+    </p>
+</form>
+{% endblock %}

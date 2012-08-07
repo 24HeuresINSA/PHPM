@@ -1,0 +1,12 @@
+{% extends "AssoMakerPHPMBundle::layout.html.twig"  %}
+{% set pageTitle = 'Nouvelle Mission' %}
+{% use "AssoMakerPHPMBundle::edit.html.twig" %}
+
+{% block content %}
+<form action="{{ path('mission_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Valider</button>
+    </p>
+</form>
+{% endblock %}

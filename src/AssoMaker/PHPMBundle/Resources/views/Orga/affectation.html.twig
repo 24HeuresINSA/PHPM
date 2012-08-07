@@ -1,0 +1,234 @@
+{% extends "AssoMakerPHPMBundle:Orga:layout.html.twig"  %}
+{% set pageTitle = 'Affectation' %}
+
+{% block editAction %}
+{% endblock %}
+
+{% block deleteAction %}
+{% endblock %}
+
+{% block newAction %}
+{% endblock %}
+
+{% block style %}
+	{{ parent() }}
+			
+	<link rel="stylesheet/less" href="{{ asset('bundles/phpm/css/affectation.less') }}" type="text/css" />
+{% endblock %}
+
+{% block javascript %}
+	{{ parent() }}
+				
+	{# attention dans les include Javascript l'ordre compte ! #}
+	{% javascripts 
+		'@AssoMakerPHPMBundle/Resources/public/js/affectation/util/*'
+		'@AssoMakerPHPMBundle/Resources/public/js/affectation/model/*'
+		'@AssoMakerPHPMBundle/Resources/public/js/affectation/view/*'
+		'@AssoMakerPHPMBundle/Resources/public/js/affectation/controller/*'
+		'@AssoMakerPHPMBundle/Resources/public/js/affectation/*'
+	%}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+{% endblock %}
+
+{% block content %}
+    <script>
+   		// ce bloc nous permet de passer des infos à notre appli proprement
+   		
+   		// cas à part
+    	pmAffectation.url = "{{ url('assomaker_phpm_default_home') }}";
+    	pmAffectation.paths = {};
+    	pmAffectation.paths.affecter = 'creneau/';
+    	
+    	// urls : adresses absolues
+    	pmAffectation.urls = {};
+		pmAffectation.urls.orgas = "{{ url('orga_query_json') }}";
+		pmAffectation.urls.orgaChangeStatut = "{{ url('orga_change_statut', {'id': '_ID_', '_format': 'json', 'statut': '_STATUT_'}) }}";
+		pmAffectation.urls.dispos = "{{ url('dispo_query_json') }}";
+		pmAffectation.urls.creneaux = "{{ url('creneau_query_json') }}";
+		pmAffectation.urls.creneauxTaches = "{{ url('tache_creneaux_query_json') }}";
+		pmAffectation.urls.taches = "{{ url('tache_query_json') }}";
+		pmAffectation.urls.equipes = "{{ url('equipe', {'_format' : 'json'}) }}";
+		pmAffectation.urls.niveaux = "{{ url('confiance', {'_format' : 'json'}) }}";
+		pmAffectation.urls.plages = "{{ url('config_get', {'string' : 'manifestation_plages'} ) }}";
+		pmAffectation.urls.permis = "{{ url('config_get', {'string' : 'manifestation_permis_libelles'} ) }}";
+		pmAffectation.urls.creneauMaker = "{{ url('creneaumaker_tache', {'id' : ''}) }}";	
+    </script>
+	<div class="affectation-wrapper">
+		<div class="message" id="message">
+			<!-- contiendra les éventuels messages à afficher -->
+		</div>
+				
+		<div class="menu_calendar" id ="menu_calendar">		
+			<div class="btn-group" id="boutons_plage" data-toggle="buttons-radio"></div>
+			
+			<div class="btn-group" id="bouton_mode" data-toggle="buttons-radio">
+				<button type="button" class="btn btn-info" id="bouton_mode_orga">Mode Orga -> Créneaux</button>
+				<button type="button" class="btn btn-info" id="bouton_mode_tache">Mode Tache -> Orgas</button>
+			</div>
+			
+			<button class="btn btn-inverse" id="bouton_reset" type="button">Reset heure/jour</button>
+		</div>
+		
+		<div class="client" id="client">
+			<div class="sidebar sidebar_orga" id="sidebar_orga">
+				<div class="boutons boutons_orga btn-toolbar" id="boutons_orga">
+  					<div class="btn-group" id="filtres_orga">
+          				<button class="btn dropdown-toggle" data-toggle="dropdown" data-target="#filtres_orga">
+          					<i class="icon-tags"></i> <span class="caret"></span>
+          				</button>
+          				<ul class="filtre dropdown-menu">
+							<li>
+								<select name="orga_confiance" id="filtre_orga_confiance">
+									<option value="-1" selected>Tous les niveaux</option>
+									<!-- le reste sera mis en place dynamiquement -->
+								</select>
+							</li>
+							<li>
+								<select name="orga_equipe" id="filtre_orga_equipe">
+									<option value="-1" selected>Toutes les équipes</option>
+									<!-- le reste sera mis en place dynamiquement -->
+								</select>
+							</li>
+							<li>
+								<select name="orga_permis" id="filtre_orga_permis">
+									<option value="-1" selected>Permis ou pas</option>
+									<option value="0">Permis</option>
+									<option value="1">Permis depuis 1 an au -</option>
+									<option value="2">Permis depuis 2 ans</option>
+									<option value="3">Permis depuis 3 ans et +</option>
+								</select>
+							</li>
+							<li>
+								<select name="orga_age" id="filtre_orga_age">
+									<option value="-1" selected>Tous les âges</option>
+									<option value="18">au moins 18</option>
+									<option value="19">au moins 19</option>
+									<option value="20">au moins 20</option>
+									<option value="21">au moins 21</option>
+									<option value="22">au moins 22</option>
+									<option value="23">au moins 23</option>
+									<option value="24">au moins 24</option>
+									<option value="25">25 et plus</option>
+								</select>
+							</li>
+          				</ul>
+        			</div>
+        			
+					<div class="btn-group" id="orga_rechercher">
+						<button class="btn dropdown-toggle" id="bouton_orga_rechercher" data-toggle="dropdown" data-target="#orga_rechercher">
+							<i class="icon-search"></i>
+						</button>
+	      				<ul class="filtre dropdown-menu">
+							<li>
+								<input type="text" class="input-medium" id="champ_orga_rechercher" placeholder="Rechercher...">
+							</li>
+	      				</ul>
+      				</div>
+        			
+					<div class="btn-group" id="boutons_orga_nav">
+						<button type="button" class="btn" id="bouton_orga_prev"><i class="icon-chevron-left"></i></button>
+						<button type="button" class="btn" id="bouton_orga_next"><i class="icon-chevron-right"></i></button>						
+					</div>
+					
+					<div>
+						<button type="button" class="btn" id="bouton_orga_refresh"><i class="icon-refresh"></i></button>
+					</div>
+
+					<div>
+						<button type="button" class="btn" id="bouton_orga_statut"><i class="icon-star-empty"></i></button>
+					</div>
+										
+					<div>
+						<button type="button" class="btn" id="bouton_orga_detail"><i class="icon-edit"></i></button>
+					</div>
+				</div>
+				
+				<div class="liste liste_orgas" id="liste_orgas">
+					<!-- liste des orgas -->
+				</div>
+			</div>
+			
+			<div class="calendar" id="calendar">
+				<!-- ici le calendrier/vue agenda -->
+			</div>
+			
+			<div class="sidebar sidebar_tache" id="sidebar_tache">
+				<div class="boutons boutons_tache btn-toolbar" id="boutons_tache">				
+  					<div class="btn-group"  id="filtres_tache">
+          				<button class="btn dropdown-toggle" data-toggle="dropdown"  data-target="#filtres_tache">
+          					<i class="icon-tags"></i> <span class="caret"></span>
+          				</button>
+          				<ul class="filtre dropdown-menu" id="filtres_tache">
+							<li>
+								<select name="tache_confiance" id="filtre_tache_confiance">
+									<option value="-1" selected>Tous les niveaux</option>
+									<!-- le reste sera mis en place dynamiquement -->
+								</select>
+							</li>
+							<li>
+								<select name="tache_equipe" id="filtre_tache_equipe">
+									<option value="-1" selected>Toutes les équipes</option>
+									<!-- le reste sera mis en place dynamiquement -->
+								</select>
+							</li>
+							<li>
+								<select name="tache_permis" id="filtre_tache_permis">
+									<option value="-1" selected>Permis ou pas</option>
+									<option value="0">Permis</option>
+									<option value="1">Permis depuis 1 an au -</option>
+									<option value="2">Permis depuis 2 ans</option>
+									<option value="3">Permis depuis 3 ans et +</option>
+								</select>
+							</li>
+							<li>
+								<select name="tache_duree" id="filtre_tache_duree">
+									<option value="-1" selected>Toutes durées</option>
+									<option value="15">Max. 15 mn</option>
+									<option value="30">30 mn</option>
+									<option value="45">45 mn</option>
+									<option value="60">1 heure</option>
+									<option value="90">1 heure 30</option>
+									<option value="120">2 heures</option>
+									<option value="240">4 heures</option>
+								</select>
+							</li>
+          				</ul>
+        			</div>
+
+					<div class="btn-group" id="tache_rechercher">
+						<button class="btn dropdown-toggle" id="bouton_tache_rechercher" data-toggle="dropdown" data-target="#tache_rechercher">
+							<i class="icon-search"></i>
+						</button>
+	      				<ul class="filtre dropdown-menu">
+							<li>
+								<input type="text" class="input-medium" id="champ_tache_rechercher" placeholder="Rechercher...">
+							</li>
+	      				</ul>
+      				</div>
+      				
+					<div class="btn-group" id="boutons_tache_nav">
+						<button type="button" class="btn" id="bouton_tache_prev"><i class="icon-chevron-left"></i></button>
+						<button type="button" class="btn" id="bouton_tache_next"><i class="icon-chevron-right"></i></button>
+					</div>
+					
+					<div>
+						<button type="button" class="btn" id="bouton_tache_refresh"><i class="icon-refresh"></i></button>
+					</div>
+					
+					<div>
+						<button type="button" class="btn" id="bouton_tache_detail"><i class="icon-edit"></i></button>
+					</div>
+				</div>
+				
+				<div class="liste liste_taches" id="liste_taches">
+					<!-- liste des taches -->
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block menu_action %}
+	<!-- pas de menu action ! -->
+{% endblock %}

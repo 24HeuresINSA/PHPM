@@ -1,0 +1,179 @@
+{% extends "AssoMakerPHPMBundle:Config:layout.html.twig"  %}
+{% set pageTitle = 'Configuration' %}
+
+{% form_theme form _self %}
+
+{% block style %}
+{{ parent() }}
+			{% stylesheets 'bundles/phpm/css/config.css' filter='cssrewrite'  %}
+				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
+			{% endstylesheets %}
+{% endblock %}
+
+{% block field_label %}
+{% endblock field_label %}
+
+{% block content %}
+<form action="{{ path('config') }}" method="post" {{ form_enctype(form) }}>
+    {% if valid is not null %}    
+        <div class="row-fluid">  
+            {% if valid==1 %}
+                <div class ="alert alert-success">La configuration bien été enregistrée.</div>
+            {% else %}
+                <div class ="alert alert-error">Il y a des erreurs dans la configuration, elle n'a pas été mise à jour :
+                <br/>
+                {{ form_errors(form) }}
+                {{ form_errors(form.equipeItems) }}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+	<div class="row-fluid">
+	
+	<ul id="tab" class="nav nav-tabs">
+	    <li><a href="#configItems" data-toggle="tab">Clés de configuration</a></li>
+{# 	    <li><a href="#lieuItems" data-toggle="tab">Lieux</a></li>#}
+		<li><a href="#equipeItems" data-toggle="tab">Équipes</a></li>
+		<li><a href="#confianceItems" data-toggle="tab">Niveaux de Confiance</a></li>
+		<li><a href="#materielItems" data-toggle="tab">Matériel</a></li>
+            
+    </ul>
+          <div id="myTabContent" class="tab-content">
+			<div class="tab-pane fade active in" id="configItems" >
+						{% for i in form.configItems %}
+						    {{ i.vars.value }}
+						    {{ form_errors(i) }}
+						    {% if  i.vars.value.hint %}
+						    <span class="apopover btn btn-info"  rel="popover" data-content="{{ i.vars.value.hint }}" >?</span>
+						    {% endif %}
+						    {{ form_widget(i) }}
+						         
+						{% endfor %}
+						
+			</div>
+
+
+{# 		<div id="lieuItems"  class="tab-pane fade">#}
+{# 			{% for i in form.lieuItems %}#}
+{# 			    <div class=hrow>#}
+{# 			{{ form_errors(i) }}#}
+{# 			{{ form_widget(i) }}#}
+{# 			    <a class="btn btn-danger" href="{{ path('lieu_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a>#}
+{# 			    </div>#}
+{# 			{% endfor %}#}
+{# 			<br/>#}
+{# 			<a class="btn btn-success" href="{{ path('lieu_new') }}">Nouveau Lieu</a>#}
+{# 		</div>#}
+
+		<div id="equipeItems"  class="tab-pane fade">
+			<table class="table table-condensed">
+		        <thead>
+		            <th>Nom</th>
+		            <th>Responsable</th>
+		            <th>Confiance</th>
+		            <th>Couleur</th>
+		        </thead>
+		        <tbody>
+		        
+				{% for i in form.equipeItems %}
+				
+				    <tr>
+				    <td>{{ form_row(i.nom) }}</td>
+				    <td>{{ form_row(i.responsable, {'label':'false'}) }}</td>
+				    <td>{{ form_row(i.confiance, {'label':'false'}) }}</td>
+				    <td>{{ form_row(i.couleur) }}</td>
+				    <td><a class="btn btn-danger" href="{{ path('equipe_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a></td>
+				    </tr>
+				{% endfor %}
+				
+		        </tbody>
+	    	</table>
+			
+			<div class="row-fluid">
+			<a class="btn btn-success" href="{{ path('equipe_new') }}"><i class="icon-plus"></i> Nouvelle équipe</a>
+			</div>
+		</div>
+
+		<div id="confianceItems"  class="tab-pane fade">
+			<table class="table table-condensed">
+		        <thead>
+		            <th>Nom</th>
+		            <th>Valeur</th>
+		            <th>Couleur</th>
+		            <th>Code d'Inscription</th>
+		            <th>Privileges</th>
+		        </thead>
+		        <tbody>
+		        
+				
+					{% for i in form.confianceItems %}
+				    <tr>
+				    <td>{{ form_row(i.nom) }}</td>
+				    <td>{{ form_row(i.valeur, {'label':'false'}) }}</td>
+				    <td>{{ form_row(i.couleur, {'label':'false'}) }}</td>
+				    <td>{{ form_row(i.code) }}</td>
+				    <td>{{ form_row(i.privileges) }}</td>
+				    <td><a class="btn btn-danger" href="{{ path('confiance_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a></td>
+				    </tr>
+					{% endfor %}
+				
+		        </tbody>
+	    	</table>
+				
+						         
+			
+			<br/>
+			<a class="btn btn-success" href="{{ path('confiance_new') }}">Nouveau niveau</a>
+		</div>
+		
+		<div id="materielItems" class="tab-pane fade">
+			<table class="table table-condensed">
+		        <thead>
+		            <th>Nom</th>
+		            <th>Catégorie</th>
+		            <th>Type</th>
+		            <th></th>
+		        </thead>
+		        <tbody>
+		        
+					{% for i in form.materielItems %}
+				    <tr>
+				    <td>{{ form_row(i.nom) }}</td>
+				    <td>{{ form_row(i.categorie) }}</td>
+				    <td>{{ form_row(i.type) }}</td>
+				    <td><a class="btn btn-danger" href="{{ path('materiel_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a></td>
+				    </tr>
+				{% endfor %}
+				
+		        </tbody>
+	    	</table>
+			
+			<div class="row-fluid">
+				<a class="btn btn-success" href="{{ path('materiel_new') }}"><i class="icon-plus"></i> Nouveau matériel</a>
+			</div>
+	</div>
+
+{{ form_rest(form) }}
+
+        
+    </p>
+    </div>
+    <div class="form-actions row-fluid">
+    <button class="btn btn-primary" type="submit">Enregistrer la configuration</button>
+    </div>
+    
+</form>
+
+{% endblock %}
+
+{% block actions %}
+
+{{ parent() }}
+{% block newAction %}
+{% endblock %}
+{% block editAction %}
+{% endblock %}
+{% block deleteAction %}
+{% endblock %}
+
+{% endblock %}

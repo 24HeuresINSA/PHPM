@@ -1,0 +1,24 @@
+{% extends "AssoMakerPHPMBundle::layout.html.twig"  %}
+{% set pageTitle = 'Détail des DI' %}
+{% use "AssoMakerPHPMBundle::show.html.twig" %}
+
+{% block content %}
+<table class="record_properties">
+    <tbody>
+       <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Debut</th>
+            <td>{{ entity.debut|format_datetime('dd MMM Y HH:mm') }}</td>
+        </tr>
+        <tr>
+            <th>Fin</th>
+            <td>{{ entity.fin|format_datetime('dd MMM Y HH:mm') }}</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
+
+

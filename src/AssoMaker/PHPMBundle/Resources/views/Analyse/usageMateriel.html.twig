@@ -1,0 +1,60 @@
+{% extends "AssoMakerPHPMBundle::layout.html.twig"  %}
+{% set pageTitle = 'Utilisation du Matériel' %}
+{% use "AssoMakerPHPMBundle::index.html.twig" %}
+
+{% block pageHeader %}
+{% endblock %}
+
+{% block content %}
+
+<div class="row-fluid">       
+        	<div class="page-header">
+	        	<h1>Rapport d'utilisation du matériel</h1>
+	            
+	        </div>
+</div>
+<div class="row-fluid"> 
+
+{% for m in bmResult %}
+ <h2>{{ m.nom }}</h2>
+ <hr>
+
+	<table class="table table-condensed">
+        <thead>
+        	<tr>
+	        	<th>Tâche</th>
+	            <th>Horaires</th>
+	            <th>Quantité</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% set prev=0 %}
+        {% for bm in m.besoinsMateriel %}
+			{% for ph in bm.tache.plagesHoraire %}
+			
+
+            <tr>
+            	<td>{{ bm.tache.groupeTache.nom }} / {{ entitiesMacro.tache(bm.tache) }}</td>
+            	<td>
+                	{{ ph.debut | format_datetime('EEEE dd MMM Y HH:mm') }} <i class="icon-arrow-right"></i> {{ ph.fin | format_datetime('EEEE dd MMM Y HH:mm') }}
+                </td>
+                <td>
+                {{ bm.quantite }} 
+                {% if ph.debut.timestamp < prev %}
+                <b>CONFLIT</b>{% endif %}
+                </td>
+               
+            </tr>
+            {% set prev=ph.fin.timestamp %}	
+			{% endfor %}
+		{% endfor %}
+		
+        </tbody>
+    </table>
+{% endfor %}
+
+
+</div>
+   
+
+{% endblock %}

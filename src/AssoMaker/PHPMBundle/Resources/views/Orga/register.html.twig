@@ -1,0 +1,12 @@
+{% extends "AssoMakerPHPMBundle:Orga:layout.html.twig"  %}
+{% set pageTitle = 'Inscription Orga Soft 24 Heures de l\'INSA' %}
+
+
+{% block content %}
+<form action="{{ path('orga_register',{'confianceCode':confianceCode,'email':email}) }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">S'inscrire</button>
+    </p>
+</form>
+{% endblock %}

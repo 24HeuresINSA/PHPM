@@ -1,0 +1,48 @@
+{% extends "AssoMakerPHPMBundle::layout.html.twig"  %}
+{% set pageTitle = 'Liste des Missions' %}
+
+{% block pageHeader %}
+{% endblock %}
+    
+{% block content %}
+ <div class="row-fluid">       
+	    	<div class="page-header">
+	         	<h1>Liste des Missions</h1>
+	         </div>
+</div>
+
+	    
+<div class="row-fluid"> 
+	<table class="table table-condensed">
+	    <thead>
+	       <tr>
+	       		<th>Ordre de tri</th>
+	            <th>Nom</th>
+	            <th>Description</th>
+	            <th>Confiance Minimun</th>
+	            <th>Actions</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+		    {% for e in entities %}
+	           <tr>
+	           	   <td>{{ e.ordre }}</td>
+	           	   <td>{{ e.nom }}</td>
+	           	   <td>{{ e.description }}</td>
+	           	   <td>{{ e.confianceMin }}</td>
+	               <td>
+	               <a class="btn" href="{{ path('mission_edit', { 'id': e.id }) }}"><i class="icon-pencil"></i> Éditer</a>
+			       <a class="btn  btn-danger" href="{{ path('mission_delete', { 'id': e.id }) }}"><i class="icon-remove"></i> Supprimer</a>
+	               </td>
+	           </tr>
+		     {% endfor %}
+	    </tbody>
+	</table>		
+</div>
+
+<div class="form-fluid">
+	<div class="form-actions">
+		<a class="btn btn-success" href="{{ path('mission_new') }}"><i class="icon-pencil"></i> Créer une nouvelle mission</a>
+	</div>
+</div>
+{% endblock %}

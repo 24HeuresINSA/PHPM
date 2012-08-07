@@ -1,0 +1,53 @@
+{% extends "AssoMakerPHPMBundle::layout.html.twig"  %}
+{% set pageTitle = 'Rapport d\'affectation des tâches' %}
+{% use "AssoMakerPHPMBundle::index.html.twig" %}
+
+{% block pageHeader %}
+{% endblock %}
+
+{% block content %}
+
+<div class="row-fluid">       
+        	<div class="page-header">
+	        	<h1>Rapport d'affectation des tâches</h1>
+	        </div>
+</div>
+<div class="row-fluid"> 
+
+{% for g in tacheResult %}
+<h2>{{ g.nom }}</h2>
+{% for t in g.taches %}
+ <h3>{{ entitiesMacro.tache(t) }}</h3>
+
+ <hr>
+
+	<table class="table table-condensed">
+        <thead>
+        	<tr>
+	        	<th>Créneau</th>
+	            <th>Orgas Affectés</th>
+            </tr>
+        </thead>
+        <tbody>
+		{% for p in t.plagesHoraire %}
+		 	{% for c in p.creneaux %}
+		 	 <tr><td>{{ c.debut | format_datetime('EEEE dd MMM Y HH:mm') }} <i class="icon-arrow-right"></i> {{ c.fin | format_datetime('EEEE dd MMM Y HH:mm') }}
+			    </td>           
+		 	 <td>
+		 	 {% if c.disponibilite %}
+		 	 {{ entitiesMacro.orga(c.disponibilite.orga) }}
+		 	 {% endif %}
+		 	 </td>
+		 	 </tr>
+		 	{% endfor %}
+		{% endfor %}
+        </tbody>
+    </table>
+{% endfor %}
+{% endfor %}
+
+
+</div>
+   
+
+{% endblock %}

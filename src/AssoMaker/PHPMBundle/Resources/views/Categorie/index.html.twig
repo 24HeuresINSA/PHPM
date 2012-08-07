@@ -1,0 +1,29 @@
+{% extends "AssoMakerPHPMBundle:Categorie:layout.html.twig"  %}
+{% set pageTitle = 'Liste des Catégories' %}
+{% use "AssoMakerPHPMBundle::index.html.twig" %}
+
+{% block content %}
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Couleur</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr style="cursor:pointer" onclick="window.location='{{ path('categorie_show', { 'id': entity.id }) }}'">
+            <td><a href="{{ path('categorie_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.nom }}</td>
+            <td>{{ entity.couleur }}</td>
+            <td>
+				{{ bouton.edit( path('categorie_edit', { 'id': entity.id }) ) }}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

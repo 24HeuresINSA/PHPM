@@ -20,7 +20,7 @@ class AppKernel extends Kernel
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new Sonata\IntlBundle\SonataIntlBundle(),
-            new PHPM\Bundle\PHPMBundle(),
+            new AssoMaker\PHPMBundle\AssoMakerPHPMBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -1,0 +1,70 @@
+{% extends "AssoMakerPHPMBundle:Orga:layout.html.twig"  %}
+{% set pageTitle = 'Import' %}
+
+{% block editAction %}
+{% endblock %}
+
+{% block deleteAction %}
+{% endblock %}
+
+{% block newAction %}
+{% endblock %}
+
+{% block content %}
+{% if entities is not defined %}
+
+<form method="POST" >    
+<input type="text" name="pathJson" value="http://127.0.0.1:80/inscriptionOrgas.json" /> Adresse du fichiers des orgas à ajouter à la base </td>
+<input type="Submit" value="Valider">
+
+{% else %}
+<p>Les autres orgas ont &eacute;t&eacute; correctement import&eacute; dans la base <br />
+Veuillez les valider pour pouvoir les affecter.<br />
+Ci dessous les Orga qui n'ont pas pu &ecirc;tre ins&eacute;r&eacute;s : <br />
+</p> 
+
+<table>
+	<thead>
+		<tr>
+		    <th>Erreur</th>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Surnom</th>
+            <th>Telephone</th>
+            <th>Email</th>
+            <th>Datedenaissance</th>
+            <th>Departement</th>
+            <th>Commentaire</th>
+            <th>Permis</th>
+		</tr>
+	</thead>
+	<tbody>
+		{%  for entity in entities %}
+		<tr>
+            <td>{{ entity.erreur }}</td>
+            <td>{{ entity.orga.id }}</td>           
+            <td>{{ entity.orga.nom }}</td>
+            <td>{{ entity.orga.prenom }}</td>
+            <td>{{ entity.orga.surnom }}</td>
+            <td>{{ entity.orga.telephone }}</td>
+            <td>{{ entity.orga.email }}</td>
+            <td>{% if entity.orga.dateDeNaissance %}{{ entity.orga.dateDeNaissance|format_date('dd MMM Y') }}{% endif%}</td>
+            <td>{{ entity.orga.departement }}</td>
+            <td>{{ entity.orga.commentaire }}</td>
+            <td>{{ entity.orga.permis }}</td>
+		</tr>
+		{%   endfor %}
+	</tbody>
+</table>
+{% endif%}
+
+{% endblock %}
+{% block actions %}
+{{ parent() }}
+<li>
+    <a href="{{ path('orga_validation') }}">
+    Validation
+    </a>
+</li>
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends "AssoMakerPHPMBundle:Creneau:layout.html.twig"  %}
+{% set pageTitle = 'Liste des Créneaux' %}
+{% use "AssoMakerPHPMBundle::index.html.twig" %}
+
+{% block content %}
+   {% include 'AssoMakerPHPMBundle:Creneau:afficheListe.html.twig' with {'entities': entities} %}
+{% endblock %}

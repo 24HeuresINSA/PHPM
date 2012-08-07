@@ -1,0 +1,249 @@
+{% extends "AssoMakerPHPMBundle:Tache:layout.html.twig"  %}
+{% set pageTitle = form.entity.vars.value.id~'-'~form.entity.vars.value.nom %}
+{% use "AssoMakerPHPMBundle::edit.html.twig" %}
+
+{% form_theme form _self %}
+
+{% block pageHeader %}
+{% endblock %}
+
+{% block content %}
+    <form class="form-horizontal" action="{{ path('tache_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+    	<div class="row-fluid">       
+        	<div class="page-header">
+	        	<h1 class="statut{{ form.entity.vars.value.statut }} my-inline-h">Tâche n°{{form.entity.vars.value.id }} : {{form.entity.vars.value.nom }}</h1>
+	        	&nbsp;
+	            <a class="btn btn-mini my-inline-btn" href="{{ path('groupetache_edit', { 'id': entity.groupetache.id }) }}" ><i class="icon-share-alt"></i> {{ entity.groupetache.nom }}</a>
+        	</div>
+    	</div>
+	    {% if valid is defined %}    
+	        <div class="row-fluid">  
+	            {% if valid == 1 %}
+	            	<div class="alert alert-success alert-block overflow-auto">
+					  <a class="close" data-dismiss="alert">×</a>
+					  <h4 class="alert-heading">Succès !</h4>
+					  La tâche à bien été enregistrée.
+					</div>
+	            {% else %}
+					<div class="alert alert-error alert-block my-alert-img">
+					  <a class="close" data-dismiss="alert">×</a>
+					  <h4 class="alert-heading">Erreur !</h4>
+					  Il y a des erreurs dans la fiche, la tâche n'a pas été mise à jour.
+					  <br />
+					  {{ form_errors(form) }}
+					</div>
+	            {% endif %}
+	        </div>
+	    {% endif %}
+	    <div class="row-fluid">
+			<div class="span6">
+				<fieldset>
+		            <legend>Informations Générales</legend>
+		            {{ form_row(form.entity.nom) }}
+		            {{ form_row(form.entity.responsable, { 'label':  'Orga Responsable'}) }}
+		            {{ form_row(form.entity.lieu, { 'label':  'Lieu de rendez-vous'}) }}
+		            {{ form_row(form.entity.permisNecessaire, { 'label':  'Permis nécessaire'}) }}
+				</fieldset>
+				<fieldset>
+					<legend>Besoins en matériel</legend>
+			        {% for c in form.Materiel %}
+			            <h3>{{ c.vars.label }}</h3>
+			            <div class="well overflow-auto">			      
+			                {% for i in c %}
+			                    <div class="materiel-divers">{{ form_label(i, null, {'attr': {'class': 'checkbox inline'}}) }}&nbsp;{{ form_widget(i, {'attr': {'class': 'checkbox my-small-input'}}) }}</div>
+			                {% endfor %}
+		                </div>
+			        {% endfor %}
+			    	<h3>Matériel Supplémentaire</h3>
+			        {{ form_widget(form.entity.materielSupplementaire) }}
+			        <br /><br />
+				</fieldset>
+		    </div>
+	       	<div class="span6">
+	       		<fieldset>
+		        	<legend>Consignes</legend>
+		        	{% if form_errors(form.entity.consignes)|length > 0 %}
+		        		<div class ="alert alert-error">{{ form_errors(form.entity.consignes) }}</div>        		 
+		        	{% endif %}
+		        	{{ form_widget(form.entity.consignes, {'style': 'width:500px'}) }}    
+					<style>
+						.wysiwyg-input {
+							width: 100%;
+							height: 300px;
+							{% if rOnly  %}
+								background-color: rgb(238, 238, 238) !important;
+							{% endif %}
+						}
+					</style>
+					<script type="text/javascript">
+						$(function() {
+						    $('#phpm_bundle_tachetype_entity_consignes').wysiwyg({
+						        iFrameClass: "wysiwyg-input",
+						        initialContent: ' ',
+						        rmUnusedControls: true,
+						        {% if not rOnly  %}
+							        controls: {
+							            bold: {visible: true},
+							            italic: {visible: true},
+							            strikeThrough: {visible: true},
+							            underline: {visible: true},
+										superscript: {visible: true},
+										subscript: {visible: true},
+							  			indent: {visible: true},
+							            outdent: {visible: true},
+							            insertOrderedList: {visible: true},
+							            insertUnorderedList: {visible: true},
+							            undo: {visible: true},
+							           	redo: {visible: true},
+							            removeFormat: {visible: true}
+							        }
+						        {% endif %}
+						    });
+						});
+					</script>
+				<fieldset>
+	    	</div>
+	    </div>
+	    <div class="row-fluid">
+	    	<fieldset>
+				<legend>Plages Horaires</legend>
+			    <table class="table table-condensed">
+			        <thead>
+			            <th>Horaires</th>
+			            <th>Besoins</th>
+			            <th>Total</th>
+			            <th>Durée d'un créneau<br/>(Recoupement)</th>
+			            <th>Actions</th>
+			        </thead>
+			        <tbody>
+			        {% for pl in entity.plagesHoraire %}
+			            <tr>
+			            	<td>
+			                	{{ pl.debut | format_datetime('EEEE dd MMM Y HH:mm') }} <i class="icon-arrow-right"></i> {{ pl.fin | format_datetime('EEEE dd MMM Y HH:mm') }}
+			                </td>
+			                <td>
+				                {% if pl.respNecessaire  %}
+				                	<strong>(RESP)</strong>
+				                {% endif %}
+				                {% for bo in pl.besoinsOrga %}
+				                	{% if bo.orgaHint is null %}
+				                		({{ bo.equipe }} : {{ bo.nbOrgasNecessaires }})
+				                	{% else %}
+				                		<strong>({{ bo.orgaHint }})</strong>
+				                	{% endif %}
+				                {% endfor %}
+			                </td>
+			                <td>
+			                	{{ pl.besoinsOrgaTotal }}
+			                </td>
+			                <td>
+				                {% if pl.creneauUnique  %}
+				                {% else %}
+					                {{ pl.dureeCreneau/3600}}h
+					                {% if pl.recoupementCreneau != 0 %} ({{ pl.recoupementCreneau/60 }} mn){% endif %}
+				                {% endif %}
+			                </td>
+			                <td>
+			                {% if not rOnly  %}
+				                <a class="btn" href="{{ path('plagehoraire_edit', { 'id': pl.id }) }}"><i class="icon-pencil"></i> Éditer</a>
+				                <a class="btn  btn-danger" href="{{ path('plagehoraire_delete', { 'id': pl.id }) }}"><i class="icon-remove"></i> Supprimer</a>
+			                {% endif %}
+			            	</td>
+			            </tr>
+			        {% endfor %}
+			        </tbody>
+			    </table>
+			   	{% if not rOnly  %}
+	    			<button class="btn btn-success" type="submit" name="action" value="add_plage" ><i class="icon-plus"></i> Ajouter une plage horaire</button>
+	    		{% endif %}
+	    		<br /><br />
+		    </fieldset>
+		</div>
+		<div class="row-fluid">
+			<fieldset>
+				<legend>Commentaires</legend>
+        		{% if  entity.commentaires.count > 0  %}
+					{% if  entity.commentaires.count > 4  %}
+			          <div class="accordion" id="oldCom">
+			            <div class="accordion-group">
+			              <div class="accordion-heading">
+			                <a class="accordion-toggle" data-toggle="collapse" data-parent="#odlcom" href="#collapseOne">
+			                  Anciens commentaires
+			                </a>
+			              </div>
+			              <div id="collapseOne" class="accordion-body collapse" style="height: 0px; ">
+			                <div class="accordion-inner">
+			                  {% for com in entity.commentaires %}
+						      	{% if (loop.length-loop.index == 4) %}
+							                </div>
+							              </div>
+							            </div>            
+							         </div>
+				          		{% endif %}
+					            <div class="com">
+					                <div class="com_infos">{{loop.index}}/{{loop.length}}
+					                    <span class="com_auteur">{{com.auteur}}</span>
+					                    <span class="com_heure"> {{ com.heure|format_datetime('EEEE dd MMM HH:mm') }}</span>
+					                </div>
+					                <div class="com_texte">{{com.texte|raw}}</div>
+					            </div>
+	        				{% endfor %}
+	    			{% else %}
+	                	{% for com in entity.commentaires %}
+				           <div class="com">
+				                <div class="com_infos">{{loop.index}}/{{loop.length}}
+				                    <span class="com_auteur">{{com.auteur}}</span>
+				                    <span class="com_heure"> {{ com.heure|format_datetime('EEEE dd MMM HH:mm') }}</span>
+				                </div>
+				                <div class="com_texte">{{com.texte|raw}}</div>
+				            </div>
+	        			{% endfor %}
+	  				{% endif %}
+	  			{% else %}
+	  				<div class="well">Ta fiche tâche n'a pas encore été commentée !</div>
+	 			{% endif %}
+	 			{{ form_errors(form.commentaire) }}
+	 			<div class="control-group">
+	 				<label class="control-label" for="phpm_bundle_tachetype[commentaire]">Commentaire</label>
+	 				<div class="controls">
+	 					{{ form_widget(form.commentaire) }}
+	 				</div>
+	 			</div>
+	 		</fieldset>
+			{{ form_rest(form) }}
+		</div>
+		<div class="form-fluid">
+			<div class="form-actions">
+			    {% if not rOnly %}
+			    	<button class="btn btn-primary" type="submit" name="action" value="save" >Enregistrer</button>
+					<button class="btn btn-info" type="submit" name="action" value="save_return" ><i class="icon-share-alt"></i> Enregistrer et revenir au groupe</button>
+			        {% if entity.statut == 0 and ((deadlinePassed==false) or is_granted('ROLE_ADMIN'))%}
+			            <button class="btn btn-success" type="submit" name="action" value="submit_validation"><i class="icon-eye-open"></i> Demander la validation</button>
+			        {% endif %}
+			        {% if is_granted('ROLE_ADMIN') %}
+			        	{% if entity.statut == 1 %}
+			                <button class="btn btn-success" type="submit" name="action" value="validate"><i class="icon-ok"></i> Valider la tâche</button>
+			            {% endif %}
+			            {% if entity.statut >= 1  %}
+			                 <button class="btn btn-warning" type="submit" name="action" value="reject"><i class="icon-remove"></i> Rejeter la tâche</button>
+			            {% endif %}
+			        {% endif %}
+			        {% if entity.statut != -1  %}
+			        	<button class="btn btn-danger" type="submit" name="action" value="delete"><i class="icon-remove"></i> Supprimer la tâche</button>
+			        {% endif %}
+			        {% if entity.statut == -1 and entity.groupeTache.statut != -1 %}
+			        	<button class="btn btn-inverse" type="submit" name="action" value="restore">Restaurer la fiche</button>
+			     	{% endif %}
+			     {% else %}
+			     	{% if is_granted('ROLE_ADMIN') and entity.statut == 3 %}
+			     		<a class="btn  btn-danger apopover" href="{{ path('creneaumaker_deoktache', { 'id': entity.id }) }}" rel="popover" data-content="Cette tâche à peut-être déjà été affectée." data-original-title="Attention"> Modifier la tâche</a>
+			     	{% endif %}
+				{% endif %}
+				{% if entity.statut >= 2  and is_granted('ROLE_ADMIN')%}
+			                 <button class="btn btn-success" type="submit" name="action" value="creneaumaker"><i class="icon-arrow-right"></i> Ouvrir dans CréneauMaker</button>
+			    {% endif %}
+			</div>
+		</div>
+	</form>
+
+{% endblock %}

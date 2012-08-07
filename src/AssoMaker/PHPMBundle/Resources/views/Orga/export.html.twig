@@ -1,0 +1,52 @@
+{% extends "AssoMakerPHPMBundle::layout.html.twig"  %}
+{% set pageTitle = 'Export Orga' %}
+
+
+{% block body %}
+   <table BORDER="1">
+   	<thead>
+   	  <tr>
+   		<th>Nom</th>
+   		<th>Prénom</th>
+   		<th>Surnom</th>
+   		<th>Téléphone</th>
+   		<th>Mail</th>
+   		<th>Date de Naissance</th>
+   		<th>Permis</th>
+   		<th>Com'</th>
+   		<th>Départ'</th>
+   		<th>Connection auto</th>
+   		<th>Commentaire</th>
+   		<th>Amis</th>
+   	  </tr>
+   	</thead>
+   	<tbody>
+   		{% for orga in orgas %}
+   		<tr>
+   			<td>{{ orga.nom }}</td>
+   			<td>{{ orga.prenom }}</td>
+   			<td>{{ orga.surnom }}</td>
+   			<td>{{ orga.telephone }}</td>
+   			<td>{{ orga.email }}</td>
+   			<td>{% if orga.dateDeNaissance %}{{ orga.dateDeNaissance|format_date('dd MMM Y') }}{% endif%}</td>
+   			<td>{% if orga.datePermis %}{{ orga.datePermis|format_date('dd MMM Y') }}{% endif%}</td>
+   			<td>{{ orga.equipe.nom }}</td>
+   			<td>{{ orga.departement }}</td>
+   			<td><a href="{{ url('autologin', { 'id': orga.id, 'loginkey': (orga.id)|phpm_crypt }) }}">log in</a></td>
+   			<td>{{ orga.commentaire }}</td>
+   			<td>{{ orga.amis }}</td>
+   			<td>			
+   				{% for dispo in orga.disponibilites %}
+   				{{ dispo.debut |format_datetime('EEEE dd MMM HH:mm') }} 
+   				--> {{ dispo.fin |format_datetime('EEEE dd MMM HH:mm') }}
+   				<br/>
+   				{% endfor %}</td>
+   		</tr>
+   		{% endfor %}
+   	</tbody>
+   
+   
+   
+{% endblock %}
+
+

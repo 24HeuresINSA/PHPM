@@ -1,0 +1,38 @@
+{% extends "AssoMakerPHPMBundle:PlageHoraire:layout.html.twig"  %}
+{% set pageTitle = 'Détails de la plage horaire' %}
+{% use "AssoMakerPHPMBundle::show.html.twig" %}
+
+{% block content %}
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Debut</th>
+            <td>{{ entity.debut|format_datetime('dd MMM Y HH:mm') }}</td>
+        </tr>
+        <tr>
+            <th>Fin</th>
+            <td>{{ entity.fin|format_datetime('dd MMM Y HH:mm') }}</td>
+        </tr>
+         <tr>
+            <th>T&acirc;che</th>
+            <td>{{ entity.tache }}</td>
+        </tr>
+         <tr>
+            <th>NbOrgasNecessaires</th>
+            <td>{{ entity.nbOrgasNecessaires }}</td>
+        </tr>
+         <tr>
+            <th>Dur&eacute;</th>
+            <td>{{ entity.dureeCreneau }}</td>
+        </tr>
+        <tr>
+                    <th>Recoupement</th>
+                    <td>{{ entity.recoupementCreneau }}</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

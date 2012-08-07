@@ -1,0 +1,12 @@
+{% extends "AssoMakerPHPMBundle:Creneau:layout.html.twig"  %}
+{% set pageTitle = 'Edition du Créneau' %}
+{% use "AssoMakerPHPMBundle::edit.html.twig" %}
+
+{% block content %}
+<form action="{{ path('creneau_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+    <p>
+        <button type="submit">Valider</button>
+    </p>
+</form>
+{% endblock %}

@@ -1,5 +1,5 @@
-PHPMBundle:
-    resource: "@PHPMBundle/Controller/"
+AssoMakerPHPMBundle:
+    resource: "@AssoMakerPHPMBundle/Controller/"
     type:     annotation
     prefix:   /
 

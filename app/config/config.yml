@@ -1,7 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    - { resource: @PHPMBundle/Resources/config/services.yml }
+    - { resource: @AssoMakerPHPMBundle/Resources/config/services.yml }
 
 framework:
     #esi:             ~
@@ -23,14 +23,12 @@ twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
     form:
-        resources:
-            - 'PHPMBundle:Form:fields.html.twig'
+        resources: ~
             
 # Assetic Configuration
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        [PHPMBundle]
     filters:
         cssrewrite: ~
         # closure:
@@ -56,7 +54,7 @@ doctrine:
                       auto_mapping: true
                       dql:
                           datetime_functions:
-                              timediff: PHPM\Bundle\DQL\TimeDiff
+                              timediff: AssoMaker\PHPMBundle\DQL\TimeDiff
 
 # Swiftmailer Configuration
 swiftmailer:

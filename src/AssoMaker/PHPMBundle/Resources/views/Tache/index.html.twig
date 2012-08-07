@@ -1,0 +1,70 @@
+{% extends "AssoMakerPHPMBundle:Tache:layout.html.twig"  %}
+{% set pageTitle = 'Liste des Tâches' %}
+{% use "AssoMakerPHPMBundle::index.html.twig" %}
+
+{% block content %}
+
+<div class="row-fluid">
+	<div class="span2">
+		<ul class="nav nav-list">
+			<li class="nav-header">Tâches</li>
+			<li{% if app.request.get('orgaid') == app.user.id %} class="active" {% endif %}>
+			    <a href="{{ path('tache', {	'orgaid': app.user.id ,
+			    							'equipeid':app.request.get('equipeid'),
+											'statut':app.request.get('statut')}) }}">Mes tâches</a>
+			</li>
+			<li{% if app.request.get('equipeid') == app.user.equipe.id %} class="active" {% endif %}>
+			    <a href="{{ path('tache', {	'orgaid': 'all' ,
+			    							'equipeid':app.user.equipe.id,
+											'statut':app.request.get('statut')}) }}">Celles de ma Com</a>
+			</li>
+			<li class="dropdown
+			{% if app.request.get('equipeid') != 'all' and app.request.get('equipeid') != app.user.equipe.id  %} active {% endif %}">
+			    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Par équipe<b class="caret"></b></a>
+			    <ul class="dropdown-menu">
+			    {% for equipe in equipes %}
+					<li 
+					{% if app.request.get('equipeid') == equipe.id %}
+					class="active"
+					{% endif %}
+					>
+					    <a href="{{ path('tache', {'equipeid':equipe.id, 'statut':app.request.get('statut')}) }}">{{ entitiesMacro.equipe(equipe) }}</a>
+					</li>
+				{% endfor %}
+			    </ul>
+			 </li>
+			<li{% if app.request.get('equipeid') =='all' and app.request.get('orgaid') == 'all' %} class="active" {% endif %}>
+			    <a href="{{ path('tache', {'statut':app.request.get('statut'),'equipeid':'all'}) }}">Toutes</a>
+			</li>
+			<li class="nav-header">Statut </li>
+			<li{% if app.request.get('statut') ==0 and app.request.get('statut') !='all' %} class="active" {% endif %}>
+			    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':0}) }}"><i class="icon-pencil"></i> En rédaction</a>
+			</li>
+			<li{% if app.request.get('statut') == 1 %} class="active" {% endif %}>
+			    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':1}) }}"><i class="icon-eye-open"></i> En cours de validation</a>
+			</li>
+			<li{% if app.request.get('statut') == 2 %} class="active" {% endif %}>
+			    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':2}) }}"><i class="icon-ok"></i> Validées</a>
+			</li>
+			<li{% if app.request.get('statut') == 3 %} class="active" {% endif %}>
+			    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':3}) }}"><i class="icon-arrow-right"></i> Prêtes pour affectation</a>
+			</li>
+			<li{% if app.request.get('statut') == -1 %} class="active" {% endif %}>
+			    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':-1}) }}"><i class="icon-trash"></i> Supprimées</a>
+			</li>
+			<li{% if app.request.get('statut') == 'all' %} class="active" {% endif %}>
+			    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':'all'}) }}">Pas de filtre</a>
+			</li>
+			<li class="divider"></li>
+			<li class="nav-header">Actions</li>
+			<li>
+			    <a href="{{ path('groupetache_create') }}"><i class="icon-folder-open"></i> Créer un nouveau groupe de tâches</a>
+			</li>
+		</ul>
+	</div>
+	<div class="span10">
+	{% include 'AssoMakerPHPMBundle:Tache:afficheListe.html.twig' with {'entities': taches} %}
+	</div>
+</div>
+
+{% endblock %}

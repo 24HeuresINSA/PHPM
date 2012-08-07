@@ -1,0 +1,47 @@
+{% extends "AssoMakerPHPMBundle:Tache:layout.html.twig"  %}
+{% set pageTitle = 'Nouvelle tâche' %}
+{% use "AssoMakerPHPMBundle::new.html.twig" %}
+
+{% form_theme form _self %}
+
+{% block content %}
+
+<form action="{{ path('tache_create', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+
+{{ form_errors(form) }}
+<div>
+<h2>Informations Générales</h2>
+
+
+    {{ form_errors(form.entity) }}
+    {{ form_widget(form.entity) }}
+</div>
+
+
+<div>
+<h2>Besoins en matériel</h2>
+
+    {{ form_errors(form.Materiel) }}
+    {{ form_widget(form.Materiel) }}
+</div>
+<div>
+
+
+    <h3>Enregistrer les Modifications</h3>
+    {{ form_errors(form.commentaire) }}
+    {{ form_widget(form.commentaire) }}
+
+
+</div>
+
+
+{{ form_rest(form) }}
+    <p>
+        <button type="submit" >Enregistrer</button>
+    </p>
+</form>
+
+
+
+
+{% endblock %}

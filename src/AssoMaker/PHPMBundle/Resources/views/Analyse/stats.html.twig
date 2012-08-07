@@ -1,0 +1,74 @@
+{% extends "AssoMakerPHPMBundle::layout.html.twig"  %}
+{% set pageTitle = 'Statistiques' %}
+
+{# {% form_theme form _self %}#}
+
+
+{% block pageHeader %}
+{% endblock %}
+
+{% block content %}
+   
+    <div class="row-fluid">       
+    	<div class="page-header">
+         	<h1>Statistiques</h1>
+         </div>
+    </div>
+    
+    <div class="row-fluid"> 
+    	<div class="span8">
+		    <h2>Tâches</h2>
+		    <hr>
+		    <h3>Statistiques Fiches</h3>
+		    <table class = "table table-condensed">
+		    <thead>
+		    	<th>Équipe</th>
+		    	<th>Taches supprimées</th>
+		    	<th>Taches en rédaction</th>
+		    	<th>Taches en validation</th>
+		    	<th>Taches validées</th>
+		    	<th>Taches ok pour affectation</th>
+		    </thead>
+		    <tbody>
+		    	{% for equipe,stats in tachesStats %}
+		    	 <tr>
+		    	 <td>{{ equipe }}</td>
+		    	 <td>{{ stats[-1] }}</td>
+		    	 <td>{{ stats.0 }}</td>
+		    	 <td>{{ stats.1 }}</td>
+		    	 <td>{{ stats.2 }}</td>
+		    	 <td>{{ stats.3 }}</td>
+		    	 </tr>	    	
+		    	{% endfor %}
+		    
+		    </tbody>
+		    </table>
+	    </div>
+	        <div class="span4"> 
+	    <h2>Orgas</h2>
+	    <hr>
+	    <table class = "table table-condensed">
+	    <thead>
+	    	<th>Équipe</th>
+	    	<th>Nombre d'orgas</th>
+	    </thead>
+	    <tbody>
+	    	{% for equipe,total in orgasStats %}
+	    	 <tr>
+	    	 <td>{{ equipe }}</td>
+	    	 <td>{{ total }}</td>
+	    	 </tr>	    	
+	    	{% endfor %}
+	    
+	    </tbody>
+	    </table>
+	    
+    </div>
+    </div>
+    
+
+    
+
+    
+
+{% endblock %}

@@ -1,0 +1,39 @@
+parameters:
+    my.validator.quartHeure.class:      AssoMaker\PHPMBundle\Validator\QuartHeureValidator
+    my.validator.inclus.class:      AssoMaker\PHPMBundle\Validator\InclusValidator
+    my.validator.debutAvantFin.class:      AssoMaker\PHPMBundle\Validator\DebutAvantFinValidator
+    my.validator.recoupe.class:      AssoMaker\PHPMBundle\Validator\RecoupeValidator
+    config.extension.class:      AssoMaker\PHPMBundle\Extension\ConfigExtension
+
+services:
+    my.validator.quartHeure:
+       class:      %my.validator.quartHeure.class%
+       arguments: [@doctrine.orm.entity_manager]
+       tags:
+            - { name: validator.constraint_validator, alias: validator.quartHeure } 
+
+    my.validator.inclus:
+       class:      %my.validator.inclus.class%
+       arguments: [@doctrine.orm.entity_manager]
+       tags:
+            - { name: validator.constraint_validator, alias: validator.inclus } 
+
+    my.validator.debutAvantFin:
+       class:      %my.validator.debutAvantFin.class%
+       arguments: [@doctrine.orm.entity_manager]
+       tags:
+            - { name: validator.constraint_validator, alias: validator.debutAvantFin } 
+            
+    my.validator.plageHoraireRecoupe:
+       class:      %my.validator.recoupe.class%
+       arguments: [@doctrine.orm.entity_manager]
+       tags:
+            - { name: validator.constraint_validator, alias: validator.recoupe }
+    config.extension:
+       class:      %config.extension.class%
+       arguments: [@doctrine]
+       tags:
+            -  { name: twig.extension }
+
+
+      
