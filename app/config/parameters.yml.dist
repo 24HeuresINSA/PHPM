@@ -4,7 +4,7 @@ parameters:
     database_port:    ""
     database_name:    "phpm"
     database_user:    "phpm"
-    database_password:    "5JxS65w7WwtQEVqv"
+    database_password:    "password"
     mailer_transport:    "gmail"
     mailer_host:    ""
     mailer_user:    ""
