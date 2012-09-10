@@ -7,7 +7,7 @@ Version 1.0b2
 -------------------------
 Apache 2 w/ mod_rewrite
 PHP5.3 w/ php5-intl, php5-apc --> cf PHP Config section below
-node in your path with jshiht, less and uglify modules
+node in your path with jshiht, less, recess and uglify modules
 composer.phar in your path
 
 2) Deployment
