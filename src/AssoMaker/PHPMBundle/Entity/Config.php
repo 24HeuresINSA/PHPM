@@ -153,4 +153,11 @@ class Config
     {
         return $this->hint;
     }
+    
+    function __construct($field, $label, $value, $hint) {
+    	$this->setField($field);
+    	$this->setLabel($label);
+    	$this->setValue($value);
+    	$this->setHint($hint);
+     }
 }

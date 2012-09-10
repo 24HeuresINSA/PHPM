@@ -19,6 +19,7 @@
         "sensio/distribution-bundle": "dev-master",
         "sensio/framework-extra-bundle": "dev-master",
         "sensio/generator-bundle": "dev-master",
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
         "fp/lightopenid": "dev-master",

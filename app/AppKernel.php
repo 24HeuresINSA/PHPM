@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Sonata\IntlBundle\SonataIntlBundle(),
             new AssoMaker\PHPMBundle\AssoMakerPHPMBundle(),
             new AssoMaker\BaseBundle\AssoMakerBaseBundle(),
+        	new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

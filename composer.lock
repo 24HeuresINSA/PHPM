@@ -1,11 +1,17 @@
 {
-    "hash": "b9452ab8625a66f2b7a2870907695119",
+    "hash": "3e21acbfc69d1709aea76c4c7257cf15",
     "packages": [
         {
             "package": "doctrine/common",
             "version": "2.3.x-dev",
             "source-reference": "605b1b8b5a7bc8daf9111fb35483e5708e30de35",
             "commit-date": "1346249247"
+        },
+        {
+            "package": "doctrine/data-fixtures",
+            "version": "dev-master",
+            "source-reference": "779c3dfe446b6da893be87b908d6be28345d1e01",
+            "commit-date": "1341780535"
         },
         {
             "package": "doctrine/dbal",
@@ -16,8 +22,20 @@
         {
             "package": "doctrine/doctrine-bundle",
             "version": "dev-master",
+            "alias-pretty-version": "1.0.x-dev",
+            "alias-version": "1.0.9999999.9999999-dev"
+        },
+        {
+            "package": "doctrine/doctrine-bundle",
+            "version": "dev-master",
             "source-reference": "v1.0.0",
             "commit-date": "1347052701"
+        },
+        {
+            "package": "doctrine/doctrine-fixtures-bundle",
+            "version": "dev-master",
+            "source-reference": "186d605aa6b592bd577e07e0e9a2c420b02b2492",
+            "commit-date": "1345465418"
         },
         {
             "package": "doctrine/orm",
@@ -161,7 +179,7 @@
             "package": "twitter/bootstrap",
             "version": "master",
             "source-reference": "master",
-            "commit-date": "1347213474"
+            "commit-date": "1346816651"
         }
     ],
     "packages-dev": null,
@@ -178,6 +196,7 @@
         "sensio/distribution-bundle": 20,
         "sensio/framework-extra-bundle": 20,
         "sensio/generator-bundle": 20,
+        "doctrine/doctrine-fixtures-bundle": 20,
         "fp/lightopenid": 20,
         "sonata-project/intl-bundle": 20
     }
