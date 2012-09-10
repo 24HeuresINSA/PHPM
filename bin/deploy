@@ -1,6 +1,5 @@
 #!/bin/sh
 set -e
-git pull origin master 
 composer.phar update install
 cd vendor/twitter/bootstrap/
 make bootstrap

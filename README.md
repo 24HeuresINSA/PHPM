@@ -6,8 +6,9 @@ Version 1.0b2
 1) Required Configuration
 -------------------------
 Apache 2 w/ mod_rewrite
-PHP5.3 w/ php5-intl --> cf PHP Config section below
-nodejs w/ less and uglify modules
+PHP5.3 w/ php5-intl, php5-apc --> cf PHP Config section below
+node in your path with jshiht, less and uglify modules
+composer.phar in your path
 
 2) Deployment
 -------------
@@ -29,8 +30,9 @@ d) Execute the deployment script
 '/bin/deploy'
 The script must return no errors for the deployment to be successful.
 
-e) Generate database tables 
+e) Generate database tables and import data
 './app/console doctrine:schema:update --force'
+'app/console doctrine:fixtures:load --purge-with-truncate'
 
 *** Mac-specific instructions ***
 Install MacPort:
