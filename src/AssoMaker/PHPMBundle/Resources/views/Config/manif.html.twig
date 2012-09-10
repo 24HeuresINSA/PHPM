@@ -3,12 +3,7 @@
 
 {% form_theme form _self %}
 
-{% block style %}
-{{ parent() }}
-			{% stylesheets 'bundles/phpm/css/config.css' filter='cssrewrite'  %}
-				<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
-			{% endstylesheets %}
-{% endblock %}
+
 
 {% block field_label %}
 {% endblock field_label %}

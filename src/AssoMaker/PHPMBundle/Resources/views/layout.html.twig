@@ -20,7 +20,7 @@
         {% block style %}
 			
 			{# Twitter Bootstrap Code #}
-				<link rel="stylesheet" href="{{ asset('lib/bootstrap/css/bootstrap.min.css') }}" type="text/css" />
+				<link rel="stylesheet" href="{{ asset('../vendor/twitter/bootstrap/bootstrap/css/bootstrap.min.css') }}" type="text/css" />
 				<style type="text/css">
 					{% block pageStyle %}
 					
@@ -34,27 +34,32 @@
 				    
 				    {% endblock %}
 			    </style>
-				<link rel="stylesheet" href="{{ asset('lib/bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" />
+				<link rel="stylesheet" href="{{ asset('../vendor/twitter/bootstrap/bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" />
         
         
         	{# Rewritten CSS #}
 				{% stylesheets
-					'bundles/phpm/css/jquery.dataTables.css'
+					'bundles/assomakerphpm/css/jquery.dataTables.css'
 					'../vendor/DataTables/media/css/jquery.dataTables_themeroller.css'
 					'../vendor/Timepicker/jquery-ui-timepicker-addon.css'
 					'lib/jWYSIWYG/jquery.wysiwyg.css'
+					'@AssoMakerPHPMBundle/Resources/public/css/config.css'
 					filter='cssrewrite' 
+				%}
+				{% endstylesheets %}
+				{% stylesheets
+				'@AssoMakerPHPMBundle/Resources/public/css/style.less'
+				'@AssoMakerPHPMBundle/Resources/public/css/tache.less'
+					filter='less' 
 				%}
 					<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
 				{% endstylesheets %}
 			
-			{# Was re-writen, but will stick to less.js for the moment #}
-				<link rel="stylesheet/less" href="{{ asset('bundles/phpm/css/style.less') }}" type="text/css" />
-				<link rel="stylesheet/less" href="{{ asset('bundles/phpm/css/tache.less') }}" type="text/css" />
+
 			
 			{# Not rewritten stylesheets #}
-				<link rel="stylesheet" href="{{ asset('bundles/phpm/css/jquery-ui/themes/smoothness/jquery-ui-1.8.16.custom.css') }}" type="text/css" />
-				<link rel="stylesheet" href="{{ asset('bundles/phpm/css/images.css') }}" type="text/css" />
+				<link rel="stylesheet" href="{{ asset('bundles/assomakerphpm/css/jquery-ui/themes/smoothness/jquery-ui-1.8.16.custom.css') }}" type="text/css" />
+				<link rel="stylesheet" href="{{ asset('bundles/assomakerphpm/css/images.css') }}" type="text/css" />
 		{% endblock %}
 		
 		{# même chose pour Javascript, bien le mettre APRES à cause de LESS #}
@@ -69,7 +74,7 @@
 				'../vendor/Timepicker/jquery-ui-timepicker-addon.js'
 				'../vendor/shiftkeybox/jquery.shiftcheckbox.js'
 				'lib/jWYSIWYG/jquery.wysiwyg.js'
-				'lib/bootstrap/js/bootstrap.min.js'
+				'../vendor/twitter/bootstrap/bootstrap/js/bootstrap.min.js'
 				'@AssoMakerPHPMBundle/Resources/public/js/lib/jquery-ui-i18n.min.js'
 			%}
 				<script src="{{ asset_url }}" type="text/javascript"></script>
