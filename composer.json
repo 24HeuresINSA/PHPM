@@ -21,10 +21,29 @@
         "sensio/generator-bundle": "dev-master",
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
-	"fp/lightopenid": "dev-master",
-	"sonata-project/intl-bundle": "dev-master"
+	    "fp/lightopenid": "dev-master",
+	    "sonata-project/intl-bundle": "dev-master",
+        "twitter/bootstrap": "master"
 	
     },
+    "repositories": [
+            {
+                "type": "package",
+                "package": {
+                    "version": "master",
+                    "name": "twitter/bootstrap",
+                "source": {
+                        "url": "http://twitter.github.com/bootstrap/assets/bootstrap.zip",
+                        "type": "zip",
+                        "reference": "master"
+                    },
+                    "dist": {
+                        "url": "http://twitter.github.com/bootstrap/assets/bootstrap.zip",
+                        "type": "zip"
+                    }
+                }
+            }
+        ],
     "scripts": {
         "post-install-cmd": [
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
