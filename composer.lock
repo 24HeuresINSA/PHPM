@@ -1,5 +1,5 @@
 {
-    "hash": "291b8a55c1f89c0880f8af0435089df7",
+    "hash": "b9452ab8625a66f2b7a2870907695119",
     "packages": [
         {
             "package": "doctrine/common",
@@ -136,8 +136,8 @@
         {
             "package": "symfony/symfony",
             "version": "2.1.x-dev",
-            "source-reference": "e7059b44c78ca8e1e892adb4d93b5a482f4eb9b3",
-            "commit-date": "1346926323"
+            "source-reference": "3c32fd993dfb1e07b79acbe4e4bf24f382cd81b3",
+            "commit-date": "1347274422"
         },
         {
             "package": "twig/extensions",
@@ -161,7 +161,7 @@
             "package": "twitter/bootstrap",
             "version": "master",
             "source-reference": "master",
-            "commit-date": "1346945574"
+            "commit-date": "1347213474"
         }
     ],
     "packages-dev": null,
