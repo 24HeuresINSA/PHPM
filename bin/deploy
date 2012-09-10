@@ -4,6 +4,7 @@ composer.phar update install
 cd vendor/twitter/bootstrap/
 make bootstrap
 cd ../../../
+cp -r vendor/twitter/bootstrap/bootstrap web/lib/bootstrap
 app/console assets:install web --symlink
 app/console cache:clear --env=prod
 app/console assetic:dump --env=prod
