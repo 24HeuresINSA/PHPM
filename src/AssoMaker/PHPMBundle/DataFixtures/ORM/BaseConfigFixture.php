@@ -5,10 +5,10 @@ use AssoMaker\PHPMBundle\Entity\Config;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadUserData implements FixtureInterface {
+class BaseConfigFixture implements FixtureInterface {
 
 	public function load(ObjectManager $manager) {
-		echo "Starting to load PHPLanningmaker DB FIXTURES\n";
+		echo "Starting to load PHPLanningmaker Config FIXTURES\n";
 
 		$manager
 				->persist(
@@ -21,11 +21,11 @@ class LoadUserData implements FixtureInterface {
 						new Config('manifestation_organisation_nom',
 								'Nom de l\'organisation',
 								'24 Heures de l\'INSA', NULL));
-		$manager
+ 		$manager
 				->persist(
-						new Config('phpm_config_initiale',
-								'PHPlanningMaker configuré', '0',
-								'1 si la configuration initiale à déjà été effectuée, 0 sinon.'));
+						new Config('phpm_admin_login',
+								'Login admin automatique', '1',
+								NULL)); 
 		$manager
 				->persist(
 						new Config('server_baseurl', 'URL du serveur',

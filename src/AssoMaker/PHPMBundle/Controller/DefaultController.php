@@ -25,15 +25,16 @@ class DefaultController extends Controller
     public function homeAction()
     {
     	$em = $this->getDoctrine()->getEntityManager();
-    	$pref = $em->getRepository('AssoMakerPHPMBundle:Config')->findOneByField('phpm_config_initiale');
     	$config = $this->get('config.extension');
-    	if (!$pref){
-    	return $this->redirect($this->generateUrl('config_initiale'));
-    	}
+    	
+
     	
     	$user=$this->get('security.context')->getToken()->getUser();
     	
     	if (!$this->get('security.context')->isGranted('ROLE_VISITOR')) {
+    		if ($config->getValue('phpm_admin_login')==1){
+    			return $this->adminLogin();
+    		}
     		return array();
     	}
     	
@@ -100,6 +101,16 @@ class DefaultController extends Controller
     	
     }
     
+
+    public function adminLogin()
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$config = $this->get('config.extension');
+    	$admin = $em->getRepository('AssoMakerBaseBundle:Orga')->findOneById(1);
+    	$this->get('security.context')->setToken($admin->generateUserToken());
+    	return $this->redirect($this->generateUrl('accueil'));
+    	 
+    }
     
     
     /**
