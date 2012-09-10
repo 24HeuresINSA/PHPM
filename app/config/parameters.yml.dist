@@ -12,6 +12,7 @@ parameters:
     locale:    "en"
     secret:    ""
     admin_email:    ""
-    node_bin:    "/usr/bin/node"
-    node_paths:    /usr/lib/node/
+    node_bin:    "/usr/local/bin/node"
+    node_paths:
+         - /usr/local/lib/node_modules
     
