@@ -26,5 +26,6 @@ src/PHPM/Bundle/Controller/TestController.php
 .project
 
 .htaccess
+.buildpath
 
 composer.phar
