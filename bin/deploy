@@ -1,11 +1,10 @@
 #!/bin/sh
 set -e
 git pull origin master 
-bin/vendors install
-cd vendor/TwitterBootstrap
+composer.phar update install
+cd vendor/twitter/bootstrap/
 make bootstrap
-cp -r bootstrap ../../web/lib/
-cd ../../
+cd ../../../
 app/console assets:install web --symlink
 app/console cache:clear --env=prod
 app/console assetic:dump --env=prod
