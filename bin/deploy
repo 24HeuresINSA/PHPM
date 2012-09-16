@@ -3,7 +3,6 @@ set -e
 composer.phar update install
 cd vendor/twitter/bootstrap/
 make bootstrap
-mkdir web/lib
 cd ../../../
 cp -r vendor/twitter/bootstrap/bootstrap web/lib/bootstrap
 app/console assets:install web --symlink
