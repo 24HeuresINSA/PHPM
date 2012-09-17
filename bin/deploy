@@ -8,6 +8,7 @@ cp -r vendor/twitter/bootstrap/bootstrap web/lib/bootstrap
 cp -r vendor/jquery/jquery/jquery-1.8.1.min.js web/lib/jquery.min.js
 cp -r vendor/jquery/jqueryui/ web/lib
 cp -r vendor/trentrichardson/jquerytimepickeraddon web/lib/
+cp -r vendor/akzhan/jwysiwyg/ web/lib
 cp vendor/sanisoft/shiftcheckbox/jquery.shiftcheckbox.js web/lib/
 app/console assets:install web --symlink
 app/console cache:clear --env=prod

@@ -39,7 +39,6 @@
         
         	{# Rewritten CSS #}
         	
-{#         						'lib/jWYSIWYG/jquery.wysiwyg.css'#}
 				{% stylesheets
 				'@AssoMakerPHPMBundle/Resources/public/css/config.less'
 				'@AssoMakerPHPMBundle/Resources/public/css/style.less'
@@ -57,6 +56,8 @@
 				'lib/jqueryui/css/smoothness/jquery-ui-1.8.23.custom.css'
 				'lib/jquerytimepickeraddon/jquery-ui-timepicker-addon.css'
 				'bundles/assomakerphpm/css/images.css'
+				'lib/jwysiwyg/jquery.wysiwyg.css'
+				filter='cssrewrite'
 				%}
 					<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
 				{% endstylesheets %}
@@ -73,12 +74,9 @@
 				'lib/jquery.shiftcheckbox.js'
 				'@AssoMakerPHPMBundle/Resources/public/js/general.js'
 				'@AssoMakerPHPMBundle/Resources/public/js/ui.js'
-				
+				'lib/jwysiwyg/jquery.wysiwyg.js'
 			%}
 			
-
-{# 				'../vendor/shiftkeybox/jquery.shiftcheckbox.js'#}
-{# 				'lib/jWYSIWYG/jquery.wysiwyg.js'#}
 				<script src="{{ asset_url }}" type="text/javascript"></script>
 			{% endjavascripts %}
         {% endblock %}

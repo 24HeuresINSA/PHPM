@@ -1,11 +1,15 @@
 {
-    "hash": "dd76682a76dce0968d4afeca627ac7f0",
+    "hash": "af19137b86595d19394e7e914977ee00",
     "packages": [
+        {
+            "package": "akzhan/jwysiwyg",
+            "version": "0.97"
+        },
         {
             "package": "doctrine/common",
             "version": "2.3.x-dev",
-            "source-reference": "bcc89eb63e7dad22102c4e0516fe40159461f40a",
-            "commit-date": "1347603718"
+            "source-reference": "24c761bf0f8337064b961a8fad85631a561d26c7",
+            "commit-date": "1347882477"
         },
         {
             "package": "doctrine/data-fixtures",
@@ -16,8 +20,8 @@
         {
             "package": "doctrine/dbal",
             "version": "2.3.x-dev",
-            "source-reference": "239630b61f03f39d198441eced1bfffb7b0e61d1",
-            "commit-date": "1346866589"
+            "source-reference": "c4fe3499781944f7f2b056fd164cfedc67cc0130",
+            "commit-date": "1347882607"
         },
         {
             "package": "doctrine/doctrine-bundle",
@@ -40,8 +44,8 @@
         {
             "package": "doctrine/orm",
             "version": "2.3.x-dev",
-            "source-reference": "4d9f24b2eef3af3a3e76c773994c19bbb0706f88",
-            "commit-date": "1346869007"
+            "source-reference": "c6101317cd71cbf320e96f4ce461f8a5a54bf56d",
+            "commit-date": "1347883749"
         },
         {
             "package": "fp/lightopenid",
@@ -60,8 +64,8 @@
         {
             "package": "jms/di-extra-bundle",
             "version": "1.1.x-dev",
-            "source-reference": "d3360b2eb98a1381b9a3fd86ea94a35a347afebb",
-            "commit-date": "1347584907"
+            "source-reference": "b94feeee8f57060598fdc7a3ef2527182b3946b5",
+            "commit-date": "1347872946"
         },
         {
             "package": "jms/metadata",
@@ -190,8 +194,8 @@
         {
             "package": "symfony/symfony",
             "version": "2.1.x-dev",
-            "source-reference": "846df269dd32c495fde203d4568c50e3214b4365",
-            "commit-date": "1347781262"
+            "source-reference": "9993b86a4844af0b3dcd79f1c795eb4a8f5ab7d9",
+            "commit-date": "1347864860"
         },
         {
             "package": "trentrichardson/jquerytimepickeraddon",
