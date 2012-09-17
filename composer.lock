@@ -1,5 +1,5 @@
 {
-    "hash": "8689c1f0d810ed230319876b9150b768",
+    "hash": "dd76682a76dce0968d4afeca627ac7f0",
     "packages": [
         {
             "package": "doctrine/common",
@@ -74,6 +74,14 @@
             "commit-date": "1346947943"
         },
         {
+            "package": "jquery/jquery",
+            "version": "1.8.1"
+        },
+        {
+            "package": "jquery/jqueryui",
+            "version": "1.8.23"
+        },
+        {
             "package": "kriswallsmith/assetic",
             "version": "dev-master",
             "alias-pretty-version": "1.1.x-dev",
@@ -96,6 +104,10 @@
             "version": "dev-master",
             "source-reference": "0f3dc95c4a0ed7d17bec237d07af3da6c0c1071a",
             "commit-date": "1347363321"
+        },
+        {
+            "package": "sanisoft/shiftcheckbox",
+            "version": "1.0"
         },
         {
             "package": "sensio/distribution-bundle",
@@ -180,6 +192,10 @@
             "version": "2.1.x-dev",
             "source-reference": "846df269dd32c495fde203d4568c50e3214b4365",
             "commit-date": "1347781262"
+        },
+        {
+            "package": "trentrichardson/jquerytimepickeraddon",
+            "version": "1.0.3"
         },
         {
             "package": "twig/extensions",

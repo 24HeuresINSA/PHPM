@@ -38,18 +38,13 @@
         
         
         	{# Rewritten CSS #}
+        	
+{#         						'lib/jWYSIWYG/jquery.wysiwyg.css'#}
 				{% stylesheets
-					'bundles/assomakerphpm/css/jquery.dataTables.css'
-					'../vendor/DataTables/media/css/jquery.dataTables_themeroller.css'
-					'../vendor/Timepicker/jquery-ui-timepicker-addon.css'
-					'lib/jWYSIWYG/jquery.wysiwyg.css'
-					'@AssoMakerPHPMBundle/Resources/public/css/config.css'
-					filter='cssrewrite' 
-				%}
-				{% endstylesheets %}
-				{% stylesheets
+				'@AssoMakerPHPMBundle/Resources/public/css/config.less'
 				'@AssoMakerPHPMBundle/Resources/public/css/style.less'
 				'@AssoMakerPHPMBundle/Resources/public/css/tache.less'
+				'@AssoMakerPHPMBundle/Resources/public/css/affectation.less'
 					filter='less' 
 				%}
 					<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
@@ -58,25 +53,32 @@
 
 			
 			{# Not rewritten stylesheets #}
-				<link rel="stylesheet" href="{{ asset('bundles/assomakerphpm/css/jquery-ui/themes/smoothness/jquery-ui-1.8.16.custom.css') }}" type="text/css" />
-				<link rel="stylesheet" href="{{ asset('bundles/assomakerphpm/css/images.css') }}" type="text/css" />
+				{% stylesheets
+				'lib/jqueryui/css/smoothness/jquery-ui-1.8.23.custom.css'
+				'lib/jquerytimepickeraddon/jquery-ui-timepicker-addon.css'
+				'bundles/assomakerphpm/css/images.css'
+				%}
+					<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
+				{% endstylesheets %}
 		{% endblock %}
 		
 		{# même chose pour Javascript, bien le mettre APRES à cause de LESS #}
         {% block javascript %}
 			{% javascripts
-				'@AssoMakerPHPMBundle/Resources/public/js/lib/jquery.min.js'
-				'@AssoMakerPHPMBundle/Resources/public/js/lib/jquery-ui.min.js'
-				'@AssoMakerPHPMBundle/Resources/public/js/lib/less.min.js'
+				'lib/jquery.min.js'
+				'lib/bootstrap/js/bootstrap.min.js'
+				'lib/jqueryui/js/jquery-ui-1.8.23.custom.min.js'
+				'@AssoMakerPHPMBundle/Resources/public/js/lib/jquery-ui-i18n.min.js'
+				'lib/jquerytimepickeraddon/jquery-ui-timepicker-addon.js'
+				'lib/jquery.shiftcheckbox.js'
 				'@AssoMakerPHPMBundle/Resources/public/js/general.js'
 				'@AssoMakerPHPMBundle/Resources/public/js/ui.js'
-				'../vendor/DataTables/media/js/jquery.dataTables.js'
-				'../vendor/Timepicker/jquery-ui-timepicker-addon.js'
-				'../vendor/shiftkeybox/jquery.shiftcheckbox.js'
-				'lib/jWYSIWYG/jquery.wysiwyg.js'
-				'../vendor/twitter/bootstrap/bootstrap/js/bootstrap.min.js'
-				'@AssoMakerPHPMBundle/Resources/public/js/lib/jquery-ui-i18n.min.js'
+				
 			%}
+			
+
+{# 				'../vendor/shiftkeybox/jquery.shiftcheckbox.js'#}
+{# 				'lib/jWYSIWYG/jquery.wysiwyg.js'#}
 				<script src="{{ asset_url }}" type="text/javascript"></script>
 			{% endjavascripts %}
         {% endblock %}

@@ -90,12 +90,6 @@ $(function() {
 		}
 	});
 	
-	$('.records_list').dataTable( {
-		"bInfo": false,
-		"bPaginate": false,
-		"bJQueryUI": true
-	    
-	} );
 	 
 	// page orga, champ age
 	$('.birthdaydp').datepicker({
