@@ -1,14 +1,14 @@
 parameters:
     database_driver:    "pdo_mysql"
     database_host:    "localhost"
-    database_port:    ""
+    database_port:    ~
     database_name:    "phpm"
     database_user:    "phpm"
     database_password:    "password"
     mailer_transport:    "gmail"
-    mailer_host:    ""
-    mailer_user:    ""
-    mailer_password:    ""
+    mailer_host:    ~
+    mailer_user:    ~
+    mailer_password:    ~
     locale:    "en"
     secret:    ""
     admin_email:    ""
