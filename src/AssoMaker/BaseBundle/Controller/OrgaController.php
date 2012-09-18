@@ -600,31 +600,6 @@ class OrgaController extends Controller
 
 	
 	
-
-	 /**
-     * Planning Orgas from website.
-     *
-     * @Route("/{id}/planning", name="orga_planning")
-     * @Template
-     */
-	public function planningAction($id)	
-	{
-	    if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-	        throw new AccessDeniedException();
-	    }
-		$em = $this->getDoctrine()->getEntityManager();
-		
-		$orga = $em->getRepository('AssoMakerBaseBundle:Orga')->find($id);
-		$CreneauxParJour = $em->getRepository('AssoMakerPHPMBundle:Creneau')->getCreneauxParJour($orga);
-		
-		if (!$orga) {
-			throw $this->createNotFoundException('Unable to find Orga entity.');
-		}
-		else {
-       	 	return array('entity' => $orga,'creneauxParJour' => $CreneauxParJour );
-			}
-	}
-	
 	/**
 	* Lists all Orga entities according to post criteria.
 	*
