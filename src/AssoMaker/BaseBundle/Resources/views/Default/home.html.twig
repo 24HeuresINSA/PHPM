@@ -1,0 +1,33 @@
+{% extends "AssoMakerBaseBundle::layout.html.twig"  %}
+{% set pageTitle = 'Accueil' %}
+
+{% block pageHeader %}
+{% endblock %}
+
+{% block content %}
+
+{% if is_granted('ROLE_VISITOR') %}
+	<div class="row-fluid">
+		<h1>Bonsoir {{ app.user.prenom }} !</h1>
+		<hr>
+	</div>
+	<div class="row-fluid">
+	
+		
+			<div class="span4">
+	          <h2>Mes Informations</h2>
+		       
+	    	</div>
+	   
+	
+{% else %}
+	<div class="hero-unit">
+	{{ phpm_contenu_page_principale |raw}}
+			<p>
+				<a class="btn btn-primary btn-large" href="{{ url('login') }}">Se connecter</a>
+			</p>
+	</div>
+
+{% endif %}
+{% endblock %}
+

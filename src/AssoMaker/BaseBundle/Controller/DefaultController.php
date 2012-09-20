@@ -8,12 +8,31 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class DefaultController extends Controller
 {
-    /**
-     * @Route("/hello/{name}")
+	
+/**
+     * @Route("/", name="base_accueil")
+	 * @Route("/")
      * @Template()
      */
-    public function indexAction($name)
+    public function homeAction()
     {
-        return array('name' => $name);
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$config = $this->get('config.extension');
+    	   	
+    	$user=$this->get('security.context')->getToken()->getUser();
+    	
+    	if (!$this->get('security.context')->isGranted('ROLE_VISITOR')) {
+    		if ($config->getValue('phpm_admin_login')==1){
+    			return $this->adminLogin();
+    		}
+    		return array();
+    	}
+    
+    	
+    	   	
+    	return array();
+    	
+        
     }
+    
 }

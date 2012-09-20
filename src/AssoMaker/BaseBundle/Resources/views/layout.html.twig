@@ -1,0 +1,150 @@
+{% import "AssoMakerPHPMBundle:Macros:entities.html.twig" as entitiesMacro %}
+
+{% macro navBarItem(nom,route,params) %}
+{% if params !="" %}
+<li{% if route == app.request.attributes.get('_route') %} class="active" {% endif %}><a href="{{ path(route,params) }}">{{ nom }}</a></li>
+{% else %}
+<li{% if route == app.request.attributes.get('_route') %} class="active" {% endif %}><a href="{{ path(route) }}">{{ nom }}</a></li>
+{% endif %}
+{% endmacro %}
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>{{ pageTitle }} - PHPlanningMaker</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+        {# c'est pas très beau - on met un code 'générique' dans un block - mais à priori la seule méthode #}
+        {% block style %}
+			
+			{# Twitter Bootstrap Code #}
+				<link rel="stylesheet" href="{{ asset('lib/bootstrap/css/bootstrap.min.css') }}" type="text/css" />
+				<style type="text/css">
+					{% block pageStyle %}
+
+				      body {
+				        padding-top: 60px;
+				        padding-bottom: 40px;
+				      }
+				      .sidebar-nav {
+				        padding: 9px 0;
+				      }
+
+				    {% endblock %}
+			    </style>
+				<link rel="stylesheet" href="{{ asset('lib/bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" />
+        
+        
+        	{# Rewritten CSS #}
+        	
+				{% stylesheets
+				'@AssoMakerPHPMBundle/Resources/public/css/config.less'
+				'@AssoMakerPHPMBundle/Resources/public/css/style.less'
+				'@AssoMakerPHPMBundle/Resources/public/css/tache.less'
+				'@AssoMakerPHPMBundle/Resources/public/css/affectation.less'
+					filter='less' 
+				%}
+					<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
+				{% endstylesheets %}
+			
+
+			
+			{# Not rewritten stylesheets #}
+				{% stylesheets
+				'lib/jqueryui/css/smoothness/jquery-ui-1.8.23.custom.css'
+				'lib/jquerytimepickeraddon/jquery-ui-timepicker-addon.css'
+				'bundles/assomakerphpm/css/images.css'
+				'lib/jwysiwyg/jquery.wysiwyg.css'
+				filter='cssrewrite'
+				%}
+					<link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="screen" />
+				{% endstylesheets %}
+		{% endblock %}
+		
+		{# même chose pour Javascript, bien le mettre APRES à cause de LESS #}
+        {% block javascript %}
+			{% javascripts
+				'lib/jquery.min.js'
+				'lib/bootstrap/js/bootstrap.min.js'
+				'lib/jqueryui/js/jquery-ui-1.8.23.custom.min.js'
+				'@AssoMakerPHPMBundle/Resources/public/js/lib/jquery-ui-i18n.min.js'
+				'lib/jquerytimepickeraddon/jquery-ui-timepicker-addon.js'
+				'lib/jquery.shiftcheckbox.js'
+				'@AssoMakerPHPMBundle/Resources/public/js/general.js'
+				'@AssoMakerPHPMBundle/Resources/public/js/ui.js'
+				'lib/jwysiwyg/jquery.wysiwyg.js'
+			%}
+			
+				<script src="{{ asset_url }}" type="text/javascript"></script>
+			{% endjavascripts %}
+        {% endblock %}
+        
+        <script>
+       		// petit hack : variable avec l'adresse de l'appli, accessibles de partout
+        	app_url = "{{ url('assomaker_phpm_default_home') }}";
+        	app_search_url = "{{ url('search_json') }}";
+        	//app_orga_url = "{{ url('orga') }}";
+        	app_orga_edit_url = "{{ url('orga_edit', {id: '_ID_'}) }}";
+        	//app_tache_url = "{{ url('assomaker_phpm_default_home') }}tache/"; // malheureusement la route tache donne tache/index...
+        	app_tache_edit_url = "{{ url('tache_edit', {id: '_ID_'}) }}";
+        	//app_groupetache_url = "{{ url('groupetache') }}";
+        	app_groupetache_edit_url = "{{ url('groupetache_edit', {id: '_ID_'}) }}";
+        </script>
+        {% endblock %}
+    </head>
+    <body>
+    {% block body %}
+    {% if is_granted('ROLE_USER') %}
+	    <div class="navbar navbar-fixed-top">
+	      <div class="navbar-inner">
+	        <div class="container-fluid">
+	          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </a>
+	          <a class="brand" href="{{ path('base_accueil') }}">AssoMaker</a>
+	          <div class="nav-collapse in" style="height: auto; ">
+	            <ul class="nav">
+	            {% block navbar %}
+
+	       			{{ _self.navBarItem('PlanningMaker','phpm_accueil') }}
+     			{% endblock %}
+
+	          </div><!--/.nav-collapse -->
+	        </div>
+	      </div>
+	    </div>
+    {% endif %}
+	        
+<div class="container-fluid">
+	{% block pageHeader %}
+	<div class="row-fluid">       
+        <div class="page-header">
+       	 <h1>{{ pageTitle }}</h1>
+        </div>
+    </div>
+    {% endblock %}
+  	{% block content %}
+		<p>Il y aura ici le contenu</p>
+	{% endblock %}
+<hr>
+<footer>
+	&copy;
+	<a href="http://www.24heures.org">24 Heures de l'INSA</a>
+	- PHPM
+	v1.0b2
+	@ <a href="https://github.com/lbillon/PHPM" target="_blank">Github</a><br/>
+	<small><i>Si vous rencontrez un bug dans ce logiciel, veuillez contacter <a href="mailto:DSI@24heures.org">DSI@24heures.org</a></i></small>
+</footer>
+
+</div>	        
+
+{% if is_granted('ROLE_VISITOR') %}
+	{% render "AssoMakerBaseBundle:Orga:updateLastActivity"  %}
+{% endif %}
+	      {% endblock %}
+	</body>
+</html>
+

@@ -18,8 +18,8 @@ use AssoMaker\PHPMBundle\Form\PrintPlanningType;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="phpm_accueil")
-	 * @Route("/")
+     * @Route("/phpm", name="phpm_accueil")
+	 * @Route("/phpm")
      * @Template()
      */
     public function homeAction()
