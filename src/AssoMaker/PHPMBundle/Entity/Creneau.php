@@ -207,7 +207,7 @@ class Creneau
      *
      * @param AssoMaker\BaseBundle\Entity\Equipe $equipeHint
      */
-    public function setEquipeHint(\AssoMaker\BaseBundle\Entity\Equipe $equipeHint)
+    public function setEquipeHint($equipeHint)
     {
         $this->equipeHint = $equipeHint;
     }
@@ -227,7 +227,7 @@ class Creneau
      *
      * @param AssoMaker\BaseBundle\Entity\Orga $orgaHint
      */
-    public function setOrgaHint(\AssoMaker\BaseBundle\Entity\Orga $orgaHint)
+    public function setOrgaHint($orgaHint)
     {
         $this->orgaHint = $orgaHint;
     }
