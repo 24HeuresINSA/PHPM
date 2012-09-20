@@ -21,68 +21,7 @@ use AssoMaker\PHPMBundle\Validator\QuartHeure;
  */
 class CreneauController extends Controller
 {
-//     /**
-//      * Lists all Creneau entities.
-//      *
-//      * @Route("/", name="creneau")
-//      * @Template()
-//      */
-//     public function indexAction()
-//     {
-//     	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-//     		throw new AccessDeniedException();
-//     	}
-//         $em = $this->getDoctrine()->getEntityManager();
 
-//         $entities = $em->getRepository('AssoMakerPHPMBundle:Creneau')->findAll();
-
-//         return array('entities' => $entities);
-//     }
-
-//     /**
-//      * Finds and displays a Creneau entity.
-//      *
-//      * @Route("/{id}/show", name="creneau_show")
-//      * @Template()
-//      */
-//     public function showAction($id)
-//     {
-//     	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-//     		throw new AccessDeniedException();
-//     	}
-//         $em = $this->getDoctrine()->getEntityManager();
-
-//         $entity = $em->getRepository('AssoMakerPHPMBundle:Creneau')->find($id);
-		
-
-
-//         if (!$entity) {
-//             throw $this->createNotFoundException('Unable to find Creneau entity.');
-//         }
-
-//         
-
-//         return array(
-//             'entity'      => $entity,
-//                     );
-//     }
-
-//     /**
-//      * Displays a form to create a new Creneau entity.
-//      *
-//      * @Route("/new", name="creneau_new")
-//      * @Template()
-//      */
-//     public function newAction()
-//     {
-//         $entity = new Creneau();
-//         $form   = $this->createForm(new CreneauType(), $entity);
-
-//         return array(
-//             'entity' => $entity,
-//             'form'   => $form->createView()
-//         );
-//     }
 
     /**
      * Creates a new Creneau entity.
