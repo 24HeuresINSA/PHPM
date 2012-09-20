@@ -32,7 +32,7 @@ class PlageHoraire
      * @var datetime $debut
      *
      * @ORM\Column(name="debut", type="datetime")
-     * @Assert\DateTime()
+
      * @QuartHeure()
      */
     protected $debut;
@@ -41,7 +41,6 @@ class PlageHoraire
      * @var datetime $fin
      *
      * @ORM\Column(name="fin", type="datetime")
-     * @Assert\DateTime()
      * @QuartHeure()
      */
     protected $fin;
