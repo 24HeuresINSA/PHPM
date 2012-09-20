@@ -13,46 +13,6 @@
 	</div>
 	<div class="row-fluid">
 	
-		
-			<div class="span4">
-	          <h2>Mes Informations</h2>
-		       {% if not app.user.anneeEtudes or not app.user.departement or (not app.user.groupePC and (app.user.anneeEtudes == 1 or app.user.anneeEtudes == 2))%}
-		       	<div class="alert alert-block alert-error fade in">
-		            <h4 class="alert-heading">Tu n'a pas renseigné les informations suivantes :</h4>
-		            <ul>
-		            {% if not app.user.anneeEtudes%}<li>Année d'études</li>{% endif %}
-		            {% if not app.user.departement%}<li>Département INSA</li>{% endif %}
-		            {% if not app.user.groupePC and (app.user.anneeEtudes == 1 or app.user.anneeEtudes == 2)  %}<li>Numéro de groupe Premier Cycle</li>{% endif %}
-		            </ul>
-		        </div>
-		       {% else %}
-	          <p><em>Assure-toi que ces informations sont toujours à jour.</em></p>
-	          {% endif %}
-		          <div class="well">
-		          <h3>{{ entitiesMacro.orga(app.user) }}</h3>
-		          <p>{{ app.user.email }} - {{ app.user.telephone }}</p>
-		          <dl class="dl-horizontal">
-			        
-			        <b>Date de Naissance : </b>
-			        {{ app.user.dateDeNaissance|format_date('dd MMM Y') }}<br>
-			        <b>Équipe : </b>
-			        {{ entitiesMacro.equipe(app.user.equipe) }}<br>
-			        <b>Permis de conduire : </b>
-			        {% if app.user.datePermis %}
-			        obtenu le {{ app.user.datePermis|format_date('dd MMM Y') }}.
-			        {% else %}
-			        non titulaire
-			        {% endif%}<br>
-			        <b>Département : </b>
-					{{ app.user.anneeEtudes }}{{ app.user.departement }}
-					{% if app.user.groupePC %}
-					(groupe {{ app.user.groupePC }})
-			        {% endif %}<br>		        
-			      </dl>
-		          <p><a class="btn" href="{{ path('orga_edit',{'id':app.user.id }) }}"><i class="icon-pencil"></i> Modifier mes informations »</a></p>
-		    	</div>
-	    	</div>
-	    
 	    {% if is_granted('ROLE_USER') %}	
 			<div class="span4">
 	          <h2>Fiches Tâches</h2>
