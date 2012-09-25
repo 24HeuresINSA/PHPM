@@ -14,7 +14,7 @@
 /bundles/
 
 
-src/PHPM/Bundle/Controller/TestController.php
+src/AssoMaker/BaseBundle/Controller/TestController.php
 
 *~
 
