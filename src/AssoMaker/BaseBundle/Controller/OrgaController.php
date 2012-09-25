@@ -155,9 +155,6 @@ class OrgaController extends Controller
 	        if ($form->isValid()) {
 	        	$equipe = $data->getEquipe();
 	            $entity->setPrivileges($equipe->getConfiance()->getPrivileges());
-	        	
-	        	var_dump($form->getErrors());
-	        	exit;
 	            $em->persist($entity);
 	            $em->flush();
 	            
