@@ -82,11 +82,12 @@ class OrgaUserType extends AbstractType
     	if($this->admin){
         $builder
 			
-			->add('statut', 'choice',array('choices'=>array('0'=>'Inscrit','1'=>'Validé','2'=>'Complétement affecté'), 'read_only'=>!$this->admin))
-			->add('privileges','choice',array('choices'=>array('0'=>'Visiteur','1'=>'Orga', '2'=>'Admin'),'read_only'=>!$this->admin))
+			->add('statut', 'choice',array('choices'=>array('0'=>'Inscrit','1'=>'Validé','2'=>'Complétement affecté')))
+			->add('privileges','choice',array('choices'=>array('0'=>'Visiteur','1'=>'Orga', '2'=>'Admin')))
 			->add('equipe','entity',array('label'=>'Équipe','class' => 'AssoMakerBaseBundle:Equipe'));
-        
+        var_dump('adm');
     	}
+    	
     }
 
     public function getName()

@@ -318,11 +318,9 @@ class OrgaController extends Controller
         $confianceCode=$entity->getEquipe()->getConfiance()->getCode();
         $config = $e=$this->get('config.extension');
         $editForm   = $this->createForm(new OrgaUserType($this->get('security.context')->isGranted('ROLE_ADMIN'),$config,$confianceCode), $entity);
-        
-
         $request = $this->getRequest();
-
         $editForm->bindRequest($request);
+
         $entity->uploadProfilePicture();
         if ($editForm->isValid()) {
             $em->persist($entity);
