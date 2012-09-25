@@ -1,0 +1,38 @@
+{% extends "AssoMakerBaseBundle:Orga:layout.html.twig"  %}
+{% set pageTitle = 'Liste des Organisateurs' %}
+{% use "AssoMakerPHPMBundle::index.html.twig" %}
+
+{% block content %}
+<div class="row-fluid">
+	{% for equipe in entities %}
+		<div class="row-fluid">
+			<h3>{{ equipe.nom }}</h3>
+		</div>
+		{% for orga in equipe.orgas %}
+		<div class="row-fluid">
+			<div class="span1">
+				{% if orga.profilePictureSet == 1 %}
+			    	<img src="{{ asset( 'up/profilePictures/'~orga.id~'.jpg' ) }}"/>
+			    {% endif %}
+			</div>
+			<div class="span11">
+				<p>
+					{{ entitiesMacro.orga(orga) }}<br/>
+					<em>{{ orga.email }}</em><br/>
+					<em>{{ orga.telephone }}</em><br/>
+				</p>
+			
+			</div>
+		</div>
+		<hr>
+		{% endfor %}
+	
+	{% endfor %}
+</div>
+
+{% endblock %}
+
+{% block actions %}
+{% endblock %}
+
+

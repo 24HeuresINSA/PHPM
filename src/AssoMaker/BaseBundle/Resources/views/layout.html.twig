@@ -112,6 +112,7 @@
 					{% if phpm_actif ==1 %}
 	       				{{ _self.navBarItem('PlanningMaker','phpm_accueil') }}
 	       			{% endif %}
+	       			{{ _self.navBarItem('Trombinoscope','orga_trombi') }}
      			{% endblock %}
      				{% if is_granted('ROLE_ADMIN') %}
 		       			{{ _self.navBarItem('Configuration','config') }}

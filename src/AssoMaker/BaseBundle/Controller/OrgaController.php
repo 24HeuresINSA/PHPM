@@ -95,6 +95,30 @@ class OrgaController extends Controller
         return array('confiances' => $confiances, 
         			'entities' => $entities);
     }
+    
+    /**
+     * Trombi
+     *
+     * @Route("/trombi", name="orga_trombi")
+     * @Template()
+     */
+    public function trombiAction()
+    {
+    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+    		throw new AccessDeniedException();
+    	}
+    	$em = $this->getDoctrine()->getEntityManager();
+    
+    	$orgasDQL = "SELECT e,o FROM AssoMakerBaseBundle:Equipe e JOIN e.orgas o";
+    
+    	$entities =$em
+    	->createQuery($orgasDQL)
+    	->getResult();
+    	
+    
+    
+    	return array('entities' => $entities);
+    }
 
     
     /**
