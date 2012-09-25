@@ -24,8 +24,6 @@
 		            {% if not app.user.ProfilePictureSet%}<li>Photo de Trombinoscope</li>{% endif %}
 		            </ul>
 		        </div>
-		       {% else %}
-	          <p><em>Assure-toi que ces informations sont toujours à jour.</em></p>
 	          {% endif %}
 		          <div class="well">
 		          	<div class="row-fluid">
@@ -62,9 +60,25 @@
 						    		<a class="btn" href="{{ path('orga_edit',{'id':app.user.id }) }}"><i class="icon-pencil"></i> Modifier mes informations »</a>
 						    	</p>
 					    	</div>
-				    	</div>
-    			</div>
-	   
+				    </div>
+    		</div>
+	   <div class="span4">
+          <h2>Mon compte perso</h2>
+          {% if app.user.soldeComptePerso < 0 %}
+			<div class="alert alert-block alert-error">
+		            <h4 class="alert-heading">Attention : ton compte perso est dans le rouge</h4>
+		            <p>
+		            Tu dois actuellement <em>{{ app.user.soldeComptePerso|number_format(2) }}€</em>  à l'association !
+		            </p>
+		    </div>
+		  {% else %}
+		  <div class="well">
+		            <p>Il te reste actuellement <em>{{ app.user.soldeComptePerso|number_format(2) }}€</em> sur ton compte.</p>
+		    </div>
+		  {% endif %}
+
+
+    		</div>
 	</div>
 {% else %}
 	<div class="hero-unit">

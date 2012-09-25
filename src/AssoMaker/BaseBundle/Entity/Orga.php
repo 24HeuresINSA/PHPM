@@ -251,6 +251,11 @@ class Orga implements UserInterface
     protected $besoinsOrgaHint;
     
     
+    /**
+     * @ORM\Column(name="soldeComptePerso", type="decimal", nullable=true)
+     */
+    protected $soldeComptePerso;
+    
     
     
     
@@ -1112,6 +1117,26 @@ class Orga implements UserInterface
     public function getAnneeEtudes()
     {
         return $this->anneeEtudes;
+    }
+    
+    /**
+     * Set soldeComptePerso
+     *
+     * @param decimal $soldeComptePerso
+     */
+    public function setsoldeComptePerso($soldeComptePerso)
+    {
+    	$this->soldeComptePerso = $soldeComptePerso;
+    }
+    
+    /**
+     * Get soldeComptePerso
+     *
+     * @return decimal
+     */
+    public function getsoldeComptePerso()
+    {
+    	return $this->soldeComptePerso;
     }
 
     /**
