@@ -107,12 +107,22 @@
 	          <a class="brand" href="{{ path('base_accueil') }}">AssoMaker</a>
 	          <div class="nav-collapse in" style="height: auto; ">
 	            <ul class="nav">
-	            {% if is_granted('ROLE_USER') %}
+	            {% if is_granted('ROLE_USER')  %}
 	            {% block navbar %}
-
-	       			{{ _self.navBarItem('PlanningMaker','phpm_accueil') }}
+					{% if phpm_actif ==1 %}
+	       				{{ _self.navBarItem('PlanningMaker','phpm_accueil') }}
+	       			{% endif %}
      			{% endblock %}
+     				{% if is_granted('ROLE_ADMIN') %}
+		       			{{ _self.navBarItem('Configuration','config') }}
+		       		{% endif %}
+		       		{% if is_granted('ROLE_VISITOR') %}	
+	       		    	{{ _self.navBarItem('Se déconnecter','logout') }}
+	        		{% else %}
+	       				{{ _self.navBarItem('Se connecter','login') }}
+	        		{% endif %}
 				{% endif %}
+				</ul>
 	          </div><!--/.nav-collapse -->
 	        </div>
 	      </div>

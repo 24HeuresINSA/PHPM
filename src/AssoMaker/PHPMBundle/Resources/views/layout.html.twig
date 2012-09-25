@@ -9,6 +9,7 @@
 {% endmacro %}
 
 {% block navbar %}
+{{ parent() }}
 	 				<li class="dropdown" id="menu_topnav_orgas">
 					    <a class="dropdown-toggle" data-toggle="dropdown" href="">
 					      Orgas
@@ -25,7 +26,6 @@
 					</li>
 	       		{% if is_granted('ROLE_ADMIN') %}	
 	       			{{ _self.navBarItem('Affectation','orga_affectation') }}
-	       			{{ _self.navBarItem('Configuration','config') }}
 	       		{% endif %}
 	     		{% if is_granted('ROLE_USER') %}
 	        		<li class="dropdown" id="menu_topnav_taches">
@@ -66,13 +66,9 @@
 					{% endif %}
 	       			{{ _self.navBarItem('Charisme','orga_charisme') }}
 	       		{% endif %}
-	       		{% if is_granted('ROLE_VISITOR') %}	
-	       		    {{ _self.navBarItem('Se déconnecter','logout') }}
-	        	{% else %}
-	       			{{ _self.navBarItem('Se connecter','login') }}
-	        	{% endif %}
+
 	            
-	        	</ul>
+	        	
 	        	{% if is_granted('ROLE_USER') %}
 		        	<form class="navbar-form pull-right form-search" method="post" action="{{ path('search') }}" id="search_form">
 				           <input  class="input-medium search-query" id="searchBox" name="s" size="30" placeholder="Rechercher..." />		        		  
