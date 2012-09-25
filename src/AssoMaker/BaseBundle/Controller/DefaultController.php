@@ -74,7 +74,8 @@ class DefaultController extends Controller
     {
     	$em = $this->getDoctrine()->getEntityManager();
     	$config = $this->get('config.extension');
-    	$admin = $em->getRepository('AssoMakerBaseBundle:Orga')->findOneById(1);
+    	$orgas = $em->getRepository('AssoMakerBaseBundle:Orga')->findAll();
+    	$admin = $orgas[0];
     	$this->get('security.context')->setToken($admin->generateUserToken());
     	return $this->redirect($this->generateUrl('base_accueil'));
     
