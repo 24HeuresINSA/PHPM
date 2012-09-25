@@ -48,6 +48,7 @@ class OrgaUserType extends AbstractType
                     'label'=>'Date de permis',
                     'widget' => 'single_text',
                     'format' => 'yyyy-MM-dd',
+            		'required'=>'false',
                     'attr'=>array('class'=>'datep')))
            	->add('anneeEtudes','choice',array(	'label'=>'Année d\'études',
                             			'required'=>false,
