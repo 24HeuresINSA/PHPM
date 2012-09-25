@@ -1,5 +1,5 @@
 <?php
-namespace Acme\HelloBundle\DataFixtures\ORM;
+namespace AssoMaker\BaseBundle\DataFixtures\ORM;
 use AssoMaker\BaseBundle\Entity\Orga;
 
 use AssoMaker\BaseBundle\Entity\Equipe;

@@ -1,5 +1,5 @@
 <?php
-namespace Acme\HelloBundle\DataFixtures\ORM;
+namespace AssoMaker\BaseBundle\DataFixtures\ORM;
 use AssoMaker\PHPMBundle\Entity\Config;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
