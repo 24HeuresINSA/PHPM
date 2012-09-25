@@ -285,7 +285,8 @@ class OrgaController extends Controller
 		
         $editForm = $this->createForm(new OrgaUserType($this->get('security.context')->isGranted('ROLE_ADMIN'),$config,$confianceCode), $entity);
         $deleteForm = $this->createDeleteForm($id);
-
+ 
+        
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
@@ -322,14 +323,7 @@ class OrgaController extends Controller
         $request = $this->getRequest();
 
         $editForm->bindRequest($request);
-        
-        
-        
-        
-        
-        $entity->setDateDeNaissance("1991-07-23");
-        $entity->setDatePermis("1991-07-23");
-        
+        $entity->uploadProfilePicture();
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();

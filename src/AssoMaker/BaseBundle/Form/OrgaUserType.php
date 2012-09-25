@@ -64,6 +64,9 @@ class OrgaUserType extends AbstractType
             									'required'=>false,
             									'choices'=>array('0'=>'Non','1'=>'Oui'),
             									'attr'=>array('class'=>'inline')))
+            ->add('profilePicture','file',array('label'=>'Photo',
+            									'required'=>false,
+            									))
             
     	    ;
     	    

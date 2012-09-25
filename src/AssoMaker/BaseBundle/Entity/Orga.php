@@ -93,6 +93,25 @@ class Orga implements UserInterface
     protected $dateDeNaissance;
     
     /**
+     * @Assert\Image(
+     *     minWidth = 300,
+     *     maxWidth = 300,
+     *     minHeight = 400,
+     *     maxHeight = 400,
+     *     mimeTypes = {"image/jpeg"}
+     * )
+     */
+    public $profilePicture;
+    
+    /**
+     * @var boolean $profilePictureSet
+     *
+     * @ORM\Column(name="profilePictureSet", type="boolean")
+     */
+    protected $profilePictureSet = false;
+    
+    
+    /**
      * @var date $datePermis
      *
      * @ORM\Column(name="datePermis", type="date", nullable=true)
@@ -230,6 +249,8 @@ class Orga implements UserInterface
      * @ORM\OneToMany(targetEntity="AssoMaker\PHPMBundle\Entity\BesoinOrga", mappedBy="orgaHint")
      */
     protected $besoinsOrgaHint;
+    
+    
     
     
     
@@ -1112,4 +1133,26 @@ class Orga implements UserInterface
     {
         return $this->groupePC;
     }
+    
+
+    public function isProfilePictureSet()
+    {
+    	return $this->profilePictureSet;
+    }
+    
+
+    
+    
+    public function uploadProfilePicture()
+    {
+    	
+    	if (null === $this->profilePicture) {
+    		return;
+    	}
+
+    	$this->profilePicture->move(__DIR__ . '/../../../../web/up/profilePictures', $this->getId().'.jpg');
+    	$this->profilePicture = null;
+    	$this->profilePictureSet = true;
+    }
+    
 }

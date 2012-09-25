@@ -4,6 +4,8 @@
 {% block content %}
 <div class="row-fluid">
 <h1>Inscription Orga Hard</h1>
+
+
 	<form action="{{ path('orga_register_user',{'confianceCode':confianceCode}) }}" method="post" {{ form_enctype(form) }}>
 	    {{ form_widget(form) }}
 		<div class="form-actions"> 
