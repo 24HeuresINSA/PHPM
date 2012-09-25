@@ -1,0 +1,17 @@
+{% extends "AssoMakerBaseBundle::layout.html.twig"  %}
+{% set pageTitle = 'Inscription Orga' %}
+
+{% block content %}
+<div class="row-fluid">
+<h1>Inscription Orga Hard</h1>
+	<form action="{{ path('orga_register_user',{'confianceCode':confianceCode}) }}" method="post" {{ form_enctype(form) }}>
+	    {{ form_widget(form) }}
+		<div class="form-actions"> 
+			<div class="btn-toolbar">
+				<button type="submit" class="btn btn-success">S'inscrire</button>
+			</div>
+		</div>
+
+	</form>
+</div>
+{% endblock %}

@@ -95,7 +95,7 @@
     </head>
     <body>
     {% block body %}
-    {% if is_granted('ROLE_USER') %}
+    
 	    <div class="navbar navbar-fixed-top">
 	      <div class="navbar-inner">
 	        <div class="container-fluid">
@@ -107,16 +107,17 @@
 	          <a class="brand" href="{{ path('base_accueil') }}">AssoMaker</a>
 	          <div class="nav-collapse in" style="height: auto; ">
 	            <ul class="nav">
+	            {% if is_granted('ROLE_USER') %}
 	            {% block navbar %}
 
 	       			{{ _self.navBarItem('PlanningMaker','phpm_accueil') }}
      			{% endblock %}
-
+				{% endif %}
 	          </div><!--/.nav-collapse -->
 	        </div>
 	      </div>
 	    </div>
-    {% endif %}
+    
 	        
 <div class="container-fluid">
 	{% block pageHeader %}

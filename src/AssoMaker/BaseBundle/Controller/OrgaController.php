@@ -24,7 +24,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AssoMaker\BaseBundle\Entity\Orga;
 use AssoMaker\PHPMBundle\Entity\Disponibilite;
-use AssoMaker\PHPMBundle\Form\OrgaType;
+use AssoMaker\BaseBundle\Form\OrgaUserType;
 use AssoMaker\PHPMBundle\Form\OrgaSoftType;
 use AssoMaker\PHPMBundle\Entity\BesoinOrga;
 use AssoMaker\PHPMBundle\Form\PrintPlanningType;
@@ -96,38 +96,15 @@ class OrgaController extends Controller
         			'entities' => $entities);
     }
 
- 
-
-    /**
-     * Displays a form to create a new Orga entity.
-     *
-     * @Route("/new", name="orga_new")
-     * @Template()
-     */
-    public function newAction()
-    {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
-        $config = $this->get('config.extension');
-        
-        $entity = new Orga();
-        $form   = $this->createForm(new OrgaType(true, $config), $entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        );
-    }
     
     /**
      * Displays a form to create a new Orga Hard entity.
      *
-     * @Route("/register/{email}/{confianceCode}/{equipeId}",  defaults={"email"="none","equipeId"="-1"}, name="orga_register")
+     * @Route("/register/{confianceCode}/{equipeId}",  defaults={"equipeId"="-1"}, name="orga_register_user")
      * 
      * @Template()
      */
-    public function registerAction($email,$confianceCode,$equipeId)
+    public function registerUserAction($confianceCode,$equipeId)
     {
     	
     	
@@ -140,12 +117,11 @@ class OrgaController extends Controller
         }
         
         $entity = new Orga();
-        $entity->setEmail($email);
         $entity->setStatut(0);
         
 
         
-        $form   = $this->createForm(new OrgaType(false,$config,$confianceCode), $entity);
+        $form   = $this->createForm(new OrgaUserType(false,$config,$confianceCode), $entity);
     
         
         if ($this->get('request')->getMethod() == 'POST') {
@@ -156,7 +132,8 @@ class OrgaController extends Controller
 	        	$equipe = $data->getEquipe();
 	            $entity->setPrivileges($equipe->getConfiance()->getPrivileges());
 	        	
-	        	
+	        	var_dump($form->getErrors());
+	        	exit;
 	            $em->persist($entity);
 	            $em->flush();
 	            
@@ -175,8 +152,7 @@ class OrgaController extends Controller
         return array(
                 'entity' => $entity,
                 'form'   => $form->createView(),
-        		'confianceCode'=>$confianceCode,
-        		'email' =>$email
+        		'confianceCode'=>$confianceCode
         );
     }
     
@@ -283,39 +259,6 @@ class OrgaController extends Controller
         );
     }
 
- /**
-     * Creates a new Orga entity.
-     *
-     * @Route("/create", name="orga_create")
-     * @Method("post")
-     * @Template("AssoMakerBaseBundle:Orga:new.html.twig")
-     */
-    public function createAction()
-    {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
-        $config = $this->get('config.extension');
-        
-        $entity  = new Orga();
-        $request = $this->getRequest();
-        $form    = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN'),$config), $entity);
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('orga_show', array('id' => $entity->getId())));
-            
-        }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        );
-    }
 
     /**
      * Displays a form to edit an existing Orga entity.
@@ -340,7 +283,7 @@ class OrgaController extends Controller
 
         $confianceCode=$entity->getEquipe()->getConfiance()->getCode();
 		
-        $editForm = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN'),$config,$confianceCode), $entity);
+        $editForm = $this->createForm(new OrgaUserType($this->get('security.context')->isGranted('ROLE_ADMIN'),$config,$confianceCode), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -373,7 +316,7 @@ class OrgaController extends Controller
         
         $confianceCode=$entity->getEquipe()->getConfiance()->getCode();
         $config = $e=$this->get('config.extension');
-        $editForm   = $this->createForm(new OrgaType($this->get('security.context')->isGranted('ROLE_ADMIN'),$config,$confianceCode), $entity);
+        $editForm   = $this->createForm(new OrgaUserType($this->get('security.context')->isGranted('ROLE_ADMIN'),$config,$confianceCode), $entity);
         
 
         $request = $this->getRequest();
@@ -384,7 +327,8 @@ class OrgaController extends Controller
         
         
         
-        
+        $entity->setDateDeNaissance("1991-07-23");
+        $entity->setDatePermis("1991-07-23");
         
         if ($editForm->isValid()) {
             $em->persist($entity);

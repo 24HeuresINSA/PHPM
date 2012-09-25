@@ -1,12 +1,12 @@
 <?php
 
-namespace AssoMaker\PHPMBundle\Form;
+namespace AssoMaker\BaseBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use AssoMaker\BaseBundle\Entity\EquipeRepository;
 
-class OrgaType extends AbstractType
+class OrgaUserType extends AbstractType
 {
     protected $admin;
     protected $config;
@@ -37,16 +37,18 @@ class OrgaType extends AbstractType
             ->add('telephone',null,array('label'=>'Téléphone portable'))
             ->add('email',null,array('label'=>'Adresse email'))
             ->add('dateDeNaissance', 'birthday', array(
+            		'input'=>'datetime',
                     'label'=>'Date de naissance',
                     'years'=>$years,
                     'widget' => 'single_text',
                     'attr'=>array('class'=>'birthdaydp'),
                     'format' => 'yyyy-MM-dd'))
-            ->add('datePermis', null, array(
-                            'label'=>'Date de permis',
-                            'widget' => 'single_text',
-                            'format' => 'yyyy-MM-dd',
-                            'attr'=>array('class'=>'datep')))
+            ->add('datePermis', 'date', array(
+            		'input'=>'datetime',
+                    'label'=>'Date de permis',
+                    'widget' => 'single_text',
+                    'format' => 'yyyy-MM-dd',
+                    'attr'=>array('class'=>'datep')))
            	->add('anneeEtudes','choice',array(	'label'=>'Année d\'études',
                             			'required'=>false,
                             			'choices'=>array(1=>1,2,3,4,5,6,7,8,0=>'Autre')))
@@ -58,7 +60,6 @@ class OrgaType extends AbstractType
             							'attr'=>array('placeHolder'=>'Groupe (si Premier Cycle)')))   
             
             ->add('commentaire')
-            ->add('amis')
             ->add('celibataire','choice',array(	'label'=>'Célib\'?',
             									'required'=>false,
             									'choices'=>array('0'=>'Non','1'=>'Oui'),
@@ -86,7 +87,7 @@ class OrgaType extends AbstractType
 
     public function getName()
     {
-        return 'phpm_bundle_orgatype';
+        return 'assomaker_base_bundle_orgatype';
     }
     
     
