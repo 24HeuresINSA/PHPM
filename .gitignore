@@ -3,8 +3,9 @@
 /web/css
 /web/js
 /web/images
-/web/lib
+/web/lib/*
 /web/.htaccess
+/web/up
 
 /app/bootstrap*
 /app/cache/*
