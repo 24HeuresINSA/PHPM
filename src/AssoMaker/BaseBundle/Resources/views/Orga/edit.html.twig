@@ -4,8 +4,70 @@
 
 
 {% block content %}
-	<form class="form-horizontal" action="{{ path('orga_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-	{{ form_widget(edit_form) }}
+	<form class="form-horizontal" action="{{ path('orga_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+		<div class="row-fluid">
+			<div class="span4 well">
+				<fieldset>
+				    <legend>Informations de base</legend>
+					    <div class="row-fluid">
+					    	<div class="span5">
+					    		{% if entity.profilePictureSet == 1 %}
+							    <img src="{{ asset( 'up/profilePictures/'~entity.id~'.jpg' ) }}"/>
+							    {% else %}
+							    Pas de Photo
+							    {% endif %}
+							    {{ form_row(form.profilePicture) }}
+							</div>
+							<div class="span7">
+							    <div class="control-group">
+								{{ form_row(form.nom) }}
+								{{ form_row(form.prenom) }}
+								{{ form_row(form.surnom) }}
+								{{ form_row(form.email) }}
+								{{ form_row(form.telephone) }}
+								{{ form_row(form.dateDeNaissance) }}
+							    </div>
+							 </div>
+						</div>       			
+	         			
+				</fieldset>
+			</div>
+			<div class="span4 well">
+				<fieldset>
+			    	<legend>Renseignements Supplémentaires</legend>
+				              {{ form_row(form.anneeEtudes) }}
+				              {{ form_row(form.departement) }}
+				              {{ form_row(form.groupePC) }}
+				              {{ form_row(form.datePermis) }}
+				              {{ form_row(form.celibataire) }}
+	
+				</fieldset>
+			</div>
+			<div class="span4 well">
+				<fieldset>
+			    	<legend>Autres</legend>
+					{{ form_row(form.amis) }}
+					{{ form_row(form.commentaire) }}
+				</fieldset>
+			</div>
+	    </div>
+	    {% if is_granted('ROLE_ADMIN') %}
+		    <div class="row-fluid">
+				<div class="span12 well">
+					<fieldset>
+				    	<legend>Options Admin</legend>
+					              {{ form_row(form.equipe) }}
+					              {{ form_row(form.privileges) }}
+					              {{ form_row(form.statut) }}
+	
+		
+					</fieldset>
+				</div>
+			</div>
+		{% endif %}
+
+	
+	{{ form_widget(form._token) }}
 	<div class="form-actions">
 	    <div class="btn-toolbar">
 	        <button class="btn btn-primary" type="submit">Enregistrer</button>
