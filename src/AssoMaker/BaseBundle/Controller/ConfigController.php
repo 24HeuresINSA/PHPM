@@ -1,6 +1,6 @@
 <?php
 
-namespace AssoMaker\PHPMBundle\Controller;
+namespace AssoMaker\BaseBundle\Controller;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 use Symfony\Component\HttpFoundation\Response;
