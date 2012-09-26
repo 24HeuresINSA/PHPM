@@ -74,7 +74,7 @@ class ComptesPersoController extends Controller
 						if($action=='consoStandard'){
 							$nbConsos = $data['form'][$id];
 							$orga = $em->getRepository('AssoMakerBaseBundle:Orga')->find($id);
-							$amount =  $prixConso* $nbConsos;
+							$amount =  -$prixConso* $nbConsos;
 							$comment = "$nbConsos consommations à $prixConso € = $amount €";
 						}elseif($action=='autre'){
 							$operation = $data['operation'];
@@ -87,7 +87,7 @@ class ComptesPersoController extends Controller
 						}
 						
 						
-						$transaction = new Transaction($orga, -$amount, $comment);
+						$transaction = new Transaction($orga, $amount, $comment);
 						$em->persist($transaction);
 					}
 				}
