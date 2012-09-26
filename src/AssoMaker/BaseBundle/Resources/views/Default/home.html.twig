@@ -64,19 +64,20 @@
     		</div>
 	   <div class="span4">
           <h2>Mon compte perso</h2>
-          {% if app.user.soldeComptePerso < 0 %}
+          {% if soldeCP < 0 %}
 			<div class="alert alert-block alert-error">
 		            <h4 class="alert-heading">Attention : ton compte perso est dans le rouge</h4>
 		            <p>
-		            Tu dois actuellement <em>{{ app.user.soldeComptePerso|number_format(2) }}€</em>  à l'association !
+		            Tu dois actuellement <em>{{ soldeCP|number_format(2) }}€</em>  à l'association !
 		            </p>
-		    </div>
+		    
 		  {% else %}
-		  <div class="well">
-		            <p>Il te reste actuellement <em>{{ app.user.soldeComptePerso|number_format(2) }}€</em> sur ton compte.</p>
-		    </div>
+		  	<div class="well">
+		            <p>Il te reste actuellement <em>{{ soldeCP|number_format(2) }}€</em> sur ton compte.</p>
 		  {% endif %}
-
+		  	<h4>Détail des transactions</h4>
+		  	{% include 'AssoMakerComptesPersoBundle:Transaction:history.html.twig' with {'transactions': transactionsCP} only  %}
+			</div>
 
     		</div>
 	</div>

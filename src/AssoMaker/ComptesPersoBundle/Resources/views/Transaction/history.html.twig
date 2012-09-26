@@ -1,0 +1,18 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Montant</th>
+            <th>Date</th>
+            <th>Détail</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for transaction in transactions %}
+        <tr>
+            <td>{{ transaction.amount }}</td>
+            <td>{{ transaction.commitDate |format_date('dd MMM Y')}}</td>
+            <td>{{ transaction.comment }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

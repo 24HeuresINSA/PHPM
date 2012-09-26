@@ -1,0 +1,70 @@
+{% extends "AssoMakerBaseBundle::layout.html.twig"  %}
+{% set pageTitle = 'Liste des Comptes Perso' %}
+
+{% block content %}
+<form class="form-horizontal" action="{{ path('comptesPerso') }}" method="post" {{ form_enctype(form) }}>
+	<div class="row-fluid">
+		<table class="table">
+		    <thead>
+		        <tr>
+		        	<th>Orga</th>
+		            <th>Solde</th>
+		            <th>Consommation</th>
+	
+		        </tr>
+		    </thead>
+		    <tbody>
+		        {% for orga in orgas %}
+		        <tr>
+		            <td>{{ entitiesMacro.Orga(orga) }}</td>
+		            <td>{{ orga.balance }}</td>
+		            <td>{{ form_widget(form.form[orga.id]) }}</td>
+		        </tr>
+		        {% endfor %}
+		    </tbody>
+		   	<tfoot>
+		        <tr>
+		        	<th>Total des Comptes Perso</th>
+		            <th>{{ totalBalance }}</th>
+	
+	
+		        </tr>
+		   </tfoot>
+		</table>
+	</div>
+	<div class="form-actions">
+            <ul id="operations" class="nav nav-tabs">
+              <li class="active"><a href="#consoStandard" data-toggle="tab">Consommations Standard à {{ prixConsoStandard }}</a></li>
+              <li class=""><a href="#autre" data-toggle="tab">Profile</a></li>
+            </ul>
+            <div id="operationsContent" class="tab-content">
+              <div class="tab-pane fade active in" id="consoStandard">
+              		<p>
+              		Entrer le nombre de consommations dans le tableau ci-dessus.
+              		</p>
+              	    <div class="btn-toolbar">
+	         			<button class="btn btn-primary" type="submit" name="action" value="consoStandard">Enregistrer</button>
+					</div>
+              </div>
+              <div class="tab-pane fade" id="autre">
+              		<p>
+              		Entrer le montant en euros dû par chacun dans le tableau ci-dessus.<br/>
+              		Entrer le nom de l'opération : {{ form_widget(form.operation) }}
+              		</p>
+              	    <div class="btn-toolbar">
+	         			<button class="btn btn-primary" type="submit" name="action" value="autre">Enregistrer</button>
+					</div>
+              </div>
+            </div>
+
+	
+
+	</div>
+	{{ form_widget(form._token) }}
+</form>
+{% endblock %}
+
+{% block actions %}
+{% endblock %}
+
+

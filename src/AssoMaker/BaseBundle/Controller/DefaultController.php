@@ -36,9 +36,9 @@ class DefaultController extends Controller
     		return array();
     	}
     
-    	
-    	   	
-    	return array();
+    	$soldeCP =  $em->getRepository('AssoMakerComptesPersoBundle:Transaction')->getOrgaBalance($user->getId());
+    	$transactionsCP = $em->getRepository('AssoMakerComptesPersoBundle:Transaction')->findByOrga($user->getId());
+    	return array('soldeCP'=>$soldeCP,'transactionsCP'=>$transactionsCP);
     	
         
     }

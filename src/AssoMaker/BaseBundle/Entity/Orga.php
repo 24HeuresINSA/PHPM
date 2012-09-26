@@ -249,13 +249,7 @@ class Orga implements UserInterface
      * @ORM\OneToMany(targetEntity="AssoMaker\PHPMBundle\Entity\BesoinOrga", mappedBy="orgaHint")
      */
     protected $besoinsOrgaHint;
-    
-    
-    /**
-     * @ORM\Column(name="soldeComptePerso", type="decimal", nullable=true)
-     */
-    protected $soldeComptePerso;
-    
+       
     
     
     
@@ -1119,26 +1113,6 @@ class Orga implements UserInterface
         return $this->anneeEtudes;
     }
     
-    /**
-     * Set soldeComptePerso
-     *
-     * @param decimal $soldeComptePerso
-     */
-    public function setsoldeComptePerso($soldeComptePerso)
-    {
-    	$this->soldeComptePerso = $soldeComptePerso;
-    }
-    
-    /**
-     * Get soldeComptePerso
-     *
-     * @return decimal
-     */
-    public function getsoldeComptePerso()
-    {
-    	return $this->soldeComptePerso;
-    }
-
     /**
      * Set groupePC
      *

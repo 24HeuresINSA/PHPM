@@ -136,7 +136,14 @@ class BaseConfigFixture implements FixtureInterface {
 								'Contenu du mail de notification de planning',
 								'<p>Ton planning est disponible.</p>\r\n<p><em>Maud et Adam.</em></p>',
 								NULL));	
-
+		
+		$manager
+		->persist(
+				new Config('comptes_perso_prix_conso_standard',
+						'Prix d\'une consommation standard',
+						'0.4',
+						NULL));
+		
 		
 		$manager->flush();
 
