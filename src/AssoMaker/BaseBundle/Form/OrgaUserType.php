@@ -48,7 +48,7 @@ class OrgaUserType extends AbstractType
                     'label'=>'Date de permis',
                     'widget' => 'single_text',
                     'format' => 'yyyy-MM-dd',
-            		'required'=>'false',
+            		'required'=>false,
                     'attr'=>array('class'=>'datep')))
            	->add('anneeEtudes','choice',array(	'label'=>'Année d\'études',
                             			'required'=>false,
@@ -87,9 +87,7 @@ class OrgaUserType extends AbstractType
 			->add('statut', 'choice',array('choices'=>array('0'=>'Inscrit','1'=>'Validé','2'=>'Complétement affecté')))
 			->add('privileges','choice',array('choices'=>array('0'=>'Visiteur','1'=>'Orga', '2'=>'Admin')))
 			->add('equipe','entity',array('label'=>'Équipe','class' => 'AssoMakerBaseBundle:Equipe'))
-	        ->add('soldeComptePerso','money',array('label'=>'Solde du compte perso',
-	        		'required'=>false,
-	        ));
+	        ;
     	}
     	
     }
