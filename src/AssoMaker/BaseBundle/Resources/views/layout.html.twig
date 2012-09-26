@@ -115,6 +115,7 @@
 	       			{{ _self.navBarItem('Trombinoscope','orga_trombi') }}
      			{% endblock %}
      				{% if is_granted('ROLE_ADMIN') %}
+     					{{ _self.navBarItem('Comptes Perso','comptesPerso') }}
 		       			{{ _self.navBarItem('Configuration','config') }}
 		       		{% endif %}
 		       		{% if is_granted('ROLE_VISITOR') %}	
