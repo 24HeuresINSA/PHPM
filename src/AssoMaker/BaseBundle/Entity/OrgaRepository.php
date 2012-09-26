@@ -14,6 +14,19 @@ use AssoMaker\PHPMBundle\Entity\Config;
  */
 class OrgaRepository extends EntityRepository
 {
+	public function findAllUsersExcept($userId)
+	{
+	
+		return  $this->createQueryBuilder('o')
+		->where('o.privileges >= 1')
+		->where('o.id != :userId')
+		->setParameter('userId', $userId);
+		;
+	
+	
+	
+	}
+	
 	public function getOrgasWithCriteria($annee_permis, $maxDateNaissance, $plage_id, $niveau_confiance, $equipe_id)
 	{
 		$dql = "SELECT o, SUM(di.pointsCharisme) charisme FROM AssoMakerBaseBundle:Orga AS o JOIN o.disponibilitesInscription di JOIN o.disponibilites d JOIN o.equipe e WHERE o.statut>=1";
@@ -88,7 +101,7 @@ class OrgaRepository extends EntityRepository
 	{
 	
 		return $this->getEntityManager()
-		->createQuery("SELECT o ,SUM(d.fin-d.debut)/3600 AS nbHeures FROM AssoMakerBaseBundle:Orga o, PHPMBundle:Disponibilite d WHERE (d.orga = o AND o.statut=0)")
+		->createQuery("SELECT o ,SUM(d.fin-d.debut)/3600 AS nbHeures FROM AssoMakerBaseBundle:Orga o, AssoMakerPHPMBundle:Disponibilite d WHERE (d.orga = o AND o.statut=0)")
 		
 		->getResult();	
 	
