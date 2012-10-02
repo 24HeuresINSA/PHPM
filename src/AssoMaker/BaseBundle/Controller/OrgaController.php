@@ -314,6 +314,33 @@ class OrgaController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
+    
+    /**
+     * 
+     *
+     * @Route("/{id}/signature", name="orga_signature")
+     * @Template()
+     */
+    public function signatureAction($id)
+    {
+    
+        $em = $this->getDoctrine()->getEntityManager();
+        $config = $e=$this->get('config.extension');
+        $entity = $em->getRepository('AssoMakerBaseBundle:Orga')->find($id);
+    
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Orga entity.');
+        }
+    
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser() != $entity) {
+            throw new AccessDeniedException();
+        }
+
+    
+        return array(
+                'orga'      => $entity
+        );
+    }
 
     /**
      * Edits an existing Orga entity.

@@ -34,8 +34,10 @@ class OrgaUserType extends AbstractType
     	    ->add('prenom',null,array('label'=>'Prénom'))
             ->add('nom',null,array('label'=>'Nom'))
             ->add('surnom',null,array('label'=>'Surnom'))
+            ->add('role',null,array('label'=>'Rôle'))
             ->add('telephone',null,array('label'=>'Téléphone portable'))
             ->add('email',null,array('label'=>'Adresse email'))
+            ->add('publicEmail',null,array('label'=>'Adresse email publique'))
             ->add('dateDeNaissance', 'birthday', array(
             		'input'=>'datetime',
                     'label'=>'Date de naissance',

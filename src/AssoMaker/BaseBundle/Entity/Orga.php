@@ -57,6 +57,13 @@ class Orga implements UserInterface
     * @ORM\Column(name="surnom", type="string", length=255, nullable=true)
     */
     protected $surnom;
+    
+    /**
+     * @var string $role
+     *
+     * @ORM\Column(name="role", type="string", length=255, nullable=true)
+     */
+    protected $role;
 
     
     /**
@@ -82,6 +89,18 @@ class Orga implements UserInterface
      * )
      */
     protected $email;
+    
+    /**
+     * @var string $publicEmail
+     *
+     * @ORM\Column(name="publicEmail", type="string", length=255, nullable=true)
+     *
+     * @Assert\Email(
+     * 	   message = "L'email public doît être valide.",
+     *     checkMX = true
+     * )
+     */
+    protected $publicEmail;
 
     /**
      * @var date $dateDeNaissance
@@ -1154,4 +1173,221 @@ class Orga implements UserInterface
     	$this->profilePictureSet = true;
     }
     
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     * @return Orga
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string 
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * Set publicEmail
+     *
+     * @param string $publicEmail
+     * @return Orga
+     */
+    public function setPublicEmail($publicEmail)
+    {
+        $this->publicEmail = $publicEmail;
+    
+        return $this;
+    }
+
+    /**
+     * Get publicEmail
+     *
+     * @return string 
+     */
+    public function getPublicEmail()
+    {
+        return $this->publicEmail;
+    }
+
+    /**
+     * Set profilePictureSet
+     *
+     * @param boolean $profilePictureSet
+     * @return Orga
+     */
+    public function setProfilePictureSet($profilePictureSet)
+    {
+        $this->profilePictureSet = $profilePictureSet;
+    
+        return $this;
+    }
+
+    /**
+     * Get profilePictureSet
+     *
+     * @return boolean 
+     */
+    public function getProfilePictureSet()
+    {
+        return $this->profilePictureSet;
+    }
+
+    /**
+     * Add groupesTacheResponsable
+     *
+     * @param AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable
+     * @return Orga
+     */
+    public function addGroupesTacheResponsable(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable)
+    {
+        $this->groupesTacheResponsable[] = $groupesTacheResponsable;
+    
+        return $this;
+    }
+
+    /**
+     * Remove groupesTacheResponsable
+     *
+     * @param AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable
+     */
+    public function removeGroupesTacheResponsable(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable)
+    {
+        $this->groupesTacheResponsable->removeElement($groupesTacheResponsable);
+    }
+
+    /**
+     * Add tachesResponsable
+     *
+     * @param AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable
+     * @return Orga
+     */
+    public function addTachesResponsable(\AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable)
+    {
+        $this->tachesResponsable[] = $tachesResponsable;
+    
+        return $this;
+    }
+
+    /**
+     * Remove tachesResponsable
+     *
+     * @param AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable
+     */
+    public function removeTachesResponsable(\AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable)
+    {
+        $this->tachesResponsable->removeElement($tachesResponsable);
+    }
+
+    /**
+     * Add equipesResponsable
+     *
+     * @param AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable
+     * @return Orga
+     */
+    public function addEquipesResponsable(\AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable)
+    {
+        $this->equipesResponsable[] = $equipesResponsable;
+    
+        return $this;
+    }
+
+    /**
+     * Remove equipesResponsable
+     *
+     * @param AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable
+     */
+    public function removeEquipesResponsable(\AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable)
+    {
+        $this->equipesResponsable->removeElement($equipesResponsable);
+    }
+
+    /**
+     * Add disponibilitesInscription
+     *
+     * @param AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription
+     * @return Orga
+     */
+    public function addDisponibilitesInscription(\AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription)
+    {
+        $this->disponibilitesInscription[] = $disponibilitesInscription;
+    
+        return $this;
+    }
+
+    /**
+     * Remove disponibilitesInscription
+     *
+     * @param AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription
+     */
+    public function removeDisponibilitesInscription(\AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription)
+    {
+        $this->disponibilitesInscription->removeElement($disponibilitesInscription);
+    }
+
+    /**
+     * Remove commentaires
+     *
+     * @param AssoMaker\PHPMBundle\Entity\Commentaire $commentaires
+     */
+    public function removeCommentaire(\AssoMaker\PHPMBundle\Entity\Commentaire $commentaires)
+    {
+        $this->commentaires->removeElement($commentaires);
+    }
+
+    /**
+     * Add creneauxHint
+     *
+     * @param AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint
+     * @return Orga
+     */
+    public function addCreneauxHint(\AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint)
+    {
+        $this->creneauxHint[] = $creneauxHint;
+    
+        return $this;
+    }
+
+    /**
+     * Remove creneauxHint
+     *
+     * @param AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint
+     */
+    public function removeCreneauxHint(\AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint)
+    {
+        $this->creneauxHint->removeElement($creneauxHint);
+    }
+
+    /**
+     * Add besoinsOrgaHint
+     *
+     * @param AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint
+     * @return Orga
+     */
+    public function addBesoinsOrgaHint(\AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint)
+    {
+        $this->besoinsOrgaHint[] = $besoinsOrgaHint;
+    
+        return $this;
+    }
+
+    /**
+     * Remove besoinsOrgaHint
+     *
+     * @param AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint
+     */
+    public function removeBesoinsOrgaHint(\AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint)
+    {
+        $this->besoinsOrgaHint->removeElement($besoinsOrgaHint);
+    }
 }
