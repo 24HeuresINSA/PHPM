@@ -318,27 +318,19 @@ class OrgaController extends Controller
     /**
      * 
      *
-     * @Route("/{id}/signature", name="orga_signature")
+     * @Route("/signature", name="orga_signature")
      * @Template()
      */
-    public function signatureAction($id)
+    public function signatureAction()
     {
     
         $em = $this->getDoctrine()->getEntityManager();
         $config = $e=$this->get('config.extension');
-        $entity = $em->getRepository('AssoMakerBaseBundle:Orga')->find($id);
-    
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Orga entity.');
-        }
-    
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser() != $entity) {
-            throw new AccessDeniedException();
-        }
 
-    
+        $user = $this->get('security.context')->getToken()->getUser();
+        
         return array(
-                'orga'      => $entity
+                'orga'      => $user
         );
     }
 
