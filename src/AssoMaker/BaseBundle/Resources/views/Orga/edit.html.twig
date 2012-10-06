@@ -1,7 +1,5 @@
 {% extends "AssoMakerBaseBundle:Orga:layout.html.twig"  %}
 {% set pageTitle = entity.prenom~' '~entity.nom %}
-{% use "AssoMakerPHPMBundle::edit.html.twig" %}
-
 
 {% block content %}
 	<form class="form-horizontal" action="{{ path('orga_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>

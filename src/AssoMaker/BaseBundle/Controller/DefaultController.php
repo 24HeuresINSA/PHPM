@@ -85,16 +85,17 @@ class DefaultController extends Controller
     /**
      * OpenId login
      *
-     * @Route("/login/{registered}",defaults={"registered"=""}, name="login")
+     * @Route("/login/{confianceCode}", defaults={"confianceCode":""}, name="login")
      * @Template()
      *
      */
-    public function loginAction($registered)
+    public function loginAction($confianceCode)
     {
     
     	$em = $this->getDoctrine()->getEntityManager();
     	$config = $this->get('config.extension');
     	$pref = $em->getRepository('AssoMakerPHPMBundle:Config')->findOneByField('server_baseurl');
+    	$session = $this->getRequest()->getSession();
     	if($pref)
     		$serverurl = $pref->getvalue();
     	else
@@ -107,7 +108,14 @@ class DefaultController extends Controller
     		if(!$openid->mode) {
     			//                 if(isset($_GET['login'])) {
     			$openid->identity = 'https://www.google.com/accounts/o8/id';
-    			$openid->required = array('namePerson/friendly', 'contact/email');
+    			$openid->required = array('contact/email');
+    			
+    			$confiance = $em->getRepository('AssoMakerBaseBundle:Confiance')->findOneByCode($confianceCode);
+    			if($confiance){
+    			   $session->set('confianceCode', $confianceCode);
+
+    			}
+    			
     			//header('Location: ' . $openid->authUrl());
     
     			$response = new RedirectResponse($openid->authUrl());
@@ -116,21 +124,27 @@ class DefaultController extends Controller
     			return $response;
     
     			//                 }
-    			return array("registered"=>$registered);
+    			
     
     		} elseif($openid->mode == 'cancel') {
     			exit;
     		} else {
-    			//                 $message= 'User ' . ($openid->validate() ? $openid->identity . ' has ' : 'has not ') . 'logged in.';
     			$attrs = $openid->getAttributes();
-    
     			$email = $attrs['contact/email'];
-    
+    			$session->set('email', $email);
     			$em = $this->getDoctrine()->getEntityManager();
-    
     			$user = $em->getRepository('AssoMakerBaseBundle:Orga')->findOneByEmail($email);
-    
+/*    
+    			$confiance = $em->getRepository('AssoMakerBaseBundle:Confiance')->findOneByCode($confianceCode);
+    			if(!$confiance){
+    			    throw new AccessDeniedException();
+    			}
+    			
+    			*/
     			if (!$user) {
+    			    if($this->getRequest()->getSession()->get('confianceCode')){
+    			        return $this->redirect($this->generateUrl('orga_register_user'));
+    			    }
     				$redirectURL = $config->getValue('manifestation_permis_libelles');
     				return $this->redirect($config->getValue('phpm_orgasoft_inscription_returnURL'));
     			}

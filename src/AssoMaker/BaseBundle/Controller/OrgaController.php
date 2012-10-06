@@ -24,6 +24,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AssoMaker\BaseBundle\Entity\Orga;
 use AssoMaker\PHPMBundle\Entity\Disponibilite;
+use AssoMaker\BaseBundle\Form\OrgaRegisterUserType;
 use AssoMaker\BaseBundle\Form\OrgaUserType;
 use AssoMaker\PHPMBundle\Form\OrgaSoftType;
 use AssoMaker\PHPMBundle\Entity\BesoinOrga;
@@ -114,9 +115,7 @@ class OrgaController extends Controller
     	$entities =$em
     	->createQuery($orgasDQL)
     	->getResult();
-    	
-    
-    
+
     	return array('entities' => $entities);
     }
 
@@ -124,30 +123,36 @@ class OrgaController extends Controller
     /**
      * Displays a form to create a new Orga Hard entity.
      *
-     * @Route("/register/{confianceCode}/{equipeId}",  defaults={"equipeId"="-1"}, name="orga_register_user")
+     * @Route("/register/", name="orga_register_user")
      * 
      * @Template()
      */
-    public function registerUserAction($confianceCode,$equipeId)
+    public function registerUserAction()
     {
-    	
-    	
         $em = $this->getDoctrine()->getEntityManager();
         $config = $e=$this->get('config.extension');
         $request = $this->getRequest();
         
-        if ($confianceCode=='') {
-            throw new AccessDeniedException();
+        $confianceCode=$this->getRequest()->getSession()->get('confianceCode');
+        $email=$this->getRequest()->getSession()->get('email');
+
+        $confiance = $em->getRepository('AssoMakerBaseBundle:Confiance')->findOneByCode($confianceCode);
+
+        $entity = new Orga();
+        
+        if ($this->get('request')->getMethod() != 'POST') {
+        if(!$confiance||!$email){
+            exit;
+           throw new AccessDeniedException();
         }
         
-        $entity = new Orga();
-        $entity->setStatut(0);
-        
 
+        $entity->setEmail($email);
         
-        $form   = $this->createForm(new OrgaUserType(false,$config,$confianceCode), $entity);
+        
+        }
+        $form   = $this->createForm(new OrgaRegisterUserType($config,$confianceCode), $entity);
     
-        
         if ($this->get('request')->getMethod() == 'POST') {
         	$form->bindRequest($request);
         	$data = $form->getData();
@@ -155,19 +160,14 @@ class OrgaController extends Controller
 	        if ($form->isValid()) {
 	        	$equipe = $data->getEquipe();
 	            $entity->setPrivileges($equipe->getConfiance()->getPrivileges());
+	            $entity->setRole("Équipe ".$entity->getEquipe()->getNom());
+	            $entity->setEmail($email);
+	            $entity->setStatut(0);
 	            $em->persist($entity);
 	            $em->flush();
-	            
 	            return $this->redirect($this->generateUrl('login'));
-	    
 	        }
-        	
-        	
-        	
-        	
         }
-        
-        
         
         
         return array(

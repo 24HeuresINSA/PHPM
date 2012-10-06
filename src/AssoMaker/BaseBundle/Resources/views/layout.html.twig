@@ -113,7 +113,6 @@
 	       				{{ _self.navBarItem('PlanningMaker','phpm_accueil') }}
 	       			{% endif %}
 	       			{{ _self.navBarItem('Trombinoscope','orga_trombi') }}
-     			{% endblock %}
      				{% if is_granted('ROLE_ADMIN') %}
      					{{ _self.navBarItem('Comptes Perso','comptesPerso') }}
 		       			{{ _self.navBarItem('Configuration','config') }}
@@ -123,6 +122,7 @@
 	        		{% else %}
 	       				{{ _self.navBarItem('Se connecter','login') }}
 	        		{% endif %}
+	        	{% endblock %}
 				{% endif %}
 				</ul>
 	          </div><!--/.nav-collapse -->

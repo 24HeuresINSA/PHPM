@@ -565,7 +565,7 @@ class Orga implements UserInterface
 
     public function __construct()
     {
-        $this->tachesResponsable = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->tachesResponsable = new \Doctrine\Common\Collections\ArrayCollection();
     $this->equipesResponsable = new \Doctrine\Common\Collections\ArrayCollection();
     $this->disponibilites = new \Doctrine\Common\Collections\ArrayCollection();
     $this->disponibilitesInscription = new \Doctrine\Common\Collections\ArrayCollection();
@@ -1200,7 +1200,7 @@ class Orga implements UserInterface
     /**
      * Set publicEmail
      *
-     * @param string $publicEmail
+     * 
      * @return Orga
      */
     public function setPublicEmail($publicEmail)
@@ -1217,7 +1217,11 @@ class Orga implements UserInterface
      */
     public function getPublicEmail()
     {
+        if($this->publicEmail != null){
         return $this->publicEmail;
+        }else{
+            return $this->email;
+        }
     }
 
     /**

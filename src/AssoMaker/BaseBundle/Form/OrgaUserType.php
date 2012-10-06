@@ -12,7 +12,6 @@ class OrgaUserType extends AbstractType
     protected $config;
     protected $forcedConfiance;
     function __construct($admin,$config,$forcedConfiance){
-        
             $this->config =$config;
             $this->admin =$admin;
             $this->forcedConfiance=$forcedConfiance;
@@ -22,7 +21,6 @@ class OrgaUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $libellesPermis =  json_decode($this->config->getValue('manifestation_permis_libelles'),true);
-        
     	$currentYear = date('Y');
     	$years = array(); 	
     	
@@ -34,10 +32,10 @@ class OrgaUserType extends AbstractType
     	    ->add('prenom',null,array('label'=>'Prénom'))
             ->add('nom',null,array('label'=>'Nom'))
             ->add('surnom',null,array('label'=>'Surnom'))
-            ->add('role',null,array('label'=>'Rôle'))
+            
             ->add('telephone',null,array('label'=>'Téléphone portable'))
             ->add('email',null,array('label'=>'Adresse email'))
-            ->add('publicEmail',null,array('label'=>'Adresse email publique'))
+            
             ->add('dateDeNaissance', 'birthday', array(
             		'input'=>'datetime',
                     'label'=>'Date de naissance',
@@ -61,7 +59,6 @@ class OrgaUserType extends AbstractType
                     )))
             ->add('groupePC',null,array('label'=>'Groupe (Premier Cycle Uniquement)',
             							'attr'=>array('placeHolder'=>'Groupe (si Premier Cycle)')))   
-            
             ->add('commentaire')
             ->add('celibataire','choice',array(	'label'=>'Célib\'?',
             									'required'=>false,
@@ -71,21 +68,23 @@ class OrgaUserType extends AbstractType
             									'required'=>false,
             									))
             ->add('amis')
-            
-            
+            ->add('publicEmail',null,array('label'=>'Adresse email publique','required'=>false))
+            ->add('role',null,array('label'=>'Rôle'));
     	    ;
     	    
     	    if($this->forcedConfiance){
+    	        
     	    	$code=$this->forcedConfiance;
     	    	$builder->add('equipe','entity',array('label'=>'Équipe',
     	    			'class' => 'AssoMakerBaseBundle:Equipe',
-    	    			'query_builder' => function(EquipeRepository $er)use($code){return $er->findAllWithConfianceCode($code);}));
+    	    			'query_builder' => function(EquipeRepository $er)use($code){return $er->findAllWithConfianceCode($code);}))
+
+    	    	
+    	    	;
     	    }
-    	    
     	    
     	if($this->admin){
         $builder
-			
 			->add('statut', 'choice',array('choices'=>array('0'=>'Inscrit','1'=>'Validé','2'=>'Complétement affecté')))
 			->add('privileges','choice',array('choices'=>array('0'=>'Visiteur','1'=>'Orga', '2'=>'Admin')))
 			->add('equipe','entity',array('label'=>'Équipe','class' => 'AssoMakerBaseBundle:Equipe'))
