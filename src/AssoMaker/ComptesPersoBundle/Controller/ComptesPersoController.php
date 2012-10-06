@@ -4,14 +4,14 @@ namespace AssoMaker\ComptesPersoBundle\Controller;
 use Doctrine\DBAL\Platforms\Keywords\KeywordList;
 
 use AssoMaker\ComptesPersoBundle\Entity\Transaction;
+use AssoMaker\ComptesPersoBundle\Form\VirementType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
-use AssoMaker\BaseBundle\Entity\OrgaRepository;
-use Symfony\Component\Validator\Constraints\Min;
-use Symfony\Component\Validator\Constraints\Collection;
+
+
 
 /**
  * Comptes Perso  controller.
@@ -123,52 +123,14 @@ class ComptesPersoController extends Controller {
 		$config = $e = $this->get('config.extension');
 		$user = $this->get('security.context')->getToken()->getUser();
 		$userId = $user->getId();
-
-		$orgas = $em
-				->createQuery(
-						"SELECT o FROM AssoMakerBaseBundle:Orga o WHERE o.privileges >=1")
-				->getResult();
-
-		$collectionConstraint = new Collection(
-				array(
-				        'confirm'=>array(),
-				        'raison'=>array(),
-						'montant' => new Min(
-								array('limit' => 0,
-										'message' => "Veuillez entrer un montant positif")),
-						'destinataire' => array()));
-
-		$builder = $this
-				->createFormBuilder(null,
-						array('validation_constraint' => $collectionConstraint))
-				->add('montant', 'money', array())
-				->add('destinataire', 'entity',
-						array('label' => 'Bénéficiaire',
-								'class' => 'AssoMakerBaseBundle:Orga',
-								'query_builder' => function (
-										OrgaRepository $or) use ($userId) {
-									return $or->findAllUsersExcept($userId);
-								}))
-				->add('raison', null, array('label'=>'Raison'))
-								;
-		$builder->add('confirm', 'hidden');
-		$builder->setData(array('confirm' => '0'));
-
-		$form = $builder->getForm();
+		
+		$defaults=array();
+		$form   = $this->createForm(new VirementType($config,$userId), $defaults);
 
 		if ($request->getMethod() == 'POST') {
 			$form->bind($request);
 			if ($form->isValid()) {
 				$data = $form->getData();
-				if ($data['confirm'] == '0') {
-					$data['confirm'] = '1';
-					$builder->setData($data);
-					$form2 = $builder->getForm();
-
-					return array('form' => $form2->createView());
-				}
-
-				if ($data['confirm'] == '1') {
 				    $destinataire = $data['destinataire'];
 				    $amount = $data['montant'];
 				    $raison = $data['raison'];
@@ -180,7 +142,7 @@ class ComptesPersoController extends Controller {
 					return $this->redirect($this->generateUrl('base_accueil'));
 				}
 
-			}
+			
 
 		}
 

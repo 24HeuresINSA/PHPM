@@ -11,16 +11,11 @@
 	</div>	
 	<div class="form-actions">
               	    <div class="btn-toolbar">
-              	        {% if form.vars.value.confirm == 0 %}
-	         			<button class="btn" type="submit">
+              	       
+	         			<button class="btn btn-success" type="submit">
 	         			    Confirmer
 	         			</button>
-	         			{% elseif form.vars.value.confirm == 1%}
-	         			    <button class="btn btn-success" type="submit">
-	         			        Valider un virement de {{ form.vars.value.montant }}€ à destination de {{ entitiesMacro.Orga(form.vars.value.destinataire) }}
-	         			    </button>
-	         			{% endif %}
-					
+	         								
 					</div>
               </div>
             </div>
