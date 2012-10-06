@@ -123,10 +123,8 @@ class ComptesPersoController extends Controller {
 		$config = $e = $this->get('config.extension');
 		$user = $this->get('security.context')->getToken()->getUser();
 		$userId = $user->getId();
+		$form   = $this->createForm(new VirementType($config,$userId));
 		
-		$defaults=array();
-		$form   = $this->createForm(new VirementType($config,$userId), $defaults);
-
 		if ($request->getMethod() == 'POST') {
 			$form->bind($request);
 			if ($form->isValid()) {

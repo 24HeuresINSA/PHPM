@@ -33,10 +33,9 @@ class VirementType extends AbstractType
 										OrgaRepository $or) use ($userId) {
 									return $or->findAllUsersExcept($userId);
 								}))
-				->add('raison', null, array('label'=>'Raison'))
+				->add('raison', 'text', array('label'=>'Raison'))
 								;
-		$builder->add('confirm', 'hidden');
-		$builder->setData(array('confirm' => '0'));
+		
     
     	
     }
