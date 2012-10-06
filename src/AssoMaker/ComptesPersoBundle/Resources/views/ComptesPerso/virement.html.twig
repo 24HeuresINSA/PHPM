@@ -6,19 +6,23 @@
 <script>
 function Ctrl($scope) {
 	  $scope.montant='5';
+	  $scope.solde={{ soldeCP }};
 	}
 </script>
 
 <form class="form-horizontal" action="{{ path('comptesPerso_virement') }}" method="post" {{ form_enctype(form) }} ng-controller="Ctrl">
 	<div class="row-fluid">
 		<h2>Effectuer un virement</h2>
+		
 
             {{ form_label(form.destinataire) }}
 		    {{ form_widget(form.destinataire) }}
 			{{ form_label(form.montant) }}
 			{{ form_widget(form.montant, { 'attr': {'ng-model': 'montant'} }) }}
-			
 			{{ form_row(form.raison) }}
+			{% raw %}
+			    <p>Nouveau solde : {{ solde-montant }}</p>
+			{% endraw %}
 	</div>	
 	<div class="form-actions" >
               	    <div class="btn-toolbar">

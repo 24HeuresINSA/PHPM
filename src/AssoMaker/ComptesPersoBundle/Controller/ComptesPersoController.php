@@ -124,11 +124,12 @@ class ComptesPersoController extends Controller {
 		$user = $this->get('security.context')->getToken()->getUser();
 		$userId = $user->getId();
 		$form   = $this->createForm(new VirementType($config,$userId));
+		$soldeCP =  $em->getRepository('AssoMakerComptesPersoBundle:Transaction')->getOrgaBalance($user->getId());
 		
 		if ($request->getMethod() == 'POST') {
 			$form->bind($request);
 			if ($form->isValid()) {
-				$data = $form->getData();
+				    $data = $form->getData();
 				    $destinataire = $data['destinataire'];
 				    $amount = $data['montant'];
 				    $raison = $data['raison'];
@@ -144,7 +145,7 @@ class ComptesPersoController extends Controller {
 
 		}
 
-		return array('form' => $form->createView());
+		return array('form' => $form->createView(), 'soldeCP'=>$soldeCP);
 	}
 
 }

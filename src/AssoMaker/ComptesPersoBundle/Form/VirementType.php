@@ -49,7 +49,6 @@ class VirementType extends AbstractType
     {
        $collectionConstraint = new Collection(
 				array(
-				        'confirm'=>array(),
 				        'raison'=>array(),
 						'montant' => new Min(
 								array('limit' => 0,
