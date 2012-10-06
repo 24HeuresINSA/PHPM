@@ -8,7 +8,7 @@
 {% endif %}
 {% endmacro %}
 <!DOCTYPE html>
-<html>
+<html ng-app>
     <head>
         {% block head %}
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -67,6 +67,7 @@
 			{% javascripts
 				'lib/jquery.min.js'
 				'lib/bootstrap/js/bootstrap.min.js'
+				'lib/angularJS/angular.min.js'
 				'lib/jqueryui/js/jquery-ui-1.8.23.custom.min.js'
 				'@AssoMakerPHPMBundle/Resources/public/js/lib/jquery-ui-i18n.min.js'
 				'lib/jquerytimepickeraddon/jquery-ui-timepicker-addon.js'
@@ -74,6 +75,7 @@
 				'@AssoMakerPHPMBundle/Resources/public/js/general.js'
 				'@AssoMakerPHPMBundle/Resources/public/js/ui.js'
 				'lib/jwysiwyg/jquery.wysiwyg.js'
+				
 			%}
 			
 				<script src="{{ asset_url }}" type="text/javascript"></script>
