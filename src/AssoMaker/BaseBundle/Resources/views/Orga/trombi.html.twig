@@ -1,5 +1,5 @@
 {% extends "AssoMakerBaseBundle:Orga:layout.html.twig"  %}
-{% set pageTitle = 'Liste des Organisateurs' %}
+{% set pageTitle = 'Trombinoscope' %}
 {% use "AssoMakerPHPMBundle::index.html.twig" %}
 
 {% block content %}
@@ -8,22 +8,26 @@
 		<div class="row-fluid">
 			<h3>{{ equipe.nom }}</h3>
 		</div>
-		{% for orga in equipe.orgas %}
-		<div class="row-fluid">
-			<div class="span1">
-				{% if orga.profilePictureSet == 1 %}
-			    	<img src="{{ asset( 'up/profilePictures/'~orga.id~'.jpg' ) }}"/>
-			    {% endif %}
-			</div>
-			<div class="span11">
-				<p>
-					{{ entitiesMacro.orga(orga) }}<br/>
-					<em>{{ orga.email }}</em><br/>
-					<em>{{ orga.telephone }}</em><br/>
-				</p>
-			
-			</div>
-		</div>
+		{% for key,orga in equipe.orgas %}
+		{%  if loop.index0 % 6 == 0 %}
+		<ul class="thumbnails">
+		{%  endif %}
+			<li class="span2">
+                <div class="thumbnail">
+                    {% if orga.profilePictureSet == 1 %}
+			    	    <img src="{{ asset( 'up/profilePictures/'~orga.id~'.jpg' ) }}"/>
+			        {% endif %}
+                  <h3>{{ entitiesMacro.orga(orga) }}</h3>
+                  <p>
+                      <a href= "mailto:{{ orga.email }}">{{ orga.email }}</a><br/>
+                      {{ orga.telephone }}
+                  </p>
+                </div>
+             </li>
+        {%  if loop.index0 % 6 == 5 %}
+		</ul>
+		{%  endif %}
+
 		<hr>
 		{% endfor %}
 	
