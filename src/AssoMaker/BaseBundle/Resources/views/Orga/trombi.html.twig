@@ -17,7 +17,7 @@
                     {% if orga.profilePictureSet == 1 %}
 			    	    <img src="{{ asset( 'up/profilePictures/'~orga.id~'.jpg' ) }}"/>
 			        {% endif %}
-                  <h3>{{ entitiesMacro.orga(orga) }}</h3>
+                  <h4>{{ entitiesMacro.orga(orga) }}</h4>
                   <p>
                       <a href= "mailto:{{ orga.email }}">{{ orga.email }}</a><br/>
                       {{ orga.telephone }}
