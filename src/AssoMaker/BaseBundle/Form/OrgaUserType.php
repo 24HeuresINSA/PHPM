@@ -57,7 +57,7 @@ class OrgaUserType extends AbstractType
                     'GI'=>'GI', 'GE'=>'GE', 'TC'=>'TC', 'GCU'=>'GCU', 'BIM'=>'BIM', 'BIOCH'=>'BIOCH', 'GEN'=>'GEN', 'Autre'=>'Autre' 
                     )))
             ->add('groupePC','integer',array('label'=>'Groupe (Premier Cycle Uniquement)',
-            							'attr'=>array('placeHolder'=>'00')))   
+            							'attr'=>array('placeHolder'=>'00'),'required'=>false))   
             ->add('commentaire')
             ->add('celibataire','choice',array(	'label'=>'Célib\'?',
             									'required'=>false,
