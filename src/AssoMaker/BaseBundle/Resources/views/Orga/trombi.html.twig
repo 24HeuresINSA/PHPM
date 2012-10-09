@@ -19,8 +19,8 @@
 			        {% endif %}
                   <h4>{{ entitiesMacro.orga(orga) }}</h4>
                   <p>
-                      <a href= "mailto:{{ orga.email }}">{{ orga.email }}</a><br/>
-                      {{ orga.telephone |telephone}}
+                      <i class="icon-envelope"></i> <a href= "mailto:{{ orga.email }}">{{ orga.email }}</a><br/>
+                      <i class="icon-phone"></i> {{ orga.telephone |telephone}}
                   </p>
                 </div>
              </li>

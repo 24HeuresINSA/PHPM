@@ -27,7 +27,8 @@
         "trentrichardson/jquerytimepickeraddon": "1.0.3",
         "akzhan/jwysiwyg": "0.97",
         "sanisoft/shiftcheckbox": "1.0",
-        "angular/angularJS": "1.0.2"
+        "angular/angularJS": "1.0.2",
+        "fortawesome/font-awesome": "2.0"
 
     },
    "repositories": [
@@ -115,6 +116,18 @@
                 "version": "1.0",
                 "dist": {
                     "url": "http://www.sanisoft.com/downloads/shiftcheckbox.zip",
+                    "type": "zip"
+                }
+                
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "fortawesome/font-awesome",
+                "version": "2.0",
+                "dist": {
+                    "url": "https://github.com/FortAwesome/Font-Awesome/zipball/master",
                     "type": "zip"
                 }
                 
