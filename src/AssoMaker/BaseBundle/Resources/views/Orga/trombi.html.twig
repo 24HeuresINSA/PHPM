@@ -9,10 +9,10 @@
 			<h3>{{ equipe.nom }}</h3>
 		</div>
 		{% for key,orga in equipe.orgas %}
-		{%  if loop.index0 % 6 == 0 %}
+		{%  if loop.index0 % 4 == 0 %}
 		<ul class="thumbnails">
 		{%  endif %}
-			<li class="span2">
+			<li class="span3">
                 <div class="thumbnail">
                     {% if orga.profilePictureSet == 1 %}
 			    	    <img src="{{ asset( 'up/profilePictures/'~orga.id~'.jpg' ) }}"/>
@@ -24,7 +24,7 @@
                   </p>
                 </div>
              </li>
-        {%  if loop.index0 % 6 == 5 %}
+        {%  if loop.index0 % 4 == 3 %}
 		</ul>
 		{%  endif %}
 
