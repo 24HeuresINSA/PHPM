@@ -41,13 +41,12 @@ class OrgaUserType extends AbstractType
                     'label'=>'Date de naissance',
                     'years'=>$years,
                     'widget' => 'single_text',
-                    'attr'=>array('class'=>'birthdaydp'),
-                    'format' => 'yyyy-MM-dd'))
+                    'attr'=>array('class'=>'birthdaydp')
+                    ))
             ->add('datePermis', 'date', array(
             		'input'=>'datetime',
                     'label'=>'Date de permis',
                     'widget' => 'single_text',
-                    'format' => 'yyyy-MM-dd',
             		'required'=>false,
                     'attr'=>array('class'=>'datep')))
            	->add('anneeEtudes','choice',array(	'label'=>'Année d\'études',
@@ -57,8 +56,8 @@ class OrgaUserType extends AbstractType
                     'PC'=>'PC','GMC'=>'GMC','GMD'=>'GMD', 'GMPP'=>'GMPP', 'IF'=>'IF', 'SGM'=>'SGM',
                     'GI'=>'GI', 'GE'=>'GE', 'TC'=>'TC', 'GCU'=>'GCU', 'BIM'=>'BIM', 'BIOCH'=>'BIOCH', 'GEN'=>'GEN', 'Autre'=>'Autre' 
                     )))
-            ->add('groupePC',null,array('label'=>'Groupe (Premier Cycle Uniquement)',
-            							'attr'=>array('placeHolder'=>'Groupe (si Premier Cycle)')))   
+            ->add('groupePC','integer',array('label'=>'Groupe (Premier Cycle Uniquement)',
+            							'attr'=>array('placeHolder'=>'00')))   
             ->add('commentaire')
             ->add('celibataire','choice',array(	'label'=>'Célib\'?',
             									'required'=>false,
