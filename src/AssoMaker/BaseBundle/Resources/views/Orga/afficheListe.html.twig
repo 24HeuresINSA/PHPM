@@ -15,7 +15,7 @@
         <tr>
             <td>
 	            {{ entitiesMacro.orga(entity) }} {{ entitiesMacro.orgaPrivileges(entity.privileges) }}<br>
-	            {{ entity.telephone }}<br>
+	            {{ entity.telephone |telephone}}<br>
 	            {{ entitiesMacro.orgaEmail(entity.email) }}<br>
             
            		{% if is_granted('ROLE_ADMIN') %}

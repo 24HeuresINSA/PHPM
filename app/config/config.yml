@@ -1,7 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    - { resource: @AssoMakerPHPMBundle/Resources/config/services.yml }
+    - { resource: @AssoMakerBaseBundle/Resources/config/services.yml }
 
 framework:
     #esi:             ~

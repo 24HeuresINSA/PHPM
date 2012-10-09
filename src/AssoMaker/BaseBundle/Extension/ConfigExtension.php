@@ -1,5 +1,5 @@
 <?php 
-namespace AssoMaker\PHPMBundle\Extension;
+namespace AssoMaker\BaseBundle\Extension;
 
 class ConfigExtension extends \Twig_Extension {
 

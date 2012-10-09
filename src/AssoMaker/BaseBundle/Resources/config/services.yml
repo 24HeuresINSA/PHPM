@@ -1,0 +1,18 @@
+parameters:
+    config.extension.class:      AssoMaker\BaseBundle\Extension\ConfigExtension
+    strings.extension.class:      AssoMaker\BaseBundle\Extension\StringsExtension
+
+services:
+    config.extension:
+       class:      %config.extension.class%
+       arguments: [@doctrine]
+       tags:
+            -  { name: twig.extension }
+    strings.extension:
+       class:      %strings.extension.class%
+       arguments: [@doctrine]
+       tags:
+            -  { name: twig.extension }
+
+
+      

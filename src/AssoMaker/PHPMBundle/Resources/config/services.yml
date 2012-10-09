@@ -4,6 +4,7 @@ parameters:
     my.validator.debutAvantFin.class:      AssoMaker\PHPMBundle\Validator\DebutAvantFinValidator
     my.validator.recoupe.class:      AssoMaker\PHPMBundle\Validator\RecoupeValidator
     config.extension.class:      AssoMaker\PHPMBundle\Extension\ConfigExtension
+    strings.extension.class:      AssoMaker\PHPMBundle\Extension\StringsExtension
 
 services:
     my.validator.quartHeure:
@@ -31,6 +32,11 @@ services:
             - { name: validator.constraint_validator, alias: validator.recoupe }
     config.extension:
        class:      %config.extension.class%
+       arguments: [@doctrine]
+       tags:
+            -  { name: twig.extension }
+    strings.extension:
+       class:      %strings.extension.class%
        arguments: [@doctrine]
        tags:
             -  { name: twig.extension }

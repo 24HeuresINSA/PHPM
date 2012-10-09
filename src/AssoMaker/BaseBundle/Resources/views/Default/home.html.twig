@@ -34,7 +34,7 @@
 				          	<img src="{{ asset( 'up/profilePictures/'~app.user.id~'.jpg' ) }}"/>
 				          </div>
 				          <div class="span9">
-					          <p>{{ app.user.email }} - {{ app.user.telephone }}</p>
+					          <p>{{ app.user.email }} - {{ app.user.telephone |telephone}}</p>
 					          <dl class="dl-horizontal">
 						        
 						        <b>Date de Naissance : </b>

@@ -20,7 +20,7 @@
                   <h4>{{ entitiesMacro.orga(orga) }}</h4>
                   <p>
                       <a href= "mailto:{{ orga.email }}">{{ orga.email }}</a><br/>
-                      {{ orga.telephone }}
+                      {{ orga.telephone |telephone}}
                   </p>
                 </div>
              </li>
