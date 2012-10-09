@@ -64,7 +64,7 @@
 		{% endblock %}
 		
 		{# même chose pour Javascript, bien le mettre APRES à cause de LESS #}
-        {% block javascript %}
+
 			{% javascripts
 				'lib/jquery.min.js'
 				'lib/bootstrap/js/bootstrap.min.js'
@@ -81,7 +81,19 @@
 			
 				<script src="{{ asset_url }}" type="text/javascript"></script>
 			{% endjavascripts %}
-        {% endblock %}
+
+        
+			{% javascripts
+				
+				'@AssoMakerPHPMBundle/Resources/public/js/general.js'
+				'@AssoMakerPHPMBundle/Resources/public/js/ui.js'
+
+				
+			%}
+			
+				<script src="{{ asset_url }}" type="text/javascript"></script>
+			{% endjavascripts %}
+
         
         <script>
        		// petit hack : variable avec l'adresse de l'appli, accessibles de partout
