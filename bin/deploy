@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
-composer.phar update install
+composer.phar update
 cd vendor/twitter/bootstrap/
 make bootstrap
 cd ../../../
