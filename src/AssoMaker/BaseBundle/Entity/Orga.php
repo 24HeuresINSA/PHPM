@@ -147,8 +147,6 @@ class Orga implements UserInterface
     
     /**
      * @ORM\Column(type="smallint", length=1, name="groupePC",nullable=true)
-     * @Assert\Max(limit = 0, message = "Veuillez entrer un groupe valide")
-     * @Assert\Min(limit = 200, message = "Veuillez entrer un groupe valide")
      */
      
     protected $groupePC;
