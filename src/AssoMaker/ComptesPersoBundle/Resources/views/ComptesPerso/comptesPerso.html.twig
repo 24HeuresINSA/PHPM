@@ -2,64 +2,122 @@
 {% set pageTitle = 'Liste des Comptes Perso' %}
 
 {% block content %}
-<form class="form-horizontal" action="{{ path('comptesPerso') }}" method="post" {{ form_enctype(form) }}>
-	<div class="row-fluid">
-		<h2>Gestion des Comptes Perso</h2>
-		<table class="table">
-		    <thead>
-		        <tr>
-		        	<th>Orga</th>
-		            <th>Solde</th>
-		            <th></th>
+<script>
+function Ctrl($scope, $http) {
+
+	$scope.ModeEnum = {
+		    CONSOS : 0,
+		    ADDSUB : 1
+		}
+
+	$scope.fetch=function($scope, $http) {
+		$http.get('comptes.json').success(function(data) {
+		    $scope.orgas = data;
+		  });
+		}
+
+	$scope.totalCP = function() {
+		var count = 0;
+	    angular.forEach($scope.orgas, function(orga) {
+	      count += orga.balance ;
+	    });
+	    return count;
+	  };
+
+	$scope.newBalance=function($key) {
+		$orga = $scope.orgas[$key]
+		if($scope.mode==$scope.ModeEnum.CONSOS){
+			return $orga.balance - $scope.alter[$orga.id]*$scope.prixConso;
+		}
+		else if($scope.mode==$scope.ModeEnum.ADDSUB){
+			return $orga.balance + $scope.alter[$orga.id]*1;
+		}
+
+		}
+
+	$scope.newTotalCP = function() {
+		var count = 0;
+	    angular.forEach($scope.orgas, function(orga,key) {
+		    if(!isNaN($scope.newBalance(key))){
+	      count += $scope.newBalance(key) ;
+		    }else{
+		   count += orga.balance ;
+			    }
+	    });
+	    
+	    return count;
+	  };
+
+	$scope.post=function() {
+
+		var data={ 'mode': $scope.mode, 'alter': $scope.alter, 'operation': $scope.operation};
+		$http.post('process',JSON.stringify(data)).success(function(data) {
+			$scope.fetch($scope,$http);
+			$scope.alter=new Array();
+			$scope.operation='';
+		  });
+		}
+
+	$scope.prixConso={{ prixConsoStandard }};
+	$scope.fetch($scope,$http);
+	$scope.mode = $scope.ModeEnum.CONSOS;
+	$scope.alter=new Array();
 	
-		        </tr>
-		    </thead>
-		    <tbody>
-		        {% for orga in orgas %}
-		        <tr>
-		            <td>{{ entitiesMacro.Orga(orga) }}</td>
-		            <td>{{ orga.balance }}</td>
-		            <td>{{ form_widget(form.form[orga.id]) }}</td>
-		        </tr>
-		        {% endfor %}
-		    </tbody>
-		   	<tfoot>
-		        <tr>
-		        	<th>Total des Comptes Perso</th>
-		            <th>{{ totalBalance }}</th>
-	
-	
-		        </tr>
-		   </tfoot>
-		</table>
-	</div>
-	<div class="form-actions">
-            <ul id="operations" class="nav nav-tabs">
-              <li class="active"><a href="#consoStandard" data-toggle="tab">Consommations Standard à {{ prixConsoStandard }}</a></li>
-              <li class=""><a href="#autre" data-toggle="tab">Autres</a></li>
-            </ul>
-            <div id="operationsContent" class="tab-content">
-              <div class="tab-pane fade active in" id="consoStandard">
-              		<p>
-              		Entrer le nombre de consommations dans le tableau ci-dessus.
-              		</p>
-              	    <div class="btn-toolbar">
-	         			<button class="btn btn-primary" type="submit" name="action" value="consoStandard">Enregistrer</button>
-					</div>
-              </div>
-              <div class="tab-pane fade" id="autre">
-              		<p>
-              		Entrer le montant en euros dû par chacun dans le tableau ci-dessus.<br/>
-              		Entrer le nom de l'opération : {{ form_widget(form.operation) }}
-              		</p>
-              	    <div class="btn-toolbar">
-	         			<button class="btn btn-primary" type="submit" name="action" value="autre">Enregistrer</button>
-					</div>
-              </div>
+	}
+
+
+
+
+</script>
+<form class="form-horizontal" action="{{ path('comptesPerso') }}" method="post" {{ form_enctype(form) }} ng-controller="Ctrl" >
+	{% raw %}
+    	<div class="row-fluid">
+    		<h2>Gestion des Comptes Perso</h2>
+    		<div class="btn-group">
+              <a ng-click="mode=ModeEnum.CONSOS" class="btn" ng:class="{true:'active', false:''}[mode==ModeEnum.CONSOS]" >Consommations Standard à {{ prixConso | number:2}}€</a>
+              <a ng-click="mode=ModeEnum.ADDSUB" class="btn" ng:class="{true:'active', false:''}[mode==ModeEnum.ADDSUB]" >Ajouter/Retirer de l'argent</a>
             </div>
-
-	
-
+            <div ng:show="mode==ModeEnum.ADDSUB">
+            <label>Libellé de l'opération</label>
+            <input ng-model="operation" type="text" placeholder="Remise d'espèces...">
+            </div>
+    	</div>
+    	<div class="row-fluid">
+    		<table class="table">
+    		    <thead>
+    		        <tr>
+    		        	<th>Orga</th>
+    		            <th>Solde</th>
+    		            <th ng-show="mode==ModeEnum.CONSOS">Nombre de Consommations</th>
+    		            <th ng-show="mode==ModeEnum.ADDSUB" >Ajouter/retirer</th>
+    		            <th>Nouveau Solde</th>
+    	
+    		        </tr>
+    		    </thead>
+    		    <tbody>
+    		       
+    		        <tr ng-repeat="(key,orga) in orgas">
+    		        	<td>{{ orga.name }}</td>
+    		            <td>{{ orga.balance  | number:2}}€</td>
+    		            <td><input type="number" ng-model="alter[orga.id]" ></td>
+    		            <td>{{ newBalance(key)  | number:2}}€</td>
+    	
+    		        </tr>
+    		        
+    		    </tbody>
+    		   	<tfoot>
+    		        <tr>
+    		        	<th>Total des Comptes Perso</th>
+    		            <th>{{ totalCP() | number:2}}€</th>
+    		            <th></th>
+    		            <th>{{ newTotalCP() | number:2}}€</th>
+    		        </tr>
+    		   </tfoot>
+    		</table>
+    	</div>
+    {% endraw %}
+	<div class="form-actions row-fluid">
+	     <a href="" ng-click="post()" class="btn btn-primary">Enregistrer les modifications</a>
 	</div>
 	{{ form_widget(form._token) }}
 </form>
