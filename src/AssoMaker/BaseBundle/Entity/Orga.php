@@ -120,7 +120,7 @@ class Orga implements UserInterface
      *     mimeTypes = {"image/jpeg"}
      * )
      */
-    protected $profilePicture;
+    public $profilePicture;
     
     /**
      * @var boolean $profilePictureSet
@@ -279,6 +279,13 @@ class Orga implements UserInterface
         
     }
     
+    public function __sleep()
+    {
+   
+        return array('id', 'email');
+    }
+    
+
     public function toArray($developCreneaux = NULL)
     {
     	$a = array();
@@ -971,24 +978,6 @@ class Orga implements UserInterface
     {
         return $this->lastActivity;
     }
-    
-    /**
-     * Set profilePicture
-     *
-     */
-    public function setProfilePicture($profilePicture)
-    {
-        $this->profilePicture = $profilePicture;
-    }
-    
-    /**
-     * Get profilePicture
-     *
-     */
-    public function getProfilePicture()
-    {
-        return $this->profilePicture;
-    }
 
     /**
      * Set datePermis
@@ -1176,14 +1165,14 @@ class Orga implements UserInterface
     
     public function uploadProfilePicture()
     {
-        exit;
-    	if (null === $this->getProfilePicture()) {
+        
+    	if (null === $this->profilePicture) {
     		return;
     	}
 
     	
-    	$this->getprofilePicture()->move(__DIR__ . '/../../../../web/up/profilePictures', $this->getId().'.jpg');
-    	$this->setProfilePicture(null);
+    	$this->profilePicture->move(__DIR__ . '/../../../../web/up/profilePictures', $this->getId().'.jpg');
+    	$this->profilePicture = null;
     	$this->setProfilePictureSet(true);
     }
     

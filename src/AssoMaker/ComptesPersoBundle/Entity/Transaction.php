@@ -22,14 +22,14 @@ class Transaction
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var float $amount
      *
      * @ORM\Column(name="amount", type="decimal", scale=2)
      */
-    private $amount;
+    protected $amount;
 
     /**
      * @var \DateTime $commitDate
@@ -37,14 +37,14 @@ class Transaction
      * @ORM\Column(name="commitDate", type="date")
      * @Assert\Date()
      */
-    private $commitDate;
+    protected  $commitDate;
 
     /**
      * @var string $comment
      *
      * @ORM\Column(name="comment", type="string", length=255)
      */
-    private $comment;
+    protected  $comment;
 
     /**
      * @ORM\ManyToOne(targetEntity="\AssoMaker\BaseBundle\Entity\Orga",cascade={"persist", "remove"})

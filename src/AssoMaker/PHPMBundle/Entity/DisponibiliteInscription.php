@@ -29,7 +29,7 @@ class DisponibiliteInscription
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected  $id;
 
     /**
      * @var datetime $debut
@@ -39,7 +39,7 @@ class DisponibiliteInscription
      * @QuartHeure()
      * 
      */
-    private $debut;
+    protected  $debut;
 
     /**
      * @var datetime $fin
@@ -48,7 +48,7 @@ class DisponibiliteInscription
      * @Assert\DateTime()
      * @QuartHeure()
      */
-    private $fin;
+    protected  $fin;
     
     
     /**
@@ -70,7 +70,7 @@ class DisponibiliteInscription
      * 
      * @ORM\ManyToMany(targetEntity="AssoMaker\BaseBundle\Entity\Orga", mappedBy="disponibilitesInscription")
      */
-    private $orgas;
+    protected  $orgas;
     
     /**
      * @ORM\ManyToOne(targetEntity="Mission", inversedBy="disponibilitesInscription")

@@ -337,6 +337,8 @@ class OrgaController extends Controller
     
     
                 return $this->redirect($this->generateUrl('orga_edit', array('id' => $id)));
+        }else{
+            $this->profilePicture = null;
         }
         }
 
