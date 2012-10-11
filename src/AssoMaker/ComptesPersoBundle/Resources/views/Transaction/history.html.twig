@@ -9,7 +9,7 @@
     <tbody>
         {% for transaction in transactions %}
         <tr>
-            <td>{{ transaction.amount }}</td>
+            <td>{{ transaction.amount |number_format(2) }}€</td>
             <td>{{ transaction.commitDate |format_date('dd MMM Y')}}</td>
             <td>{{ transaction.comment }}</td>
         </tr>
