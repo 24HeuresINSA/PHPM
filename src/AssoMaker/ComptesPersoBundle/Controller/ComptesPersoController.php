@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
 /**
@@ -207,6 +208,37 @@ class ComptesPersoController extends Controller {
 	    }
 	    
 	    
+	}
+	
+	/**
+	 * ComputeInterests
+	 *
+	 * @Route("/computeInterests.json", name="comptesPerso_computeInterests")
+	 * @Method("post")
+	 * @Template()
+	 */
+	public function computeInterestsAction(Request $request) {
+	    $accessCode = $request->request->get('accessCode');
+	    
+	    if($accessCode!='245887'){
+	        throw new AccessDeniedException();
+	    }
+	    
+	    $em = $this->getDoctrine()->getEntityManager();
+	    $config = $e = $this->get('config.extension');
+
+	    $orgas = $em->createQuery("SELECT o FROM AssoMakerBaseBundle:Orga o WHERE o.privileges >= 1")->getResult();
+	    
+	    foreach ($orgas as $orga){
+	        $soldeCP =  $em->getRepository('AssoMakerComptesPersoBundle:Transaction')->getOrgaBalance($orga->getId());
+	        if($soldeCP<=0){
+	            $interests = round(-$soldeCP*11/100*7/365,2);
+	            $em->persist(new Transaction($orga, -$interests, "Intérêts sur compte déficitaire: $soldeCP € x (1+10)% x 7 jours = $interests €"));
+	            $em->flush();
+	        }
+	    }
+	
+	    return array();
 	}
 	
 
