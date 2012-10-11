@@ -109,20 +109,17 @@ class ComptesPersoController extends Controller {
 	    foreach ($data["alter"] as $id => $conso) {
 	        if ($conso != null) {
 	            $param = $request->request->all();
+	            $orga = $em
+	            ->getRepository('AssoMakerBaseBundle:Orga')
+	            ->find($id);
 	    
 	            if ($data['mode'] == 0) {
 	                $nbConsos = $data['alter'][$id];
-	                $orga = $em
-	                ->getRepository('AssoMakerBaseBundle:Orga')
-	                ->find($id);
 	                $amount = -$prixConso * $nbConsos;
 	                $comment = "$nbConsos consommations à $prixConso € = $amount €";
 	            } elseif ($data['mode'] == 1) {
 	                $operation = $data['operation'];
 	                $amount = $data['alter'][$id];
-	                $orga = $em
-	                ->getRepository('AssoMakerBaseBundle:Orga')
-	                ->find($id);
 	                $comment = "$operation : $amount €";
 	            } else {
 	                $this->getResponse()->setStatusCode('400');
@@ -135,6 +132,15 @@ class ComptesPersoController extends Controller {
 	        }
 	    }
 	    $em->flush();
+	    
+	    foreach ($data["alter"] as $id => $conso) {
+	        $orga = $em
+	        ->getRepository('AssoMakerBaseBundle:Orga')
+	        ->find($id);
+	        if ($conso != null) {
+	        $this->checkNegativeAccountAndSendEmail($orga);
+	        }
+	    }
 	
 	    
 	     
@@ -172,6 +178,7 @@ class ComptesPersoController extends Controller {
 				    $em->persist(new Transaction($user, -$amount, "Virement vers $destinataire : '$raison'."));
 
 				    $em->flush();
+				    $this->checkNegativeAccountAndSendEmail($user);
 					return $this->redirect($this->generateUrl('base_accueil'));
 				}
 
@@ -182,6 +189,25 @@ class ComptesPersoController extends Controller {
 		return array('form' => $form->createView(), 'soldeCP'=>$soldeCP);
 	}
 	
+	public function checkNegativeAccountAndSendEmail($orga){
+	    $em = $this->getDoctrine()->getEntityManager();
+	    $soldeCP =  $em->getRepository('AssoMakerComptesPersoBundle:Transaction')->getOrgaBalance($orga->getId());
+	    if($soldeCP<0){
+	        
+	        $message = \Swift_Message::newInstance()
+    			->setSubject('[Alerte Compte Perso] Ton compte perso est dans le rouge!')
+    			->setFrom(array('secretaire.general@24heures.org' => 'SG 24 Heures'))
+    			->setReplyTo('secretaire.general@24heures.org')
+    			->setTo($orga->getEmail())
+    			->setBody($this->renderView('AssoMakerComptesPersoBundle:ComptesPerso:emailNegativeAccount.html.twig', array('orga' => $orga, 'soldeCP'=>$soldeCP)), 'text/html')
+    			;
+    		
+    			
+	        $this->get('mailer')->send($message);
+	    }
+	    
+	    
+	}
 	
 
 }
