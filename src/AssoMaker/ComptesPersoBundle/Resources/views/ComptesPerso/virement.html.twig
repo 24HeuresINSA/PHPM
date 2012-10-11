@@ -16,18 +16,21 @@ function Ctrl($scope) {
 		
 
             {{ form_label(form.destinataire) }}
+            {{ form_errors(form.destinataire) }}
 		    {{ form_widget(form.destinataire) }}
 			{{ form_label(form.montant) }}
+			{{ form_errors(form.montant) }}
 			{{ form_widget(form.montant, { 'attr': {'ng-model': 'montant'} }) }}
 			{{ form_row(form.raison) }}
+			{{ form_errors(form.raison) }}
 			{% raw %}
-			    <p>Nouveau solde : {{ solde-montant }}</p>
+			    <p>Nouveau solde : {{ {true:solde-montant, false:'ERREUR'}[montant>=0]  }}</p>
 			{% endraw %}
 	</div>	
 	<div class="form-actions" >
               	    <div class="btn-toolbar">
               	       
-	         			<button class="btn btn-success" type="submit">
+	         			<button class="btn" ng:class="{true:'btn-success', false:'btn-danger disabled'}[montant>=0]" type="submit">
 	         			    {% raw %}Confirmer un virement de {{montant}}€ {% endraw %}
 	         			</button>
 	         								

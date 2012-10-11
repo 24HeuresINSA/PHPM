@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use AssoMaker\BaseBundle\Entity\EquipeRepository;
 use AssoMaker\BaseBundle\Entity\OrgaRepository;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Validator\Constraints\Min;
+use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Collection;
 
 class VirementType extends AbstractType
@@ -50,9 +50,9 @@ class VirementType extends AbstractType
        $collectionConstraint = new Collection(
 				array(
 				        'raison'=>array(),
-						'montant' => new Min(
-								array('limit' => 0,
-										'message' => "Veuillez entrer un montant positif")),
+						'montant' => new Range(
+								array('min' => 0,
+										'minMessage' => "Veuillez entrer un montant positif !")),
 						'destinataire' => array()));
     
         $resolver->setDefaults(array(
