@@ -63,7 +63,7 @@ class ComptesPersoController extends Controller {
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		$entities = $em
-		->createQuery("SELECT o FROM AssoMakerBaseBundle:Orga o ORDER BY o.nom")
+		->createQuery("SELECT o FROM AssoMakerBaseBundle:Orga o ORDER BY o.prenom")
 		->getResult();
 		
 		
