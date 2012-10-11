@@ -14,6 +14,10 @@
 <a href="mailto:{{ email }}">{{ email }}</a>
 {% endmacro %}
 
+{% macro orgaProfilePictureLink(id) %}
+    {{ asset( 'up/profilePictures/'~id~'.jpg' ) }}
+{% endmacro %}
+
 {% macro groupeTache(entity) %}
  <a href="{{ path('groupetache_edit', { 'id': entity.id }) }}">{{ entity.id }}- {{ entity.nom }}</a>
 {% endmacro %}

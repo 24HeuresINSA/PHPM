@@ -14,9 +14,9 @@
 		{%  endif %}
 			<li class="span3">
                 <div class="thumbnail">
-                    {% if orga.profilePictureSet == 1 %}
-			    	    <img src="{{ asset( 'up/profilePictures/'~orga.id~'.jpg' ) }}" style="width:50%;"/>
-			        {% endif %}
+                 {% if orga.profilePictureSet == 1 %}
+                     <img src="{{ entitiesMacro.orgaProfilePictureLink(orga.id) }}" class="img-polaroid" style="width:50%"/>
+                 {% endif %}
                   <h4>{{ entitiesMacro.orga(orga) }}</h4>
                   <p>
                       <i class="icon-envelope"></i> <a href= "mailto:{{ orga.email }}">{{ orga.email }}</a><br/>

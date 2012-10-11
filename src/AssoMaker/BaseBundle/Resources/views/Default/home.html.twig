@@ -31,9 +31,9 @@
 		          	</div>
 			          <div class="row-fluid">
 				          <div class="span3">
-				          {% if app.user.profilePictureSet == 1 %}
-				          	<img src="{{ asset( 'up/profilePictures/'~app.user.id~'.jpg' ) }}"/>
-				          {% endif %}
+                            {% if app.user.profilePictureSet == 1 %}
+                        	    <img src="{{ entitiesMacro.orgaProfilePictureLink(app.user.id) }}" class="img-polaroid" style="width:90%"/>
+                            {% endif %}
 				          </div>
 				          <div class="span9">
 					          <p>{{ app.user.email }} - {{ app.user.telephone |telephone}}</p>
