@@ -219,8 +219,9 @@ class ComptesPersoController extends Controller {
 	 */
 	public function computeInterestsAction(Request $request) {
 	    $accessCode = $request->request->get('accessCode');
+	    $config = $this->get('config.extension');
 	    
-	    if($accessCode!='245887'){
+	    if($accessCode!=$config->getValue('phpm_ws_access_code')){
 	        throw new AccessDeniedException();
 	    }
 	    
