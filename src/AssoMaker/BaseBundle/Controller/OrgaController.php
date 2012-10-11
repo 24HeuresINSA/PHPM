@@ -280,41 +280,7 @@ class OrgaController extends Controller
         );
     }
 
-
-    /**
-     * Displays a form to edit an existing Orga entity.
-     *
-     * @Route("/{id}/edit", name="orga_edit")
-     * @Template()
-     */
-    public function editAction($id)
-    {
-
-        $em = $this->getDoctrine()->getEntityManager();
-        $config = $e=$this->get('config.extension');
-        $entity = $em->getRepository('AssoMakerBaseBundle:Orga')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Orga entity.');
-        }
-        
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser() != $entity) {
-        	throw new AccessDeniedException();
-        }
-
-        $confianceCode=$entity->getEquipe()->getConfiance()->getCode();
-		
-        $editForm = $this->createForm(new OrgaUserType($this->get('security.context')->isGranted('ROLE_ADMIN'),$config,$confianceCode), $entity);
-        $deleteForm = $this->createDeleteForm($id);
- 
-        
-        return array(
-            'entity'      => $entity,
-            'form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-    
+   
     /**
      * 
      *
@@ -337,16 +303,15 @@ class OrgaController extends Controller
     /**
      * Edits an existing Orga entity.
      *
-     * @Route("/{id}/update", name="orga_update")
-     * @Method("post")
+     * @Route("/{id}/edit", name="orga_edit")
      * @Template("AssoMakerBaseBundle:Orga:edit.html.twig")
      */
     public function updateAction($id)
     {
-
         $em = $this->getDoctrine()->getEntityManager();
-
+        $config = $e=$this->get('config.extension');
         $entity = $em->getRepository('AssoMakerBaseBundle:Orga')->find($id);
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Orga entity.');
         }
@@ -354,24 +319,30 @@ class OrgaController extends Controller
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser() != $entity) {
             throw new AccessDeniedException();
         }
-        
         $confianceCode=$entity->getEquipe()->getConfiance()->getCode();
         $config = $e=$this->get('config.extension');
         $editForm   = $this->createForm(new OrgaUserType($this->get('security.context')->isGranted('ROLE_ADMIN'),$config,$confianceCode), $entity);
+        
+        
+        if ($this->get('request')->getMethod() == 'POST') {
         $request = $this->getRequest();
         $editForm->bindRequest($request);
 
-        $entity->uploadProfilePicture();
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
 
-            return $this->redirect($this->generateUrl('orga_edit', array('id' => $id)));
+        
+        if ($editForm->isValid()) {
+                $entity->uploadProfilePicture();
+                $em->persist($entity);
+                $em->flush();
+    
+    
+                return $this->redirect($this->generateUrl('orga_edit', array('id' => $id)));
+        }
         }
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView()
+            'form'   => $editForm->createView()
         );
     }
 

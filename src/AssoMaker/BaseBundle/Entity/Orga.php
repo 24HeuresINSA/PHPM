@@ -113,14 +113,14 @@ class Orga implements UserInterface
     
     /**
      * @Assert\Image(
-     *     minWidth = 300,
-     *     maxWidth = 300,
-     *     minHeight = 400,
-     *     maxHeight = 400,
+     *     minWidth = 600,
+     *     maxWidth = 600,
+     *     minHeight = 800,
+     *     maxHeight = 800,
      *     mimeTypes = {"image/jpeg"}
      * )
      */
-    public $profilePicture;
+    protected $profilePicture;
     
     /**
      * @var boolean $profilePictureSet
@@ -971,6 +971,24 @@ class Orga implements UserInterface
     {
         return $this->lastActivity;
     }
+    
+    /**
+     * Set profilePicture
+     *
+     */
+    public function setProfilePicture($profilePicture)
+    {
+        $this->profilePicture = $profilePicture;
+    }
+    
+    /**
+     * Get profilePicture
+     *
+     */
+    public function getProfilePicture()
+    {
+        return $this->profilePicture;
+    }
 
     /**
      * Set datePermis
@@ -1154,24 +1172,19 @@ class Orga implements UserInterface
     }
     
 
-    public function isProfilePictureSet()
-    {
-    	return $this->profilePictureSet;
-    }
-    
-
     
     
     public function uploadProfilePicture()
     {
-    	
-    	if (null === $this->profilePicture) {
+        exit;
+    	if (null === $this->getProfilePicture()) {
     		return;
     	}
 
-    	$this->profilePicture->move(__DIR__ . '/../../../../web/up/profilePictures', $this->getId().'.jpg');
-    	$this->profilePicture = null;
-    	$this->profilePictureSet = true;
+    	
+    	$this->getprofilePicture()->move(__DIR__ . '/../../../../web/up/profilePictures', $this->getId().'.jpg');
+    	$this->setProfilePicture(null);
+    	$this->setProfilePictureSet(true);
     }
     
 
