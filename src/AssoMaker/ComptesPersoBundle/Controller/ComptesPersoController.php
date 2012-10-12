@@ -60,11 +60,7 @@ class ComptesPersoController extends Controller {
             throw new AccessDeniedException();
         }
         $em = $this->getDoctrine()->getEntityManager();
-    
-        $entities = $em
-        ->createQuery("SELECT o FROM AssoMakerBaseBundle:Orga o ORDER BY o.prenom")
-        ->getResult();
-    
+       
         $comptes=$em->getRepository('AssoMakerComptesPersoBundle:Transaction')->getComptes();
     
         return array('comptes' => $comptes);
@@ -82,11 +78,7 @@ class ComptesPersoController extends Controller {
 			throw new AccessDeniedException();
 		}
 		$em = $this->getDoctrine()->getEntityManager();
-		
-		$entities = $em
-		->createQuery("SELECT o FROM AssoMakerBaseBundle:Orga o ORDER BY o.prenom")
-		->getResult();
-		
+				
 		
 		$comptes=$em->getRepository('AssoMakerComptesPersoBundle:Transaction')->getComptes();
 		    	

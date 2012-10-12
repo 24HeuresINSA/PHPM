@@ -30,7 +30,7 @@ class TransactionRepository extends EntityRepository
 	public function getComptes(){
    
 	    $entities = $this->getEntityManager()
-	    ->createQuery("SELECT o FROM AssoMakerBaseBundle:Orga o ORDER BY o.prenom WHERE o.priviliges >=1")
+	    ->createQuery("SELECT o FROM AssoMakerBaseBundle:Orga o WHERE o.privileges >=1 ORDER BY o.prenom ")
 	    ->getResult();
 	    
 	    
