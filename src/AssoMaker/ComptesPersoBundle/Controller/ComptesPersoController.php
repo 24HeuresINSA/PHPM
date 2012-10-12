@@ -106,7 +106,8 @@ class ComptesPersoController extends Controller {
 	 */
 	public function comptesPersoProcessAction(Request $request) {
 	    if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-	        throw new AccessDeniedException();
+	        $this->getResponse()->setStatusCode('404');
+	        return new Response();
 	    }
 	    $em = $this->getDoctrine()->getEntityManager();
 	    
@@ -229,7 +230,9 @@ class ComptesPersoController extends Controller {
 	    $config = $this->get('config.extension');
 	    
 	    if($accessCode!=$config->getValue('phpm_ws_access_code')){
-	        throw new AccessDeniedException();
+	        $response = new Response();
+	        $response->setStatusCode('401');
+	        return $response;
 	    }
 	    
 	    $em = $this->getDoctrine()->getEntityManager();
