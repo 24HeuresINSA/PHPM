@@ -26,4 +26,25 @@ class TransactionRepository extends EntityRepository
 
 		}
 	}	
+	
+	public function getComptes(){
+   
+	    $entities = $this->getEntityManager()
+	    ->createQuery("SELECT o FROM AssoMakerBaseBundle:Orga o ORDER BY o.prenom WHERE o.priviliges >=1")
+	    ->getResult();
+	    
+	    
+	    $comptes = array();
+	    //création du Json de retour selon le modèle définit dans la spec (cf wiki)
+	    foreach ($entities as $orga) {
+	    
+	        $comptes[] = array(
+	                "id" => $orga->getId(),
+	                "name" => $orga->__toString(),
+	                "balance"=> $this->getOrgaBalance($orga->getId())
+	        );
+	    }
+	    return $comptes;
+	}
+	   
 }

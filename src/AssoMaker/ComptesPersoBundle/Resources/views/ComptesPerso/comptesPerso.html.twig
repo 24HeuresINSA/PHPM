@@ -73,10 +73,16 @@ function Ctrl($scope, $http) {
 	{% raw %}
     	<div class="row-fluid">
     		<h2>Gestion des Comptes Perso</h2>
-    		<div class="btn-group">
-              <a ng-click="mode=ModeEnum.CONSOS" class="btn" ng:class="{true:'active', false:''}[mode==ModeEnum.CONSOS]" >Consommations Standard à {{ prixConso | number:2}}€</a>
-              <a ng-click="mode=ModeEnum.ADDSUB" class="btn" ng:class="{true:'active', false:''}[mode==ModeEnum.ADDSUB]" >Ajouter/Retirer de l'argent</a>
+    		<div class="btn-toolbar">
+        		<div class="btn-group">
+                  <a ng-click="mode=ModeEnum.CONSOS" class="btn" ng:class="{true:'active', false:''}[mode==ModeEnum.CONSOS]" >Consommations Standard à {{ prixConso | number:2}}€</a>
+                  <a ng-click="mode=ModeEnum.ADDSUB" class="btn" ng:class="{true:'active', false:''}[mode==ModeEnum.ADDSUB]" >Ajouter/Retirer de l'argent</a>
+                </div>
+                <div class="btn-group">
+                  <a href="{% endraw %}{{ path('comptesPersoPrint') }}{% raw %}" class="btn" target="_blank" ><i class="icon-print"></i> Imprimer</a>
+                </div>
             </div>
+
             <div ng:show="mode==ModeEnum.ADDSUB">
             <label>Libellé de l'opération</label>
             <input ng-model="operation" type="text" placeholder="Remise d'espèces...">

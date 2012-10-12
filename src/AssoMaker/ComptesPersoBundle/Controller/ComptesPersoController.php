@@ -48,7 +48,27 @@ class ComptesPersoController extends Controller {
                  'form' => $form->createView());
     }
     
+    /**
+     * Print
+     *
+     * @Route("/print", name="comptesPersoPrint")
+     * @Method("get")
+     * @Template()
+     */
+    public function printAction(Request $request) {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+        $em = $this->getDoctrine()->getEntityManager();
     
+        $entities = $em
+        ->createQuery("SELECT o FROM AssoMakerBaseBundle:Orga o ORDER BY o.prenom")
+        ->getResult();
+    
+        $comptes=$em->getRepository('AssoMakerComptesPersoBundle:Transaction')->getComptes();
+    
+        return array('comptes' => $comptes);
+    }
 	
 	/**
 	 * Lists all Orga comptes as JSON
@@ -68,23 +88,10 @@ class ComptesPersoController extends Controller {
 		->getResult();
 		
 		
-		$comptesArray = array();
-		//création du Json de retour selon le modèle définit dans la spec (cf wiki)
-		foreach ($entities as $orga) {
-
-			$orgaArray[] = array(
-						"id" => $orga->getId(),
-			            "name" => $orga->__toString(),
-			        	"balance"=> $em
-					    ->getRepository('AssoMakerComptesPersoBundle:Transaction')
-					    ->getOrgaBalance($orga->getId())
-						);
-		}
-		
-    	//exit(var_dump($orgaArray));
-    	
+		$comptes=$em->getRepository('AssoMakerComptesPersoBundle:Transaction')->getComptes();
+		    	
     	$response = new Response();
-    	$response->setContent(json_encode($orgaArray));
+    	$response->setContent(json_encode($comptes));
 		$response->headers->set('Content-Type', 'application/json');
     	
     	return $response;

@@ -1,0 +1,33 @@
+{% extends "AssoMakerBaseBundle::publicLayout.html.twig"  %}
+{% set pageTitle = 'Liste des Comptes Perso' %}
+
+{% block body %}
+	<div class="row-fluid" style="text-align:center">
+		<h1>Solde des Comptes Perso</h1>
+		<small>{{ "now" | format_datetime('EEEE dd MMM Y HH:mm') }}</small>
+	</div>
+	<div class="row-fluid">
+		<table class="table table-condensed table-striped">
+		    <thead>
+		        <tr>
+		        	<th>Orga</th>
+		            <th>Solde</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		    {% for compte in comptes %}
+    		    <tr{% if compte.balance < 0 %} style="color:red; font-weight:bold;"{% endif %}>
+		        	<td>{{ compte.name }}</td>
+		            <td>{{ compte.balance | number_format(2)}}€</td>    	
+    		    </tr>
+		    {% endfor %}
+		    </tbody>
+		
+		</table>
+	</div>
+{% endblock %}
+
+{% block actions %}
+{% endblock %}
+
+
