@@ -34,8 +34,8 @@ class Transaction
     /**
      * @var \DateTime $commitDate
      *
-     * @ORM\Column(name="commitDate", type="date")
-     * @Assert\Date()
+     * @ORM\Column(name="commitDate", type="datetime")
+     * @Assert\DateTime()
      */
     protected  $commitDate;
 
@@ -61,6 +61,11 @@ class Transaction
     	$this->comment=$comment;
     }
     
+    public function toArray(){
+        return array("id"=>$this->getId(),"orga"=>$this->getOrga()->__toString(),"amount"=>$this->getAmount(),"comment"=>$this->getComment(),"commitDate"=>$this->commitDate->format("Y-m-d H:i:s"));
+    }
+    
+ 
     /**
      * Get id
      *

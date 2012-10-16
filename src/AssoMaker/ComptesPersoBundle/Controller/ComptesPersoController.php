@@ -90,7 +90,7 @@ class ComptesPersoController extends Controller {
 	}
 	
 	/**
-	 * Lists all Orga comptes as JSON
+	 * Process comptesPerso update
 	 *
 	 * @Route("/process", name="comptesPersoProcess")
 	 * @Method("post")
@@ -148,7 +148,29 @@ class ComptesPersoController extends Controller {
 	    return new Response();
 	}
 	
+	/**
+	 * Lists all transactions as JSON
+	 *
+	 * @Route("/transactions.json", name="transactionsJSON")
+	 * @Method("get")
+	 * @Template()
+	 */
+	public function transactionsDataAction(Request $request) {
+	    if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+	        throw new AccessDeniedException();
+	    }
+	    $em = $this->getDoctrine()->getEntityManager();
 	
+	
+	    $transactions=$em->getRepository('AssoMakerComptesPersoBundle:Transaction')->getTransactionsArray();
+	    
+	    
+	    $response = new Response();
+	    $response->setContent(json_encode($transactions));
+	    $response->headers->set('Content-Type', 'application/json');
+	     
+	    return $response;
+	}
 
 	/**
 	 * Virement

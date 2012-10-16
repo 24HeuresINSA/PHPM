@@ -2,8 +2,40 @@
 {% set pageTitle = 'Liste des Comptes Perso' %}
 
 {% block content %}
+
+<div class="row-fluid">
+    		<h2>Gestion des Comptes Perso</h2>
+    		
+    		<div class="btn-toolbar">
+        		<div class="btn-group">
+                  <a href="#/" class="btn">Liste des Comptes Perso</a>
+                  <a href="#/transactions" class="btn">Liste des Transactions</a>
+                </div>
+            </div>
+            
+<div ng-view></div>
+
 <script>
-function Ctrl($scope, $http) {
+angular.module('MyApp', []).
+config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when('/', {templateUrl: '{{ asset("bundles/assomakercomptesperso/partials/listeComptes.html") }} ', controller: ListeCtrl});
+  $routeProvider.when('/transactions', {templateUrl: '{{ asset("bundles/assomakercomptesperso/partials/transactions.html") }} ', controller: TransactionCtrl});
+  $routeProvider.otherwise({redirectTo: '/'});
+}]);
+
+function TransactionCtrl($scope, $http) {
+	$scope.fetch=function($scope, $http) {
+		$http.get('transactions.json').success(function(data) {
+		    $scope.transactions = data;
+		  });
+	}
+
+	$scope.fetch($scope,$http);
+	}
+
+
+function ListeCtrl($scope, $http) {
+
 
 	$scope.ModeEnum = {
 		    CONSOS : 0,
@@ -69,67 +101,4 @@ function Ctrl($scope, $http) {
 
 
 </script>
-<form class="form-horizontal" action="{{ path('comptesPerso') }}" method="post" {{ form_enctype(form) }} ng-controller="Ctrl" >
-	{% raw %}
-    	<div class="row-fluid">
-    		<h2>Gestion des Comptes Perso</h2>
-    		<div class="btn-toolbar">
-        		<div class="btn-group">
-                  <a ng-click="mode=ModeEnum.CONSOS" class="btn" ng:class="{true:'active', false:''}[mode==ModeEnum.CONSOS]" >Consommations Standard à {{ prixConso | number:2}}€</a>
-                  <a ng-click="mode=ModeEnum.ADDSUB" class="btn" ng:class="{true:'active', false:''}[mode==ModeEnum.ADDSUB]" >Ajouter/Retirer de l'argent</a>
-                </div>
-                <div class="btn-group">
-                  <a href="{% endraw %}{{ path('comptesPersoPrint') }}{% raw %}" class="btn" target="_blank" ><i class="icon-print"></i> Imprimer</a>
-                </div>
-            </div>
-
-            <div ng:show="mode==ModeEnum.ADDSUB">
-            <label>Libellé de l'opération</label>
-            <input ng-model="operation" type="text" placeholder="Remise d'espèces...">
-            </div>
-    	</div>
-    	<div class="row-fluid">
-    		<table class="table table-condensed table-striped">
-    		    <thead>
-    		        <tr>
-    		        	<th>Orga</th>
-    		            <th>Solde</th>
-    		            <th ng-show="mode==ModeEnum.CONSOS">Nombre de Consommations</th>
-    		            <th ng-show="mode==ModeEnum.ADDSUB" >Ajouter/retirer</th>
-    		            <th>Nouveau Solde</th>
-    	
-    		        </tr>
-    		    </thead>
-    		    <tbody>
-    		       
-    		        <tr ng-repeat="(key,orga) in orgas">
-    		        	<td>{{ orga.name }}</td>
-    		            <td>{{ orga.balance  | number:2}}€</td>
-    		            <td><input type="number" ng-model="alter[orga.id]" ></td>
-    		            <td>{{ newBalance(key)  | number:2}}€</td>
-    	
-    		        </tr>
-    		        
-    		    </tbody>
-    		   	<tfoot>
-    		        <tr>
-    		        	<th>Total des Comptes Perso</th>
-    		            <th>{{ totalCP() | number:2}}€</th>
-    		            <th></th>
-    		            <th>{{ newTotalCP() | number:2}}€</th>
-    		        </tr>
-    		   </tfoot>
-    		</table>
-    	</div>
-    {% endraw %}
-	<div class="form-actions row-fluid">
-	     <a href="" ng-click="post()" class="btn btn-primary">Enregistrer les modifications</a>
-	</div>
-	{{ form_widget(form._token) }}
-</form>
 {% endblock %}
-
-{% block actions %}
-{% endblock %}
-
-

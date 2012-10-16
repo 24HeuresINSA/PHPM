@@ -46,5 +46,21 @@ class TransactionRepository extends EntityRepository
 	    }
 	    return $comptes;
 	}
+	
+	public function getTransactionsArray(){
+	     
+	    $entities = $this->getEntityManager()
+	    ->createQuery("SELECT t FROM AssoMakerComptesPersoBundle:Transaction t ORDER BY t.commitDate DESC ")
+	    ->getResult();
+	     
+	     
+	    $transactions = array();
+	    //création du Json de retour selon le modèle définit dans la spec (cf wiki)
+	    foreach ($entities as $transaction) {
+	         
+	        $transactions[] = $transaction->toArray();
+	    }
+	    return $transactions;
+	}
 	   
 }
