@@ -256,7 +256,7 @@ class ComptesPersoController extends Controller {
 	    
 	    foreach ($orgas as $orga){
 	        $soldeCP =  $em->getRepository('AssoMakerComptesPersoBundle:Transaction')->getOrgaBalance($orga->getId());
-	        if($soldeCP<=0){
+	        if($soldeCP<0){
 	            $interests = round(-$soldeCP*11/100*7/365,2);
 	            $em->persist(new Transaction($orga, -$interests, "Intérêts sur compte déficitaire: $soldeCP € x (1+10)% x 7 jours = $interests €"));
 	            $em->flush();
