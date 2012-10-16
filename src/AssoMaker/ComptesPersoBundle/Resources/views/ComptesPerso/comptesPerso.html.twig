@@ -36,6 +36,10 @@ function TransactionCtrl($scope, $http, $routeParams) {
 		  });	
 	}
 
+	$scope.filterById = function(item) {
+		return item.orgaId == $scope.search.orgaId
+		}
+
 	$scope.search=new Array();
 	$scope.orgas=new Array();
 

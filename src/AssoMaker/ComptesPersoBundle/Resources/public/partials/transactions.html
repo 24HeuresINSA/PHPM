@@ -1,5 +1,6 @@
  	<div class="row-fluid">
  	<form class="form-search">
+ 	{{search.orgaId}}
  	<label>Rechercher un orga</label>
     	<select ng-model="search.orgaId" ng-options="item.id as item.name for item in orgas">
     	</select>
@@ -17,7 +18,7 @@
 	    </thead>
 	    <tbody>
 	       
-	        <tr ng-repeat="(key,transaction) in transactions | filter:search">
+	        <tr ng-repeat="(key,transaction) in transactions | filter:filterById">
 	        	<td>{{ transaction.commitDate }}</td>
 	        	<td>{{ transaction.orga }}</td>
 	        	<td>{{ transaction.amount }}</td>
