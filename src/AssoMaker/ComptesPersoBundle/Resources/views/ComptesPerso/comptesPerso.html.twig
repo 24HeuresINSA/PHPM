@@ -9,7 +9,7 @@
     		<div class="btn-toolbar">
         		<div class="btn-group">
                   <a href="#/" class="btn">Liste des Comptes Perso</a>
-                  <a href="#/transactions" class="btn">Liste des Transactions</a>
+                  <a href="#/transactions/0" class="btn">Liste des Transactions</a>
                 </div>
             </div>
             
@@ -19,18 +19,31 @@
 angular.module('MyApp', []).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', {templateUrl: '{{ asset("bundles/assomakercomptesperso/partials/listeComptes.html") }} ', controller: ListeCtrl});
-  $routeProvider.when('/transactions', {templateUrl: '{{ asset("bundles/assomakercomptesperso/partials/transactions.html") }} ', controller: TransactionCtrl});
+  $routeProvider.when('/transactions/:orga', {templateUrl: '{{ asset("bundles/assomakercomptesperso/partials/transactions.html") }} ', controller: TransactionCtrl});
   $routeProvider.otherwise({redirectTo: '/'});
 }]);
 
-function TransactionCtrl($scope, $http) {
-	$scope.fetch=function($scope, $http) {
+function TransactionCtrl($scope, $http, $routeParams) {
+	
+	$scope.fetch=function($scope, $http,$routeParams) {
 		$http.get('transactions.json').success(function(data) {
 		    $scope.transactions = data;
 		  });
+		$http.get('comptes.json').success(function(data) {
+		    $scope.orgas = data;
+		    
+		    
+		  });	
 	}
 
+	$scope.search=new Array();
+	$scope.orgas=new Array();
+
 	$scope.fetch($scope,$http);
+	
+	$scope.search.orgaId = $routeParams.orga;
+
+      
 	}
 
 

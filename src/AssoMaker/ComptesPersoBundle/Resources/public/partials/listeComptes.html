@@ -29,7 +29,7 @@
     		    <tbody>
     		       
     		        <tr ng-repeat="(key,orga) in orgas">
-    		        	<td>{{ orga.name }}</td>
+    		        	<td><a href="#/transactions/{{ orga.id }}">{{ orga.name }}</a></td>
     		            <td>{{ orga.balance  | number:2}}€</td>
     		            <td><input type="number" ng-model="alter[orga.id]" ></td>
     		            <td>{{ newBalance(key)  | number:2}}€</td>

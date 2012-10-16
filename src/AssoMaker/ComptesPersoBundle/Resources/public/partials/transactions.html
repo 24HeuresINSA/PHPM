@@ -1,7 +1,8 @@
  	<div class="row-fluid">
  	<form class="form-search">
  	<label>Rechercher un orga</label>
-    	<input ng-model="search.orga" type="text" placeholder="" class="input-medium search-query">
+    	<select ng-model="search.orgaId" ng-options="item.id as item.name for item in orgas">
+    	</select>
 	</form>
 	<table class="table table-condensed table-striped">
 	    <thead>

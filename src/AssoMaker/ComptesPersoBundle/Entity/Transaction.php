@@ -62,7 +62,7 @@ class Transaction
     }
     
     public function toArray(){
-        return array("id"=>$this->getId(),"orga"=>$this->getOrga()->__toString(),"amount"=>$this->getAmount(),"comment"=>$this->getComment(),"commitDate"=>$this->commitDate->format("Y-m-d H:i:s"));
+        return array("id"=>$this->getId(),"orga"=>$this->getOrga()->__toString(),"orgaId"=>$this->getOrga()->getId(),"amount"=>$this->getAmount(),"comment"=>$this->getComment(),"commitDate"=>$this->commitDate->format("Y-m-d H:i:s"));
     }
     
  
