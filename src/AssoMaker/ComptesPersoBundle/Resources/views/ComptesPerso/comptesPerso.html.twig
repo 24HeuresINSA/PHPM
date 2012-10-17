@@ -107,6 +107,9 @@ function ListeCtrl($scope, $http) {
 		  });
 		}
 
+
+	$scope.printURL = "{{path('comptesPersoPrint')  }}";
+	
 	$scope.prixConso={{ prixConsoStandard }};
 	$scope.fetch($scope,$http);
 	$scope.mode = $scope.ModeEnum.CONSOS;
