@@ -9,13 +9,13 @@
 			<h3>{{ equipe.nom }}</h3>
 		</div>
 		{% for key,orga in equipe.orgas %}
-		{%  if loop.index0 % 4 == 0 %}
+		{%  if loop.index0 % 6 == 0 %}
 		<ul class="thumbnails">
 		{%  endif %}
-			<li class="span3">
+			<li class="span2">
                 <div class="thumbnail">
                  {% if orga.profilePictureSet == 1 %}
-                     <img src="{{ entitiesMacro.orgaProfilePictureLink(orga.id) }}" class="img-polaroid" style="width:50%"/>
+                     <img src="{{ entitiesMacro.orgaProfilePictureLink(orga.id) }}" class="img-polaroid" style="width:90%"/>
                  {% endif %}
                   <h4>{{ entitiesMacro.orga(orga) }}</h4>
                   <p>
@@ -24,7 +24,7 @@
                   </p>
                 </div>
              </li>
-        {%  if loop.index0 % 4 == 3 %}
+        {%  if loop.index0 % 6 == 5 %}
 		</ul>
 		{%  endif %}
 
