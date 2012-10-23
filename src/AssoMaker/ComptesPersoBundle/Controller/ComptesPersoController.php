@@ -232,6 +232,8 @@ class ComptesPersoController extends Controller {
 	    
 	}
 	
+
+	
 	/**
 	 * ComputeInterests
 	 *
@@ -260,6 +262,7 @@ class ComptesPersoController extends Controller {
 	            $interests = round(-$soldeCP*11/100*7/365,2);
 	            $em->persist(new Transaction($orga, -$interests, "Intérêts sur compte déficitaire: $soldeCP € x (1+10)% x 7 jours = $interests €"));
 	            $em->flush();
+	            $this->checkNegativeAccountAndSendEmail($orga);
 	        }
 	    }
 	
