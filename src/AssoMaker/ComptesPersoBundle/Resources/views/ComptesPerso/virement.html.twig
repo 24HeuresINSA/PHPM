@@ -7,10 +7,18 @@
 function Ctrl($scope) {
 	  $scope.montant='5';
 	  $scope.solde={{ soldeCP }};
+
+	  function erreur(){
+		  if(montant>0)
+		  return 
+		  }
+console.log(virementForm);
+	  
+	  
 	}
 </script>
 
-<form class="form-horizontal" action="{{ path('comptesPerso_virement') }}" method="post" {{ form_enctype(form) }} ng-controller="Ctrl">
+<form name="virementForm" ng-app class="form-horizontal" action="{{ path('comptesPerso_virement') }}" method="post" {{ form_enctype(form) }} ng-controller="Ctrl">
 	<div class="row-fluid">
 		<h2>Effectuer un virement</h2>
 		
@@ -21,17 +29,15 @@ function Ctrl($scope) {
 			{{ form_label(form.montant) }}
 			{{ form_errors(form.montant) }}
 			{{ form_widget(form.montant, { 'attr': {'ng-model': 'montant'} }) }}
-			{{ form_row(form.raison) }}
+			{{ form_label(form.raison) }}
+			<input type="text" id="assomaker_comptes_perso_bundle_virement_raison" name="assomaker_comptes_perso_bundle_virement[raison]" required="required" ng-model="raison" class="ng-pristine ng-invalid ng-invalid-required">
 			{{ form_errors(form.raison) }}
-			{% raw %}
-			    <p>Nouveau solde : {{ {true:solde-montant, false:'ERREUR'}[montant>=0]  }}</p>
-			{% endraw %}
 	</div>	
 	<div class="form-actions" >
+	
               	    <div class="btn-toolbar">
-              	       
-	         			<button class="btn" ng:class="{true:'btn-success', false:'btn-danger disabled'}[montant>=0]" type="submit">
-	         			    {% raw %}Confirmer un virement de {{montant}}€ {% endraw %}
+	         			<button type="number" min="0"  step="0.01" class="btn btn-success"  ng-disabled="virementForm.$invalid" type="submit">
+	         			    Confirmer le virement
 	         			</button>
 	         								
 					</div>
@@ -41,9 +47,7 @@ function Ctrl($scope) {
 	
 
 	</div>
-	{% if form.confirm is defined %}
-	{{ form_widget(form.confirm) }}
-	{% endif %}
+
 	{{ form_widget(form._token) }}
 </form>
 {% endblock %}
