@@ -120,13 +120,6 @@
 
 	    {% if is_granted('ROLE_ADMIN') %}	
 			<div class="span4">
-	        	<h2>Gestion des Inscriptions</h2>
-	        	{% if statsOrga.nonValidated > 0%}
-		       	<div class="alert alert-block alert-info fade in">
-		            <h4 class="alert-heading">Il reste {{ statsOrga.nonValidated }} orgas non validés.</h4>
-		            <a class="btn" href="{{ path('orga', {'statut':0}) }}"><i class="icon-list"></i> Afficher la liste »</a>
-		        </div>
-		        {% endif %}
 		        <h2>Impression des Plannings</h2>
 		       	<div class="alert alert-block alert-info fade in">
 					<form name="input" action="{{ path('orga_plannings') }}" method="post">
