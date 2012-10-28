@@ -18,6 +18,13 @@ class BaseConfigFixture implements FixtureInterface {
 						NULL));
 		
 		$manager
+		->persist(
+		        new Config('comptes_perso_actif',
+		                'Module Comptes Perso activé',
+		                '0',
+		                NULL));
+				
+		$manager
 				->persist(
 						new Config('manifestation_plages',
 								'Plages de la manifestation',

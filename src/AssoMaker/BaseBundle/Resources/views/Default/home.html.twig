@@ -65,6 +65,7 @@
 					    	</div>
 				    </div>
     		</div>
+	   {% if comptes_perso_actif ==1 %}
 	   <div class="span4">
           <h2>Mon compte perso</h2>
           {% if soldeCP < 0 %}
@@ -84,7 +85,8 @@
 			</div>
 
     		</div>
-	</div>
+	    </div>
+	    {% endif %}
 {% else %}
 	<div class="hero-unit">
 	{{ phpm_contenu_page_principale |raw}}
