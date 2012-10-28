@@ -37,7 +37,6 @@ class DefaultController extends Controller
     	}
     	
     	$statsUser=$em->getRepository('AssoMakerBaseBundle:Orga')->getStats($user);
-    	$statsUser['taches']=$em->getRepository('AssoMakerPHPMBundle:Tache')->getOrgaStats($user);
     
     	$soldeCP =  $em->getRepository('AssoMakerComptesPersoBundle:Transaction')->getOrgaBalance($user->getId());
     	$transactionsCP = $em->getRepository('AssoMakerComptesPersoBundle:Transaction')->findByOrga($user->getId());
