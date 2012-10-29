@@ -5,7 +5,7 @@ use AssoMaker\PHPMBundle\Entity\Config;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class ComptesPersoFixture implements FixtureInterface {
+class ComptesPersoConfigFixture implements FixtureInterface {
 
 	public function load(ObjectManager $manager) {
 		echo "Starting to load PHPLanningmaker ComptePerso FIXTURES\n";
