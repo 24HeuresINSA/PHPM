@@ -5,7 +5,7 @@ cd vendor/twitter/bootstrap/
 make bootstrap
 cd ../../../
 cp -r vendor/twitter/bootstrap/bootstrap web/lib/
-cp -r vendor/jquery/jquery/jquery-1.8.1.min.js web/lib/jquery.min.js
+cp -r vendor/jquery/jquery/jquery-latest.min.js web/lib/jquery.min.js
 cp -r vendor/jquery/jqueryui/ web/lib/
 cp -r vendor/trentrichardson/jquerytimepickeraddon web/lib/
 cp -r vendor/akzhan/jwysiwyg/ web/lib/
