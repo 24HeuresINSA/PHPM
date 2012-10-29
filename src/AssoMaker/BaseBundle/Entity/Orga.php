@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-
+use AssoMaker\PHPMBundle\Entity\Disponibilite;
 
 /**
  * AssoMaker\BaseBundle\Entity\Orga

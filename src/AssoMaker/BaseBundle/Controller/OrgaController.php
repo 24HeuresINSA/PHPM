@@ -1050,13 +1050,9 @@ class OrgaController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 	
 	
-		
-	
 		$orgas = $em
 		->createQuery("SELECT o,d,e FROM AssoMakerBaseBundle:Orga o JOIN o.disponibilites d JOIN o.equipe e WHERE o.statut >=0")
 		->getArrayResult();
-	
-
 	
 		return array( 'orgas' => $orgas	);
 		

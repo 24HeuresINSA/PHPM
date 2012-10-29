@@ -66,10 +66,12 @@
 		{# même chose pour Javascript, bien le mettre APRES à cause de LESS #}
 
 			{% javascripts
-				'lib/jquery.min.js'
+			                                '@AssoMakerPHPMBundle/Resources/public/js/lib/jquery.min.js'
+                                '@AssoMakerPHPMBundle/Resources/public/js/lib/jquery-ui.min.js'
+
 				'lib/bootstrap/js/bootstrap.min.js'
 				'lib/angularJS/angular.min.js'
-				'lib/jqueryui/ui/minified/jquery-ui.min.js'
+				
 				'@AssoMakerPHPMBundle/Resources/public/js/lib/jquery-ui-i18n.min.js'
 				'lib/jquerytimepickeraddon/jquery-ui-timepicker-addon.js'
 				'lib/jquery.shiftcheckbox.js'
@@ -81,19 +83,7 @@
 			{% endjavascripts %}
 
         
-			{% javascripts
-				
-				'@AssoMakerPHPMBundle/Resources/public/js/general.js'
-				'@AssoMakerPHPMBundle/Resources/public/js/ui.js'
-
-				output="js/app.js"
-			%}
-			
-				<script src="{{ asset_url }}" type="text/javascript"></script>
-			{% endjavascripts %}
-
-        
-        <script>
+                <script>
        		// petit hack : variable avec l'adresse de l'appli, accessibles de partout
         	app_url = "{{ url('assomaker_phpm_default_home') }}";
         	app_search_url = "{{ url('search_json') }}";
@@ -104,6 +94,25 @@
         	//app_groupetache_url = "{{ url('groupetache') }}";
         	app_groupetache_edit_url = "{{ url('groupetache_edit', {id: '_ID_'}) }}";
         </script>
+        
+			{% javascripts
+				
+				'@AssoMakerPHPMBundle/Resources/public/js/general.js'
+				'@AssoMakerPHPMBundle/Resources/public/js/ui.js'
+		'@AssoMakerPHPMBundle/Resources/public/js/affectation/util/*'
+		'@AssoMakerPHPMBundle/Resources/public/js/affectation/model/*'
+		'@AssoMakerPHPMBundle/Resources/public/js/affectation/view/*'
+		'@AssoMakerPHPMBundle/Resources/public/js/affectation/controller/*'
+		'@AssoMakerPHPMBundle/Resources/public/js/affectation/*'
+
+				output="js/app.js"
+			%}
+			
+				<script src="{{ asset_url }}" type="text/javascript"></script>
+			{% endjavascripts %}
+
+        
+
         {% endblock %}
     </head>
     <body>
@@ -173,9 +182,10 @@
 							{% endif %}
 					    </ul>
 					</li>
+					{{ _self.navBarItem('Mes Disponibilités','orga_inputdispos',{'id':app.user.id }) }}
 					{% if not is_granted('ROLE_ADMIN') %}
 					{{ _self.navBarItem('Recherche des conflits','analyse_plagesorga',{'orgaid': app.user.id}) }}
-					{{ _self.navBarItem('Mes Disponibilités','orga_inputdispos',{'id':app.user.id }) }}
+					
 					{% endif %}
 	       			{{ _self.navBarItem('Charisme','orga_charisme') }}
 	       		{% endif %}

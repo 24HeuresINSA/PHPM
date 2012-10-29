@@ -11,20 +11,7 @@
 {% endblock %}
 
 
-{% block javascript %}
-	{{ parent() }}
-				
-	{# attention dans les include Javascript l'ordre compte ! #}
-	{% javascripts 
-		'@AssoMakerPHPMBundle/Resources/public/js/affectation/util/*'
-		'@AssoMakerPHPMBundle/Resources/public/js/affectation/model/*'
-		'@AssoMakerPHPMBundle/Resources/public/js/affectation/view/*'
-		'@AssoMakerPHPMBundle/Resources/public/js/affectation/controller/*'
-		'@AssoMakerPHPMBundle/Resources/public/js/affectation/*'
-	%}
-		<script src="{{ asset_url }}" type="text/javascript"></script>
-	{% endjavascripts %}
-{% endblock %}
+
 
 {% block content %}
     <script>

@@ -23,7 +23,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('phpm');
+        $rootNode = $treeBuilder->root('asso_maker_phpm');
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
@@ -32,35 +32,4 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 }
-/*  // semble inutile 
-class QuartHeureValidator extends Extension
-{
-    public function load(array $configs, ContainerBuilder $container) {
-        // create a yaml file loader in the Resources/config/ folder
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        // load the services.yml file
-        $loader->load('services.yml');
-		
-    }
 
-    public function getAlias() {
-        return 'validator.quartHeureValidator';
-    }
-}
-
-class InclusValidator extends Extension
-{
-    public function load(array $configs, ContainerBuilder $container) {
-        // create a yaml file loader in the Resources/config/ folder
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        // load the services.yml file
-        $loader->load('services.yml');
-		
-    }
-
-    public function getAlias() {
-        return 'validator.quartHeureValidator';
-    }
- 
-}
-*/ 
