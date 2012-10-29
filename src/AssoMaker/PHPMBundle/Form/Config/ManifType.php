@@ -32,13 +32,6 @@ class ManifType extends AbstractType
                                 'label' => 'Clés de Configuration',
                 				'options'  => array('error_bubbling'=>true)));
 
-//         $builder
-//                 ->add('lieuItems', 'collection',
-//                         array('type' => new LieuType(), 'allow_add' => true,
-//                                 'allow_delete' => true,
-//                                 'by_reference' => false,
-//                                 'label' => 'Lieux'));
-
         $builder
                 ->add('equipeItems', 'collection',
                         array('type' => new EquipeType(), 'allow_add' => true,

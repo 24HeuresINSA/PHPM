@@ -60,7 +60,9 @@
 					    	<div class="row-fluid">
 						    	<p>
 						    		<a class="btn" href="{{ path('orga_edit',{'id':app.user.id }) }}"><i class="icon-pencil"></i> Modifier mes informations »</a>
-						    		<a class="btn" href="{{ path('orga_signature') }}"><i class="icon-envelope"></i> Générer ma signature email »</a>
+						    		{% if base_signature_actif ==1 %}
+						    		    <a class="btn" href="{{ path('orga_signature') }}"><i class="icon-envelope"></i> Générer ma signature email »</a>
+						    	    {% endif %}
 						    	</p>
 					    	</div>
 				    </div>

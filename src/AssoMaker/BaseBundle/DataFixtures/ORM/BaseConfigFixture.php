@@ -143,7 +143,7 @@ class BaseConfigFixture implements FixtureInterface {
 				->persist(
 						new Config('phpm_planning_visiteurs',
 								'Autoriser les visiteurs à accéder à leur planning',
-								'false', NULL));
+								0, NULL));
 		$manager
 				->persist(
 						new Config('phpm_contenu_mail_planning',
