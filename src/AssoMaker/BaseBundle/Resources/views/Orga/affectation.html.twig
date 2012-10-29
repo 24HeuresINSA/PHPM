@@ -25,6 +25,22 @@
         	//app_groupetache_url = "{{ url('groupetache') }}";
         	app_groupetache_edit_url = "{{ url('groupetache_edit', {id: '_ID_'}) }}";
         </script>
+        
+        			{% javascripts
+				
+				'@AssoMakerPHPMBundle/Resources/public/js/general.js'
+				'@AssoMakerPHPMBundle/Resources/public/js/ui.js'
+		'@AssoMakerPHPMBundle/Resources/public/js/affectation/util/*'
+		'@AssoMakerPHPMBundle/Resources/public/js/affectation/model/*'
+		'@AssoMakerPHPMBundle/Resources/public/js/affectation/view/*'
+		'@AssoMakerPHPMBundle/Resources/public/js/affectation/controller/*'
+		'@AssoMakerPHPMBundle/Resources/public/js/affectation/*'
+
+				output="js/affectation.js"
+			%}
+			
+				<script src="{{ asset_url }}" type="text/javascript"></script>
+			{% endjavascripts %}
 
     <script>
    		// ce bloc nous permet de passer des infos à notre appli proprement
