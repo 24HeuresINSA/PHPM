@@ -66,16 +66,13 @@
 		{# même chose pour Javascript, bien le mettre APRES à cause de LESS #}
 
 			{% javascripts
-			                                '@AssoMakerPHPMBundle/Resources/public/js/lib/jquery.min.js'
-                                '@AssoMakerPHPMBundle/Resources/public/js/lib/jquery-ui.min.js'
-
+			    '@AssoMakerPHPMBundle/Resources/public/js/lib/jquery.min.js'
+                '@AssoMakerPHPMBundle/Resources/public/js/lib/jquery-ui.min.js'
 				'lib/bootstrap/js/bootstrap.min.js'
 				'lib/angularJS/angular.min.js'
 				
 				'@AssoMakerPHPMBundle/Resources/public/js/lib/jquery-ui-i18n.min.js'
-				'lib/jquerytimepickeraddon/jquery-ui-timepicker-addon.js'
-				'lib/jquery.shiftcheckbox.js'
-				'lib/jwysiwyg/jquery.wysiwyg.js'
+
 				output="js/lib.js"
 			%}
 			
@@ -94,6 +91,16 @@
         	//app_groupetache_url = "{{ url('groupetache') }}";
         	app_groupetache_edit_url = "{{ url('groupetache_edit', {id: '_ID_'}) }}";
         </script>
+        
+        			{% javascripts
+				'lib/jquerytimepickeraddon/jquery-ui-timepicker-addon.js'
+				'lib/jquery.shiftcheckbox.js'
+				'lib/jwysiwyg/jquery.wysiwyg.js'
+				output="js/lib2.js"
+			%}
+			
+				<script src="{{ asset_url }}" type="text/javascript"></script>
+			{% endjavascripts %}
         
 			{% javascripts
 				
