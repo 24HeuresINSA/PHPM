@@ -1,0 +1,6 @@
+imports:
+    - { resource: services.yml }
+    
+parameters:
+    config.extension.class:      AssoMaker\BaseBundle\Extension\ConfigExtension
+    strings.extension.class:      AssoMaker\BaseBundle\Extension\StringsExtension
