@@ -44,7 +44,7 @@ class BaseConfigFixture implements FixtureInterface {
 								'24 Heures de l\'INSA', NULL));
  		$manager
 				->persist(
-						new Config('phpm_admin_login',
+						new Config('base_admin_login',
 								'Login admin automatique', '1',
 								NULL)); 
 		$manager
@@ -72,7 +72,7 @@ class BaseConfigFixture implements FixtureInterface {
 				->persist(
 						new Config('animations_db_path',
 								'Chemin vers la BDD des anims',
-								'/var/www/animaker/Backend/Data/DB/DB.sqlite',
+								null,
 								'Chemin absolu vers la base SQLite des animations, au format Animaker. Laisser nul sinon.'));
 		$manager
 				->persist(
@@ -87,7 +87,7 @@ class BaseConfigFixture implements FixtureInterface {
 		$manager
 				->persist(
 						new Config('phpm_orgasoft_inscription_returnURL',
-								'URL de retour  inscription orga',
+								'URL de retour inscription après inscription orga',
 								'http://www.24heures.org/orga', NULL));
 		$manager
 				->persist(

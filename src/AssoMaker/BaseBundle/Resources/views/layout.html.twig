@@ -2,9 +2,9 @@
 
 {% macro navBarItem(nom,route,params) %}
 {% if params !="" %}
-<li{% if route == app.request.attributes.get('_route') %} class="active" {% endif %}><a href="{{ path(route,params) }}">{{ nom }}</a></li>
+<li{% if route == app.request.attributes.get('_route') %} class="active" {% endif %}><a href="{{ path(route,params) }}">{{ nom| raw }}</a></li>
 {% else %}
-<li{% if route == app.request.attributes.get('_route') %} class="active" {% endif %}><a href="{{ path(route) }}">{{ nom }}</a></li>
+<li{% if route == app.request.attributes.get('_route') %} class="active" {% endif %}><a href="{{ path(route) }}">{{ nom | raw}}</a></li>
 {% endif %}
 {% endmacro %}
 <!DOCTYPE html>
@@ -52,7 +52,7 @@
 			
 			{# Not rewritten stylesheets #}
 				{% stylesheets
-				'lib/jqueryui/css/smoothness/jquery-ui-1.8.23.custom.css'
+				'lib/jqueryui/css/smoothness/jquery-ui-1.9.1.custom.css'
 				'lib/jquerytimepickeraddon/jquery-ui-timepicker-addon.css'
 				'bundles/assomakerphpm/css/images.css'
 				'lib/jwysiwyg/jquery.wysiwyg.css'
@@ -69,7 +69,7 @@
 				'lib/jquery.min.js'
 				'lib/bootstrap/js/bootstrap.min.js'
 				'lib/angularJS/angular.min.js'
-				'lib/jqueryui/js/jquery-ui-1.8.23.custom.min.js'
+				'lib/jqueryui/js/jquery-ui-1.9.1.custom.min.js'
 				'@AssoMakerPHPMBundle/Resources/public/js/lib/jquery-ui-i18n.min.js'
 				'lib/jquerytimepickeraddon/jquery-ui-timepicker-addon.js'
 				'lib/jquery.shiftcheckbox.js'
@@ -123,7 +123,66 @@
 	            {% if is_granted('ROLE_USER')  %}
 	            {% block navbar %}
 					{% if phpm_actif ==1 %}
-	       				{{ _self.navBarItem('PlanningMaker','phpm_accueil') }}
+	       				<li class="dropdown" id="menu_topnav_orgas">
+					    <a class="dropdown-toggle" data-toggle="dropdown" href="">
+					      Orgas
+					      <b class="caret"></b>
+					    </a>
+					    <ul class="dropdown-menu">
+				    		{{ _self.navBarItem('Liste','orga') }}
+				    		{% if is_granted('ROLE_ADMIN') %}
+					    		{{ _self.navBarItem('ListeHTML','orga_export') }}
+								{{ _self.navBarItem('Créneaux d\'inscription','disponibiliteinscription') }}
+								{{ _self.navBarItem('Missions','mission') }}
+							{% endif %}
+					    </ul>
+					</li>
+	       		{% if is_granted('ROLE_ADMIN') %}	
+	       			{{ _self.navBarItem('Affectation','orga_affectation') }}
+	       		{% endif %}
+	     		{% if is_granted('ROLE_USER') %}
+	        		<li class="dropdown" id="menu_topnav_taches">
+					    <a class="dropdown-toggle" data-toggle="dropdown" href="">
+					      Fiches Tâches
+					      <b class="caret"></b>
+					    </a>
+					    <ul class="dropdown-menu">
+					    	{% if is_granted('ROLE_ADMIN') %}
+							{{ _self.navBarItem('Fiches tâches','tache') }}
+							{{ _self.navBarItem('Groupes de tâches','groupetache') }}
+							{% else %}
+							{{ _self.navBarItem('Mes Fiches','tache',{'orgaid': app.user.id}) }}
+							{{ _self.navBarItem('Celles de ma com\'','tache',{'equipeid': app.user.equipe.id}) }}
+							{{ _self.navBarItem('Groupes de tâches','groupetache',{'orgaid': app.user.id}) }}
+							
+							{% endif %}
+					    </ul>
+					</li>
+	        		<li class="dropdown" id="menu_topnav_analyse">
+					    <a class="dropdown-toggle" data-toggle="dropdown" href="">
+					      Analyse
+					      <b class="caret"></b>
+					    </a>
+					    <ul class="dropdown-menu">
+							{{ _self.navBarItem('Statistiques','analyse_stats') }}
+							{{ _self.navBarItem('Utilisation du matériel','analyse_usageMateriel') }}
+							{{ _self.navBarItem('Orgas requis','analyse_plagesorga') }}
+							{% if is_granted('ROLE_ADMIN') %}
+							{{ _self.navBarItem('Besoins en orgas','analyse_besoinsorga') }}
+							{{ _self.navBarItem('Orgas affectés','analyse_taches') }}
+							{% endif %}
+					    </ul>
+					</li>
+					{% if not is_granted('ROLE_ADMIN') %}
+					{{ _self.navBarItem('Recherche des conflits','analyse_plagesorga',{'orgaid': app.user.id}) }}
+					{{ _self.navBarItem('Mes Disponibilités','orga_inputdispos',{'id':app.user.id }) }}
+					{% endif %}
+	       			{{ _self.navBarItem('Charisme','orga_charisme') }}
+	       		{% endif %}
+
+	            
+	        	
+
 	       			{% endif %}
 	       			    {{ _self.navBarItem('Trombinoscope','orga_trombi') }}
      				{% if is_granted('ROLE_ADMIN') %}
@@ -132,14 +191,17 @@
 	       			    {% endif %}
 		       			{{ _self.navBarItem('Configuration','config') }}
 		       		{% endif %}
-		       		{% if is_granted('ROLE_VISITOR') %}	
-	       		    	{{ _self.navBarItem('Se déconnecter','logout') }}
-	        		{% else %}
-	       				{{ _self.navBarItem('Se connecter','login') }}
-	        		{% endif %}
+		       		 {{ _self.navBarItem('Logout <i class="icon-signout"></i>','logout') }}
+
+
 	        	{% endblock %}
 				{% endif %}
 				</ul>
+					{% if is_granted('ROLE_USER') %}
+		        	<form class="navbar-form pull-right form-search" method="post" action="{{ path('search') }}" id="search_form">
+				           <input  class="input-medium search-query" id="searchBox" name="s" size="30" placeholder="Rechercher..." />		        		  
+				    </form>
+	        	{% endif %}
 	          </div><!--/.nav-collapse -->
 	        </div>
 	      </div>

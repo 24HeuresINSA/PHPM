@@ -32,7 +32,7 @@ class DefaultController extends Controller
     	$user=$this->get('security.context')->getToken()->getUser();
     	
     	if (!$this->get('security.context')->isGranted('ROLE_VISITOR')) {
-    		if ($config->getValue('phpm_admin_login')==1){
+    		if ($config->getValue('base_admin_login')==1){
     			return $this->adminLogin();
     		}
     		return array();
