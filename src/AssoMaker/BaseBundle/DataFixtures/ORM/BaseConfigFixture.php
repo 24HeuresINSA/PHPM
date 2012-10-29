@@ -19,6 +19,13 @@ class BaseConfigFixture implements FixtureInterface {
 		
 		$manager
 		->persist(
+		        new Config('base_signature_actif',
+		                'Module signature actif',
+		                '0',
+		                'Autoriser les orgas à générer leur signature'));
+		
+		$manager
+		->persist(
 		        new Config('comptes_perso_actif',
 		                'Module Comptes Perso activé',
 		                '0',
