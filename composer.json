@@ -23,7 +23,7 @@
         "sonata-project/intl-bundle": "dev-master",
         "twitter/bootstrap": "master",
         "jquery/jquery": "master",
-        "jquery/jqueryui": "1.8.23",
+        "jquery/jqueryui": "1.9.1",
         "trentrichardson/jquerytimepickeraddon": "1.0.3",
         "akzhan/jwysiwyg": "0.97",
         "sanisoft/shiftcheckbox": "1.0",
@@ -65,9 +65,9 @@
                     "type": "package",
                     "package": {
                         "name": "jquery/jqueryui",
-                        "version": "1.8.23",
+                        "version": "1.9.1",
                         "dist": {
-                            "url": "http://jqueryui.com/download/jquery-ui-1.8.23.custom.zip",
+                            "url": "https://github.com/downloads/jquery/jquery-ui/jquery-ui-1.9.1.zip",
                             "type": "zip"
                         }
                         
