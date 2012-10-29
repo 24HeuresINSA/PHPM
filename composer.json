@@ -22,7 +22,7 @@
         "fp/lightopenid": "dev-master",
         "sonata-project/intl-bundle": "dev-master",
         "twitter/bootstrap": "master",
-        "jquery/jquery": "latest",
+        "jquery/jquery": "master",
         "jquery/jqueryui": "1.8.23",
         "trentrichardson/jquerytimepickeraddon": "1.0.3",
         "akzhan/jwysiwyg": "0.97",
@@ -52,7 +52,7 @@
                "type": "package",
                "package": {
                    "name": "jquery/jquery",
-                   "version": "latest",
+                   "version": "master",
                    "dist": {
                        "url": "http://code.jquery.com/jquery-latest.min.js",
                        "type": "file"
