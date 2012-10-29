@@ -33,11 +33,11 @@ class PlageHoraireType extends AbstractType
         }
         
         $builder
-            ->add('debut',null,array(
+            ->add('debut','datetime',array(
                     'label'=>'Début',
                     'widget' => 'single_text',
                     'attr'=>array('class'=>'debutdp')))
-            ->add('fin',null,array(
+            ->add('fin','datetime',array(
                     'label'=>'Fin',
                     'widget' => 'single_text',
                     'attr'=>array('class'=>'findp')))
