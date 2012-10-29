@@ -80,17 +80,7 @@
 			{% endjavascripts %}
 
         
-                <script>
-       		// petit hack : variable avec l'adresse de l'appli, accessibles de partout
-        	app_url = "{{ url('assomaker_phpm_default_home') }}";
-        	app_search_url = "{{ url('search_json') }}";
-        	//app_orga_url = "{{ url('orga') }}";
-        	app_orga_edit_url = "{{ url('orga_edit', {id: '_ID_'}) }}";
-        	//app_tache_url = "{{ url('assomaker_phpm_default_home') }}tache/"; // malheureusement la route tache donne tache/index...
-        	app_tache_edit_url = "{{ url('tache_edit', {id: '_ID_'}) }}";
-        	//app_groupetache_url = "{{ url('groupetache') }}";
-        	app_groupetache_edit_url = "{{ url('groupetache_edit', {id: '_ID_'}) }}";
-        </script>
+
         
         			{% javascripts
 				'lib/jquerytimepickeraddon/jquery-ui-timepicker-addon.js'
