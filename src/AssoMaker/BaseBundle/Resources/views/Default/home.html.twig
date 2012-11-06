@@ -82,7 +82,37 @@
 		            <p>Il te reste actuellement <em>{{ soldeCP|number_format(2) }}€</em> sur ton compte.</p>
 		  {% endif %}
 		  	<h4>Détail des transactions</h4>
-		  	{% include 'AssoMakerComptesPersoBundle:Transaction:history.html.twig' with {'transactions': transactionsCP} only  %}
+            		  	<table class="table">
+                <thead>
+                    <tr>
+                        <th>Montant</th>
+                        <th>Date</th>
+                        <th>Détail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactionsCP %}
+                    {% if loop.index == '6' %}
+                    
+                        </tbody>
+                    </table>
+                    <div id="demo" class="collapse">
+                    <table class="table">
+                    <tbody>
+                    {% endif %}
+                    <tr>
+                        <td>{{ transaction.amount |number_format(2) }}€</td>
+                        <td>{{ transaction.commitDate |format_date('dd MMM Y HH:mm')}}</td>
+                        <td>{{ transaction.comment }}</td>
+                    </tr>
+            
+                    {% endfor %}
+                        </tbody>
+            </table>
+            {% if transactionsCP|length > 5 %}
+                </div>
+            {% endif %}
+			<button type="button" class="btn" data-toggle="collapse" data-target="#demo">  Afficher toutes les transactions </button>
 			<a class="btn" href="{{ url('comptesPerso_virement') }}"><i class="icon-credit-card"></i> Effectuer un virement »</a>
 			</div>
 

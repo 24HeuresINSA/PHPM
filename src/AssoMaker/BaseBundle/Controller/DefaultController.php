@@ -39,7 +39,7 @@ class DefaultController extends Controller
     	$statsUser=$em->getRepository('AssoMakerBaseBundle:Orga')->getStats($user);
     
     	$soldeCP =  $em->getRepository('AssoMakerComptesPersoBundle:Transaction')->getOrgaBalance($user->getId());
-    	$transactionsCP = $em->getRepository('AssoMakerComptesPersoBundle:Transaction')->findByOrga($user->getId());
+    	$transactionsCP = $em->getRepository('AssoMakerComptesPersoBundle:Transaction')->getTransactionsByOrga($user->getId());
     	return array('soldeCP'=>$soldeCP,'transactionsCP'=>$transactionsCP,'statsOrga'=>$statsUser,);
     	
         
