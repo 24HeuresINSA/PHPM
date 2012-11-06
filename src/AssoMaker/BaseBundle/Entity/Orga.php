@@ -5,6 +5,7 @@ namespace AssoMaker\BaseBundle\Entity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ExecutionContext;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use AssoMaker\PHPMBundle\Entity\Disponibilite;
@@ -16,6 +17,7 @@ use AssoMaker\PHPMBundle\Entity\Disponibilite;
  * @ORM\Entity(repositoryClass="AssoMaker\BaseBundle\Entity\OrgaRepository")
  * @UniqueEntity(fields={"email"}, message="Un orga possédant cet email est déjà inscrit.")
  * @UniqueEntity(fields={"telephone"}, message="Un orga possédant ce numéro de téléphone est déjà inscrit.")
+ * @Assert\Callback(methods = { "isBirthdayValid" })
  */
 class Orga implements UserInterface
 {
@@ -1396,5 +1398,19 @@ class Orga implements UserInterface
     public function removeBesoinsOrgaHint(\AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint)
     {
         $this->besoinsOrgaHint->removeElement($besoinsOrgaHint);
+    }
+    
+    public function isBirthDayValid(ExecutionContext $context)
+    {
+        if ($this->dateDeNaissance >= new \DateTime()) {
+            $context->addViolationAtSubPath('dateDeNaissance', 'Cette date doit être dans le passé.');
+        }
+    }
+    
+    public function isLicenceDateValid(ExecutionContext $context)
+    {
+        if ($this->datePermis >= new \DateTime()) {
+            $context->addViolationAtSubPath('datePermis', 'Cette date doit être dans le passé.');
+        }
     }
 }

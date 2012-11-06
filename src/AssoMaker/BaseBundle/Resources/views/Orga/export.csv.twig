@@ -1,0 +1,4 @@
+Name,Given Name,Family Name,Nickname,Birthday,Group Membership,E-mail 1 - Type,E-mail 1 - Value,Phone 1 - Type,Phone 1 - Value,Company,Job Title
+{% for orga in orgas %}
+{{orga.prenom| raw}} {{orga.nom| raw}},{{orga.prenom| raw}},{{orga.nom| raw}},"{{orga.surnom| raw}}",{% if orga.dateDeNaissance %}{{ orga.dateDeNaissance|format_date('Y-M-d') }}{% endif%},* 24h - {{manifestation_edition}}e,Home,{{orga.email}},Mobile,+33760930068,{{ manifestation_organisation_nom | raw}},{{ orga.role | raw}}
+{% endfor %}

@@ -1,0 +1,44 @@
+{% extends "AssoMakerBaseBundle::publicLayout.html.twig"  %}
+{% set pageTitle = 'Liste des Orgas' %}
+
+{% block body %}
+<div class="row-fluid" style="text-align:center">
+   <table>
+   	<thead>
+   	  <tr>
+   		<th>Nom</th>
+   		<th>Prénom</th>
+   		<th>Surnom</th>
+   		<th>Téléphone</th>
+   		<th>Mail</th>
+   		<th>Date de Naissance</th>
+   		<th>Permis</th>
+   		<th>Com'</th>
+   		<th>Départ'</th>
+   		<th>Commentaire</th>
+   		<th>Amis</th>
+   	  </tr>
+   	</thead>
+   	<tbody>
+   		{% for orga in orgas %}
+   		<tr>
+   			<td>{{ orga.nom }}</td>
+   			<td>{{ orga.prenom }}</td>
+   			<td>{{ orga.surnom }}</td>
+   			<td>{{ orga.telephone | telephone}}</td>
+   			<td>{{ orga.email }}</td>
+   			<td>{% if orga.dateDeNaissance %}{{ orga.dateDeNaissance|format_date('dd MMM Y') }}{% endif%}</td>
+   			<td>{% if orga.datePermis %}{{ orga.datePermis|format_date('dd MMM Y') }}{% endif%}</td>
+   			<td>{{ orga.equipe.nom }}</td>
+   			<td>{{ orga.departement }}</td>
+   			<td>{{ orga.commentaire }}</td>
+   			<td>{{ orga.amis }}</td>
+   		</tr>
+   		{% endfor %}
+   	</tbody>
+</table>
+</div>
+   
+{% endblock %}
+
+
