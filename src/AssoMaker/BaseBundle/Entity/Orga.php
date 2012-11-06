@@ -1409,7 +1409,7 @@ class Orga implements UserInterface
     
     public function isLicenceDateValid(ExecutionContext $context)
     {
-        if ($this->datePermis >= new \DateTime()) {
+        if ($this->datePermis != null && $this->datePermis >= new \DateTime()) {
             $context->addViolationAtSubPath('datePermis', 'Cette date doit être dans le passé.');
         }
     }
