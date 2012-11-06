@@ -13,7 +13,7 @@ class StringsExtension extends \Twig_Extension {
     public function getFilters() {
         return array(
             'telephone'     => new \Twig_Filter_Method($this, 'telephone'),
- 
+             'intlTelephone'     => new \Twig_Filter_Method($this, 'intlTelephone'),
         );
     }
 
@@ -24,7 +24,11 @@ class StringsExtension extends \Twig_Extension {
     	}
         return $str;
     }
-   
+    
+    public function intlTelephone($str) {
+            $str = substr_replace($str, '+33', 0, 1);
+        return $str;
+    }   
     
     public function getName()
     {

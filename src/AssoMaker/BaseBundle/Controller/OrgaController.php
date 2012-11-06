@@ -1038,10 +1038,10 @@ class OrgaController extends Controller
 	/**
 	*
 	*
-	* @Route("/export", name="orga_export")
+	* @Route("/export/tableau", name="orga_export_tableau")
 	* @Template()
 	*/
-	public function exportAction()
+	public function exportTableauAction()
 	{
 		if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
 			throw new AccessDeniedException();
@@ -1051,11 +1051,43 @@ class OrgaController extends Controller
 	
 	
 		$orgas = $em
-		->createQuery("SELECT o,d,e FROM AssoMakerBaseBundle:Orga o JOIN o.disponibilites d JOIN o.equipe e WHERE o.statut >=0")
+		->createQuery("SELECT o,e FROM AssoMakerBaseBundle:Orga o JOIN o.equipe e WHERE o.statut >=0")
 		->getArrayResult();
 	
 		return array( 'orgas' => $orgas	);
 		
+	}
+	
+	/**
+	 *
+	 *
+	 * @Route("/export.csv", name="orga_export_csv")
+	 */
+	public function exportCSVAction()
+	{
+
+	    if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+	        throw new AccessDeniedException();
+	    }
+	    	    
+	    $em = $this->getDoctrine()->getEntityManager();
+	    $orgas = $em
+	    ->createQuery("SELECT o,e FROM AssoMakerBaseBundle:Orga o JOIN o.equipe e WHERE o.statut >=0")
+	    ->getArrayResult();
+	    
+	    $response = $this->render('AssoMakerBaseBundle:Orga:export.csv.twig', array('orgas' => $orgas));
+	    $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename=Orgas.csv');
+	    return $response;
+	    
+	    
+
+
+	
+	
+
+	
+	
 	}
 	
 	

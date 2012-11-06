@@ -131,7 +131,8 @@
 					    <ul class="dropdown-menu">
 				    		{{ _self.navBarItem('Liste','orga') }}
 				    		{% if is_granted('ROLE_ADMIN') %}
-					    		{{ _self.navBarItem('ListeHTML','orga_export') }}
+					    		{{ _self.navBarItem('Export Tableau','orga_export_tableau') }}
+					    		{{ _self.navBarItem('Export CSV','orga_export_csv') }}
 								{{ _self.navBarItem('Créneaux d\'inscription','disponibiliteinscription') }}
 								{{ _self.navBarItem('Missions','mission') }}
 							{% endif %}
