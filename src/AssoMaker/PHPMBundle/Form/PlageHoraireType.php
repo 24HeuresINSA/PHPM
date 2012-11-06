@@ -36,11 +36,13 @@ class PlageHoraireType extends AbstractType
             ->add('debut','datetime',array(
                     'label'=>'Début',
                     'widget' => 'single_text',
-                    'attr'=>array('class'=>'debutdp')))
+                    'attr'=>array('class'=>'debutdp'),
+                    'format'=>'yyyy-MM-dd HH:mm:ss'))
             ->add('fin','datetime',array(
                     'label'=>'Fin',
                     'widget' => 'single_text',
-                    'attr'=>array('class'=>'findp')))
+                    'attr'=>array('class'=>'findp'),
+                    'format'=>'yyyy-MM-dd HH:mm:ss'))
             ->add('creneauUnique', null, array('label'=>'Créneau Unique (pas de découpage)'))
             ->add('dureeCreneau', 'choice', array('label'=>'Durée d\'un créneau', 'choices'=>$choixDurees))
             ->add('recoupementCreneau', 'choice', array('label'=>'Recoupement entre deux créneaux consécutifs (en sec.)', 'choices' => $choixRC ))
