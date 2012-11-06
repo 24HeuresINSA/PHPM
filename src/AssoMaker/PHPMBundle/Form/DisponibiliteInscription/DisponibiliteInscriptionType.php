@@ -13,11 +13,13 @@ class DisponibiliteInscriptionType extends AbstractType
             ->add('debut','datetime',array(
                     'label'=>'Début',
                     'widget' => 'single_text',
-                    'attr'=>array('class'=>'debutdp')))
+                    'attr'=>array('class'=>'debutdp'),
+                    'format'=>'yyyy-MM-dd HH:mm:ss'))
             ->add('fin','datetime',array(
                     'label'=>'Fin',
                     'widget' => 'single_text',
-                    'attr'=>array('class'=>'findp')))
+                    'attr'=>array('class'=>'findp'),
+                    'format'=>'yyyy-MM-dd HH:mm:ss'))
             ->add('statut','choice',array('label'=>'Statut', 'choices'=>array(
         				'0'=>'Verrouillé', '1'=>'Cochable Uniquement', '2'=>'Cochable/Décochable'
         	)))
