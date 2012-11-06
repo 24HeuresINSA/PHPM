@@ -17,7 +17,7 @@ use AssoMaker\PHPMBundle\Entity\Disponibilite;
  * @ORM\Entity(repositoryClass="AssoMaker\BaseBundle\Entity\OrgaRepository")
  * @UniqueEntity(fields={"email"}, message="Un orga possédant cet email est déjà inscrit.")
  * @UniqueEntity(fields={"telephone"}, message="Un orga possédant ce numéro de téléphone est déjà inscrit.")
- * @Assert\Callback(methods = { "isBirthdayValid" })
+ * @Assert\Callback(methods = { "isBirthdayValid","isLicenceDateValid" })
  */
 class Orga implements UserInterface
 {

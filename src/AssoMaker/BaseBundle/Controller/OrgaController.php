@@ -327,16 +327,14 @@ class OrgaController extends Controller
         if ($this->get('request')->getMethod() == 'POST') {
         $request = $this->getRequest();
         $editForm->bindRequest($request);
-
-
         
         if ($editForm->isValid()) {
+            
                 $entity->uploadProfilePicture();
                 $em->persist($entity);
                 $em->flush();
-    
-    
-                return $this->redirect($this->generateUrl('orga_edit', array('id' => $id)));
+
+                return $this->redirect($this->generateUrl('base_accueil'));
         }else{
             $this->profilePicture = null;
         }
@@ -834,7 +832,10 @@ class OrgaController extends Controller
 	    $user = $this->get('security.context')->getToken()->getUser();
 	    $user->setLastActivity(new \DateTime());
 	    $em = $this->getDoctrine()->getEntityManager();
-	    $em->flush();
+	    $errors = $this->container->get('validator')->validate($user);
+	    if((count($errors) == 0)){
+	        $em->flush();
+	    }
 	    return new Response();
 	    
 	    
