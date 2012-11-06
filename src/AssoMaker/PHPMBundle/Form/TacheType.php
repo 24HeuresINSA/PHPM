@@ -64,7 +64,7 @@ class TacheType extends AbstractType
 		foreach ($entities as $key => $e) {
 			if ($e->getCategorie() != $prevcat) {
 				$label = $e->getCategorie();
-				$c = $builder->create($e->getCategorie(), 'form', array('label' => $label, 'required' => false));
+				$c = $builder->create((string)$e->getCategorie()->getId(), 'form', array('label' => $label, 'required' => false));
 				$m->add($c);
 				//                 $c->add('end',new FormType(),array('label'=>" ", 'required'=>false, 'attr'=> array('class'=>'clear')));
 			}
