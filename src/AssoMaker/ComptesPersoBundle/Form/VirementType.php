@@ -51,8 +51,8 @@ class VirementType extends AbstractType
 				array(
 				        'raison'=>array(),
 						'montant' => new Range(
-								array('min' => 0,
-										'minMessage' => "Veuillez entrer un montant positif !")),
+								array('min' => 0.01,
+										'minMessage' => "Veuillez entrer un montant supérieur ou égal à 0,01€ !")),
 						'destinataire' => array()));
     
         $resolver->setDefaults(array(
