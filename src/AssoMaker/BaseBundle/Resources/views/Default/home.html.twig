@@ -80,6 +80,7 @@
 		  {% else %}
 		  	<div class="well">
 		            <p>Il te reste actuellement <em>{{ soldeCP|number_format(2) }}€</em> sur ton compte.</p>
+		    
 		  {% endif %}
 		  	<h4>Détail des transactions</h4>
             		  	<table class="table">
@@ -116,7 +117,6 @@
 			<a class="btn" href="{{ url('comptesPerso_virement') }}"><i class="icon-credit-card"></i> Effectuer un virement »</a>
 			</div>
 
-    		</div>
 	    </div>
 	    {% endif %}
 	    
@@ -131,6 +131,18 @@
 		        {% endif %}
 	       </div>
 	    	{% endif %}
+	    	
+	    {% if not is_granted('ROLE_USER') %}
+	    	<div class="span4">
+    	    	<h2>Actions</h2>
+        	    	<div class="well">
+            	    	<a class="btn {% if phpm_planning_visiteurs == 0 %}btn-primary {% endif %}btn-large" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Renseigner mes disponibilités »</a></p>
+            			{% if (planning[0] is defined) and  (phpm_planning_visiteurs ==1) %}
+            	        <a class="btn btn-primary btn-large" href="{{ path('orga_print', {'orgaid':app.user.id }) }}"><i class="icon-print"></i> Imprimer mon planning »</a>
+            	        {% endif %}
+        	    	</div>
+	    	</div>
+	    {% endif %}
 {% else %}
 	<div class="hero-unit">
 	{{ phpm_contenu_page_principale |raw}}

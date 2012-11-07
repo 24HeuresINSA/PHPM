@@ -103,16 +103,7 @@
 			{% endif %}
 	    	</div>
 	    	{% endif %}
-	    	{% if not is_granted('ROLE_USER') %}
-	    	<h2>Actions</h2>
-	    	<div class="span4">
-	    	<a class="btn {% if phpm_planning_visiteurs == 0 %}btn-primary {% endif %}btn-large" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Renseigner mes disponibilités »</a></p>
-			{% if (planning[0] is defined) and  (phpm_planning_visiteurs ==1) %}
-	        <a class="btn btn-primary btn-large" href="{{ path('orga_print', {'orgaid':app.user.id }) }}"><i class="icon-print"></i> Imprimer mon planning »</a>
-	        {% endif %}
-	    	
-	    	</div>
-	    	{% endif %}
+
 			
 	
 	</div>	
