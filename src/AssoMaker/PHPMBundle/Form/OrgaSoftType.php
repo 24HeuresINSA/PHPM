@@ -42,7 +42,7 @@ class OrgaSoftType extends AbstractType
                     'widget' => 'single_text',
                     'attr'=>array('class'=>'birthdaydp','placeHolder'=>'Date de Naissance'),
                     'format' => 'yyyy-MM-dd'))
-            ->add('datePermis', 'datetime', array(
+            ->add('datePermis', 'date', array(
                             'label'=>'Date de permis',
             				'required'=>false,
                             'widget' => 'single_text',
