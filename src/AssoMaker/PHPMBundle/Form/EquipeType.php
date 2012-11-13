@@ -14,6 +14,8 @@ class EquipeType extends AbstractType
             ->add('couleur')
             ->add('responsable',null,array('required'=>false,'label'=>false))
             ->add('confiance')
+            ->add('showOnTrombi',null,array('required'=>false,'label'=>false))
+            ->add('comptesPersoEnabled',null,array('required'=>false,'label'=>false))
         ;
     }
     

@@ -21,7 +21,9 @@ class ConfigExtension extends \Twig_Extension {
         return array(
             'permis'     => new \Twig_Filter_Method($this, 'permis'),
         	'statutDI'     => new \Twig_Filter_Method($this, 'statutDI'),
-        	'phpm_crypt'     => new \Twig_Filter_Method($this, 'phpm_crypt')
+        	'phpm_crypt'     => new \Twig_Filter_Method($this, 'phpm_crypt'),
+            'accessComptesPerso'     => new \Twig_Filter_Method($this, 'accessComptesPerso'),
+            'accessTrombi'     => new \Twig_Filter_Method($this, 'accessTrombi')
  
         );
     }
@@ -43,6 +45,14 @@ class ConfigExtension extends \Twig_Extension {
     	
     	return crypt($this->configs['phpm_secret_salt'].$string, 24);
     }
+    
+    public function accessComptesPerso($user) {
+        return $this->configs['comptes_perso_actif'] && ($user->getEquipe()->getComptesPersoEnabled());
+    }
+    
+    public function accessTrombi($user) {
+        return $user->getEquipe()->getShowOnTrombi();
+    }
 
     public function getValue($field)
     {
@@ -58,6 +68,7 @@ class ConfigExtension extends \Twig_Extension {
     {
         return 'phpm_config_extension';
     }
+    
 
 }
 

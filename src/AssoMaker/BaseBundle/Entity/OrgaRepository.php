@@ -3,6 +3,7 @@
 namespace AssoMaker\BaseBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr;
 use AssoMaker\BaseBundle\Entity\Orga;
 use AssoMaker\PHPMBundle\Entity\Config;
 
@@ -26,6 +27,21 @@ class OrgaRepository extends EntityRepository
 	
 	
 	}
+	
+	public function findAllComptesPersoUsersExcept($userId)
+	{
+	
+	    return   $this->createQueryBuilder('o')
+	    ->join('o.equipe', 'e')
+        ->where('o.id != :userId')
+	    ->andWhere('e.comptesPersoEnabled = 1')
+	    ->setParameter('userId', $userId)
+		;
+	
+	
+	}
+	
+	
 	
 	public function getOrgasWithCriteria($annee_permis, $maxDateNaissance, $plage_id, $niveau_confiance, $equipe_id)
 	{

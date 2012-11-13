@@ -28,13 +28,14 @@ class TransactionRepository extends EntityRepository
 
         }
     }
+    
 
     public function getComptes()
     {
 
         $entities = $this->getEntityManager()
                 ->createQuery(
-                        "SELECT o FROM AssoMakerBaseBundle:Orga o WHERE o.privileges >=1 ORDER BY o.prenom ")
+                        "SELECT o FROM AssoMakerBaseBundle:Orga o JOIN o.equipe e WHERE e.comptesPersoEnabled =1 ORDER BY o.prenom ")
                 ->getResult();
 
         $comptes = array();

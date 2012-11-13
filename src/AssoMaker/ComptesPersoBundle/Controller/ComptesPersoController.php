@@ -254,7 +254,7 @@ class ComptesPersoController extends Controller {
 	    $em = $this->getDoctrine()->getEntityManager();
 	    $config = $e = $this->get('config.extension');
 
-	    $orgas = $em->createQuery("SELECT o FROM AssoMakerBaseBundle:Orga o WHERE o.privileges >= 1")->getResult();
+	    $orgas = $em->getRepository("AssoMakerBaseBundle:Orga")->findAllComptesPersoUsersExcept(0)->getQuery()->getResult();
 	    
 	    foreach ($orgas as $orga){
 	        $soldeCP =  $em->getRepository('AssoMakerComptesPersoBundle:Transaction')->getOrgaBalance($orga->getId());

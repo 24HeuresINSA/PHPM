@@ -110,7 +110,7 @@ class OrgaController extends Controller
     	}
     	$em = $this->getDoctrine()->getEntityManager();
     
-    	$orgasDQL = "SELECT e,o FROM AssoMakerBaseBundle:Equipe e JOIN e.orgas o";
+    	$orgasDQL = "SELECT e,o FROM AssoMakerBaseBundle:Equipe e JOIN e.orgas o WHERE e.showOnTrombi = 1";
     
     	$entities =$em
     	->createQuery($orgasDQL)

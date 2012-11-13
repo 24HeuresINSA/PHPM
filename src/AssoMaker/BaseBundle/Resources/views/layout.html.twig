@@ -186,11 +186,13 @@
 	        	
 
 	       			{% endif %}
+	       			{% if app.user | accessTrombi %}
 	       			    {{ _self.navBarItem('Trombinoscope','orga_trombi') }}
-     				{% if is_granted('ROLE_ADMIN') %}
-     				    {% if comptes_perso_actif ==1 %}
+	       			{% endif %}
+                    {% if app.user | accessComptesPerso %}
                             {{ _self.navBarItem('Comptes Perso','comptesPerso') }}
-	       			    {% endif %}
+	       			{% endif %}
+	       			{% if is_granted('ROLE_ADMIN') %}
 		       			{{ _self.navBarItem('Configuration','config') }}
 		       		{% endif %}
 		       		 {{ _self.navBarItem('Logout <i class="icon-signout"></i>','logout') }}

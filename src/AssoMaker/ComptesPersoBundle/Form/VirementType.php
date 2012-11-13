@@ -31,7 +31,7 @@ class VirementType extends AbstractType
 								'class' => 'AssoMakerBaseBundle:Orga',
 								'query_builder' => function (
 										OrgaRepository $or) use ($userId) {
-									return $or->findAllUsersExcept($userId);
+									return $or->findAllComptesPersoUsersExcept($userId);
 								}))
 				->add('raison', 'text', array('label'=>'Raison'))
 								;

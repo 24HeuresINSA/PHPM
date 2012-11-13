@@ -79,6 +79,23 @@ class Equipe
     }
     
     /**
+     * @var boolean $comptesPersoEnabled
+     *
+     * @ORM\Column(name="comptesPersoEnabled", type="boolean")
+     */
+    protected $comptesPersoEnabled = false;
+    
+    /**
+     * @var boolean $showOnTrombi
+     *
+     * @ORM\Column(name="showOnTrombi", type="boolean")
+     */
+    protected $showOnTrombi = false;
+    
+    
+    
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -206,5 +223,84 @@ class Equipe
     public function getConfiance()
     {
         return $this->confiance;
+    }
+
+    /**
+     * Set comptesPersoEnabled
+     *
+     * @param boolean $comptesPersoEnabled
+     * @return Equipe
+     */
+    public function setComptesPersoEnabled($comptesPersoEnabled)
+    {
+        $this->comptesPersoEnabled = $comptesPersoEnabled;
+    
+        return $this;
+    }
+
+    /**
+     * Get comptesPersoEnabled
+     *
+     * @return boolean 
+     */
+    public function getComptesPersoEnabled()
+    {
+        return $this->comptesPersoEnabled;
+    }
+
+    /**
+     * Set showOnTrombi
+     *
+     * @param boolean $showOnTrombi
+     * @return Equipe
+     */
+    public function setShowOnTrombi($showOnTrombi)
+    {
+        $this->showOnTrombi = $showOnTrombi;
+    
+        return $this;
+    }
+
+    /**
+     * Get showOnTrombi
+     *
+     * @return boolean 
+     */
+    public function getShowOnTrombi()
+    {
+        return $this->showOnTrombi;
+    }
+
+    /**
+     * Add groupesTache
+     *
+     * @param AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTache
+     * @return Equipe
+     */
+    public function addGroupesTache(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTache)
+    {
+        $this->groupesTache[] = $groupesTache;
+    
+        return $this;
+    }
+
+    /**
+     * Remove groupesTache
+     *
+     * @param AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTache
+     */
+    public function removeGroupesTache(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTache)
+    {
+        $this->groupesTache->removeElement($groupesTache);
+    }
+
+    /**
+     * Remove orgas
+     *
+     * @param AssoMaker\BaseBundle\Entity\Orga $orgas
+     */
+    public function removeOrga(\AssoMaker\BaseBundle\Entity\Orga $orgas)
+    {
+        $this->orgas->removeElement($orgas);
     }
 }
