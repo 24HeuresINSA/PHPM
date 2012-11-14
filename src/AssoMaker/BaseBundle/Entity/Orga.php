@@ -277,7 +277,11 @@ class Orga implements UserInterface
     
     public function __toString()
     {
-        return $this->prenom." ".$this->nom;
+        if($this->getSurnom()!=null){
+            return $this->prenom." ".$this->nom." (".$this->surnom.")";
+        }else{
+            return $this->prenom." ".$this->nom;
+        }
         
     }
     
