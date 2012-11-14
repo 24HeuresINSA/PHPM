@@ -147,8 +147,10 @@ class DefaultController extends Controller
     			    if($this->getRequest()->getSession()->get('confianceCode')){
     			        return $this->redirect($this->generateUrl('orga_register_user'));
     			    }
-    				$redirectURL = $config->getValue('manifestation_permis_libelles');
-    				return $this->redirect($config->getValue('phpm_orgasoft_inscription_returnURL'));
+    				
+    			    $this->get('session')->setFlash('notice', "L'adresse $email n'est pas dans le système.");
+    			    $redirectURL = $config->getValue('manifestation_permis_libelles');
+    				return $this->redirect($this->generateUrl('base_accueil'));
     			}
     
     			$this->get('security.context')->setToken($user->generateUserToken());
