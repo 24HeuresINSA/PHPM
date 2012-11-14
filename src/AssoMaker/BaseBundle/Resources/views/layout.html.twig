@@ -189,7 +189,7 @@
 	       			{% if app.user | accessTrombi %}
 	       			    {{ _self.navBarItem('Trombinoscope','orga_trombi') }}
 	       			{% endif %}
-                    {% if app.user | accessComptesPerso %}
+                    {% if is_granted('ROLE_ADMIN') %}
                             {{ _self.navBarItem('Comptes Perso','comptesPerso') }}
 	       			{% endif %}
 	       			{% if is_granted('ROLE_ADMIN') %}
