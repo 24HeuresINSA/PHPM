@@ -1,0 +1,37 @@
+{% extends "AssoMakerBaseBundle::layout.html.twig"  %}
+{% set pageTitle = entity.nom %}
+
+{% block content %}
+	<form class="form-horizontal" action="{{ path('sponso_contact_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+		<div class="row-fluid">
+			<div class="span4">
+				<fieldset>
+				    <legend>Éditer le contact</legend>
+					    <div class="row-fluid">
+							    <div class="control-group">
+							    {{ form_row(form.entreprise) }}
+								{{ form_row(form.nom) }}
+								{{ form_row(form.poste) }}
+								{{ form_row(form.email) }}
+								{{ form_row(form.telephone) }}
+								{{ form_row(form.adresse) }}
+
+							    </div>
+						</div>       			
+	         			
+				</fieldset>
+			</div>
+			
+	    </div>
+	   
+
+	
+	{{ form_widget(form._token) }}
+	<div class="form-actions">
+	    <div class="btn-toolbar">
+	        <button class="btn btn-primary" type="submit">Enregistrer</button>
+	        <a href="../../" class="btn">Annuler</a>
+		</div>
+	</div>
+	</form>
+{% endblock %}

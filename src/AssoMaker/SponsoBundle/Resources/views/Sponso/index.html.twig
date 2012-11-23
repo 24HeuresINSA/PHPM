@@ -1,0 +1,37 @@
+{% extends "AssoMakerBaseBundle::layout.html.twig"  %}
+{% set pageTitle = 'Liste des Comptes Perso' %}
+
+{% block content %}
+
+<div class="row-fluid" ng-app="MyApp">
+<div ng-view></div>
+
+<script>
+angular.module('MyApp', []).
+config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when('/', {templateUrl: '{{ asset("bundles/assomakersponso/partials/sponso.html") }} ', controller: SponsoCtrl});
+  $routeProvider.otherwise({redirectTo: '/'});
+}]);
+
+function SponsoCtrl($scope, $http, $routeParams) {
+	
+	$scope.fetch=function($scope, $http,$routeParams) {
+		$http.get('contact/index.json').success(function(data) {
+			$scope.contacts = data;
+		  });
+
+	}
+
+
+	$scope.contacts=new Array();
+	$scope.fetch($scope,$http);
+	
+
+	
+	$scope.test=2;
+      
+	}
+
+
+</script>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "AssoMakerBaseBundle::layout.html.twig"  %}
+{% set pageTitle =  'Ajouter une note' %}
+
+{% block content %}
+	<form class="form-horizontal" action="{{ path('sponso_contact_addNote', { 'id': entity.contact.id }) }}" method="post" {{ form_enctype(form) }}>
+		<div class="row-fluid">
+			<div class="span4">
+				<fieldset>
+				    <legend>Ajouter une note</legend>
+					    <div class="row-fluid">
+							    <div class="control-group">
+							    {{ form_row(form.type) }}
+								{{ form_row(form.statut) }}
+								{{ form_row(form.texte) }}
+
+
+							    </div>
+						</div>       			
+	         			
+				</fieldset>
+			</div>
+			
+	    </div>
+	   
+
+	
+	{{ form_widget(form._token) }}
+	<div class="form-actions">
+	    <div class="btn-toolbar">
+	        <button class="btn btn-primary" type="submit">Enregistrer</button>
+	        <a href="../../" class="btn">Annuler</a>
+		</div>
+	</div>
+	</form>
+{% endblock %}

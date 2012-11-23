@@ -1,3 +1,8 @@
+asso_maker_sponso:
+    resource: "@AssoMakerSponsoBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 asso_maker_comptes_perso:
     resource: "@AssoMakerComptesPersoBundle/Controller/"
     type:     annotation

@@ -1,0 +1,34 @@
+	<h3>Liste des contacts</h3>
+		<div class="btn-toolbar">
+                <div class="btn-group">
+                  <a href="contact/new" class="btn btn-success"><i class="icon-plus"></i> Ajouter un contact</a>
+                </div>
+         </div>
+		<table class="table table-condensed table-striped">
+	    <thead>
+	        <tr>
+	        	<th>Entreprise</th>
+	        	<th>Contact</th>
+	        	<th>Notes</th>
+	        	<th></th>
+
+
+	        </tr>
+	    </thead>
+	    <tbody>
+	       
+	        <tr ng-repeat="(key,contact) in contacts">
+	        	<td>{{ contact.entreprise }}</td>
+	        	<td>{{ contact.nom }} ({{ contact.poste }})<br/>{{ contact.email }} - {{ contact.telephone }}<br/>{{ contact.adresse }}</td>
+	        	<td>
+					<ul ng-repeat="(keyn,note) in contact.notes">
+	        			<li><b>{{ note.type }} : </b>{{note.texte}}</li>
+	        		</ul>
+				</td>
+				<td><a href="contact/{{contact.id}}/addNote" class="btn btn-success"><i class="icon-plus"></i> Note</a>
+	        	<a href="contact/{{contact.id}}/edit" class="btn"><i class="icon-pencil"></i> Éditer</a></td>
+	        </tr>
+	        
+	    </tbody>
+	</table>
+</div>
