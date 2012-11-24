@@ -56,9 +56,9 @@ class Contact
     private $poste;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Entreprise",cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="entreprise_id", referencedColumnName="id")
-     * @Assert\Valid
+     * @var string $entreprise
+     *
+     * @ORM\Column(name="entreprise", type="string", length=255)
      */
     private $entreprise;
     
@@ -177,28 +177,7 @@ class Contact
         return $this->poste;
     }
 
-    /**
-     * Set entreprise
-     *
-     * @param AssoMaker\SponsoBundle\Entity\Entreprise $entreprise
-     * @return Contact
-     */
-    public function setEntreprise(\AssoMaker\SponsoBundle\Entity\Entreprise $entreprise = null)
-    {
-        $this->entreprise = $entreprise;
-    
-        return $this;
-    }
 
-    /**
-     * Get entreprise
-     *
-     * @return AssoMaker\SponsoBundle\Entity\Entreprise 
-     */
-    public function getEntreprise()
-    {
-        return $this->entreprise;
-    }
     
     public function __toString(){
         return $this->getNom();

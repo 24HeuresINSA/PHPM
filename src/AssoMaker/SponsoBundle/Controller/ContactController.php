@@ -42,7 +42,7 @@ class ContactController extends Controller
     
         
     
-        $contacts=$em->createQuery("SELECT c,e FROM AssoMakerSponsoBundle:Contact c JOIN c.entreprise e ")->getResult();
+        $contacts=$em->createQuery("SELECT c FROM AssoMakerSponsoBundle:Contact c ")->getResult();
         
         
         
@@ -57,7 +57,7 @@ class ContactController extends Controller
                         "nom"=> $contact->getNom(),
                         "telephone"=> $contact->getTelephone(),
                         "email"=> $contact->getEmail(),
-                        "entreprise"=> $contact->getEntreprise()->getNom(),
+                        "entreprise"=> $contact->getEntreprise(),
                         "poste"=> $contact->getPoste(),
                         "adresse"=> $contact->getAdresse(),
                         "notes"=>$notes

@@ -18,7 +18,7 @@ class ContactType extends AbstractType
         	
     	$builder
     	    ->add('nom',null,array('label'=>'Nom'))
-    	    ->add('entreprise','entity',array('class'=>'AssoMakerSponsoBundle:Entreprise','label'=>'Entreprise'))
+    	    ->add('entreprise',null,array('label'=>'Entreprise'))
     	    ->add('email',null,array('label'=>'Email'))
     	    ->add('telephone',null,array('label'=>'Téléphone'))
     	    ->add('adresse','textarea',array('label'=>'Adresse'))
