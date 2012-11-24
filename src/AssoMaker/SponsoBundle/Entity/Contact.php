@@ -247,4 +247,27 @@ class Contact
     {
         return $this->notes;
     }
+
+    /**
+     * Set entreprise
+     *
+     * @param string $entreprise
+     * @return Contact
+     */
+    public function setEntreprise($entreprise)
+    {
+        $this->entreprise = $entreprise;
+    
+        return $this;
+    }
+
+    /**
+     * Get entreprise
+     *
+     * @return string 
+     */
+    public function getEntreprise()
+    {
+        return $this->entreprise;
+    }
 }
