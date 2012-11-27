@@ -1,0 +1,33 @@
+{% extends "AssoMakerBaseBundle::layout.html.twig"  %}
+{% set pageTitle = 'Liste des Projets' %}
+
+{% block content %}
+<div class="row-fluid">
+    <h3>Liste des Projets</h3>
+
+
+     <table class="table">
+         <thead>      
+            <th>Equipe</th> 
+            <th>Nom du Projet</th>
+            <th>Entreprise</th>
+            <th>Contact</th>
+            <th>Responsable</th>
+         </thead>
+         <tbody>
+             {% for projet in projets %}
+             <tr>
+                 <td>{{ projet.equipe }}</td>
+                 <td>{{ entitiesMacro.projet(projet) }}</td>
+                 <td>{{ projet.contact.entreprise }}</td>
+                 <td>{{ projet.contact }}</td>
+                 <td>{{ projet.responsable }}</td>
+             </tr>
+             {% endfor %}
+         </tbody>
+            
+    
+    </table>
+
+</div>
+{% endblock %}

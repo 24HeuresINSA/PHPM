@@ -32,13 +32,6 @@ class Note
     private $type;
     
     /**
-    * @var smallint $statut
-    * @Assert\Choice(choices = {"-1", "0", "1", "2"})
-    * @ORM\Column(name="statut", type="smallint")
-    */
-    private $statut;
-
-    /**
      * @var \DateTime $date
      *
      * @ORM\Column(name="date", type="datetime")
@@ -54,11 +47,11 @@ class Note
     private $texte;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Contact",cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="contact_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Projet",cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="projet_id", referencedColumnName="id")
      * @Assert\Valid
      */
-    protected $contact;
+    protected $projet;
     
     /**
      * @ORM\ManyToOne(targetEntity="\AssoMaker\BaseBundle\Entity\Orga",cascade={"persist", "remove"})
@@ -171,28 +164,6 @@ class Note
         return $this->orga;
     }
 
-    /**
-     * Set statut
-     *
-     * @param integer $statut
-     * @return Note
-     */
-    public function setStatut($statut)
-    {
-        $this->statut = $statut;
-    
-        return $this;
-    }
-
-    /**
-     * Get statut
-     *
-     * @return integer 
-     */
-    public function getStatut()
-    {
-        return $this->statut;
-    }
     
     /**
      * Get type Texte
@@ -233,5 +204,28 @@ class Note
     public function getTexte()
     {
         return $this->texte;
+    }
+
+    /**
+     * Set projet
+     *
+     * @param AssoMaker\SponsoBundle\Entity\Projet $projet
+     * @return Note
+     */
+    public function setProjet(\AssoMaker\SponsoBundle\Entity\Projet $projet = null)
+    {
+        $this->projet = $projet;
+    
+        return $this;
+    }
+
+    /**
+     * Get projet
+     *
+     * @return AssoMaker\SponsoBundle\Entity\Projet 
+     */
+    public function getProjet()
+    {
+        return $this->projet;
     }
 }

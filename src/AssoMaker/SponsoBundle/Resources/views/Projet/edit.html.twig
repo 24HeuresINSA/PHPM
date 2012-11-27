@@ -1,0 +1,90 @@
+{% extends "AssoMakerBaseBundle::layout.html.twig"  %}
+{% set pageTitle = entity.nom %}
+
+{% block content %}
+<div id="editModal" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Éditer le Projet</h3>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal" action="{{ path('sponso_projet_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+		<div class="row-fluid">
+				<fieldset>
+					    <div class="control-group">
+					    {{ form_label(form.contact) }}
+					    {{ form_widget(form.contact) }}
+					    <br/>
+					        <a class="btn btn-success" href="{{ path('sponso_contact_new') }}"><i class="icon-plus"></i>Nouveau Contact</a>
+					    <br/>
+					    {{ form_widget(form) }}
+						
+					    </div>
+				</fieldset>
+	    </div>
+	{{ form_widget(form._token) }}
+	</form>
+  </div>
+  <div class="modal-footer">
+    
+    <div class="btn-toolbar">
+	        <button class="btn btn-primary" type="submit">Enregistrer les modifications</button>
+	        <button class="btn" data-dismiss="modal" aria-hidden="true">Annuler</button>
+	</div>
+  </div>
+</div>
+<div id="noteModal" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Ajouter une note</h3>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal" action="{{ path('sponso_projet_addNote', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+		<div class="row-fluid">
+				<fieldset>
+				    <div class="control-group">
+
+				    {{ form_widget(formNote) }}
+					
+				    </div>
+				</fieldset>
+	    </div>
+	{{ form_widget(formNote._token) }}
+	</form>
+  </div>
+  <div class="modal-footer">
+    
+    <div class="btn-toolbar">
+	        <button class="btn btn-primary" type="submit">Ajouter une note</button>
+	        <button class="btn" data-dismiss="modal" aria-hidden="true">Annuler</button>
+	</div>
+  </div>
+</div>
+	
+</div>
+<div class="span6">
+<h3>{{ entity.nom }}</h3>
+<p>Équipe {{ entity.equipe }}, Responsable : {{ entity.responsable }}</p>
+<a href="#editModal" role="button" class="btn" data-toggle="modal"><i class="icon-pencil"></i>Éditer les infos</a>
+<div class="well">
+    <h4>Contact : {{ entity.contact.entreprise }}, {{ entity.contact.nom }} ({{ entity.contact.poste }})</h4>
+    <ul>
+        <li>{{ entity.contact.telephone }}</li>
+        <li>{{ entity.contact.email }}</li>
+        <li>{{ entity.contact.adresse }}</li>
+    </ul>
+</div>
+<h4>Description</h4>
+<p>{{ entity.description }}</p>
+</div>
+<div class="span6">
+<h3>Notes</h3>
+{% for note in entity.notes %}
+<div><h4>{{ note.orga }} <small>{{ note.date |format_datetime('EEEE dd MMM HH:mm')}} : </small> </h4>{{ note.texte }}</div>
+{% endfor %}
+<a href="#noteModal" role="button" class="btn btn-success" data-toggle="modal"><i class="icon-plus"></i>Ajouter une note</a>
+
+
+	
+</div>
+{% endblock %}

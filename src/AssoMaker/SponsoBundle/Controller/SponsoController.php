@@ -22,13 +22,11 @@ class SponsoController extends Controller
 {
     /**
      * @Route("/", name="sponso_home")
-     * @Template()
+     * 
      */
     public function indexAction()
     {
-        $form    = $this->createForm(new ContactType());
-        $v=$form->createView();
-        return array();
+        return $this->redirect($this->generateUrl('sponso_projet_home'));
     }
     
 }

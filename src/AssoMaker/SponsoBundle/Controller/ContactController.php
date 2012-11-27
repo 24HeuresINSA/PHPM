@@ -134,7 +134,7 @@ class ContactController extends Controller
                 $em->persist($entity);
                 $em->flush();
     
-                return $this->redirect($this->generateUrl('sponso_home'));
+                return $this->redirect($this->generateUrl('sponso_projet_new'));
             }
         }
     
@@ -144,42 +144,5 @@ class ContactController extends Controller
         );
     }
     
-    /**
-     * AddNote
-     *
-     * @Route("/{id}/addNote", name="sponso_contact_addNote")
-     * @Template
-     */
-    public function addNoteAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-        $contact = $em->getRepository('AssoMakerSponsoBundle:Contact')->find($id);
-        $user = $this->get('security.context')->getToken()->getUser();
-        
-
-        $entity  = new Note();
-        
-        $entity->setOrga($user);
-        $entity->setContact($contact);
-        $entity->setStatut("2");
-    
-        $editForm   = $this->createForm(new NoteType(),$entity);
-        
-        if ($this->get('request')->getMethod() == 'POST') {
-            $request = $this->getRequest();
-            $editForm->bindRequest($request);
-            $entity->setDate(new \DateTime());
-            if ($editForm->isValid()) {
-                $em->persist($entity);
-                $em->flush();
-    
-                return $this->redirect($this->generateUrl('sponso_home'));
-            }
-        }
-    
-        return array(
-                'entity'      => $entity,
-                'form'   => $editForm->createView()
-        );
-    }
+   
 }

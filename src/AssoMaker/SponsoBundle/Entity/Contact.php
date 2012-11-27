@@ -69,10 +69,6 @@ class Contact
      */
     private $adresse;
     
-    /**
-     * @ORM\OneToMany(targetEntity="Note", mappedBy="contact")
-     */
-    protected $notes;
 
 
     /**

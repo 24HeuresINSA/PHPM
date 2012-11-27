@@ -18,7 +18,6 @@ class NoteType extends AbstractType
         	
     	$builder
     	    ->add('type', 'choice', array('choices'   => array('Infos','Rencontre','Appel téléphonique','Mail','Autre')))
-    	    ->add('statut', 'choice', array('choices'   => array(-1 => 'Supprimé',0 => 'À faire',1 => 'En cours',2 => 'Terminé/Rien à faire')))
     	    ->add('texte','textarea',array('label'=>'Texte'));
            
     	
