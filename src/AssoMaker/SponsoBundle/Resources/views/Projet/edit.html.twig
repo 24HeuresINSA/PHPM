@@ -3,12 +3,13 @@
 
 {% block content %}
 <div id="editModal" class="modal hide fade">
+  <form class="form-horizontal" action="{{ path('sponso_projet_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3>Éditer le Projet</h3>
   </div>
   <div class="modal-body">
-    <form class="form-horizontal" action="{{ path('sponso_projet_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+    
 		<div class="row-fluid">
 				<fieldset>
 					    <div class="control-group">
@@ -23,7 +24,7 @@
 				</fieldset>
 	    </div>
 	{{ form_widget(form._token) }}
-	</form>
+	
   </div>
   <div class="modal-footer">
     
@@ -32,6 +33,7 @@
 	        <button class="btn" data-dismiss="modal" aria-hidden="true">Annuler</button>
 	</div>
   </div>
+  </form>
 </div>
 <div id="noteModal" class="modal hide fade">
   <div class="modal-header">
@@ -66,6 +68,7 @@
 <h3>{{ entity.nom }}</h3>
 <p>Équipe {{ entity.equipe }}, Responsable : {{ entity.responsable }}</p>
 <a href="#editModal" role="button" class="btn" data-toggle="modal"><i class="icon-pencil"></i>Éditer les infos</a>
+{% if entity.contact.entreprise is defined %}
 <div class="well">
     <h4>Contact : {{ entity.contact.entreprise }}, {{ entity.contact.nom }} ({{ entity.contact.poste }})</h4>
     <ul>
@@ -74,6 +77,7 @@
         <li>{{ entity.contact.adresse }}</li>
     </ul>
 </div>
+{% endif %}
 <h4>Description</h4>
 <p>{{ entity.description }}</p>
 </div>

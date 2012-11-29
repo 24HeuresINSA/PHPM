@@ -2,6 +2,8 @@
 
 namespace AssoMaker\SponsoBundle\Form;
 
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use AssoMaker\BaseBundle\Entity\EquipeRepository;
@@ -32,5 +34,12 @@ class ContactType extends AbstractType
         return 'assomaker_sponso_bundle_contact_type';
     }
     
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+    $resolver->setDefaults(array(
+            'data_class' => 'AssoMaker\SponsoBundle\Entity\Contact',
+            'cascade_validation' => true,
+    ));
+    }
     
 }

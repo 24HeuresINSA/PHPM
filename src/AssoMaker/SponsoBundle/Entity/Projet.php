@@ -95,6 +95,8 @@ class Projet
     {
         $this->supports = new \Doctrine\Common\Collections\ArrayCollection();
         $this->notes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dateCreation = new \DateTime();
+        $this->statut = 0;
     }
    
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace AssoMaker\SponsoBundle\Controller;
+use AssoMaker\SponsoBundle\Entity\Projet;
 
 use AssoMaker\SponsoBundle\Form\NoteType;
 
@@ -14,7 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 use AssoMaker\SponsoBundle\Entity\Contact;
 use AssoMaker\SponsoBundle\Entity\Note;
 use AssoMaker\SponsoBundle\Form\ProjetType;
-
 
 /**
  * Projet controller.
@@ -32,11 +32,13 @@ class ProjetController extends Controller
 
         $em = $this->getDoctrine()->getEntityManager();
 
-        $projets = $em->createQuery("SELECT p FROM AssoMakerSponsoBundle:Projet p")->getResult();
-        
+        $projets = $em
+                ->createQuery("SELECT p FROM AssoMakerSponsoBundle:Projet p")
+                ->getResult();
+
         return array('projets' => $projets);
     }
-    
+
     /**
      * Edits an existing Projet entity.
      *
@@ -46,39 +48,68 @@ class ProjetController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $config = $e=$this->get('config.extension');
+        $config = $e = $this->get('config.extension');
         $entity = $em->getRepository('AssoMakerSponsoBundle:Projet')->find($id);
-    
+
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find entity.');
         }
-    
-        $editForm   = $this->createForm(new ProjetType, $entity);
-        $noteForm   = $this->createForm(new NoteType);
-    
-    
+
+        $editForm = $this->createForm(new ProjetType, $entity);
+        $noteForm = $this->createForm(new NoteType);
+
         if ($this->get('request')->getMethod() == 'POST') {
             $request = $this->getRequest();
             $editForm->bindRequest($request);
-    
+
             if ($editForm->isValid()) {
                 $em->persist($entity);
                 $em->flush();
-    
-                return $this->redirect($this->generateUrl('sponso_projet_home'));
+
+                return $this
+                        ->redirect($this->generateUrl('sponso_projet_home'));
             }
         }
-    
-        return array(
-                'entity'      => $entity,
-                'form'   => $editForm->createView(),
-                'formNote' => $noteForm->createView()
-        );
+
+        return array('entity' => $entity, 'form' => $editForm->createView(),
+                'formNote' => $noteForm->createView());
     }
-    
+
+    /**
+     * Edits an existing Projet entity.
+     *
+     * @Route("/new", name="sponso_projet_new")
+     * @Template
+     */
+    public function newAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $config = $e = $this->get('config.extension');
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        $entity = new Projet();
+        $editForm = $this->createForm(new ProjetType, $entity);
+        
+        if ($this->get('request')->getMethod() == 'POST') {
+            $request = $this->getRequest();
+            $editForm->bindRequest($request);
+        
+            if ($editForm->isValid()) {
+                $em->persist($entity);
+                $em->flush();
+        
+                return $this
+                ->redirect($this->generateUrl('sponso_projet_edit',array('id'=>$entity->getId())));
+            }
+        }
+        
+        return array('entity' => $entity, 'form' => $editForm->createView());
+
+    }
+
     /**
      * AddNote
-     *
+     * @Method("post")
      * @Route("/{id}/addNote", name="sponso_projet_addNote")
      */
     public function addNoteAction($id)
@@ -86,16 +117,14 @@ class ProjetController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $projet = $em->getRepository('AssoMakerSponsoBundle:Projet')->find($id);
         $user = $this->get('security.context')->getToken()->getUser();
-    
-    
-        $entity  = new Note();
-    
+
+        $entity = new Note();
+
         $entity->setOrga($user);
         $entity->setProjet($projet);
-    
-        $editForm   = $this->createForm(new NoteType(),$entity);
-    
-     
+
+        $editForm = $this->createForm(new NoteType(), $entity);
+
         $request = $this->getRequest();
         $editForm->bindRequest($request);
         $entity->setDate(new \DateTime());
@@ -103,9 +132,13 @@ class ProjetController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('sponso_projet_edit',array('id'=>$projet->getId())));
+            return $this
+                    ->redirect(
+                            $this
+                                    ->generateUrl('sponso_projet_edit',
+                                            array('id' => $projet->getId())));
         }
 
     }
-    
+
 }

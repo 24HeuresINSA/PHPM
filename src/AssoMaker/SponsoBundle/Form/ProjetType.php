@@ -16,9 +16,13 @@ class ProjetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         	
+      
+        $builder->add('contact',new ContactType());
+        
     	$builder
     	    ->add('nom',null,array('label'=>'Nom'))
-    	    ->add('contact','entity',array('label'=>'Contact','class' => 'AssoMakerSponsoBundle:Contact'))
+    	    
+    	//    ->add('contact','entity',array('label'=>'Contact','class' => 'AssoMakerSponsoBundle:Contact'))
     	    ->add('description',null,array('label'=>'Description'))
     	    ->add('equipe','entity',array('label'=>'Equipe','class' => 'AssoMakerBaseBundle:Equipe'))
     	    ->add('responsable','entity',array('label'=>'Responsable','class' => 'AssoMakerBaseBundle:Orga'))
@@ -30,7 +34,7 @@ class ProjetType extends AbstractType
 
     public function getName()
     {
-        return 'assomaker_sponso_bundle_contact_type';
+        return 'assomaker_sponso_bundle_projet_type';
     }
     
     

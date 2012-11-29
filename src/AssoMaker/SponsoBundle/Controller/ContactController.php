@@ -94,7 +94,7 @@ class ContactController extends Controller
                 $em->persist($entity);
                 $em->flush();
         
-                return $this->redirect($this->generateUrl('sponso_home'));
+                return $this->redirect($this->generateUrl('sponso_projet_new'));
             }
         }
    
