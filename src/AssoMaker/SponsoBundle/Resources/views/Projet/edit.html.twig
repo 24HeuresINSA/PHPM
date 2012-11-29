@@ -36,12 +36,13 @@
   </form>
 </div>
 <div id="noteModal" class="modal hide fade">
+<form class="form-horizontal" action="{{ path('sponso_projet_addNote', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3>Ajouter une note</h3>
   </div>
   <div class="modal-body">
-    <form class="form-horizontal" action="{{ path('sponso_projet_addNote', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+    
 		<div class="row-fluid">
 				<fieldset>
 				    <div class="control-group">
@@ -52,7 +53,7 @@
 				</fieldset>
 	    </div>
 	{{ form_widget(formNote._token) }}
-	</form>
+
   </div>
   <div class="modal-footer">
     
@@ -61,13 +62,13 @@
 	        <button class="btn" data-dismiss="modal" aria-hidden="true">Annuler</button>
 	</div>
   </div>
+  	</form>
 </div>
-	
-</div>
-<div class="span6">
+
+<div class="row-fluid">
+<div class="span4">
 <h3>{{ entity.nom }}</h3>
 <p>Équipe {{ entity.equipe }}, Responsable : {{ entity.responsable }}</p>
-<a href="#editModal" role="button" class="btn" data-toggle="modal"><i class="icon-pencil"></i>Éditer les infos</a>
 {% if entity.contact.entreprise is defined %}
 <div class="well">
     <h4>Contact : {{ entity.contact.entreprise }}, {{ entity.contact.nom }} ({{ entity.contact.poste }})</h4>
@@ -79,16 +80,22 @@
 </div>
 {% endif %}
 <h4>Description</h4>
-<p>{{ entity.description }}</p>
+<div class="well">{{ entity.description }}</div>
 </div>
-<div class="span6">
+<div class="span8">
 <h3>Notes</h3>
 {% for note in entity.notes %}
-<div><h4>{{ note.orga }} <small>{{ note.date |format_datetime('EEEE dd MMM HH:mm')}} : </small> </h4>{{ note.texte }}</div>
+<div class="well"><h4>{{ note.orga }} <small>{{ note.date |format_datetime('EEEE dd MMM HH:mm')}} : </small> </h4>{{ note.texte }}</div>
 {% endfor %}
-<a href="#noteModal" role="button" class="btn btn-success" data-toggle="modal"><i class="icon-plus"></i>Ajouter une note</a>
-
-
-	
 </div>
+</div>
+<div class="form-fluid">
+			<div class="form-actions">
+    			
+    			<a href="#editModal" role="button" class="btn" data-toggle="modal"><i class="icon-pencil"></i>Éditer les infos</a>
+    			<a href="#noteModal" role="button" class="btn btn-success" data-toggle="modal"><i class="icon-plus"></i>Ajouter une note</a>
+    			
+			</div>
+    </div>   
+
 {% endblock %}

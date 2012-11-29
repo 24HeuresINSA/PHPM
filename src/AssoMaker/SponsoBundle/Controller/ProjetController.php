@@ -128,7 +128,7 @@ class ProjetController extends Controller
         $request = $this->getRequest();
         $editForm->bindRequest($request);
         $entity->setDate(new \DateTime());
-        if ($editForm->isValid()) {
+        
             $em->persist($entity);
             $em->flush();
 
@@ -137,7 +137,7 @@ class ProjetController extends Controller
                             $this
                                     ->generateUrl('sponso_projet_edit',
                                             array('id' => $projet->getId())));
-        }
+        
 
     }
 
