@@ -135,10 +135,10 @@ class Transaction
     /**
      * Set orga
      *
-     * @param AssoMaker\BaseBundle\Orga $orga
+     * @param AssoMaker\BaseBundle\Entity\Orga $orga
      * @return Transaction
      */
-    public function setOrga(\AssoMaker\BaseBundle\Orga $orga = null)
+    public function setOrga(\AssoMaker\BaseBundle\Entity\Orga $orga = null)
     {
         $this->orga = $orga;
     
@@ -148,7 +148,7 @@ class Transaction
     /**
      * Get orga
      *
-     * @return AssoMaker\BaseBundle\Orga 
+     * @return AssoMaker\BaseBundle\Entity\Orga 
      */
     public function getOrga()
     {
