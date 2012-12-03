@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Note
 {
     
-    public $textesType = array('Infos','Rencontre','Appel téléphonique','Mail','Autre');
+    protected  $textesType = array('Infos','Rencontre','Appel téléphonique','Mail','Autre');
     /**
      * @var integer $id
      *
@@ -47,7 +47,7 @@ class Note
     private $texte;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Projet",cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="Projet",inversedBy="notes",cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="projet_id", referencedColumnName="id")
      * @Assert\Valid
      */

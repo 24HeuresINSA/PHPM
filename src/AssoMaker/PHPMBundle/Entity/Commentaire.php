@@ -34,14 +34,14 @@ class Commentaire
     protected $heure;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Tache", inversedBy="Commentaires")
+    * @ORM\ManyToOne(targetEntity="Tache", inversedBy="commentaires")
     * @ORM\JoinColumn(name="tache_id", referencedColumnName="id",onDelete="CASCADE")
     * @Assert\Valid
     */
     protected $tache;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Orga", inversedBy="Commentaires")
+     * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Orga", inversedBy="commentaires")
      * @ORM\JoinColumn(name="orga_id", referencedColumnName="id",onDelete="CASCADE")
      * @Assert\Valid
      */

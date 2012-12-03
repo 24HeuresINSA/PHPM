@@ -30,7 +30,7 @@ class BesoinOrga
     protected $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="PlageHoraire")
+    * @ORM\ManyToOne(targetEntity="PlageHoraire",inversedBy="besoinsOrga")
     * @ORM\JoinColumn(name="plageHoraire_id", referencedColumnName="id",onDelete="CASCADE")
     * @Assert\Valid
     */

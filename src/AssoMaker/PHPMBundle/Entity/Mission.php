@@ -50,7 +50,7 @@ class Mission
     protected $description;
     
     /**
-     * @ORM\OneToMany(targetEntity="DisponibiliteInscription", mappedBy="groupe")
+     * @ORM\OneToMany(targetEntity="DisponibiliteInscription", mappedBy="mission")
      */
     protected $disponibilitesInscription;
 

@@ -122,7 +122,7 @@ class Orga implements UserInterface
      *     mimeTypes = {"image/jpeg"}
      * )
      */
-    public $profilePicture;
+    protected  $profilePicture;
     
     /**
      * @var boolean $profilePictureSet
