@@ -1255,6 +1255,10 @@ class Orga implements UserInterface
     {
         return $this->profilePictureSet;
     }
+    
+    public function getProfilePicture(){
+        return $this->profilePicture;
+    }
 
     /**
      * Add groupesTacheResponsable
