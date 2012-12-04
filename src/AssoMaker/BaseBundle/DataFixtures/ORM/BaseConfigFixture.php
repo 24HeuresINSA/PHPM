@@ -17,12 +17,7 @@ class BaseConfigFixture implements FixtureInterface {
 						'1',
 						NULL));
 		
-		$manager
-		->persist(
-		        new Config('base_signature_actif',
-		                'Module signature actif',
-		                '0',
-		                'Autoriser les orgas à générer leur signature'));
+
 		
 		$manager
 		->persist(
@@ -30,6 +25,19 @@ class BaseConfigFixture implements FixtureInterface {
 		                'Module Comptes Perso activé',
 		                '0',
 		                NULL));
+		$manager
+		->persist(
+		        new Config('sponso_actif',
+		                'Module Sponso activé',
+		                '0',
+		                NULL));
+
+		$manager
+		->persist(
+		        new Config('base_signature_actif',
+		                'Module signature actif',
+		                '0',
+		                'Autoriser les orgas à générer leur signature'));
 
  		$manager
 				->persist(

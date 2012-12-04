@@ -9,35 +9,90 @@
 {% block content %}
 {% if (app.request.get('new')==true) %}
 <script>
-function unloadMess(){
-mess = "Attention, tes changements n'ont pas été enregistrés";
-return mess;
-}
-function setBunload(on){
-window.onbeforeunload = (on) ? unloadMess : null;
-}
-setBunload(true);
+    function unloadMess(){
+    mess = "Attention, tes changements n'ont pas été enregistrés";
+    return mess;
+    }
+    function setBunload(on){
+    window.onbeforeunload = (on) ? unloadMess : null;
+    }
+    setBunload(true);
 </script>
 {% endif %}
-    <form {% if (app.request.get('new')==true) %}onsubmit="javascript:setBunload(false);"{% endif %} action="{{ path('orga_inputdispos',{'id':orga.id }) }}" method="post" {{ form_enctype(form) }}>
-	    <div class="row-fluid">       
-	    	<div class="page-header">
+<script>
+    function Ctrl($scope) {
+       
+  $scope.charisme = function() {
+	  var count = 0;
+	  var len=$scope.dispos.length;
+	  for(var i=0; i<len; i++) {
+		  if(!isNaN($scope.points[i])&&($scope.dispos[i])){
+			  count = count + $scope.points[i];
+			 }
+		  	
+	  	console.log($scope.dispos[i]);
+	  }
+	    return count;
+	  };
+
+	  $scope.maxpoints = function() {
+		  var count = 0;
+		  var len=$scope.dispos.length;
+		  for(var i=0; i<len; i++) {
+		  	  if(!isNaN($scope.points[i])){
+		  		  count = count + $scope.points[i];
+		  		 }
+		  	  	
+		    	console.log($scope.dispos[i]);
+		    }
+		      
+		    return count;
+		  }
+
+		  $scope.ratiocharisme = function() {
+		  		  return 100*$scope.charisme()/$scope.maxpoints();
+		  	}
+
+		  
+    	  $scope.dispos = new Array();
+    	  $scope.points = new Array();
+{% for categorie,di_jour in entities%}		   
+{% for jour,d in di_jour %}					    
+{% for e in d %}
+          $scope.dispos[{{ e.id }}]= {% if e in orga.disponibilitesInscription %}true{% else %}false{% endif %};
+          $scope.points[{{ e.id }}]= {{ e.pointsCharisme }};
+{% endfor %}
+{% endfor %}
+{% endfor %}  
+
+
+    		  
+    }
+</script>
+
+
+    <form ng-app ng-controller="Ctrl" {% if (app.request.get('new')==true) %}onsubmit="javascript:setBunload(false);"{% endif %} action="{{ path('orga_inputdispos',{'id':orga.id }) }}" method="post" {{ form_enctype(form) }}>
+	    <div class="row-fluid">   
+	        <div class="well">    
 	         	{% if is_granted('ROLE_ADMIN') %}
 	         		<h1>Disponibilités de {{ orga.prenom }} {{ orga.nom }}</h1>
 	         	{% else %}
 	         		<h1>Tes disponibilités</h1>
 	         	{% endif %}
-	         </div>
-	    </div>
-
-	    
-	    <div class="row-fluid"> 
-		    <div class="well">
+         
+		    
 	         		{{ phpm_inscription_disponibilites_consignes | raw }}
 		    {% if is_granted('ROLE_USER') %}
 		    	<em>Les créneaux oranges ne sont plus modifiables une fois cochés.</em>
 		    {% endif %}	
 		    {{ form_errors(form) }}
+		    
+		    {% raw %}
+		    <h3 style="text-align: center;">Points de charisme : {{ charisme() }}/{{ maxpoints() }}</h3>
+		    <div class="progress">
+              <div class="bar bar-success" style="width: {{ ratiocharisme() }}%;"></div>
+            </div>
+            {% endraw %}
 		    
 		    </div>
 		    {% if charismeInsuffisant is defined%}
@@ -60,6 +115,7 @@ setBunload(true);
 					    			{% if e in orga.disponibilitesInscription %}checked="checked"{% endif %} 
 					    			{% if (e.statut == 0 or (e.statut>=1 and e in orga.disponibilitesInscription)or (e.debut.timestamp - now.timestamp < 0)) and not is_granted('ROLE_ADMIN') %}disabled{% endif %}
 {# 					    			{% if e in orga.disponibilitesInscription or (e.debut.timestamp - now.timestamp < 0) %}disabled{% endif %}#}
+					    			ng-model="dispos[{{ e.id }}]"
 					    			>
 					               </label></div>
 							{% endfor %}

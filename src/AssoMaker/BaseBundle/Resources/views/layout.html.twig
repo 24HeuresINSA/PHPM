@@ -122,7 +122,9 @@
 	            <ul class="nav">
 	            {% if is_granted('ROLE_USER')  %}
 	            {% block navbar %}
-	                {{ _self.navBarItem('Sponso','sponso_home') }}
+	                {% if phpm_actif ==1 %}
+	                    {{ _self.navBarItem('Sponso','sponso_home') }}
+	                {% endif %}
 					{% if phpm_actif ==1 %}
 					
 	       				<li class="dropdown" id="menu_topnav_orgas">
