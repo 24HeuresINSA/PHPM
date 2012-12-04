@@ -18,7 +18,7 @@ class DisponibiliteRepository extends EntityRepository
 	{
 	
 		return $this->getEntityManager()
-		->createQuery("SELECT d FROM AssoMakerPHPMBundle:Disponibilite d JOIN d.orga o, PHPMBundle:Creneau c
+		->createQuery("SELECT d FROM AssoMakerPHPMBundle:Disponibilite d JOIN d.orga o, AssoMakerPHPMBundle:Creneau c
 		WHERE d.orga = :orga_id AND c.id = :creneau_id AND c.debut >= d.debut AND c.fin <= d.fin
 		")
 		->setMaxResults(1)
