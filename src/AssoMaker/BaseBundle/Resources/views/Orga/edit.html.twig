@@ -36,6 +36,9 @@
 			<div class="span4 well">
 				<fieldset>
 			    	<legend>Renseignements Supplémentaires</legend>
+			    	   <b>Compétences : </b>
+			    	          {{ form_widget(form.competences) }}
+			    	        <br/>
 				              {{ form_row(form.anneeEtudes) }}
 				              {{ form_row(form.departement) }}
 				              {{ form_row(form.groupePC) }}

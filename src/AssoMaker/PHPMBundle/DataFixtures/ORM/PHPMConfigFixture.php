@@ -43,6 +43,13 @@ class PHPMConfigFixture implements FixtureInterface {
 		                'Objet JSON. Exemple : "{"0": "Pas de permis","1": "Permis - de 2 ans","2": "Permis de + de 2 ans" }"'));
 		$manager
 		->persist(
+		        new Config('phpm_competences_orga',
+		                'Liste des compétences orga',
+		                '{"0": "Changer un fut","1": "Poser du parquet","2": "Avoir du charisme" }',
+		                'Objet JSON. Exemple : "{"0": "Changer un fut","1": "Poser du parquet","2": "Avoir du charisme" }"'));
+		
+		$manager
+		->persist(
 		        new Config('animations_db_path',
 		                'Chemin vers la BDD des anims',
 		                null,

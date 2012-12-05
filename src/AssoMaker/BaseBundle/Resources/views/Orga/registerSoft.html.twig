@@ -52,8 +52,17 @@ setBunload(true);
 			            </div>
          			</div>
          			
-         			
-			</fieldset>
+			        <legend>Tu sais </legend>
+         			<div class="control-group {% if form_errors(form.competences)|length > 0 %}error{% endif %}">
+			            {{ form_errors(form.competences) }}
+			              {% for comp in form.competences %}
+                            <label class="checkbox">
+                              {{ form_widget(comp) }} {{ comp.get('label') }} ?
+                            </label>
+			              {% endfor %}
+         			</div>
+         			</fieldset>     			
+			
 		</div>
 		<div class="well">
 			<fieldset>

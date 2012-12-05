@@ -21,6 +21,7 @@ class OrgaSoftType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $libellesPermis =  json_decode($this->config->getValue('manifestation_permis_libelles'),true);
+        $choixCompetences =  json_decode($this->config->getValue('phpm_competences_orga'),true);
         
     	$currentYear = date('Y');
     	$years = array(); 	
@@ -68,6 +69,12 @@ class OrgaSoftType extends AbstractType
             									'expanded'=>true,
             									'choices'=>array('0'=>'Non','1'=>'Oui'),
             									'attr'=>array('class'=>'inline')))
+		    ->add('competences', 'choice', array(
+                'choices'=>$choixCompetences,
+                'multiple'=>true,
+                'expanded'=>true,
+		        'label'=>'Compétences'
+            ));
     	;
     	    
     }

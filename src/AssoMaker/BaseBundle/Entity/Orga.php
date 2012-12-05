@@ -176,6 +176,18 @@ class Orga implements UserInterface
      */
     protected $commentaire;
     
+    
+    /** @ORM\Column(type="array") */
+    private $competences = array();
+    
+    public function setCompetences($value) {
+        $this->competences = $value;
+    }
+    
+    public function getCompetences() {
+        return $this->competences;
+    }
+    
     /**
      * @var text $amis
      *
@@ -1165,6 +1177,7 @@ class Orga implements UserInterface
     {
         return $this->groupePC;
     }
+    
     
 
     

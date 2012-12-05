@@ -21,6 +21,7 @@ class OrgaUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $libellesPermis =  json_decode($this->config->getValue('manifestation_permis_libelles'),true);
+        $choixCompetences =  json_decode($this->config->getValue('phpm_competences_orga'),true);
     	$currentYear = date('Y');
     	$years = array(); 	
     	
@@ -68,7 +69,13 @@ class OrgaUserType extends AbstractType
             									))
             ->add('amis')
             ->add('publicEmail',null,array('label'=>'Adresse email publique','required'=>false))
-            ->add('role',null,array('label'=>'Rôle'));
+            ->add('role',null,array('label'=>'Rôle'))
+		    ->add('competences', 'choice', array(
+                'choices'=>$choixCompetences,
+                'multiple'=>true,
+                'expanded'=>true,
+		        'label'=>'Compétences'
+            ));
     	    ;
     	    
     	    if($this->forcedConfiance){

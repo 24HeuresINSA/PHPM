@@ -200,13 +200,13 @@ class OrgaController extends Controller
     	$entity->setStatut(0);
     	$entity->setEquipe($equipe);
     	$form   = $this->createForm(new OrgaSoftType($config), $entity);
+
     	
     
     
     	if ($this->get('request')->getMethod() == 'POST') {
     		$form->bindRequest($request);
     		$data = $form->getData();
-    		 
     		 
     		if ($form->isValid()) {
     			$entity->setPrivileges($equipe->getConfiance()->getPrivileges());
@@ -236,9 +236,6 @@ class OrgaController extends Controller
     		 
     		 
     	}
-    
-    
-    
     
     	return array(
     			'entity' => $entity,
@@ -537,6 +534,7 @@ class OrgaController extends Controller
 	        
 	    }
 	    
+	    
 	    return array( 	'form' => $form->createView(),
 	    				'entities' => $DIs,
 	    				'missions' => $groupesDI,
@@ -602,8 +600,7 @@ class OrgaController extends Controller
 			    		"commentaire" => $orga[0]->getCommentaire()
 						);
 		}
-		
-    	//exit(var_dump($orgaArray));
+
     	
     	$response = new Response();
     	$response->setContent(json_encode($orgaArray));
@@ -940,7 +937,6 @@ class OrgaController extends Controller
 		 
 		foreach ($phs as $ph){
 			if($ph->getRespNecessaire()){
-				var_dump($ph->getId());
 				$bo = new BesoinOrga();
 				$bo->setOrgaHint($ph->getTache()->getResponsable());
 				$bo->setPlageHoraire($ph);
