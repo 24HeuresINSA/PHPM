@@ -95,6 +95,12 @@ class PHPMConfigFixture implements FixtureInterface {
 		        new Config('phpm_planning_fin',
 		                'Heure de début des plannings',
 		                '13-05-05 00:00:00', NULL));
+		$manager
+		->persist(
+		        new Config('phpm_messages_charisme',
+		                'Messages et niveaux de charisme associés, par ordre décroissant',
+		                '{"1000": "Quel charisme !","500": "Encore un effort !","0": "Coches moult créneaux !" }',
+		                 NULL));
 		
 
 		

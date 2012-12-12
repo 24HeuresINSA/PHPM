@@ -539,7 +539,8 @@ class OrgaController extends Controller
 	    				'entities' => $DIs,
 	    				'missions' => $groupesDI,
 	    				'orga'=>$orga,
-	    				'now'=> new \DateTime()
+	    				'now'=> new \DateTime(),
+	                    'messagesCharisme'=>$config->getValue('phpm_messages_charisme')
 	    		); 
 	}
 

@@ -21,6 +21,18 @@
 {% endif %}
 <script>
     function Ctrl($scope) {
+
+    	$scope.messageCharisme=function() {
+    		messages = {{ messagesCharisme |raw }};
+    		
+    		for(var key in messages) {
+    			if($scope.charisme() >= key){
+    			    message = messages[key];
+        			} 
+    			}
+    		  return message;
+
+    		}
        
   $scope.charisme = function() {
 	  var count = 0;
@@ -29,8 +41,7 @@
 		  if(!isNaN($scope.points[i])&&($scope.dispos[i])){
 			  count = count + $scope.points[i];
 			 }
-		  	
-	  	console.log($scope.dispos[i]);
+
 	  }
 	    return count;
 	  };
@@ -43,7 +54,6 @@
 		  		  count = count + $scope.points[i];
 		  		 }
 		  	  	
-		    	console.log($scope.dispos[i]);
 		    }
 		      
 		    return count;
@@ -89,6 +99,7 @@
 		    
 		    {% raw %}
 		    <h3 style="text-align: center;">Points de charisme : {{ charisme() }}/{{ maxpoints() }}</h3>
+		    <h3 style="text-align: center;">{{ messageCharisme() }}</h3>
 		    <div class="progress">
               <div class="bar bar-success" style="width: {{ ratiocharisme() }}%;"></div>
             </div>
