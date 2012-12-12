@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * AssoMaker\SponsoBundle\Entity\Contact
+ * AssoMaker\SponsoBundle\Entity\Avancement
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AssoMaker\SponsoBundle\Entity\ContactRepository")
+ * @ORM\Entity(repositoryClass="AssoMaker\SponsoBundle\Entity\AvancementRepository")
  */
-class Contact
+class Avancement
 {
     /**
      * @var integer $id
@@ -69,7 +69,31 @@ class Contact
      */
     private $adresse;
     
-
+    /**
+     * @ORM\ManyToOne(targetEntity="Projet", inversedBy="avancements")
+     * @ORM\JoinColumn(name="projet_id", referencedColumnName="id",onDelete="SET NULL")
+     * @Assert\Valid
+     */
+    protected $projet;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="\AssoMaker\BaseBundle\Entity\Orga", inversedBy="equipesResponsable",cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id",onDelete="SET NULL", nullable=true)
+     * @Assert\Valid
+     */
+    protected $responsable;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Note", mappedBy="avancement")
+     */
+    protected $notes;
+    
+    /**
+     * @var smallint $statut
+     * @Assert\Choice(choices = {"0", "1", "2", "-1"})
+     * @ORM\Column(name="statut", type="smallint")
+     */
+    protected $statut;
 
     /**
      * Get id
@@ -85,7 +109,7 @@ class Contact
      * Set nom
      *
      * @param string $nom
-     * @return Contact
+     * @return Avancement
      */
     public function setNom($nom)
     {
@@ -108,7 +132,7 @@ class Contact
      * Set telephone
      *
      * @param string $telephone
-     * @return Contact
+     * @return Avancement
      */
     public function setTelephone($telephone)
     {
@@ -131,7 +155,7 @@ class Contact
      * Set email
      *
      * @param string $email
-     * @return Contact
+     * @return Avancement
      */
     public function setEmail($email)
     {
@@ -154,7 +178,7 @@ class Contact
      * Set poste
      *
      * @param string $poste
-     * @return Contact
+     * @return Avancement
      */
     public function setPoste($poste)
     {
@@ -183,7 +207,7 @@ class Contact
      * Set adresse
      *
      * @param string $adresse
-     * @return Contact
+     * @return Avancement
      */
     public function setAdresse($adresse)
     {
@@ -209,13 +233,15 @@ class Contact
     public function __construct()
     {
         $this->notes = new \Doctrine\Common\Collections\ArrayCollection();
+        
+        $this->statut = 0;
     }
     
     /**
      * Add notes
      *
      * @param AssoMaker\SponsoBundle\Entity\Note $notes
-     * @return Contact
+     * @return Avancement
      */
     public function addNote(\AssoMaker\SponsoBundle\Entity\Note $notes)
     {
@@ -248,7 +274,7 @@ class Contact
      * Set entreprise
      *
      * @param string $entreprise
-     * @return Contact
+     * @return Avancement
      */
     public function setEntreprise($entreprise)
     {
@@ -265,5 +291,76 @@ class Contact
     public function getEntreprise()
     {
         return $this->entreprise;
+    }
+
+    
+
+    /**
+     * Set projet
+     *
+     * @param AssoMaker\SponsoBundle\Entity\Projet $projet
+     * @return Avancement
+     */
+    public function setProjet(\AssoMaker\SponsoBundle\Entity\Projet $projet = null)
+    {
+        $this->projet = $projet;
+    
+        return $this;
+    }
+
+    /**
+     * Get projet
+     *
+     * @return AssoMaker\SponsoBundle\Entity\Projet 
+     */
+    public function getProjet()
+    {
+        return $this->projet;
+    }
+
+    /**
+     * Set responsable
+     *
+     * @param AssoMaker\BaseBundle\Entity\Orga $responsable
+     * @return Avancement
+     */
+    public function setResponsable(\AssoMaker\BaseBundle\Entity\Orga $responsable = null)
+    {
+        $this->responsable = $responsable;
+    
+        return $this;
+    }
+
+    /**
+     * Get responsable
+     *
+     * @return AssoMaker\BaseBundle\Entity\Orga 
+     */
+    public function getResponsable()
+    {
+        return $this->responsable;
+    }
+
+    /**
+     * Set statut
+     *
+     * @param integer $statut
+     * @return Avancement
+     */
+    public function setStatut($statut)
+    {
+        $this->statut = $statut;
+    
+        return $this;
+    }
+
+    /**
+     * Get statut
+     *
+     * @return integer 
+     */
+    public function getStatut()
+    {
+        return $this->statut;
     }
 }

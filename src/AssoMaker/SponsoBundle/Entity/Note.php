@@ -47,11 +47,11 @@ class Note
     private $texte;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Projet",inversedBy="notes",cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="projet_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Avancement",inversedBy="notes",cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="avancement_id", referencedColumnName="id")
      * @Assert\Valid
      */
-    protected $projet;
+    protected $avancement;
     
     /**
      * @ORM\ManyToOne(targetEntity="\AssoMaker\BaseBundle\Entity\Orga",cascade={"persist", "remove"})
@@ -119,29 +119,6 @@ class Note
 
 
     /**
-     * Set contact
-     *
-     * @param AssoMaker\SponsoBundle\Entity\Contact $contact
-     * @return Note
-     */
-    public function setContact(\AssoMaker\SponsoBundle\Entity\Contact $contact = null)
-    {
-        $this->contact = $contact;
-    
-        return $this;
-    }
-
-    /**
-     * Get contact
-     *
-     * @return AssoMaker\SponsoBundle\Entity\Contact 
-     */
-    public function getContact()
-    {
-        return $this->contact;
-    }
-
-    /**
      * Set orga
      *
      * @param AssoMaker\BaseBundle\Entity\Orga $orga
@@ -206,26 +183,27 @@ class Note
         return $this->texte;
     }
 
+
     /**
-     * Set projet
+     * Set avancement
      *
-     * @param AssoMaker\SponsoBundle\Entity\Projet $projet
+     * @param AssoMaker\SponsoBundle\Entity\Avancement $avancement
      * @return Note
      */
-    public function setProjet(\AssoMaker\SponsoBundle\Entity\Projet $projet = null)
+    public function setAvancement(\AssoMaker\SponsoBundle\Entity\Avancement $avancement = null)
     {
-        $this->projet = $projet;
+        $this->avancement = $avancement;
     
         return $this;
     }
 
     /**
-     * Get projet
+     * Get avancement
      *
-     * @return AssoMaker\SponsoBundle\Entity\Projet 
+     * @return AssoMaker\SponsoBundle\Entity\Avancement 
      */
-    public function getProjet()
+    public function getAvancement()
     {
-        return $this->projet;
+        return $this->avancement;
     }
 }

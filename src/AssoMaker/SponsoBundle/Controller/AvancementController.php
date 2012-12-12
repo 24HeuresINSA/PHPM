@@ -2,15 +2,17 @@
 
 namespace AssoMaker\SponsoBundle\Controller;
 
+use AssoMaker\SponsoBundle\Form\AvancementType;
+
+use AssoMaker\SponsoBundle\Entity\Avancement;
+
 use Symfony\Component\Validator\Constraints\DateTime;
 
 use AssoMaker\SponsoBundle\Entity\Note;
 
 use AssoMaker\SponsoBundle\Form\NoteType;
 
-use AssoMaker\SponsoBundle\Form\ContactType;
 
-use AssoMaker\SponsoBundle\Entity\Contact;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -21,11 +23,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 
 /**
- * Contact controller.
+ * Avancement controller.
  *
- * @Route("/sponso/contact")
+ * @Route("/sponso/avancement")
  */
-class ContactController extends Controller
+class AvancementController extends Controller
 {
        
     /**
@@ -42,7 +44,7 @@ class ContactController extends Controller
     
         
     
-        $contacts=$em->createQuery("SELECT c FROM AssoMakerSponsoBundle:Contact c ")->getResult();
+        $contacts=$em->createQuery("SELECT c FROM AssoMakerSponsoBundle:Avancement a ")->getResult();
         
         
         
@@ -73,17 +75,30 @@ class ContactController extends Controller
     }
     
     /**
-     * new Contact entity.
+     * new Avancement entity.
      *
-     * @Route("/new", name="sponso_contact_new")
+     * @Route("/new/{projectId}", name="sponso_avancement_new", defaults={"projectId"=""})
      * @Template()
      */
-    public function newAction()
+    public function newAction($projectId)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $config  =$e=$this->get('config.extension');
-        $entity  = new Contact();
-        $editForm   = $this->createForm(new ContactType(), $entity);
+        
+        $entity  = new Avancement();
+        if ($this->get('request')->getMethod() == 'GET') {        
+        $project = $em->getRepository('AssoMakerSponsoBundle:Projet')->find($projectId);
+        $entity->setProjet($project);
+        
+        if (!$project) {
+            throw $this->createNotFoundException('Unable to find project.');
+        }
+        
+
+        }
+        
+        
+        $editForm   = $this->createForm(new AvancementType(), $entity);
         
         
         if ($this->get('request')->getMethod() == 'POST') {
@@ -94,7 +109,7 @@ class ContactController extends Controller
                 $em->persist($entity);
                 $em->flush();
         
-                return $this->redirect($this->generateUrl('sponso_projet_new'));
+                return $this->redirect($this->generateUrl('sponso_avancement_edit',array("id"=>$entity->getId())));
             }
         }
    
@@ -108,22 +123,23 @@ class ContactController extends Controller
     
     
     /**
-     * Edits an existing Contact entity.
+     * Edits an existing Avancement entity.
      *
-     * @Route("/{id}/edit", name="sponso_contact_edit")
+     * @Route("/{id}/edit", name="sponso_avancement_edit")
      * @Template
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $config = $e=$this->get('config.extension');
-        $entity = $em->getRepository('AssoMakerSponsoBundle:Contact')->find($id);
+        $entity = $em->getRepository('AssoMakerSponsoBundle:Avancement')->find($id);
     
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Contact entity.');
         }
     
-        $editForm   = $this->createForm(new ContactType(), $entity);
+        $editForm   = $this->createForm(new AvancementType(), $entity);
+        $noteForm = $this->createForm(new NoteType);
     
     
         if ($this->get('request')->getMethod() == 'POST') {
@@ -134,14 +150,49 @@ class ContactController extends Controller
                 $em->persist($entity);
                 $em->flush();
     
-                return $this->redirect($this->generateUrl('sponso_projet_new'));
+                return $this->redirect($this->generateUrl('sponso_avancement_edit',array('id'=>$entity->getId())));
             }
         }
     
         return array(
                 'entity'      => $entity,
-                'form'   => $editForm->createView()
+                'form'   => $editForm->createView(),
+                'formNote' => $noteForm->createView()
         );
+    }
+    
+    /**
+     * AddNote
+     * @Method("post")
+     * @Route("/{id}/addNote", name="sponso_avancement_addNote")
+     */
+    public function addNoteAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $avancement = $em->getRepository('AssoMakerSponsoBundle:Avancement')->find($id);
+        $user = $this->get('security.context')->getToken()->getUser();
+    
+        $entity = new Note();
+    
+        $entity->setOrga($user);
+        $entity->setAvancement($avancement);
+    
+        $editForm = $this->createForm(new NoteType(), $entity);
+    
+        $request = $this->getRequest();
+        $editForm->bindRequest($request);
+        $entity->setDate(new \DateTime());
+    
+        $em->persist($entity);
+        $em->flush();
+    
+        return $this
+        ->redirect(
+                $this
+                ->generateUrl('sponso_avancement_edit',
+                        array('id' => $avancement->getId())));
+    
+    
     }
     
    

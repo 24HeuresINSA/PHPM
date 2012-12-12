@@ -31,7 +31,11 @@
 {% endmacro %}
 
 {% macro projet(projet) %}
-<a class="statut{{  projet.statut }}" href="{{ path('sponso_projet_edit', { 'id': projet.id }) }}">{{ projet.nom }}</a>
+<a href="{{ path('sponso_projet_edit', { 'id': projet.id }) }}">{{ projet.nom }}</a>
+{% endmacro %}
+
+{% macro avancement(avancement) %}
+<a href="{{ path('sponso_avancement_edit', { 'id': avancement.id }) }}">{{ avancement.nom }} - {{ avancement.entreprise }} : {{ avancement.responsable }}</a>
 {% endmacro %}
 
 {% macro tacheCom(tache) %}

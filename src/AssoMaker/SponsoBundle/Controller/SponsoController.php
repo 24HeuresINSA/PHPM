@@ -9,8 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use AssoMaker\SponsoBundle\Entity\Contact;
-use AssoMaker\SponsoBundle\Form\ContactType;
+
 
 
 /**

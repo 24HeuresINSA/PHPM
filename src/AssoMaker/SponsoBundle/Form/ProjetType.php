@@ -17,7 +17,7 @@ class ProjetType extends AbstractType
     {
         	
       
-        $builder->add('contact',new ContactType());
+        
         
     	$builder
     	    ->add('nom',null,array('label'=>'Nom'))
@@ -25,7 +25,6 @@ class ProjetType extends AbstractType
     	//    ->add('contact','entity',array('label'=>'Contact','class' => 'AssoMakerSponsoBundle:Contact'))
     	    ->add('description',null,array('label'=>'Description'))
     	    ->add('equipe','entity',array('label'=>'Equipe','class' => 'AssoMakerBaseBundle:Equipe'))
-    	    ->add('responsable','entity',array('label'=>'Responsable','class' => 'AssoMakerBaseBundle:Orga'))
 
     	    ;
             

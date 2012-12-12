@@ -12,7 +12,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use AssoMaker\SponsoBundle\Entity\Contact;
 use AssoMaker\SponsoBundle\Entity\Note;
 use AssoMaker\SponsoBundle\Form\ProjetType;
 
@@ -32,11 +31,11 @@ class ProjetController extends Controller
 
         $em = $this->getDoctrine()->getEntityManager();
 
-        $projets = $em
+        $p = $em
                 ->createQuery("SELECT p FROM AssoMakerSponsoBundle:Projet p")
                 ->getResult();
 
-        return array('projets' => $projets);
+        return array('projets' => $p);
     }
 
     /**
@@ -107,38 +106,6 @@ class ProjetController extends Controller
 
     }
 
-    /**
-     * AddNote
-     * @Method("post")
-     * @Route("/{id}/addNote", name="sponso_projet_addNote")
-     */
-    public function addNoteAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-        $projet = $em->getRepository('AssoMakerSponsoBundle:Projet')->find($id);
-        $user = $this->get('security.context')->getToken()->getUser();
-
-        $entity = new Note();
-
-        $entity->setOrga($user);
-        $entity->setProjet($projet);
-
-        $editForm = $this->createForm(new NoteType(), $entity);
-
-        $request = $this->getRequest();
-        $editForm->bindRequest($request);
-        $entity->setDate(new \DateTime());
-        
-            $em->persist($entity);
-            $em->flush();
-
-            return $this
-                    ->redirect(
-                            $this
-                                    ->generateUrl('sponso_projet_edit',
-                                            array('id' => $projet->getId())));
-        
-
-    }
+    
 
 }

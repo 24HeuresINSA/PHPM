@@ -8,7 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use AssoMaker\BaseBundle\Entity\EquipeRepository;
 
-class ContactType extends AbstractType
+class AvancementType extends AbstractType
 {
 
     function __construct(){
@@ -24,20 +24,23 @@ class ContactType extends AbstractType
     	    ->add('email',null,array('label'=>'Email'))
     	    ->add('telephone',null,array('label'=>'Téléphone'))
     	    ->add('adresse','textarea',array('label'=>'Adresse'))
-    	    ->add('poste',null,array('label'=>'Poste'));
+    	    ->add('poste',null,array('label'=>'Poste'))
+    	    ->add('responsable','entity',array('label'=>'Responsable','class' => 'AssoMakerBaseBundle:Orga'))
+    	    ->add('projet','entity',array('label'=>'Projet','class' => 'AssoMakerSponsoBundle:Projet'))
+    	;
             
     	
     }
 
     public function getName()
     {
-        return 'assomaker_sponso_bundle_contact_type';
+        return 'assomaker_sponso_bundle_avancement_type';
     }
     
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
     $resolver->setDefaults(array(
-            'data_class' => 'AssoMaker\SponsoBundle\Entity\Contact',
+            'data_class' => 'AssoMaker\SponsoBundle\Entity\Avancement',
             'cascade_validation' => true,
     ));
     }
