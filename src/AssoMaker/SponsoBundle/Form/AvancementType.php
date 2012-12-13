@@ -19,12 +19,12 @@ class AvancementType extends AbstractType
     {
         	
     	$builder
-    	    ->add('nom',null,array('label'=>'Nom'))
+    	    ->add('nom',null,array('label'=>'Nom','required' => false))
     	    ->add('entreprise',null,array('label'=>'Entreprise'))
-    	    ->add('email',null,array('label'=>'Email'))
-    	    ->add('telephone',null,array('label'=>'Téléphone'))
-    	    ->add('adresse','textarea',array('label'=>'Adresse'))
-    	    ->add('poste',null,array('label'=>'Poste'))
+    	    ->add('email',null,array('label'=>'Email','required' => false))
+    	    ->add('telephone',null,array('label'=>'Téléphone','required' => false))
+    	    ->add('adresse','textarea',array('label'=>'Adresse','required' => false))
+    	    ->add('poste',null,array('label'=>'Poste','required' => false))
     	    ->add('responsable','entity',array('label'=>'Responsable','class' => 'AssoMakerBaseBundle:Orga'))
     	    ->add('projet','entity',array('label'=>'Projet','class' => 'AssoMakerSponsoBundle:Projet'))
     	;
