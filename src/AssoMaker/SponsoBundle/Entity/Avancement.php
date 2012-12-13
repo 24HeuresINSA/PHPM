@@ -104,7 +104,7 @@ class Avancement
     
     /**
      * @var smallint $statut
-     * @Assert\Choice(choices = {"0", "1", "2", "-1"})
+     * @Assert\Choice(choices = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "-1"})
      * @ORM\Column(name="statut", type="smallint")
      */
     protected $statut;
