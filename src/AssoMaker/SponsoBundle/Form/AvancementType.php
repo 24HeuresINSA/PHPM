@@ -37,7 +37,7 @@ class AvancementType extends AbstractType
     	
     	if($this->admin){
     	    $builder
-    	    ->add('statut', 'choice',array('choices'=>array(Avancement::$messagesStatut)))
+    	    ->add('statut', 'choice',array('choices'=>Avancement::$messagesStatut))
     	    ;
     	}
             
