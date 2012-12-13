@@ -46,7 +46,7 @@ class Avancement
     /**
      * @var string $telephone
      *
-     * @ORM\Column(name="telephone", type="string", length=10, nullable=true)
+     * @ORM\Column(name="telephone", type="string", length=255, nullable=true)
      */
     private $telephone;
 
