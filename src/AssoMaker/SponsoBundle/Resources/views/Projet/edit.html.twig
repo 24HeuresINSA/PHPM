@@ -47,7 +47,7 @@
 <h3>Contacts</h3>
 {% for avancement in entity.avancements %}
 <div class="well well-small">
-    <h4><a href="{{ path('sponso_avancement_edit', { 'id': avancement.id }) }}">{{ avancement.entreprise }}{% if avancement.nom %}{{avancement.nom}}{% endif %}</a></h4>
+    <h4><a href="{{ path('sponso_avancement_edit', { 'id': avancement.id }) }}">{{ avancement.entreprise }}{% if avancement.nom %} {{avancement.nom}}{% endif %}</a></h4>
     <p>
         {{ avancement.messageStatut }}<br/>
         Géré par {{ avancement.responsable }}

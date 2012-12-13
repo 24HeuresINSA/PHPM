@@ -101,7 +101,7 @@
 
 <div class="row-fluid">
 <div class="span4">
-<h3>Projet <a href="{{ path('sponso_projet_edit', { 'id': entity.projet.id }) }}" >{{entity.projet}}{{ entity.entreprise }}</a></h3>
+<h3>Projet <a href="{{ path('sponso_projet_edit', { 'id': entity.projet.id }) }}" >{{entity.projet}}</a> - {{ entity.entreprise }}</h3>
 État : {{ entity.messageStatut }}
 <h4>Responsable : {{ entity.responsable }}</h4>
 
