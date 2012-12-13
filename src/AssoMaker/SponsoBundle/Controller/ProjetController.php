@@ -84,7 +84,6 @@ class ProjetController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $config = $e = $this->get('config.extension');
-        $user = $this->get('security.context')->getToken()->getUser();
 
         $entity = new Projet();
         $editForm = $this->createForm(new ProjetType, $entity);

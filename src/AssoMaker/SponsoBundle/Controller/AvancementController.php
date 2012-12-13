@@ -84,11 +84,13 @@ class AvancementController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $config  =$e=$this->get('config.extension');
+        $user = $this->get('security.context')->getToken()->getUser();
         
         $entity  = new Avancement();
         if ($this->get('request')->getMethod() == 'GET') {        
         $project = $em->getRepository('AssoMakerSponsoBundle:Projet')->find($projectId);
         $entity->setProjet($project);
+        $entity->setResponsable($user);
         
         if (!$project) {
             throw $this->createNotFoundException('Unable to find project.');
