@@ -109,9 +109,9 @@
 <div class="well">
     <h4>Contact : {{ entity.entreprise }}{% if entity.nom %} ({{entity.nom}}{% if entity.poste %} <small>{{entity.poste}}</small>{% endif %}){% endif %}</h4>
     <ul>
-        <li>{% if entity.telephone %}{{ entity.telephone }}{% endif %}</li>
-        <li>{% if entity.email %}{{ entity.email }}{% endif %}</li>
-        <li>{% if entity.adresse %}{{ entity.adresse }}{% endif %}</li>
+        {% if entity.telephone %}<li>{{ entity.telephone }}</li>{% endif %}
+        {% if entity.email %}<li>{{ entity.email }}</li>{% endif %}
+        {% if entity.adresse %}<li>{{ entity.adresse }}</li>{% endif %}
     </ul>
 </div>
 {% endif %}
