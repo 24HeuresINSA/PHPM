@@ -21,7 +21,7 @@
                  <td>
                      <ul>
                          {% for avancement in projet.avancements %}
-                             <li><a href="{{path("sponso_avancement_edit",{"id":avancement.id})}}">{{ avancement.entreprise }}{% if avancement.nom %} {{avancement.nom}}{% endif %}</a>, <i>{{ avancement.messageStatut }}</i> géré par {{ avancement.responsable }}</li>
+                             <li><a href="{{path("sponso_avancement_edit",{"id":avancement.id})}}">{{ avancement.entreprise }}{% if avancement.nom %} ({{avancement.nom}}){% endif %}</a>, <i>{{ avancement.messageStatut }}</i> géré par {{ avancement.responsable }}</li>
                          {% endfor %}
                  </td>
              </tr>
