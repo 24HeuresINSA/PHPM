@@ -17,6 +17,7 @@ class AvancementType extends AbstractType
 
 	function __construct($admin)
 	{
+	    $this->admin = $admin;
 	}
     
     
