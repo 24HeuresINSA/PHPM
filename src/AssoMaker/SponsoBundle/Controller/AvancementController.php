@@ -135,12 +135,13 @@ class AvancementController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $config = $e=$this->get('config.extension');
         $entity = $em->getRepository('AssoMakerSponsoBundle:Avancement')->find($id);
+        $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
     
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Contact entity.');
         }
     
-        $editForm   = $this->createForm(new AvancementType(), $entity);
+        $editForm   = $this->createForm(new AvancementType($admin), $entity);
         $noteForm = $this->createForm(new NoteType);
     
     

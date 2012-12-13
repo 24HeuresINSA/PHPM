@@ -2,6 +2,8 @@
 
 namespace AssoMaker\SponsoBundle\Form;
 
+use AssoMaker\SponsoBundle\Entity\Avancement;
+
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 use Symfony\Component\Form\AbstractType;
@@ -11,8 +13,11 @@ use AssoMaker\BaseBundle\Entity\EquipeRepository;
 class AvancementType extends AbstractType
 {
 
-    function __construct(){
-    }
+	protected $admin;
+
+	function __construct($admin)
+	{
+	}
     
     
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -28,6 +33,12 @@ class AvancementType extends AbstractType
     	    ->add('responsable','entity',array('label'=>'Responsable','class' => 'AssoMakerBaseBundle:Orga'))
     	    ->add('projet','entity',array('label'=>'Projet','class' => 'AssoMakerSponsoBundle:Projet'))
     	;
+    	
+    	if($this->admin){
+    	    $builder
+    	    ->add('statut', 'choice',array('choices'=>array(Avancement::$messagesStatut)))
+    	    ;
+    	}
             
     	
     }
