@@ -183,6 +183,49 @@ class AvancementController extends Controller
         $editForm->bindRequest($request);
         $entity->setDate(new \DateTime());
     
+        $param = $request->request->all();
+        $action = $param['action'];
+        $statut = $avancement->getStatut();
+                
+        if($action=='valid'){
+            
+            if(($statut==1 || $statut==5|| $statut==7)&&(false === $this->get('security.context')->isGranted('ROLE_ADMIN')) ){
+                    throw new AccessDeniedException();
+            }
+                
+            if($statut==10){
+                $avancement->setStatut(0);
+            }else{
+                $avancement->setStatut($statut+1);
+            }
+            $messageNouveauStatut = $avancement->getMessageStatut();         
+            $entity->setTexte($entity->getTexte()."<i>&rarr;$messageNouveauStatut</i>");
+        }
+        
+        if($action=='invalid'){
+        
+            if(!($statut==1 || $statut==5|| $statut==7)||(false === $this->get('security.context')->isGranted('ROLE_ADMIN')) ){
+                throw new AccessDeniedException();
+            }
+        
+            $avancement->setStatut($statut-1);
+            $messageNouveauStatut = $avancement->getMessageStatut();
+            $entity->setTexte($entity->getTexte()."<i>&rarr;$messageNouveauStatut</i>");
+        }
+        
+        if($action=='cancel'){
+        
+            if((false === $this->get('security.context')->isGranted('ROLE_ADMIN')) ){
+                throw new AccessDeniedException();
+            }
+        
+            $avancement->setStatut($statut-1);
+            $messageNouveauStatut = $avancement->getMessageStatut();
+            $entity->setTexte($entity->getTexte()."<i>&rarr;Projet Annulé</i>");
+        }
+
+        
+        
         $em->persist($entity);
         $em->flush();
     

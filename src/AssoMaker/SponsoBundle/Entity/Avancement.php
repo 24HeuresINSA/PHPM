@@ -13,6 +13,20 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Avancement
 {
+    public static $messagesStatut = array(
+            -1=>'Projet annulé / en sommeil',
+            0=>'Dossier en cours de rédaction',
+            1=>'Dossier en attente de validation',
+            2=>'Dossier prêt à être envoyer',
+            3=>'En attente de réponse du contact',
+            4=>'Rendez-vous pris',
+            5=>'Partenariat négocié',
+            6=>'Transmission des infos à l\'Orga',
+            7=>'Préparation de la prestation en attente de validation',
+            8=>'Prestation prête à être exécutée',
+            9=>'Documentation pour l\'an prochain',
+            10=>'Projet terminé');
+    
     /**
      * @var integer $id
      *
@@ -25,7 +39,7 @@ class Avancement
     /**
      * @var string $nom
      *
-     * @ORM\Column(name="nom", type="string", length=255)
+     * @ORM\Column(name="nom", type="string", length=255,nullable=true)
      */
     private $nom;
 
@@ -51,7 +65,7 @@ class Avancement
     /**
      * @var string $poste
      *
-     * @ORM\Column(name="poste", type="string", length=255)
+     * @ORM\Column(name="poste", type="string", length=255,nullable=true)
      */
     private $poste;
     
@@ -200,7 +214,7 @@ class Avancement
 
     
     public function __toString(){
-        return $this->getNom();
+        return $this->getEntreprise();
     }
 
     /**
@@ -362,5 +376,9 @@ class Avancement
     public function getStatut()
     {
         return $this->statut;
+    }
+    
+    public function getMessageStatut(){
+        return $this::$messagesStatut[$this->getStatut()];
     }
 }

@@ -11,18 +11,19 @@
          <thead>      
             <th>Equipe</th> 
             <th>Nom du Projet</th>
-            <th>Entreprise</th>
-            <th>Contact</th>
-            <th>Responsable</th>
+            <th>Contacts entreprise</th>
          </thead>
          <tbody>
              {% for projet in projets %}
              <tr>
                  <td>{{ projet.equipe }}</td>
                  <td>{{ entitiesMacro.projet(projet) }}</td>
-                 <td></td>
-                 <td></td>
-                 <td></td>
+                 <td>
+                     <ul>
+                         {% for avancement in projet.avancements %}
+                             <li><a href="{{path("sponso_avancement_edit",{"id":avancement.id})}}">{{ avancement.entreprise }}{% if avancement.nom %}{{avancement.nom}}{% endif %}</a>, <i>{{ avancement.messageStatut }}</i> géré par {{ avancement.responsable }}</li>
+                         {% endfor %}
+                 </td>
              </tr>
              {% endfor %}
          </tbody>

@@ -66,7 +66,7 @@ class ProjetController extends Controller
                 $em->flush();
 
                 return $this
-                        ->redirect($this->generateUrl('sponso_projet_home'));
+                        ->redirect($this->generateUrl('sponso_projet_edit',array('id'=>$entity->getId())));
             }
         }
 

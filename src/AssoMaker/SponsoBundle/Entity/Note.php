@@ -13,8 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Note
 {
-    
-    protected  $textesType = array('Infos','Rencontre','Appel téléphonique','Mail','Autre');
+    public static $textesTypes = array('Infos','Rencontre','Appel téléphonique','Mail','Autre');
     /**
      * @var integer $id
      *

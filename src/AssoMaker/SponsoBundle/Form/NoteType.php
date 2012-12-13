@@ -2,6 +2,8 @@
 
 namespace AssoMaker\SponsoBundle\Form;
 
+use AssoMaker\SponsoBundle\Entity\Note;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use AssoMaker\BaseBundle\Entity\EquipeRepository;
@@ -17,7 +19,7 @@ class NoteType extends AbstractType
     {
         	
     	$builder
-    	    ->add('type', 'choice', array('choices'   => array('Infos','Rencontre','Appel téléphonique','Mail','Autre')))
+    	    ->add('type', 'choice', array('choices'   => Note::$textesTypes))
     	    ->add('texte','textarea',array('label'=>'Texte'));
            
     	

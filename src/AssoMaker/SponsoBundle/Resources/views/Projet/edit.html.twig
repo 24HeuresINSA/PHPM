@@ -39,23 +39,27 @@
 <div class="row-fluid">
 <div class="span4">
 <h3>{{ entity.nom }}</h3>
-<p>Équipe {{ entity.equipe }}</p>
+<h4>Équipe {{ entity.equipe }}</h4>
 <h4>Description</h4>
 <div class="well">{{ entity.description }}</div>
 </div>
 <div class="span8">
 <h3>Contacts</h3>
-<a class="btn btn-success" href="{{ path('sponso_avancement_new',{'projectId':entity.id}) }}"><i class="icon-plus"></i> Nouveau Contact</a>
 {% for avancement in entity.avancements %}
-<div class="well"><h4>{{ entitiesMacro.avancement(avancement) }}</h4></div>
+<div class="well well-small">
+    <h4><a href="{{ path('sponso_avancement_edit', { 'id': avancement.id }) }}">{{ avancement.entreprise }}{% if avancement.nom %}{{avancement.nom}}{% endif %}</a></h4>
+    <p>
+        {{ avancement.messageStatut }}<br/>
+        Géré par {{ avancement.responsable }}
+    </p>
+</div>
 {% endfor %}
 </div>
 </div>
 <div class="form-fluid">
-			<div class="form-actions">
-    			
+			<div class="form-actions">    			
     			<a href="#editModal" role="button" class="btn" data-toggle="modal"><i class="icon-pencil"></i>Éditer les infos</a>
-    			
+    			<a class="btn btn-success" href="{{ path('sponso_avancement_new',{'projectId':entity.id}) }}"><i class="icon-plus"></i> Nouveau Contact</a>
 			</div>
     </div>   
 
