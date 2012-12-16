@@ -1,6 +1,6 @@
 <h1>Bonjour {{ orga.prenom }} !</h1>
 {{ phpm_contenu_mail_confirmation_soft|raw }}
 <br>
-<b><a href="{{ url('autologin', { 'id': orga.id, 'loginkey': (orga.id)|phpm_crypt }) }}">Cliques ici pour indiquer les créneaux sur lesquels tu es disponible.</a></b>
+<b><a href="{{ url('autologin', { 'id': orga.id, 'loginkey': (orga.id)|phpm_crypt }) }}">Clique ici pour indiquer les créneaux sur lesquels tu es disponible.</a></b>
 
 

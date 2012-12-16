@@ -187,7 +187,7 @@ class OrgaController extends Controller
     public function registerSoftAction($confianceCode,$equipeId){
     	 
     	$em = $this->getDoctrine()->getEntityManager();
-    	$config = $e=$this->get('config.extension');
+    	$config = $this->get('config.extension');
     	$request = $this->getRequest();
     	
     	$equipe = $em->getRepository('AssoMakerBaseBundle:Equipe')->find($equipeId);
@@ -219,9 +219,9 @@ class OrgaController extends Controller
     			
     			
     			$message = \Swift_Message::newInstance()
-    			->setSubject('Inscription orga soft 24 Heures de l\'INSA')
-    			->setFrom(array('orga@24heures.org' => 'Orga 24H INSA'))
-    			->setReplyTo('orga@24heures.org')
+    			->setSubject('Inscription orga soft '.$config->getValue('manifestation_nom'))
+    			->setFrom(array($config->getValue('phpm_admin_email') => 'Orga'.$config->getValue('manifestation_nom')))
+    			->setReplyTo($config->getValue('phpm_admin_email'))
     			->setTo($entity->getEmail())
     			->setBody($this->renderView('AssoMakerBaseBundle:Orga:emailConfirmationSoft.html.twig', array('orga' => $entity)), 'text/html')
     			;
@@ -488,7 +488,8 @@ class OrgaController extends Controller
 	            			'missions' => $groupesDI,
 	            			'orga'=>$orga,
 	            			'charismeInsuffisant'=>true,
-	            			'now'=> new \DateTime()
+	            			'now'=> new \DateTime(),
+	            	        'messagesCharisme'=>$config->getValue('phpm_messages_charisme')
 	            			);
 	            }
 

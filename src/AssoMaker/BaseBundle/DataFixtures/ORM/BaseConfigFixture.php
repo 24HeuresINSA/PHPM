@@ -66,7 +66,7 @@ class BaseConfigFixture implements FixtureInterface {
 		
 		$manager
 				->persist(
-						new Config('manifestation_admin_email',
+						new Config('phpm_admin_email',
 								'Email de l\'administrateur',
 								'orga@24heures.org', NULL));
 		
