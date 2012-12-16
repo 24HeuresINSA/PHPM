@@ -220,7 +220,7 @@ class OrgaController extends Controller
     			
     			$message = \Swift_Message::newInstance()
     			->setSubject('Inscription orga soft '.$config->getValue('manifestation_nom'))
-    			->setFrom(array($config->getValue('phpm_admin_email') => 'Orga'.$config->getValue('manifestation_nom')))
+    			->setFrom(array($config->getValue('phpm_admin_email') => 'Orga '.$config->getValue('manifestation_nom')))
     			->setReplyTo($config->getValue('phpm_admin_email'))
     			->setTo($entity->getEmail())
     			->setBody($this->renderView('AssoMakerBaseBundle:Orga:emailConfirmationSoft.html.twig', array('orga' => $entity)), 'text/html')
