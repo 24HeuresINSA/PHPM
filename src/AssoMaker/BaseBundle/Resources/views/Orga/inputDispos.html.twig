@@ -126,7 +126,7 @@
 					    			{% if e in orga.disponibilitesInscription %}checked="checked"{% endif %} 
 					    			{% if ((e.statut == 0) or ((e.statut==1) and (e in orga.disponibilitesInscription))or (e.debut.timestamp - now.timestamp < 0)) and not is_granted('ROLE_ADMIN') %}disabled{% endif %}
 					    			ng-model="dispos[{{ e.id }}]"
-					    			>{{ e.statut }}
+					    			>
 					               </label></div>
 							{% endfor %}
 						</div>
