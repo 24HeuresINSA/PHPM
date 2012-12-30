@@ -30,7 +30,8 @@
         "akzhan/jwysiwyg":"0.97",
         "sanisoft/shiftcheckbox":"1.0",
         "angular/angularJS":"1.0.2",
-        "fortawesome/font-awesome":"2.0"
+        "fortawesome/font-awesome":"2.0",
+        "leafo/lessphp": "dev-master"
     },
     "repositories":[
         {
