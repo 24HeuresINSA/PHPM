@@ -23,10 +23,12 @@ src/AssoMaker/BaseBundle/Controller/TestController.php
 .metadata
 .DS_Store
 
-# Aptana-specific
+# IDE-specific
 .project
+.idea/*
 
 .htaccess
 .buildpath
 
 composer.phar
+composer.lock
