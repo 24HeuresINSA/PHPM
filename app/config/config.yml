@@ -30,9 +30,12 @@ assetic:
     use_controller: false
     filters:
         cssrewrite: ~
-        less:
-            node: %node_bin%
-            node_paths: %node_paths%
+        lessphp:
+            file: %kernel.root_dir%/../vendor/leafo/lessphp/lessc.inc.php
+            apply_to: "\.less$"
+        #less:
+        #    node: %node_bin%
+        #    node_paths: %node_paths%
         # closure:
         #     jar: %kernel.root_dir%/java/compiler.jar
         # yui_css:

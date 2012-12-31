@@ -1,32 +1,72 @@
-/.settings/*
-/web/bundles/
+# Symfony2 specific #
+#####################
+
+# Bootstrap
+app/bootstrap*
+
+# Symfony directories
+vendor/*
+*/logs/*
+*/cache/*
+web/uploads/*
+web/bundles/*
+
+# Configuration files
+app/config/parameters.ini
+app/config/parameters.yml
+
+# Logs and databases #
+######################
+*.log
+*.sqlite
+*.bat
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+.metadata
+
+# Perso #
+#########
+~*
+*~
+
+# IDE-specific #
+################
+.project
+.settings/*
+.idea/*
+.buildpath
+
+# Composer #
+############
+composer.phar
+composer.lock
+
+# Others #
+#########
+.htaccess
+.buildpath
+
+# Hacks #
+#########
+src/AssoMaker/BaseBundle/Controller/TestController.php
+
+# Deprecated? #
+###############
 /web/css
 /web/js
 /web/images
 /web/lib/*
 /web/.htaccess
 /web/up
-
 /app/bootstrap*
-/app/cache/*
-/app/logs/*
-/vendor/
-/app/config/parameters.yml
 /bundles/
-
-
-src/AssoMaker/BaseBundle/Controller/TestController.php
-
-*~
-
-# Metadata
-.metadata
-.DS_Store
-
-# Aptana-specific
-.project
-
-.htaccess
-.buildpath
-
-composer.phar
