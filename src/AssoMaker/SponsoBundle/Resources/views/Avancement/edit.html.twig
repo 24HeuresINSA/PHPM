@@ -41,8 +41,11 @@
 				<fieldset>
 				    <div class="control-group">
 
-				    {{ form_widget(formNote) }}
-					
+				    
+				    {{ form_row(formNote.type) }}
+				    {{ form_label(formNote.texte)  }}
+					{{ form_widget(formNote.texte, {'attr':{'class':'winput'}})  }}
+					{{ form_widget(formNote) }}
 				    </div>
 				</fieldset>
 	    </div>

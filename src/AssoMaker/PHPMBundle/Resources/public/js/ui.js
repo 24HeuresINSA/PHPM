@@ -178,6 +178,40 @@ $(function() {
     $(".apopover").popover();
     
     $('input.shiftkeybox').shiftcheckbox();
+    
+
+    $('.winput').wysiwyg({
+        iFrameClass: "wysiwyg-input",
+        initialContent: ' ',
+        rmUnusedControls: true,
+        
+	        controls: {
+	            bold: {visible: true},
+	            italic: {visible: true},
+	            strikeThrough: {visible: true},
+	            underline: {visible: true},
+				superscript: {visible: true},
+				subscript: {visible: true},
+	  			indent: {visible: true},
+	            outdent: {visible: true},
+	            insertOrderedList: {visible: true},
+	            insertUnorderedList: {visible: true},
+	            undo: {visible: true},
+	           	redo: {visible: true},
+	            removeFormat: {visible: true}
+	        }
+        
+    });
+    
+    $('.winput-ro').wysiwyg({
+        iFrameClass: "wysiwyg-input",
+        initialContent: ' ',
+        rmUnusedControls: true,
+                
+    });
+
+    
+    
 	
 });
 
