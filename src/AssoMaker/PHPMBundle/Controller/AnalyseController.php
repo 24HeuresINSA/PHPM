@@ -178,7 +178,6 @@ class AnalyseController extends Controller
     	$finPlage = new \DateTime($plage['fin']);
     	
     	
-    	
     	$result = array();
     	$id=0;
     	$debut=$debutPlage;
@@ -186,21 +185,15 @@ class AnalyseController extends Controller
     	$fin->add(new \DateInterval('PT'.(900).'S'));
     	$days=array();
     	
-    	
-    	$dayFormatter= new  \IntlDateFormatter(null ,\IntlDateFormatter::FULL, \IntlDateFormatter::FULL,    null,null,'EEEE d MMMM'  );
-    	$timeFormatter= new  \IntlDateFormatter(null ,\IntlDateFormatter::FULL, \IntlDateFormatter::FULL,    null,null,'HH:mm'  );
-    	 
     	while ($debut<$finPlage){
 
-    		
-    		
     		
     		$t = $em
     		->createQuery("SELECT count(c) FROM AssoMakerPHPMBundle:Creneau c WHERE c.debut < :fin AND c.fin > :debut")
     		->setParameter('debut', $debut->format('Y-m-d H:i:s'))
     		->setParameter('fin', $fin->format('Y-m-d H:i:s'))
     		->getSingleScalarResult();
-
+    		
     		if($showBonusOrgas || $t!=0){
     			$o = $em
     			->createQuery("SELECT count(di) FROM AssoMakerPHPMBundle:DisponibiliteInscription di JOIN di.orgas o WHERE di.debut < :fin AND di.fin > :debut")
@@ -263,20 +256,12 @@ class AnalyseController extends Controller
 	    		
 	    	}
 	    	
-	    	
-	    	
-    		
-    		
-    	
-    		
-    		
-    		
     		$row = array('debut'=>$debut->format('Y-m-d H:i:s'),'fin'=>$fin->format('Y-m-d H:i:s'),'data'=>$data,'color'=>$color);
     		
-    		$result[$timeFormatter->format($debut).' - '.$timeFormatter->format($fin)][$debut->format('d')]= $row;
-	    	
-	    	$id++;
-	    	$days[$debut->format('d')]=$dayFormatter->format($debut);
+    		$result[$debut->format('H:i').' - '.$fin->format('H:i')][$debut->format('d')]= $row;
+
+        	$id++;
+	    	$days[$debut->format('d')]=$debut->format('l d F');
 	    	$debut->add(new \DateInterval('PT'.(900).'S'));	
 	    	$fin->add(new \DateInterval('PT'.(900).'S'));
 	    	
