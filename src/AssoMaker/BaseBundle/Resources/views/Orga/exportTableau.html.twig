@@ -14,9 +14,12 @@
    		<th>Date de Naissance</th>
    		<th>Permis</th>
    		<th>Com'</th>
+   		<th>Année Étude</th>
    		<th>Départ'</th>
    		<th>Commentaire</th>
-   		<th>Amis</th>
+   		<th>Amis</th>   
+   		<th>Créneaux</th>	
+   		<th>Charisme</th>	
    	  </tr>
    	</thead>
    	<tbody>
@@ -30,9 +33,12 @@
    			<td>{% if orga.dateDeNaissance %}{{ orga.dateDeNaissance|format_date('dd MMM Y') }}{% endif%}</td>
    			<td>{% if orga.datePermis %}{{ orga.datePermis|format_date('dd MMM Y') }}{% endif%}</td>
    			<td>{{ orga.equipe.nom }}</td>
+   			<td>{{ orga.anneeEtudes }}</td>
    			<td>{{ orga.departement }}</td>
    			<td>{{ orga.commentaire }}</td>
    			<td>{{ orga.amis }}</td>
+   			<td>{% for di in orga.disponibilitesInscription %}{{ di.id }},{% endfor %}</td>
+   			<td>{{ orga.charisme }}</td>   			   			
    		</tr>
    		{% endfor %}
    	</tbody>

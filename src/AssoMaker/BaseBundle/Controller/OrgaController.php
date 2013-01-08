@@ -1051,7 +1051,7 @@ class OrgaController extends Controller
 	
 		$orgas = $em
 		->createQuery("SELECT o,e FROM AssoMakerBaseBundle:Orga o JOIN o.equipe e WHERE o.statut >=0")
-		->getArrayResult();
+		->getResult();
 	
 		return array( 'orgas' => $orgas	);
 		

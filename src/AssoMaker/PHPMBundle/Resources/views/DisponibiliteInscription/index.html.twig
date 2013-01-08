@@ -18,6 +18,7 @@
 			<table class="table table-condensed">
 			    <thead>
 			        <tr>
+			            <th>Numéro</th>
 			            <th>Horaires</th>
 			            <th>Mission</th>
 			            <th>Statut</th>
@@ -33,6 +34,10 @@
 			                   <input class="shiftkeybox"type="checkbox" name="phpm_bundle_disponibiliteinscriptionlisttype[disponibiliteInscriptionItems][{{ e.id }}]"
 			                   id="phpm_bundle_disponibiliteinscriptionlisttype_disponibiliteInscriptionItems_{{ e.id }}" value="{{ e.id }}"
 			                   >
+			                   {{ e.id }}
+			               </td>
+			               <td>
+			                   
 				               {{ e.debut |format_datetime('EEEE dd MMM Y HH:mm')}}<i class="icon-arrow-right"></i>
 				               {{ e.fin |format_datetime('EEEE dd MMM HH:mm')}}
 			               </td>
