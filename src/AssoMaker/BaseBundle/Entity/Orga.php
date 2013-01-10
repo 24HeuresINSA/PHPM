@@ -230,6 +230,12 @@ class Orga implements UserInterface
     */
     protected $statut;
     
+    /**
+     * @var string $nfcId
+     * @ORM\Column(name="nfcId", type="string", nullable=true)
+     */
+    protected $nfcId;
+    
     
     /**
      * @ORM\ManyToMany(targetEntity="AssoMaker\PHPMBundle\Entity\DisponibiliteInscription", inversedBy="orgas")
@@ -1440,5 +1446,28 @@ class Orga implements UserInterface
         if ($this->datePermis != null && $this->datePermis >= new \DateTime()) {
             $context->addViolationAtSubPath('datePermis', 'Cette date doit être dans le passé.');
         }
+    }
+
+    /**
+     * Set nfcId
+     *
+     * @param string $nfcId
+     * @return Orga
+     */
+    public function setNfcId($nfcId)
+    {
+        $this->nfcId = $nfcId;
+    
+        return $this;
+    }
+
+    /**
+     * Get nfcId
+     *
+     * @return string 
+     */
+    public function getNfcId()
+    {
+        return $this->nfcId;
     }
 }

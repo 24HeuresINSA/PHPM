@@ -237,4 +237,14 @@ class Confiance
     {
         return $this->privileges;
     }
+
+    /**
+     * Remove equipes
+     *
+     * @param \AssoMaker\BaseBundle\Entity\Equipe $equipes
+     */
+    public function removeEquipe(\AssoMaker\BaseBundle\Entity\Equipe $equipes)
+    {
+        $this->equipes->removeElement($equipes);
+    }
 }
