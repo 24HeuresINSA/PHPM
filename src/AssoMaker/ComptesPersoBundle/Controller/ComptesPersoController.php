@@ -290,12 +290,13 @@ class ComptesPersoController extends Controller
         return array();
     }
 
-    /**
-     * ComputeInterests
-     *
-     * @Route("/logConso.json", name="comptesPerso_logConso")
-     * @Method("put")
-     */
+   
+     /*
+      LogConso
+     
+      @Route("/logConso.json", name="comptesPerso_logConso")
+      @Method("put")
+     
     public function logConsoAction(Request $request)
     {
         $em = $this->getDoctrine()->getEntityManager();
@@ -325,5 +326,6 @@ class ComptesPersoController extends Controller
         return $response;
 
     }
+    */
 
 }
