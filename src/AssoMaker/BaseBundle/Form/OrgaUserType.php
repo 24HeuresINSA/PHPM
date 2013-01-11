@@ -76,7 +76,6 @@ class OrgaUserType extends AbstractType
                 'expanded'=>true,
 		        'label'=>'Compétences'
             ))
-    	    ->add('nfcId')
     	    ;
     	    
     	    if($this->forcedConfiance){
