@@ -26,7 +26,7 @@
 	        </div>
 	    {% endif %}
     	<div class="row-fluid">
-    		<div class="span-6">
+    		<div class="span6">
     			<fieldset>
     				<legend>Informations</legend>
 					{{ form_row(form.debut) }}
@@ -45,13 +45,13 @@
 					
     			</fieldset>
 			</div>
-			<div class="span-6">
+			<div class="span6">
 				<fieldset>
 				    <legend>Besoins en Orgas</legend>
 				    <em>Si un orga précis est sélectionné, les champs "équipe" et "nombre d'orgas sont ignorés"</em>
 				    <br /><br />
 				    {{ form_errors(form.besoinsOrga) }}
-				    <div id="phpm_bundle_plagehorairetype_besoinsorga" data-prototype="{{ form_widget(form.besoinsOrga.get('prototype'), { 'attr': {'class': 'well'} }) | e }}">
+				    <div id="assomaker_phpm_bundle_plagehorairetype_besoinsorga" data-prototype="{{ form_widget(form.besoinsOrga.get('prototype'), { 'attr': {'class': 'well'} }) | e }}">
 				    {% for bo in form.besoinsOrga %}
 					    <div class="well">
 					    	{{ form_widget(bo.orgaHint) }}
@@ -80,22 +80,22 @@
 	</form>
 	<script type="text/javascript">
 		$(document).ready(function(){	
-			$("#infosCreneaux").toggle($('#phpm_bundle_plagehorairetype_creneauUnique:checked').val() ==undefined);
+			$("#infosCreneaux").toggle($('#assomaker_phpm_bundle_plagehorairetype_creneauUnique:checked').val() ==undefined);
 		});
 		
-		$('#phpm_bundle_plagehorairetype_creneauUnique').click(function() {
+		$('#assomaker_phpm_bundle_plagehorairetype_creneauUnique').click(function() {
 		    $("#infosCreneaux").toggle();
 		});
 		
 		function addTagForm() {
-			var collectionHolder = $('#phpm_bundle_plagehorairetype_besoinsorga');
+			var collectionHolder = $('#assomaker_phpm_bundle_plagehorairetype_besoinsorga');
 			
 			// Get the data-prototype we explained earlier
 			var prototype = collectionHolder.attr('data-prototype');
 			
 			// Replace '$$name$$' in the prototype's HTML to
 			// instead be a number based on the current collection's length.
-			form = prototype.replace(/\$\$name\$\$/g, collectionHolder.children().length);
+			form = prototype.replace(/\_\_name\_\_/g, collectionHolder.children().length);
 			
 			// Display the form in the page
 			collectionHolder.append(form);
@@ -104,7 +104,7 @@
 		}
 		
 		function rmTagForm() {
-			var last = $('#phpm_bundle_plagehorairetype_besoinsorga > :last-child');
+			var last = $('#assomaker_phpm_bundle_plagehorairetype_besoinsorga > :last-child');
 			
 			last.remove();
 		}

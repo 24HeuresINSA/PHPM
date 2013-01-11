@@ -220,22 +220,33 @@ class PlageHoraireController extends Controller
     	}
         $em = $this->getDoctrine()->getEntityManager();
         $config = $this->get('config.extension');
+        
         $entity = $em->getRepository('AssoMakerPHPMBundle:PlageHoraire')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find PlageHoraire entity.');
         }
+        
+        $originalBesoins = $entity->getBesoinsOrga();
 
         $editForm   = $this->createForm(new PlageHoraireType($config), $entity);        
 
         $request = $this->getRequest();
 
         $editForm->bindRequest($request);
+        $data = $editForm->getData();
 
         $valid=$editForm->isValid();
         
-        if ($valid) {
-        	
+        if ($valid) {            
+            $nouveauxBesoins=$data->getBesoinsOrga();
+        
+            foreach ($originalBesoins as $ob){
+                if(!$nouveauxBesoins->contains($ob)){
+                    $em->remove($ob);
+                }
+            }
+       
             $em->persist($entity);
             $em->flush();
 
