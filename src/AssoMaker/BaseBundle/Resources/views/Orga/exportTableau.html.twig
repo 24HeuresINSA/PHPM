@@ -17,7 +17,8 @@
    		<th>Année Étude</th>
    		<th>Départ'</th>
    		<th>Commentaire</th>
-   		<th>Amis</th>   
+   		<th>Amis</th>
+   		<th>Compétences</th>    
    		<th>Créneaux</th>	
    		<th>Charisme</th>	
    	  </tr>
@@ -37,6 +38,7 @@
    			<td>{{ orga.departement }}</td>
    			<td>{{ orga.commentaire }}</td>
    			<td>{{ orga.amis }}</td>
+   			<td>{% for c in orga.competences %}{{ c }},{% endfor %}</td>
    			<td>{% for di in orga.disponibilitesInscription %}{{ di.id }},{% endfor %}</td>
    			<td>{{ orga.charisme }}</td>   			   			
    		</tr>
