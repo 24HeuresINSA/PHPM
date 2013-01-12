@@ -30,12 +30,20 @@ class ProjetController extends Controller
     {
 
         $em = $this->getDoctrine()->getEntityManager();
+        $user = $this->get('security.context')->getToken()->getUser();
 
         $p = $em
-                ->createQuery("SELECT p FROM AssoMakerSponsoBundle:Projet p")
+                ->createQuery("SELECT p FROM AssoMakerSponsoBundle:Projet p JOIN p.equipe e  WHERE e.id != :tid ORDER BY e.id")
+                ->setParameter("tid",$user->getEquipe()->getId())
                 ->getResult();
+        
+        
+        $tp = $em
+        ->createQuery("SELECT p FROM AssoMakerSponsoBundle:Projet p JOIN p.equipe e WHERE e.id = :tid")
+        ->setParameter("tid",$user->getEquipe()->getId())
+        ->getResult();
 
-        return array('projets' => $p);
+        return array('projets' => $p,'teamProjets' => $tp);
     }
 
     /**
@@ -84,8 +92,10 @@ class ProjetController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $config = $e = $this->get('config.extension');
+        $user = $this->get('security.context')->getToken()->getUser();
 
         $entity = new Projet();
+        $entity->setEquipe($user->getEquipe());
         $editForm = $this->createForm(new ProjetType, $entity);
         
         if ($this->get('request')->getMethod() == 'POST') {

@@ -123,7 +123,7 @@
 <div class="span8">
 <h3>Notes</h3>
 {% for note in entity.notes %}
-<div style="margin-top: .5em"><b>{{ note.orga }} </b><small>{{ note.date |format_datetime('EEEE dd MMM HH:mm')}} : </small> {{ note.texte | raw}}</div>
+<div style="margin-top: .5em"><b>{{ note.orga }} </b><small><span class="label label-info">{{ note.typeTexte }}</span> {{ note.date |format_datetime('EEEE dd MMM HH:mm')}} : </small><br/>{{ note.texte | raw}}</div>
 {% endfor %}
 </div>
 

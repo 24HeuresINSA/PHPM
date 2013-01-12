@@ -1,4 +1,5 @@
 {% extends "AssoMakerBaseBundle::layout.html.twig"  %}
+
 {% set pageTitle = "Nouveau Contact" %}
 
 {% block content %}
@@ -6,19 +7,19 @@
 		<div class="row-fluid">
 			<div class="span4">
 				<fieldset>
-				    <legend>Nouveau contact</legend>
 					    <div class="row-fluid">
-							    <div class="control-group">
+							    
 							    {{ form_row(form.projet) }}
 							    {{ form_row(form.responsable) }}
-							    {{ form_row(form.entreprise) }}
+                                {{ form_row(form.entreprise) }}
 								{{ form_row(form.nom) }}
 								{{ form_row(form.poste) }}
 								{{ form_row(form.email) }}
 								{{ form_row(form.telephone) }}
 								{{ form_row(form.adresse) }}
+								{{ form_widget(form) }}
 
-							    </div>
+							    
 						</div>       			
 	         			
 				</fieldset>

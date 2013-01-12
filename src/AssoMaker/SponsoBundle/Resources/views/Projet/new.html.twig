@@ -1,12 +1,9 @@
 {% extends "AssoMakerBaseBundle::layout.html.twig"  %}
-{% set pageTitle = entity.nom %}
+{% set pageTitle = "Nouveau Projet" %}
 
 {% block content %}
 
 <form class="form-horizontal" action="{{ path('sponso_projet_new') }}" method="post" {{ form_enctype(form) }}>
-    <div class="row-fluid">
-    <h2>Nouveau Projet</h2>
-    </div> 
     <div class="row-fluid">
 {#        <div class="span6">
             <h3>Contact de l'Entreprise</h3>

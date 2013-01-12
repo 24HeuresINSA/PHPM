@@ -148,7 +148,7 @@ class Note
      */
     public function getTypeTexte()
     {
-        return $this->textesType[$this->type];
+        return Note::$textesTypes[$this->type];
     }
     
     public function toArray(){

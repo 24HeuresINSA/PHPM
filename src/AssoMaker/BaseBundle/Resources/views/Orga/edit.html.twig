@@ -2,7 +2,7 @@
 {% set pageTitle = entity.prenom~' '~entity.nom %}
 
 {% block content %}
-	<form class="form-horizontal" action="{{ path('orga_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+	<form action="{{ path('orga_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
 		<div class="row-fluid">
 			<div class="span4 well">
 				<fieldset>
@@ -17,7 +17,6 @@
 							    {{ form_row(form.profilePicture) }}
 							</div>
 							<div class="span7">
-							    <div class="control-group">
 								{{ form_row(form.nom) }}
 								{{ form_row(form.prenom) }}
 								{{ form_row(form.surnom) }}
@@ -27,7 +26,7 @@
 								{{ form_row(form.telephone) }}
 								{{ form_row(form.dateDeNaissance) }}
 								{{ form_row(form.equipe) }}
-							    </div>
+
 							 </div>
 						</div>       			
 	         			

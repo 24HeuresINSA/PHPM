@@ -17,7 +17,7 @@ class Avancement
             -1=>'Projet annulé / en sommeil',
             0=>'Dossier en cours de rédaction',
             1=>'Dossier en attente de validation',
-            2=>'Dossier prêt à être envoyer',
+            2=>'Dossier prêt à être envoyé',
             3=>'En attente de réponse du contact',
             4=>'Rendez-vous pris',
             5=>'Partenariat négocié',

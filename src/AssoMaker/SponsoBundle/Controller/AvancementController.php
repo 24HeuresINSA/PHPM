@@ -85,6 +85,7 @@ class AvancementController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $config  =$e=$this->get('config.extension');
         $user = $this->get('security.context')->getToken()->getUser();
+        $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
         
         $entity  = new Avancement();
         if ($this->get('request')->getMethod() == 'GET') {        
@@ -100,7 +101,7 @@ class AvancementController extends Controller
         }
         
         
-        $editForm   = $this->createForm(new AvancementType(), $entity);
+        $editForm   = $this->createForm(new AvancementType($admin), $entity);
         
         
         if ($this->get('request')->getMethod() == 'POST') {
