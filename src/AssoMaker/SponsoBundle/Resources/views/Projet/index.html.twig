@@ -16,6 +16,7 @@
              {% for projet in teamProjets %}
              {% if projet.avancements is empty %}
              <tr>
+                 <td>-</td>
                  <td>{{ entitiesMacro.projet(projet) }}</td>
                  <td colspan="3">Pas encore de contacts <a class="btn btn-success btn-small" href="{{ path('sponso_avancement_new',{'projectId':projet.id}) }}"><i class="icon-plus"></i> Ajouter</a></td>
              </tr>
