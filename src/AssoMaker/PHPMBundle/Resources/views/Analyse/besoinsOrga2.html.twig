@@ -1,0 +1,39 @@
+{% extends "AssoMakerPHPMBundle::layout.html.twig"  %}
+{% set pageTitle = 'Besoins en Orgas' %}
+{% use "AssoMakerPHPMBundle::index.html.twig" %}
+
+{% block pageHeader %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row-fluid">       
+
+<table>
+<tr>
+<td></td>
+{% for k,h in horaires %}
+<td >{{ k | format_datetime('EEEE dd MMM Y HH:mm') }}</td>
+{% endfor %}
+</tr>
+
+{% for idTache,tache in data %}
+<tr  style="border: .5px solid  lightgray; ">
+<th>{{ nomsTaches[idTache] }}</th>
+{% for value in tache %}
+<td
+{% if value > 0 %}style="background-color:gray;"{% endif %}
+
+>{% if value > 0 %}{{ value }}{% endif %}</td>
+{% endfor %}
+</tr>
+
+{% endfor %}
+
+
+</table>
+
+</div>
+ 
+{% endblock %}
