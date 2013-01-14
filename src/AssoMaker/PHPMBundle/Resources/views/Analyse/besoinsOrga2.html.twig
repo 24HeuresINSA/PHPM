@@ -12,7 +12,7 @@
 
 <table>
 <tr>
-<td></td>
+<td>Tâche</td><td>Équipe</td><td>Responsable</td><td>Lieu</td>
 {% for k,h in horaires %}
 <td >{{ k | format_datetime('EEEE dd MMM Y HH:mm') }}</td>
 {% endfor %}
@@ -20,7 +20,10 @@
 
 {% for idTache,tache in data %}
 <tr  style="border: .5px solid  lightgray; ">
-<th>{{ nomsTaches[idTache] }}</th>
+<th>{{ (taches[idTache]).nom }}</th>
+<th>{{ (taches[idTache]).groupeTache.equipe }}</th>
+<th>{{ (taches[idTache]).responsable }}</th>
+<th>{{ (taches[idTache]).lieu }}</th>
 {% for value in tache %}
 <td
 {% if value > 0 %}style="background-color:gray;"{% endif %}

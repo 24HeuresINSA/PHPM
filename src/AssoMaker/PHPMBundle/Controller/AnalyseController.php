@@ -372,11 +372,11 @@ class AnalyseController extends Controller
         }
         
         $r= array();
-        $nomsTaches= array();
+        $listeTaches= array();
         
         foreach ($taches as $tache){
             $r[$tache->getId()]=$tabHoraires;
-            $nomsTaches[$tache->getId()]=$tache->getNom();
+            $listeTaches[$tache->getId()]=$tache;
             foreach($tache->getPlagesHoraire() as $ph){
                 print "\n";
                 foreach($ph->getCreneaux() as $c){
@@ -396,7 +396,7 @@ class AnalyseController extends Controller
     
         return array( "horaires" =>$tabHoraires,
                        "data" => $r,
-                        "nomsTaches"=>$nomsTaches            
+                        "taches"=>$listeTaches            
         );
     }
     
