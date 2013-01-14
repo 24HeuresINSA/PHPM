@@ -298,7 +298,6 @@ class AnalyseController extends Controller
     		$tacheDQL = "SELECT g,t,p,c,d,o FROM AssoMakerPHPMBundle:GroupeTache g JOIN g.taches t
     		JOIN t.plagesHoraire p JOIN p.creneaux c LEFT JOIN c.disponibilite d LEFT JOIN d.orga o 
     		 ORDER BY g.id ";
-    		var_dump('d');
     		$tacheResult = $em->createQuery($tacheDQL)->getArrayResult();
     		return array('tacheResult'=>$tacheResult);
     	}else{
@@ -317,6 +316,88 @@ class AnalyseController extends Controller
 	
     
     	
+    }
+    
+    /**
+     * Besoins Orga v2
+     *
+     * @Route("/besoinsorga2/{plageId}/{confianceId}", defaults={"plageId"=0,"confianceId"="all"}, name="analyse_besoinsorga2")
+     * @Template()
+     */
+    public function besoinsOrga2Action($plageId,$confianceId)
+    {
+        
+        ini_set("memory_limit","1024M");
+         
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+    
+        $em = $this->getDoctrine()->getEntityManager();
+        $config = $this->get('config.extension');
+         
+         
+         
+        $plages = json_decode($config->getValue('manifestation_plages'), TRUE);
+        $plage= $plages[$plageId];
+        $debutPlage = new \DateTime($plage['debut']);
+        $finPlage = new \DateTime($plage['fin']);
+        $debutPlage=$debutPlage->gettimestamp();
+        $finPlage=$finPlage->gettimestamp();
+        
+        $debut = $debutPlage;
+        $fin=$debutPlage+900;
+        $tabHoraires=array();
+         
+        while ($debut<$finPlage){
+
+            $debut+=900;
+            $fin+=900;
+            $tabHoraires[$debut]=0;
+        }
+        
+        if ($confianceId=='all') {
+                        
+        $taches = $em
+        ->createQuery("SELECT t FROM AssoMakerPHPMBundle:Tache t JOIN t.plagesHoraire p JOIN p.creneaux c ORDER BY c.debut")
+        ->getResult();
+        
+        }else{
+                        
+        $taches = $em
+        ->createQuery("SELECT t FROM AssoMakerPHPMBundle:Tache t JOIN t.plagesHoraire p JOIN p.creneaux c JOIN c.equipeHint e JOIN e.confiance ec WHERE ec.id= :ecid ORDER BY c.debut")
+        ->setParameter("ecid",$confianceId)
+        ->getResult();
+        
+        }
+        
+        $r= array();
+        $nomsTaches= array();
+        
+        foreach ($taches as $tache){
+            $r[$tache->getId()]=$tabHoraires;
+            $nomsTaches[$tache->getId()]=$tache->getNom();
+            foreach($tache->getPlagesHoraire() as $ph){
+                print "\n";
+                foreach($ph->getCreneaux() as $c){
+                    $debutCreneau = $c->getDebut()->getTimestamp();
+                    $finCreneau = $c->getFin()->getTimestamp();
+                    foreach($tabHoraires as $key =>$total){
+                        if(($key >= $debutCreneau)&&($key < $finCreneau)){
+                            $r[$tache->getId()][$key]+=1;
+                        }
+                    }
+                    
+                }
+            }
+        
+        }
+        
+    
+        return array( "horaires" =>$tabHoraires,
+                       "data" => $r,
+                        "nomsTaches"=>$nomsTaches            
+        );
     }
     
     

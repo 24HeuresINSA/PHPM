@@ -194,7 +194,6 @@ class Tache
      */
     public function addPlageHoraire(\AssoMaker\PHPMBundle\Entity\PlageHoraire $plageHoraire)
     {
-        var_dump("ap");
         $plageHoraire->setTache($this);
         $this->plagesHoraire[] = $plageHoraire;
     }
