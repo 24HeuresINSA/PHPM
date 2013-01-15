@@ -1079,14 +1079,29 @@ class OrgaController extends Controller
         $response->headers->set('Content-Disposition', 'attachment; filename=Orgas.csv');
 	    return $response;
 	    
-	    
-
-
 	
+	}
 	
-
+	/**
+	 * Print orga badges.
+	 *
+	 * @Route("/printbadges",  name="orga_print_badges")
+	 * @Template()
+	 */
+	public function printBadgesAction()
+	{
+	    $em = $this->getDoctrine()->getEntityManager();
+	    $config = $e=$this->get('config.extension');
 	
+	    if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser()->getId() != $orgaid) {
+	        throw new AccessDeniedException();
+	    }
 	
+	    $em = $this->getDoctrine()->getEntityManager();
+	    $orgas = $em->getRepository('AssoMakerBaseBundle:Orga')->findAll();
+	   	     
+	     
+	    return array('orgas' => $orgas );
 	}
 	
 	

@@ -1,0 +1,141 @@
+{% import "AssoMakerBaseBundle:Macros:entities.html.twig" as entitiesMacro %}
+<!DOCTYPE html>
+<html>
+    <head>
+
+      	
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Planning Printing - PHPlanningMaker</title>
+<style>
+*{
+	margin : 0px;
+	padding : 0px;
+}
+
+body{
+	width : 200mm;
+	font-family: 'ono', Helvetica, Arial, sans-serif;
+}
+
+@font-face {
+	font-family: 'ono';
+	src: url('{{ asset('/images/ono.ttf') }}');
+}
+
+.badge_hard{
+	width : 181mm;
+	height : 255mm;
+	display: inline-block;
+	background: url('{{ asset('bundles/assomakerbase/images/bg_hard.jpg') }}') no-repeat ;
+	background-size:100% 100%;
+	-webkit-print-color-adjust:exact;
+}
+
+.badge_soft{
+	width : 181mm;
+	height : 255mm;
+	display: inline-block;
+	background: url('{{ asset('bundles/assomakerbase/images/bg_soft.jpg') }}') no-repeat ;
+	background-size:100% 100%;
+	-webkit-print-color-adjust:exact;
+}
+
+.photo{
+	padding-top : 80mm;
+	padding-left : 20mm;
+	height : 60mm;
+	moz-border-radius: 10px;
+}
+
+.badge_hard .texte{
+	float: right;
+	padding-top : 75mm;
+	padding-right : 15mm;
+	text-align: right;
+	
+}
+
+.badge_hard span{
+	text-align: right;
+	font-family: 'ono', Helvetica, Arial, sans-serif;
+	word-wrap: break-word;
+}
+
+.badge_soft .texte{
+	text-align: center;
+	padding-top : 75mm;
+	padding-left : 9.3mm;
+	padding-right : 9.3mm;
+}
+
+.badge_soft span{
+	text-align: center;
+	width : 100%;
+	font-family: 'ono', Helvetica, Arial, sans-serif;
+	word-wrap: break-word;
+}
+
+.nom{
+	text-align: right;
+	font-size : 13.6mm;
+}
+
+.surnom{
+	padding-top: 0.846mm;
+	padding-bottom : 0.846mm;
+	text-align: right;
+	font-size : 17mm;
+}
+
+.role{
+	text-align: right;
+	font-size : 10mm;
+	color : #FFFFFF;
+}
+
+.break{
+	page-break-after: always;
+	display: block;
+
+}
+
+.confiance{
+	text-align: center;
+	padding-top : 88mm;
+	padding-left : 9.3mm;
+	padding-right : 9.3mm;
+	font-size : 17mm;
+	color: white;
+}
+
+
+</style>
+
+        
+    </head>
+    <body>
+    {% for orga in orgas %}
+        {% if orga.profilePictureSet == 1 %}
+		<div class="badge_hard">			
+                <img src="{{ entitiesMacro.orgaProfilePictureLink(orga.id) }}" class="photo" />
+
+		
+		{% else %}
+		<div class="badge_soft">
+			
+
+
+		{% endif %}
+		    	<div class="texte">
+    				<span id="prenom" class="nom">{{ orga.nom }}</span><br/>
+    				<span id="nom" class="nom">{{ orga.prenom }}</span><br/>
+    				<span class="surnom">{% if orga.surnom %}{{ orga.surnom }}{% endif %}</span><br/>
+    				<span class="role">{% if orga.role %}{{ orga.role }}{% endif %}</span><br/>
+    			</div>	
+    			<div class="confiance">{{ orga.equipe.confiance.nom }}</div>	
+		</div>
+		<div class="break"></div>
+	{% endfor %}
+		
+	</body>
+</html>
