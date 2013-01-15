@@ -41,8 +41,8 @@ body{
 }
 
 .photo{
-	padding-top : 80mm;
-	padding-left : 20mm;
+	padding-top : 70mm;
+	padding-left : 18mm;
 	height : 60mm;
 	moz-border-radius: 10px;
 }
@@ -117,14 +117,9 @@ body{
     {% for orga in orgas %}
         {% if orga.profilePictureSet == 1 %}
 		<div class="badge_hard">			
-                <img src="{{ entitiesMacro.orgaProfilePictureLink(orga.id) }}" class="photo" />
-
-		
+                <img src="{{ entitiesMacro.orgaProfilePictureLink(orga.id) }}" class="photo" />		
 		{% else %}
 		<div class="badge_soft">
-			
-
-
 		{% endif %}
 		    	<div class="texte">
     				<span id="prenom" class="nom">{{ orga.nom }}</span><br/>
