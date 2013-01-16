@@ -28,29 +28,12 @@ setBunload(true);
 		<div class="well">
 			<fieldset>
 			    <legend>Renseignements Obligatoires</legend>
-				    <div class="control-group">
-					{{ form_widget(form.prenom) }} {{ form_widget(form.nom) }}<br>
-				    </div>
-
-				    <div class="control-group {% if form_errors(form.email)|length > 0 %}error{% endif %}">
-			            <div class="">
-			              {{ form_widget(form.email) }}
-			              <span class="help-inline">Adresse mail INSA de préférence.{{ form_errors(form.email) }} </span>
-			            </div>
-         			</div>
-         			
-         			<div class="control-group {% if form_errors(form.telephone)|length > 0 %}error{% endif %}">
-			            <div class="">
-			              {{ form_widget(form.telephone) }}
-			              <span class="help-inline">Sans séparateurs : 0647682792 {{ form_errors(form.telephone) }} </span>
-			            </div>
-         			</div>
-         			<div class="control-group {% if form_errors(form.dateDeNaissance)|length > 0 %}error{% endif %}">
-			            <div class="">
-			              {{ form_widget(form.dateDeNaissance) }}
-			              <span class="help-inline">Format : 1990-12-31{{ form_errors(form.dateDeNaissance) }} </span>
-			            </div>
-         			</div>
+				   
+					{{ form_row(form.prenom) }}
+					{{ form_row(form.nom) }}
+                    {{ form_row(form.email,{"help":"Adresse mail INSA de préférence."}) }}
+			        {{ form_row(form.telephone,{"help":"Sans séparateurs : 0647682792"}) }}
+			        {{ form_row(form.dateDeNaissance) }}
          			
 			        <legend>Tu sais </legend>
          			<div class="control-group {% if form_errors(form.competences)|length > 0 %}error{% endif %}">
@@ -67,35 +50,30 @@ setBunload(true);
 		<div class="well">
 			<fieldset>
 		    	<legend>Renseignements Supplémentaires</legend>
-			    <div class="control-group {% if form_errors(form.surnom)|length > 0 %}error{% endif %}">
-			            <div class="">
-			              {{ form_widget(form.surnom) }}
-			              <span class="help-inline">{{ form_errors(form.surnom) }} </span>
-			            </div>
-         		</div>
+			    {{ form_row(form.surnom) }}
          			<div class="control-group {% if form_errors(form.departement)|length > 0 %}error{% endif %}">
-			            <div class="">
+			            <label class="control-label">Infos INSA</label>
+			            <div class="controls">
 			              {{ form_widget(form.anneeEtudes) }}
 			              {{ form_widget(form.departement) }}
 			              {{ form_widget(form.groupePC) }}
 			              <span class="help-inline">{{ form_errors(form.departement) }}<br> {{ form_errors(form.anneeEtudes) }} </span>
 			            </div>
          			</div>
-         			<div class="control-group {% if form_errors(form.datePermis)|length > 0 %}error{% endif %}">
-			            <div class="">
-			              {{ form_widget(form.datePermis) }}
-			              <span class="help-inline">Format : 2010-12-31{{ form_errors(form.datePermis) }} </span>
+         			{{ form_row(form.datePermis) }}
+         			
+
+         			<div class="control-group">
+			            <label class="control-label">Célib ?</label>
+			            <div class="controls">
+			            <label class="radio inline">
+        		          <input type="radio" name="phpm_bundle_orgatype[celibataire]" id="inlineCheckbox1" value="1"> Oui
+        		        </label>
+        		        <label class="radio inline">
+        		          <input type="radio" name="phpm_bundle_orgatype[celibataire]" value="0"> Non
+        		        </label>
 			            </div>
          			</div>
-
-		        Célib' ?          
-		        <label class="radio inline">
-		          <input type="radio" name="phpm_bundle_orgatype[celibataire]" id="inlineCheckbox1" value="1"> Oui
-		        </label>
-		        <label class="radio inline">
-		          <input type="radio" name="phpm_bundle_orgatype[celibataire]" value="0"> Non
-		        </label>
-		
 			</fieldset>
 		</div>
 		<div class="well">

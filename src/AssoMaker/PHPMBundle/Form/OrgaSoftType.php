@@ -35,7 +35,7 @@ class OrgaSoftType extends AbstractType
             ->add('nom',null,array('label'=>'Nom','attr' => array('placeHolder'=>'Nom')))
             ->add('surnom',null,array('label'=>'Surnom','attr' => array('placeHolder'=>'Surnom')))
             ->add('telephone',null,array('label'=>'Téléphone portable','attr' => array('placeHolder'=>'Numéro de portable')))
-            ->add('email',null,array('label'=>'Adresse email','attr' => array('placeHolder'=>'Adresse email')))
+            ->add('email',null,array('label'=>'Adresse email','attr' => array('placeHolder'=>'Adresse email','help'=>'Adresse mail INSA de préférence.')))
             ->add('dateDeNaissance', 'birthday', array(
                     'label'=>'Date de naissance',
             		'required'=>true,
