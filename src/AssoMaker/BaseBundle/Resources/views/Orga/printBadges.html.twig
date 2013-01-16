@@ -116,8 +116,10 @@ body{
     <body>
     {% for orga in orgas %}
         {% if orga.profilePictureSet == 1 %}
-		<div class="badge_hard">			
-                <img src="{{ entitiesMacro.orgaProfilePictureLink(orga.id) }}" class="photo" />		
+		<div class="badge_hard">
+		    {% if orga.profilePictureSet == 1 %}			
+                <img src="{{ entitiesMacro.orgaProfilePictureLink(orga.id) }}" class="photo" />
+                {% endif %}		
 		{% else %}
 		<div class="badge_soft">
 		{% endif %}

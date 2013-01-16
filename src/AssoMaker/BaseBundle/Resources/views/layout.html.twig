@@ -198,10 +198,13 @@
 	       			{% if is_granted('ROLE_ADMIN') %}
 		       			{{ _self.navBarItem('Configuration','config') }}
 		       		{% endif %}
-		       		 {{ _self.navBarItem('Logout <i class="icon-signout"></i>','logout') }}
+		       		 
 
 
 	        	{% endblock %}
+				{% endif %}
+				{% if is_granted('ROLE_VISITOR') %}
+				{{ _self.navBarItem('Logout <i class="icon-signout"></i>','logout') }}
 				{% endif %}
 				</ul>
 					{% if is_granted('ROLE_USER') %}
