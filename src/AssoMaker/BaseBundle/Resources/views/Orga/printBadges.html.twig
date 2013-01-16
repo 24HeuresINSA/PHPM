@@ -23,6 +23,8 @@ body{
 }
 
 .badge_hard{
+    margin-top:5mm;
+    margin-left:8mm;
 	width : 181mm;
 	height : 255mm;
 	display: inline-block;
@@ -32,6 +34,8 @@ body{
 }
 
 .badge_soft{
+    margin-top:5mm;
+    margin-left:8mm;
 	width : 181mm;
 	height : 255mm;
 	display: inline-block;
@@ -101,11 +105,33 @@ body{
 
 .confiance{
 	text-align: center;
-	padding-top : 100mm;
+
 	padding-left : 9.3mm;
 	padding-right : 9.3mm;
 	font-size : 17mm;
 	color: white;
+}
+
+.badge_soft .confiance{
+	padding-top : 29mm;
+}
+
+.badge_hard .confiance{
+	padding-top : 100mm;
+}
+
+.softcreneau{
+	text-align: left;
+	float:left;
+	padding-top : 55mm;
+	padding-left : 0mm;
+	font-size : 17mm;
+
+}
+.softcreneau > div{
+	float:left;
+	
+
 }
 
 
@@ -116,20 +142,36 @@ body{
     <body>
     {% for orga in orgas %}
         {% if orga.profilePictureSet == 1 %}
-		<div class="badge_hard">
-		    {% if orga.profilePictureSet == 1 %}			
+		<div class="badge_hard">			
                 <img src="{{ entitiesMacro.orgaProfilePictureLink(orga.id) }}" class="photo" />
-                {% endif %}		
-		{% else %}
-		<div class="badge_soft">
-		{% endif %}
-		    	<div class="texte">
+                <div class="texte">
     				<span id="prenom" class="nom">{{ orga.nom }}</span><br/>
     				<span id="nom" class="nom">{{ orga.prenom }}</span><br/>
     				<span class="surnom">{% if orga.surnom %}{{ orga.surnom }}{% endif %}</span><br/>
     				<span class="role">{% if orga.role %}{{ orga.role }}{% endif %}</span><br/>
     			</div>	
     			<div class="confiance">{{ orga.equipe.confiance.nom }}</div>	
+		{% else %}
+		<div class="badge_soft">
+    		<div class="texte">
+    				<span id="prenom" class="nom">{{ orga.nom }}</span><br/>
+    				<span id="nom" class="nom">{{ orga.prenom }}</span><br/>
+    				<span class="surnom">{% if orga.surnom %}{{ orga.surnom }}{% endif %}</span><br/>
+    				<span class="role">{% if orga.role %}{{ orga.role }}{% endif %}</span><br/>
+    			</div>	
+    		
+    		    <div class="softcreneau"  >
+    		    <div style="margin-left : 15mm;">{% if creneaux[orga.id][0] is defined %}X{% endif %}</div>
+    		    <div style="margin-left : 17mm;">{% if creneaux[orga.id][1] is defined %}X{% endif %}</div>
+    		    <div style="margin-left : 20mm;">{% if creneaux[orga.id][2] is defined %}X{% endif %}</div>
+    		    <div style="margin-left : 20mm;">{% if creneaux[orga.id][3] is defined %}X{% endif %}</div>
+    		    <div style="margin-left : 20mm;">{% if creneaux[orga.id][4] is defined %}X{% endif %}</div>
+    		    <div style="margin-left : 18mm;">{% if creneaux[orga.id][5] is defined %}X{% endif %}</div>
+    
+    		</div>
+		    
+    			<div class="confiance" style="clear: both">{{ orga.equipe.confiance.nom }}</div>
+    	{% endif %}	
 		</div>
 		<div class="break"></div>
 	{% endfor %}

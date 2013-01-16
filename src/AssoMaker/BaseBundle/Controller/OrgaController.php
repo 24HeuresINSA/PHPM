@@ -1098,10 +1098,39 @@ class OrgaController extends Controller
 	    }
 	
 	    $em = $this->getDoctrine()->getEntityManager();
-	    $orgas = $em->getRepository('AssoMakerBaseBundle:Orga')->findAll();
-	   	     
+	    $orgas = $em
+	    ->createQuery("SELECT o,e FROM AssoMakerBaseBundle:Orga o JOIN o.equipe e JOIN e.confiance c JOIN o.disponibilites d JOIN d.creneaux cr WHERE o.statut >=0")
+	    ->getResult();
+	    
+	            $casesHoraires = array(
+	                                    1360443600,
+                                        1360447200,
+                                        1360450800,
+                                        1360454400,
+                                        1360458000,
+                                        1360461600);
+	    
+	    $orgasCreneaux= array();
+	    foreach($orgas as $o){
+	        
+	        $orgaCreneau =array();
+    	    foreach($o->getDisponibilites() as $d){
+    	        foreach($d->getCreneaux() as $c){
+    	            foreach ($casesHoraires as $key=>$debutCase){
+    	                $debutCreneau = $c->getDebut()->getTimestamp();
+    	                $finCreneau = $c->getFin()->getTimestamp();
+    	                $finCase = $debutCase+3600;
+    	                if (($debutCreneau<=$finCase)&&($finCreneau>=$debutCase)){
+    	                    $orgaCreneau[$key]=true;
+    	                }
+    	            }
+    	        }
+    	    }
+    	    $orgasCreneaux[$o->getId()]=$orgaCreneau;
+	    }
+	   	    
 	     
-	    return array('orgas' => $orgas );
+	    return array('orgas' => $orgas, 'creneaux'=>$orgasCreneaux );
 	}
 	
 	
