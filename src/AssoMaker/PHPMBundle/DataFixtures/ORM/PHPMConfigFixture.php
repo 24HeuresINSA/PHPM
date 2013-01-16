@@ -93,7 +93,7 @@ class PHPMConfigFixture implements FixtureInterface {
 		$manager
 		->persist(
 		        new Config('phpm_planning_fin',
-		                'Heure de début des plannings',
+		                'Heure de fin des plannings',
 		                '13-05-05 00:00:00', NULL));
 		$manager
 		->persist(
