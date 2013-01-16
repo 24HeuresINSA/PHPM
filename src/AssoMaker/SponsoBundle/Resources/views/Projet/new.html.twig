@@ -5,11 +5,7 @@
 
 <form class="form-horizontal" action="{{ path('sponso_projet_new') }}" method="post" {{ form_enctype(form) }}>
     <div class="row-fluid">
-{#        <div class="span6">
-            <h3>Contact de l'Entreprise</h3>
-            {{ form_widget(form.contact) }}
-            	        
-        </div>#}
+
         <div class="span6">
             <h3>Informations sur le Projet</h3>
             {{ form_widget(form) }}

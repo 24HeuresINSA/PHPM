@@ -2,27 +2,20 @@
 
 {% block field_row %}
     <div class="control-group{% if errors|length > 0 %} error{% endif %}">
-{{ form_label(form) }}
-
-
+        {{ form_label(form) }}
         <div class="controls">
             {{ form_widget(form) }}
-            
                 <span class="help-inline">
                     
                     {% if errors|length > 0 %}
-                    <ul class="error_list">
-                        {% for error in errors %}
-                            <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
-                        {% endfor %}
-                    </ul>
+                        {{ form_errors(form) }}
                     {% endif %}
                     {% if help is defined %} - {{ help }}{% endif %}</span>
             
         </div>
-        </div>
+</div>
         
-        {{ form_errors(form) }}
+        
         
 
 {% endblock field_row %}

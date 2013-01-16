@@ -27,6 +27,7 @@ class Projet
      * @var string $nom
      *
      * @ORM\Column(name="nom", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $nom;
 
@@ -34,6 +35,7 @@ class Projet
      * @var \DateTime $dateCreation
      *
      * @ORM\Column(name="dateCreation", type="datetime")
+     * @Assert\NotBlank()
      */
     private $dateCreation;
 
