@@ -359,16 +359,15 @@ class AnalyseController extends Controller
         if ($confianceId=='all') {
                         
         $taches = $em
-        ->createQuery("SELECT t FROM AssoMakerPHPMBundle:Tache t JOIN t.plagesHoraire p JOIN p.creneaux c ORDER BY c.debut")
+        ->createQuery("SELECT t,p,c FROM AssoMakerPHPMBundle:Tache t JOIN t.plagesHoraire p JOIN p.creneaux c ORDER BY c.debut")
         ->getResult();
-        
+        var_dump(2);
         }else{
                         
         $taches = $em
-        ->createQuery("SELECT t FROM AssoMakerPHPMBundle:Tache t JOIN t.plagesHoraire p JOIN p.creneaux c JOIN c.equipeHint e JOIN e.confiance ec WHERE ec.id= :ecid ORDER BY c.debut")
+        ->createQuery("SELECT t,p,c,e,ec,g,ge,r FROM AssoMakerPHPMBundle:Tache t JOIN t.plagesHoraire p JOIN p.creneaux c JOIN c.equipeHint e JOIN e.confiance ec JOIN t.responsable r JOIN t.groupeTache g JOIN g.equipe ge WHERE ec.id= :ecid ORDER BY c.debut")
         ->setParameter("ecid",$confianceId)
-        ->getResult();
-        
+        ->getResult();        
         }
         
         $r= array();
