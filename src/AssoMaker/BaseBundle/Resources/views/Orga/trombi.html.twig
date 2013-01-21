@@ -1,10 +1,9 @@
 {% extends "AssoMakerBaseBundle:Orga:layout.html.twig"  %}
-{% set pageTitle = 'Trombinoscope' %}
+{% set pageTitle = 'Trombinoscope '~manifestation_nom  %}
 {% use "AssoMakerPHPMBundle::index.html.twig" %}
 
 {% block content %}
 <div class="row-fluid">
-    <h2>Trombinoscope {{ manifestation_nom }}</h2>
 	<div class="btn-toolbar">
 	       <div class="btn-group">
               <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
