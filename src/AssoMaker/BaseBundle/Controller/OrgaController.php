@@ -443,9 +443,7 @@ class OrgaController extends Controller
         }
         $confianceOrga=$orga->getEquipe()->getConfiance()->getValeur();
 	    
-	    $groupesDIresult = $this->getDoctrine()->getEntityManager()->createQuery("SELECT g FROM AssoMakerPHPMBundle:Mission g WHERE g.confianceMin = :corga ORDER BY g.ordre")
-	    ->setParameter('corga',$confianceOrga)
-	    ->getResult();
+	    $groupesDIresult = $this->getDoctrine()->getEntityManager()->createQuery("SELECT g FROM AssoMakerPHPMBundle:Mission g WHERE g.confianceMin <= $confianceOrga ORDER BY g.ordre")->getResult();
 	    $groupesDI = array();
 	     
 	    foreach ($groupesDIresult as $entity){
@@ -453,9 +451,7 @@ class OrgaController extends Controller
 	    }
 
 	    
-	    $queryResult = $this->getDoctrine()->getEntityManager()->createQuery("SELECT d FROM AssoMakerPHPMBundle:DisponibiliteInscription d JOIN d.mission m WHERE m.confianceMin = :corga ORDER BY d.debut")
-	    ->setParameter('corga',$confianceOrga)
-	    ->getResult();
+	    $queryResult = $this->getDoctrine()->getEntityManager()->createQuery("SELECT d FROM AssoMakerPHPMBundle:DisponibiliteInscription d JOIN d.mission m WHERE m.confianceMin <= $confianceOrga ORDER BY d.debut")->getResult();
 	    $DIs = array();
 	    
 	    foreach ($queryResult as $entity){
@@ -474,9 +470,7 @@ class OrgaController extends Controller
 	        
 	        if ($form->isValid()) {
 	        	
-	        	$allDI = $this->getDoctrine()->getEntityManager()->createQuery("SELECT d FROM AssoMakerPHPMBundle:DisponibiliteInscription d  ")
-	        	
-	        	->getResult();
+	        	$allDI = $this->getDoctrine()->getEntityManager()->createQuery("SELECT d FROM AssoMakerPHPMBundle:DisponibiliteInscription d")->getResult();
 	        	
 	        	$minCharisme = $config->getValue('manifestation_charisme_minimum');
 	        	
@@ -514,8 +508,9 @@ class OrgaController extends Controller
 	            {
 	                 
 	            	if($submittedDI->contains($di)){
-	            		if(!$orga->getDisponibilitesInscription()->contains($di) && ($this->get('security.context')->isGranted('ROLE_ADMIN') || ($di->getStatut() > 0)) && ($di->getDebut() > new \DateTime())&& ($di->getMission()->getConfianceMin() == $confianceOrga)){
+	            		if(!$orga->getDisponibilitesInscription()->contains($di) && ($this->get('security.context')->isGranted('ROLE_ADMIN') || ($di->getStatut() > 0)) && ($di->getDebut() > new \DateTime())){
 	            			$orga->addDisponibiliteInscription($di);
+	            			$di->addOrga($orga);
 	            		}
 	            	}
 	            	
