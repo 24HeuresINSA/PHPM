@@ -40,8 +40,7 @@ class AvancementController extends Controller
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
-        $em = $this->getDoctrine()->getEntityManager();
-    
+        $em = $this->getDoctrine()->getEntityManager();   
         
     
         $contacts=$em->createQuery("SELECT c FROM AssoMakerSponsoBundle:Avancement a ")->getResult();

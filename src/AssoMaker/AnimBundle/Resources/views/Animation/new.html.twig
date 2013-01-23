@@ -1,0 +1,22 @@
+{% extends "AssoMakerBaseBundle::layout.html.twig"  %}
+{% set pageTitle = "Nouvelle Animation" %}
+
+{% block content %}
+
+<form class="form-horizontal" action="{{ path('anim_animation_new') }}" method="post" {{ form_enctype(form) }}>
+    <div class="row-fluid">
+
+        <div class="span6">
+            {{ form_widget(form) }}
+            	        
+        </div>
+    </div>	
+    
+    <div class="form-fluid">
+			<div class="form-actions">
+			    <button class="btn btn-primary" type="submit">Enregistrer les modifications</button>
+			</div>
+    </div>       
+</form>
+
+{% endblock %}

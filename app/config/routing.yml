@@ -1,3 +1,8 @@
+asso_maker_anim:
+    resource: "@AssoMakerAnimBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 asso_maker_sponso:
     resource: "@AssoMakerSponsoBundle/Controller/"
     type:     annotation

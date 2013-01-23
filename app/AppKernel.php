@@ -25,6 +25,7 @@ class AppKernel extends Kernel
         	new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new AssoMaker\ComptesPersoBundle\AssoMakerComptesPersoBundle(),
             new AssoMaker\SponsoBundle\AssoMakerSponsoBundle(),
+            new AssoMaker\AnimBundle\AssoMakerAnimBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
