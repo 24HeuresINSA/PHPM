@@ -36,21 +36,21 @@ class Animation
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      */
     private $nom;
     
     /**
      * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Orga", inversedBy="animsResponsable")
-     * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id",onDelete="SET NULL")
+     * @ORM\JoinColumn(referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
     protected $responsable;
     
     /**
      * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Orga")
-     * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id",onDelete="SET NULL")
+     * @ORM\JoinColumn(referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
     protected $orgaManif;
@@ -58,13 +58,13 @@ class Animation
     /**
      * @var smallint $statut
      * @Assert\Choice(choices = {"0", "1", "2", "-1"})
-     * @ORM\Column(name="statut", type="smallint")
+     * @ORM\Column(type="smallint")
      */
     protected $statut;
     
     /**
      * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Equipe", inversedBy="animations")
-     * @ORM\JoinColumn(name="equipe_id", referencedColumnName="id",onDelete="SET NULL")
+     * @ORM\JoinColumn( referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
     protected $equipe;
@@ -74,20 +74,20 @@ class Animation
     /**
      * @var string
      *
-     * @ORM\Column(name="extNom", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $extNom;    
     
     
     /**
      * @Assert\Choice(choices = {"0", "1", "2", "3", "4"})
-     * @ORM\Column(name="extType", type="smallint")
+     * @ORM\Column(type="smallint")
      */
     protected $extType = 0;
     
     
     /**
-     * @ORM\Column(name="extTelephone", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Regex(
      *     pattern="/^0[67][0-9]{8}$/",
      *     message="Veuillez renseigner un numéro de portable valide."
@@ -97,7 +97,7 @@ class Animation
     
     /**
      *
-     * @ORM\Column(name="extEmail", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @Assert\Email(
      * 	   message = "L'email du prestataire doît être valide.",
@@ -108,91 +108,87 @@ class Animation
     
     /**
      *
-     * @ORM\Column(name="extCommentaire", type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $extCommentaire;
     
     /**
      *
-     * @ORM\Column(name="extPresent", type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $extPresent;
     
     /**
      *
-     * @ORM\Column(name="extTboisson", type="integer", nullable=true)
+     * @ORM\Column(type="integer")
      */
-    protected $extTboisson;
+    protected $extBoisson=0;
     
     /**
      *
-     * @ORM\Column(name="extTbouffe", type="integer", nullable=true)
+     * @ORM\Column(type="integer")
      */
-    protected $extTbouffe;
+    protected $extBouffe=0;
     
     /**
      *
-     * @ORM\Column(name="extCatering", type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $extCatering;
     
     /**
      * @var string $lieu
      *
-     * @ORM\Column(name="lieu", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $lieu;
     
     /**
      *
-     * @ORM\Column(name="locX", type="float", nullable=true)
+     * @ORM\Column(type="float", nullable=true)
      */
-    protected $locX;
+    protected $locX = '45.783562';
     
     /**
      *
-     * @ORM\Column(name="locY", type="float", nullable=true)
+     * @ORM\Column(type="float", nullable=true)
      */
-    protected $locY;
+    protected $locY = '4.87623899999994';
     
     /**
      *
-     * @ORM\Column(name="public", type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $public;
     
     /**
      * @var string $description
      *
-     * @ORM\Column(name="description", type="string", length=4096, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
     
     /**
      *
-     * @ORM\Column(name="animPhare", type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $animPhare;
     
     /**
      *
-     * @ORM\Column(name="animGosses", type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $animGosses;
     
     /**
-     * @var string $lieuPublic
-     *
-     * @ORM\Column(name="lieuPublic", type="string", length=255, nullable=true)
+     * @ORM\Column(type="array")
+     * 
      */
-    protected $lieuPublic;
+    protected $horaires = array(array('jour'=>'Samedi','debut'=>'10h00','fin'=>'18h00'),array('jour'=>'Dimanche','debut'=>'10h00','fin'=>'18h00'));
     
     
     
     
-    
-
-
 
     /**
      * Get id
@@ -248,75 +244,6 @@ class Animation
     public function getStatut()
     {
         return $this->statut;
-    }
-
-    /**
-     * Set responsable
-     *
-     * @param \AssoMaker\BaseBundle\Entity\Orga $responsable
-     * @return Animation
-     */
-    public function setResponsable(\AssoMaker\BaseBundle\Entity\Orga $responsable = null)
-    {
-        $this->responsable = $responsable;
-    
-        return $this;
-    }
-
-    /**
-     * Get responsable
-     *
-     * @return \AssoMaker\BaseBundle\Entity\Orga 
-     */
-    public function getResponsable()
-    {
-        return $this->responsable;
-    }
-
-    /**
-     * Set orgaManif
-     *
-     * @param \AssoMaker\BaseBundle\Entity\Orga $orgaManif
-     * @return Animation
-     */
-    public function setOrgaManif(\AssoMaker\BaseBundle\Entity\Orga $orgaManif = null)
-    {
-        $this->orgaManif = $orgaManif;
-    
-        return $this;
-    }
-
-    /**
-     * Get orgaManif
-     *
-     * @return \AssoMaker\BaseBundle\Entity\Orga 
-     */
-    public function getOrgaManif()
-    {
-        return $this->orgaManif;
-    }
-
-    /**
-     * Set equipe
-     *
-     * @param \AssoMaker\BaseBundle\Entity\Equipe $equipe
-     * @return Animation
-     */
-    public function setEquipe(\AssoMaker\BaseBundle\Entity\Equipe $equipe = null)
-    {
-        $this->equipe = $equipe;
-    
-        return $this;
-    }
-
-    /**
-     * Get equipe
-     *
-     * @return \AssoMaker\BaseBundle\Entity\Equipe 
-     */
-    public function getEquipe()
-    {
-        return $this->equipe;
     }
 
     /**
@@ -437,10 +364,10 @@ class Animation
     /**
      * Set extPresent
      *
-     * @param \bool $extPresent
+     * @param boolean $extPresent
      * @return Animation
      */
-    public function setExtPresent(\bool $extPresent)
+    public function setExtPresent($extPresent)
     {
         $this->extPresent = $extPresent;
     
@@ -450,7 +377,7 @@ class Animation
     /**
      * Get extPresent
      *
-     * @return \bool 
+     * @return boolean 
      */
     public function getExtPresent()
     {
@@ -458,58 +385,58 @@ class Animation
     }
 
     /**
-     * Set extTboisson
+     * Set extBoisson
      *
-     * @param \int $extTboisson
+     * @param integer $extBoisson
      * @return Animation
      */
-    public function setExtTboisson(\int $extTboisson)
+    public function setExtBoisson($extBoisson)
     {
-        $this->extTboisson = $extTboisson;
+        $this->extBoisson = $extBoisson;
     
         return $this;
     }
 
     /**
-     * Get extTboisson
+     * Get extBoisson
      *
-     * @return \int 
+     * @return integer 
      */
-    public function getExtTboisson()
+    public function getExtBoisson()
     {
-        return $this->extTboisson;
+        return $this->extBoisson;
     }
 
     /**
-     * Set extTbouffe
+     * Set extBouffe
      *
-     * @param \int $extTbouffe
+     * @param integer $extBouffe
      * @return Animation
      */
-    public function setExtTbouffe(\int $extTbouffe)
+    public function setExtBouffe($extBouffe)
     {
-        $this->extTbouffe = $extTbouffe;
+        $this->extBouffe = $extBouffe;
     
         return $this;
     }
 
     /**
-     * Get extTbouffe
+     * Get extBouffe
      *
-     * @return \int 
+     * @return integer 
      */
-    public function getExtTbouffe()
+    public function getExtBouffe()
     {
-        return $this->extTbouffe;
+        return $this->extBouffe;
     }
 
     /**
      * Set extCatering
      *
-     * @param \bool $extCatering
+     * @param boolean $extCatering
      * @return Animation
      */
-    public function setExtCatering(\bool $extCatering)
+    public function setExtCatering($extCatering)
     {
         $this->extCatering = $extCatering;
     
@@ -519,7 +446,7 @@ class Animation
     /**
      * Get extCatering
      *
-     * @return \bool 
+     * @return boolean 
      */
     public function getExtCatering()
     {
@@ -598,10 +525,10 @@ class Animation
     /**
      * Set public
      *
-     * @param \bool $public
+     * @param boolean $public
      * @return Animation
      */
-    public function setPublic(\bool $public)
+    public function setPublic($public)
     {
         $this->public = $public;
     
@@ -611,7 +538,7 @@ class Animation
     /**
      * Get public
      *
-     * @return \bool 
+     * @return boolean 
      */
     public function getPublic()
     {
@@ -644,10 +571,10 @@ class Animation
     /**
      * Set animPhare
      *
-     * @param \bool $animPhare
+     * @param boolean $animPhare
      * @return Animation
      */
-    public function setAnimPhare(\bool $animPhare)
+    public function setAnimPhare($animPhare)
     {
         $this->animPhare = $animPhare;
     
@@ -657,7 +584,7 @@ class Animation
     /**
      * Get animPhare
      *
-     * @return \bool 
+     * @return boolean 
      */
     public function getAnimPhare()
     {
@@ -667,10 +594,10 @@ class Animation
     /**
      * Set animGosses
      *
-     * @param \bool $animGosses
+     * @param boolean $animGosses
      * @return Animation
      */
-    public function setAnimGosses(\bool $animGosses)
+    public function setAnimGosses($animGosses)
     {
         $this->animGosses = $animGosses;
     
@@ -680,7 +607,7 @@ class Animation
     /**
      * Get animGosses
      *
-     * @return \bool 
+     * @return boolean 
      */
     public function getAnimGosses()
     {
@@ -708,5 +635,120 @@ class Animation
     public function getLieuPublic()
     {
         return $this->lieuPublic;
+    }
+
+    /**
+     * Set responsable
+     *
+     * @param \AssoMaker\BaseBundle\Entity\Orga $responsable
+     * @return Animation
+     */
+    public function setResponsable(\AssoMaker\BaseBundle\Entity\Orga $responsable = null)
+    {
+        $this->responsable = $responsable;
+    
+        return $this;
+    }
+
+    /**
+     * Get responsable
+     *
+     * @return \AssoMaker\BaseBundle\Entity\Orga 
+     */
+    public function getResponsable()
+    {
+        return $this->responsable;
+    }
+
+    /**
+     * Set orgaManif
+     *
+     * @param \AssoMaker\BaseBundle\Entity\Orga $orgaManif
+     * @return Animation
+     */
+    public function setOrgaManif(\AssoMaker\BaseBundle\Entity\Orga $orgaManif = null)
+    {
+        $this->orgaManif = $orgaManif;
+    
+        return $this;
+    }
+
+    /**
+     * Get orgaManif
+     *
+     * @return \AssoMaker\BaseBundle\Entity\Orga 
+     */
+    public function getOrgaManif()
+    {
+        return $this->orgaManif;
+    }
+
+    /**
+     * Set equipe
+     *
+     * @param \AssoMaker\BaseBundle\Entity\Equipe $equipe
+     * @return Animation
+     */
+    public function setEquipe(\AssoMaker\BaseBundle\Entity\Equipe $equipe = null)
+    {
+        $this->equipe = $equipe;
+    
+        return $this;
+    }
+
+    /**
+     * Get equipe
+     *
+     * @return \AssoMaker\BaseBundle\Entity\Equipe 
+     */
+    public function getEquipe()
+    {
+        return $this->equipe;
+    }
+
+    /**
+     * Set competences
+     *
+     * @param array $competences
+     * @return Animation
+     */
+    public function setCompetences($competences)
+    {
+        $this->competences = $competences;
+    
+        return $this;
+    }
+
+    /**
+     * Get competences
+     *
+     * @return array 
+     */
+    public function getCompetences()
+    {
+        return $this->competences;
+    }
+
+    /**
+     * Set horaires
+     *
+     * @param array $horaires
+     * @return Animation
+     */
+    public function setHoraires($horaires)
+    {
+        $this->horaires = $horaires;
+    
+        return $this;
+    }
+
+    /**
+     * Get horaires
+     *
+     *  
+     */
+    public function getHoraires()
+    {
+        return json_encode($this->horaires,true);
     }
 }

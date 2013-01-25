@@ -12,7 +12,7 @@
     <head>
         {% block head %}
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>{{ pageTitle }} - PHPlanningMaker</title>
+        <title>{% if pageTitle is defined %}{{ pageTitle }} - {% endif %}PHPlanningMaker</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
         {# c'est pas très beau - on met un code 'générique' dans un block - mais à priori la seule méthode #}
@@ -221,11 +221,13 @@
 	        
 <div class="container-fluid">
 	{% block pageHeader %}
-	<div class="row-fluid">       
-        <div class="page-header">
-       	 <h1>{{ pageTitle }}</h1>
-        </div>
-    </div>
+    	{% if pageTitle is defined %}
+        	<div class="row-fluid">       
+                <div class="page-header">
+               	 <h1>{{ pageTitle }}</h1>
+                </div>
+            </div>
+        {% endif %}
     {% endblock %}
   	{% block content %}
 		<p>Il y aura ici le contenu</p>

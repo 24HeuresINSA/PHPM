@@ -1,6 +1,25 @@
 {% extends 'form_div_layout.html.twig' %}
 
 {% block field_row %}
+
+{% if 'checkbox' in form.vars.block_prefixes %}
+ <div class="control-group{% if errors|length > 0 %} error{% endif %}">
+    <div class="controls">
+      <label class="checkbox">
+        {{ form_widget(form) }} {{ form.vars.label }}
+      </label>
+      <span class="help-inline">
+                    
+                    {% if errors|length > 0 %}
+                        {{ form_errors(form) }}
+                    {% endif %}
+                    {% if help is defined %} - {{ help }}{% endif %}</span>
+    </div>
+  </div>
+
+{% else %}
+
+
     <div class="control-group{% if errors|length > 0 %} error{% endif %}">
         {{ form_label(form) }}
         <div class="controls">
@@ -17,5 +36,5 @@
         
         
         
-
+{% endif %}
 {% endblock field_row %}
