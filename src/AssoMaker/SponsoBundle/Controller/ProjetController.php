@@ -103,8 +103,6 @@ class ProjetController extends Controller
             $editForm->bindRequest($request);
         
             if ($editForm->isValid()) {
-                var_dump($editForm->getData());
-                exit;
                 $em->persist($entity);
                 $em->flush();
         
