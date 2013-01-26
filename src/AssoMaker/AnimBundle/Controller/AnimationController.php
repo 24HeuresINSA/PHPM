@@ -90,8 +90,6 @@ class AnimationController extends Controller
                 return $this->redirect($this->generateUrl('anim_animation_edit',array('id'=>$entity->getId())));
             }
         }
-        
-        var_dump($entity->getHoraires());
     
         return array(
                 'entity'      => $entity,

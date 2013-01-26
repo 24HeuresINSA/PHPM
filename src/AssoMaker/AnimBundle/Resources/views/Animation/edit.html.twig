@@ -41,12 +41,22 @@
 </script>
 
 <script type="text/javascript">
+
+
 function Ctrl($scope){
 
 	$scope.horaires = {{ entity.horaires | raw}};
 	$scope.addHoraire = function(){
-		$scope.horaires.push({"jour":"samedi","debut":"10h00","fin":"18h00"});
+		$scope.horaires.push({"jour":"Samedi","debut":"10h00","fin":"18h00"});
 		}
+
+	$scope.remHoraire = function(index){
+		$scope.horaires.splice(index,1);
+		}
+
+	
+
+
 
 	
 	
@@ -143,9 +153,42 @@ function Ctrl($scope){
                 <legend>Horaires</legend>
                 <div class="row-fluid">
                  <ul>
-                    <li ng-repeat="h in horaires">                      
-                      <span>{%raw%}<input ng-model="h.jour"><input ng-model="h.debut"><input ng-model="h.fin">{% endraw %}</span>
+                    <li ng-repeat="h in horaires">   
+                          <select class="input-medium" name="assomaker_animbundle_animationtype[horaires][{%raw%}{{$index}}{% endraw %}][jour]" ng-model="h.jour">
+                              <option>Jeudi</option>
+                              <option>Vendredi</option>
+                              <option>Samedi</option>
+                              <option>Dimanche</option>                              
+                          </select>
+                          <select class="input-small" name="assomaker_animbundle_animationtype[horaires][{%raw%}{{$index}}{% endraw %}][debut]" ng-model="h.debut">
+                            {% for i in 7..23 %}
+                                {% for j in ['00','15', '30', '45'] %}
+                                    <option>{{ i~'h'~j }}</option>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for i in 0..6 %}
+                                {% for j in ['00','15', '30', '45'] %}
+                                    <option>{{ i~'h'~j }}</option>
+                                {% endfor %}
+                            {% endfor %}
+                          </select>
+                          <i class="icon-arrow-right"></i>
+                           <select class="input-small" name="assomaker_animbundle_animationtype[horaires][{%raw%}{{$index}}{% endraw %}][fin]" ng-model="h.fin">
+                            {% for i in 18..23 %}
+                                {% for j in ['00','15', '30', '45'] %}
+                                    <option>{{ i~'h'~j }}</option>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for i in 0..17 %}
+                                {% for j in ['00','15', '30', '45'] %}
+                                    <option>{{ i~'h'~j }}</option>
+                                {% endfor %}
+                            {% endfor %}
+                          </select>
+                          
+                          <a class="btn btn-small btn-danger" ng-click="remHoraire($index)"><i class="icon-lightbulb"></i></a>
                     </li>
+                    
                   </ul>
                 </div>
                 
@@ -158,7 +201,6 @@ function Ctrl($scope){
             </div>
         </div>
         
-        <input type="hidden" id="assomaker_animbundle_animationtype_horaires" name="assomaker_animbundle_animationtype[horaires]" value="{% raw %}{{ horaires }}{% endraw %}">
         {{ form_widget(form.locX) }}
         {{ form_widget(form.locY) }}
         {{ form_widget(form._token) }}
