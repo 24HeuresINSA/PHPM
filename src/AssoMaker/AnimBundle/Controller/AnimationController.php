@@ -2,6 +2,8 @@
 
 namespace AssoMaker\AnimBundle\Controller;
 
+use Doctrine\DBAL\Types\JsonArrayType;
+
 use AssoMaker\AnimBundle\Form\AnimationType;
 
 use AssoMaker\AnimBundle\Entity\Animation;
@@ -24,7 +26,15 @@ class AnimationController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        $em = $this->getDoctrine()->getEntityManager();
+        $config = $e = $this->get('config.extension');
+        $user = $this->get('security.context')->getToken()->getUser();
+        
+        $animations = $em->createQuery("SELECT a.id, a.nom, a.statut, e.nom as equipe, a.type, CONCAT(r.prenom, CONCAT(' ',r.nom)) as responsable FROM AssoMakerAnimBundle:Animation a JOIN a.responsable r JOIN a.equipe e ORDER BY a.statut DESC ")->getArrayResult();
+        return array('animations' => json_encode($animations),
+                'types'=>json_encode(Animation::$animTypes)
+                );
+
     }
     
     /**
@@ -77,8 +87,16 @@ class AnimationController extends Controller
         }
     
         $editForm   = $this->createForm(new AnimationType($admin,$config,false), $entity);
+        
+        $rawListeLieux = $em->createQuery("SELECT a.lieu FROM AssoMakerAnimBundle:Animation a WHERE a.lieu IS NOT NULL GROUP BY a.lieu")->getScalarResult();
+        $listeLieux=array();
+        foreach ($rawListeLieux as $l){
+            $listeLieux[]=$l['lieu'];
+        }
+
     
-    
+        
+        
         if ($this->get('request')->getMethod() == 'POST') {
             $request = $this->getRequest();
             $editForm->bindRequest($request);
@@ -93,7 +111,8 @@ class AnimationController extends Controller
     
         return array(
                 'entity'      => $entity,
-                'form'   => $editForm->createView()
+                'form'   => $editForm->createView(),
+                'listeLieux'=>json_encode($listeLieux)
         );
     }
 }

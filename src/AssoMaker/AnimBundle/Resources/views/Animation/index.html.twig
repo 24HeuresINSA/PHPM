@@ -2,9 +2,75 @@
 {% set pageTitle = 'Liste des animations' %}
 
 {% block content %}
-<div class="row-fluid">
-    <a class="btn btn-success" href="{{ path('anim_animation_new') }}"><i class="icon-plus"></i> Nouvelle Animation</a>
+<script type="text/javascript">
 
 
+function Ctrl($scope){
+
+	$scope.animations={{ animations |raw }}
+	$scope.types = {{ types|raw }};
+	$scope.statut=0;
+
+	$scope.deleted = function(elem){
+		return ((elem.statut ==-1)&&($scope.statut==-1)||(elem.statut >=0)&&($scope.statut==0));
+		}
+	
+}
+</script>
+
+<div class="row-fluid"  ng-app ng-controller="Ctrl">
+{%raw%}
+    <div class="span2">
+        <ul class="nav nav-list">
+			<li class="nav-header">Actions</li>
+			<li>
+			    <a href="{{ path('anim_animation_new') }}"><i class="icon-plus"></i> Nouvelle Animation</a>
+			</li>
+			<li class="nav-header">Animations</li>
+			<li>
+			    <a>Celles de ma Com</a>
+			</li>
+			<li class="nav-header">Rechercher</li>
+			<li>
+			    <a><input type="text" class="input-medium search-query" ng-model="search.$"></a>
+			</li>
+			<li class="nav-header">Statut {{ search.statut }}</li>
+			<li ng-class="{active: statut==0}">
+			    <a ng-click="statut=0" >Actives</a>
+			</li>
+			<li ng-class="{active: statut==-1}">
+			    <a ng-click="statut=-1"><i class="icon-trash"></i> Supprimées</a>
+			</li>
+
+
+		</ul>
+    </div>
+    <div class="span10">
+
+    
+    
+    <table class="table">
+        <thead>
+            <th>Animation</th>
+            <th>Type</th>
+            <th>Équipe</th>
+            <th>Responsable</th>
+        </thead>
+    
+        <tbody>
+            <tr ng:repeat="a in animations | filter:search | filter:deleted ">
+                <td><a href="{{ a.id }}/edit" class="statut{{ a.statut }}">{{a.nom}}</a></td>
+                <td>{{types[a.type]}}</td>
+                <td>{{a.equipe}}</td>
+                <td>{{a.responsable}}</td>
+            </tr>
+        </tbody>
+    </table>
+   
+
+    
+    </div>
+     {% endraw %}
 </div>
+
 {% endblock %}

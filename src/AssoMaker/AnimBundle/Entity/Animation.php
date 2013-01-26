@@ -16,12 +16,9 @@ class Animation
 
 {
     
-    public static $extTypes = array(
-            0=>'Aucun',
-            1=>'Asso INSA',
-            2=>'Association',
-            3=>'Entreprise',
-            4=>'Particulier');
+    public static $extTypes = array('Aucun','Asso INSA','Association','Entreprise','Particulier');
+    
+    public static $animTypes = array('Divertissement','Spectacle','Initiation','Démo sportive','Match de Gala','Tournoi','Course','Concert','Prévention','Vente','Autre');
     
     
     /**
@@ -61,6 +58,12 @@ class Animation
      * @ORM\Column(type="smallint")
      */
     protected $statut;
+    
+    /**
+     * @var smallint $statut
+     * @ORM\Column(type="smallint",nullable=true)
+     */
+    protected $type;
     
     /**
      * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Equipe", inversedBy="animations")
@@ -750,5 +753,28 @@ class Animation
     public function getHoraires()
     {
         return json_encode($this->horaires,true);
+    }
+
+    /**
+     * Set type
+     *
+     * @param integer $type
+     * @return Animation
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

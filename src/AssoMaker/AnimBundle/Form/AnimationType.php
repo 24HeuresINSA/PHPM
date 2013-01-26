@@ -40,6 +40,7 @@ class AnimationType extends AbstractType
 				'query_builder' => function(OrgaRepository $or)use($minConfianceResp){return $or->findAllWithConfianceValueMin($minConfianceResp);}))
                 
             ->add('equipe')
+            ->add('type', 'choice',array('label'=>'Type','choices'=>Animation::$animTypes))
         ;
         
         if(!$this->create){

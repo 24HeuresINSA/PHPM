@@ -23,7 +23,7 @@
         "jms/di-extra-bundle":"1.1.*",
         "fp/lightopenid":"dev-master",
         "sonata-project/intl-bundle":"dev-master",
-        "twitter/bootstrap":"master",
+        "twitter/bootstrap":"2.2.3",
         "jquery/jquery":"master",
         "jquery/jqueryui":"1.9.1",
         "trentrichardson/jquerytimepickeraddon":"1.0.3",
@@ -35,18 +35,13 @@
     },
     "repositories":[
         {
-            "type":"package",
-            "package":{
-                "version":"master",
-                "name":"twitter/bootstrap",
-                "source":{
-                    "url":"https://github.com/twitter/bootstrap.git",
-                    "type":"git",
-                    "reference":"master"
-                },
-                "dist":{
-                    "url":"https://github.com/twitter/bootstrap/zipball/master",
-                    "type":"zip"
+            "type": "package",
+            "package": {
+                "name": "twitter/bootstrap",
+                "version": "2.2.3",
+                "dist": {
+                    "url": "http://twitter.github.com/bootstrap/assets/bootstrap.zip",
+                    "type": "zip"
                 }
             }
         },
