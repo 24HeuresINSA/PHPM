@@ -24,6 +24,7 @@ class Animation
     
     public static $animTypes = array('Divertissement','Spectacle','Initiation','Démo sportive','Match de Gala','Tournoi','Course','Concert','Prévention','Vente','Autre');
     
+    public static $lieuxDepotLog = array('Dépôt AIP','Dépôt Humanités','QG Orga','QG Courses','QG Culture','Local 24h');
     
     /**
      * @var integer
@@ -62,6 +63,12 @@ class Animation
      * @ORM\Column(type="smallint")
      */
     protected $statut;
+    
+    /**
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $validLog;
     
     /**
      * @var smallint $statut
@@ -207,6 +214,38 @@ class Animation
     
     /**
      *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $elec=false;
+    
+    /**
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $elecAmperes=0;
+    
+    /**
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $elecTri=false;
+    
+    /**
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $interieur=false;
+    
+    /**
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $besoinEau=false;
+    
+    
+    
+    /**
+     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $detailSecu;
@@ -229,9 +268,18 @@ class Animation
      */
     protected $commentaires = array();
     
+    /**
+     * @ORM\Column(type="array")
+     *
+     */
+    protected $materiel = array(array('nom'=>'Barrières','items'=>array(array('nom'=>'Vauban','qte'=>10))));
     
-    
-    
+    /**
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $lieuDepotLog;
+         
 
     /**
      * Get id
@@ -792,7 +840,7 @@ class Animation
      */
     public function getHoraires()
     {
-        return json_encode($this->horaires,true);
+        return $this->horaires;
     }
 
     /**
@@ -940,13 +988,37 @@ class Animation
         return $this->detailSigna;
     }
 
+
+    /**
+     * Set materiel
+     *
+     * @param array $materiel
+     * @return Animation
+     */
+    public function setMateriel($materiel)
+    {
+        $this->materiel = $materiel;
+    
+        return $this;
+    }
+
+    /**
+     * Get materiel
+     *
+     * @return array 
+     */
+    public function getMateriel()
+    {
+        return $this->materiel;
+    }
+
     /**
      * Set besoinPass
      *
-     * @param \pass $besoinPass
+     * @param boolean $besoinPass
      * @return Animation
      */
-    public function setBesoinPass(\pass $besoinPass)
+    public function setBesoinPass($besoinPass)
     {
         $this->besoinPass = $besoinPass;
     
@@ -956,10 +1028,171 @@ class Animation
     /**
      * Get besoinPass
      *
-     * @return \pass 
+     * @return boolean 
      */
     public function getBesoinPass()
     {
         return $this->besoinPass;
+    }
+
+    /**
+     * Set validLog
+     *
+     * @param boolean $validLog
+     * @return Animation
+     */
+    public function setValidLog($validLog)
+    {
+        $this->validLog = $validLog;
+    
+        return $this;
+    }
+
+    /**
+     * Get validLog
+     *
+     * @return boolean 
+     */
+    public function getValidLog()
+    {
+        return $this->validLog;
+    }
+
+    /**
+     * Set elec
+     *
+     * @param boolean $elec
+     * @return Animation
+     */
+    public function setElec($elec)
+    {
+        $this->elec = $elec;
+    
+        return $this;
+    }
+
+    /**
+     * Get elec
+     *
+     * @return boolean 
+     */
+    public function getElec()
+    {
+        return $this->elec;
+    }
+
+    /**
+     * Set elecAmperes
+     *
+     * @param integer $elecAmperes
+     * @return Animation
+     */
+    public function setElecAmperes($elecAmperes)
+    {
+        $this->elecAmperes = $elecAmperes;
+    
+        return $this;
+    }
+
+    /**
+     * Get elecAmperes
+     *
+     * @return integer 
+     */
+    public function getElecAmperes()
+    {
+        return $this->elecAmperes;
+    }
+
+    /**
+     * Set elecTri
+     *
+     * @param boolean $elecTri
+     * @return Animation
+     */
+    public function setElecTri($elecTri)
+    {
+        $this->elecTri = $elecTri;
+    
+        return $this;
+    }
+
+    /**
+     * Get elecTri
+     *
+     * @return boolean 
+     */
+    public function getElecTri()
+    {
+        return $this->elecTri;
+    }
+
+    /**
+     * Set interieur
+     *
+     * @param boolean $interieur
+     * @return Animation
+     */
+    public function setInterieur($interieur)
+    {
+        $this->interieur = $interieur;
+    
+        return $this;
+    }
+
+    /**
+     * Get interieur
+     *
+     * @return boolean 
+     */
+    public function getInterieur()
+    {
+        return $this->interieur;
+    }
+
+    /**
+     * Set besoinEau
+     *
+     * @param boolean $besoinEau
+     * @return Animation
+     */
+    public function setBesoinEau($besoinEau)
+    {
+        $this->besoinEau = $besoinEau;
+    
+        return $this;
+    }
+
+    /**
+     * Get besoinEau
+     *
+     * @return boolean 
+     */
+    public function getBesoinEau()
+    {
+        return $this->besoinEau;
+    }
+
+    /**
+     * Set lieuDepotLog
+     *
+     * @param integer $lieuDepotLog
+     * @return Animation
+     */
+    public function setLieuDepotLog($lieuDepotLog)
+    {
+        $this->lieuDepotLog = $lieuDepotLog;
+    
+        return $this;
+    }
+
+    /**
+     * Get lieuDepotLog
+     *
+     * @return integer 
+     */
+    public function getLieuDepotLog()
+    {
+        return $this->lieuDepotLog;
     }
 }

@@ -86,6 +86,8 @@ class AnimationController extends Controller
         $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
         $request = $this->getRequest();
         $param = $request->request->all();
+        
+       
     
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Animation entity.');
@@ -104,7 +106,8 @@ class AnimationController extends Controller
         if ($this->get('request')->getMethod() == 'POST') {
             $request = $this->getRequest();
             $editForm->bindRequest($request);
-            
+            $data = $editForm->getData();
+                      
     
             if ($editForm->isValid()) {
                 $data = $editForm->getData();

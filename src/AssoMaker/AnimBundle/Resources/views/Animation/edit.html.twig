@@ -42,12 +42,7 @@
 
 function Ctrl($scope){
 
-	{% if entity.horaires != 'null' %}
-	$scope.horaires = {{ entity.horaires | raw}};
-	{% else %}
-	$scope.horaires = [];
-	{% endif %}
-	
+
 	$scope.addHoraire = function(){
 		$scope.horaires.push({"jour":"Samedi","debut":"10h00","fin":"18h00"});
 		}
@@ -56,7 +51,79 @@ function Ctrl($scope){
 		$scope.horaires.splice(index,1);
 		}
 
+	$scope.addMatos = function(categorie,nom){
+		
+
+		var added = false;
+		for (var i=0;i<$scope.materiel.length;i++)
+		{ 
+		    if($scope.materiel[i].nom==categorie){
+		    	$scope.materiel[i].items.push({'nom':nom,'qte':1});
+		    	added=true;
+			    }
+		}
+
+		if(added==false){
+			$scope.materiel.push({'nom':categorie,"items":[{'nom':nom,'qte':1}]});
+			}
+
+		$scope.customMatos=null;
+
+		}
+
+	$scope.cleanMatos= function(){
+    		for (var i=0;i<$scope.materiel.length;i++)
+    		{ 
+        		console.log($scope.materiel[i].items.length);
+    			for (var j=0;j<(($scope.materiel[i]).items.length);j++)
+        		{ 
+        		    if($scope.materiel[i].items[j].qte==0){
+        		    	$scope.materiel[i].items.splice(j,1);
+        			    }
+        		}
+
+    			if($scope.materiel[i].items.length==0){
+    		    	$scope.materiel.splice(i,1);
+    			    }
+    		}
+		}
 	
+
+	{% if entity.horaires != 'null' %}
+	$scope.horaires = {{ entity.horaires | json_encode()| raw}};
+	{% else %}
+	$scope.horaires = [];
+	{% endif %}
+
+	{% if entity.materiel != 'null' %}
+	$scope.materiel = {{ entity.materiel | json_encode(32) | raw}};
+	{% else %}
+	$scope.materiel = [];
+	{% endif %}
+
+	$scope.materielStandard = [
+	                       	{
+		                       	"nom":"Barri\u00e8res",
+		                        "items":["Vauban","Héras","Rubalise en mètres"]
+                            },
+	                       	{
+		                       	"nom":"Mobilier",
+		                        "items":["Table 1 place","Table 2 places","Grande table","Chaise","Canapé","Grille d'exposition"]
+                            },
+	                       	{
+		                       	"nom":"Électronique",
+		                        "items":["Vidéoprojecteur","Enceintes","Ordinateur", "Frigo"]
+                            },
+	                       	{
+		                       	"nom":"Tentes",
+		                        "items":["Parasol","3x3","4x8","6x12"]
+                            },
+	                       	{
+		                       	"nom":"Sacs Poubelle",
+		                        "items":["50 Litres","200 Litres"]
+                            }
+
+	                       	];
 
 	
 	
@@ -129,9 +196,60 @@ function Ctrl($scope){
                     </div>          
             </fieldset>
             <fieldset>             
-                <legend>Logistique</legend>
+                <legend {% if(entity.validLog) %}class="statut0"{% endif %}>Logistique</legend>     
+
+
+
+
+
                     <div class="row-fluid">
-                    </div>            
+                    <div class="span6">
+                    <div class="row_fluid">
+                    {% if entity.statut > 0 and not entity.validLog  %}
+                        <div class="alert alert-error">
+                        <h5>Attention !</h5> Cette fiche n'a pas été validée par un responsable logistique.
+                        </div>
+                    {% endif %}
+                    </div>
+                        <div class="row_fluid">
+                                            {{ form_row(form.entity.lieuDepotLog) }}
+                        <h4>Matériel et quantité requise</h4>
+                        <ul>
+                        <li ng-repeat="(kc,c) in materiel">
+                        {% raw %}{{ c.nom }}{% endraw %}
+                              <ul>
+                                  <input type="hidden" ng-model="c.nom" class="input" name="assomaker_animbundle_animationtype[entity][materiel][{%raw%}{{kc}}{% endraw %}][nom]" value="{%raw%}{{c.nom}}{% endraw %}">
+                                  <li ng-repeat="(km,m) in c.items">  
+                                  <input type="text" ng-model="m.nom" class="input" name="assomaker_animbundle_animationtype[entity][materiel][{%raw%}{{kc}}{% endraw %}][items][{%raw%}{{km}}{% endraw %}][nom]">
+                                  <input type="number" class="input-mini" ng-model="m.qte" ng-click="cleanMatos()" name="assomaker_animbundle_animationtype[entity][materiel][{%raw%}{{kc}}{% endraw %}][items][{%raw%}{{km}}{% endraw %}][qte]">
+                                  </li>
+                              </ul>                          
+                        </li>                    
+                      </ul>
+                      </div>
+                    </div>
+                    
+                  <div class="span6 well">
+                    <h5>Ajouter du matériel</h5>
+                    <ul class="nav nav-list">
+                            <li class="dropdown" ng-repeat="(kc,c) in materielStandard">
+                			    <a class="dropdown-toggle" data-toggle="dropdown" href="#">{% raw %}{{ c.nom }}{% endraw %}<b class="caret"></b></a>
+                			    <ul class="dropdown-menu">
+                			    <li ng-repeat="(km,m) in c.items"><a ng-click="addMatos(c.nom,m)">{% raw %}{{ m }}{% endraw %}</a>
+                			    </li>
+                				</ul>
+                			 </li>
+                			 <li>
+                			     Autre : <input type="text" ng-model="customMatos" class="input"> <span class="" ng-click="addMatos('Autre',customMatos)"><i class="icon-plus"></i></span>
+                			     
+                			 </li>
+                			 <li></li>
+                    </ul>
+                  </div>
+                    </div>
+
+                    
+           
             </fieldset>
             <fieldset>             
                 <legend>Signalétique</legend>
@@ -201,10 +319,12 @@ function Ctrl($scope){
                  <ul>
                     <li ng-repeat="h in horaires">   
                           <select class="input-medium" name="assomaker_animbundle_animationtype[entity][horaires][{%raw%}{{$index}}{% endraw %}][jour]" ng-model="h.jour">
+                              <option>Mercredi</option>  
                               <option>Jeudi</option>
                               <option>Vendredi</option>
                               <option>Samedi</option>
-                              <option>Dimanche</option>                              
+                              <option>Dimanche</option>
+                              <option>Lundi</option>   
                           </select>
                           <select class="input-small" name="assomaker_animbundle_animationtype[entity][horaires][{%raw%}{{$index}}{% endraw %}][debut]" ng-model="h.debut">
                             {% for i in 7..23 %}
@@ -275,14 +395,18 @@ function Ctrl($scope){
 		        {% endif %}
 		        {% if is_granted('ROLE_ADMIN') %}
 		        	{% if entity.statut == 1 %}
+		        	    {% if entity.validLog %}
 		                <button class="btn btn-success" type="submit" name="action" value="validate"><i class="icon-ok"></i> Valider la tâche</button>
+		                {% else %}
+		                <button class="btn btn-warning" type="submit" name="action" value="validate"><i class="icon-ok"></i> Valider la tâche sans vérification logistique</button>
+		                {% endif %}
 		            {% endif %}
 		            {% if entity.statut >= 1  %}
-		                 <button class="btn btn-warning" type="submit" name="action" value="reject"><i class="icon-remove"></i> Rejeter la tâche</button>
+		                 <button class="btn btn-danger" type="submit" name="action" value="reject"><i class="icon-remove"></i> Rejeter la tâche</button>
 		            {% endif %}
 		        {% endif %}
 		        {% if entity.statut != -1  %}
-		        	<button class="btn btn-danger" type="submit" name="action" value="delete"><i class="icon-remove"></i> Supprimer la tâche</button>
+		        	<button class="btn btn-inverse" type="submit" name="action" value="delete"><i class="icon-remove"></i> Supprimer la tâche</button>
 		        {% endif %}
 		        {% if entity.statut == -1 %}
 		        	<button class="btn btn-inverse" type="submit" name="action" value="restore">Restaurer la fiche</button>

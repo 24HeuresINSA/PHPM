@@ -40,7 +40,7 @@ class AnimationType extends AbstractType
 				'class' => 'AssoMakerBaseBundle:Orga',
 				'query_builder' => function(OrgaRepository $or)use($minConfianceResp){return $or->findAllWithConfianceValueMin($minConfianceResp);}))
                 
-            ->add('equipe')
+            ->add('equipe','entity',array('label'=>'Équipe','class' => 'AssoMakerBaseBundle:Equipe'))
             ->add('type', 'choice',array('label'=>'Type','choices'=>Animation::$animTypes))
             
         ;
@@ -65,14 +65,17 @@ class AnimationType extends AbstractType
             ->add('animGosses',null,array('label'=>'Anim pour les gosses'))
             ->add('besoinSecu',null,array('label'=>'Dispositif de sécurité particulier'))
             ->add('besoinPass',null,array('label'=>'Besoin de pass'))
-            ->add('detailSecu',null,array('label'=>'Détails'))
+            ->add('detailSecu',null,array('label'=>'Détails','attr'=>array('placeholder'=>'Description du dispositif de sécurité à mettre en place (AS, barrièrage, ERP spécial, autorisation spéciale, types de risques, etc.)')))
             ->add('besoinSigna',null,array('label'=>'Besoin de signalétique'))
-            ->add('detailSigna',null,array('label'=>'Détails'))
+            ->add('detailSigna',null,array('label'=>'Desctiption du dispositif','attr'=>array('placeholder'=>'Texte à mettre sur les panneaux, nombre, etc')))
             ->add('horaires','hidden')
+            ->add('materiel','hidden')
+            ->add('lieuDepotLog', 'choice',array('label'=>'Lieu de dépôt du matériel','choices'=>Animation::$lieuxDepotLog, 'required'=>false))
             ;
             $builder->add('commentaire','textarea',array('label'=>'Ajouter un commentaire','required'=>false));
         }
     }
+    
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
