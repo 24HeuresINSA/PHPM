@@ -27,9 +27,10 @@ class AnimationType extends AbstractType
         
         $minConfianceResp = $this->config->getValue('manifestation_orga_responsableconfiancemin');
         
+        $a = $builder->create('entity', 'form', array('label' => " ", 'data_class' => 'AssoMaker\AnimBundle\Entity\Animation'));
+        $builder->add($a);
         
-        $builder
-            ->add('nom',null,array('label'=>'Nom'))
+        $a  ->add('nom',null,array('label'=>'Nom'))
             ->add('responsable','entity',array(
                 'label'=>'Responsable',
 				'class' => 'AssoMakerBaseBundle:Orga',
@@ -41,10 +42,11 @@ class AnimationType extends AbstractType
                 
             ->add('equipe')
             ->add('type', 'choice',array('label'=>'Type','choices'=>Animation::$animTypes))
+            
         ;
         
         if(!$this->create){
-            $builder            
+            $a            
             ->add('extNom',null,array('label'=>'Nom'))
             ->add('extType', 'choice',array('label'=>'Type','choices'=>Animation::$extTypes))
             ->add('extTelephone',null,array('label'=>'Téléphone'))
@@ -61,16 +63,20 @@ class AnimationType extends AbstractType
             ->add('description',null,array('label'=>'Description de l\'animation'))
             ->add('animPhare',null,array('label'=>'Anim Phare'))
             ->add('animGosses',null,array('label'=>'Anim pour les gosses'))
+            ->add('besoinSecu',null,array('label'=>'Dispositif de sécurité particulier'))
+            ->add('besoinPass',null,array('label'=>'Besoin de pass'))
+            ->add('detailSecu',null,array('label'=>'Détails'))
+            ->add('besoinSigna',null,array('label'=>'Besoin de signalétique'))
+            ->add('detailSigna',null,array('label'=>'Détails'))
             ->add('horaires','hidden')
             ;
+            $builder->add('commentaire','textarea',array('label'=>'Ajouter un commentaire','required'=>false));
         }
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'AssoMaker\AnimBundle\Entity\Animation'
-        ));
+
     }
 
     public function getName()

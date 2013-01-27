@@ -2,6 +2,10 @@
 
 namespace AssoMaker\AnimBundle\Entity;
 
+use Symfony\Component\Validator\Constraints\DateTime;
+
+use AssoMaker\BaseBundle\Entity\Orga;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -188,6 +192,42 @@ class Animation
      * 
      */
     protected $horaires = array(array('jour'=>'Samedi','debut'=>'10h00','fin'=>'18h00'),array('jour'=>'Dimanche','debut'=>'10h00','fin'=>'18h00'));
+    
+    /**
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $besoinSecu;
+    
+    /**
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $besoinPass;
+    
+    /**
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $detailSecu;
+    
+    /**
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $besoinSigna;
+    
+    /**
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $detailSigna;
+        
+    /**
+     * @ORM\Column(type="array")
+     *
+     */
+    protected $commentaires = array();
     
     
     
@@ -776,5 +816,150 @@ class Animation
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set commentaires
+     *
+     * @param array $commentaires
+     * @return Animation
+     */
+    public function setCommentaires($commentaires)
+    {
+        $this->commentaires = $commentaires;
+    
+        return $this;
+    }
+
+    /**
+     * Get commentaires
+     *
+     * @return array 
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
+    }
+    
+    public function addCommentaire(Orga $auteur, $texte){
+        
+        $this->commentaires[]=array('auteur'=>$auteur->__toString(),
+                                    'texte'=>$texte,
+                                    'date'=>(new \DateTime()));
+    }
+
+    /**
+     * Set besoinSecu
+     *
+     * @param boolean $besoinSecu
+     * @return Animation
+     */
+    public function setBesoinSecu($besoinSecu)
+    {
+        $this->besoinSecu = $besoinSecu;
+    
+        return $this;
+    }
+
+    /**
+     * Get besoinSecu
+     *
+     * @return boolean 
+     */
+    public function getBesoinSecu()
+    {
+        return $this->besoinSecu;
+    }
+
+    /**
+     * Set detailSecu
+     *
+     * @param string $detailSecu
+     * @return Animation
+     */
+    public function setDetailSecu($detailSecu)
+    {
+        $this->detailSecu = $detailSecu;
+    
+        return $this;
+    }
+
+    /**
+     * Get detailSecu
+     *
+     * @return string 
+     */
+    public function getDetailSecu()
+    {
+        return $this->detailSecu;
+    }
+
+    /**
+     * Set besoinSigna
+     *
+     * @param boolean $besoinSigna
+     * @return Animation
+     */
+    public function setBesoinSigna($besoinSigna)
+    {
+        $this->besoinSigna = $besoinSigna;
+    
+        return $this;
+    }
+
+    /**
+     * Get besoinSigna
+     *
+     * @return boolean 
+     */
+    public function getBesoinSigna()
+    {
+        return $this->besoinSigna;
+    }
+
+    /**
+     * Set detailSigna
+     *
+     * @param string $detailSigna
+     * @return Animation
+     */
+    public function setDetailSigna($detailSigna)
+    {
+        $this->detailSigna = $detailSigna;
+    
+        return $this;
+    }
+
+    /**
+     * Get detailSigna
+     *
+     * @return string 
+     */
+    public function getDetailSigna()
+    {
+        return $this->detailSigna;
+    }
+
+    /**
+     * Set besoinPass
+     *
+     * @param \pass $besoinPass
+     * @return Animation
+     */
+    public function setBesoinPass(\pass $besoinPass)
+    {
+        $this->besoinPass = $besoinPass;
+    
+        return $this;
+    }
+
+    /**
+     * Get besoinPass
+     *
+     * @return \pass 
+     */
+    public function getBesoinPass()
+    {
+        return $this->besoinPass;
     }
 }

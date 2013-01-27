@@ -7,6 +7,7 @@
 
 function Ctrl($scope){
 
+	$scope.search={'equipeId':''};
 	$scope.animations={{ animations |raw }}
 	$scope.types = {{ types|raw }};
 	$scope.statut=0;
@@ -19,7 +20,7 @@ function Ctrl($scope){
 </script>
 
 <div class="row-fluid"  ng-app ng-controller="Ctrl">
-{%raw%}
+
     <div class="span2">
         <ul class="nav nav-list">
 			<li class="nav-header">Actions</li>
@@ -27,14 +28,17 @@ function Ctrl($scope){
 			    <a href="{{ path('anim_animation_new') }}"><i class="icon-plus"></i> Nouvelle Animation</a>
 			</li>
 			<li class="nav-header">Animations</li>
-			<li>
-			    <a>Celles de ma Com</a>
+			<li ng-class="{active: search.equipeId==''}">
+			    <a ng-click="search.equipeId=''">Toutes</a>
+			</li>
+			<li ng-class="{active: search.equipeId=={{ app.user.equipe.id }}}">
+			    <a ng-click="search.equipeId={{ app.user.equipe.id }}">Celles de ma Com</a>
 			</li>
 			<li class="nav-header">Rechercher</li>
 			<li>
 			    <a><input type="text" class="input-medium search-query" ng-model="search.$"></a>
 			</li>
-			<li class="nav-header">Statut {{ search.statut }}</li>
+			<li class="nav-header">Statut</li>
 			<li ng-class="{active: statut==0}">
 			    <a ng-click="statut=0" >Actives</a>
 			</li>
@@ -48,7 +52,7 @@ function Ctrl($scope){
     <div class="span10">
 
     
-    
+    {%raw%}
     <table class="table">
         <thead>
             <th>Animation</th>
@@ -66,11 +70,11 @@ function Ctrl($scope){
             </tr>
         </tbody>
     </table>
-   
+   {% endraw %}
 
     
     </div>
-     {% endraw %}
+     
 </div>
 
 {% endblock %}
