@@ -37,7 +37,7 @@ class AvancementController extends Controller
      * @Method("get")
      */
     public function contactsDataAction(Request $request) {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
             throw new AccessDeniedException();
         }
         $em = $this->getDoctrine()->getEntityManager();   
@@ -84,7 +84,7 @@ class AvancementController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $config  =$e=$this->get('config.extension');
         $user = $this->get('security.context')->getToken()->getUser();
-        $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+        $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
         
         $entity  = new Avancement();
         if ($this->get('request')->getMethod() == 'GET') {        
@@ -135,7 +135,7 @@ class AvancementController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $config = $e=$this->get('config.extension');
         $entity = $em->getRepository('AssoMakerSponsoBundle:Avancement')->find($id);
-        $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+        $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
     
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Contact entity.');
@@ -192,7 +192,7 @@ class AvancementController extends Controller
                 
         if($action=='valid'){
             
-            if(($statut==1 || $statut==5|| $statut==7)&&(false === $this->get('security.context')->isGranted('ROLE_ADMIN')) ){
+            if(($statut==1 || $statut==5|| $statut==7)&&(false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) ){
                     throw new AccessDeniedException();
             }
                 
@@ -207,7 +207,7 @@ class AvancementController extends Controller
         
         if($action=='invalid'){
         
-            if(!($statut==1 || $statut==5|| $statut==7)||(false === $this->get('security.context')->isGranted('ROLE_ADMIN')) ){
+            if(!($statut==1 || $statut==5|| $statut==7)||(false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) ){
                 throw new AccessDeniedException();
             }
         
@@ -218,7 +218,7 @@ class AvancementController extends Controller
         
         if($action=='cancel'){
         
-            if((false === $this->get('security.context')->isGranted('ROLE_ADMIN')) ){
+            if((false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) ){
                 throw new AccessDeniedException();
             }
         

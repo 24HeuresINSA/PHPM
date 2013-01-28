@@ -121,7 +121,7 @@ class TacheController extends Controller
         $entity  = new Tache();
         $entity->setStatut(0);
         $request = $this->getRequest();
-        $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+        $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
         $user = $this->get('security.context')->getToken()->getUser();
         
         if($gid!=""){
@@ -161,7 +161,7 @@ class TacheController extends Controller
     	}
         $em = $this->getDoctrine()->getEntityManager();
         $config  =$this->get('config.extension');
-        $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+        $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
 	
         $entity = $em->getRepository('AssoMakerPHPMBundle:Tache')->find($id);
 
@@ -205,7 +205,7 @@ class TacheController extends Controller
     	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
     		throw new AccessDeniedException();
     	}
-        $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+        $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
         $em = $this->getDoctrine()->getEntityManager();
         $config  =$this->get('config.extension');
         $request = $this->getRequest();
@@ -370,10 +370,10 @@ class TacheController extends Controller
      */
     public function okaffectationAction($id)
     {
-	    if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+	    if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
 	    		throw new AccessDeniedException();
 	    	}
-    	$admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    	$admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
     	$em = $this->getDoctrine()->getEntityManager();
     	$config  =$this->get('config.extension');
     	$request = $this->getRequest();
@@ -415,7 +415,7 @@ class TacheController extends Controller
      */
     public function deleteAction($id)
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
         

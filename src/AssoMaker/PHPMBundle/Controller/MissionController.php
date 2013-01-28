@@ -28,7 +28,7 @@ class MissionController extends Controller
      */
     public function newAction()
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
         $entity = new Mission();
@@ -49,7 +49,7 @@ class MissionController extends Controller
      */
     public function createAction()
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
         $entity  = new Mission();
@@ -80,7 +80,7 @@ class MissionController extends Controller
      */
     public function editAction($id)
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
         $em = $this->getDoctrine()->getEntityManager();
@@ -108,7 +108,7 @@ class MissionController extends Controller
      */
     public function updateAction($id)
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
         $em = $this->getDoctrine()->getEntityManager();
@@ -147,7 +147,7 @@ class MissionController extends Controller
     public function deleteAction($id)
     {
 
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
        	$em = $this->getDoctrine()->getEntityManager();

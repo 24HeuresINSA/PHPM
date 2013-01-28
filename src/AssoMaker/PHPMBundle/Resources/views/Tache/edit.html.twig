@@ -187,10 +187,10 @@
 			    {% if not rOnly %}
 			    	<button class="btn btn-primary" type="submit" name="action" value="save" >Enregistrer</button>
 					<button class="btn btn-info" type="submit" name="action" value="save_return" ><i class="icon-share-alt"></i> Enregistrer et revenir au groupe</button>
-			        {% if entity.statut == 0 and ((deadlinePassed==false) or is_granted('ROLE_ADMIN'))%}
+			        {% if entity.statut == 0 and ((deadlinePassed==false) or is_granted('ROLE_HUMAIN'))%}
 			            <button class="btn btn-success" type="submit" name="action" value="submit_validation"><i class="icon-eye-open"></i> Demander la validation</button>
 			        {% endif %}
-			        {% if is_granted('ROLE_ADMIN') %}
+			        {% if is_granted('ROLE_HUMAIN') %}
 			        	{% if entity.statut == 1 %}
 			                <button class="btn btn-success" type="submit" name="action" value="validate"><i class="icon-ok"></i> Valider la tâche</button>
 			            {% endif %}
@@ -205,11 +205,11 @@
 			        	<button class="btn btn-inverse" type="submit" name="action" value="restore">Restaurer la fiche</button>
 			     	{% endif %}
 			     {% else %}
-			     	{% if is_granted('ROLE_ADMIN') and entity.statut == 3 %}
+			     	{% if is_granted('ROLE_HUMAIN') and entity.statut == 3 %}
 			     		<a class="btn  btn-danger apopover" href="{{ path('creneaumaker_deoktache', { 'id': entity.id }) }}" rel="popover" data-content="Cette tâche à peut-être déjà été affectée." data-original-title="Attention"> Modifier la tâche</a>
 			     	{% endif %}
 				{% endif %}
-				{% if entity.statut >= 2  and is_granted('ROLE_ADMIN')%}
+				{% if entity.statut >= 2  and is_granted('ROLE_HUMAIN')%}
 			                 <button class="btn btn-success" type="submit" name="action" value="creneaumaker"><i class="icon-arrow-right"></i> Ouvrir dans CréneauMaker</button>
 			    {% endif %}
 			</div>

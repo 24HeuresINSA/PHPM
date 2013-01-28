@@ -109,7 +109,7 @@
 	</div>	
 	<div class="row-fluid">
 
-	    {% if is_granted('ROLE_ADMIN') %}	
+	    {% if is_granted('ROLE_HUMAIN') %}	
 			<div class="span4">
 		        <h2>Impression des Plannings</h2>
 		       	<div class="alert alert-block alert-info fade in">
@@ -129,7 +129,7 @@
 	       </div>
 	    	{% endif %}
 	    	{% if (planning[0] is defined) and (is_granted('ROLE_USER')) %}	
-			<div class="span{% if is_granted('ROLE_ADMIN') %}8{% else %}12{% endif %}">
+			<div class="span{% if is_granted('ROLE_HUMAIN') %}8{% else %}12{% endif %}">
 	        	<h2>Planning prévisionnel</h2>
 	        		Planning valable du {{ debutPlanning | format_datetime('EEEE dd MMM Y HH:mm') }} au  {{ finPlanning | format_datetime('EEEE dd MMM Y HH:mm') }}.
 					{% include 'AssoMakerBaseBundle:Orga:planningTable.html.twig' with {'disponibilites': planning[0].disponibilites}%}

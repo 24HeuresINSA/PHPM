@@ -54,7 +54,7 @@
 				</fieldset>
 			</div>
 	    </div>
-	    {% if is_granted('ROLE_ADMIN') %}
+	    {% if is_granted('ROLE_HUMAIN') %}
 		    <div class="row-fluid">
 				<div class="span12 well">
 					<fieldset>
@@ -74,7 +74,7 @@
 	    <div class="btn-toolbar">
 	        <button class="btn btn-primary" type="submit">Enregistrer</button>
 	        
-			{% if is_granted('ROLE_ADMIN') %}
+			{% if is_granted('ROLE_HUMAIN') %}
 		        <a class="btn" href="{{ path('orga_inputdispos', { 'id': entity.id }) }}"><i class="icon-calendar"></i>Disponibilités</a>
 				<a class="btn" href="{{ path('orga_affectation', { 'orga_id': entity.id }) }}"><i class="icon-book"></i>Affecter</a>
 				<a class="btn" href="{{ path('orga_print', { 'orgaid': entity.id })  }}"><i class="icon-print"></i> Imprimer le planning</a>	
@@ -91,7 +91,7 @@
 {% endblock %}
 
 {% block actions %}
-{% if is_granted('ROLE_ADMIN') %}
+{% if is_granted('ROLE_HUMAIN') %}
 {{ parent() }}
 {% else %}
 {% endif %}

@@ -28,7 +28,7 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function indexAction()
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
     	$request = $this->get('request');
@@ -36,7 +36,7 @@ class DisponibiliteInscriptionController extends Controller
     	$param = $request->request->all();
         $em = $this->getDoctrine()->getEntityManager();
         $config=$this->get('config.extension');
-        $admin=$this->get('security.context')->isGranted('ROLE_ADMIN');
+        $admin=$this->get('security.context')->isGranted('ROLE_HUMAIN');
         $entitiesQuery="SELECT d, o FROM AssoMakerPHPMBundle:DisponibiliteInscription d LEFT JOIN d.orgas o ORDER BY d.debut"; 
 
         $entities = $em->createQuery($entitiesQuery)->getResult();
@@ -180,7 +180,7 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function missionsAction()
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
     	$em = $this->getDoctrine()->getEntityManager();
@@ -198,7 +198,7 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function showAction($id)
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
         $em = $this->getDoctrine()->getEntityManager();
@@ -224,7 +224,7 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function newAction()
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
         $entity = new DisponibiliteInscription();
@@ -245,7 +245,7 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function createAction()
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
         $entity  = new DisponibiliteInscription();
@@ -276,7 +276,7 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function editAction($id)
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
         $em = $this->getDoctrine()->getEntityManager();
@@ -306,7 +306,7 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function updateAction($id)
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
         $em = $this->getDoctrine()->getEntityManager();
@@ -344,7 +344,7 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function deleteAction($id)
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
             $em = $this->getDoctrine()->getEntityManager();
@@ -371,7 +371,7 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function statsAction($permis)
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
         $em = $this->getDoctrine()->getEntityManager();
@@ -392,7 +392,7 @@ class DisponibiliteInscriptionController extends Controller
      */
     public function arrayAction()
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
         $em = $this->getDoctrine()->getEntityManager();

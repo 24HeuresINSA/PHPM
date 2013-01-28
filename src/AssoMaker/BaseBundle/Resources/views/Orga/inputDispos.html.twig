@@ -84,7 +84,7 @@
     <form ng-app ng-controller="Ctrl" {% if (app.request.get('new')==true) %}onsubmit="javascript:setBunload(false);"{% endif %} action="{{ path('orga_inputdispos',{'id':orga.id }) }}" method="post" {{ form_enctype(form) }}>
 	    <div class="row-fluid">   
 	        <div class="well">    
-	         	{% if is_granted('ROLE_ADMIN') %}
+	         	{% if is_granted('ROLE_HUMAIN') %}
 	         		<h1>Disponibilités de {{ orga.prenom }} {{ orga.nom }}</h1>
 	         	{% else %}
 	         		<h1>Tes disponibilités</h1>
@@ -124,7 +124,7 @@
 					    			<input class="shiftkeybox"type="checkbox" name="phpm_bundle_inputdispostype[disponibiliteInscriptionItems][{{ e.id }}]"
 					    			id="phpm_bundle_inputdispostype_disponibiliteInscriptionItems_{{ e.id }}" value="{{ e.id }}"
 					    			{% if e in orga.disponibilitesInscription %}checked="checked"{% endif %} 
-					    			{% if ((e.statut == 0) or ((e.statut==1) and (e in orga.disponibilitesInscription))or (e.debut.timestamp - now.timestamp < 0)) and not is_granted('ROLE_ADMIN') %}disabled{% endif %}
+					    			{% if ((e.statut == 0) or ((e.statut==1) and (e in orga.disponibilitesInscription))or (e.debut.timestamp - now.timestamp < 0)) and not is_granted('ROLE_HUMAIN') %}disabled{% endif %}
 					    			ng-model="dispos[{{ e.id }}]"
 					    			>
 					               </label></div>

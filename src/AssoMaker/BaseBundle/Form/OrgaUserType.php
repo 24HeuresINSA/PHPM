@@ -2,6 +2,8 @@
 
 namespace AssoMaker\BaseBundle\Form;
 
+use AssoMaker\BaseBundle\Entity\Orga;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use AssoMaker\BaseBundle\Entity\EquipeRepository;
@@ -92,7 +94,7 @@ class OrgaUserType extends AbstractType
     	if($this->admin){
         $builder
 			->add('statut', 'choice',array('choices'=>array('0'=>'Inscrit','1'=>'Validé','2'=>'Complétement affecté')))
-			->add('privileges','choice',array('choices'=>array('0'=>'Visiteur','1'=>'Orga', '2'=>'Admin')))
+			->add('privileges','choice',array('choices'=>Orga::$privilegesTypes))
 			->add('equipe','entity',array('label'=>'Équipe','class' => 'AssoMakerBaseBundle:Equipe'))
 	        ;
     	}

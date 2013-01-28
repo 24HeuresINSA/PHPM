@@ -242,7 +242,7 @@ class ConfigController extends Controller {
 
 		$initiale = $em->getRepository('AssoMakerPHPMBundle:Config')
 				->findOneByField('phpm_config_initiale');
-		$admin=$this->get('security.context')->isGranted('ROLE_ADMIN');
+		$admin=$this->get('security.context')->isGranted('ROLE_HUMAIN');
 
 		if (!(!$initiale)
 				& !$admin) {
@@ -327,7 +327,7 @@ COMMIT;
 	public function manifAction() {
 		$request = $this->get('request');
 		$em = $this->getDoctrine()->getEntityManager();
-		$admin=$this->get('security.context')->isGranted('ROLE_ADMIN');
+		$admin=$this->get('security.context')->isGranted('ROLE_HUMAIN');
 		$config = $e=$this->get('config.extension');
 	
 		

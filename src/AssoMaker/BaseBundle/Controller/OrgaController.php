@@ -49,7 +49,7 @@ class OrgaController extends Controller
      */
     public function affectationAction()
     {
-     if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+     if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
         throw new AccessDeniedException();
         }
         
@@ -313,12 +313,12 @@ class OrgaController extends Controller
             throw $this->createNotFoundException('Unable to find Orga entity.');
         }
         
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser() != $entity) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN') && $user = $this->get('security.context')->getToken()->getUser() != $entity) {
             throw new AccessDeniedException();
         }
         $confianceCode=$entity->getEquipe()->getConfiance()->getCode();
         $config = $e=$this->get('config.extension');
-        $editForm   = $this->createForm(new OrgaUserType($this->get('security.context')->isGranted('ROLE_ADMIN'),$config,$confianceCode), $entity);
+        $editForm   = $this->createForm(new OrgaUserType($this->get('security.context')->isGranted('ROLE_HUMAIN'),$config,$confianceCode), $entity);
         
         
         if ($this->get('request')->getMethod() == 'POST') {
@@ -351,7 +351,7 @@ class OrgaController extends Controller
      */
     public function deleteAction($id)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
             throw new AccessDeniedException();
         }
        
@@ -378,7 +378,7 @@ class OrgaController extends Controller
     */
     public function changeStatutAction($id, $statut)
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
     	 
@@ -438,7 +438,7 @@ class OrgaController extends Controller
             throw $this->createNotFoundException('Unable to find Orga entity.');
         }
         
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user != $orga) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN') && $user != $orga) {
             throw new AccessDeniedException();
         }
         $confianceOrga=$orga->getEquipe()->getConfiance()->getValeur();
@@ -497,7 +497,7 @@ class OrgaController extends Controller
 	            {
 	            
 	            	if(!$submittedDI->contains($di)){
-	            		if($orga->getDisponibilitesInscription()->contains($di) && ($this->get('security.context')->isGranted('ROLE_ADMIN')) && ($di->getDebut() > new \DateTime())){
+	            		if($orga->getDisponibilitesInscription()->contains($di) && ($this->get('security.context')->isGranted('ROLE_HUMAIN')) && ($di->getDebut() > new \DateTime())){
 	            			$orga->removeDisponibiliteInscription($di);
 	            		}
 	            	}
@@ -508,7 +508,7 @@ class OrgaController extends Controller
 	            {
 	                 
 	            	if($submittedDI->contains($di)){
-	            		if(!$orga->getDisponibilitesInscription()->contains($di) && ($this->get('security.context')->isGranted('ROLE_ADMIN') || ($di->getStatut() > 0)) && ($di->getDebut() > new \DateTime())){
+	            		if(!$orga->getDisponibilitesInscription()->contains($di) && ($this->get('security.context')->isGranted('ROLE_HUMAIN') || ($di->getStatut() > 0)) && ($di->getDebut() > new \DateTime())){
 	            			$orga->addDisponibiliteInscription($di);
 	            			$di->addOrga($orga);
 	            		}
@@ -623,7 +623,7 @@ class OrgaController extends Controller
 	    $em = $this->getDoctrine()->getEntityManager();
         $config = $e=$this->get('config.extension');
         
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser()->getId() != $orgaid) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN') && $user = $this->get('security.context')->getToken()->getUser()->getId() != $orgaid) {
         	throw new AccessDeniedException();
         }
         
@@ -668,7 +668,7 @@ class OrgaController extends Controller
 		$config = $e=$this->get('config.extension');
 		
 	
-		if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') ) {
+		if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN') ) {
 			throw new AccessDeniedException();
 		}
 		$request = $this->get('request');
@@ -870,7 +870,7 @@ class OrgaController extends Controller
 // 	public function genDispoAction($id)
 // 	{
 	
-// 		if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+// 		if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
 // 			throw new AccessDeniedException();
 // 		}
 		
@@ -927,7 +927,7 @@ class OrgaController extends Controller
 	public function convertRespAction()
 	{
 	
-		if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+		if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
 			throw new AccessDeniedException();
 		}
 	
@@ -969,7 +969,7 @@ class OrgaController extends Controller
 	public function affectHintsAction($id)
 	{
 	
-		if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+		if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
 			throw new AccessDeniedException();
 		}
 		$em = $this->getDoctrine()->getEntityManager();
@@ -1042,7 +1042,7 @@ class OrgaController extends Controller
 	*/
 	public function exportTableauAction()
 	{
-		if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+		if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
 			throw new AccessDeniedException();
 		}
 	
@@ -1093,7 +1093,7 @@ class OrgaController extends Controller
 	    $em = $this->getDoctrine()->getEntityManager();
 	    $config = $e=$this->get('config.extension');
 	
-	    if (false === $this->get('security.context')->isGranted('ROLE_ADMIN') && $user = $this->get('security.context')->getToken()->getUser()->getId() != $orgaid) {
+	    if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN') && $user = $this->get('security.context')->getToken()->getUser()->getId() != $orgaid) {
 	        throw new AccessDeniedException();
 	    }
 	

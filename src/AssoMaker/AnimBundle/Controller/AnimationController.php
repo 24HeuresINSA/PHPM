@@ -47,7 +47,7 @@ class AnimationController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $config = $e = $this->get('config.extension');
         $user = $this->get('security.context')->getToken()->getUser();        
-        $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');        
+        $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');        
     
         $entity = new Animation();
         $entity->setStatut(0);
@@ -83,7 +83,7 @@ class AnimationController extends Controller
         $config = $e=$this->get('config.extension');
         $entity = $em->getRepository('AssoMakerAnimBundle:Animation')->find($id);
         $user = $this->get('security.context')->getToken()->getUser();     
-        $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+        $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
         $request = $this->getRequest();
         $param = $request->request->all();
         

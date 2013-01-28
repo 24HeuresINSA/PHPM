@@ -108,7 +108,7 @@ class GroupeTacheController extends Controller
     	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
     		throw new AccessDeniedException();
     	}
-        $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+        $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
         $em = $this->getDoctrine()->getEntityManager();
         $config  =$this->get('config.extension');
         $user = $this->get('security.context')->getToken()->getUser();
@@ -140,7 +140,7 @@ class GroupeTacheController extends Controller
         $config  =$this->get('config.extension');
         $entity  = new GroupeTache();
         $request = $this->getRequest();
-        $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+        $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
         $user = $this->get('security.context')->getToken()->getUser();
             
         $entity->setResponsable($user);
@@ -173,7 +173,7 @@ class GroupeTacheController extends Controller
     	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
     		throw new AccessDeniedException();
     	}
-        $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+        $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
         $em = $this->getDoctrine()->getEntityManager();
         $config  =$this->get('config.extension');
         $em = $this->getDoctrine()->getEntityManager();
@@ -207,7 +207,7 @@ class GroupeTacheController extends Controller
     	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
     		throw new AccessDeniedException();
     	}
-        $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+        $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
         $config  =$this->get('config.extension');
@@ -273,7 +273,7 @@ class GroupeTacheController extends Controller
      */
     public function deleteAction($id)
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
         $form = $this->createDeleteForm($id);

@@ -24,7 +24,7 @@ class EquipeController extends Controller
      */
     public function indexAction()
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
         $em = $this->getDoctrine()->getEntityManager();

@@ -17,7 +17,7 @@
 
 {% for o in respResult %}
  <h2>{{ entitiesMacro.orga(o) }}</h2>
- {% if is_granted('ROLE_ADMIN') %}
+ {% if is_granted('ROLE_HUMAIN') %}
  <div class="btn-toolbar">
 <a class="btn btn-primary" href="{{ path('orga_affectHint', { 'id': o.id })  }}"> Auto affecter les créneaux de l'orga</a>
 <a class="btn" href="{{ path('orga_edit', { 'id': o.id })  }}"><i class="icon-pencil"></i> Éditer</a>

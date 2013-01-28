@@ -62,7 +62,7 @@
 	{% if entity.statut == 0 %}
 		    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="icon-arrow-right"></i> Soumettre le dossier à validation</button>
 		{% endif %}
-		{% if entity.statut == 1 and is_granted('ROLE_ADMIN') %}
+		{% if entity.statut == 1 and is_granted('ROLE_HUMAIN') %}
 		    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="icon-arrow-right"></i> Valider le dossier</button>
 		    <button type="submit" name="action" value="invalid" class="btn btn-warning" ><i class="icon-arrow-left"></i> Invalider le dossier</button>
 		{% endif %}
@@ -75,13 +75,13 @@
 		{% if entity.statut == 4 %}
 		    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="icon-arrow-right"></i> Négociations terminées</button>
 		{% endif %}
-		{% if entity.statut == 5 and is_granted('ROLE_ADMIN') %}
+		{% if entity.statut == 5 and is_granted('ROLE_HUMAIN') %}
 		    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="icon-arrow-right"></i> Convention signée</button>
 		{% endif %}
 		{% if entity.statut == 6 %}
 		    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="icon-arrow-right"></i> Infos transmises à l'orga</button>
 		{% endif %}
-		{% if entity.statut == 7 and is_granted('ROLE_ADMIN')%}
+		{% if entity.statut == 7 and is_granted('ROLE_HUMAIN')%}
 		    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="icon-arrow-right"></i> Valider</button>
 		    <button type="submit" name="action" value="invalid" class="btn btn-warning" ><i class="icon-arrow-left"></i> Invalider</button>
 		{% endif %}
@@ -94,7 +94,7 @@
 		{% if entity.statut == 10 or entity.statut == -1 %}
 		    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="icon-arrow-right"></i> Relancer le projet</button>
 		{% endif %}
-		{% if entity.statut != -1 and is_granted('ROLE_ADMIN') %}
+		{% if entity.statut != -1 and is_granted('ROLE_HUMAIN') %}
 		    <button type="submit" name="action" value="cancel" class="btn btn-danger" ><i class="icon-remove"></i> Annuler le projet</button>
 		{% endif %}
 	</div>

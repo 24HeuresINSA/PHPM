@@ -393,7 +393,7 @@ function Ctrl($scope){
 	            {% if entity.statut == 0 %}
 		            <button class="btn btn-success" type="submit" name="action" value="submit_validation"><i class="icon-eye-open"></i> Demander la validation</button>
 		        {% endif %}
-		        {% if is_granted('ROLE_ADMIN') %}
+		        {% if is_granted('ROLE_HUMAIN') %}
 		        	{% if entity.statut == 1 %}
 		        	    {% if entity.validLog %}
 		                <button class="btn btn-success" type="submit" name="action" value="validate"><i class="icon-ok"></i> Valider la tâche</button>

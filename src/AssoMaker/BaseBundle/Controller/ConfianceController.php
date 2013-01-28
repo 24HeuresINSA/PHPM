@@ -58,7 +58,7 @@ class ConfianceController extends Controller
      */
     public function showAction($id)
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
         $em = $this->getDoctrine()->getEntityManager();
@@ -84,7 +84,7 @@ class ConfianceController extends Controller
      */
     public function newAction()
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
         $entity = new Confiance();
@@ -105,7 +105,7 @@ class ConfianceController extends Controller
      */
     public function createAction()
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
         $entity  = new Confiance();
@@ -136,7 +136,7 @@ class ConfianceController extends Controller
      */
     public function editAction($id)
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
         $em = $this->getDoctrine()->getEntityManager();
@@ -166,7 +166,7 @@ class ConfianceController extends Controller
      */
     public function updateAction($id)
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
         $em = $this->getDoctrine()->getEntityManager();

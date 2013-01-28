@@ -35,7 +35,7 @@ class CreneauMakerController extends Controller
     */
     public function homeAction()
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
     	return array();
@@ -47,12 +47,12 @@ class CreneauMakerController extends Controller
      */
     public function tacheAction($id)
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
     	$em = $this->getDoctrine()->getEntityManager();
     	$config  =$this->get('config.extension');
-    	$admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    	$admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
     	
     	
     	
@@ -117,12 +117,12 @@ class CreneauMakerController extends Controller
      */
     public function genererphAction($id)
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
     	$em = $this->getDoctrine()->getEntityManager();
     	$config  =$this->get('config.extension');
-    	$admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    	$admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
     	$validator = $this->get('validator');
     	
     	 
@@ -185,12 +185,12 @@ class CreneauMakerController extends Controller
      */
     public function deleteallphAction($id)
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
     	$em = $this->getDoctrine()->getEntityManager();
     	$config  =$this->get('config.extension');
-    	$admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    	$admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
     
     	$entity = $em->getRepository('AssoMakerPHPMBundle:PlageHoraire')->find($id);
     
@@ -218,13 +218,13 @@ class CreneauMakerController extends Controller
      */
     public function deoktacheAction($id)
     {
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
     	
     	$em = $this->getDoctrine()->getEntityManager();
     	$config  =$this->get('config.extension');
-    	$admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    	$admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
     	
     	$user = $this->get('security.context')->getToken()->getUser();
     

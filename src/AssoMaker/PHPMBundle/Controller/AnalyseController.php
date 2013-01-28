@@ -163,7 +163,7 @@ class AnalyseController extends Controller
     public function besoinsOrgaAction($plageId,$showBonusOrgas)
     {
     	
-    	if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
     		throw new AccessDeniedException();
     	}
     	 
@@ -329,7 +329,7 @@ class AnalyseController extends Controller
         
         ini_set("memory_limit","1024M");
          
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
             throw new AccessDeniedException();
         }
     

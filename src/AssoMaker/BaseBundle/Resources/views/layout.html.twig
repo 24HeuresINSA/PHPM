@@ -133,7 +133,7 @@
 					    </a>
 					    <ul class="dropdown-menu">
 				    		{{ _self.navBarItem('Liste','orga') }}
-				    		{% if is_granted('ROLE_ADMIN') %}
+				    		{% if is_granted('ROLE_HUMAIN') %}
 					    		{{ _self.navBarItem('Export Tableau','orga_export_tableau') }}
 					    		{{ _self.navBarItem('Export CSV','orga_export_csv') }}
 								{{ _self.navBarItem('Créneaux d\'inscription','disponibiliteinscription') }}
@@ -142,7 +142,7 @@
 							{% endif %}
 					    </ul>
 					</li>
-	       		{% if is_granted('ROLE_ADMIN') %}	
+	       		{% if is_granted('ROLE_HUMAIN') %}	
 	       			{{ _self.navBarItem('Affectation','orga_affectation') }}
 	       		{% endif %}
 	     		{% if is_granted('ROLE_USER') %}
@@ -152,7 +152,7 @@
 					      <b class="caret"></b>
 					    </a>
 					    <ul class="dropdown-menu">
-					    	{% if is_granted('ROLE_ADMIN') %}
+					    	{% if is_granted('ROLE_HUMAIN') %}
 							{{ _self.navBarItem('Fiches tâches','tache') }}
 							{{ _self.navBarItem('Groupes de tâches','groupetache') }}
 							{% else %}
@@ -172,14 +172,14 @@
 							{{ _self.navBarItem('Statistiques','analyse_stats') }}
 							{{ _self.navBarItem('Utilisation du matériel','analyse_usageMateriel') }}
 							{{ _self.navBarItem('Orgas requis','analyse_plagesorga') }}
-							{% if is_granted('ROLE_ADMIN') %}
+							{% if is_granted('ROLE_HUMAIN') %}
 							{{ _self.navBarItem('Besoins en orgas','analyse_besoinsorga') }}
 							{{ _self.navBarItem('Orgas affectés','analyse_taches') }}
 							{% endif %}
 					    </ul>
 					</li>
 					{{ _self.navBarItem('Mes Disponibilités','orga_inputdispos',{'id':app.user.id }) }}
-					{% if not is_granted('ROLE_ADMIN') %}
+					{% if not is_granted('ROLE_HUMAIN') %}
 					{{ _self.navBarItem('Recherche des conflits','analyse_plagesorga',{'orgaid': app.user.id}) }}
 					
 					{% endif %}
@@ -193,10 +193,10 @@
 	       			{% if app.user | accessTrombi %}
 	       			    {{ _self.navBarItem('Trombinoscope','orga_trombi') }}
 	       			{% endif %}
-                    {% if is_granted('ROLE_ADMIN') %}
+                    {% if is_granted('ROLE_HUMAIN') %}
                             {{ _self.navBarItem('Comptes Perso','comptesPerso') }}
 	       			{% endif %}
-	       			{% if is_granted('ROLE_ADMIN') %}
+	       			{% if is_granted('ROLE_HUMAIN') %}
 		       			{{ _self.navBarItem('Configuration','config') }}
 		       		{% endif %}
 		       		 

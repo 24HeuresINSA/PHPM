@@ -30,7 +30,7 @@ class ComptesPersoController extends Controller
      */
     public function comptesPersoAction(Request $request)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
             throw new AccessDeniedException();
         }
         $em = $this->getDoctrine()->getEntityManager();
@@ -56,7 +56,7 @@ class ComptesPersoController extends Controller
      */
     public function printAction(Request $request)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
             throw new AccessDeniedException();
         }
         $em = $this->getDoctrine()->getEntityManager();
@@ -77,7 +77,7 @@ class ComptesPersoController extends Controller
      */
     public function comptesPersoDataAction(Request $request)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
             throw new AccessDeniedException();
         }
         $em = $this->getDoctrine()->getEntityManager();
@@ -102,7 +102,7 @@ class ComptesPersoController extends Controller
      */
     public function comptesPersoProcessAction(Request $request)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
             $this->getResponse()->setStatusCode('404');
             return new Response();
         }
@@ -156,7 +156,7 @@ class ComptesPersoController extends Controller
      */
     public function transactionsDataAction(Request $request)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
             throw new AccessDeniedException();
         }
         $em = $this->getDoctrine()->getEntityManager();

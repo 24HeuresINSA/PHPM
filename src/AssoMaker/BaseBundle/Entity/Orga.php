@@ -21,6 +21,8 @@ use AssoMaker\PHPMBundle\Entity\Disponibilite;
  */
 class Orga implements UserInterface
 {
+    public static $privilegesTypes = array('Visiteur','Orga','Humain','Responsable Log','Responsable Sécurité');
+    
     /**
      * @var integer $id
      *
@@ -244,7 +246,7 @@ class Orga implements UserInterface
     
     /**
      * @ORM\Column(type="smallint", name="privileges")
-     * @Assert\Choice(choices = {"0", "1","2"})
+     * @Assert\Choice(choices = {"0", "1","2","3","4","5"})
      */
     protected $privileges;
     
@@ -526,9 +528,21 @@ class Orga implements UserInterface
 
     public function generateUserToken(){
     	 
-    	if($this->getPrivileges()==2)
+        if($this->getPrivileges()==5)
+        {
+            $options = array('ROLE_SUPER_ADMIN');
+        }        
+        elseif($this->getPrivileges()==4)
+        {
+            $options = array('ROLE_SECU');
+        }
+        elseif($this->getPrivileges()==3)
+        {
+            $options = array('ROLE_LOG');
+        }
+    	elseif($this->getPrivileges()==2)
     	{
-    		$options = array('ROLE_ADMIN');
+    		$options = array('ROLE_HUMAIN');
     	}
     	elseif($this->getPrivileges()==1)
     	{
@@ -546,7 +560,7 @@ class Orga implements UserInterface
 
     public function getRoles()
     {
-    	return array('ROLE_ADMIN');
+    	return array('ROLE_HUMAIN');
     }
     
     public function isEqualTo(UserInterface $user)
