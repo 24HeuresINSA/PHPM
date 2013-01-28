@@ -30,12 +30,13 @@ class AnimationController extends Controller
         $config = $e = $this->get('config.extension');
         $user = $this->get('security.context')->getToken()->getUser();
         
-        $animations = $em->createQuery("SELECT a.id, a.nom, a.statut, e.nom as equipe, e.id as equipeId, a.type, CONCAT(r.prenom, CONCAT(' ',r.nom)) as responsable FROM AssoMakerAnimBundle:Animation a JOIN a.responsable r JOIN a.equipe e ORDER BY a.statut DESC ")->getArrayResult();
+        $animations = $em->createQuery("SELECT a,r,e FROM AssoMakerAnimBundle:Animation a JOIN a.responsable r JOIN a.equipe e ORDER BY a.statut DESC ")->getArrayResult();
         return array('animations' => json_encode($animations),
                 'types'=>json_encode(Animation::$animTypes)
                 );
 
     }
+    
     
     /**
      *
@@ -84,17 +85,20 @@ class AnimationController extends Controller
         $entity = $em->getRepository('AssoMakerAnimBundle:Animation')->find($id);
         $user = $this->get('security.context')->getToken()->getUser();     
         $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
+        $log = $this->get('security.context')->isGranted('ROLE_LOG');
+        $secu = $this->get('security.context')->isGranted('ROLE_SECU');
         $request = $this->getRequest();
         $param = $request->request->all();
         
-       
-    
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Animation entity.');
         }
+        
+        $readOnly=(!($admin||$secu||$log) && ($entity->getStatut()>=1));
     
         $defaultValues = array('entity' => $entity, "commentaire" => '');
-        $editForm   = $this->createForm(new AnimationType($admin,$config,false), $defaultValues);
+        $editForm   = $this->createForm(new AnimationType($admin,$config,false,$readOnly), $defaultValues);
         
         $rawListeLieux = $em->createQuery("SELECT a.lieu FROM AssoMakerAnimBundle:Animation a WHERE a.lieu IS NOT NULL GROUP BY a.lieu")->getScalarResult();
         $listeLieux=array();
@@ -110,6 +114,9 @@ class AnimationController extends Controller
                       
     
             if ($editForm->isValid()) {
+                
+
+                
                 $data = $editForm->getData();
                 
                 $texteCommentaire = $data['commentaire'];
@@ -117,29 +124,42 @@ class AnimationController extends Controller
                 
                 if($param['action']=='submit_validation'){
                     $entity->setStatut(1);
-                    $texteCommentaire=$texteCommentaire."<b>&rarr;Fiche soumise à Validation.</b>";
+                    $texteCommentaire='<i class="icon-eye-open"></i> '.$texteCommentaire."<b>&rarr;Fiche soumise à validation.</b>";
                 }
                 
-                if($param['action']=='validate'){
+                if($admin && $param['action']=='validate'){
                     $entity->setStatut(2);
-                    $texteCommentaire=$texteCommentaire."<b>&rarr;Fiche validée.</b>";
+                    $texteCommentaire='<i class="icon-ok"></i> '.$texteCommentaire."<b>&rarr;Fiche validée.</b>";
                 }
                 
-                if($param['action']=='reject'){
+                if(($admin||$log || $secu) && $param['action']=='reject'){
                     $entity->setStatut(0);
-                    $texteCommentaire=$texteCommentaire."<b>&rarr;Fiche rejetée.</b>";
+                    $texteCommentaire='<i class="icon-remove"></i> '.$texteCommentaire."<b>&rarr;Fiche rejetée.</b>";
+                    $entity->setValidLog(false);
+                    $entity->setValidSecu(false);
                 }
                 
-                if($param['action']=='delete'){
+                if($entity->getStatut() <= 1 && $param['action']=='delete'){
                     $entity->setStatut(-1);                   
-                    $texteCommentaire=$texteCommentaire."<b>&rarr;Fiche supprimée.</b>";
+                    $texteCommentaire='<i class="icon-trash"></i> '.$texteCommentaire."<b>&rarr;Fiche supprimée.</b>";
                 }
-                if($param['action']=='restore'){
+                if($entity->getStatut() == -1 && $param['action']=='restore'){
                     $entity->setStatut(0);
                     $texteCommentaire=$texteCommentaire."<b>&rarr;Fiche restaurée.</b>";
                 }
                 
+                if($entity->getStatut() >= 1 && ($log) && $param['action']=='validateLog'){
+                    $entity->setValidLog(true);
+                    $texteCommentaire='<i class="icon-wrench"></i> '.$texteCommentaire."<b>&rarr;Partie logistique validée.</b>";
+                }
                 
+                
+                if($entity->getStatut() >= 1 && ($secu) && $param['action']=='validateSecu'){
+                    $entity->setValidSecu(true);
+                    $texteCommentaire='<i class="icon-bullhorn"></i> '.$texteCommentaire."<b>&rarr;Partie sécurité validée.</b>";
+                }
+                
+
                 
                 if($texteCommentaire!=''){
                     $entity->addCommentaire($user, $texteCommentaire);
@@ -155,7 +175,8 @@ class AnimationController extends Controller
         return array(
                 'entity'      => $entity,
                 'form'   => $editForm->createView(),
-                'listeLieux'=>json_encode($listeLieux)
+                'listeLieux'=>json_encode($listeLieux),
+                'readOnly'=>$readOnly
         );
     }
 }

@@ -29,7 +29,7 @@
         "trentrichardson/jquerytimepickeraddon":"1.0.3",
         "akzhan/jwysiwyg":"0.97",
         "sanisoft/shiftcheckbox":"1.0",
-        "angular/angularJS":"1.0.3",
+        "angular/angularJS":"1.0.4",
         "fortawesome/font-awesome":"3.0.2",
         "leafo/lessphp": "dev-master"
     },
@@ -98,9 +98,9 @@
             "type":"package",
             "package":{
                 "name":"angular/angularJS",
-                "version":"1.0.3",
+                "version":"1.0.4",
                 "dist":{
-                    "url":"http://code.angularjs.org/1.0.3/angular-1.0.3.zip",
+                    "url":"http://code.angularjs.org/1.0.4/angular-1.0.4.zip",
                     "type":"zip"
                 }
 

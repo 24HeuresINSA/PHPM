@@ -71,6 +71,12 @@ class Animation
     protected $validLog;
     
     /**
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $validSecu;
+    
+    /**
      * @var smallint $statut
      * @ORM\Column(type="smallint",nullable=true)
      */
@@ -1194,5 +1200,28 @@ class Animation
     public function getLieuDepotLog()
     {
         return $this->lieuDepotLog;
+    }
+
+    /**
+     * Set validSecu
+     *
+     * @param boolean $validSecu
+     * @return Animation
+     */
+    public function setValidSecu($validSecu)
+    {
+        $this->validSecu = $validSecu;
+    
+        return $this;
+    }
+
+    /**
+     * Get validSecu
+     *
+     * @return boolean 
+     */
+    public function getValidSecu()
+    {
+        return $this->validSecu;
     }
 }

@@ -16,18 +16,20 @@ class AnimationType extends AbstractType
     protected $admin;
     protected $create;
     protected $config;
+    protected $disabled;
     
-    function __construct($admin,$config,$create){
+    function __construct($admin,$config,$create,$disabled = false){
         $this->admin =$admin;
         $this->config=$config;
         $this->create=$create;
+        $this->disabled=$disabled;
     }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         
         $minConfianceResp = $this->config->getValue('manifestation_orga_responsableconfiancemin');
         
-        $a = $builder->create('entity', 'form', array('label' => " ", 'data_class' => 'AssoMaker\AnimBundle\Entity\Animation'));
+        $a = $builder->create('entity', 'form', array('disabled'=>$this->disabled,'label' => " ", 'data_class' => 'AssoMaker\AnimBundle\Entity\Animation'));
         $builder->add($a);
         
         $a  ->add('nom',null,array('label'=>'Nom'))
