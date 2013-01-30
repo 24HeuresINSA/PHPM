@@ -110,7 +110,7 @@ class AnimationController extends Controller
         if ($this->get('request')->getMethod() == 'POST') {
             $request = $this->getRequest();
             $editForm->bindRequest($request);
-            $data = $editForm->getData();
+
                       
     
             if ($editForm->isValid()) {

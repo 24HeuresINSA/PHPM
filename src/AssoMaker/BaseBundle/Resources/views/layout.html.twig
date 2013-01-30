@@ -107,7 +107,7 @@
     </head>
     <body>
     {% block body %}
-    
+    {% if  is_granted('ROLE_VISITOR')  %}
 	    <div class="navbar navbar-fixed-top">
 	      <div class="navbar-inner">
 	        <div class="container-fluid">
@@ -117,6 +117,7 @@
 	            <span class="icon-bar"></span>
 	          </a>
 	          <a class="brand" href="{{ path('base_accueil') }}">AssoMaker</a>
+	          
 	          <div class="nav-collapse collapse">
 	            <ul class="nav">
 	            {% if is_granted('ROLE_USER')  %}
@@ -214,9 +215,11 @@
 				    </form>
 	        	{% endif %}
 	          </div><!--/.nav-collapse -->
+	          
 	        </div>
 	      </div>
 	    </div>
+	    {% endif %}
     
 	        
 <div class="container-fluid">

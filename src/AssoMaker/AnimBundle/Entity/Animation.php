@@ -1224,4 +1224,9 @@ class Animation
     {
         return $this->validSecu;
     }
+    
+    
+    public function __toString(){
+        return $this->nom;
+    }
 }

@@ -1,0 +1,179 @@
+{% extends "AssoMakerBaseBundle::layout.html.twig"  %}
+
+
+{% block content %}
+
+<script type="text/javascript">
+
+function Ctrl($scope){
+
+	$scope.passesRestants= function(){
+		return $scope.maxPersonnes - $scope.personnes.length;
+	}
+	
+	$scope.addPass= function(){
+		if(($scope.maxPersonnes - $scope.personnes.length) >0){
+		$scope.personnes.push({'nom':''})
+		}
+
+	}
+
+	$scope.pp=[];
+	{% for n,p in entity.pointsPassage%}
+	{% if p=='true' %}
+	$scope.pp[{{ n }}]=true;
+	{% endif %}
+	{% endfor %}
+
+	
+	{% if entity.personnes|length >0 %}
+	$scope.personnes = {{ entity.personnes | json_encode()| raw}};
+	{% else %}
+	$scope.personnes = [{'nom':''}];
+	{% endif %}
+
+
+	$scope.maxPersonnes = {{ entity.maxPersonnes }};
+
+}
+</script>
+
+<form class="form-inline" action="{{ path('pass_pass_edit',{"id":entity.id,"code":entity.accessCode}) }}" method="post" {{ form_enctype(form) }} >
+    <div class="row-fluid" ng-app ng-controller="Ctrl">
+        
+            <div class="row-fluid">
+            <h1>Demande de laissez-passer <small>24 Heures de l'INSA</small></h1>
+
+            </div>	
+           {% if not is_granted('ROLE_SECU') %}     
+            <div class="row-fluid">
+                <div class="alert alert-info">
+                <h5>Instructions</h5>
+                {% if is_granted('ROLE_USER') %} 
+                <ol>
+                    <li>Préremplissez cette demande en renseignant toutes les infos que vous connaissez.</li>
+                    <li>Si l'entité (boîte, asso, etc) est susceptible de faire une demande pour plusieures personnes, envoyez-lui <a style="font-weight: bolder;" href="{{ path('pass_pass_edit',{"id":entity.id,"code":entity.accessCode}) }}">ce lien</a> en lui demandant de renseigner les différentes personnes qui auront besoin d'un pass.</li>
+                    <li>La personne va remplir ses infos et cliquer sur envoyer. Quand l'équipe sécurité aura validé le pass, la personne indiqué dans contact recevra un mail avec les instructions pour télécharger ses pass.</li>
+                </ol>
+                {% else %}   
+                <p>
+                Cette page web vous permet de réaliser en ligne votre demande de laissez-passer afin de pouvoir accéder au campus LyonTech - La Doua lors du festival des 24 heures de l'INSA.<br>
+                La majorité des champs ont été préremplis, il vous suffit de contrôler ces données.<br>
+                Ensuite, remplissez la partie "<em>Personnes devant bénéficier d'un laissez-passer</em>" en ajoutant autant de personnes que nécessaires.<br>
+                Quand vous avexz terminé, cliquez sur le bouton "<em>Soumettre la demande</em>"<br>
+                Vous receverez un email de confirmation si votre demande est acceptée.                
+                </p>
+                {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+     <div class="row-fluid">
+         <div class="span3">
+         <div class="row-fluid">
+         <legend>Informations sur le demandeur</legend>
+         {{ form_row(form.emailDemandeur) }}
+         {{ form_row(form.telephoneDemandeur) }}
+         </div>
+         
+         
+         <div class="row-fluid">
+         <legend>Points de passage</legend>
+         
+         <ul>
+         {% for n,p in points %}
+         <li><input type="hidden" name="assomaker_passsecubundle_passtype[pointsPassage][{{ n }}]" value="false" /><input id="{{ n }}" ng-model="pp[{{ n }}]" type="checkbox" {% if not is_granted('ROLE_USER') %}disabled {% endif %}name="assomaker_passsecubundle_passtype[pointsPassage][{{ n }}]" value="true"><label for="{{ n }}"> {{ p }}</label></li>
+        {% endfor %}
+         </ul>
+         </div>
+
+         </div>
+          <div class="span6" style="min-height:22em;">
+          {#background-image: url('')#}
+          <div style="position: absolute; z-index:-1;padding-left: .2em;"><img src="{{ asset("bundles/assomakerpasssecu/images/Plan37.png") }}"/></div> 
+          
+          {% for n,p in points %}
+          <div style="position: absolute;" ng-show="pp[{{ n }}]"><img src="{{ asset("bundles/assomakerpasssecu/images/PS"~(n+1)~".png") }}"/></div>
+          {% endfor %}
+          
+         
+         </div>
+          <div class="span3">
+          <legend>Informations supplémentaires</legend>
+              {{ form_row(form.validiteDebut) }}
+              {{ form_row(form.validiteFin) }}
+              <hr>
+              {{ form_row(form.infosSupplementaires) }}
+              {% if is_granted('ROLE_USER') %}
+              {{ form_row(form.animationLiee) }}              
+              {{ form_row(form.maxPersonnes,{'attr':{'ng-model':'maxPersonnes'}} ) }}
+              {% endif %}
+     
+         </div>
+     </div>
+     <div class="row-fluid">
+         <div class="span12">
+             <legend>Personnes devant bénéficier d'un laissez-passer</legend>
+             <p>
+                 <em>Mentionner une personne par ligne, préciser le nom et le prénom</em>
+             </p>
+
+             <ul>
+                <li ng-repeat="p in personnes">
+                    <div class="input-append">
+                       <input type="text" class="input-medium" name="assomaker_passsecubundle_passtype[personnes][{%raw%}{{$index}}{% endraw %}][nom]" ng-model="p.nom">
+                       <a class="btn btn-danger" ng-click="personnes.splice($index,1)"><i class="icon-remove"></i></a>
+                    </div>
+                </li>
+                
+                
+              </ul>
+                       
+                 
+             <div class="alert" ng:class="{true:'alert-info', false:'alert-success'}[passesRestants()>0]">
+                 <span ng-show="passesRestants()>0"> 
+                     <p>
+                     Vous pouvez encore générer <b>{% raw %}{{passesRestants()}}{% endraw %}</b> laissez-passer sur un total de <b>{% raw %}{{maxPersonnes}}{% endraw %}</b>. <br>
+                     </p>
+                     <p>
+                     <a class="btn btn-success btn-small" ng-click="addPass()"><i class="icon-plus"></i> Ajouter un nouveau laissez-passer.</a>
+                     </p>
+                 </span>
+                 <span ng-show="passesRestants()<=0">
+                 Vous avez bien renseigné tous vos laissez-passer nécessaires, si vous avez besoin d'en obtenir plus, merci de le signaler dans le champ <em>Vos remarques</em>, en bas de la page.
+                 </span>
+             </div>
+         </div>
+     </div>
+     <div class="row-fluid">
+         <div class="span12">
+         <legend>Vos remarques</legend>         
+         {{ form_row(form.message) }}
+         </div>
+     </div>
+    
+    </div>	
+
+            {{ form_widget(form._token) }}
+    <div class="form-fluid">
+			<div class="form-actions">
+				{% if (is_granted('ROLE_SECU')) or (is_granted('ROLE_USER') and entity.statut == 0)%}
+			    <button class="btn btn-primary" type="submit" name="action" value="save">Enregistrer les informations</button>
+			    {% endif %}
+			    
+			    {% if entity.statut == 0%}
+			        {% if not is_granted('ROLE_SECU') %}
+			        <button class="btn btn-success" type="submit" name="action" value="submit"><i class="icon-arrow-right"></i> Soumettre la demande de laissez-passer</button>
+			        {% else %}
+			        <button class="btn btn-warning" type="submit" name="action" value="submit"><i class="icon-eye-open"></i> Mettre le pass "en attente de validation"</button>
+			        {% endif %}
+			    {% endif %}
+			    
+			    {% if is_granted('ROLE_SECU') and (entity.statut < 2) %}
+			    <button class="btn btn-success" type="submit" name="action" value="validate"><i class="icon-ok"></i> Valider la demande</button>
+			    {% endif %}
+
+			</div>
+    </div>       
+</form>
+{% endblock %}

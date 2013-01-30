@@ -221,27 +221,27 @@ function Ctrl($scope){
                     {% endif %}
                     </div>
                         <div class="row_fluid">
-                                            {{ form_row(form.entity.lieuDepotLog) }}
-                        <h4>Matériel et quantité requise</h4>
-                        <ul>
-                        <li ng-repeat="(kc,c) in materiel">
-                        {% raw %}{{ c.nom }}{% endraw %}
-                              <ul>
-                                  {% if not readOnly %}
-                                  <input type="hidden" ng-model="c.nom" class="input" name="assomaker_animbundle_animationtype[entity][materiel][{%raw%}{{kc}}{% endraw %}][nom]" value="{%raw%}{{c.nom}}{% endraw %}">
-                                  {% endif %}
-                                  <li ng-repeat="(km,m) in c.items">
-                                   {% if readOnly %}
-                                   {%raw%}{{ m.nom }} x {{ m.qte }}{% endraw %}
-                                   {% else %}
-                                  <input type="text" ng-model="m.nom" class="input" name="assomaker_animbundle_animationtype[entity][materiel][{%raw%}{{kc}}{% endraw %}][items][{%raw%}{{km}}{% endraw %}][nom]">
-                                  <input type="number" class="input-mini" ng-model="m.qte" ng-click="cleanMatos()" name="assomaker_animbundle_animationtype[entity][materiel][{%raw%}{{kc}}{% endraw %}][items][{%raw%}{{km}}{% endraw %}][qte]">
-                                  {% endif %}
-                                  </li>
-                              </ul>                          
-                        </li>                    
-                      </ul>
-                      </div>
+                            {{ form_row(form.entity.lieuDepotLog) }}
+                            <h4>Matériel et quantité requise</h4>
+                                <ul>
+                                    <li ng-repeat="(kc,c) in materiel">
+                                    {% raw %}{{ c.nom }}{% endraw %}
+                                          <ul>
+                                              {% if not readOnly %}
+                                              <input type="hidden" ng-model="c.nom" class="input" name="assomaker_animbundle_animationtype[entity][materiel][{%raw%}{{kc}}{% endraw %}][nom]" value="{%raw%}{{c.nom}}{% endraw %}">
+                                              {% endif %}
+                                              <li ng-repeat="(km,m) in c.items">
+                                               {% if readOnly %}
+                                               {%raw%}{{ m.nom }} x {{ m.qte }}{% endraw %}
+                                               {% else %}
+                                              <input type="text" ng-model="m.nom" class="input" name="assomaker_animbundle_animationtype[entity][materiel][{%raw%}{{kc}}{% endraw %}][items][{%raw%}{{km}}{% endraw %}][nom]">
+                                              <input type="number" class="input-mini" ng-model="m.qte" ng-click="cleanMatos()" name="assomaker_animbundle_animationtype[entity][materiel][{%raw%}{{kc}}{% endraw %}][items][{%raw%}{{km}}{% endraw %}][qte]">
+                                              {% endif %}
+                                              </li>
+                                          </ul>                          
+                                      </li>                    
+                                  </ul>
+                          </div>
                     </div>
                     
                     {% if not readOnly %}
