@@ -422,7 +422,7 @@ function Ctrl($scope){
 		        {% if is_granted('ROLE_HUMAIN') %}
 		        	{% if entity.statut == 1 %}
 		        	    {% if entity.validLog and entity.validSecu%}
-		                <button class="btn btn-success" type="submit" name="action" value="validate"><i class="icon-ok"></i> Valider la tâche</button>
+		                <button class="btn btn-success" type="submit" name="action" value="validate"><i class="icon-ok"></i> Valider la fiche</button>
 		                {% else %}
 		                <button class="btn btn-warning" type="submit" name="action" value="validate"><i class="icon-ok"></i>
 		                Forcer la validation sans vérif 
@@ -439,7 +439,7 @@ function Ctrl($scope){
 		        {% endif %}
 		        
 		        	{% if entity.statut >= 1 and (is_granted('ROLE_LOG') or is_granted('ROLE_HUMAIN') or is_granted('ROLE_SECU')) %}
-		                 <button class="btn btn-danger" type="submit" name="action" value="reject"><i class="icon-remove"></i> Rejeter la tâche</button>
+		                 <button class="btn btn-danger" type="submit" name="action" value="reject"><i class="icon-remove"></i> Rejeter la fiche</button>
 		            {% endif %}
 		        
 		        	

@@ -1,0 +1,95 @@
+{% extends "AssoMakerBaseBundle::layout.html.twig"  %}
+{% set pageTitle = 'Impression Laissez-Passer' %}
+
+{% block body %}
+<style>
+@media print {
+.pagebreak{
+    page-break-before:always;
+
+    
+}
+
+.pass{
+	width:100%;
+    padding-top:15pt;
+    page-break-inside: avoid;
+    page-break-before:auto;
+    page-break-after: always;
+
+    
+}
+
+}
+</style>
+{% for personne in entity.personnes %}
+<div class="pass">
+<div style="height:70pt">
+    <div>
+        <h1>LAISSEZ-PASSER</h1>
+        <h4>24 HEURES DE L'INSA <small>DIRECTION SÉCURITÉ</small></h4>
+    </div>
+    <div style=" position: absolute; top:5pt; right: 5pt; width:120pt;  ">
+        <img src="http://application.24heures.org/24.png">
+    </div>
+</div>
+<div class="clear" ></div>
+<div style="    text-align: center;">
+<p>CE LAISSEZ-PASSER VOUS PERMET D'ACCÉDER AVEC UN VÉHICULE AU CAMPUS LYONTECH / LA DOUA PENDANT LE FESTIVAL DES 24 HEURES DE L'INSA</p>
+<p>Ce laissez-passer est valable UNIQUEMENT aux points de suivants :</p>
+        <div class="span6" style="min-height:22em; margin-left: 130pt">
+        <div style="position: absolute; z-index:-1;padding-left: .2em;">        
+        <img src="{{ asset("bundles/assomakerpasssecu/images/Plan37.png") }}"/>
+        
+        </div> 
+        
+        {% for n,p in entity.pointsPassage if p == 'true' %}
+        <div style="position: absolute;"><img src="{{ asset("bundles/assomakerpasssecu/images/PS"~(n+1)~".png") }}"/></div>
+        {% endfor %}
+
+        </div>
+</div>
+
+<div style="border:1px solid black; padding: 2pt; margin-top: 1em">
+<h4 style="text-align:center">CE PASS EST <b>VALABLE</b> DE {{ validites[entity.validiteDebut] | upper}} À {{ validites[entity.validiteFin] | upper}}.</h4>
+<h4>IL A ÉTÉ DÉLIVRÉ À LA PERSONNE SUIVANTE ET NE PEUT ÊTRE CÉDÉ</h4>
+<p style="font-size: large;">
+    <b>ENTREPRISE / ORGANISME / ENTITÉ : </b>{{ personne.nom }}<br>
+    <b>M OU MME : </b>{{ personne.nom }}<br>
+    <b>POUR LE MOTIF SUIVANT À L'EXCLUSION DE TOUT AUTRE : </b>{{ entity.infosSupplementaires }}<br>
+    
+</p>
+
+</div>
+
+<div style="border:1px solid black; padding-top: 1pt; margin-top: 1em">
+<h4>INFORMATIONS IMPORTANTES</h4>
+<p>CONFORMÉMENT AUX DISPOSITIONS PRISES DANS LE CADRE DU FESTIVAL, SANS CE LAISSEZ-PASSER, L'ENTRÉE VOUS SERA REFUSÉE AU CONTRÔLE
+-- IL EST INTERDIT DE MODIFIER TOUT OU PARTIE DU PRÉSENT LAISSEZ PASSER</p>
+<p>
+CONTACT : 04 72 43 70 00 - securite@24heures.org
+</p>
+
+
+<h4>SIGNATURE DE L'AUTORITÉ AYANT DÉLIVRÉ LE LAISSEZ PASSER : </h4>
+<p>POUR LA DIRECTION SÉCURITÉ DES 24 HEURES, <br>
+LAURENT BILLON, FAIT À VILLEURBANNE LE {{ "now"|date("m/d/Y") }} : </p>
+
+
+<img style="width:160pt; padding-left:10em; margin-top:.5em" src="http://application.24heures.org/sig24h.png">
+
+
+</div>
+
+</div>
+
+<div class="pagebreak"></div>
+{% endfor %}
+
+<script>
+$(document).ready(function(){
+	window.print();
+});
+</script>
+
+{% endblock %}
