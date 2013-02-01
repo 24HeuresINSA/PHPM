@@ -200,6 +200,10 @@ function Ctrl($scope){
                     </div>
                     <div class="row-fluid" ng-show="besoinPass">
                         <h5>Pass Voiture</h5>
+                        {% for p in entity.passAssocies %}
+                        
+                        {% endfor %}
+                        
                         <p>État : Pas de pass <a class="btn btn-small" ng-click="addHoraire()"><i class="icon-refresh"></i> Générer</a></p>
                         
                     </div>          

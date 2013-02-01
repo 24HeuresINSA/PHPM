@@ -89,6 +89,11 @@ class Animation
      */
     protected $equipe;
     
+    /**
+     * @ORM\OneToMany(targetEntity="AssoMaker\PassSecuBundle\Entity\Pass", mappedBy="animationLiee")
+     */
+    protected $passAssocies;
+    
     
     
     /**
@@ -1228,5 +1233,45 @@ class Animation
     
     public function __toString(){
         return $this->nom;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->passAssocies = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add passAssocies
+     *
+     * @param \AssoMaker\PassSecuBundle\Entity\Pass $passAssocies
+     * @return Animation
+     */
+    public function addPassAssocie(\AssoMaker\PassSecuBundle\Entity\Pass $passAssocies)
+    {
+        $this->passAssocies[] = $passAssocies;
+    
+        return $this;
+    }
+
+    /**
+     * Remove passAssocies
+     *
+     * @param \AssoMaker\PassSecuBundle\Entity\Pass $passAssocies
+     */
+    public function removePassAssocie(\AssoMaker\PassSecuBundle\Entity\Pass $passAssocies)
+    {
+        $this->passAssocies->removeElement($passAssocies);
+    }
+
+    /**
+     * Get passAssocies
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPassAssocies()
+    {
+        return $this->passAssocies;
     }
 }
