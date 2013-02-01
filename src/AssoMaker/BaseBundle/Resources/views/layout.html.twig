@@ -19,7 +19,8 @@
         {% block style %}
 			
 			{# Twitter Bootstrap Code #}
-				<link rel="stylesheet" href="{{ asset('vendor/twitter/bootstrap/css/bootstrap.min.css') }}" type="text/css" />
+				<link rel="stylesheet" media="all" href="{{ asset('vendor/twitter/bootstrap/css/bootstrap.min.css') }}" type="text/css" />
+				<link rel="stylesheet" media="print" href="{{ asset('vendor/twitter/bootstrap/css/bootstrap.min.css') }}" type="text/css" />
 				<style type="text/css">
 					{% block pageStyle %}
 
@@ -36,7 +37,7 @@
 				<link rel="stylesheet" href="{{ asset('vendor/twitter/bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" />
 				<style type="text/css"> [class^="icon-"], [class*=" icon-"] {background-image:none;} </style>
                 <link rel="stylesheet" href="{{ asset('vendor/fortawesome/font-awesome/css/font-awesome.min.css') }}" type="text/css" />
-        
+                
         	{# Rewritten CSS #}
         	
 				{% stylesheets

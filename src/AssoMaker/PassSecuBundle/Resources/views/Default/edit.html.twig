@@ -72,6 +72,7 @@ function Ctrl($scope){
          <div class="span3">
          <div class="row-fluid">
          <legend>Informations sur le demandeur</legend>
+         {{ form_row(form.entite) }}
          {{ form_row(form.emailDemandeur) }}
          {{ form_row(form.telephoneDemandeur) }}
          </div>
@@ -89,7 +90,6 @@ function Ctrl($scope){
 
          </div>
           <div class="span6" style="min-height:22em;">
-          {#background-image: url('')#}
           <div style="position: absolute; z-index:-1;padding-left: .2em;"><img src="{{ asset("bundles/assomakerpasssecu/images/Plan37.png") }}"/></div> 
           
           {% for n,p in points %}
@@ -160,13 +160,16 @@ function Ctrl($scope){
 				{% if (is_granted('ROLE_SECU')) or (is_granted('ROLE_USER') and entity.statut == 0)%}
 			    <button class="btn btn-primary" type="submit" name="action" value="save">Enregistrer les informations</button>
 			    {% endif %}
-			    
 			    {% if entity.statut == 0%}
 			        {% if not is_granted('ROLE_SECU') %}
 			        <button class="btn btn-success" type="submit" name="action" value="submit"><i class="icon-arrow-right"></i> Soumettre la demande de laissez-passer</button>
 			        {% else %}
 			        <button class="btn btn-warning" type="submit" name="action" value="submit"><i class="icon-eye-open"></i> Mettre le pass "en attente de validation"</button>
 			        {% endif %}
+			    {% endif %}
+			    
+			    {% if entity.statut ==2 %}
+			     <a href="{{ path('pass_pass_print',{"id":entity.id,"code":entity.accessCode}) }}" class="btn"><i class="icon-print"></i> Imprimer les pass</a>
 			    {% endif %}
 			    
 			    {% if is_granted('ROLE_SECU') and (entity.statut < 2) %}
