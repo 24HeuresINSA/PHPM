@@ -56,10 +56,6 @@ class BaseConfigFixture implements FixtureInterface {
 								NULL)); 
 		$manager
 				->persist(
-						new Config('server_baseurl', 'URL du serveur',
-								'localhost', NULL));
-		$manager
-				->persist(
 						new Config('manifestation_nom',
 								'Nom de la manifestation',
 								'24 Heures de l\'INSA 38e', NULL));
