@@ -125,6 +125,9 @@
 	                {% if sponso_actif ==1 %}
 	                    {{ _self.navBarItem('Sponso','sponso_home') }}
 	                {% endif %}
+	                {% if anim_actif ==1 %}
+	                    {{ _self.navBarItem('Animations','anim_animation_index') }}
+	                {% endif %}
 					{% if phpm_actif ==1 %}
 					
 	       				<li class="dropdown" id="menu_topnav_orgas">
@@ -135,17 +138,20 @@
 					    <ul class="dropdown-menu">
 				    		{{ _self.navBarItem('Liste','orga') }}
 				    		{% if is_granted('ROLE_HUMAIN') %}
-					    		{{ _self.navBarItem('Export Tableau','orga_export_tableau') }}
-					    		{{ _self.navBarItem('Export CSV','orga_export_csv') }}
-								{{ _self.navBarItem('Créneaux d\'inscription','disponibiliteinscription') }}
-								{{ _self.navBarItem('Missions','mission') }}
-								{{ _self.navBarItem('Impression des Badges','orga_print_badges') }}
+        		    		     {{ _self.navBarItem('Affectation','orga_affectation') }}
+        		    		     {{ _self.navBarItem('Charisme','orga_charisme') }}    				    		
+        					     {{ _self.navBarItem('Comptes Perso','comptesPerso') }}
+        					     {{ _self.navBarItem('Trombinoscope','orga_trombi') }}
+        						 <hr>
+        					     {{ _self.navBarItem('Export Tableau','orga_export_tableau') }}
+        					     {{ _self.navBarItem('Export Google Contacts','orga_export_csv') }}
+        					     {{ _self.navBarItem('Impression des Badges','orga_print_badges') }}
+        						 <hr>
+        					     {{ _self.navBarItem('Créneaux d\'inscription','disponibiliteinscription') }}
+        					     {{ _self.navBarItem('Missions','mission') }}
 							{% endif %}
 					    </ul>
 					</li>
-	       		{% if is_granted('ROLE_HUMAIN') %}	
-	       			{{ _self.navBarItem('Affectation','orga_affectation') }}
-	       		{% endif %}
 	     		{% if is_granted('ROLE_USER') %}
 	        		<li class="dropdown" id="menu_topnav_taches">
 					    <a class="dropdown-toggle" data-toggle="dropdown" href="">
@@ -179,23 +185,21 @@
 							{% endif %}
 					    </ul>
 					</li>
-					{{ _self.navBarItem('Mes Disponibilités','orga_inputdispos',{'id':app.user.id }) }}
-					{% if not is_granted('ROLE_HUMAIN') %}
-					{{ _self.navBarItem('Recherche des conflits','analyse_plagesorga',{'orgaid': app.user.id}) }}
 					
+					{% if not is_granted('ROLE_HUMAIN') %}
+    					{{ _self.navBarItem('Recherche des conflits','analyse_plagesorga',{'orgaid': app.user.id}) }}
+    					{{ _self.navBarItem('Mes Disponibilités','orga_inputdispos',{'id':app.user.id }) }}
+    					{{ _self.navBarItem('Charisme','orga_charisme') }}
 					{% endif %}
-	       			{{ _self.navBarItem('Charisme','orga_charisme') }}
+
 	       		{% endif %}
 
 	            
 	        	
 
 	       			{% endif %}
-	       			{% if app.user | accessTrombi %}
+	       			{% if app.user.equipe.showOnTrombi and not is_granted('ROLE_HUMAIN') %}
 	       			    {{ _self.navBarItem('Trombinoscope','orga_trombi') }}
-	       			{% endif %}
-                    {% if is_granted('ROLE_HUMAIN') %}
-                            {{ _self.navBarItem('Comptes Perso','comptesPerso') }}
 	       			{% endif %}
 	       			{% if is_granted('ROLE_HUMAIN') %}
 		       			{{ _self.navBarItem('Configuration','config') }}

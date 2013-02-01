@@ -16,7 +16,13 @@ function Ctrl($scope){
 		return ((elem.statut ==-1)&&($scope.statut==-1)||(elem.statut >=0)&&($scope.statut==0));
 		}
 
-	$scope.showLog=false;
+	{% if is_granted('ROLE_LOG') %}
+	$scope.showLog=true;
+	{% endif %}
+
+	{% if is_granted('ROLE_SECU') %}
+	$scope.showSecu=true;
+	{% endif %}
 	
 }
 </script>

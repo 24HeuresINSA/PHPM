@@ -16,9 +16,6 @@ class BaseConfigFixture implements FixtureInterface {
 						'Module planningmaker activé',
 						'1',
 						NULL));
-		
-
-		
 		$manager
 		->persist(
 		        new Config('comptes_perso_actif',
@@ -31,7 +28,20 @@ class BaseConfigFixture implements FixtureInterface {
 		                'Module Sponso activé',
 		                '0',
 		                NULL));
-
+		
+		$manager
+		->persist(
+		        new Config('anim_actif',
+		                'Module Anim activé',
+		                '0',
+		                NULL));
+		
+		$manager
+		->persist(
+		        new Config('pass_actif',
+		                'Module Pass activé',
+		                '0',
+		                NULL));
 		$manager
 		->persist(
 		        new Config('base_signature_actif',

@@ -21,7 +21,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class AnimationController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="anim_animation_index")
      * @Template()
      */
     public function indexAction()
