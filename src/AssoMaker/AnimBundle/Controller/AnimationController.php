@@ -168,6 +168,10 @@ class AnimationController extends Controller
                 $em->persist($entity);
                 $em->flush();
     
+                if($entity->getBesoinPass() && $entity->getPassAssocies()->count() == 0){
+                    return $this->redirect($this->generateUrl('pass_pass_new',array('animId'=>$entity->getId())));
+                }
+                
                 return $this->redirect($this->generateUrl('anim_animation_edit',array('id'=>$entity->getId())));
             }
         }

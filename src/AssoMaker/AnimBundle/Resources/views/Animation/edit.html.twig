@@ -139,6 +139,10 @@ function Ctrl($scope){
     $scope.besoinSecu=true;
 	{% endif %}
 
+	{% if entity.besoinPass %}
+    $scope.besoinPass=true;
+	{% endif %}
+
 	{% if entity.besoinSigna %}
     $scope.besoinSigna=true;
 	{% endif %}
@@ -192,21 +196,34 @@ function Ctrl($scope){
             <fieldset>             
                 <legend>Sécurité</legend>
                     <div class="row-fluid">
-                        <div class="span6">{{ form_row(form.entity.besoinSecu,{'attr':{'ng-model':'besoinSecu'}} ) }}</div>
-                        <div class="span6">{{ form_row(form.entity.besoinPass,{'attr':{'ng-model':'besoinPass'}} ) }}</div>
-                    </div>
-                    <div class="row-fluid" ng-show="besoinSecu">
+                        <div class="span6">{{ form_row(form.entity.besoinSecu,{'attr':{'ng-model':'besoinSecu'}} ) }}
+                             <div class="row-fluid" ng-show="besoinSecu">
                         {{ form_row(form.entity.detailSecu) }}
+                            </div>
+                    
+                        </div>
+                        <div class="span6">
+                        {{ form_row(form.entity.besoinPass,{'attr':{'ng-model':'besoinPass'}} ) }}
+                        
+                        <div class="row-fluid" ng-show="besoinPass">
+                                            
+                        {% if entity.passAssocies | length >0 %}
+                                <h5> Liste des Pass Voiture :</h5>
+                                <ul>
+                                {% for k,p in entity.passAssocies %}
+                                <li><a class="statut{{ p.statut }}" href="{{ path('pass_pass_edit',{"id":p.id,"code":p.accessCode}) }}">Pass {{k}} : {{ p.entite }}</a></li>
+                                {% endfor %}
+                                </ul>
+                            {% else %}
+                                <div class="alert alert-info"><h5>Un pass voiture sera généré à l'enregistrement de la fiche.</h5></div>    
+                                </p>
+                            {% endif %}
+                        </div>    
+                    
+                        </div>
                     </div>
-                    <div class="row-fluid" ng-show="besoinPass">
-                        <h5>Pass Voiture</h5>
-                        {% for p in entity.passAssocies %}
-                        
-                        {% endfor %}
-                        
-                        <p>État : Pas de pass <a class="btn btn-small" ng-click="addHoraire()"><i class="icon-refresh"></i> Générer</a></p>
-                        
-                    </div>          
+
+                          
             </fieldset>
             <fieldset>             
                 <legend {% if(entity.validLog) %}class="statut2"{% else %}class="statut0"{% endif %}>Logistique</legend>     

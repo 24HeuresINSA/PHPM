@@ -2,6 +2,8 @@
 
 namespace AssoMaker\PassSecuBundle\Controller;
 
+use AssoMaker\AnimBundle\Entity\Animation;
+
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 
 use AssoMaker\PassSecuBundle\Form\PassType;
@@ -40,18 +42,30 @@ class DefaultController extends Controller
     
     /**
      *
-     * @Route("/new", name="pass_pass_new")
+     * @Route("/new/{animId}", defaults={"animId"=""},name="pass_pass_new")
      * @Template
      */
-    public function newAction()
+    public function newAction($animId)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $config = $e = $this->get('config.extension');
         $user = $this->get('security.context')->getToken()->getUser();
         $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
         
-    
         $entity = new Pass();
+        
+        if($animId!=''){
+            $anim = $em->getRepository('AssoMakerAnimBundle:Animation')->find($animId);
+            if (!$anim) {
+                throw $this->createNotFoundException('Unable to find Animation entity.');
+            }
+            $entity->setAnimationLiee($anim);
+            $entity->setEmailDemandeur($anim->getExtEmail());
+            $entity->setTelephoneDemandeur($anim->getExtTelephone());
+            $entity->setEntite(Animation::$extTypes[$anim->getType()].' '.$anim->getExtNom());
+            $entity->setInfosSupplementaires('Pass demandé par '.$user->getPrenom().' '.$user->getNom());
+        }
+        
         $entity->setAccessCode(md5(uniqid(rand(), true)));
         
         $editForm = $this->createForm(new PassType(false,$config,true), $entity);
