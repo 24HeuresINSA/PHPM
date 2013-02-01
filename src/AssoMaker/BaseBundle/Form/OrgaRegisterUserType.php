@@ -34,8 +34,8 @@ class OrgaRegisterUserType extends AbstractType
             ->add('nom',null,array('label'=>'Nom'))
             ->add('surnom',null,array('label'=>'Surnom'))
             
-            ->add('telephone',null,array('label'=>'Téléphone portable','help'=>'Sans séparateurs : 0648851224'))
-            ->add('email',null,array('label'=>'Adresse email')
+            ->add('telephone',null,array('label'=>'Téléphone portable'))
+            ->add('email',null,array('label'=>'Adresse email'))
             
             ->add('dateDeNaissance', 'birthday', array(
             		'input'=>'datetime',
