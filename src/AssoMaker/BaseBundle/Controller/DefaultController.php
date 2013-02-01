@@ -96,12 +96,8 @@ class DefaultController extends Controller
     
     	$em = $this->getDoctrine()->getEntityManager();
     	$config = $this->get('config.extension');
-    	$pref = $em->getRepository('AssoMakerPHPMBundle:Config')->findOneByField('server_baseurl');
     	$session = $this->getRequest()->getSession();
-    	if($pref)
-    		$serverurl = $pref->getvalue();
-    	else
-    		$serverurl = 'localhost';
+    	$serverurl = $this->getRequest()->getHost();
     	 
     	try {
     
