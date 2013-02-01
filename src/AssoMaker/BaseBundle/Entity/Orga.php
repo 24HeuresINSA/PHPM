@@ -21,7 +21,7 @@ use AssoMaker\PHPMBundle\Entity\Disponibilite;
  */
 class Orga implements UserInterface
 {
-    public static $privilegesTypes = array('Visiteur','Orga','Humain','Responsable Log','Responsable Sécurité');
+    public static $privilegesTypes = array('Visiteur','Orga','Humain','Responsable Log','Responsable Sécurité','Super Admin');
     
     /**
      * @var integer $id
