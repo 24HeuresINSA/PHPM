@@ -54,9 +54,9 @@
 <h4 style="text-align:center">CE PASS EST <b>VALABLE</b> DE {{ validites[entity.validiteDebut] | upper}} À {{ validites[entity.validiteFin] | upper}}.</h4>
 <h4>IL A ÉTÉ DÉLIVRÉ À LA PERSONNE SUIVANTE ET NE PEUT ÊTRE CÉDÉ</h4>
 <p style="font-size: large;">
-    <b>ENTREPRISE / ORGANISME / ENTITÉ : </b>{{ personne.nom }}<br>
-    <b>M OU MME : </b>{{ personne.nom }}<br>
-    <b>POUR LE MOTIF SUIVANT À L'EXCLUSION DE TOUT AUTRE : </b>{{ entity.infosSupplementaires }}<br>
+    <b>ENTREPRISE / ORGANISME / ENTITÉ : </b>{{ entity.entite | upper }}<br>
+    <b>M OU MME : </b>{{ personne.nom | upper}}<br>
+    <b>POUR LE MOTIF SUIVANT À L'EXCLUSION DE TOUT AUTRE : </b>{{ entity.infosSupplementaires | upper}}<br>
     
 </p>
 
