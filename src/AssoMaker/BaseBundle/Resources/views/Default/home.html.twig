@@ -144,6 +144,38 @@
 	    	</div>
 	    {% endif %}
 	    </div>
+	    <div class="row-fluid">
+	    {% if is_granted('ROLE_HUMAIN') %}	
+	    	<div class="span4">
+		        <h2>Impression des Plannings</h2>
+		       	<div class="alert alert-block alert-info fade in">
+					<form name="input" action="{{ path('orga_plannings') }}" method="post">
+						<fieldset>
+							Début : {{ form_widget(printPlanningForm.debut,  { 'attr': {'class': 'datep'} }) }}
+							Fin : {{ form_widget(printPlanningForm.fin,  { 'attr': {'class': ' datep'} }) }}
+							<br>
+							Orga : {{ form_widget(printPlanningForm.orga)}} <b>OU</b>
+							Équipe : {{ form_widget(printPlanningForm.equipe) }}
+							<br>
+							<button class="btn btn-primary" type="submit" name="action" value="print" >Imprimer</button>
+							<button class="btn" type="submit" name="action" value="show" >Afficher</button>
+						</fieldset>
+					</form>
+		        </div>
+	       </div>
+	    {% endif %}
+{#    	{% if (planning[0] is defined) and (is_granted('ROLE_USER')) %}	
+		<div class="span{% if is_granted('ROLE_HUMAIN') %}8{% else %}12{% endif %}">
+        	<h2>Planning prévisionnel</h2>
+        		Planning valable du {{ debutPlanning | format_datetime('EEEE dd MMM Y HH:mm') }} au  {{ finPlanning | format_datetime('EEEE dd MMM Y HH:mm') }}.
+				{% include 'AssoMakerBaseBundle:Orga:planningTable.html.twig' with {'disponibilites': planning[0].disponibilites}%}
+				<a class="btn btn-primary" href="{{ path('orga_print', {'orgaid':app.user.id }) }}"><i class="icon-print"></i> Imprimer mon planning »</a>
+				<a class="btn" href="https://www.google.com/calendar/render?cid={{ url('orga_ical', {'orgaid':app.user.id }) }}"><i class="icon-calendar"></i> Importer dans Google Agenda »</a>
+       </div>
+    	{% endif %} #}
+
+	    </div>		
+	    
 {% else %}
 	<div class="hero-unit">
 	{{ phpm_contenu_page_principale |raw}}

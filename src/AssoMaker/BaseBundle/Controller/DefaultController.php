@@ -37,10 +37,27 @@ class DefaultController extends Controller
     	}
     	
     	$statsUser=$em->getRepository('AssoMakerBaseBundle:Orga')->getStats($user);
-    
     	$soldeCP =  $em->getRepository('AssoMakerComptesPersoBundle:Transaction')->getOrgaBalance($user->getId());
     	$transactionsCP = $em->getRepository('AssoMakerComptesPersoBundle:Transaction')->getTransactionsByOrga($user->getId());
-    	return array('soldeCP'=>$soldeCP,'transactionsCP'=>$transactionsCP,'statsOrga'=>$statsUser,);
+    	
+    	$statsUser['taches']=$em->getRepository('AssoMakerPHPMBundle:Tache')->getOrgaStats($user);
+    	$debutPlanning = new \DateTime();
+    	$finPlanning = new \DateTime($config->getValue('phpm_planning_fin'));
+    	$planning=$em->getRepository('AssoMakerBaseBundle:Orga')->getPlanning($user->getId(),null,$debutPlanning,$finPlanning);
+    	$deadlineFT=$config->getValue('phpm_tache_heure_limite_validation');
+    	 
+    	$printPlanningForm = $this->createForm(new PrintPlanningType(), array('debut'=>new \DateTime(),'fin'=>new \DateTime()));
+    	
+    	
+    	return array('soldeCP'=>$soldeCP,
+    	            'transactionsCP'=>$transactionsCP,
+    	            'statsOrga'=>$statsUser,
+    				'planning'=>$planning,
+    				'debutPlanning'=>$debutPlanning,
+    				'finPlanning'=>$finPlanning,
+    				'deadlineFT'=>$deadlineFT,
+    				'printPlanningForm'=>$printPlanningForm->createView()
+    				);
     	
         
     }

@@ -1,27 +1,72 @@
 {% extends "AssoMakerPHPMBundle::layout.html.twig"  %}
 {% set pageTitle = 'Impression Planning' %}
 
-{% block pageStyle %}
-{{ parent() }}
-body{
-padding-top: 0px;
-padding-bottom: 0px;
-width:600pt;
-}
-{% endblock %}
-
-{% block style %}
-<link rel="stylesheet/less" href="{{ asset('bundles/phpm/css/print.less') }}" type="text/css" media="all" />
-{{ parent() }}
-
-{% endblock %}
-
 {% block body %}
+<style>
+
+h1{
+font-size: 20pt;
+}
+
+h2{
+font-size: 18pt;
+}
+
+h3{
+font-size: 15pt;
+}
+
+.orga{
+	width:100%;
+    margin-bottom:15pt;
+    
+}
+.pagebreak{
+    page-break-before:always;
+
+    
+}
+
+.creneau{
+	width:100%;
+    page-break-inside: avoid;
+    page-break-before:auto;
+    page-break-after: auto;
+    margin-bottom:15pt;
+    
+}
+.creneau > div{
+
+    border-bottom:solid 1pt lightgray;
+
+}
+
+.horaires{
+float:left;
+}
+
+.responsable{
+float:right;
+text-align:center;
+}
+
+.lieu{
+float:right;
+}
+.infos{
+overflow:auto;
+}
+
+.p{
+line-height:3em;
+}
+
+</style>
 <div class="row-fluid " >
 {% for key,orga in orgas %}
-{% if key!=0 %}
+
 <div class="pagebreak"></div>
-{% endif %}
+
 <div class="orga">
 <h1>{{ entitiesMacro.orga(orga) }}</h1>
 {{ phpm_planning_message |raw }} Planning valable du {{ debut | format_datetime('EEEE dd MMM HH:mm') }} au  {{ fin | format_datetime('EEEE dd MMM HH:mm') }}.
@@ -32,14 +77,22 @@ width:600pt;
 	
 	  <div class="creneau">
 	  <div class="infos">
-	  <div class="horaires"><h2>{{ creneau.debut | format_datetime('EEEE dd MMM HH:mm') }}
-	  	-> {{ creneau.fin | format_datetime('EEEE dd MMM HH:mm') }}</h2>
+	  <div class="horaires">
+	  <h3>
+	      {{ creneau.debut | format_datetime('EEEE dd MMM HH:mm') }}
+	  	    <i class="icon-arrow-right"></i>
+	  	  {%  if (creneau.debut | format_datetime('dd'))==(creneau.fin | format_datetime('dd')) %}
+	  	  {{ creneau.fin | format_datetime('HH:mm') }}
+	  	  {% else %}
+	  	  {{ creneau.fin | format_datetime('EEEE dd MMM HH:mm') }}
+	  	  {% endif %}
+	  	  </h3>
 	  	</div>
 	  	
-	  <div class="lieu"><h2>{{ creneau.plageHoraire.tache.lieu }}</h2></div>
+	  <div class="lieu"><h3><small>{{ creneau.plageHoraire.tache.lieu }}</small></h2></div>
 	 </div>
 	 	<div class="infos">
-	 		<div class="titre"><h2>{{ creneau.plageHoraire.tache.groupeTache.nom }} / {{ creneau.plageHoraire.tache.nom }}</h2></div>
+	 		<div class="titre"><h3>{{ creneau.plageHoraire.tache.groupeTache.nom }} / {{ creneau.plageHoraire.tache.nom }}</h3></div>
 	 		{% if creneau.plageHoraire.creneaux| length > 1 %}
 		 		<b>Avec : </b>
 		 		{% for c2 in creneau.plageHoraire.creneaux if  c2.id != creneau.id %}
