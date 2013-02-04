@@ -184,8 +184,6 @@ class Orga implements UserInterface
     
     public function setCompetences($value) {
         $this->competences = json_decode($value,true);
-        var_dump($value);
-        exit;
     }
     
     public function getCompetences() {
