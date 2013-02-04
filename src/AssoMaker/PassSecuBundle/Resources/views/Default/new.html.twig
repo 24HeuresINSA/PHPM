@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<form class="form-horizontal" action="{{ path('pass_pass_new') }}" method="post" {{ form_enctype(form) }}>
+<form class="form-horizontal" action="{{ path('pass_pass_new',{"animId":app.request.get('animId')}) }}" method="post" {{ form_enctype(form) }}>
     <div class="row-fluid">
 
         <div class="span6">

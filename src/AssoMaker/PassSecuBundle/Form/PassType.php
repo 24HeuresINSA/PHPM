@@ -30,7 +30,6 @@ class PassType extends AbstractType
         if(!$this->guest){
             $builder
                 
-                ->add('animationLiee',null,array('label'=>'Animation Liée','disabled'=>true))
                 
                 ->add('maxPersonnes',null,array('label'=>'Nombre maximum de passes pour cette entité'))
             ;

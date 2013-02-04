@@ -105,7 +105,11 @@ function Ctrl($scope){
               <hr>
               {{ form_row(form.infosSupplementaires) }}
               {% if is_granted('ROLE_USER') %}
-              {{ form_row(form.animationLiee) }}              
+              
+              {% if entity.animationLiee is defined  %}
+              Animation liée : <a href="{{ path('anim_animation_edit',{'id':entity.animationLiee.id })}}">{{ entity.animationLiee.nom }}</a><br>
+              {% endif %}
+                          
               {{ form_row(form.maxPersonnes,{'attr':{'ng-model':'maxPersonnes'}} ) }}
               {% endif %}
      
