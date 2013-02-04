@@ -723,20 +723,20 @@ class OrgaController extends Controller
 			}
 			
 			
-			foreach ($orga['disponibilites'] as &$disponibilite){
-				$prevCreneau = null;
-				foreach ($disponibilite['creneaux'] as $id => &$creneau){
-					if(($creneau['plageHoraire']['tache'] == $prevCreneau['plageHoraire']['tache'])&&($creneau['debut'] == $prevCreneau['fin'])){
-						$prevCreneau['fin']= $creneau['fin'];
-						unset($disponibilite['creneaux'][$id]);	
-					}
+// 			foreach ($orga['disponibilites'] as &$disponibilite){
+// 				$prevCreneau = null;
+// 				foreach ($disponibilite['creneaux'] as $id => &$creneau){
+// 					if(($creneau['plageHoraire']['tache'] == $prevCreneau['plageHoraire']['tache'])&&($creneau['debut'] == $prevCreneau['fin'])){
+// 						$prevCreneau['fin']= $creneau['fin'];
+// 						unset($disponibilite['creneaux'][$id]);	
+// 					}
 					 
-					$prevCreneau=&$creneau;
-					//         			$creneau['fin']=  new \DateTime();
-				}
-				unset($creneau);
-				unset($prevCreneau);
-			}
+// 					$prevCreneau=&$creneau;
+// 					//         			$creneau['fin']=  new \DateTime();
+// 				}
+// 				unset($creneau);
+// 				unset($prevCreneau);
+// 			}
 		}
 		
 		
