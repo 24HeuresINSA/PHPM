@@ -214,4 +214,27 @@ class Disponibilite
     }
     
     
+
+    /**
+     * Add creneaux
+     *
+     * @param \AssoMaker\PHPMBundle\Entity\Creneau $creneaux
+     * @return Disponibilite
+     */
+    public function addCreneaux(\AssoMaker\PHPMBundle\Entity\Creneau $creneaux)
+    {
+        $this->creneaux[] = $creneaux;
+    
+        return $this;
+    }
+
+    /**
+     * Remove creneaux
+     *
+     * @param \AssoMaker\PHPMBundle\Entity\Creneau $creneaux
+     */
+    public function removeCreneaux(\AssoMaker\PHPMBundle\Entity\Creneau $creneaux)
+    {
+        $this->creneaux->removeElement($creneaux);
+    }
 }

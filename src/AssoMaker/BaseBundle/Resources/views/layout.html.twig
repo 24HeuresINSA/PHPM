@@ -1,12 +1,5 @@
 {% import "AssoMakerBaseBundle:Macros:entities.html.twig" as entitiesMacro %}
 
-{% macro navBarItem(nom,route,params) %}
-{% if params !="" %}
-<li{% if route == app.request.attributes.get('_route') %} class="active" {% endif %}><a href="{{ path(route,params) }}">{{ nom| raw }}</a></li>
-{% else %}
-<li{% if route == app.request.attributes.get('_route') %} class="active" {% endif %}><a href="{{ path(route) }}">{{ nom | raw}}</a></li>
-{% endif %}
-{% endmacro %}
 <!DOCTYPE html>
 <html>
     <head>

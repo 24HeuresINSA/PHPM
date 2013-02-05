@@ -304,4 +304,14 @@ class GroupeTache
 	    	"id" => $this->getId(),
 	    	"nom" => $this->getNom());
     }
+
+    /**
+     * Remove taches
+     *
+     * @param \AssoMaker\PHPMBundle\Entity\Tache $taches
+     */
+    public function removeTache(\AssoMaker\PHPMBundle\Entity\Tache $taches)
+    {
+        $this->taches->removeElement($taches);
+    }
 }

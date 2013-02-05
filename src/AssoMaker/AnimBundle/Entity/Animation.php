@@ -283,7 +283,7 @@ class Animation
      * @ORM\Column(type="array")
      *
      */
-    protected $materiel = array(array('nom'=>'Barrières','items'=>array(array('nom'=>'Vauban','qte'=>10))));
+    protected $materiel = array();
     
     /**
      *
@@ -900,9 +900,10 @@ class Animation
         return $this->commentaires;
     }
     
-    public function addCommentaire(Orga $auteur, $texte){
+    public function addCommentaire(Orga $auteur, $texte,$type = 0){
         
         $this->commentaires[]=array('auteur'=>$auteur->__toString(),
+                                    'type'=>$type,
                                     'texte'=>$texte,
                                     'date'=>(new \DateTime()));
     }

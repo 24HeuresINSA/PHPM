@@ -153,4 +153,27 @@ class Materiel
     {
         return $this->besoinsMateriel;
     }
+
+    /**
+     * Add besoinsMateriel
+     *
+     * @param \AssoMaker\PHPMBundle\Entity\BesoinMateriel $besoinsMateriel
+     * @return Materiel
+     */
+    public function addBesoinsMateriel(\AssoMaker\PHPMBundle\Entity\BesoinMateriel $besoinsMateriel)
+    {
+        $this->besoinsMateriel[] = $besoinsMateriel;
+    
+        return $this;
+    }
+
+    /**
+     * Remove besoinsMateriel
+     *
+     * @param \AssoMaker\PHPMBundle\Entity\BesoinMateriel $besoinsMateriel
+     */
+    public function removeBesoinsMateriel(\AssoMaker\PHPMBundle\Entity\BesoinMateriel $besoinsMateriel)
+    {
+        $this->besoinsMateriel->removeElement($besoinsMateriel);
+    }
 }

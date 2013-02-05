@@ -399,4 +399,50 @@ class PlageHoraire
     {
         return $this->creneauUnique;
     }
+
+    /**
+     * Add creneaux
+     *
+     * @param \AssoMaker\PHPMBundle\Entity\Creneau $creneaux
+     * @return PlageHoraire
+     */
+    public function addCreneaux(\AssoMaker\PHPMBundle\Entity\Creneau $creneaux)
+    {
+        $this->creneaux[] = $creneaux;
+    
+        return $this;
+    }
+
+    /**
+     * Remove creneaux
+     *
+     * @param \AssoMaker\PHPMBundle\Entity\Creneau $creneaux
+     */
+    public function removeCreneaux(\AssoMaker\PHPMBundle\Entity\Creneau $creneaux)
+    {
+        $this->creneaux->removeElement($creneaux);
+    }
+
+    /**
+     * Add besoinsOrga
+     *
+     * @param \AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrga
+     * @return PlageHoraire
+     */
+    public function addBesoinsOrga(\AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrga)
+    {
+        $this->besoinsOrga[] = $besoinsOrga;
+    
+        return $this;
+    }
+
+    /**
+     * Remove besoinsOrga
+     *
+     * @param \AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrga
+     */
+    public function removeBesoinsOrga(\AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrga)
+    {
+        $this->besoinsOrga->removeElement($besoinsOrga);
+    }
 }

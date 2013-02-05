@@ -233,4 +233,14 @@ class DisponibiliteInscription
     {
         return $this->mission;
     }
+
+    /**
+     * Remove orgas
+     *
+     * @param \AssoMaker\BaseBundle\Entity\Orga $orgas
+     */
+    public function removeOrga(\AssoMaker\BaseBundle\Entity\Orga $orgas)
+    {
+        $this->orgas->removeElement($orgas);
+    }
 }

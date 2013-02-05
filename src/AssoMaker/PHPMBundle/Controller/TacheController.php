@@ -234,7 +234,7 @@ class TacheController extends Controller
             
             $data=$editForm->getData();
             
-        $texteCommentaire = $data['commentaire'];
+        $typeCommentaire = 0;
             
         $valid=$editForm->isValid();
         
@@ -245,27 +245,27 @@ class TacheController extends Controller
             
             if($param['action']=='submit_validation'){
                 $entity->setStatut(1);
-                $texteCommentaire=$texteCommentaire."<b>&rarr;Fiche soumise à Validation.</b>";
+                $typeCommentaire = 1;
             }
             
             if($param['action']=='validate'){
                 $entity->setStatut(2);
-                $texteCommentaire=$texteCommentaire."<b>&rarr;Fiche validée.</b>";
+                $typeCommentaire = 2;
             }
             
             if($param['action']=='reject'){
                 $entity->setStatut(0);
-                $texteCommentaire=$texteCommentaire."<b>&rarr;Fiche rejetée.</b>";
+                $typeCommentaire = 3;
             }
             
             if($param['action']=='delete'){
                 $entity->setStatut(-1);
                 $entity->removeAllCreneaux();
-                $texteCommentaire=$texteCommentaire."<b>&rarr;Fiche supprimée.</b>";
+                $typeCommentaire = -1;
             }
             if($param['action']=='restore'){
                 $entity->setStatut(0);
-                $texteCommentaire=$texteCommentaire."<b>&rarr;Fiche restaurée.</b>";
+                $typeCommentaire = 4;
             }
             
             
@@ -322,12 +322,13 @@ class TacheController extends Controller
                 }
                 }
             }
-                if($texteCommentaire!=""){
+                if($data['commentaire']!="" || $typeCommentaire!=0){
 	                $commentaire = new Commentaire();
 	                $commentaire->setAuteur($user);
 	                $commentaire->setHeure(new \DateTime());
 	                $commentaire->setTache($entity);
-	                $commentaire->setTexte($texteCommentaire);
+	                $commentaire->setTexte($data['commentaire']);
+	                $commentaire->setType($typeCommentaire);
 	                $em->persist($commentaire);
                 }
             

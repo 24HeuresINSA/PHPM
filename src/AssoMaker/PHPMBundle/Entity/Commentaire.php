@@ -50,10 +50,16 @@ class Commentaire
     /**
      * @var text $texte
      *
-     * @ORM\Column(name="texte", type="text")
-     * @Assert\NotBlank()
+     * @ORM\Column(name="texte", type="text", nullable=true)
      */
     protected $texte;
+    
+    /**
+     * @var smallint $type
+     * @Assert\Choice(choices = {"0", "1", "2", "3", "-1"})
+     * @ORM\Column(name="statut", type="smallint")
+     */
+    protected $type = 0;
     
 
 
@@ -148,5 +154,30 @@ class Commentaire
     public function getTexte()
     {
         return $this->texte;
+    }
+
+
+
+    /**
+     * Set type
+     *
+     * @param integer $type
+     * @return Commentaire
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

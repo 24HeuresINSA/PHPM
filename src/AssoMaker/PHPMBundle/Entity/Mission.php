@@ -173,4 +173,27 @@ class Mission
     {
         return $this->confianceMin;
     }
+
+    /**
+     * Add disponibilitesInscription
+     *
+     * @param \AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription
+     * @return Mission
+     */
+    public function addDisponibilitesInscription(\AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription)
+    {
+        $this->disponibilitesInscription[] = $disponibilitesInscription;
+    
+        return $this;
+    }
+
+    /**
+     * Remove disponibilitesInscription
+     *
+     * @param \AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription
+     */
+    public function removeDisponibilitesInscription(\AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription)
+    {
+        $this->disponibilitesInscription->removeElement($disponibilitesInscription);
+    }
 }

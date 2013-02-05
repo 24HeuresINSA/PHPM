@@ -37,8 +37,39 @@
 <a href="{{ path('sponso_projet_edit', { 'id': projet.id }) }}">{{ projet.nom }}</a>
 {% endmacro %}
 
-{% macro tacheCom(tache) %}
-{% if tache.commentaires.count >0 %}
-<span class="lcom"><span class="com_auteur">{{tache.commentaires.last.auteur}}</span><span class="com_heure"> {{ tache.commentaires.last.heure|format_datetime('EEEE dd MMM HH:mm') }} : </span>{{ tache.commentaires.last.texte | raw }}</span>
+{% macro iconCom(com) %}
+{% if com.type == -1 %}<i class="icon-trash"></i>{% endif %}
+{% if com.type == 1 %}<i class="icon-eye-open"></i>{% endif %}
+{% if com.type == 2 %}<i class="icon-ok"></i>{% endif %}
+{% if com.type == 3 %}<i class="icon-remove"></i>{% endif %}
+{% if com.type == 4 %}<i class="icon-share-alt"></i>{% endif %}
+{% if com.type == 5 %}<i class="icon-wrench"></i>{% endif %}
+{% if com.type == 6 %}<i class="icon-bullhorn"></i>{% endif %}
+{% endmacro %}
+
+{% macro supTextCom(com) %}
+{% if com.type != 0 %}
+<i class="icon-arrow-right"></i>
+<b>
+{% if com.type == -1 %}Fiche supprimée{% endif %}
+{% if com.type == 1 %}Fiche soumise à validation{% endif %}
+{% if com.type == 2 %}Fiche validée{% endif %}
+{% if com.type == 3 %}Fiche rejetée{% endif %}
+{% if com.type == 4 %}Fiche restaurée{% endif %}
+{% if com.type == 5 %}Fiche vérifiée par la logistique{% endif %}
+{% if com.type == 6 %}Fiche vérifiée par la sécurité{% endif %}
+</b>
 {% endif %}
 {% endmacro %}
+
+{% macro tacheCom(tache) %}
+{% if tache.commentaires.count >0 %}
+<span class="lcom"><span class="com_auteur">
+    {{tache.commentaires.last.auteur}}
+</span>
+<span class="com_heure"> 
+    {{ tache.commentaires.last.heure|format_datetime('EEEE dd MMM HH:mm') }} : </span>
+    {{  _self.iconCom(tache.commentaires.last) }} {{ tache.commentaires.last.texte }} {{  _self.supTextCom(tache.commentaires.last) }}</span>
+{% endif %}
+{% endmacro %}
+

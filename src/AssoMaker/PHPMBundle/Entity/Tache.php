@@ -526,4 +526,60 @@ class Tache
     
     	
     }
+
+    /**
+     * Add plagesHoraire
+     *
+     * @param \AssoMaker\PHPMBundle\Entity\PlageHoraire $plagesHoraire
+     * @return Tache
+     */
+    public function addPlagesHoraire(\AssoMaker\PHPMBundle\Entity\PlageHoraire $plagesHoraire)
+    {
+        $this->plagesHoraire[] = $plagesHoraire;
+    
+        return $this;
+    }
+
+    /**
+     * Remove plagesHoraire
+     *
+     * @param \AssoMaker\PHPMBundle\Entity\PlageHoraire $plagesHoraire
+     */
+    public function removePlagesHoraire(\AssoMaker\PHPMBundle\Entity\PlageHoraire $plagesHoraire)
+    {
+        $this->plagesHoraire->removeElement($plagesHoraire);
+    }
+
+    /**
+     * Remove commentaires
+     *
+     * @param \AssoMaker\PHPMBundle\Entity\Commentaire $commentaires
+     */
+    public function removeCommentaire(\AssoMaker\PHPMBundle\Entity\Commentaire $commentaires)
+    {
+        $this->commentaires->removeElement($commentaires);
+    }
+
+    /**
+     * Add besoinsMateriel
+     *
+     * @param \AssoMaker\PHPMBundle\Entity\BesoinMateriel $besoinsMateriel
+     * @return Tache
+     */
+    public function addBesoinsMateriel(\AssoMaker\PHPMBundle\Entity\BesoinMateriel $besoinsMateriel)
+    {
+        $this->besoinsMateriel[] = $besoinsMateriel;
+    
+        return $this;
+    }
+
+    /**
+     * Remove besoinsMateriel
+     *
+     * @param \AssoMaker\PHPMBundle\Entity\BesoinMateriel $besoinsMateriel
+     */
+    public function removeBesoinsMateriel(\AssoMaker\PHPMBundle\Entity\BesoinMateriel $besoinsMateriel)
+    {
+        $this->besoinsMateriel->removeElement($besoinsMateriel);
+    }
 }

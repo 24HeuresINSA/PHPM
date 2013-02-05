@@ -119,50 +119,50 @@ class AnimationController extends Controller
                 
                 $data = $editForm->getData();
                 
-                $texteCommentaire = $data['commentaire'];
+                $typeCommentaire = 0;
                 
                 
                 if($param['action']=='submit_validation'){
                     $entity->setStatut(1);
-                    $texteCommentaire='<i class="icon-eye-open"></i> '.$texteCommentaire."<b>&rarr;Fiche soumise à validation.</b>";
+                    $typeCommentaire = 1;
                 }
                 
                 if($admin && $param['action']=='validate'){
                     $entity->setStatut(2);
-                    $texteCommentaire='<i class="icon-ok"></i> '.$texteCommentaire."<b>&rarr;Fiche validée.</b>";
+                    $typeCommentaire = 2;
                 }
                 
                 if(($admin||$log || $secu) && $param['action']=='reject'){
                     $entity->setStatut(0);
-                    $texteCommentaire='<i class="icon-remove"></i> '.$texteCommentaire."<b>&rarr;Fiche rejetée.</b>";
+                    $typeCommentaire = 3;
                     $entity->setValidLog(false);
                     $entity->setValidSecu(false);
                 }
                 
                 if($entity->getStatut() <= 1 && $param['action']=='delete'){
                     $entity->setStatut(-1);                   
-                    $texteCommentaire='<i class="icon-trash"></i> '.$texteCommentaire."<b>&rarr;Fiche supprimée.</b>";
+                    $typeCommentaire = -1;
                 }
                 if($entity->getStatut() == -1 && $param['action']=='restore'){
                     $entity->setStatut(0);
-                    $texteCommentaire=$texteCommentaire."<b>&rarr;Fiche restaurée.</b>";
+                    $typeCommentaire = 4;
                 }
                 
                 if($entity->getStatut() >= 1 && ($log) && $param['action']=='validateLog'){
                     $entity->setValidLog(true);
-                    $texteCommentaire='<i class="icon-wrench"></i> '.$texteCommentaire."<b>&rarr;Partie logistique validée.</b>";
+                    $typeCommentaire = 5;
                 }
                 
                 
                 if($entity->getStatut() >= 1 && ($secu) && $param['action']=='validateSecu'){
                     $entity->setValidSecu(true);
-                    $texteCommentaire='<i class="icon-bullhorn"></i> '.$texteCommentaire."<b>&rarr;Partie sécurité validée.</b>";
+                    $typeCommentaire = 6;
                 }
                 
 
                 
-                if($texteCommentaire!=''){
-                    $entity->addCommentaire($user, $texteCommentaire);
+                if($data['commentaire']!='' || $typeCommentaire!=0){
+                    $entity->addCommentaire($user, $data['commentaire'],$typeCommentaire);
                 }                
                 
                 $em->persist($entity);
