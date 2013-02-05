@@ -65,7 +65,7 @@ function Ctrl($scope){
 	
 }
 </script>
-{%raw%}
+
 <div class="row-fluid" ng-app ng-controller="Ctrl">
 
     <div class="span2">
@@ -82,6 +82,7 @@ function Ctrl($scope){
 			    <a ng-click="search.equipeId={{ app.user.equipe.id }}">Celles de ma Com</a>
 			</li>
 			<li class="nav-header">Rechercher</li>
+			{%raw%}
 			<li>
 			    <a><input type="text" class="input-medium search-query" ng-model="search.$"></a>
 			</li>

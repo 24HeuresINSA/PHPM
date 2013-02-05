@@ -30,7 +30,7 @@ function Ctrl($scope){
 	
 }
 </script>
-{%raw%}
+
 <div class="row-fluid" ng-app ng-controller="Ctrl">
 
     <div class="span2">
@@ -39,6 +39,7 @@ function Ctrl($scope){
 			<li>
 			    <a href="{{ path('pass_pass_new') }}"><i class="icon-plus"></i> Nouveau pass</a>
 			</li>
+			{%raw%}
 			<li class="nav-header">Rechercher</li>
 			<li>
 			    <a><input type="text" class="input-medium search-query" ng-model="search.$"></a>
