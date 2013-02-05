@@ -132,7 +132,7 @@
     		        {% endif %}
 		        </div>
 		        <div class="row-fluid">
-    		        {% if is_granted('ROLE_HUMAIN') %}	
+    		        {% if is_granted('ROLE_HUMAIN') and phpm_actif %}	
             	    	<div class="span12">
             		        <h2>Impression des Plannings</h2>
             		       	<div class="alert alert-block alert-info fade in">
