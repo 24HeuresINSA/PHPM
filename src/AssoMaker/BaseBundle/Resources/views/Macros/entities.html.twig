@@ -5,8 +5,8 @@
 {% macro orgaPrivileges(privileges) %}
 {% spaceless %}
 {% if(privileges == 5) %}<span class="label label-important">Super Admin</span>{% endif %}
-{% if(privileges == 4) %}<span class="label label-important">Logistique</span>{% endif %}
-{% if(privileges == 3) %}<span class="label label-important">Sécu</span>{% endif %}
+{% if(privileges == 4) %}<span class="label label-important">Sécu</span>{% endif %}
+{% if(privileges == 3) %}<span class="label label-important">Logistique</span>{% endif %}
 {% if(privileges == 2) %}<span class="label label-important">Humain</span>{% endif %}
 {% if(privileges == 1) %}<span class="label label-info">Orga</span>{% endif %}
 {% if(privileges == 0) %}<span class="label">Visiteur</span>{% endif %}
