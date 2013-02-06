@@ -165,7 +165,7 @@ function Ctrl($scope){
                     
                     
                     
-                    Animation {{ entity.nom }} - Infos Générales</legend>
+                    Animation {{ entity.nom }} - Infos Générales <a class="btn btn-small" href="{{ path("anim_animation_index") }}"><i class="icon-share-alt"></i> Retour</a></legend>
                         <div class="row-fluid">
                             <div class="span8">{{ form_row(form.entity.nom,{'attr':{'class':'input-block-level'}}) }}</div>                            
                             <div class="span4">{{ form_row(form.entity.type,{'attr':{'class':'input-block-level'}}) }}</div>
@@ -490,7 +490,7 @@ function Ctrl($scope){
 		        	<button class="btn btn-inverse" type="submit" name="action" value="delete"><i class="icon-remove"></i> Supprimer la tâche</button>
 		        {% endif %}
 		        {% if entity.statut == -1 %}
-		        	<button class="btn btn-inverse" type="submit" name="action" value="restore">Restaurer la fiche</button>
+		        	<button class="btn btn-inverse" type="submit" name="action" value="restore"><i class="icon-share-alt"></i>Restaurer la fiche</button>
 		     	{% endif %}
 			</div>
     </div>       

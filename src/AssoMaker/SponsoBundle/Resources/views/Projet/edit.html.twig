@@ -1,5 +1,4 @@
 {% extends "AssoMakerBaseBundle::layout.html.twig"  %}
-{% set pageTitle = entity.nom %}
 
 {% block content %}
 <div id="editModal" class="modal hide fade">
@@ -38,7 +37,7 @@
 
 <div class="row-fluid">
 <div class="span4">
-<h3>{{ entity.nom }}</h3>
+<h3>{{ entity.nom }} <a class="btn btn-small" href="{{ path("sponso_projet_home") }}"><i class="icon-share-alt"></i> Retour</a></h3>
 <h4>Équipe {{ entity.equipe }}</h4>
 <h4>Description</h4>
 <div class="well">{{ entity.description }}</div>

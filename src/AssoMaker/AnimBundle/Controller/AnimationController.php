@@ -171,7 +171,9 @@ class AnimationController extends Controller
                 if($entity->getBesoinPass() && $entity->getPassAssocies()->count() == 0){
                     return $this->redirect($this->generateUrl('pass_pass_new',array('animId'=>$entity->getId())));
                 }
-                
+                if($this->get('security.context')->isGranted('ROLE_USER')){                
+                return $this->redirect($this->generateUrl('anim_animation_index'));
+                }
                 return $this->redirect($this->generateUrl('anim_animation_edit',array('id'=>$entity->getId())));
             }
         }
