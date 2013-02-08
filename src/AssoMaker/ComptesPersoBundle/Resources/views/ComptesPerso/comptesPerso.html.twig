@@ -4,121 +4,121 @@
 {% block content %}
 
 <div class="row-fluid" ng-app="MyApp">
-    		<h2>Gestion des Comptes Perso</h2>
-    		
-    		<div class="btn-toolbar">
-        		<div class="btn-group">
-                  <a href="#/" class="btn">Liste des Comptes Perso</a>
-                  <a href="#/transactions/0" class="btn">Liste des Transactions</a>
-                </div>
-            </div>
-            
-<div ng-view></div>
+    <h2>Gestion des Comptes Perso</h2>
 
-<script>
-angular.module('MyApp', []).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/', {templateUrl: '{{ asset("bundles/assomakercomptesperso/partials/listeComptes.html") }} ', controller: ListeCtrl});
-  $routeProvider.when('/transactions/:orga', {templateUrl: '{{ asset("bundles/assomakercomptesperso/partials/transactions.html") }} ', controller: TransactionCtrl});
-  $routeProvider.otherwise({redirectTo: '/'});
-}]);
+    <div class="btn-toolbar">
+        <div class="btn-group">
+            <a href="#/" class="btn">Liste des Comptes Perso</a>
+            <a href="#/transactions/0" class="btn">Liste des Transactions</a>
+        </div>
+    </div>
 
-function TransactionCtrl($scope, $http, $routeParams) {
-	
-	$scope.fetch=function($scope, $http,$routeParams) {
-		$http.get('transactions.json').success(function(data) {
-		    $scope.transactions = data;
-		  });
-		$http.get('comptes.json').success(function(data) {
-		    $scope.orgas = data;
-		    
-		    
-		  });	
-	}
+    <div ng-view></div>
 
-	$scope.filterById = function(item) {
-		return item.orgaId == $scope.search.orgaId
-		}
+    <script>
+        angular.module('MyApp', []).
+                config(['$routeProvider', function($routeProvider) {
+                $routeProvider.when('/', {templateUrl: '{{ asset("bundles/assomakercomptesperso/partials/listeComptes.html") }} ', controller: ListeCtrl});
+                $routeProvider.when('/transactions/:orga', {templateUrl: '{{ asset("bundles/assomakercomptesperso/partials/transactions.html") }} ', controller: TransactionCtrl});
+                $routeProvider.otherwise({redirectTo: '/'});
+            }]);
 
-	$scope.search=new Array();
-	$scope.orgas=new Array();
+        function TransactionCtrl($scope, $http, $routeParams) {
 
-	$scope.fetch($scope,$http);
-	
-	$scope.search.orgaId = $routeParams.orga;
-
-      
-	}
+            $scope.fetch = function($scope, $http, $routeParams) {
+                $http.get('transactions.json').success(function(data) {
+                    $scope.transactions = data;
+                });
+                $http.get('comptes.json').success(function(data) {
+                    $scope.orgas = data;
 
 
-function ListeCtrl($scope, $http) {
+                });
+            }
+
+            $scope.filterById = function(item) {
+                return item.orgaId == $scope.search.orgaId
+            }
+
+            $scope.search = new Array();
+            $scope.orgas = new Array();
+
+            $scope.fetch($scope, $http);
+
+            $scope.search.orgaId = $routeParams.orga;
 
 
-	$scope.ModeEnum = {
-		    CONSOS : 0,
-		    ADDSUB : 1
-		}
-
-	$scope.fetch=function($scope, $http) {
-		$http.get('comptes.json').success(function(data) {
-		    $scope.orgas = data;
-		  });
-		}
-
-	$scope.totalCP = function() {
-		var count = 0;
-	    angular.forEach($scope.orgas, function(orga) {
-	      count += orga.balance ;
-	    });
-	    return count;
-	  };
-
-	$scope.newBalance=function($key) {
-		$orga = $scope.orgas[$key]
-		if($scope.mode==$scope.ModeEnum.CONSOS){
-			return $orga.balance - $scope.alter[$orga.id]*$scope.prixConso;
-		}
-		else if($scope.mode==$scope.ModeEnum.ADDSUB){
-			return $orga.balance + $scope.alter[$orga.id]*1;
-		}
-
-		}
-
-	$scope.newTotalCP = function() {
-		var count = 0;
-	    angular.forEach($scope.orgas, function(orga,key) {
-		    if(!isNaN($scope.newBalance(key))){
-	      count += $scope.newBalance(key) ;
-		    }else{
-		   count += orga.balance ;
-			    }
-	    });
-	    
-	    return count;
-	  };
-
-	$scope.post=function() {
-
-		var data={ 'mode': $scope.mode, 'alter': $scope.alter, 'operation': $scope.operation};
-		$http.post('process',JSON.stringify(data)).success(function(data) {
-			$scope.fetch($scope,$http);
-			$scope.alter=new Array();
-			$scope.operation='';
-		  });
-		}
+        }
 
 
-	$scope.printURL = "{{path('comptesPersoPrint')  }}";
-	
-	$scope.prixConso={{ prixConsoStandard }};
-	$scope.fetch($scope,$http);
-	$scope.mode = $scope.ModeEnum.CONSOS;
-	$scope.alter=new Array();
-	
-	}
+        function ListeCtrl($scope, $http) {
+
+
+            $scope.ModeEnum = {
+                CONSOS: 0,
+                ADDSUB: 1
+            }
+
+            $scope.fetch = function($scope, $http) {
+                $http.get('comptes.json').success(function(data) {
+                    $scope.orgas = data;
+                });
+            }
+
+            $scope.totalCP = function() {
+                var count = 0;
+                angular.forEach($scope.orgas, function(orga) {
+                    count += orga.balance;
+                });
+                return count;
+            };
+
+            $scope.newBalance = function($key) {
+                $orga = $scope.orgas[$key]
+                if ($scope.mode == $scope.ModeEnum.CONSOS) {
+                    return $orga.balance - $scope.alter[$orga.id] * $scope.prixConso;
+                }
+                else if ($scope.mode == $scope.ModeEnum.ADDSUB) {
+                    return $orga.balance + $scope.alter[$orga.id] * 1;
+                }
+
+            }
+
+            $scope.newTotalCP = function() {
+                var count = 0;
+                angular.forEach($scope.orgas, function(orga, key) {
+                    if (!isNaN($scope.newBalance(key))) {
+                        count += $scope.newBalance(key);
+                    } else {
+                        count += orga.balance;
+                    }
+                });
+
+                return count;
+            };
+
+            $scope.post = function() {
+
+                var data = {'mode': $scope.mode, 'alter': $scope.alter, 'operation': $scope.operation};
+                $http.post('process', JSON.stringify(data)).success(function(data) {
+                    $scope.fetch($scope, $http);
+                    $scope.alter = new Array();
+                    $scope.operation = '';
+                });
+            }
+
+
+            $scope.printURL = "{{path('comptesPersoPrint')  }}";
+
+            $scope.prixConso = {{ prixConsoStandard }} ;
+                    $scope.fetch($scope, $http);
+            $scope.mode = $scope.ModeEnum.CONSOS;
+            $scope.alter = new Array();
+
+        }
 
 
 
 
-</script>
+        </script>
 {% endblock %}

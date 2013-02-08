@@ -3,7 +3,6 @@
 namespace AssoMaker\PHPMBundle\Controller;
 
 use AssoMaker\PHPMBundle\Entity\Tache;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -18,108 +17,50 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  *
  * @Route("/groupetache")
  */
-class GroupeTacheController extends Controller
-{
+class GroupeTacheController extends Controller {
+
     /**
      * Lists all GroupeTache entities.
      *
      * @Route("/index/{equipeid}/{statut}/{orgaid}", defaults={"equipeid"="all","statut"="all","orgaid"="all"}, name="groupetache")
      * @Template()
      */
-    public function indexAction($equipeid,$statut,$orgaid)
-    {
-    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-    		throw new AccessDeniedException();
-    	}
-    	
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $equipes =$em
-        ->createQuery("SELECT e FROM AssoMakerBaseBundle:Equipe e")
-        ->getResult();
-        
-		$groupesDQL = "SELECT g,r,t FROM AssoMakerPHPMBundle:GroupeTache g LEFT JOIN g.equipe e JOIN g.responsable r JOIN g.taches t WHERE 1=1 ";
-		
-		if($statut !='all'){
-			$groupesDQL .= " AND g.statut = $statut ";
-		}
-		
-		if($statut !=-1){
-			$groupesDQL .= " AND g.statut <> -1 ";
-		}
-		
-		if($equipeid !='all'){
-			$groupesDQL .= " AND e.id = $equipeid ";
-			
-		}
-		if($orgaid !='all'){
-			$groupesDQL .= " AND r.id = $orgaid ";
-				
-		}
-		
-		$groupesDQL .= " AND t.statut <> -1 ORDER BY e.id, g.id, g.statut";
-		
-        $groupes =$em
-        ->createQuery($groupesDQL)
-        ->getResult();
-        
-        return array('equipes' => $equipes,
-        		'groupes' => $groupes
-        		
-        		);
-
-    }
-
-    /**
-     * Finds and displays a GroupeTache entity.
-     *
-     * @Route("/{id}/show", name="groupetache_show")
-     * @Template()
-     */
-    public function showAction($id)
-    {
-    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-    		throw new AccessDeniedException();
-    	}
-    	
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('AssoMakerPHPMBundle:GroupeTache')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find GroupeTache entity.');
+    public function indexAction($equipeid, $statut, $orgaid) {
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
         }
 
-        
-
-        return array(
-            'entity'      => $entity,
-                    );
-    }
-
-    /**
-     * Displays a form to create a new GroupeTache entity.
-     *
-     * @Route("/new", name="groupetache_new")
-     * @Template()
-     */
-    public function newAction()
-    {
-    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-    		throw new AccessDeniedException();
-    	}
-        $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
         $em = $this->getDoctrine()->getEntityManager();
-        $config  =$this->get('config.extension');
-        $user = $this->get('security.context')->getToken()->getUser();
-        $entity = new GroupeTache();
-        $entity->setResponsable($user);
-        $form   = $this->createForm(new GroupeTacheType($admin,$config), $entity);
-        
-        
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView()
+
+        $equipes = $em
+                ->createQuery("SELECT e FROM AssoMakerBaseBundle:Equipe e")
+                ->getResult();
+
+        $groupesDQL = "SELECT g,r,t FROM AssoMakerPHPMBundle:GroupeTache g LEFT JOIN g.equipe e JOIN g.responsable r JOIN g.taches t WHERE 1=1 ";
+
+        if ($statut != 'all') {
+            $groupesDQL .= " AND g.statut = $statut ";
+        }
+
+        if ($statut != -1) {
+            $groupesDQL .= " AND g.statut <> -1 ";
+        }
+
+        if ($equipeid != 'all') {
+            $groupesDQL .= " AND e.id = $equipeid ";
+        }
+        if ($orgaid != 'all') {
+            $groupesDQL .= " AND r.id = $orgaid ";
+        }
+
+        $groupesDQL .= " AND t.statut <> -1 ORDER BY e.id, g.id, g.statut";
+
+        $groupes = $em
+                ->createQuery($groupesDQL)
+                ->getResult();
+
+        return array('equipes' => $equipes,
+            'groupes' => $groupes
         );
     }
 
@@ -130,37 +71,30 @@ class GroupeTacheController extends Controller
      *
      * @Template("AssoMakerPHPMBundle:GroupeTache:new.html.twig")
      */
-       
-    public function createAction()
-    {
-    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-    		throw new AccessDeniedException();
-    	}
+    public function createAction() {
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
         $em = $this->getDoctrine()->getEntityManager();
-        $config  =$this->get('config.extension');
-        $entity  = new GroupeTache();
+        $config = $this->get('config.extension');
+        $entity = new GroupeTache();
         $request = $this->getRequest();
         $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
         $user = $this->get('security.context')->getToken()->getUser();
-            
+
         $entity->setResponsable($user);
         $entity->setEquipe($user->getEquipe());
         $entity->setNom('Groupe sans nom');
         $entity->setLieu(' ');
         $entity->setStatut(0);
-                
-        
+
+
         $em->persist($entity);
         $em->flush();
-    
-    
+
+
         return $this->redirect($this->generateUrl('groupetache_edit', array('id' => $entity->getId())));
-    
-         
     }
-    
-    
-    
 
     /**
      * Displays a form to edit an existing GroupeTache entity.
@@ -168,14 +102,13 @@ class GroupeTacheController extends Controller
      * @Route("/{id}/edit", name="groupetache_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
-    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-    		throw new AccessDeniedException();
-    	}
+    public function editAction($id) {
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
         $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
         $em = $this->getDoctrine()->getEntityManager();
-        $config  =$this->get('config.extension');
+        $config = $this->get('config.extension');
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('AssoMakerPHPMBundle:GroupeTache')->find($id);
@@ -185,13 +118,15 @@ class GroupeTacheController extends Controller
         }
         $taches = $em->getRepository('AssoMakerPHPMBundle:Tache')->getNonDeletedTaches($id);
 
-        $editForm = $this->createForm(new GroupeTacheType($admin,$config), $entity);
-        
+        $editForm = $this->createForm(new GroupeTacheType($admin, $config), $entity);
+
+        $animations = $em->createQuery('SELECT a.id,a.nom,a.lieu FROM AssoMakerAnimBundle:Animation a INDEX BY a.id')->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
 
         return array(
-            'entity'      => $entity,
-            'form'   => $editForm->createView(),
-            'taches' => $taches
+            'entity' => $entity,
+            'form' => $editForm->createView(),
+            'taches' => $taches,
+            'animations' => $animations
         );
     }
 
@@ -202,17 +137,16 @@ class GroupeTacheController extends Controller
      * @Method("post")
      * @Template("AssoMakerPHPMBundle:GroupeTache:edit.html.twig")
      */
-    public function updateAction($id)
-    {
-    	if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-    		throw new AccessDeniedException();
-    	}
+    public function updateAction($id) {
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
         $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
-        $config  =$this->get('config.extension');
+        $config = $this->get('config.extension');
         $param = $request->request->all();
-        
+
 
         $entity = $em->getRepository('AssoMakerPHPMBundle:GroupeTache')->find($id);
 
@@ -220,48 +154,47 @@ class GroupeTacheController extends Controller
             throw $this->createNotFoundException('Unable to find GroupeTache entity.');
         }
 
-        $editForm   = $this->createForm(new GroupeTacheType($admin,$config), $entity);
-        
+        $editForm = $this->createForm(new GroupeTacheType($admin, $config), $entity);
+
 
         $request = $this->getRequest();
 
         $editForm->bindRequest($request);
-       
+
         if ($editForm->isValid()) {
-            if($param['action']=='delete' && $entity->isDeletable()){
+            if ($param['action'] == 'delete' && $entity->isDeletable()) {
                 $entity->setStatut(-1);
-                
             }
-            
-            if($param['action']=='restore'){
+
+            if ($param['action'] == 'restore') {
                 $entity->setStatut(0);
             }
-            
-           
+
+
             $em->persist($entity);
             $em->flush();
-            
-            if($param['action']=='add_tache'){
-            	$tache = new Tache(); 
-            	$tache->setGroupeTache($entity);
-            	$tache->setNom("Tâche sans nom");
-            	$tache->setStatut(0);
-            	$tache->setResponsable($entity->getResponsable());
-            	$tache->setPermisNecessaire(-1);
-            	$tache->setLieu($entity->getLieu());
-            	$em->persist($tache);
-            	$em->flush();
-            	return $this->redirect($this->generateUrl('tache_edit', array('id' => $tache->getId())));            	
+
+            if ($param['action'] == 'add_tache') {
+                $tache = new Tache();
+                $tache->setGroupeTache($entity);
+                $tache->setNom("Tâche sans nom");
+                $tache->setStatut(0);
+                $tache->setResponsable($entity->getResponsable());
+                $tache->setPermisNecessaire(-1);
+                $tache->setLieu($entity->getLieu());
+                $em->persist($tache);
+                $em->flush();
+                return $this->redirect($this->generateUrl('tache_edit', array('id' => $tache->getId())));
             }
-            
-            
+
+
 
             return $this->redirect($this->generateUrl('groupetache_edit', array('id' => $id)));
         }
 
         return array(
-            'entity'      => $entity,
-            'form'   => $editForm->createView()
+            'entity' => $entity,
+            'form' => $editForm->createView()
         );
     }
 
@@ -271,11 +204,10 @@ class GroupeTacheController extends Controller
      * @Route("/{id}/delete", name="groupetache_delete")
      * @Method("post")
      */
-    public function deleteAction($id)
-    {
-    	if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
-    		throw new AccessDeniedException();
-    	}
+    public function deleteAction($id) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
+            throw new AccessDeniedException();
+        }
         $form = $this->createDeleteForm($id);
         $request = $this->getRequest();
 
@@ -296,11 +228,11 @@ class GroupeTacheController extends Controller
         return $this->redirect($this->generateUrl('groupetache'));
     }
 
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                        ->add('id', 'hidden')
+                        ->getForm()
         ;
     }
+
 }

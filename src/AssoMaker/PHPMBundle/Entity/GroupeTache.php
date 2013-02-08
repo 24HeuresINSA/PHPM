@@ -1,6 +1,7 @@
 <?php
 
 namespace AssoMaker\PHPMBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -10,8 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AssoMaker\PHPMBundle\Entity\GroupeTacheRepository")
  */
-class GroupeTache
-{
+class GroupeTache {
+
     /**
      * @var integer $id
      *
@@ -64,9 +65,9 @@ class GroupeTache
     protected $lieu;
 
     /**
-     * @var integer $animLiee
-     *
-     * @ORM\Column(name="animLiee", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="AssoMaker\AnimBundle\Entity\Animation", inversedBy="groupesTacheLies")
+     * @ORM\JoinColumn(onDelete="SET NULL",nullable=true)
+     * @Assert\Valid
      */
     protected $animLiee;
 
@@ -77,12 +78,11 @@ class GroupeTache
      */
     protected $statut;
 
-    public function __toString()
-    {
+    public function __toString() {
         return $this->getId() . "- " . $this->getNom();
     }
-    public function __construct()
-    {
+
+    public function __construct() {
         $this->taches = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -91,8 +91,7 @@ class GroupeTache
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -101,8 +100,7 @@ class GroupeTache
      *
      * @param string $nom
      */
-    public function setNom($nom)
-    {
+    public function setNom($nom) {
         $this->nom = $nom;
     }
 
@@ -111,8 +109,7 @@ class GroupeTache
      *
      * @return string
      */
-    public function getNom()
-    {
+    public function getNom() {
         return $this->nom;
     }
 
@@ -121,8 +118,7 @@ class GroupeTache
      *
      * @param AssoMaker\PHPMBundle\Entity\Tache $taches
      */
-    public function addTache(\AssoMaker\PHPMBundle\Entity\Tache $taches)
-    {
+    public function addTache(\AssoMaker\PHPMBundle\Entity\Tache $taches) {
         $this->taches[] = $taches;
     }
 
@@ -131,8 +127,7 @@ class GroupeTache
      *
      * @return Doctrine\Common\Collections\Collection
      */
-    public function getTaches()
-    {
+    public function getTaches() {
         return $this->taches;
     }
 
@@ -141,8 +136,7 @@ class GroupeTache
      *
      * @return Doctrine\Common\Collections\Collection
      */
-    public function getNonDeletedTaches()
-    {
+    public function getNonDeletedTaches() {
         return $this->taches;
     }
 
@@ -151,8 +145,7 @@ class GroupeTache
      *
      * @param AssoMaker\BaseBundle\Entity\Orga $responsable
      */
-    public function setResponsable(\AssoMaker\BaseBundle\Entity\Orga $responsable)
-    {
+    public function setResponsable(\AssoMaker\BaseBundle\Entity\Orga $responsable) {
         $this->responsable = $responsable;
     }
 
@@ -161,8 +154,7 @@ class GroupeTache
      *
      * @return AssoMaker\BaseBundle\Entity\Orga
      */
-    public function getResponsable()
-    {
+    public function getResponsable() {
         return $this->responsable;
     }
 
@@ -171,8 +163,7 @@ class GroupeTache
      *
      * @param AssoMaker\BaseBundle\Entity\Equipe $equipe
      */
-    public function setEquipe(\AssoMaker\BaseBundle\Entity\Equipe $equipe)
-    {
+    public function setEquipe(\AssoMaker\BaseBundle\Entity\Equipe $equipe) {
         $this->equipe = $equipe;
     }
 
@@ -181,29 +172,8 @@ class GroupeTache
      *
      * @return AssoMaker\BaseBundle\Entity\Equipe
      */
-    public function getEquipe()
-    {
+    public function getEquipe() {
         return $this->equipe;
-    }
-
-    /**
-     * Set animLiee
-     *
-     * @param integer $animLiee
-     */
-    public function setAnimLiee($animLiee)
-    {
-        $this->animLiee = $animLiee;
-    }
-
-    /**
-     * Get animLiee
-     *
-     * @return integer
-     */
-    public function getAnimLiee()
-    {
-        return $this->animLiee;
     }
 
     /**
@@ -211,8 +181,7 @@ class GroupeTache
      *
      * @param string $lieu
      */
-    public function setLieu($lieu)
-    {
+    public function setLieu($lieu) {
         $this->lieu = $lieu;
     }
 
@@ -221,8 +190,7 @@ class GroupeTache
      *
      * @return string
      */
-    public function getLieu()
-    {
+    public function getLieu() {
         return $this->lieu;
     }
 
@@ -231,8 +199,7 @@ class GroupeTache
      *
      * @param smallint $statut
      */
-    public function setStatut($statut)
-    {
+    public function setStatut($statut) {
         $this->statut = $statut;
     }
 
@@ -241,49 +208,41 @@ class GroupeTache
      *
      * @return smallint
      */
-    public function getStatut()
-    {
-    	return $this->statut;
+    public function getStatut() {
+        return $this->statut;
     }
-    
+
     /**
      * Get tachesStatut
      *
      * @return smallint
      */
-    public function getTachesStatut()
-    {
-    
-    	if($this->getStatut() ==-1){
-    		return -1;
-    	}
-    	
-	    if(count($this->getTaches())==0){
-	    	$statut= 0;
-	    }else{
-	    	$statut=3;
-	    }
-    
-	    foreach ($this->getTaches() as $tache){
-	    	if($tache->getStatut()>=0){
-	    		$statut = min($statut,$tache->getStatut());
-	    	}
-    	 
-    	}
-    return $statut;
-    
+    public function getTachesStatut() {
+
+        if ($this->getStatut() == -1) {
+            return -1;
+        }
+
+        if (count($this->getTaches()) == 0) {
+            $statut = 0;
+        } else {
+            $statut = 3;
+        }
+
+        foreach ($this->getTaches() as $tache) {
+            if ($tache->getStatut() >= 0) {
+                $statut = min($statut, $tache->getStatut());
+            }
+        }
+        return $statut;
     }
-    
-   
-     
 
     /**
      * Is deletable ?
      *
      * @param smallint $statut
      */
-    public function isDeletable()
-    {
+    public function isDeletable() {
 
         foreach ($this->taches as $tache) {
             if ($tache->getStatut() != -1) {
@@ -291,18 +250,17 @@ class GroupeTache
             }
         }
         return true;
-
     }
 
-	/*
-	 * Recherche
-	 */
-    public function toSearchArray()
-    {
-    	return array(
-    		"type" => "groupe_tache",
-	    	"id" => $this->getId(),
-	    	"nom" => $this->getNom());
+    /*
+     * Recherche
+     */
+
+    public function toSearchArray() {
+        return array(
+            "type" => "groupe_tache",
+            "id" => $this->getId(),
+            "nom" => $this->getNom());
     }
 
     /**
@@ -310,8 +268,29 @@ class GroupeTache
      *
      * @param \AssoMaker\PHPMBundle\Entity\Tache $taches
      */
-    public function removeTache(\AssoMaker\PHPMBundle\Entity\Tache $taches)
-    {
+    public function removeTache(\AssoMaker\PHPMBundle\Entity\Tache $taches) {
         $this->taches->removeElement($taches);
     }
+
+    /**
+     * Set animLiee
+     *
+     * @param \AssoMaker\AnimBundle\Entity\Animation $animLiee
+     * @return GroupeTache
+     */
+    public function setAnimLiee(\AssoMaker\AnimBundle\Entity\Animation $animLiee = null) {
+        $this->animLiee = $animLiee;
+
+        return $this;
+    }
+
+    /**
+     * Get animLiee
+     *
+     * @return \AssoMaker\AnimBundle\Entity\Animation
+     */
+    public function getAnimLiee() {
+        return $this->animLiee;
+    }
+
 }

@@ -59,20 +59,62 @@
 
 
 	    	{% endif %}
+	    	{% if is_granted('ROLE_USER') %}
+        <div class="span4">
+            <h2>Disponibilités</h2>
+	       {% if statsOrga.PCMax ==0 %}
+            <div class="alert alert-block alert-info fade in">
+                <h4 class="alert-heading">Il n'est pas encore possible de renseigner de disponibilités.</h4>
+            </div>
+	       {% else %}
+	    	{% if statsOrga.PCOrga==0 and statsOrga.PCMax>0%}
+            <div class="alert alert-block alert-error fade in">
+                <h4 class="alert-heading">Aucun charisme !</h4>
+                <p>Tu n'as pas encore renseigné tes disponibilités.</p>
+                <p><a class="btn" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Renseigner mes disponibilités »</a></p>
+            </div>
+			{% else %}
+				{% if statsOrga.nbOrgas != 0 and statsOrga.PCOrga<(statsOrga.PCTotal/statsOrga.nbOrgas) %}
+            <div class="alert alert-block  fade in">
+                <a class="close" data-dismiss="alert" href="#">×</a>
+                <h4 class="alert-heading">Faible charisme !</h4>
+                <p>Tu as renseigné peu de disponibilités.</p>
+                <p><a class="btn" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Ajouter des disponibilités</a></p>
+            </div>
+				{% endif %}
+            <div class="well">
+                <h2>Ton charisme :</h2>
+                <div class="progress progress-success progress-striped">
+                    <div id="barreCharisme" class="bar"></div>
+                    <script type="text/javascript">
+                        $('#barreCharisme').attr('style', "width: {{ statsOrga.PCOrga/statsOrga.PCMax*100 }}%");
+                        </script>
+                    </div>
+                    <div style="text-align: center;">
+                        <p>Points de charisme : {{ statsOrga.PCOrga}}/{{statsOrga.PCMax }}<br>
+                            Classement : {{ statsOrga.rangCharisme}}/{{statsOrga.nbOrgas }}
+                        </p>
+                    </div>
+                </div>
+                <div class="btn-toolbar"><a class="btn btn-primary" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Modifier mes disponibilités »</a>
+                    <a class="btn" href="{{ path('orga_charisme') }}">Statistiques Charisme »</a></div>
+			{% endif %}
+			{% endif %}
+            </div>
+	    	{% endif %}
 
 
 
-
-    </div>
+        </div>
 
 
 {% else %}
-    <div class="hero-unit">
+        <div class="hero-unit">
 	{{ phpm_contenu_page_principale |raw}}
-            <p>
-                <a class="btn btn-primary btn-large" href="{{ url('login') }}">Se connecter</a>
-            </p>
-        </div>
+                <p>
+                    <a class="btn btn-primary btn-large" href="{{ url('login') }}">Se connecter</a>
+                </p>
+            </div>
 
 {% endif %}
 {% endblock %}

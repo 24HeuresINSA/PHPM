@@ -3,9 +3,7 @@
 namespace AssoMaker\AnimBundle\Entity;
 
 use Symfony\Component\Validator\Constraints\DateTime;
-
 use AssoMaker\BaseBundle\Entity\Orga;
-
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -15,17 +13,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AssoMaker\AnimBundle\Entity\AnimationRepository")
  */
-class Animation
+class Animation {
 
+    public static $extTypes = array('Aucun', 'Asso INSA', 'Association', 'Entreprise', 'Particulier');
+    public static $animTypes = array('Divertissement', 'Spectacle', 'Initiation', 'Démo sportive', 'Match de Gala', 'Tournoi', 'Course', 'Concert', 'Prévention', 'Vente', 'Autre');
+    public static $lieuxDepotLog = array('Dépôt AIP', 'Dépôt Humanités', 'QG Orga', 'QG Courses', 'QG Culture', 'Local 24h');
 
-{
-    
-    public static $extTypes = array('Aucun','Asso INSA','Association','Entreprise','Particulier');
-    
-    public static $animTypes = array('Divertissement','Spectacle','Initiation','Démo sportive','Match de Gala','Tournoi','Course','Concert','Prévention','Vente','Autre');
-    
-    public static $lieuxDepotLog = array('Dépôt AIP','Dépôt Humanités','QG Orga','QG Courses','QG Culture','Local 24h');
-    
     /**
      * @var integer
      *
@@ -42,75 +35,76 @@ class Animation
      * @Assert\NotBlank()
      */
     private $nom;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Orga", inversedBy="animsResponsable")
      * @ORM\JoinColumn(referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
     protected $responsable;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Orga")
      * @ORM\JoinColumn(referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
     protected $orgaManif;
-    
+
     /**
      * @var smallint $statut
      * @Assert\Choice(choices = {"0", "1", "2", "-1"})
      * @ORM\Column(type="smallint")
      */
     protected $statut;
-    
+
     /**
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $validLog;
-    
+
     /**
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $validSecu;
-    
+
     /**
      * @var smallint $statut
      * @ORM\Column(type="smallint",nullable=true)
      */
     protected $type;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Equipe", inversedBy="animations")
      * @ORM\JoinColumn( referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
     protected $equipe;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="AssoMaker\PassSecuBundle\Entity\Pass", mappedBy="animationLiee")
      */
     protected $passAssocies;
-    
-    
-    
+
+    /**
+     * @ORM\OneToMany(targetEntity="AssoMaker\PHPMBundle\Entity\GroupeTache", mappedBy="animLiee")
+     */
+    protected $groupesTacheLies;
+
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $extNom;    
-    
-    
+    private $extNom;
+
     /**
      * @Assert\Choice(choices = {"0", "1", "2", "3", "4"})
      * @ORM\Column(type="smallint")
      */
     protected $extType = 0;
-    
-    
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Regex(
@@ -119,7 +113,7 @@ class Animation
      * )
      */
     protected $extTelephone;
-    
+
     /**
      *
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -130,175 +124,171 @@ class Animation
      * )
      */
     protected $extEmail;
-    
+
     /**
      *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $extCommentaire;
-    
+
     /**
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $extPresent;
-    
+
     /**
      *
      * @ORM\Column(type="integer")
      */
-    protected $extBoisson=0;
-    
+    protected $extBoisson = 0;
+
     /**
      *
      * @ORM\Column(type="integer")
      */
-    protected $extBouffe=0;
-    
+    protected $extBouffe = 0;
+
     /**
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $extCatering;
-    
+
     /**
      * @var string $lieu
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $lieu;
-    
+
     /**
      *
      * @ORM\Column(type="float", nullable=true)
      */
     protected $locX = '45.783562';
-    
+
     /**
      *
      * @ORM\Column(type="float", nullable=true)
      */
     protected $locY = '4.87623899999994';
-    
+
     /**
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $public;
-    
+
     /**
      * @var string $description
      *
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
-    
+
     /**
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $animPhare;
-    
+
     /**
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $animGosses;
-    
+
     /**
      * @ORM\Column(type="array")
-     * 
+     *
      */
-    protected $horaires = array(array('jour'=>'Samedi','debut'=>'10h00','fin'=>'18h00'),array('jour'=>'Dimanche','debut'=>'10h00','fin'=>'18h00'));
-    
+    protected $horaires = array(array('jour' => 'Samedi', 'debut' => '10h00', 'fin' => '18h00'), array('jour' => 'Dimanche', 'debut' => '10h00', 'fin' => '18h00'));
+
     /**
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $besoinSecu;
-    
+
     /**
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $besoinPass;
-    
+
     /**
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
-    protected $elec=false;
-    
+    protected $elec = false;
+
     /**
      *
      * @ORM\Column(type="integer")
      */
-    protected $elecAmperes=0;
-    
+    protected $elecAmperes = 0;
+
     /**
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
-    protected $elecTri=false;
-    
+    protected $elecTri = false;
+
     /**
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
-    protected $interieur=false;
-    
+    protected $interieur = false;
+
     /**
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
-    protected $besoinEau=false;
-    
-    
-    
+    protected $besoinEau = false;
+
     /**
      *
      * @ORM\Column(type="text", nullable=true)
      */
     private $detailSecu;
-    
+
     /**
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $besoinSigna;
-    
+
     /**
      *
      * @ORM\Column(type="text", nullable=true)
      */
     private $detailSigna;
-        
+
     /**
      * @ORM\Column(type="array")
      *
      */
     protected $commentaires = array();
-    
+
     /**
      * @ORM\Column(type="array")
      *
      */
     protected $materiel = array();
-    
+
     /**
      *
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $lieuDepotLog;
-         
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -308,20 +298,18 @@ class Animation
      * @param string $nom
      * @return Animation
      */
-    public function setNom($nom)
-    {
+    public function setNom($nom) {
         $this->nom = $nom;
-    
+
         return $this;
     }
 
     /**
      * Get nom
      *
-     * @return string 
+     * @return string
      */
-    public function getNom()
-    {
+    public function getNom() {
         return $this->nom;
     }
 
@@ -331,20 +319,18 @@ class Animation
      * @param integer $statut
      * @return Animation
      */
-    public function setStatut($statut)
-    {
+    public function setStatut($statut) {
         $this->statut = $statut;
-    
+
         return $this;
     }
 
     /**
      * Get statut
      *
-     * @return integer 
+     * @return integer
      */
-    public function getStatut()
-    {
+    public function getStatut() {
         return $this->statut;
     }
 
@@ -354,20 +340,18 @@ class Animation
      * @param string $extNom
      * @return Animation
      */
-    public function setExtNom($extNom)
-    {
+    public function setExtNom($extNom) {
         $this->extNom = $extNom;
-    
+
         return $this;
     }
 
     /**
      * Get extNom
      *
-     * @return string 
+     * @return string
      */
-    public function getExtNom()
-    {
+    public function getExtNom() {
         return $this->extNom;
     }
 
@@ -377,20 +361,18 @@ class Animation
      * @param integer $extType
      * @return Animation
      */
-    public function setExtType($extType)
-    {
+    public function setExtType($extType) {
         $this->extType = $extType;
-    
+
         return $this;
     }
 
     /**
      * Get extType
      *
-     * @return integer 
+     * @return integer
      */
-    public function getExtType()
-    {
+    public function getExtType() {
         return $this->extType;
     }
 
@@ -400,20 +382,18 @@ class Animation
      * @param string $extTelephone
      * @return Animation
      */
-    public function setExtTelephone($extTelephone)
-    {
+    public function setExtTelephone($extTelephone) {
         $this->extTelephone = $extTelephone;
-    
+
         return $this;
     }
 
     /**
      * Get extTelephone
      *
-     * @return string 
+     * @return string
      */
-    public function getExtTelephone()
-    {
+    public function getExtTelephone() {
         return $this->extTelephone;
     }
 
@@ -423,20 +403,18 @@ class Animation
      * @param string $extEmail
      * @return Animation
      */
-    public function setExtEmail($extEmail)
-    {
+    public function setExtEmail($extEmail) {
         $this->extEmail = $extEmail;
-    
+
         return $this;
     }
 
     /**
      * Get extEmail
      *
-     * @return string 
+     * @return string
      */
-    public function getExtEmail()
-    {
+    public function getExtEmail() {
         return $this->extEmail;
     }
 
@@ -446,20 +424,18 @@ class Animation
      * @param string $extCommentaire
      * @return Animation
      */
-    public function setExtCommentaire($extCommentaire)
-    {
+    public function setExtCommentaire($extCommentaire) {
         $this->extCommentaire = $extCommentaire;
-    
+
         return $this;
     }
 
     /**
      * Get extCommentaire
      *
-     * @return string 
+     * @return string
      */
-    public function getExtCommentaire()
-    {
+    public function getExtCommentaire() {
         return $this->extCommentaire;
     }
 
@@ -469,20 +445,18 @@ class Animation
      * @param boolean $extPresent
      * @return Animation
      */
-    public function setExtPresent($extPresent)
-    {
+    public function setExtPresent($extPresent) {
         $this->extPresent = $extPresent;
-    
+
         return $this;
     }
 
     /**
      * Get extPresent
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getExtPresent()
-    {
+    public function getExtPresent() {
         return $this->extPresent;
     }
 
@@ -492,20 +466,18 @@ class Animation
      * @param integer $extBoisson
      * @return Animation
      */
-    public function setExtBoisson($extBoisson)
-    {
+    public function setExtBoisson($extBoisson) {
         $this->extBoisson = $extBoisson;
-    
+
         return $this;
     }
 
     /**
      * Get extBoisson
      *
-     * @return integer 
+     * @return integer
      */
-    public function getExtBoisson()
-    {
+    public function getExtBoisson() {
         return $this->extBoisson;
     }
 
@@ -515,20 +487,18 @@ class Animation
      * @param integer $extBouffe
      * @return Animation
      */
-    public function setExtBouffe($extBouffe)
-    {
+    public function setExtBouffe($extBouffe) {
         $this->extBouffe = $extBouffe;
-    
+
         return $this;
     }
 
     /**
      * Get extBouffe
      *
-     * @return integer 
+     * @return integer
      */
-    public function getExtBouffe()
-    {
+    public function getExtBouffe() {
         return $this->extBouffe;
     }
 
@@ -538,20 +508,18 @@ class Animation
      * @param boolean $extCatering
      * @return Animation
      */
-    public function setExtCatering($extCatering)
-    {
+    public function setExtCatering($extCatering) {
         $this->extCatering = $extCatering;
-    
+
         return $this;
     }
 
     /**
      * Get extCatering
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getExtCatering()
-    {
+    public function getExtCatering() {
         return $this->extCatering;
     }
 
@@ -561,20 +529,18 @@ class Animation
      * @param string $lieu
      * @return Animation
      */
-    public function setLieu($lieu)
-    {
+    public function setLieu($lieu) {
         $this->lieu = $lieu;
-    
+
         return $this;
     }
 
     /**
      * Get lieu
      *
-     * @return string 
+     * @return string
      */
-    public function getLieu()
-    {
+    public function getLieu() {
         return $this->lieu;
     }
 
@@ -584,20 +550,18 @@ class Animation
      * @param float $locX
      * @return Animation
      */
-    public function setLocX($locX)
-    {
+    public function setLocX($locX) {
         $this->locX = $locX;
-    
+
         return $this;
     }
 
     /**
      * Get locX
      *
-     * @return float 
+     * @return float
      */
-    public function getLocX()
-    {
+    public function getLocX() {
         return $this->locX;
     }
 
@@ -607,20 +571,18 @@ class Animation
      * @param float $locY
      * @return Animation
      */
-    public function setLocY($locY)
-    {
+    public function setLocY($locY) {
         $this->locY = $locY;
-    
+
         return $this;
     }
 
     /**
      * Get locY
      *
-     * @return float 
+     * @return float
      */
-    public function getLocY()
-    {
+    public function getLocY() {
         return $this->locY;
     }
 
@@ -630,20 +592,18 @@ class Animation
      * @param boolean $public
      * @return Animation
      */
-    public function setPublic($public)
-    {
+    public function setPublic($public) {
         $this->public = $public;
-    
+
         return $this;
     }
 
     /**
      * Get public
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getPublic()
-    {
+    public function getPublic() {
         return $this->public;
     }
 
@@ -653,20 +613,18 @@ class Animation
      * @param string $description
      * @return Animation
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -676,20 +634,18 @@ class Animation
      * @param boolean $animPhare
      * @return Animation
      */
-    public function setAnimPhare($animPhare)
-    {
+    public function setAnimPhare($animPhare) {
         $this->animPhare = $animPhare;
-    
+
         return $this;
     }
 
     /**
      * Get animPhare
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getAnimPhare()
-    {
+    public function getAnimPhare() {
         return $this->animPhare;
     }
 
@@ -699,20 +655,18 @@ class Animation
      * @param boolean $animGosses
      * @return Animation
      */
-    public function setAnimGosses($animGosses)
-    {
+    public function setAnimGosses($animGosses) {
         $this->animGosses = $animGosses;
-    
+
         return $this;
     }
 
     /**
      * Get animGosses
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getAnimGosses()
-    {
+    public function getAnimGosses() {
         return $this->animGosses;
     }
 
@@ -722,20 +676,18 @@ class Animation
      * @param string $lieuPublic
      * @return Animation
      */
-    public function setLieuPublic($lieuPublic)
-    {
+    public function setLieuPublic($lieuPublic) {
         $this->lieuPublic = $lieuPublic;
-    
+
         return $this;
     }
 
     /**
      * Get lieuPublic
      *
-     * @return string 
+     * @return string
      */
-    public function getLieuPublic()
-    {
+    public function getLieuPublic() {
         return $this->lieuPublic;
     }
 
@@ -745,20 +697,18 @@ class Animation
      * @param \AssoMaker\BaseBundle\Entity\Orga $responsable
      * @return Animation
      */
-    public function setResponsable(\AssoMaker\BaseBundle\Entity\Orga $responsable = null)
-    {
+    public function setResponsable(\AssoMaker\BaseBundle\Entity\Orga $responsable = null) {
         $this->responsable = $responsable;
-    
+
         return $this;
     }
 
     /**
      * Get responsable
      *
-     * @return \AssoMaker\BaseBundle\Entity\Orga 
+     * @return \AssoMaker\BaseBundle\Entity\Orga
      */
-    public function getResponsable()
-    {
+    public function getResponsable() {
         return $this->responsable;
     }
 
@@ -768,20 +718,18 @@ class Animation
      * @param \AssoMaker\BaseBundle\Entity\Orga $orgaManif
      * @return Animation
      */
-    public function setOrgaManif(\AssoMaker\BaseBundle\Entity\Orga $orgaManif = null)
-    {
+    public function setOrgaManif(\AssoMaker\BaseBundle\Entity\Orga $orgaManif = null) {
         $this->orgaManif = $orgaManif;
-    
+
         return $this;
     }
 
     /**
      * Get orgaManif
      *
-     * @return \AssoMaker\BaseBundle\Entity\Orga 
+     * @return \AssoMaker\BaseBundle\Entity\Orga
      */
-    public function getOrgaManif()
-    {
+    public function getOrgaManif() {
         return $this->orgaManif;
     }
 
@@ -791,20 +739,18 @@ class Animation
      * @param \AssoMaker\BaseBundle\Entity\Equipe $equipe
      * @return Animation
      */
-    public function setEquipe(\AssoMaker\BaseBundle\Entity\Equipe $equipe = null)
-    {
+    public function setEquipe(\AssoMaker\BaseBundle\Entity\Equipe $equipe = null) {
         $this->equipe = $equipe;
-    
+
         return $this;
     }
 
     /**
      * Get equipe
      *
-     * @return \AssoMaker\BaseBundle\Entity\Equipe 
+     * @return \AssoMaker\BaseBundle\Entity\Equipe
      */
-    public function getEquipe()
-    {
+    public function getEquipe() {
         return $this->equipe;
     }
 
@@ -814,20 +760,18 @@ class Animation
      * @param array $competences
      * @return Animation
      */
-    public function setCompetences($competences)
-    {
+    public function setCompetences($competences) {
         $this->competences = $competences;
-    
+
         return $this;
     }
 
     /**
      * Get competences
      *
-     * @return array 
+     * @return array
      */
-    public function getCompetences()
-    {
+    public function getCompetences() {
         return $this->competences;
     }
 
@@ -837,20 +781,18 @@ class Animation
      * @param array $horaires
      * @return Animation
      */
-    public function setHoraires($horaires)
-    {
+    public function setHoraires($horaires) {
         $this->horaires = $horaires;
-    
+
         return $this;
     }
 
     /**
      * Get horaires
      *
-     *  
+     *
      */
-    public function getHoraires()
-    {
+    public function getHoraires() {
         return $this->horaires;
     }
 
@@ -860,20 +802,18 @@ class Animation
      * @param integer $type
      * @return Animation
      */
-    public function setType($type)
-    {
+    public function setType($type) {
         $this->type = $type;
-    
+
         return $this;
     }
 
     /**
      * Get type
      *
-     * @return integer 
+     * @return integer
      */
-    public function getType()
-    {
+    public function getType() {
         return $this->type;
     }
 
@@ -883,29 +823,27 @@ class Animation
      * @param array $commentaires
      * @return Animation
      */
-    public function setCommentaires($commentaires)
-    {
+    public function setCommentaires($commentaires) {
         $this->commentaires = $commentaires;
-    
+
         return $this;
     }
 
     /**
      * Get commentaires
      *
-     * @return array 
+     * @return array
      */
-    public function getCommentaires()
-    {
+    public function getCommentaires() {
         return $this->commentaires;
     }
-    
-    public function addCommentaire(Orga $auteur, $texte,$type = 0){
-        
-        $this->commentaires[]=array('auteur'=>$auteur->__toString(),
-                                    'type'=>$type,
-                                    'texte'=>$texte,
-                                    'date'=>(new \DateTime()));
+
+    public function addCommentaire(Orga $auteur, $texte, $type = 0) {
+
+        $this->commentaires[] = array('auteur' => $auteur->__toString(),
+            'type' => $type,
+            'texte' => $texte,
+            'date' => (new \DateTime()));
     }
 
     /**
@@ -914,20 +852,18 @@ class Animation
      * @param boolean $besoinSecu
      * @return Animation
      */
-    public function setBesoinSecu($besoinSecu)
-    {
+    public function setBesoinSecu($besoinSecu) {
         $this->besoinSecu = $besoinSecu;
-    
+
         return $this;
     }
 
     /**
      * Get besoinSecu
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getBesoinSecu()
-    {
+    public function getBesoinSecu() {
         return $this->besoinSecu;
     }
 
@@ -937,20 +873,18 @@ class Animation
      * @param string $detailSecu
      * @return Animation
      */
-    public function setDetailSecu($detailSecu)
-    {
+    public function setDetailSecu($detailSecu) {
         $this->detailSecu = $detailSecu;
-    
+
         return $this;
     }
 
     /**
      * Get detailSecu
      *
-     * @return string 
+     * @return string
      */
-    public function getDetailSecu()
-    {
+    public function getDetailSecu() {
         return $this->detailSecu;
     }
 
@@ -960,20 +894,18 @@ class Animation
      * @param boolean $besoinSigna
      * @return Animation
      */
-    public function setBesoinSigna($besoinSigna)
-    {
+    public function setBesoinSigna($besoinSigna) {
         $this->besoinSigna = $besoinSigna;
-    
+
         return $this;
     }
 
     /**
      * Get besoinSigna
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getBesoinSigna()
-    {
+    public function getBesoinSigna() {
         return $this->besoinSigna;
     }
 
@@ -983,23 +915,20 @@ class Animation
      * @param string $detailSigna
      * @return Animation
      */
-    public function setDetailSigna($detailSigna)
-    {
+    public function setDetailSigna($detailSigna) {
         $this->detailSigna = $detailSigna;
-    
+
         return $this;
     }
 
     /**
      * Get detailSigna
      *
-     * @return string 
+     * @return string
      */
-    public function getDetailSigna()
-    {
+    public function getDetailSigna() {
         return $this->detailSigna;
     }
-
 
     /**
      * Set materiel
@@ -1007,20 +936,18 @@ class Animation
      * @param array $materiel
      * @return Animation
      */
-    public function setMateriel($materiel)
-    {
+    public function setMateriel($materiel) {
         $this->materiel = $materiel;
-    
+
         return $this;
     }
 
     /**
      * Get materiel
      *
-     * @return array 
+     * @return array
      */
-    public function getMateriel()
-    {
+    public function getMateriel() {
         return $this->materiel;
     }
 
@@ -1030,20 +957,18 @@ class Animation
      * @param boolean $besoinPass
      * @return Animation
      */
-    public function setBesoinPass($besoinPass)
-    {
+    public function setBesoinPass($besoinPass) {
         $this->besoinPass = $besoinPass;
-    
+
         return $this;
     }
 
     /**
      * Get besoinPass
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getBesoinPass()
-    {
+    public function getBesoinPass() {
         return $this->besoinPass;
     }
 
@@ -1053,20 +978,18 @@ class Animation
      * @param boolean $validLog
      * @return Animation
      */
-    public function setValidLog($validLog)
-    {
+    public function setValidLog($validLog) {
         $this->validLog = $validLog;
-    
+
         return $this;
     }
 
     /**
      * Get validLog
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getValidLog()
-    {
+    public function getValidLog() {
         return $this->validLog;
     }
 
@@ -1076,20 +999,18 @@ class Animation
      * @param boolean $elec
      * @return Animation
      */
-    public function setElec($elec)
-    {
+    public function setElec($elec) {
         $this->elec = $elec;
-    
+
         return $this;
     }
 
     /**
      * Get elec
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getElec()
-    {
+    public function getElec() {
         return $this->elec;
     }
 
@@ -1099,20 +1020,18 @@ class Animation
      * @param integer $elecAmperes
      * @return Animation
      */
-    public function setElecAmperes($elecAmperes)
-    {
+    public function setElecAmperes($elecAmperes) {
         $this->elecAmperes = $elecAmperes;
-    
+
         return $this;
     }
 
     /**
      * Get elecAmperes
      *
-     * @return integer 
+     * @return integer
      */
-    public function getElecAmperes()
-    {
+    public function getElecAmperes() {
         return $this->elecAmperes;
     }
 
@@ -1122,20 +1041,18 @@ class Animation
      * @param boolean $elecTri
      * @return Animation
      */
-    public function setElecTri($elecTri)
-    {
+    public function setElecTri($elecTri) {
         $this->elecTri = $elecTri;
-    
+
         return $this;
     }
 
     /**
      * Get elecTri
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getElecTri()
-    {
+    public function getElecTri() {
         return $this->elecTri;
     }
 
@@ -1145,20 +1062,18 @@ class Animation
      * @param boolean $interieur
      * @return Animation
      */
-    public function setInterieur($interieur)
-    {
+    public function setInterieur($interieur) {
         $this->interieur = $interieur;
-    
+
         return $this;
     }
 
     /**
      * Get interieur
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getInterieur()
-    {
+    public function getInterieur() {
         return $this->interieur;
     }
 
@@ -1168,20 +1083,18 @@ class Animation
      * @param boolean $besoinEau
      * @return Animation
      */
-    public function setBesoinEau($besoinEau)
-    {
+    public function setBesoinEau($besoinEau) {
         $this->besoinEau = $besoinEau;
-    
+
         return $this;
     }
 
     /**
      * Get besoinEau
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getBesoinEau()
-    {
+    public function getBesoinEau() {
         return $this->besoinEau;
     }
 
@@ -1191,20 +1104,18 @@ class Animation
      * @param integer $lieuDepotLog
      * @return Animation
      */
-    public function setLieuDepotLog($lieuDepotLog)
-    {
+    public function setLieuDepotLog($lieuDepotLog) {
         $this->lieuDepotLog = $lieuDepotLog;
-    
+
         return $this;
     }
 
     /**
      * Get lieuDepotLog
      *
-     * @return integer 
+     * @return integer
      */
-    public function getLieuDepotLog()
-    {
+    public function getLieuDepotLog() {
         return $this->lieuDepotLog;
     }
 
@@ -1214,45 +1125,41 @@ class Animation
      * @param boolean $validSecu
      * @return Animation
      */
-    public function setValidSecu($validSecu)
-    {
+    public function setValidSecu($validSecu) {
         $this->validSecu = $validSecu;
-    
+
         return $this;
     }
 
     /**
      * Get validSecu
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getValidSecu()
-    {
+    public function getValidSecu() {
         return $this->validSecu;
     }
-    
-    
-    public function __toString(){
+
+    public function __toString() {
         return $this->nom;
     }
+
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->passAssocies = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add passAssocies
      *
      * @param \AssoMaker\PassSecuBundle\Entity\Pass $passAssocies
      * @return Animation
      */
-    public function addPassAssocie(\AssoMaker\PassSecuBundle\Entity\Pass $passAssocies)
-    {
+    public function addPassAssocie(\AssoMaker\PassSecuBundle\Entity\Pass $passAssocies) {
         $this->passAssocies[] = $passAssocies;
-    
+
         return $this;
     }
 
@@ -1261,18 +1168,50 @@ class Animation
      *
      * @param \AssoMaker\PassSecuBundle\Entity\Pass $passAssocies
      */
-    public function removePassAssocie(\AssoMaker\PassSecuBundle\Entity\Pass $passAssocies)
-    {
+    public function removePassAssocie(\AssoMaker\PassSecuBundle\Entity\Pass $passAssocies) {
         $this->passAssocies->removeElement($passAssocies);
     }
 
     /**
      * Get passAssocies
      *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPassAssocies() {
+        return $this->passAssocies;
+    }
+
+
+    /**
+     * Add groupesTacheLies
+     *
+     * @param \AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheLies
+     * @return Animation
+     */
+    public function addGroupesTacheLie(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheLies)
+    {
+        $this->groupesTacheLies[] = $groupesTacheLies;
+    
+        return $this;
+    }
+
+    /**
+     * Remove groupesTacheLies
+     *
+     * @param \AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheLies
+     */
+    public function removeGroupesTacheLie(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheLies)
+    {
+        $this->groupesTacheLies->removeElement($groupesTacheLies);
+    }
+
+    /**
+     * Get groupesTacheLies
+     *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getPassAssocies()
+    public function getGroupesTacheLies()
     {
-        return $this->passAssocies;
+        return $this->groupesTacheLies;
     }
 }
