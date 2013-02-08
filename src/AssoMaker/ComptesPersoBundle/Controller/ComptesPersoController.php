@@ -1,11 +1,10 @@
 <?php
 
 namespace AssoMaker\ComptesPersoBundle\Controller;
-use Doctrine\DBAL\Platforms\Keywords\KeywordList;
 
+use Doctrine\DBAL\Platforms\Keywords\KeywordList;
 use AssoMaker\ComptesPersoBundle\Entity\Transaction;
 use AssoMaker\ComptesPersoBundle\Form\VirementType;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -19,8 +18,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  *
  * @Route("/comptesPerso")
  */
-class ComptesPersoController extends Controller
-{
+class ComptesPersoController extends Controller {
 
     /**
      * Lists all Orga comptes
@@ -28,8 +26,7 @@ class ComptesPersoController extends Controller
      * @Route("/", name="comptesPerso")
      * @Template()
      */
-    public function comptesPersoAction(Request $request)
-    {
+    public function comptesPersoAction(Request $request) {
         if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
             throw new AccessDeniedException();
         }
@@ -44,7 +41,7 @@ class ComptesPersoController extends Controller
         $form = $builder->getForm();
 
         return array('prixConsoStandard' => $prixConso,
-                'form' => $form->createView());
+            'form' => $form->createView());
     }
 
     /**
@@ -54,8 +51,7 @@ class ComptesPersoController extends Controller
      * @Method("get")
      * @Template()
      */
-    public function printAction(Request $request)
-    {
+    public function printAction(Request $request) {
         if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
             throw new AccessDeniedException();
         }
@@ -75,8 +71,7 @@ class ComptesPersoController extends Controller
      * @Method("get")
      * @Template()
      */
-    public function comptesPersoDataAction(Request $request)
-    {
+    public function comptesPersoDataAction(Request $request) {
         if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
             throw new AccessDeniedException();
         }
@@ -100,8 +95,7 @@ class ComptesPersoController extends Controller
      * @Method("post")
      * @Template()
      */
-    public function comptesPersoProcessAction(Request $request)
-    {
+    public function comptesPersoProcessAction(Request $request) {
         if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
             $this->getResponse()->setStatusCode('404');
             return new Response();
@@ -154,8 +148,7 @@ class ComptesPersoController extends Controller
      * @Method("get")
      * @Template()
      */
-    public function transactionsDataAction(Request $request)
-    {
+    public function transactionsDataAction(Request $request) {
         if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
             throw new AccessDeniedException();
         }
@@ -178,14 +171,14 @@ class ComptesPersoController extends Controller
      * @Route("/virement", name="comptesPerso_virement")
      * @Template()
      */
-    public function virementAction(Request $request)
-    {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+    public function virementAction(Request $request) {
+        $user = $this->get('security.context')->getToken()->getUser();
+        if (false === $user->getEquipe()->getComptesPersoEnabled()) {
             throw new AccessDeniedException();
         }
         $em = $this->getDoctrine()->getEntityManager();
         $config = $e = $this->get('config.extension');
-        $user = $this->get('security.context')->getToken()->getUser();
+
         $userId = $user->getId();
         $form = $this->createForm(new VirementType($config, $userId));
         $soldeCP = $em
@@ -202,25 +195,21 @@ class ComptesPersoController extends Controller
 
                 $em
                         ->persist(
-                                new Transaction($destinataire, $amount,
-                                        "Virement reçu de $user : '$raison'."));
+                                new Transaction($destinataire, $amount, "Virement reçu de $user : '$raison'."));
                 $em
                         ->persist(
-                                new Transaction($user, -$amount,
-                                        "Virement vers $destinataire : '$raison'."));
+                                new Transaction($user, -$amount, "Virement vers $destinataire : '$raison'."));
 
                 $em->flush();
                 $this->checkNegativeAccountAndSendEmail($user);
                 return $this->redirect($this->generateUrl('base_accueil'));
             }
-
         }
 
         return array('form' => $form->createView(), 'soldeCP' => $soldeCP);
     }
 
-    public function checkNegativeAccountAndSendEmail($orga)
-    {
+    public function checkNegativeAccountAndSendEmail($orga) {
         $em = $this->getDoctrine()->getEntityManager();
         $soldeCP = $em
                 ->getRepository('AssoMakerComptesPersoBundle:Transaction')
@@ -232,20 +221,17 @@ class ComptesPersoController extends Controller
                             '[Alerte Compte Perso] Ton compte perso est dans le rouge!')
                     ->setFrom(
                             array(
-                                    'secretaire.general@24heures.org' => 'SG 24 Heures'))
+                                'secretaire.general@24heures.org' => 'SG 24 Heures'))
                     ->setReplyTo('secretaire.general@24heures.org')
                     ->setTo($orga->getEmail())
                     ->setBody(
-                            $this
-                                    ->renderView(
-                                            'AssoMakerComptesPersoBundle:ComptesPerso:emailNegativeAccount.html.twig',
-                                            array('orga' => $orga,
-                                                    'soldeCP' => $soldeCP)),
-                            'text/html');
+                    $this
+                    ->renderView(
+                            'AssoMakerComptesPersoBundle:ComptesPerso:emailNegativeAccount.html.twig', array('orga' => $orga,
+                        'soldeCP' => $soldeCP)), 'text/html');
 
             $this->get('mailer')->send($message);
         }
-
     }
 
     /**
@@ -255,8 +241,7 @@ class ComptesPersoController extends Controller
      * @Method("post")
      * @Template()
      */
-    public function computeInterestsAction(Request $request)
-    {
+    public function computeInterestsAction(Request $request) {
         $accessCode = $request->request->get('accessCode');
         $config = $this->get('config.extension');
 
@@ -270,7 +255,7 @@ class ComptesPersoController extends Controller
         $config = $e = $this->get('config.extension');
 
         $orgas = $em->getRepository("AssoMakerBaseBundle:Orga")
-                ->findAllComptesPersoUsersExcept(0)->getQuery()->getResult();
+                        ->findAllComptesPersoUsersExcept(0)->getQuery()->getResult();
 
         foreach ($orgas as $orga) {
             $soldeCP = $em
@@ -280,8 +265,7 @@ class ComptesPersoController extends Controller
                 $interests = round(-$soldeCP * 11 / 100 * 7 / 365, 2);
                 $em
                         ->persist(
-                                new Transaction($orga, -$interests,
-                                        "Intérêts sur compte déficitaire: $soldeCP € x (1+10)% x 7 jours = $interests €"));
+                                new Transaction($orga, -$interests, "Intérêts sur compte déficitaire: $soldeCP € x (1+10)% x 7 jours = $interests €"));
                 $em->flush();
                 $this->checkNegativeAccountAndSendEmail($orga);
             }
@@ -290,42 +274,40 @@ class ComptesPersoController extends Controller
         return array();
     }
 
-   
-     /*
+    /*
       LogConso
-     
+
       @Route("/logConso.json", name="comptesPerso_logConso")
       @Method("put")
-     
-    public function logConsoAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-        $config = $e = $this->get('config.extension');
 
-        $prixConso = $config->getValue('comptes_perso_prix_conso_standard');
+      public function logConsoAction(Request $request)
+      {
+      $em = $this->getDoctrine()->getEntityManager();
+      $config = $e = $this->get('config.extension');
 
-        $data = json_decode($request->getContent(), true);
-        $NFCId = $data['NFCId'];
-        $orga = $em->getRepository("AssoMakerBaseBundle:Orga")
-                ->findOneByNfcId($NFCId);
+      $prixConso = $config->getValue('comptes_perso_prix_conso_standard');
 
-        if (!$orga) {
-            $response = new Response("#0");
-            return $response;
-        }
+      $data = json_decode($request->getContent(), true);
+      $NFCId = $data['NFCId'];
+      $orga = $em->getRepository("AssoMakerBaseBundle:Orga")
+      ->findOneByNfcId($NFCId);
+
+      if (!$orga) {
+      $response = new Response("#0");
+      return $response;
+      }
 
 
-        $em
-                ->persist(
-                        new Transaction($orga, -$prixConso,
-                                "Conso: $prixConso €"));
-        $em->flush();
-        $this->checkNegativeAccountAndSendEmail($orga);
+      $em
+      ->persist(
+      new Transaction($orga, -$prixConso,
+      "Conso: $prixConso €"));
+      $em->flush();
+      $this->checkNegativeAccountAndSendEmail($orga);
 
-        $response = new Response("#1");
-        return $response;
+      $response = new Response("#1");
+      return $response;
 
-    }
-    */
-
+      }
+     */
 }
