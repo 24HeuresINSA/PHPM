@@ -5,7 +5,7 @@ security:
 
     role_hierarchy:
         ROLE_USER:        ROLE_VISITOR
-        ROLE_ADMIN: [ROLE_USER, ROLE_VISITOR] 
+        ROLE_ADMIN: [ROLE_USER, ROLE_VISITOR]
         ROLE_HUMAIN:       [ROLE_ADMIN]
         ROLE_LOG:       [ROLE_ADMIN]
         ROLE_SECU:       [ROLE_ADMIN]
@@ -34,7 +34,7 @@ security:
                 path:   /logout
                 invalidate_session: true
             anonymous:  ~
-                
+
     access_control:
              - { path: /_wdt/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: /_profiler/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
@@ -46,9 +46,10 @@ security:
              - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
              - { path: ^/pass/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/config/initiale, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+             - { path: ^/comptesPerso/virement, roles: ROLE_VISITOR }
              - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/.*json, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-             - { path: ^/.*, roles: ROLE_USER }               
+             - { path: ^/.*, roles: ROLE_USER }
 #             - { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
 jms_security_extra:
     secure_all_services: false
