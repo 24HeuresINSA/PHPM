@@ -59,7 +59,9 @@
                     {% endif %}
 
                                                 <hr>
+                    {% if is_granted('ROLE_ADMIN') %}
                     {{ _self.navBarItem('Export Tableau','orga_export_tableau') }}
+                    {% endif %}
                     {{ _self.navBarItem('Export Google Contacts','orga_export_csv') }}
 
                     {% if is_granted('ROLE_HUMAIN') and (phpm_actif ==1) %}
