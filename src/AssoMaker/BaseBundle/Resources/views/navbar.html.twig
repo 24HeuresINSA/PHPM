@@ -103,6 +103,7 @@
             {% if is_granted('ROLE_USER') and not is_granted('ROLE_HUMAIN') and (phpm_actif ==1) %}
                 {{ _self.navBarItem('Recherche des conflits','analyse_plagesorga',{'orgaid': app.user.id}) }}
                 {{ _self.navBarItem('Mes Disponibilités','orga_inputdispos',{'id':app.user.id }) }}
+                {{ _self.navBarItem('Charisme','orga_charisme') }}
             {% endif %}
 
             {% if is_granted('ROLE_HUMAIN') %}
