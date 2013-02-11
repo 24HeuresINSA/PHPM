@@ -27,7 +27,7 @@ function Ctrl($scope){
 		      if(anim.statut == statut){
 			      count = count + 1;
 			      }
-		      console.log(count);
+
 		    });
 		    return count;
 		}
@@ -35,21 +35,22 @@ function Ctrl($scope){
 	$scope.countLog = function(){
 		 var count = 0;
 		    angular.forEach($scope.animations, function(anim) {
-		      if(anim.statut == 1 && anim.validLog == false){
+		      if(anim.statut == 1 && anim.validLog != true){
 			      count = count + 1;
 			      }
-		      console.log(count);
+		      console.log(['log',count]);
 		    });
+		    
 		    return count;
 		}
 
 	$scope.countSecu = function(){
 		 var count = 0;
 		    angular.forEach($scope.animations, function(anim) {
-		      if(anim.statut == 1 && anim.validSecu == false){
+		      if(anim.statut == 1 && anim.validSecu != true){
 			      count = count + 1;
 			      }
-		      console.log(count);
+		      console.log(['se',count]);
 		    });
 		    return count;
 		}
@@ -57,10 +58,16 @@ function Ctrl($scope){
 	
 	{% if is_granted('ROLE_LOG') %}
 	$scope.showLog=true;
+	$scope.isLog=true;
 	{% endif %}
 
 	{% if is_granted('ROLE_SECU') %}
 	$scope.showSecu=true;
+	$scope.isSecu=true;
+	{% endif %}
+
+	{% if is_granted('ROLE_HUMAIN') %}
+	$scope.isHumain=true;
 	{% endif %}
 	
 }
@@ -96,9 +103,9 @@ function Ctrl($scope){
 			<li ng-class="{active: search.statut=='1'}">
 			    <a ng-click="search.statut='1'" >
     			    <i class="icon-eye-open"></i> À valider
-    			    <span class="badge badge-important"><i class="icon-user"></i>{{ countStatut(1) }}</span> 
-    			    <span class="badge"><i class="icon-wrench"></i>{{ countLog() }}</span>
-    			    <span class="badge"><i class="icon-bullhorn"></i>{{ countSecu() }}</span>
+    			    <span class="badge" ng-class="{true:'badge-important', false:''}[isHumain]"><i class="icon-user"></i>{{ countStatut(1) }}</span> 
+    			    <span class="badge" ng-class="{true:'badge-important', false:''}[isLog]"><i class="icon-wrench"></i>{{ countLog() }}</span>
+    			    <span class="badge" ng-class="{true:'badge-important', false:''}[isSecu]"><i class="icon-bullhorn"></i>{{ countSecu() }}</span>
 			    </a>
 			</li>
 			<li ng-class="{active: search.statut=='2'}">
@@ -144,20 +151,29 @@ function Ctrl($scope){
                     
                     
                     <div class="row-fluid" ng-show="showLog">
-                        
-                        <div class="span12" >
-                            <p>
-                                <b>Matériel :</b>
-                                <span ng:repeat="c in a.materiel">
-                                    <span  ng:repeat="m in c.items">
-                                        {{ c.nom }} > {{ m.nom }} : {{ m.qte }},
+                        <div class="row-fluid">
+                             <div class="span12" >
+                                <p>
+                                    <b>Matériel :</b>
+                                    <span ng:repeat="c in a.materiel">
+                                        <span  ng:repeat="m in c.items">
+                                            {{ c.nom }} > {{ m.nom }} : {{ m.qte }},
+                                        </span>
                                     </span>
-                                </span>
-                            </p>
+                                </p>
+                            </div>
                         </div>
+                        <div class="row-fluid" ng-show="a.elec==1">
+                            <div class="span12" >
+                                <p>
+                                    <b>Électricité : </b>{{ a.elecAmperes }} Ampères <span ng-show="a.elecTri">triphasé</span>
+                                </p>
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="row-fluid" ng-show="showSecu && a.besoinSecu">
-                        <div class="span5" ><b>Dispositif de sécurité :</b> {{a.detailSecu}}</div>
+                    <div class="row-fluid" ng-show="showSecu">
+                        <div class="span5" ng-show="a.besoinSecu"><b>Dispositif de sécurité :</b> {{a.detailSecu}}</div>
                     </div>
                 </div>
             </div>

@@ -146,6 +146,10 @@ function Ctrl($scope){
 	{% if entity.besoinSigna %}
     $scope.besoinSigna=true;
 	{% endif %}
+
+	{% if entity.elec %}
+    $scope.besoinElec=true;
+	{% endif %}
 }
 </script>
 
@@ -227,7 +231,19 @@ function Ctrl($scope){
             </fieldset>
             <fieldset>             
                 <legend {% if(entity.validLog) %}class="statut2"{% else %}class="statut0"{% endif %}>Logistique</legend>     
+                    <div class="row-fluid">
+                        <div class="span4">
+                            {{ form_row(form.entity.elec,{'attr':{'ng-model':'besoinElec'}}) }}
+                           
+                        </div>
+                         <div class="span4" ng-show="besoinElec">
+                            {{ form_row(form.entity.elecAmperes,{'attr':{'class':'input-small'}}) }}
+                        </div>
+                        <div class="span4" ng-show="besoinElec">
+                            {{ form_row(form.entity.elecTri) }}
+                        </div>
 
+                    </div>
 
 
 
@@ -242,8 +258,8 @@ function Ctrl($scope){
                     {% endif %}
                     </div>
                         <div class="row_fluid">
-                            {{ form_row(form.entity.lieuDepotLog) }}
                             <h4>Matériel et quantité requise</h4>
+                            {{ form_row(form.entity.lieuDepotLog) }}
                                 <ul>
                                     <li ng-repeat="(kc,c) in materiel">
                                     {% raw %}{{ c.nom }}{% endraw %}

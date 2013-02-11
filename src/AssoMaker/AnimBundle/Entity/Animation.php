@@ -59,15 +59,15 @@ class Animation {
 
     /**
      *
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      */
-    protected $validLog;
+    protected $validLog = false;
 
     /**
      *
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      */
-    protected $validSecu;
+    protected $validSecu = false;
 
     /**
      * @var smallint $statut
