@@ -284,6 +284,21 @@ class Animation {
     protected $lieuDepotLog;
 
     /**
+     * @Assert\Image(
+     *     maxWidth = 800,
+     *     maxHeight = 600,
+     *     mimeTypes = {"image/jpeg"}
+     * )
+     */
+    protected $pubPicture;
+
+    /**
+     *      *
+     * @ORM\Column( type="boolean")
+     */
+    protected $pubPictureSet = false;
+
+    /**
      * Get id
      *
      * @return integer
@@ -1181,17 +1196,15 @@ class Animation {
         return $this->passAssocies;
     }
 
-
     /**
      * Add groupesTacheLies
      *
      * @param \AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheLies
      * @return Animation
      */
-    public function addGroupesTacheLie(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheLies)
-    {
+    public function addGroupesTacheLie(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheLies) {
         $this->groupesTacheLies[] = $groupesTacheLies;
-    
+
         return $this;
     }
 
@@ -1200,18 +1213,61 @@ class Animation {
      *
      * @param \AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheLies
      */
-    public function removeGroupesTacheLie(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheLies)
-    {
+    public function removeGroupesTacheLie(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheLies) {
         $this->groupesTacheLies->removeElement($groupesTacheLies);
     }
 
     /**
      * Get groupesTacheLies
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getGroupesTacheLies()
-    {
+    public function getGroupesTacheLies() {
         return $this->groupesTacheLies;
     }
+
+    public function uploadPubPicture() {
+
+        if (null === $this->pubPicture) {
+            return;
+        }
+
+
+        $this->pubPicture->move(__DIR__ . '/../../../../web/up/animPictures', $this->getId() . '.jpg');
+        $this->pubPicture = null;
+        $this->setPubPictureSet(true);
+    }
+
+    /**
+     * Set pubPictureSet
+     *
+     * @param boolean $pubPictureSet
+     * @return Animation
+     */
+    public function setPubPictureSet($pubPictureSet) {
+        $this->pubPictureSet = $pubPictureSet;
+
+        return $this;
+    }
+
+    /**
+     * Get pubPictureSet
+     *
+     * @return boolean
+     */
+    public function getPubPictureSet() {
+        return $this->pubPictureSet;
+    }
+
+    public function getPubPicture() {
+        return $this->pubPicture;
+    }
+
+    public function setPubPicture($pubPicture) {
+        $this->pubPicture = $pubPicture;
+
+        return $this;
+    }
+
 }
+

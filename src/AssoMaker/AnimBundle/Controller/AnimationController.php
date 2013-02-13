@@ -133,7 +133,7 @@ class AnimationController extends Controller {
             if ($editForm->isValid()) {
 
 
-
+                $entity->uploadPubPicture();
                 $data = $editForm->getData();
 
                 $typeCommentaire = 0;
