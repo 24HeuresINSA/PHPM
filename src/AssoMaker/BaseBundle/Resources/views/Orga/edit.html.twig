@@ -2,21 +2,21 @@
 {% set pageTitle = entity.prenom~' '~entity.nom %}
 
 {% block content %}
-	<form action="{{ path('orga_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
-		<div class="row-fluid">
-			<div class="span4 well">
-				<fieldset>
-				    <legend>Informations de base</legend>
-					    <div class="row-fluid">
-					    	<div class="span5">
+<form action="{{ path('orga_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+    <div class="row-fluid">
+        <div class="span4 well">
+            <fieldset>
+                <legend>Informations de base</legend>
+                <div class="row-fluid">
+                    <div class="span5">
 					    		{% if entity.profilePictureSet == 1 %}
-							    <img src="{{ asset( 'up/profilePictures/'~entity.id~'.jpg' ) }}"/>
+                            <img src="{{ asset( 'up/profilePictures/'~entity.id~'.jpg' ) }}"/>
 							    {% else %}
-							    Pas de Photo
+                            Pas de Photo
 							    {% endif %}
 							    {{ form_row(form.profilePicture) }}
-							</div>
-							<div class="span7">
+                        </div>
+                        <div class="span7">
 								{{ form_row(form.nom) }}
 								{{ form_row(form.prenom) }}
 								{{ form_row(form.surnom) }}
@@ -27,68 +27,83 @@
 								{{ form_row(form.dateDeNaissance) }}
 								{{ form_row(form.equipe) }}
 
-							 </div>
-						</div>       			
-	         			
-				</fieldset>
-			</div>
-			<div class="span4 well">
-				<fieldset>
-			    	<legend>Renseignements Supplémentaires</legend>
-			    	   <b>Compétences : </b>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+                <div class="span4 well">
+                    <fieldset>
+                        <legend>Renseignements Supplémentaires</legend>
+                        <b>Compétences : </b>
 			    	          {{ form_widget(form.competences) }}
-			    	        <br/>
-				              {{ form_row(form.anneeEtudes) }}
-				              {{ form_row(form.departement) }}
-				              {{ form_row(form.groupePC) }}
-				              {{ form_row(form.datePermis) }}
-				              {{ form_row(form.celibataire) }}
-	
-				</fieldset>
-			</div>
-			<div class="span4 well">
-				<fieldset>
-			    	<legend>Autres</legend>
+                        <br/>
+                        {{ form_row(form.anneeEtudes) }}
+                        {{ form_row(form.departement) }}
+                        {{ form_row(form.groupePC) }}
+                        {{ form_row(form.datePermis) }}
+
+
+                        <div class="row-fluid">
+                            <div class="span6">
+                            {{ form_row(form.fichierPermis) }}
+                                </div>
+                                <div class="span6">
+                        {% if entity.fichierPermisSet == 1 %}
+                                        <a class="btn btn-info" href="{{asset( 'up/fichiersPermis/'~entity.id~'.pdf' )}}">Afficher</a>
+                            {% if is_granted('ROLE_HUMAIN') %}
+                                        <button class="btn btn-danger" name="action" value="delPermis" type="submit">Supprimer</button>
+                            {% endif %}
+                        {%endif%}
+                                    </div>
+                                </div>
+                        {{ form_row(form.celibataire) }}
+
+                            </fieldset>
+                        </div>
+                        <div class="span4 well">
+                            <fieldset>
+                                <legend>Autres</legend>
 					{{ form_row(form.amis) }}
 					{{ form_row(form.commentaire) }}
-				</fieldset>
-			</div>
-	    </div>
+                            </fieldset>
+                        </div>
+                    </div>
 	    {% if is_granted('ROLE_HUMAIN') %}
-		    <div class="row-fluid">
-				<div class="span12 well">
-					<fieldset>
-				    	<legend>Options Admin</legend>
+                    <div class="row-fluid">
+                        <div class="span12 well">
+                            <fieldset>
+                                <legend>Options Admin</legend>
 					              {{ form_row(form.privileges) }}
 					              {{ form_row(form.statut) }}
-	
-		
-					</fieldset>
-				</div>
-			</div>
+
+
+                            </fieldset>
+                        </div>
+                    </div>
 		{% endif %}
 
-	
+
 	{{ form_widget(form._token) }}
-	<div class="form-actions">
-	    <div class="btn-toolbar">
-	        <button class="btn btn-primary" type="submit">Enregistrer</button>
-	        
+                    <div class="form-actions">
+                        <div class="btn-toolbar">
+                            <button class="btn btn-primary" name="action" value="save" type="submit">Enregistrer</button>
+
 			{% if is_granted('ROLE_HUMAIN') %}
-		        <a class="btn" href="{{ path('orga_inputdispos', { 'id': entity.id }) }}"><i class="icon-calendar"></i>Disponibilités</a>
-				<a class="btn" href="{{ path('orga_affectation', { 'orga_id': entity.id }) }}"><i class="icon-book"></i>Affecter</a>
-				<a class="btn" href="{{ path('orga_print', { 'orgaid': entity.id })  }}"><i class="icon-print"></i> Imprimer le planning</a>	
-				<a class="btn" href="{{ path('orga_ical', { 'orgaid': entity.id })  }}"> Planning Google Agenda</a>	
-				<a class="btn" target="_blank" href="https://www.facebook.com/search/results.php?q={{ entity.prenom~"%20"~entity.nom |url_encode }}"><i class="icon-search"></i> Rechercher sur Facebook</a>
+                            <a class="btn" href="{{ path('orga_inputdispos', { 'id': entity.id }) }}"><i class="icon-calendar"></i>Disponibilités</a>
+                            <a class="btn" href="{{ path('orga_affectation', { 'orga_id': entity.id }) }}"><i class="icon-book"></i>Affecter</a>
+                            <a class="btn" href="{{ path('orga_print', { 'orgaid': entity.id })  }}"><i class="icon-print"></i> Imprimer le planning</a>
+                            <a class="btn" href="{{ path('orga_ical', { 'orgaid': entity.id })  }}"> Planning Google Agenda</a>
+                            <a class="btn" target="_blank" href="https://www.facebook.com/search/results.php?q={{ entity.prenom~"%20"~entity.nom |url_encode }}"><i class="icon-search"></i> Rechercher sur Facebook</a>
 				{% if entity.groupePC%}
-				<a class="btn" target="_blank" href="http://cipcnet.insa-lyon.fr/scol/php/apprec_groupe?id_annee=2011&id_groupe={{ entity.groupePC |url_encode }}"><i class="icon-search"></i> Afficher le trombi du groupe</a>
+                            <a class="btn" target="_blank" href="http://cipcnet.insa-lyon.fr/scol/php/apprec_groupe?id_annee=2011&id_groupe={{ entity.groupePC |url_encode }}"><i class="icon-search"></i> Afficher le trombi du groupe</a>
 				{% endif %}
-				<a class="btn" href="{{ path('autologin', { 'id': entity.id, 'loginkey': (entity.id)|phpm_crypt }) }}">Se connecter en tant que cet orga.</a>
+                            <a class="btn" href="{{ path('autologin', { 'id': entity.id, 'loginkey': (entity.id)|phpm_crypt }) }}">Se connecter en tant que cet orga.</a>
 			{% endif %}
-			
-		</div>
-	</div>
-	</form>
+
+                        </div>
+                    </div>
+                </form>
 {% endblock %}
 
 {% block actions %}

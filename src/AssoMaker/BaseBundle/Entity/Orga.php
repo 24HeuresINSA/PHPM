@@ -19,10 +19,10 @@ use AssoMaker\PHPMBundle\Entity\Disponibilite;
  * @UniqueEntity(fields={"telephone"}, message="Un orga possédant ce numéro de téléphone est déjà inscrit.")
  * @Assert\Callback(methods = { "isBirthdayValid","isLicenceDateValid" })
  */
-class Orga implements UserInterface
-{
-    public static $privilegesTypes = array('Visiteur','Orga','Humain','Responsable Log','Responsable Sécurité','Super Admin');
-    
+class Orga implements UserInterface {
+
+    public static $privilegesTypes = array('Visiteur', 'Orga', 'Humain', 'Responsable Log', 'Responsable Sécurité', 'Super Admin');
+
     /**
      * @var integer $id
      *
@@ -31,12 +31,12 @@ class Orga implements UserInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    
+
     /**
-    * @var integer $importId
-    *
-    * @ORM\Column(name="importid", type="integer", nullable=true)
-    */
+     * @var integer $importId
+     *
+     * @ORM\Column(name="importid", type="integer", nullable=true)
+     */
     protected $importId;
 
     /**
@@ -54,14 +54,14 @@ class Orga implements UserInterface
      * @Assert\NotBlank(message="Le prénom de l'orga ne doit pas être vide.")
      */
     protected $prenom;
-    
+
     /**
-    * @var string $surnom
-    *
-    * @ORM\Column(name="surnom", type="string", length=255, nullable=true)
-    */
+     * @var string $surnom
+     *
+     * @ORM\Column(name="surnom", type="string", length=255, nullable=true)
+     */
     protected $surnom;
-    
+
     /**
      * @var string $role
      *
@@ -69,7 +69,6 @@ class Orga implements UserInterface
      */
     protected $role;
 
-    
     /**
      * @var string $telephone
      *
@@ -86,14 +85,14 @@ class Orga implements UserInterface
      * @var string $email
      *
      * @ORM\Column(name="email", type="string", length=255, unique=true)
-     * 
+     *
      * @Assert\Email(
      * 	   message = "L'email doît être valide.",
      *     checkMX = true
      * )
      */
     protected $email;
-    
+
     /**
      * @var string $publicEmail
      *
@@ -110,11 +109,11 @@ class Orga implements UserInterface
      * @var date $dateDeNaissance
      *
      * @ORM\Column(name="dateDeNaissance", type="date")
-     * 
+     *
      * @Assert\Date(message="La date de naissance doît être valide")
      */
     protected $dateDeNaissance;
-    
+
     /**
      * @Assert\Image(
      *     minWidth = 600,
@@ -124,16 +123,31 @@ class Orga implements UserInterface
      *     mimeTypes = {"image/jpeg"}
      * )
      */
-    protected  $profilePicture;
-    
+    protected $profilePicture;
+
     /**
      * @var boolean $profilePictureSet
      *
      * @ORM\Column(name="profilePictureSet", type="boolean")
      */
     protected $profilePictureSet = false;
-    
-    
+
+    /**
+     * @Assert\File(
+     *     maxSize = "1024k",
+     *     mimeTypes = {"application/pdf", "application/x-pdf"},
+     *     mimeTypesMessage = "Fichier PDF uniquement"
+     * )
+     */
+    protected $fichierPermis;
+
+    /**
+     *
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $fichierPermisSet = false;
+
     /**
      * @var date $datePermis
      *
@@ -148,13 +162,12 @@ class Orga implements UserInterface
      * @Assert\Choice(choices = {0,1,2,3,4,5,6,7,8} , message = "Année d'études invalide. ")
      */
     protected $anneeEtudes;
-    
+
     /**
      * @ORM\Column(type="smallint", length=1, name="groupePC",nullable=true)
      */
-     
     protected $groupePC;
-    
+
     /**
      * @var string $departement
      *
@@ -168,28 +181,25 @@ class Orga implements UserInterface
 //      * @ORM\Column(name="equipe", type="string", length=255, nullable=true)
 //      */
 //     protected $equipe;
-    
-    
-    
+
     /**
      * @var text $commentaire
      *
      * @ORM\Column(name="commentaire", type="text", nullable=true)
      */
     protected $commentaire;
-    
-    
+
     /** @ORM\Column(type="array") */
     private $competences = array();
-    
+
     public function setCompetences($value) {
         $this->competences = $value;
     }
-    
+
     public function getCompetences() {
         return $this->competences;
     }
-    
+
     /**
      * @var text $amis
      *
@@ -203,36 +213,34 @@ class Orga implements UserInterface
 //      * @ORM\Column(name="permis", type="smallint")
 //      */
 //     protected $permis;
-    
-    
+
     /**
      * @ORM\OneToMany(targetEntity="AssoMaker\PHPMBundle\Entity\GroupeTache", mappedBy="responsable")
      */
     protected $groupesTacheResponsable;
-    
+
     /**
-    * @ORM\OneToMany(targetEntity="AssoMaker\PHPMBundle\Entity\Tache", mappedBy="responsable")
-    */
+     * @ORM\OneToMany(targetEntity="AssoMaker\PHPMBundle\Entity\Tache", mappedBy="responsable")
+     */
     protected $tachesResponsable;
-    
+
     /**
-    * @ORM\OneToMany(targetEntity="Equipe", mappedBy="responsable")
-    */
+     * @ORM\OneToMany(targetEntity="Equipe", mappedBy="responsable")
+     */
     protected $equipesResponsable;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="AssoMaker\PHPMBundle\Entity\Disponibilite", mappedBy="orga",indexBy="id", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $disponibilites;
-    
+
     /**
-    * @var smallint $statut
-    * @Assert\Choice(choices = {"-1", "0", "1", "2"})
-    * @ORM\Column(name="statut", type="smallint")
-    */
+     * @var smallint $statut
+     * @Assert\Choice(choices = {"-1", "0", "1", "2"})
+     * @ORM\Column(name="statut", type="smallint")
+     */
     protected $statut;
-   
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="AssoMaker\PHPMBundle\Entity\DisponibiliteInscription", inversedBy="orgas")
      * @ORM\JoinTable(name="orga_disponibiliteinscription",
@@ -241,25 +249,25 @@ class Orga implements UserInterface
      *      )
      */
     protected $disponibilitesInscription;
-    
+
     /**
      * @ORM\Column(type="smallint", name="privileges")
      * @Assert\Choice(choices = {"0", "1","2","3","4","5"})
      */
     protected $privileges;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Equipe", inversedBy="orgas")
      * @ORM\JoinColumn(name="equipe_id", referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
     protected $equipe;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="AssoMaker\PHPMBundle\Entity\Commentaire", mappedBy="auteur")
      */
     protected $commentaires;
-    
+
     /**
      * @var datetime $lastActivity
      *
@@ -268,357 +276,305 @@ class Orga implements UserInterface
      * @Assert\DateTime()
      */
     protected $lastActivity;
-    
+
     /**
-    * @var smallint $celibataire
-    * @Assert\Choice(choices = {"0", "1"})
-    * @ORM\Column(name="celibataire", type="smallint", nullable=true)
-    */
+     * @var smallint $celibataire
+     * @Assert\Choice(choices = {"0", "1"})
+     * @ORM\Column(name="celibataire", type="smallint", nullable=true)
+     */
     protected $celibataire;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="AssoMaker\PHPMBundle\Entity\Creneau", mappedBy="orgaHint")
      */
     protected $creneauxHint;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="AssoMaker\PHPMBundle\Entity\BesoinOrga", mappedBy="orgaHint")
      */
     protected $besoinsOrgaHint;
-       
-    
-    
-    
-    public function __toString()
-    {
-        if($this->getSurnom()!=null){
-            return $this->prenom." ".$this->nom." (".$this->surnom.")";
-        }else{
-            return $this->prenom." ".$this->nom;
+
+    public function __toString() {
+        if ($this->getSurnom() != null) {
+            return $this->prenom . " " . $this->nom . " (" . $this->surnom . ")";
+        } else {
+            return $this->prenom . " " . $this->nom;
         }
-        
     }
-    
-    public function __sleep()
-    {
-   
+
+    public function __sleep() {
+
         return array('id', 'email');
     }
-    
 
-    public function toArray($developCreneaux = NULL)
-    {
-    	$a = array();
-    	if(isset($developCreneaux))
-    	foreach ($this->getDisponibilites() as $entity){
-    		$a[$entity->getId()] = $entity->toArray(TRUE);
-    	}
-    	 
-    	 
-    	return array(
-    		"id" => $this->getId(),
-    	    "importid" => $this->getImportId(),
-    		"statut" => $this->getStatut(),
-        	"nom" => $this->getNom(),
-        	"prenom" => $this->getPrenom(),
-    		"surnom" => $this->getSurnom(),
-    		"telephone" => $this->getTelephone(),
-    		"email" => $this->getEmail(),
-    		"dateDeNaissance" => $this->getDateDeNaissance(),
-    		"departement" => $this->getDepartement(),
-    		"commentaire" => $this->getCommentaire(),
+    public function toArray($developCreneaux = NULL) {
+        $a = array();
+        if (isset($developCreneaux))
+            foreach ($this->getDisponibilites() as $entity) {
+                $a[$entity->getId()] = $entity->toArray(TRUE);
+            }
+
+
+        return array(
+            "id" => $this->getId(),
+            "importid" => $this->getImportId(),
+            "statut" => $this->getStatut(),
+            "nom" => $this->getNom(),
+            "prenom" => $this->getPrenom(),
+            "surnom" => $this->getSurnom(),
+            "telephone" => $this->getTelephone(),
+            "email" => $this->getEmail(),
+            "dateDeNaissance" => $this->getDateDeNaissance(),
+            "departement" => $this->getDepartement(),
+            "commentaire" => $this->getCommentaire(),
 //     		"permis"=>$this->getPermis(),
-        	"confiance" => $this->getConfiance()->toArray(),
-        	"disponibilites" => $a);
-    	 
+            "confiance" => $this->getConfiance()->toArray(),
+            "disponibilites" => $a);
     }
-	
-    public function toSearchArray()
-    {
-    	return array(
-    		"type" => "orga" ,
-    		"id" => $this->getId(),
-        	"nom" => $this->getNom(),
-        	"prenom" => $this->getPrenom(),
-    		"surnom" => $this->getSurnom(),
-    		"telephone" => $this->getTelephone(),
-    		"email" => $this->getEmail());
+
+    public function toSearchArray() {
+        return array(
+            "type" => "orga",
+            "id" => $this->getId(),
+            "nom" => $this->getNom(),
+            "prenom" => $this->getPrenom(),
+            "surnom" => $this->getSurnom(),
+            "telephone" => $this->getTelephone(),
+            "email" => $this->getEmail());
     }
-    
-    public function toExportArray()
-    {
-    	$a = array();
-    	
-    		foreach ($this->getDisponibilites() as $entity){
-    		$a[$entity->getId()] = $entity->toSimpleArray();
-    		}
-    	
-    
-    
-    	return array(
-    			"id" => $this->getId(),
-    			"statut" => $this->getStatut(),
-    			"nom" => $this->getNom(),
-    			"prenom" => $this->getPrenom(),
-    			"surnom" => $this->getSurnom(),
-    			"telephone" => $this->getTelephone(),
-    			"email" => $this->getEmail(),
-    			"dateDeNaissance" => $this->getDateDeNaissance()->format('Y-m-d'),
-    			"departement" => $this->getDepartement(),
-    			"commentaire" => $this->getCommentaire(),
+
+    public function toExportArray() {
+        $a = array();
+
+        foreach ($this->getDisponibilites() as $entity) {
+            $a[$entity->getId()] = $entity->toSimpleArray();
+        }
+
+
+
+        return array(
+            "id" => $this->getId(),
+            "statut" => $this->getStatut(),
+            "nom" => $this->getNom(),
+            "prenom" => $this->getPrenom(),
+            "surnom" => $this->getSurnom(),
+            "telephone" => $this->getTelephone(),
+            "email" => $this->getEmail(),
+            "dateDeNaissance" => $this->getDateDeNaissance()->format('Y-m-d'),
+            "departement" => $this->getDepartement(),
+            "commentaire" => $this->getCommentaire(),
 //     			"permis"=>$this->getPermis(),
-    			"confiance" => $this->getConfiance()->getId(),
-    			"disponibilites" => $a);
-    
-    }
-    
-    public function addDIstoDisponibilites(){
-    	foreach ($this->getDisponibilitesInscription() as $di)
-    	{
-	    	$absorbed=false;
-	    	foreach($this->getDisponibilites()as $dispo){    		
-	    		if(($di->getDebut()<=$dispo->getFin())&&($di->getFin()>=$dispo->getFin())){
-	    			$dispo->setFin($di->getFin());
-	    			$absorbed=true;
-	    		}
-	    		if(($di->getDebut()<=$dispo->getDebut())&&($di->getFin()>=$dispo->getDebut())){
-	    			$dispo->setDebut($di->getDebut());
-	    			$absorbed=true;
-	    		}
-	    	}
-	    	if(!$absorbed){
-	    		$dispo = new Disponibilite();
-	    		$dispo->setDebut($di->getDebut());
-	    		$dispo->setFin($di->getFin());
-	    		$dispo->setOrga($this);
-	    		$this->addDisponibilite($dispo);
-	    	}
-    	}
-    	
-    }
-    
-    public function addDIToDisponibilites(\AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $di){
-    		$absorbed=false;
-    		foreach($this->getDisponibilites()as $dispo){
-    			if(($di->getDebut()<=$dispo->getFin())&&($di->getFin()>=$dispo->getFin())){
-    				$dispo->setFin($di->getFin());
-    				$absorbed=true;
-    			}
-    			if(($di->getDebut()<=$dispo->getDebut())&&($di->getFin()>=$dispo->getDebut())){
-    				$dispo->setDebut($di->getDebut());
-    				$absorbed=true;
-    			}			
-    			
-    		}
-    		if(!$absorbed){
-    			$dispo = new Disponibilite();
-    			$dispo->setDebut($di->getDebut());
-    			$dispo->setFin($di->getFin());
-    			$dispo->setOrga($this);
-    			$this->addDisponibilite($dispo);
-    		}
-    }
-    
-    public function removeDIFromDisponibilites(\AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $di){    	
-    		foreach($this->getDisponibilites()as $dispo){
-
-    			if($di->getFin()<=$dispo->getDebut()){
-    				
-    			}
-    			elseif($di->getDebut()>=$dispo->getFin()){
-    			}
-    			elseif(($di->getDebut()<=$dispo->getDebut())&&($di->getFin()>=$dispo->getFin())){
-    				$this->removeDisponibilite($dispo);
-    			}
-    			elseif(($di->getDebut()<=$dispo->getDebut())&&($di->getFin()>$dispo->getDebut())){
-    				
-    				foreach ($dispo->getCreneaux() as $creneau){
-    					if(($creneau->getDebut()<$di->getFin())&&($creneau->getFin()>$di->getDebut())){
-							var_dump('deja affecté a '.$creneau->getId());
-							return false;
-    					}
-    				}
-    				
-    				$dispo->setDebut($di->getFin());
-    			}
-    			elseif(($di->getDebut()<$dispo->getFin())&&($di->getFin()>=$dispo->getFin())){
-    				
-    				foreach ($dispo->getCreneaux() as $creneau){
-    					if(($creneau->getDebut()<$di->getFin())&&($creneau->getFin()>$di->getDebut())){
-    						var_dump('deja affecté a '.$creneau->getId());
-    						return false;
-    						
-    					}
-    				}
-    				
-    				$dispo->setFin($di->getDebut());
-    			}
-    			elseif(($di->getDebut()>$dispo->getDebut())&&($di->getFin()<$dispo->getFin())){
-    				
-    				foreach ($dispo->getCreneaux() as $creneau){
-    					if(($creneau->getDebut()<$di->getFin())&&($creneau->getFin()>$di->getDebut())){
-    						var_dump('deja affecté a '.$creneau->getId());
-    						return false;
-    					}
-    				}
-    				print($dispo->getId());
-    				print(" ");
-    				print($di->getId());
-    				print("scinder");
-    				
-    				$nd = new Disponibilite();
-    				$nd->setDebut($di->getFin());
-    				$nd->setFin($dispo->getFin());
-    				$dispo->setFin($di->getDebut());
-    				
-    				foreach ($dispo->getCreneaux() as $creneau){
-    					if($creneau->getDebut()>=$di->getFin()){
-    						$creneau->setDisponibilite($nd);
-    					}
-    				}
-    				
-    				
-    				$nd->setOrga($this);
-    				$this->addDisponibilite($nd);
-    				
-    				
-    			}else{
-    					print("merde...");
-
-    					var_dump($dispo->getDebut());
-    					var_dump($dispo->getFin());
-    					var_dump($di->getDebut());
-    					var_dump($di->getFin());
-    			}
-    			print("\n");
-    			
-    			
-    			
-    		}
-    		return true;
+            "confiance" => $this->getConfiance()->getId(),
+            "disponibilites" => $a);
     }
 
-    public function cleanDisponibilites(){
-    	
-    	foreach($this->getDisponibilites()as $d1){
-    		foreach($this->getDisponibilites()as $d2){
-    			if($d1==$d2){
-    				continue;
-    			}
-    	
-    			if(($d1->getDebut()<=$d2->getFin())&&($d1->getFin()>=$d2->getFin())){
-    				$d2->setFin($d1->getFin());
-    				if($d1->getDebut()<=$d2->getDebut()){
-    					$d2->setDebut($d1->getDebut());
-    				}
-    				foreach ($d1->getCreneaux() as $c){
-    					$c->setDisponibilite($d2);
-    				}
-    				$this->removeDisponibilite($d1);
-    				$d1->setOrga(null);
-    			}
-    		}
-    	
-    	}
+    public function addDIstoDisponibilites() {
+        foreach ($this->getDisponibilitesInscription() as $di) {
+            $absorbed = false;
+            foreach ($this->getDisponibilites()as $dispo) {
+                if (($di->getDebut() <= $dispo->getFin()) && ($di->getFin() >= $dispo->getFin())) {
+                    $dispo->setFin($di->getFin());
+                    $absorbed = true;
+                }
+                if (($di->getDebut() <= $dispo->getDebut()) && ($di->getFin() >= $dispo->getDebut())) {
+                    $dispo->setDebut($di->getDebut());
+                    $absorbed = true;
+                }
+            }
+            if (!$absorbed) {
+                $dispo = new Disponibilite();
+                $dispo->setDebut($di->getDebut());
+                $dispo->setFin($di->getFin());
+                $dispo->setOrga($this);
+                $this->addDisponibilite($dispo);
+            }
+        }
     }
 
-    
+    public function addDIToDisponibilites(\AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $di) {
+        $absorbed = false;
+        foreach ($this->getDisponibilites()as $dispo) {
+            if (($di->getDebut() <= $dispo->getFin()) && ($di->getFin() >= $dispo->getFin())) {
+                $dispo->setFin($di->getFin());
+                $absorbed = true;
+            }
+            if (($di->getDebut() <= $dispo->getDebut()) && ($di->getFin() >= $dispo->getDebut())) {
+                $dispo->setDebut($di->getDebut());
+                $absorbed = true;
+            }
+        }
+        if (!$absorbed) {
+            $dispo = new Disponibilite();
+            $dispo->setDebut($di->getDebut());
+            $dispo->setFin($di->getFin());
+            $dispo->setOrga($this);
+            $this->addDisponibilite($dispo);
+        }
+    }
 
-    public function generateUserToken(){
-    	 
-        if($this->getPrivileges()==5)
-        {
+    public function removeDIFromDisponibilites(\AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $di) {
+        foreach ($this->getDisponibilites()as $dispo) {
+
+            if ($di->getFin() <= $dispo->getDebut()) {
+
+            } elseif ($di->getDebut() >= $dispo->getFin()) {
+
+            } elseif (($di->getDebut() <= $dispo->getDebut()) && ($di->getFin() >= $dispo->getFin())) {
+                $this->removeDisponibilite($dispo);
+            } elseif (($di->getDebut() <= $dispo->getDebut()) && ($di->getFin() > $dispo->getDebut())) {
+
+                foreach ($dispo->getCreneaux() as $creneau) {
+                    if (($creneau->getDebut() < $di->getFin()) && ($creneau->getFin() > $di->getDebut())) {
+                        var_dump('deja affecté a ' . $creneau->getId());
+                        return false;
+                    }
+                }
+
+                $dispo->setDebut($di->getFin());
+            } elseif (($di->getDebut() < $dispo->getFin()) && ($di->getFin() >= $dispo->getFin())) {
+
+                foreach ($dispo->getCreneaux() as $creneau) {
+                    if (($creneau->getDebut() < $di->getFin()) && ($creneau->getFin() > $di->getDebut())) {
+                        var_dump('deja affecté a ' . $creneau->getId());
+                        return false;
+                    }
+                }
+
+                $dispo->setFin($di->getDebut());
+            } elseif (($di->getDebut() > $dispo->getDebut()) && ($di->getFin() < $dispo->getFin())) {
+
+                foreach ($dispo->getCreneaux() as $creneau) {
+                    if (($creneau->getDebut() < $di->getFin()) && ($creneau->getFin() > $di->getDebut())) {
+                        var_dump('deja affecté a ' . $creneau->getId());
+                        return false;
+                    }
+                }
+                print($dispo->getId());
+                print(" ");
+                print($di->getId());
+                print("scinder");
+
+                $nd = new Disponibilite();
+                $nd->setDebut($di->getFin());
+                $nd->setFin($dispo->getFin());
+                $dispo->setFin($di->getDebut());
+
+                foreach ($dispo->getCreneaux() as $creneau) {
+                    if ($creneau->getDebut() >= $di->getFin()) {
+                        $creneau->setDisponibilite($nd);
+                    }
+                }
+
+
+                $nd->setOrga($this);
+                $this->addDisponibilite($nd);
+            } else {
+                print("merde...");
+
+                var_dump($dispo->getDebut());
+                var_dump($dispo->getFin());
+                var_dump($di->getDebut());
+                var_dump($di->getFin());
+            }
+            print("\n");
+        }
+        return true;
+    }
+
+    public function cleanDisponibilites() {
+
+        foreach ($this->getDisponibilites()as $d1) {
+            foreach ($this->getDisponibilites()as $d2) {
+                if ($d1 == $d2) {
+                    continue;
+                }
+
+                if (($d1->getDebut() <= $d2->getFin()) && ($d1->getFin() >= $d2->getFin())) {
+                    $d2->setFin($d1->getFin());
+                    if ($d1->getDebut() <= $d2->getDebut()) {
+                        $d2->setDebut($d1->getDebut());
+                    }
+                    foreach ($d1->getCreneaux() as $c) {
+                        $c->setDisponibilite($d2);
+                    }
+                    $this->removeDisponibilite($d1);
+                    $d1->setOrga(null);
+                }
+            }
+        }
+    }
+
+    public function generateUserToken() {
+
+        if ($this->getPrivileges() == 5) {
             $options = array('ROLE_SUPER_ADMIN');
-        }        
-        elseif($this->getPrivileges()==4)
-        {
+        } elseif ($this->getPrivileges() == 4) {
             $options = array('ROLE_SECU');
-        }
-        elseif($this->getPrivileges()==3)
-        {
+        } elseif ($this->getPrivileges() == 3) {
             $options = array('ROLE_LOG');
+        } elseif ($this->getPrivileges() == 2) {
+            $options = array('ROLE_HUMAIN');
+        } elseif ($this->getPrivileges() == 1) {
+            $options = array('ROLE_USER');
+        } elseif ($this->getPrivileges() == 0) {
+            $options = array('ROLE_VISITOR');
         }
-    	elseif($this->getPrivileges()==2)
-    	{
-    		$options = array('ROLE_HUMAIN');
-    	}
-    	elseif($this->getPrivileges()==1)
-    	{
-    		$options = array('ROLE_USER');
-    	}
-    	elseif($this->getPrivileges()==0)
-    	{
-    		$options = array('ROLE_VISITOR');
-    	}
-    	 
-    	 
-    	return  new UsernamePasswordToken($this, null, 'main', $options);
-    	 
+
+
+        return new UsernamePasswordToken($this, null, 'main', $options);
     }
 
-    public function getRoles()
-    {
-    	return array('ROLE_HUMAIN');
+    public function getRoles() {
+        return array('ROLE_HUMAIN');
     }
-    
-    public function isEqualTo(UserInterface $user)
-    {
-    	return $user->getEmail() === $this->email;
-    }
-    
-    public function eraseCredentials()
-    {
-    }
-    
 
-    
-    public function getSalt()
-    {
-    	return "";
+    public function isEqualTo(UserInterface $user) {
+        return $user->getEmail() === $this->email;
     }
-    
-    public function getPassword()
-    {
-    	return "";
+
+    public function eraseCredentials() {
+
     }
-    
+
+    public function getSalt() {
+        return "";
+    }
+
+    public function getPassword() {
+        return "";
+    }
+
     /**
      * Get username
      *
      * @return string
      */
-    public function getUsername()
-    {
+    public function getUsername() {
         return $this->email;
     }
-    
-    
-    public function serialize()
-    {
+
+    public function serialize() {
         return serialize($this->email);
     }
-    
-    public function unserialize($data)
-    {
+
+    public function unserialize($data) {
         $this->email = unserialize($data);
     }
 
-    public function __construct()
-    {
-    $this->tachesResponsable = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->equipesResponsable = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->disponibilites = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->disponibilitesInscription = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
+    public function __construct() {
+        $this->tachesResponsable = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->equipesResponsable = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->disponibilites = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->disponibilitesInscription = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -627,18 +583,16 @@ class Orga implements UserInterface
      *
      * @param integer $importId
      */
-    public function setImportId($importId)
-    {
+    public function setImportId($importId) {
         $this->importId = $importId;
     }
 
     /**
      * Get importId
      *
-     * @return integer 
+     * @return integer
      */
-    public function getImportId()
-    {
+    public function getImportId() {
         return $this->importId;
     }
 
@@ -647,18 +601,16 @@ class Orga implements UserInterface
      *
      * @param string $nom
      */
-    public function setNom($nom)
-    {
+    public function setNom($nom) {
         $this->nom = $nom;
     }
 
     /**
      * Get nom
      *
-     * @return string 
+     * @return string
      */
-    public function getNom()
-    {
+    public function getNom() {
         return $this->nom;
     }
 
@@ -667,18 +619,16 @@ class Orga implements UserInterface
      *
      * @param string $prenom
      */
-    public function setPrenom($prenom)
-    {
+    public function setPrenom($prenom) {
         $this->prenom = $prenom;
     }
 
     /**
      * Get prenom
      *
-     * @return string 
+     * @return string
      */
-    public function getPrenom()
-    {
+    public function getPrenom() {
         return $this->prenom;
     }
 
@@ -687,18 +637,16 @@ class Orga implements UserInterface
      *
      * @param string $surnom
      */
-    public function setSurnom($surnom)
-    {
+    public function setSurnom($surnom) {
         $this->surnom = $surnom;
     }
 
     /**
      * Get surnom
      *
-     * @return string 
+     * @return string
      */
-    public function getSurnom()
-    {
+    public function getSurnom() {
         return $this->surnom;
     }
 
@@ -707,18 +655,16 @@ class Orga implements UserInterface
      *
      * @param string $telephone
      */
-    public function setTelephone($telephone)
-    {
+    public function setTelephone($telephone) {
         $this->telephone = $telephone;
     }
 
     /**
      * Get telephone
      *
-     * @return string 
+     * @return string
      */
-    public function getTelephone()
-    {
+    public function getTelephone() {
         return $this->telephone;
     }
 
@@ -727,18 +673,16 @@ class Orga implements UserInterface
      *
      * @param string $email
      */
-    public function setEmail($email)
-    {
+    public function setEmail($email) {
         $this->email = $email;
     }
 
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
-    public function getEmail()
-    {
+    public function getEmail() {
         return $this->email;
     }
 
@@ -747,18 +691,16 @@ class Orga implements UserInterface
      *
      * @param date $dateDeNaissance
      */
-    public function setDateDeNaissance($dateDeNaissance)
-    {
+    public function setDateDeNaissance($dateDeNaissance) {
         $this->dateDeNaissance = $dateDeNaissance;
     }
 
     /**
      * Get dateDeNaissance
      *
-     * @return date 
+     * @return date
      */
-    public function getDateDeNaissance()
-    {
+    public function getDateDeNaissance() {
         return $this->dateDeNaissance;
     }
 
@@ -767,18 +709,16 @@ class Orga implements UserInterface
      *
      * @param string $departement
      */
-    public function setDepartement($departement)
-    {
+    public function setDepartement($departement) {
         $this->departement = $departement;
     }
 
     /**
      * Get departement
      *
-     * @return string 
+     * @return string
      */
-    public function getDepartement()
-    {
+    public function getDepartement() {
         return $this->departement;
     }
 
@@ -787,40 +727,34 @@ class Orga implements UserInterface
      *
      * @param text $commentaire
      */
-    public function setCommentaire($commentaire)
-    {
+    public function setCommentaire($commentaire) {
         $this->commentaire = $commentaire;
     }
 
     /**
      * Get commentaire
      *
-     * @return text 
+     * @return text
      */
-    public function getCommentaire()
-    {
+    public function getCommentaire() {
         return $this->commentaire;
     }
-
-
 
     /**
      * Set statut
      *
      * @param smallint $statut
      */
-    public function setStatut($statut)
-    {
+    public function setStatut($statut) {
         $this->statut = $statut;
     }
 
     /**
      * Get statut
      *
-     * @return smallint 
+     * @return smallint
      */
-    public function getStatut()
-    {
+    public function getStatut() {
         return $this->statut;
     }
 
@@ -829,18 +763,16 @@ class Orga implements UserInterface
      *
      * @param AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable
      */
-    public function addTache(\AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable)
-    {
+    public function addTache(\AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable) {
         $this->tachesResponsable[] = $tachesResponsable;
     }
 
     /**
      * Get tachesResponsable
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
-    public function getTachesResponsable()
-    {
+    public function getTachesResponsable() {
         return $this->tachesResponsable;
     }
 
@@ -849,18 +781,16 @@ class Orga implements UserInterface
      *
      * @param AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable
      */
-    public function addEquipe(\AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable)
-    {
+    public function addEquipe(\AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable) {
         $this->equipesResponsable[] = $equipesResponsable;
     }
 
     /**
      * Get equipesResponsable
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
-    public function getEquipesResponsable()
-    {
+    public function getEquipesResponsable() {
         return $this->equipesResponsable;
     }
 
@@ -869,35 +799,30 @@ class Orga implements UserInterface
      *
      * @param AssoMaker\PHPMBundle\Entity\Disponibilite $disponibilites
      */
-    public function addDisponibilite(\AssoMaker\PHPMBundle\Entity\Disponibilite $disponibilites)
-    {
+    public function addDisponibilite(\AssoMaker\PHPMBundle\Entity\Disponibilite $disponibilites) {
         $this->disponibilites[] = $disponibilites;
     }
-    
+
     /**
      * remove disponibilite
      *
      * @param AssoMaker\PHPMBundle\Entity\Disponibilite $disponibilite
      */
-    public function removeDisponibilite(\AssoMaker\PHPMBundle\Entity\Disponibilite $disponibilite)
-    {
+    public function removeDisponibilite(\AssoMaker\PHPMBundle\Entity\Disponibilite $disponibilite) {
 //     	foreach ($disponibilite->getCreneaux() as $creneau){
 // 				$disponibilite->getCreneaux()->removeElement($creneau);
 // 				$creneau->setDisponibilite(null);
-
 //     			}
-    	
-    	$this->getDisponibilites()->removeElement($disponibilite);
-    		
+
+        $this->getDisponibilites()->removeElement($disponibilite);
     }
 
     /**
      * Get disponibilites
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
-    public function getDisponibilites()
-    {
+    public function getDisponibilites() {
         return $this->disponibilites;
     }
 
@@ -906,49 +831,43 @@ class Orga implements UserInterface
      *
      * @param AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription
      */
-    public function addDisponibiliteInscription(\AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription)
-    {
-        
-    	$this->disponibilitesInscription[] = $disponibilitesInscription;
-    	$this->addDIToDisponibilites($disponibilitesInscription);
+    public function addDisponibiliteInscription(\AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription) {
+
+        $this->disponibilitesInscription[] = $disponibilitesInscription;
+        $this->addDIToDisponibilites($disponibilitesInscription);
     }
-    
+
     /**
      * Remove disponibilitesInscription
      *
      * @param AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription
      */
-    public function removeDisponibiliteInscription(\AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibiliteInscription)
-    {
-    	if($this->removeDIFromDisponibilites($disponibiliteInscription)){
-    	$this->getDisponibilitesInscription()->removeElement($disponibiliteInscription);
-    	}
+    public function removeDisponibiliteInscription(\AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibiliteInscription) {
+        if ($this->removeDIFromDisponibilites($disponibiliteInscription)) {
+            $this->getDisponibilitesInscription()->removeElement($disponibiliteInscription);
+        }
     }
 
     /**
      * Get disponibilitesInscription
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
-    public function getDisponibilitesInscription()
-    {
+    public function getDisponibilitesInscription() {
         return $this->disponibilitesInscription;
     }
-    
+
     /**
      * Get charisme
      *
-     * 
+     *
      */
-    public function getCharisme()
-    {
-    	$charisme = 0;
-    	foreach ($this->disponibilitesInscription as $di)
-    	{
-    		$charisme+=$di->getPointsCharisme();
-    		
-    	}
-    	return $charisme;
+    public function getCharisme() {
+        $charisme = 0;
+        foreach ($this->disponibilitesInscription as $di) {
+            $charisme+=$di->getPointsCharisme();
+        }
+        return $charisme;
     }
 
     /**
@@ -956,18 +875,16 @@ class Orga implements UserInterface
      *
      * @param AssoMaker\BaseBundle\Entity\Equipe $equipe
      */
-    public function setEquipe(\AssoMaker\BaseBundle\Entity\Equipe $equipe)
-    {
+    public function setEquipe(\AssoMaker\BaseBundle\Entity\Equipe $equipe) {
         $this->equipe = $equipe;
     }
 
     /**
      * Get equipe
      *
-     * @return AssoMaker\BaseBundle\Entity\Equipe 
+     * @return AssoMaker\BaseBundle\Entity\Equipe
      */
-    public function getEquipe()
-    {
+    public function getEquipe() {
         return $this->equipe;
     }
 
@@ -976,18 +893,16 @@ class Orga implements UserInterface
      *
      * @param AssoMaker\PHPMBundle\Entity\Commentaire $commentaires
      */
-    public function addCommentaire(\AssoMaker\PHPMBundle\Entity\Commentaire $commentaires)
-    {
+    public function addCommentaire(\AssoMaker\PHPMBundle\Entity\Commentaire $commentaires) {
         $this->commentaires[] = $commentaires;
     }
 
     /**
      * Get commentaires
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
-    public function getCommentaires()
-    {
+    public function getCommentaires() {
         return $this->commentaires;
     }
 
@@ -996,18 +911,16 @@ class Orga implements UserInterface
      *
      * @param datetime $lastActivity
      */
-    public function setLastActivity($lastActivity)
-    {
+    public function setLastActivity($lastActivity) {
         $this->lastActivity = $lastActivity;
     }
 
     /**
      * Get lastActivity
      *
-     * @return datetime 
+     * @return datetime
      */
-    public function getLastActivity()
-    {
+    public function getLastActivity() {
         return $this->lastActivity;
     }
 
@@ -1016,18 +929,16 @@ class Orga implements UserInterface
      *
      * @param date $datePermis
      */
-    public function setDatePermis($datePermis)
-    {
+    public function setDatePermis($datePermis) {
         $this->datePermis = $datePermis;
     }
 
     /**
      * Get datePermis
      *
-     * @return date 
+     * @return date
      */
-    public function getDatePermis()
-    {
+    public function getDatePermis() {
         return $this->datePermis;
     }
 
@@ -1036,18 +947,16 @@ class Orga implements UserInterface
      *
      * @param smallint $privileges
      */
-    public function setPrivileges($privileges)
-    {
+    public function setPrivileges($privileges) {
         $this->privileges = $privileges;
     }
 
     /**
      * Get privileges
      *
-     * @return smallint 
+     * @return smallint
      */
-    public function getPrivileges()
-    {
+    public function getPrivileges() {
         return $this->privileges;
     }
 
@@ -1056,18 +965,16 @@ class Orga implements UserInterface
      *
      * @param AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint
      */
-    public function addCreneau(\AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint)
-    {
+    public function addCreneau(\AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint) {
         $this->creneauxHint[] = $creneauxHint;
     }
 
     /**
      * Get creneauxHint
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
-    public function getCreneauxHint()
-    {
+    public function getCreneauxHint() {
         return $this->creneauxHint;
     }
 
@@ -1076,18 +983,16 @@ class Orga implements UserInterface
      *
      * @param AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint
      */
-    public function addBesoinOrga(\AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint)
-    {
+    public function addBesoinOrga(\AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint) {
         $this->besoinsOrgaHint[] = $besoinsOrgaHint;
     }
 
     /**
      * Get besoinsOrgaHint
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
-    public function getBesoinsOrgaHint()
-    {
+    public function getBesoinsOrgaHint() {
         return $this->besoinsOrgaHint;
     }
 
@@ -1096,39 +1001,34 @@ class Orga implements UserInterface
      *
      * @param AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable
      */
-    public function addGroupeTache(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable)
-    {
+    public function addGroupeTache(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable) {
         $this->groupesTacheResponsable[] = $groupesTacheResponsable;
     }
 
     /**
      * Get groupesTacheResponsable
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
-    public function getGroupesTacheResponsable()
-    {
+    public function getGroupesTacheResponsable() {
         return $this->groupesTacheResponsable;
     }
-
 
     /**
      * Set celibataire
      *
      * @param smallint $celibataire
      */
-    public function setCelibataire($celibataire)
-    {
+    public function setCelibataire($celibataire) {
         $this->celibataire = $celibataire;
     }
 
     /**
      * Get celibataire
      *
-     * @return smallint 
+     * @return smallint
      */
-    public function getCelibataire()
-    {
+    public function getCelibataire() {
         return $this->celibataire;
     }
 
@@ -1137,18 +1037,16 @@ class Orga implements UserInterface
      *
      * @param text $amis
      */
-    public function setAmis($amis)
-    {
+    public function setAmis($amis) {
         $this->amis = $amis;
     }
 
     /**
      * Get amis
      *
-     * @return text 
+     * @return text
      */
-    public function getAmis()
-    {
+    public function getAmis() {
         return $this->amis;
     }
 
@@ -1157,58 +1055,60 @@ class Orga implements UserInterface
      *
      * @param string $anneeEtudes
      */
-    public function setAnneeEtudes($anneeEtudes)
-    {
+    public function setAnneeEtudes($anneeEtudes) {
         $this->anneeEtudes = $anneeEtudes;
     }
 
     /**
      * Get anneeEtudes
      *
-     * @return string 
+     * @return string
      */
-    public function getAnneeEtudes()
-    {
+    public function getAnneeEtudes() {
         return $this->anneeEtudes;
     }
-    
+
     /**
      * Set groupePC
      *
      * @param smallint $groupePC
      */
-    public function setGroupePC($groupePC)
-    {
+    public function setGroupePC($groupePC) {
         $this->groupePC = $groupePC;
     }
 
     /**
      * Get groupePC
      *
-     * @return smallint 
+     * @return smallint
      */
-    public function getGroupePC()
-    {
+    public function getGroupePC() {
         return $this->groupePC;
     }
-    
-    
 
-    
-    
-    public function uploadProfilePicture()
-    {
-        
-    	if (null === $this->profilePicture) {
-    		return;
-    	}
+    public function uploadProfilePicture() {
 
-    	
-    	$this->profilePicture->move(__DIR__ . '/../../../../web/up/profilePictures', $this->getId().'.jpg');
-    	$this->profilePicture = null;
-    	$this->setProfilePictureSet(true);
+        if (null === $this->profilePicture) {
+            return;
+        }
+
+
+        $this->profilePicture->move(__DIR__ . '/../../../../web/up/profilePictures', $this->getId() . '.jpg');
+        $this->profilePicture = null;
+        $this->setProfilePictureSet(true);
     }
-    
+
+    public function uploadFichierPermis() {
+
+        if (null === $this->fichierPermis) {
+            return;
+        }
+
+
+        $this->fichierPermis->move(__DIR__ . '/../../../../web/up/fichiersPermis', $this->getId() . '.pdf');
+        $this->fichierPermis = null;
+        $this->setFichierPermisSet(true);
+    }
 
     /**
      * Set role
@@ -1216,46 +1116,42 @@ class Orga implements UserInterface
      * @param string $role
      * @return Orga
      */
-    public function setRole($role)
-    {
+    public function setRole($role) {
         $this->role = $role;
-    
+
         return $this;
     }
 
     /**
      * Get role
      *
-     * @return string 
+     * @return string
      */
-    public function getRole()
-    {
+    public function getRole() {
         return $this->role;
     }
 
     /**
      * Set publicEmail
      *
-     * 
+     *
      * @return Orga
      */
-    public function setPublicEmail($publicEmail)
-    {
+    public function setPublicEmail($publicEmail) {
         $this->publicEmail = $publicEmail;
-    
+
         return $this;
     }
 
     /**
      * Get publicEmail
      *
-     * @return string 
+     * @return string
      */
-    public function getPublicEmail()
-    {
-        if($this->publicEmail != null){
-        return $this->publicEmail;
-        }else{
+    public function getPublicEmail() {
+        if ($this->publicEmail != null) {
+            return $this->publicEmail;
+        } else {
             return $this->email;
         }
     }
@@ -1266,32 +1162,39 @@ class Orga implements UserInterface
      * @param boolean $profilePictureSet
      * @return Orga
      */
-    public function setProfilePictureSet($profilePictureSet)
-    {
+    public function setProfilePictureSet($profilePictureSet) {
         $this->profilePictureSet = $profilePictureSet;
-    
+
         return $this;
     }
 
     /**
      * Get profilePictureSet
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getProfilePictureSet()
-    {
+    public function getProfilePictureSet() {
         return $this->profilePictureSet;
     }
-    
-    public function getProfilePicture(){
+
+    public function getProfilePicture() {
         return $this->profilePicture;
     }
-    
-    public function setProfilePicture($profilePicture)
-    {
+
+    public function setProfilePicture($profilePicture) {
         $this->profilePicture = $profilePicture;
-    
+
         return $this;
+    }
+
+    public function setFichierPermis($fichierPermis) {
+        $this->fichierPermis = $fichierPermis;
+
+        return $this;
+    }
+
+    public function getFichierPermis() {
+        return $this->fichierPermis;
     }
 
     /**
@@ -1300,10 +1203,9 @@ class Orga implements UserInterface
      * @param AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable
      * @return Orga
      */
-    public function addGroupesTacheResponsable(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable)
-    {
+    public function addGroupesTacheResponsable(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable) {
         $this->groupesTacheResponsable[] = $groupesTacheResponsable;
-    
+
         return $this;
     }
 
@@ -1312,8 +1214,7 @@ class Orga implements UserInterface
      *
      * @param AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable
      */
-    public function removeGroupesTacheResponsable(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable)
-    {
+    public function removeGroupesTacheResponsable(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable) {
         $this->groupesTacheResponsable->removeElement($groupesTacheResponsable);
     }
 
@@ -1323,10 +1224,9 @@ class Orga implements UserInterface
      * @param AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable
      * @return Orga
      */
-    public function addTachesResponsable(\AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable)
-    {
+    public function addTachesResponsable(\AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable) {
         $this->tachesResponsable[] = $tachesResponsable;
-    
+
         return $this;
     }
 
@@ -1335,8 +1235,7 @@ class Orga implements UserInterface
      *
      * @param AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable
      */
-    public function removeTachesResponsable(\AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable)
-    {
+    public function removeTachesResponsable(\AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable) {
         $this->tachesResponsable->removeElement($tachesResponsable);
     }
 
@@ -1346,10 +1245,9 @@ class Orga implements UserInterface
      * @param AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable
      * @return Orga
      */
-    public function addEquipesResponsable(\AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable)
-    {
+    public function addEquipesResponsable(\AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable) {
         $this->equipesResponsable[] = $equipesResponsable;
-    
+
         return $this;
     }
 
@@ -1358,8 +1256,7 @@ class Orga implements UserInterface
      *
      * @param AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable
      */
-    public function removeEquipesResponsable(\AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable)
-    {
+    public function removeEquipesResponsable(\AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable) {
         $this->equipesResponsable->removeElement($equipesResponsable);
     }
 
@@ -1369,10 +1266,9 @@ class Orga implements UserInterface
      * @param AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription
      * @return Orga
      */
-    public function addDisponibilitesInscription(\AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription)
-    {
+    public function addDisponibilitesInscription(\AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription) {
         $this->disponibilitesInscription[] = $disponibilitesInscription;
-    
+
         return $this;
     }
 
@@ -1381,8 +1277,7 @@ class Orga implements UserInterface
      *
      * @param AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription
      */
-    public function removeDisponibilitesInscription(\AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription)
-    {
+    public function removeDisponibilitesInscription(\AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription) {
         $this->disponibilitesInscription->removeElement($disponibilitesInscription);
     }
 
@@ -1391,8 +1286,7 @@ class Orga implements UserInterface
      *
      * @param AssoMaker\PHPMBundle\Entity\Commentaire $commentaires
      */
-    public function removeCommentaire(\AssoMaker\PHPMBundle\Entity\Commentaire $commentaires)
-    {
+    public function removeCommentaire(\AssoMaker\PHPMBundle\Entity\Commentaire $commentaires) {
         $this->commentaires->removeElement($commentaires);
     }
 
@@ -1402,10 +1296,9 @@ class Orga implements UserInterface
      * @param AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint
      * @return Orga
      */
-    public function addCreneauxHint(\AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint)
-    {
+    public function addCreneauxHint(\AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint) {
         $this->creneauxHint[] = $creneauxHint;
-    
+
         return $this;
     }
 
@@ -1414,8 +1307,7 @@ class Orga implements UserInterface
      *
      * @param AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint
      */
-    public function removeCreneauxHint(\AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint)
-    {
+    public function removeCreneauxHint(\AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint) {
         $this->creneauxHint->removeElement($creneauxHint);
     }
 
@@ -1425,10 +1317,9 @@ class Orga implements UserInterface
      * @param AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint
      * @return Orga
      */
-    public function addBesoinsOrgaHint(\AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint)
-    {
+    public function addBesoinsOrgaHint(\AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint) {
         $this->besoinsOrgaHint[] = $besoinsOrgaHint;
-    
+
         return $this;
     }
 
@@ -1437,23 +1328,42 @@ class Orga implements UserInterface
      *
      * @param AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint
      */
-    public function removeBesoinsOrgaHint(\AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint)
-    {
+    public function removeBesoinsOrgaHint(\AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint) {
         $this->besoinsOrgaHint->removeElement($besoinsOrgaHint);
     }
-    
-    public function isBirthDayValid(ExecutionContext $context)
-    {
+
+    public function isBirthDayValid(ExecutionContext $context) {
         if ($this->dateDeNaissance >= new \DateTime()) {
             $context->addViolationAtSubPath('dateDeNaissance', 'Cette date doit être dans le passé.');
         }
     }
-    
-    public function isLicenceDateValid(ExecutionContext $context)
-    {
+
+    public function isLicenceDateValid(ExecutionContext $context) {
         if ($this->datePermis != null && $this->datePermis >= new \DateTime()) {
             $context->addViolationAtSubPath('datePermis', 'Cette date doit être dans le passé.');
         }
     }
 
+    /**
+     * Set fichierPermisSet
+     *
+     * @param boolean $fichierPermisSet
+     * @return Orga
+     */
+    public function setFichierPermisSet($fichierPermisSet) {
+        $this->fichierPermisSet = $fichierPermisSet;
+
+        return $this;
+    }
+
+    /**
+     * Get fichierPermisSet
+     *
+     * @return boolean
+     */
+    public function getFichierPermisSet() {
+        return $this->fichierPermisSet;
+    }
+
 }
+
