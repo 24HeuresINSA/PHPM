@@ -14,14 +14,20 @@
 <div class="row-fluid">
     <div class="span4">
         <h2>Mes Informations</h2>
-	       		       {% if not app.user.anneeEtudes or not app.user.departement or (not app.user.groupePC and (app.user.anneeEtudes == 1 or app.user.anneeEtudes == 2))%}
+	       		       {%   if not app.user.anneeEtudes
+                                    or not app.user.departement
+                                    or (not app.user.groupePC and (app.user.anneeEtudes == 1 or app.user.anneeEtudes == 2))
+                                    or not app.user.profilePictureSet
+                                    or (app.user.datePermis and not app.user.fichierPermisSet)
+                                %}
         <div class="alert alert-block alert-error fade in">
             <h4 class="alert-heading">Tu n'a pas renseigné les informations suivantes :</h4>
             <ul>
 		            {% if not app.user.anneeEtudes%}<li>Année d'études</li>{% endif %}
 		            {% if not app.user.departement%}<li>Département INSA</li>{% endif %}
 		            {% if not app.user.groupePC and (app.user.anneeEtudes == 1 or app.user.anneeEtudes == 2)  %}<li>Numéro de groupe Premier Cycle</li>{% endif %}
-		            {% if not app.user.ProfilePictureSet%}<li>Photo de Trombinoscope</li>{% endif %}
+		            {% if not app.user.profilePictureSet%}<li>Photo de Trombinoscope</li>{% endif %}
+                            {% if not app.user.fichierPermisSet%}<li>Scan du permis de conduire</li>{% endif %}
                 </ul>
             </div>
                               {% endif %}
