@@ -70,6 +70,7 @@ class OrgaUserType extends AbstractType {
                 ->add('amis')
                 ->add('publicEmail', null, array('label' => 'Adresse email publique', 'required' => false))
                 ->add('role', null, array('label' => 'Rôle'))
+                ->add('membreBureau', null, array('label' => 'Membre du Bureau'))
                 ->add('competences', 'choice', array(
                     'choices' => $choixCompetences,
                     'multiple' => true,

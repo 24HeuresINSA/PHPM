@@ -75,6 +75,7 @@
                             <fieldset>
                                 <legend>Options Admin</legend>
 					              {{ form_row(form.privileges) }}
+					              {{ form_row(form.membreBureau) }}
 					              {{ form_row(form.statut) }}
 
 
@@ -104,11 +105,4 @@
                         </div>
                     </div>
                 </form>
-{% endblock %}
-
-{% block actions %}
-{% if is_granted('ROLE_HUMAIN') %}
-{{ parent() }}
-{% else %}
-{% endif %}
 {% endblock %}

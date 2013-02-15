@@ -27,7 +27,7 @@ class ComptesPersoController extends Controller {
      * @Template()
      */
     public function comptesPersoAction(Request $request) {
-        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_BUREAU')) {
             throw new AccessDeniedException();
         }
         $em = $this->getDoctrine()->getEntityManager();
@@ -52,7 +52,7 @@ class ComptesPersoController extends Controller {
      * @Template()
      */
     public function printAction(Request $request) {
-        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_BUREAU')) {
             throw new AccessDeniedException();
         }
         $em = $this->getDoctrine()->getEntityManager();
@@ -72,7 +72,7 @@ class ComptesPersoController extends Controller {
      * @Template()
      */
     public function comptesPersoDataAction(Request $request) {
-        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_BUREAU')) {
             throw new AccessDeniedException();
         }
         $em = $this->getDoctrine()->getEntityManager();
@@ -96,7 +96,7 @@ class ComptesPersoController extends Controller {
      * @Template()
      */
     public function comptesPersoProcessAction(Request $request) {
-        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_BUREAU')) {
             $this->getResponse()->setStatusCode('404');
             return new Response();
         }
@@ -149,7 +149,7 @@ class ComptesPersoController extends Controller {
      * @Template()
      */
     public function transactionsDataAction(Request $request) {
-        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_BUREAU')) {
             throw new AccessDeniedException();
         }
         $em = $this->getDoctrine()->getEntityManager();

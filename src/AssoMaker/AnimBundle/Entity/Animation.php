@@ -1270,4 +1270,3 @@ class Animation {
     }
 
 }
-

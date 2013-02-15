@@ -68,6 +68,12 @@ class Orga implements UserInterface {
      * @ORM\Column(name="role", type="string", length=255, nullable=true)
      */
     protected $role;
+    
+    /**
+     * 
+     * @ORM\Column(name="membreBureau", type="boolean")
+     */
+    protected $membreBureau=false;
 
     /**
      * @var string $telephone
@@ -518,6 +524,10 @@ class Orga implements UserInterface {
             $options = array('ROLE_USER');
         } elseif ($this->getPrivileges() == 0) {
             $options = array('ROLE_VISITOR');
+        }
+        
+        if ($this->getMembreBureau()) {
+            $options[] = 'ROLE_BUREAU';
         }
 
 
@@ -1365,5 +1375,27 @@ class Orga implements UserInterface {
         return $this->fichierPermisSet;
     }
 
-}
 
+    /**
+     * Set membreBureau
+     *
+     * @param boolean $membreBureau
+     * @return Orga
+     */
+    public function setMembreBureau($membreBureau)
+    {
+        $this->membreBureau = $membreBureau;
+    
+        return $this;
+    }
+
+    /**
+     * Get membreBureau
+     *
+     * @return boolean 
+     */
+    public function getMembreBureau()
+    {
+        return $this->membreBureau;
+    }
+}
