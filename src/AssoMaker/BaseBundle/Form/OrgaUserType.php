@@ -102,7 +102,7 @@ class OrgaUserType extends AbstractType {
             ;
         }
         if ($this->securityContext->isGranted('ROLE_BUREAU')) {
-            $builder->add('membreBureau', null, array('label' => 'Membre du Bureau'));
+            $builder->add('membreBureau', null, array('label' => 'Membre du Bureau', 'required' => false));
             $builder->add('privileges', 'choice', array('choices' => Orga::$privilegesTypes));
         }
     }

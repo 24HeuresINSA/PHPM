@@ -69,13 +69,16 @@
                             </fieldset>
                         </div>
                     </div>
-	    {% if is_granted('ROLE_HUMAIN') %}
+	    {% if is_granted('ROLE_HUMAIN') or is_granted('ROLE_BUREAU')  %}
                     <div class="row-fluid">
                         <div class="span12 well">
                             <fieldset>
                                 <legend>Options Admin</legend>
+                                {% if is_granted('ROLE_BUREAU')%}
 					              {{ form_row(form.privileges) }}
 					              {{ form_row(form.membreBureau) }}
+                                {% endif %}
+
 					              {{ form_row(form.statut) }}
 
 
