@@ -2,24 +2,28 @@
 
 namespace AssoMaker\BaseBundle\Form;
 
+use AssoMaker\BaseBundle\Extension\ConfigExtension;
 use AssoMaker\BaseBundle\Entity\Orga;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use AssoMaker\BaseBundle\Entity\EquipeRepository;
+use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class OrgaUserType extends AbstractType {
 
-    protected $admin;
-    protected $config;
-    protected $forcedConfiance;
+    private $securityContext;
+    private $config;
 
-    function __construct($admin, $config, $forcedConfiance) {
+    public function __construct(SecurityContext $securityContext, ConfigExtension $config) {
+        $this->securityContext = $securityContext;
         $this->config = $config;
-        $this->admin = $admin;
-        $this->forcedConfiance = $forcedConfiance;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
+
+        $orga = ($options['data']);
+
         $libellesPermis = json_decode($this->config->getValue('manifestation_permis_libelles'), true);
         $choixCompetences = json_decode($this->config->getValue('phpm_competences_orga'), true);
         $currentYear = date('Y');
@@ -33,7 +37,7 @@ class OrgaUserType extends AbstractType {
                 ->add('nom', null, array('label' => 'Nom'))
                 ->add('surnom', null, array('label' => 'Surnom'))
                 ->add('telephone', null, array('label' => 'Téléphone portable'))
-                ->add('email', null, array('label' => 'Adresse email'))
+                ->add('email', null, array('label' => 'Adresse email', "disabled" => ($orga->getEmail() != null) && !$this->securityContext->isGranted('ROLE_ADMIN')))
                 ->add('dateDeNaissance', 'birthday', array(
                     'input' => 'datetime',
                     'label' => 'Date de naissance',
@@ -70,34 +74,36 @@ class OrgaUserType extends AbstractType {
                 ->add('amis')
                 ->add('publicEmail', null, array('label' => 'Adresse email publique', 'required' => false))
                 ->add('role', null, array('label' => 'Rôle'))
-                ->add('membreBureau', null, array('label' => 'Membre du Bureau'))
                 ->add('competences', 'choice', array(
                     'choices' => $choixCompetences,
                     'multiple' => true,
                     'expanded' => true,
                     'label' => 'Compétences'
-                ))
-        ;
+        ));
 
-        if ($this->forcedConfiance) {
+//TODO:Change
+        if ($options['confianceCode'] != null) {
 
-            $code = $this->forcedConfiance;
+            $code = $options['confianceCode'];
+
             $builder->add('equipe', 'entity', array('label' => 'Équipe',
                 'class' => 'AssoMakerBaseBundle:Equipe',
                 'query_builder' => function(EquipeRepository $er)use($code) {
                     return $er->findAllWithConfianceCode($code);
-                }))
-
-
-            ;
+                }));
         }
 
-        if ($this->admin) {
+
+
+        if ($this->securityContext->isGranted('ROLE_ADMIN')) {
             $builder
                     ->add('statut', 'choice', array('choices' => array('0' => 'Inscrit', '1' => 'Validé', '2' => 'Complétement affecté')))
-                    ->add('privileges', 'choice', array('choices' => Orga::$privilegesTypes))
                     ->add('equipe', 'entity', array('label' => 'Équipe', 'class' => 'AssoMakerBaseBundle:Equipe'))
             ;
+        }
+        if ($this->securityContext->isGranted('ROLE_BUREAU')) {
+            $builder->add('membreBureau', null, array('label' => 'Membre du Bureau'));
+            $builder->add('privileges', 'choice', array('choices' => Orga::$privilegesTypes));
         }
     }
 
@@ -105,4 +111,11 @@ class OrgaUserType extends AbstractType {
         return 'assomaker_base_bundle_orgatype';
     }
 
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+        $resolver->setDefaults(array(
+            'confianceCode' => null
+        ));
+    }
+
 }
+

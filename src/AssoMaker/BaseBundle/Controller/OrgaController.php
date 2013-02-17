@@ -3,25 +3,15 @@
 namespace AssoMaker\BaseBundle\Controller;
 
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
-use AssoMaker\PHPMBundle\Entity\DisponibiliteInscription;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use AssoMaker\PHPMBundle\Form\InputDisposType;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Validator\Constraints\Url;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Acl\Exception\Exception;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AssoMaker\BaseBundle\Entity\Orga;
-use AssoMaker\PHPMBundle\Entity\Disponibilite;
-use AssoMaker\BaseBundle\Form\OrgaRegisterUserType;
-use AssoMaker\BaseBundle\Form\OrgaUserType;
-use AssoMaker\PHPMBundle\Form\OrgaSoftType;
-use AssoMaker\PHPMBundle\Entity\BesoinOrga;
 use AssoMaker\PHPMBundle\Form\PrintPlanningType;
 
 /**
@@ -36,15 +26,11 @@ class OrgaController extends Controller {
      *
      * @Route("/affectation", name="orga_affectation")
      * @Route("/affectation/", name="orga_affectation")
+     * @Secure("ROLE_HUMAIN")
      * @Template()
      */
     public function affectationAction() {
-        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
-            throw new AccessDeniedException();
-        }
-
         $em = $this->getDoctrine()->getEntityManager();
-
         $entities = $em->getRepository('AssoMakerBaseBundle:Orga')->findAll();
 
         return array('entities' => $entities);
@@ -54,12 +40,11 @@ class OrgaController extends Controller {
      * Lists all Orga entities.
      *
      * @Route("/index/{statut}/{confiance}",defaults={"statut"="1", "confiance"="all"}, name="orga")
+     * @Secure("ROLE_USER")
      * @Template()
      */
     public function indexAction($statut, $confiance) {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException();
-        }
+
         $em = $this->getDoctrine()->getEntityManager();
 
         $confiances = $em
@@ -88,11 +73,10 @@ class OrgaController extends Controller {
      *
      * @Route("/trombi", name="orga_trombi")
      * @Template()
+     * @Secure("ROLE_USER")
      */
     public function trombiAction() {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException();
-        }
+
         $em = $this->getDoctrine()->getEntityManager();
 
         $orgasDQL = "SELECT e,o FROM AssoMakerBaseBundle:Equipe e JOIN e.orgas o WHERE e.showOnTrombi = 1";
@@ -109,11 +93,11 @@ class OrgaController extends Controller {
      *
      * @Route("/register/", name="orga_register_user")
      *
-     * @Template()
+     *    @Template("AssoMakerBaseBundle:Orga:edit.html.twig")
      */
     public function registerUserAction() {
         $em = $this->getDoctrine()->getEntityManager();
-        $config = $e = $this->get('config.extension');
+        $config = $this->get('config.extension');
         $request = $this->getRequest();
 
         $confianceCode = $this->getRequest()->getSession()->get('confianceCode');
@@ -122,17 +106,12 @@ class OrgaController extends Controller {
         $confiance = $em->getRepository('AssoMakerBaseBundle:Confiance')->findOneByCode($confianceCode);
 
         $entity = new Orga();
+        $entity->setEmail($email);
 
-        if ($this->get('request')->getMethod() != 'POST') {
-            if (!$confiance || !$email) {
-                exit;
-                throw new AccessDeniedException();
-            }
+        $entity->setEquipe($confiance->getEquipes()->first());
 
-
-            $entity->setEmail($email);
-        }
-        $form = $this->createForm(new OrgaRegisterUserType($config, $confianceCode), $entity);
+        $form = $this->createForm($this->get('form.type.orga'), $entity, array("confianceCode" => $confianceCode));
+        $form->forcedConfiance = $confianceCode;
 
         if ($this->get('request')->getMethod() == 'POST') {
             $form->bindRequest($request);
@@ -161,7 +140,7 @@ class OrgaController extends Controller {
     /**
      * Displays a form to create a new Orga Soft entity.
      *
-     * @Route("/inscriptionorgasoft/{equipeId}/{confianceCode}/{libelle}", defaults={"libelle"="", "confianceCode"="","equipeId"="1"}, name="orga_registersoft")
+     * @Route("/inscriptionorgasoft/{equipeId}/{confianceCode}/{libelle}", defaults={"libelle"="", "confianceCode"="","equipeId"=""}, name="orga_registersoft")
      *
      * @Template()
      */
@@ -180,7 +159,7 @@ class OrgaController extends Controller {
         $entity = new Orga();
         $entity->setStatut(0);
         $entity->setEquipe($equipe);
-        $form = $this->createForm(new OrgaSoftType($config), $entity);
+        $form = $this->createForm($this->get('form.type.orga'), $entity);
 
 
 
@@ -221,47 +200,14 @@ class OrgaController extends Controller {
     }
 
     /**
-     * Creates a new Orga entity.
-     *
-     * @Route("/registerprocess", name="orga_registerprocess")
-     * @Method("post")
-     * @Template("AssoMakerBaseBundle:Orga:register.html.twig")
-     */
-    public function registerprocessAction() {
-        $em = $this->getDoctrine()->getEntityManager();
-        $config = $e = $this->get('config.extension');
-        $entity = new Orga();
-        $request = $this->getRequest();
-        $entity->setStatut(0);
-        $entity->setPrivileges(1);
-
-        $form = $this->createForm(new OrgaType(false, $config), $entity);
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('login'));
-        }
-
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView()
-        );
-    }
-
-    /**
      *
      *
      * @Route("/signature", name="orga_signature")
+     * @Secure("ROLE_USER")
      * @Template()
      */
     public function signatureAction() {
 
-        $em = $this->getDoctrine()->getEntityManager();
-        $config = $e = $this->get('config.extension');
 
         $user = $this->get('security.context')->getToken()->getUser();
 
@@ -276,9 +222,8 @@ class OrgaController extends Controller {
      * @Route("/{id}/edit", name="orga_edit")
      * @Template("AssoMakerBaseBundle:Orga:edit.html.twig")
      */
-    public function updateAction($id) {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getEntityManager();
-        $config = $e = $this->get('config.extension');
         $entity = $em->getRepository('AssoMakerBaseBundle:Orga')->find($id);
         $request = $this->getRequest();
 
@@ -289,10 +234,7 @@ class OrgaController extends Controller {
         if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN') && $user = $this->get('security.context')->getToken()->getUser() != $entity) {
             throw new AccessDeniedException();
         }
-        $confianceCode = $entity->getEquipe()->getConfiance()->getCode();
-        $config = $e = $this->get('config.extension');
-        $editForm = $this->createForm(new OrgaUserType($this->get('security.context')->isGranted('ROLE_HUMAIN'), $config, $confianceCode), $entity);
-
+        $editForm = $this->createForm($this->get('form.type.orga'), $entity, array("confianceCode" => $entity->getEquipe()->getConfiance()->getCode()));
 
         if ($this->get('request')->getMethod() == 'POST') {
             $request = $this->getRequest();
@@ -329,12 +271,10 @@ class OrgaController extends Controller {
      * Deletes a Orga entity.
      *
      * @Route("/{id}/delete", name="orga_delete")
+     * @Secure("ROLE_HUMAIN")
      *
      */
     public function deleteAction($id) {
-        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
-            throw new AccessDeniedException();
-        }
 
         $em = $this->getDoctrine()->getEntityManager();
         $entity = $em->getRepository('AssoMakerBaseBundle:Orga')->find($id);
@@ -346,7 +286,6 @@ class OrgaController extends Controller {
         $em->remove($entity);
         $em->flush();
 
-
         return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 
@@ -354,12 +293,11 @@ class OrgaController extends Controller {
      * Change le statut d'un orga
      *
      * @Route("/{id}/changestatut.{_format}/{statut}/", defaults={"_format"="html"}, requirements={"_format"="html|json"}, name="orga_change_statut")
+     * @Secure("ROLE_HUMAIN")
      *
      */
     public function changeStatutAction($id, $statut) {
-        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
-            throw new AccessDeniedException();
-        }
+
 
         $em = $this->getDoctrine()->getEntityManager();
         $entity = $em->getRepository('AssoMakerBaseBundle:Orga')->find($id);
@@ -582,7 +520,7 @@ class OrgaController extends Controller {
      */
     public function printAction($orgaid) {
         $em = $this->getDoctrine()->getEntityManager();
-        $config = $e = $this->get('config.extension');
+        $config = $this->get('config.extension');
 
         if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN') && $user = $this->get('security.context')->getToken()->getUser()->getId() != $orgaid) {
             throw new AccessDeniedException();
@@ -604,6 +542,7 @@ class OrgaController extends Controller {
      * Print orga planning, custom
      *
      * @Route("/plannings", name="orga_plannings")
+     * @Secure("ROLE_HUMAIN")
      *
      */
     public function planningsAction() {
@@ -611,9 +550,6 @@ class OrgaController extends Controller {
         $config = $e = $this->get('config.extension');
 
 
-        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
-            throw new AccessDeniedException();
-        }
         $request = $this->get('request');
         $param = $request->request->all();
         $action = $param['action'];
@@ -725,12 +661,11 @@ class OrgaController extends Controller {
      * Charisme .
      *
      * @Route("/charisme", name="orga_charisme")
+     * @Secure("ROLE_VISITOR")
      * @Template()
      */
     public function charismeAction() {
-        if (false === $this->get('security.context')->isGranted('ROLE_VISITOR')) {
-            throw new AccessDeniedException();
-        }
+
 
         $em = $this->getDoctrine()->getEntityManager();
         $user = $this->get('security.context')->getToken()->getUser();
@@ -774,12 +709,9 @@ class OrgaController extends Controller {
      *
      * @Route("/thankyou", name="orga_thankyou")
      * @Template()
+     * @Secure("ROLE_VISITOR")
      */
     public function thankYouAction() {
-
-        if (false === $this->get('security.context')->isGranted('ROLE_VISITOR')) {
-            throw new AccessDeniedException();
-        }
 
         $em = $this->getDoctrine()->getEntityManager();
         $user = $this->get('security.context')->getToken()->getUser();
@@ -830,43 +762,6 @@ class OrgaController extends Controller {
 // 		}
 // 		return $this->redirect($this->getRequest()->headers->get('referer'));
 // 	}
-
-    /**
-     * Convert respNecessaire->Bo.OrgaHint
-     *
-     * @Route("/convertresp",  name="orga_convert_resp")
-     */
-    public function convertRespAction() {
-
-        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
-            throw new AccessDeniedException();
-        }
-
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $phs = $em
-                ->createQuery("SELECT ph FROM AssoMakerPHPMBundle:PlageHoraire ph")
-                ->getResult();
-
-        foreach ($phs as $ph) {
-            if ($ph->getRespNecessaire()) {
-                $bo = new BesoinOrga();
-                $bo->setOrgaHint($ph->getTache()->getResponsable());
-                $bo->setPlageHoraire($ph);
-                $ph->setRespNecessaire(false);
-                $em->persist($bo);
-            }
-        }
-
-
-
-
-
-
-        $em->flush();
-
-        return $this->redirect($this->getRequest()->headers->get('referer'));
-    }
 
     /**
      * Auto affect Orga using orga Hints

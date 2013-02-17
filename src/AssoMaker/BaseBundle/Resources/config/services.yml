@@ -1,11 +1,16 @@
 services:
     config.extension:
-       class:      %config.extension.class%
+       class:      AssoMaker\BaseBundle\Extension\ConfigExtension
        arguments: [@doctrine]
        tags:
             -  { name: twig.extension }
     strings.extension:
-       class:      %strings.extension.class%
+       class:      AssoMaker\BaseBundle\Extension\StringsExtension
        arguments: [@doctrine]
        tags:
             -  { name: twig.extension }
+    form.type.orga:
+        class: AssoMaker\BaseBundle\Form\OrgaUserType
+        arguments: ["@security.context","@config.extension"]
+        tags:
+            - { name: form.type }
