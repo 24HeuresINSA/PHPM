@@ -89,12 +89,12 @@
             }
 
 
-            {% if entity.horaires != 'null' %}
+            {% if entity.horaires is not null  %}
                     $scope.horaires = {{ entity.horaires | json_encode()| raw}};{% else %}
                             $scope.horaires = [];
             {% endif %}
 
-            {% if entity.materiel != 'null' %}
+            {% if entity.materiel is not null %}
                     $scope.materiel = {{ entity.materiel | json_encode(32) | raw}};{% else %}
                             $scope.materiel = [];
             {% endif %}

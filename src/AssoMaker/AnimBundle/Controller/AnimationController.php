@@ -156,7 +156,7 @@ class AnimationController extends Controller {
                     $entity->setValidSecu(false);
                 }
 
-                if (($entity->getStatut() <= 1 && $param['action'] == 'delete') || $admin) {
+                if (($entity->getStatut() <= 1 || $admin) && $param['action'] == 'delete') {
                     $entity->setStatut(-1);
                     $typeCommentaire = -1;
                 }
