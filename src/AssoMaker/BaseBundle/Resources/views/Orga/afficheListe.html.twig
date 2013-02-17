@@ -19,7 +19,7 @@
 	            {{ entity.telephone |telephone}}<br>
 	            {{ entitiesMacro.orgaEmail(entity.email) }}<br>
 
-           		{% if is_granted('ROLE_HUMAIN') %}
+           		{% if is_granted('ROLE_HUMAIN') or is_granted('ROLE_BUREAU')%}
 	            	{% if app.request.get('statut') ==0  %}
                         <a class="btn btn-success" href="{{ path('orga_change_statut', { 'id': entity.id, 'statut': 1 }) }}">Valider</a>
             		{% endif %}

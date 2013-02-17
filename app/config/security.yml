@@ -9,7 +9,7 @@ security:
         ROLE_HUMAIN:       [ROLE_ADMIN]
         ROLE_LOG:       [ROLE_ADMIN]
         ROLE_SECU:       [ROLE_ADMIN]
-        ROLE_BUREAU:       [ROLE_ADMIN]
+        ROLE_BUREAU:       [ROLE_HUMAIN]
         ROLE_SUPER_ADMIN: [ROLE_HUMAIN, ROLE_LOG, ROLE_SECU, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
