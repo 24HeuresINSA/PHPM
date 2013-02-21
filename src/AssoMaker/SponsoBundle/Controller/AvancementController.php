@@ -173,52 +173,58 @@ class AvancementController extends Controller {
         $action = $param['action'];
         $statut = $avancement->getStatut();
 
-        if ($action == 'valid') {
+        if ($editForm->isValid()) {
 
-            if (($statut == 1 || $statut == 5 || $statut == 7) && (false === $this->get('security.context')->isGranted('ROLE_HUMAIN'))) {
-                throw new AccessDeniedException();
+            if ($action == 'valid') {
+
+                if (($statut == 1 || $statut == 5 || $statut == 7) && (false === $this->get('security.context')->isGranted('ROLE_HUMAIN'))) {
+                    throw new AccessDeniedException();
+                }
+
+                if ($statut == 10) {
+                    $avancement->setStatut(0);
+                } else {
+                    $avancement->setStatut($statut + 1);
+                }
+                $messageNouveauStatut = $avancement->getMessageStatut();
+                $entity->setTexte($entity->getTexte() . "<i>&rarr;$messageNouveauStatut</i>");
             }
 
-            if ($statut == 10) {
-                $avancement->setStatut(0);
-            } else {
-                $avancement->setStatut($statut + 1);
+            if ($action == 'invalid') {
+
+                if (!($statut == 1 || $statut == 5 || $statut == 7) || (false === $this->get('security.context')->isGranted('ROLE_HUMAIN'))) {
+                    throw new AccessDeniedException();
+                }
+
+                $avancement->setStatut($statut - 1);
+                $messageNouveauStatut = $avancement->getMessageStatut();
+                $entity->setTexte($entity->getTexte() . "<i>&rarr;$messageNouveauStatut</i>");
             }
-            $messageNouveauStatut = $avancement->getMessageStatut();
-            $entity->setTexte($entity->getTexte() . "<i>&rarr;$messageNouveauStatut</i>");
+
+            if ($action == 'cancel') {
+
+                if ((false === $this->get('security.context')->isGranted('ROLE_HUMAIN'))) {
+                    throw new AccessDeniedException();
+                }
+
+                $avancement->setStatut(-1);
+                $messageNouveauStatut = $avancement->getMessageStatut();
+                $entity->setTexte($entity->getTexte() . "<i>&rarr;Projet Annulé</i>");
+            }
+
+
+
+            $entity->uploadDossierSponso();
+            $em->persist($entity);
+            $em->flush();
+
+            return $this
+                            ->redirect($this->generateUrl('sponso_projet_home'));
+        } else {
+            var_dump($editForm);
+            exit;
+            return $this->redirect($this->generateUrl('sponso_avancement_edit', array('id' => $avancement->getId())) . "#noteModal");
         }
-
-        if ($action == 'invalid') {
-
-            if (!($statut == 1 || $statut == 5 || $statut == 7) || (false === $this->get('security.context')->isGranted('ROLE_HUMAIN'))) {
-                throw new AccessDeniedException();
-            }
-
-            $avancement->setStatut($statut - 1);
-            $messageNouveauStatut = $avancement->getMessageStatut();
-            $entity->setTexte($entity->getTexte() . "<i>&rarr;$messageNouveauStatut</i>");
-        }
-
-        if ($action == 'cancel') {
-
-            if ((false === $this->get('security.context')->isGranted('ROLE_HUMAIN'))) {
-                throw new AccessDeniedException();
-            }
-
-            $avancement->setStatut(-1);
-            $messageNouveauStatut = $avancement->getMessageStatut();
-            $entity->setTexte($entity->getTexte() . "<i>&rarr;Projet Annulé</i>");
-        }
-
-
-
-        $em->persist($entity);
-        $em->flush();
-
-        return $this
-                        ->redirect(
-                                $this
-                                ->generateUrl('sponso_avancement_edit', array('id' => $avancement->getId())));
     }
 
 }

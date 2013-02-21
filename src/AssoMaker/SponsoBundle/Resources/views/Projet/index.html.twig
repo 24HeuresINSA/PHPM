@@ -2,70 +2,81 @@
 {% set pageTitle = 'Liste des Projets' %}
 
 {% block content %}
-<div class="row-fluid">
+<div class="row-fluid" >
     <h3>Projets de mon équipe</h3>
     <a class="btn btn-success" href="{{ path('sponso_projet_new') }}"><i class="icon-plus"></i> Nouveau Projet</a>
-    <table class="table table-compact">
-         <thead>
-            <th>Responsable</th>      
-            <th>Nom du Projet</th>    
+
+    <div class="row-fluid">
+
+        <h4></h4>
+        <table class="table table-compact">
+            <thead>
+            <th>État</th>
+            <th>Projet</th>
             <th>Contact entreprise</th>
-            <th>État</th>        
-         </thead>
-         <tbody>
-             {% for projet in teamProjets %}
-             {% if projet.avancements is empty %}
-             <tr>
-                 <td>-</td>
-                 <td>{{ entitiesMacro.projet(projet) }}</td>
-                 <td colspan="3">Pas encore de contacts <a class="btn btn-success btn-small" href="{{ path('sponso_avancement_new',{'projectId':projet.id}) }}"><i class="icon-plus"></i> Ajouter</a></td>
-             </tr>
-             {% else %}
-                 {% for avancement in projet.avancements %}
-                 <tr>
-                     <td>{{ avancement.responsable }}</td>
-                     <td>{{ entitiesMacro.projet(projet) }}</td>
-                     <td>
-                         <a href="{{path("sponso_avancement_edit",{"id":avancement.id})}}">{{ avancement.entreprise }}{% if avancement.nom %} ({{avancement.nom}}){% endif %}</a>
-                     </td>
-                     <td>{{ avancement.messageStatut }}</td>                     
-                 </tr>
-                 {% endfor %}
-             {% endif %}
-             {% endfor %}
-         </tbody>
-    </table>
-    <h3>Autres projets</h3>
-     <table class="table table-compact">
-         <thead>      
-            <th>Equipe</th> 
-            <th>Nom du Projet</th>            
+            <th>Responsable</th>
+
+
+            </thead>
+            <tbody>
+        {% for avancement in teamAvancements %}
+
+
+                    <tr>
+                        <td>{{ avancement.messageStatut }}</td>
+
+
+                        <td>{{entitiesMacro.projet(avancement.projet)}}</td>
+                        <td>
+                            <a href="{{path("sponso_avancement_edit",{"id":avancement.id})}}">{{ avancement.entreprise }}{% if avancement.nom %} ({{avancement.nom}}){% endif %}</a>
+                        </td>
+                        <td>{{ avancement.responsable }}</td>
+                        <td>
+                            <a href ="{{path("sponso_avancement_edit",{"id":avancement.id})}}#noteModal" class="btn btn-small"><i class="icon-pencil"></i> Éditer</a>
+                            {%if avancement.hasDossier %}<a class="btn btn-small" href="{{asset( 'up/dossiersSponso/'~avancement.entreprise~'.docx' )}}"><i class="icon-download-alt"></i> Dossier Sponso</a>{%endif%}
+                        </td>
+
+
+                    </tr>
+
+
+                {%endfor%}
+                </tbody>
+            </table>
+
+        </div>
+
+        <h3>Autres projets</h3>
+        <table class="table table-compact">
+            <thead>
+            <th>Equipe</th>
+            <th>Nom du Projet</th>
             <th>Contact entreprise</th>
             <th>État</th>
-         </thead>
-         <tbody>
+            </thead>
+            <tbody>
              {% for projet in projets %}
              {% if projet.avancements is empty %}
-             <tr>
-                 <td>{{ projet.equipe }}</td>
-                 <td>{{ entitiesMacro.projet(projet) }}</td>
-                 <td colspan="3">Pas encore de contacts <a class="btn btn-success btn-small" href="{{ path('sponso_avancement_new',{'projectId':projet.id}) }}"><i class="icon-plus"></i> Ajouter</a></td>
-             </tr>
+                    <tr>
+                        <td>{{ projet.equipe }}</td>
+                        <td>{{ entitiesMacro.projet(projet) }}</td>
+                        <td colspan="3">Pas encore de contacts <a class="btn btn-success btn-small" href="{{ path('sponso_avancement_new',{'projectId':projet.id}) }}"><i class="icon-plus"></i> Ajouter</a></td>
+                    </tr>
              {% else %}
                  {% for avancement in projet.avancements %}
-                 <tr>
-                     <td>{{ projet.equipe }}</td>
-                     <td>{{ entitiesMacro.projet(projet) }}</td>
-                     <td>
-                         <a href="{{path("sponso_avancement_edit",{"id":avancement.id})}}">{{ avancement.entreprise }}{% if avancement.nom %} ({{avancement.nom}}){% endif %}</a>
-                     </td>
-                     <td>{{ avancement.messageStatut }}</td>
-                 </tr>
+                    <tr>
+                        <td>{{ projet.equipe }}</td>
+                        <td>{{ entitiesMacro.projet(projet) }}</td>
+                        <td>
+                            <a href="{{path("sponso_avancement_edit",{"id":avancement.id})}}">{{ avancement.entreprise }}{% if avancement.nom %} ({{avancement.nom}}){% endif %}</a>
+                        </td>
+                        <td>{{ avancement.messageStatut }}</td>
+                    </tr>
                  {% endfor %}
              {% endif %}
              {% endfor %}
-         </tbody>
-    </table>
+                </tbody>
+            </table>
 
-</div>
+        </div>
 {% endblock %}

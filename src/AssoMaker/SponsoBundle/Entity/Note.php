@@ -4,6 +4,10 @@ namespace AssoMaker\SponsoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
+$fs = new Filesystem();
 
 /**
  * AssoMaker\SponsoBundle\Entity\Note
@@ -11,9 +15,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AssoMaker\SponsoBundle\Entity\NoteRepository")
  */
-class Note
-{
-    public static $textesTypes = array('Infos','Rencontre','Appel téléphonique','Mail','Autre');
+class Note {
+
+    public static $textesTypes = array('Infos', 'Rencontre', 'Appel téléphonique', 'Mail', 'Autre');
+
     /**
      * @var integer $id
      *
@@ -29,29 +34,29 @@ class Note
      * @ORM\Column(name="type", type="string", length=255)
      */
     private $type;
-    
+
     /**
      * @var \DateTime $date
      *
      * @ORM\Column(name="date", type="datetime")
      * @Assert\DateTime()
      */
-    protected  $date;
+    protected $date;
 
     /**
      * @var string $texte
      *
-     * @ORM\Column(name="texte", type="string", length=4096)
+     * @ORM\Column(name="texte", type="string", length=4096, nullable=true)
      */
     private $texte;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Avancement",inversedBy="notes",cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="avancement_id", referencedColumnName="id")
      * @Assert\Valid
      */
     protected $avancement;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="\AssoMaker\BaseBundle\Entity\Orga",cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="orga_id", referencedColumnName="id")
@@ -59,14 +64,21 @@ class Note
      */
     protected $orga;
 
+    /**
+     * @Assert\File(
+     *     maxSize = "1024k",
+     *     mimeTypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/zip"},
+     *     mimeTypesMessage = "Fichier .docx uniquement"
+     * )
+     */
+    protected $dossierSponso;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -76,20 +88,18 @@ class Note
      * @param string $type
      * @return Note
      */
-    public function setType($type)
-    {
+    public function setType($type) {
         $this->type = $type;
-    
+
         return $this;
     }
 
     /**
      * Get type
      *
-     * @return string 
+     * @return string
      */
-    public function getType()
-    {
+    public function getType() {
         return $this->type;
     }
 
@@ -99,23 +109,20 @@ class Note
      * @param \DateTime $date
      * @return Note
      */
-    public function setDate($date)
-    {
+    public function setDate($date) {
         $this->date = $date;
-    
+
         return $this;
     }
 
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getDate()
-    {
+    public function getDate() {
         return $this->date;
     }
-
 
     /**
      * Set orga
@@ -123,40 +130,36 @@ class Note
      * @param AssoMaker\BaseBundle\Entity\Orga $orga
      * @return Note
      */
-    public function setOrga(\AssoMaker\BaseBundle\Entity\Orga $orga = null)
-    {
+    public function setOrga(\AssoMaker\BaseBundle\Entity\Orga $orga = null) {
         $this->orga = $orga;
-    
+
         return $this;
     }
 
     /**
      * Get orga
      *
-     * @return AssoMaker\BaseBundle\Entity\Orga 
+     * @return AssoMaker\BaseBundle\Entity\Orga
      */
-    public function getOrga()
-    {
+    public function getOrga() {
         return $this->orga;
     }
 
-    
     /**
      * Get type Texte
      *
-     * 
+     *
      */
-    public function getTypeTexte()
-    {
+    public function getTypeTexte() {
         return Note::$textesTypes[$this->type];
     }
-    
-    public function toArray(){
-        return  array(  "id"=> $this->getId(),
-                "type"=> $this->getTypeTexte(),
-                "statut"=> $this->getStatut(),
-                "date"=> $this->getDate(),
-                "texte"=> $this->getTexte());
+
+    public function toArray() {
+        return array("id" => $this->getId(),
+            "type" => $this->getTypeTexte(),
+            "statut" => $this->getStatut(),
+            "date" => $this->getDate(),
+            "texte" => $this->getTexte());
     }
 
     /**
@@ -165,23 +168,20 @@ class Note
      * @param string $texte
      * @return Note
      */
-    public function setTexte($texte)
-    {
+    public function setTexte($texte) {
         $this->texte = $texte;
-    
+
         return $this;
     }
 
     /**
      * Get texte
      *
-     * @return string 
+     * @return string
      */
-    public function getTexte()
-    {
+    public function getTexte() {
         return $this->texte;
     }
-
 
     /**
      * Set avancement
@@ -189,20 +189,40 @@ class Note
      * @param AssoMaker\SponsoBundle\Entity\Avancement $avancement
      * @return Note
      */
-    public function setAvancement(\AssoMaker\SponsoBundle\Entity\Avancement $avancement = null)
-    {
+    public function setAvancement(\AssoMaker\SponsoBundle\Entity\Avancement $avancement = null) {
         $this->avancement = $avancement;
-    
+
         return $this;
     }
 
     /**
      * Get avancement
      *
-     * @return AssoMaker\SponsoBundle\Entity\Avancement 
+     * @return AssoMaker\SponsoBundle\Entity\Avancement
      */
-    public function getAvancement()
-    {
+    public function getAvancement() {
         return $this->avancement;
     }
+
+    public function uploadDossierSponso() {
+
+        if (null === $this->dossierSponso) {
+            return;
+        }
+
+        $this->dossierSponso->move(__DIR__ . '/../../../../web/up/dossiersSponso', $this->getAvancement()->getEntreprise() . '.docx');
+        $this->dossierSponso = null;
+    }
+
+    public function getDossierSponso() {
+        return $this->dossierSponso;
+    }
+
+    public function setDossierSponso($dossierSponso) {
+        $this->dossierSponso = $dossierSponso;
+
+        return $this;
+    }
+
 }
+
