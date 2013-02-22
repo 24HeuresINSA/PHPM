@@ -41,7 +41,7 @@
             <form class="form-horizontal" action="{{ path('sponso_avancement_addNote', { 'id': entity.id }) }}" method="post" {{ form_enctype(formNote) }}>
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h3>Ajouter une note</h3>
+                    <h3>Mise à jour <small>{{entity.projet}} - {{ entity.entreprise }}</small></h3>
                 </div>
                 <div class="modal-body">
                     {% if app.session.hasFlash('notice') %}
@@ -119,8 +119,9 @@
 
                     <div class="row-fluid">
                         <div class="span4">
-                            <h3>Projet <a href="{{ path('sponso_projet_edit', { 'id': entity.projet.id }) }}" >{{entity.projet}}</a> - {{ entity.entreprise }}</h3>
-                            État : {{ entity.messageStatut }}
+                            <h3>Projet <a href="{{ path('sponso_projet_edit', { 'id': entity.projet.id }) }}" >{{entity.projet}}</a> - {{ entity.entreprise }} </h3>
+                            <a class="btn btn-small" href="{{ path("sponso_projet_home") }}"><i class="icon-share-alt"></i> Retour</a><br>
+                            État : {{ entity.messageStatut }} {%if entity.hasDossier %}<a class="btn btn-small btn-info" href="{{asset( 'up/dossiersSponso/'~entity.dossierFileName )}}"><i class="icon-download-alt"></i> Dossier Sponso</a>{%endif%}
                             <h4>Responsable : {{ entity.responsable }}</h4>
 
 {% if entity.nom %}
@@ -146,8 +147,8 @@
                             <div class="form-fluid">
                                 <div class="form-actions">
 
-                                    <a href="#editModal" role="button" class="btn" data-toggle="modal"><i class="icon-pencil"></i>Éditer les infos du contact</a>
-                                    <a href="#noteModal" role="button" class="btn btn-success" data-toggle="modal"><i class="icon-plus"></i>Ajouter une note</a>
+                                    <a href="#editModal" role="button" class="btn" data-toggle="modal"><i class="icon-user"></i>Éditer les infos du contact</a>
+                                    <a href="#noteModal" role="button" class="btn btn-success" data-toggle="modal"><i class="icon-pencil"></i>Mettre à jour le projet</a>
 
 
                                 </div>

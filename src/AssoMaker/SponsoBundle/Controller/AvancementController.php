@@ -213,6 +213,11 @@ class AvancementController extends Controller {
                 $entity->setTexte($entity->getTexte() . "<i>&rarr;Projet Annulé</i>");
             }
 
+
+            $entity->uploadDossierSponso();
+            $em->persist($entity);
+            $em->flush();
+
             if ($user != $avancement->getResponsable()) {
                 $message = \Swift_Message::newInstance()
                         ->setSubject(
@@ -225,12 +230,8 @@ class AvancementController extends Controller {
                         ->setBody($this
                         ->renderView(
                                 'AssoMakerSponsoBundle:Avancement:emailNotification.html.twig', array('avancement' => $avancement, 'note' => $entity)), 'text/html');
-
                 $this->get('mailer')->send($message);
             }
-            $entity->uploadDossierSponso();
-            $em->persist($entity);
-            $em->flush();
 
             return $this
                             ->redirect($this->generateUrl('sponso_projet_home'));
