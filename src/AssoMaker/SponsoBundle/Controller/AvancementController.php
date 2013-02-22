@@ -169,11 +169,12 @@ class AvancementController extends Controller {
         $editForm->bindRequest($request);
         $entity->setDate(new \DateTime());
 
-        $param = $request->request->all();
-        $action = $param['action'];
-        $statut = $avancement->getStatut();
+
 
         if ($editForm->isValid()) {
+            $param = $request->request->all();
+            $action = $param['action'];
+            $statut = $avancement->getStatut();
 
             if ($action == 'valid') {
 
@@ -235,6 +236,7 @@ class AvancementController extends Controller {
                             ->redirect($this->generateUrl('sponso_projet_home'));
         } else {
             $errors = "";
+            $errors .= $editForm->getErrorsAsString();
             foreach ($editForm->getChildren() as $c) {
                 $errors .= $c->getErrorsAsString();
             }

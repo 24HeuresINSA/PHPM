@@ -358,7 +358,19 @@ class Avancement {
 
     public function hasDossier() {
         $fs = new Filesystem();
-        return $fs->exists(__DIR__ . '/../../../../web/up/dossiersSponso/' . $this->getEntreprise() . '.docx');
+        return $fs->exists($this->getDossierPath());
+    }
+
+    public function getDossierDir() {
+        return __DIR__ . '/../../../../web/up/dossiersSponso/';
+    }
+
+    public function getDossierFileName() {
+        return $this->getId() . $this->getEntreprise() . '.docx';
+    }
+
+    public function getDossierPath() {
+        return $this->getDossierDir() . $this->getDossierFileName();
     }
 
 }

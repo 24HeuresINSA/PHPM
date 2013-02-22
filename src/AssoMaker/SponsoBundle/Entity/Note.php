@@ -210,7 +210,7 @@ class Note {
             return;
         }
 
-        $this->dossierSponso->move(__DIR__ . '/../../../../web/up/dossiersSponso', $this->getAvancement()->getEntreprise() . '.docx');
+        $this->dossierSponso->move($this->getAvancement()->getDossierDir(), $this->getAvancement()->getDossierFileName());
         $this->dossierSponso = null;
     }
 
