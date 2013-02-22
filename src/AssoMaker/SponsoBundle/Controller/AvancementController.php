@@ -212,8 +212,21 @@ class AvancementController extends Controller {
                 $entity->setTexte($entity->getTexte() . "<i>&rarr;Projet Annulé</i>");
             }
 
+            if ($user != $avancement->getResponsable()) {
+                $message = \Swift_Message::newInstance()
+                        ->setSubject(
+                                'Le projet ' . $avancement->getProjet() . '/' . $avancement->getEntreprise() . ' mis à jour par ' . $entity->getOrga()->__toString() . '.')
+                        ->setFrom(
+                                array(
+                                    $entity->getOrga()->getEmail() => $entity->getOrga()->__toString() . ' via SponsoMaker'))
+                        ->setReplyTo($entity->getOrga()->getEmail())
+                        ->setTo($avancement->getResponsable()->getEmail())
+                        ->setBody($this
+                        ->renderView(
+                                'AssoMakerSponsoBundle:Avancement:emailNotification.html.twig', array('avancement' => $avancement, 'note' => $entity)), 'text/html');
 
-
+                $this->get('mailer')->send($message);
+            }
             $entity->uploadDossierSponso();
             $em->persist($entity);
             $em->flush();
