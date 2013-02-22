@@ -66,7 +66,7 @@ class Note {
 
     /**
      * @Assert\File(
-     *     maxSize = "1024k",
+     *     maxSize = "20M",
      *     mimeTypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/zip"},
      *     mimeTypesMessage = "Fichier .docx uniquement"
      * )

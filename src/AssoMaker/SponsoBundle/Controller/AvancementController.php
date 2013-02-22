@@ -234,8 +234,13 @@ class AvancementController extends Controller {
             return $this
                             ->redirect($this->generateUrl('sponso_projet_home'));
         } else {
-            var_dump($editForm);
-            exit;
+            $errors = "";
+            foreach ($editForm->getChildren() as $c) {
+                $errors .= $c->getErrorsAsString();
+            }
+            $this->get('session')->setFlash(
+                    'notice', $errors
+            );
             return $this->redirect($this->generateUrl('sponso_avancement_edit', array('id' => $avancement->getId())) . "#noteModal");
         }
     }
