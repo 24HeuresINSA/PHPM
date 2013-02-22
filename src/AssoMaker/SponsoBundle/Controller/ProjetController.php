@@ -30,16 +30,10 @@ class ProjetController extends Controller {
         $user = $this->get('security.context')->getToken()->getUser();
 
         $p = $em
-                ->createQuery("SELECT a FROM AssoMakerSponsoBundle:Avancement a   LEFT OUTER JOIN a.projet p  JOIN p.equipe e  ORDER BY  a.statut, p.id")
-                ->getResult();
+                ->createQuery("SELECT p, a, e FROM AssoMakerSponsoBundle:Projet p LEFT OUTER JOIN  p.avancements a  JOIN p.equipe e  ORDER BY  a.statut, p.id")
+                ->getArrayResult();
 
-
-        $tp = $em
-                ->createQuery("SELECT a FROM AssoMakerSponsoBundle:Avancement a   LEFT OUTER JOIN a.projet p  JOIN p.equipe e WHERE e.id = :tid  ORDER BY  a.statut, p.id")
-                ->setParameter("tid", $user->getEquipe()->getId())
-                ->getResult();
-
-        return array('otherAvancements' => $p, 'teamAvancements' => $tp, 'messagesStatut' => \AssoMaker\SponsoBundle\Entity\Avancement::$messagesStatut);
+        return array('projets' => $p, 'messagesStatut' => \AssoMaker\SponsoBundle\Entity\Avancement::$messagesStatut);
     }
 
     /**

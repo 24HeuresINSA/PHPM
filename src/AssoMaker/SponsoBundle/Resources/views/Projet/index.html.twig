@@ -2,15 +2,82 @@
 {% set pageTitle = 'Liste des Projets' %}
 
 {% block content %}
-<div class="row-fluid" >
-    <h3>Projets de mon équipe</h3>
-    <a class="btn btn-success" href="{{ path('sponso_projet_new') }}"><i class="icon-plus"></i> Nouveau Projet</a>
 
-{% include 'AssoMakerSponsoBundle:Avancement:afficheListe.html.twig' with {'entities':teamAvancements}%}
-
-    <h3>Autres projets</h3>
-        {% include 'AssoMakerSponsoBundle:Avancement:afficheListe.html.twig' with {'entities':otherAvancements}%}
+<script type="text/javascript">
 
 
-</div>
+    function Ctrl($scope) {
+
+        $scope.myComFilter = function(elem) {
+            return ((elem.equipe.id == {{app.user.equipe.id}}) && ($scope.myCom)) || !$scope.myCom;
+        }
+
+
+        $scope.search = {'statut': ''};
+        $scope.projets ={{ projets |json_encode |raw }} ;
+                $scope.messagesStatut = {{ messagesStatut |json_encode |raw }};
+                $scope.assetPath = '{{asset('up/dossiersSponso')}}';
+        $scope.aPath = '{{path('sponso_projet_home')}}' + '../avancement/';
+        $scope.pPath = '{{path('sponso_projet_home')}}';
+    }
+    </script>
+    <div class="row-fluid" ng-app ng-controller="Ctrl">
+        <div class="row-fluid">
+            <h3>Projets</h3>
+
+
+        </div>{%raw%}
+        <div class="row-fluid">
+            <div class="span2">
+                <ul class="nav nav-list">
+                    <li class="nav-header">Actions</li>
+                    <li>
+                        <a href="new"><i class="icon-plus"></i> Nouveau Projet</a>
+                    </li>
+                    <li class="nav-header">Projets</li>
+                    <li ng-class="{active: !myCom}">
+                        <a ng-click="myCom=false">Tous</a>
+                    </li>
+                    <li ng-class="{active: myCom}">
+                        <a ng-click="myCom=true">Ceux de ma Com</a>
+                    </li>
+                    <li class="nav-header">Rechercher</li>
+
+                    <li>
+                        <a><input type="text" class="input-medium search-query" ng-model="search.$"></a>
+                    </li>
+
+
+
+                </ul>
+            </div>
+            <div class="span10">
+                <div class="row-fluid" ng-repeat="p in projets | filter:search |filter:myComFilter ">
+                    <div class="span12 well well-small">
+                        <h5><a href="{{pPath+p.id+'/edit'}}">{{p.nom}}</a></h5>
+                        <div class="row-fluid" ng-repeat="a in p.avancements">
+
+                            <div class="span4">
+                                 {{messagesStatut[a.statut]}}
+                                </div>
+                                <div class="span4">
+                                 {{a.entreprise}}
+                                    </div>
+
+                                    <div class="span4">
+                                        <a class="btn btn-small btn-info" href="{{aPath+a.id+'/edit'}}"><i class="icon-pencil"></i> Mettre à jour</a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            {%endraw%}
+            </div>
 {% endblock %}
