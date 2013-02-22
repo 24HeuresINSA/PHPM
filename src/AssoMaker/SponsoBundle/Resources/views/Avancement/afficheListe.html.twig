@@ -1,0 +1,36 @@
+{% if entities %}
+<table class="table table-compact">
+    <thead>
+    <th>État</th>
+    <th>Projet</th>
+    <th>Contact entreprise</th>
+    <th>Responsable</th>
+
+
+</thead>
+<tbody>
+        {% for avancement in entities %}
+
+
+        <tr>
+            <td>{{ avancement.messageStatut }}</td>
+
+
+            <td>{{entitiesMacro.projet(avancement.projet)}}</td>
+            <td>
+                <a href="{{path("sponso_avancement_edit",{"id":avancement.id})}}">{{ avancement.entreprise }}{% if avancement.nom %} ({{avancement.nom}}){% endif %}</a>
+            </td>
+            <td>{{ avancement.responsable }}</td>
+            <td>
+                <a href ="{{path("sponso_avancement_edit",{"id":avancement.id})}}#noteModal" class="btn btn-small"><i class="icon-pencil"></i> Éditer</a>
+                            {%if avancement.hasDossier %}<a class="btn btn-small" href="{{asset( 'up/dossiersSponso/'~avancement.entreprise~'.docx' )}}"><i class="icon-download-alt"></i> Dossier Sponso</a>{%endif%}
+            </td>
+
+
+        </tr>
+
+
+                {%endfor%}
+    </tbody>
+</table>
+{%endif%}

@@ -2,64 +2,54 @@
 
 {% block content %}
 <div id="editModal" class="modal hide fade">
-  <form class="form-horizontal" action="{{ path('sponso_projet_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3>Éditer le Projet</h3>
-    </div>
-  <div class="modal-body">
-    
-		<div class="row-fluid">
-				<fieldset>
-					    <div class="control-group">
+    <form class="form-horizontal" action="{{ path('sponso_projet_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Éditer le Projet</h3>
+        </div>
+        <div class="modal-body">
+
+            <div class="row-fluid">
+                <fieldset>
+                    <div class="control-group">
 {#					    {{ form_label(form.avancements) }}
 					    {{ form_widget(form.avancements) }}#}
-					    <br/>
+                            <br/>
 					       {# <a class="btn btn-success" href="{{ path('sponso_contact_new') }}"><i class="icon-plus"></i>Nouveau Contact</a> #}
-					    <br/>
+                            <br/>
 					    {{ form_widget(form) }}
-						
-					    </div>
-				</fieldset>
-	    </div>
-	{{ form_widget(form._token) }}
-	
-  </div>
-  <div class="modal-footer">
-    
-    <div class="btn-toolbar">
-	        <button class="btn btn-primary" type="submit">Enregistrer les modifications</button>
-	        <button class="btn" data-dismiss="modal" aria-hidden="true">Annuler</button>
-	</div>
-  </div>
-  </form>
-</div>
 
-<div class="row-fluid">
-<div class="span4">
-<h3>{{ entity.nom }} <a class="btn btn-small" href="{{ path("sponso_projet_home") }}"><i class="icon-share-alt"></i> Retour</a></h3>
-<h4>Équipe {{ entity.equipe }}</h4>
-<h4>Description</h4>
-<div class="well">{{ entity.description }}</div>
-</div>
-<div class="span8">
-<h3>Contacts</h3>
-{% for avancement in entity.avancements %}
-<div class="well well-small">
-    <h4><a href="{{ path('sponso_avancement_edit', { 'id': avancement.id }) }}">{{ avancement.entreprise }}{% if avancement.nom %} : {{avancement.nom}}{% endif %}</a></h4>
-    <p>
-        {{ avancement.messageStatut }}<br/>
-        Géré par {{ avancement.responsable }}
-    </p>
-</div>
-{% endfor %}
-</div>
-</div>
-<div class="form-fluid">
-			<div class="form-actions">    			
-    			<a href="#editModal" role="button" class="btn" data-toggle="modal"><i class="icon-pencil"></i>Éditer les infos</a>
-    			<a class="btn btn-success" href="{{ path('sponso_avancement_new',{'projectId':entity.id}) }}"><i class="icon-plus"></i> Nouveau Contact</a>
-			</div>
-    </div>   
+                        </div>
+                    </fieldset>
+                </div>
+	{{ form_widget(form._token) }}
+
+            </div>
+            <div class="modal-footer">
+
+                <div class="btn-toolbar">
+                    <button class="btn btn-primary" type="submit">Enregistrer les modifications</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Annuler</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="row-fluid">
+        <div class="row-fluid">
+            <h2>Projet {{entity.nom}} <small>Équipe {{ entity.equipe }}</small> <a class="btn btn-small" href="{{ path("sponso_projet_home") }}"><i class="icon-share-alt"></i> Retour</a></h2>
+        </div>
+        <div class="row-fluid">
+            <h3>Contacts</h3>
+            {% include 'AssoMakerSponsoBundle:Avancement:afficheListe.html.twig' with {'entities':entity.avancements}%}
+        </div>
+    </div>
+    <div class="form-fluid">
+        <div class="form-actions">
+            <a href="#editModal" role="button" class="btn" data-toggle="modal"><i class="icon-pencil"></i>Éditer les infos</a>
+            <a class="btn btn-success" href="{{ path('sponso_avancement_new',{'projectId':entity.id}) }}"><i class="icon-plus"></i> Nouveau Contact</a>
+        </div>
+    </div>
 
 {% endblock %}

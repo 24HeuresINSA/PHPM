@@ -5,15 +5,14 @@ namespace AssoMaker\SponsoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
  * AssoMaker\SponsoBundle\Entity\Projet
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AssoMaker\SponsoBundle\Entity\ProjetRepository")
  */
-class Projet
-{
+class Projet {
+
     /**
      * @var integer $id
      *
@@ -39,30 +38,18 @@ class Projet
      */
     private $dateCreation;
 
-
-    
     /**
      * @ORM\OneToMany(targetEntity="Avancement", mappedBy="projet")
      */
     protected $avancements;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="\AssoMaker\BaseBundle\Entity\Equipe", inversedBy="orgas")
      * @ORM\JoinColumn(name="equipe_id", referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
     protected $equipe;
-    
 
-      
-    /**
-     * @var text $description
-     *
-     * @ORM\Column(name="description", type="text", nullable=true)
-     * @Assert\NotBlank()
-     */
-    protected $description;
-    
     /**
      * @ORM\ManyToMany(targetEntity="Support")
      * @ORM\JoinTable(name="Projet_Support",
@@ -71,29 +58,22 @@ class Projet
      *      )
      */
     protected $supports;
-    
-
-
 
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->supports = new \Doctrine\Common\Collections\ArrayCollection();
         $this->notes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->dateCreation = new \DateTime();
     }
-   
-
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -103,20 +83,18 @@ class Projet
      * @param string $nom
      * @return Projet
      */
-    public function setNom($nom)
-    {
+    public function setNom($nom) {
         $this->nom = $nom;
-    
+
         return $this;
     }
 
     /**
      * Get nom
      *
-     * @return string 
+     * @return string
      */
-    public function getNom()
-    {
+    public function getNom() {
         return $this->nom;
     }
 
@@ -126,49 +104,20 @@ class Projet
      * @param \DateTime $dateCreation
      * @return Projet
      */
-    public function setDateCreation($dateCreation)
-    {
+    public function setDateCreation($dateCreation) {
         $this->dateCreation = $dateCreation;
-    
+
         return $this;
     }
 
     /**
      * Get dateCreation
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getDateCreation()
-    {
+    public function getDateCreation() {
         return $this->dateCreation;
     }
-
-
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Projet
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string 
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-   
 
     /**
      * Set equipe
@@ -176,23 +125,20 @@ class Projet
      * @param AssoMaker\BaseBundle\Entity\Equipe $equipe
      * @return Projet
      */
-    public function setEquipe(\AssoMaker\BaseBundle\Entity\Equipe $equipe = null)
-    {
+    public function setEquipe(\AssoMaker\BaseBundle\Entity\Equipe $equipe = null) {
         $this->equipe = $equipe;
-    
+
         return $this;
     }
 
     /**
      * Get equipe
      *
-     * @return AssoMaker\BaseBundle\Entity\Equipe 
+     * @return AssoMaker\BaseBundle\Entity\Equipe
      */
-    public function getEquipe()
-    {
+    public function getEquipe() {
         return $this->equipe;
     }
-
 
     /**
      * Add supports
@@ -200,10 +146,9 @@ class Projet
      * @param AssoMaker\SponsoBundle\Entity\Support $supports
      * @return Projet
      */
-    public function addSupport(\AssoMaker\SponsoBundle\Entity\Support $supports)
-    {
+    public function addSupport(\AssoMaker\SponsoBundle\Entity\Support $supports) {
         $this->supports[] = $supports;
-    
+
         return $this;
     }
 
@@ -212,40 +157,34 @@ class Projet
      *
      * @param AssoMaker\SponsoBundle\Entity\Support $supports
      */
-    public function removeSupport(\AssoMaker\SponsoBundle\Entity\Support $supports)
-    {
+    public function removeSupport(\AssoMaker\SponsoBundle\Entity\Support $supports) {
         $this->supports->removeElement($supports);
     }
 
     /**
      * Get supports
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
-    public function getSupports()
-    {
+    public function getSupports() {
         return $this->supports;
     }
-
 
     /**
      * Remove notes
      *
      * @param AssoMaker\SponsoBundle\Entity\Note $notes
      */
-    public function removeNote(\AssoMaker\SponsoBundle\Entity\Note $notes)
-    {
+    public function removeNote(\AssoMaker\SponsoBundle\Entity\Note $notes) {
         $this->notes->removeElement($notes);
     }
-
 
     /**
      * Get avancements
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
-    public function getAvancements()
-    {
+    public function getAvancements() {
         return $this->avancements;
     }
 
@@ -255,10 +194,9 @@ class Projet
      * @param AssoMaker\SponsoBundle\Entity\Avancement $avancements
      * @return Projet
      */
-    public function addAvancement(\AssoMaker\SponsoBundle\Entity\Avancement $avancements)
-    {
+    public function addAvancement(\AssoMaker\SponsoBundle\Entity\Avancement $avancements) {
         $this->avancements[] = $avancements;
-    
+
         return $this;
     }
 
@@ -267,12 +205,13 @@ class Projet
      *
      * @param AssoMaker\SponsoBundle\Entity\Avancement $avancements
      */
-    public function removeAvancement(\AssoMaker\SponsoBundle\Entity\Avancement $avancements)
-    {
+    public function removeAvancement(\AssoMaker\SponsoBundle\Entity\Avancement $avancements) {
         $this->avancements->removeElement($avancements);
     }
-    
-    public function __toString(){
+
+    public function __toString() {
         return $this->getNom();
     }
+
 }
+
