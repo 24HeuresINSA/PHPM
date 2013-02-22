@@ -33,6 +33,9 @@ class ProjetController extends Controller {
                 ->createQuery("SELECT p, a, e FROM AssoMakerSponsoBundle:Projet p LEFT OUTER JOIN  p.avancements a  JOIN p.equipe e  ORDER BY  a.statut, p.id")
                 ->getArrayResult();
 
+
+
+
         return array('projets' => $p, 'messagesStatut' => \AssoMaker\SponsoBundle\Entity\Avancement::$messagesStatut);
     }
 
