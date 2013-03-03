@@ -27,6 +27,10 @@
 
 
                 angular.forEach(animations, function(a) {
+
+                    if (!a.public) {
+                        a.description = "<em>Animation non publiée sur le site</em>"
+                    }
                     var contentString = '<div id="content">' +
                             '<h1 id="firstHeading" class="firstHeading statut' + a.statut + '">' + a.nom + '</h1>' +
                             '<div id="bodyContent">' +
