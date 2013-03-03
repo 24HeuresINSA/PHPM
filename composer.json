@@ -1,39 +1,40 @@
 {
-    "name":"symfony/framework-standard-edition",
-    "description":"The \"Symfony Standard Edition\" distribution",
-    "autoload":{
-        "psr-0":{
-            "":"src/"
+    "name": "symfony/framework-standard-edition",
+    "description": "The \"Symfony Standard Edition\" distribution",
+    "autoload": {
+        "psr-0": {
+            "": "src/"
         }
     },
-    "require":{
-        "php":">=5.3.3",
-        "symfony/symfony":"2.1.*",
-        "doctrine/orm":">=2.2.3,<2.4-dev",
-        "doctrine/doctrine-bundle":"1.0.*",
-        "doctrine/doctrine-fixtures-bundle":"dev-master",
-        "twig/extensions":"1.0.*",
-        "symfony/assetic-bundle":"2.1.*",
-        "symfony/swiftmailer-bundle":"2.1.*",
-        "symfony/monolog-bundle":"2.1.*",
-        "sensio/distribution-bundle":"2.1.*",
-        "sensio/framework-extra-bundle":"2.1.*",
-        "sensio/generator-bundle":"2.1.*",
-        "jms/security-extra-bundle":"1.2.*",
-        "jms/di-extra-bundle":"1.1.*",
-        "fp/lightopenid":"dev-master",
-        "sonata-project/intl-bundle":"dev-master",
-        "twitter/bootstrap":"2.2.3",
-        "jquery/jquery":"master",
-        "jquery/jqueryui":"1.9.1",
-        "trentrichardson/jquerytimepickeraddon":"1.0.3",
-        "akzhan/jwysiwyg":"0.97",
-        "sanisoft/shiftcheckbox":"1.0",
-        "angular/angularJS":"1.0.4",
-        "fortawesome/font-awesome":"3.0.2",
-        "leafo/lessphp": "dev-master"
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.1.*",
+        "doctrine/orm": ">=2.2.3,<2.4-dev",
+        "doctrine/doctrine-bundle": "1.0.*",
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
+        "twig/extensions": "1.0.*",
+        "symfony/assetic-bundle": "2.1.*",
+        "symfony/swiftmailer-bundle": "2.1.*",
+        "symfony/monolog-bundle": "2.1.*",
+        "sensio/distribution-bundle": "2.1.*",
+        "sensio/framework-extra-bundle": "2.1.*",
+        "sensio/generator-bundle": "2.1.*",
+        "jms/security-extra-bundle": "1.2.*",
+        "jms/di-extra-bundle": "1.1.*",
+        "fp/lightopenid": "dev-master",
+        "sonata-project/intl-bundle": "dev-master",
+        "twitter/bootstrap": "2.2.3",
+        "jquery/jquery": "master",
+        "jquery/jqueryui": "1.9.1",
+        "trentrichardson/jquerytimepickeraddon": "1.0.3",
+        "akzhan/jwysiwyg": "0.97",
+        "sanisoft/shiftcheckbox": "1.0",
+        "angular/angularJS": "1.0.4",
+        "fortawesome/font-awesome": "3.0.2",
+        "leafo/lessphp": "dev-master",
+        "angular/angularUI": "0.4.0"
     },
-    "repositories":[
+    "repositories": [
         {
             "type": "package",
             "package": {
@@ -46,113 +47,125 @@
             }
         },
         {
-            "type":"package",
-            "package":{
-                "name":"jquery/jquery",
-                "version":"master",
-                "dist":{
-                    "url":"http://code.jquery.com/jquery-latest.min.js",
-                    "type":"file"
+            "type": "package",
+            "package": {
+                "name": "jquery/jquery",
+                "version": "master",
+                "dist": {
+                    "url": "http://code.jquery.com/jquery-latest.min.js",
+                    "type": "file"
                 }
 
 
             }
         },
         {
-            "type":"package",
-            "package":{
-                "name":"jquery/jqueryui",
-                "version":"1.9.1",
-                "dist":{
-                    "url":"https://github.com/downloads/jquery/jquery-ui/jquery-ui-1.9.1.zip",
-                    "type":"zip"
+            "type": "package",
+            "package": {
+                "name": "jquery/jqueryui",
+                "version": "1.9.1",
+                "dist": {
+                    "url": "https://github.com/downloads/jquery/jquery-ui/jquery-ui-1.9.1.zip",
+                    "type": "zip"
                 }
 
             }
         },
         {
-            "type":"package",
-            "package":{
-                "name":"trentrichardson/jquerytimepickeraddon",
-                "version":"1.0.3",
-                "dist":{
-                    "url":"https://github.com/trentrichardson/jQuery-Timepicker-Addon/zipball/v1.0.3",
-                    "type":"zip"
+            "type": "package",
+            "package": {
+                "name": "trentrichardson/jquerytimepickeraddon",
+                "version": "1.0.3",
+                "dist": {
+                    "url": "https://github.com/trentrichardson/jQuery-Timepicker-Addon/zipball/v1.0.3",
+                    "type": "zip"
                 }
 
             }
         },
         {
-            "type":"package",
-            "package":{
-                "name":"akzhan/jwysiwyg",
-                "version":"0.97",
-                "dist":{
-                    "url":"https://github.com/akzhan/jwysiwyg/zipball/0.97",
-                    "type":"zip"
+            "type": "package",
+            "package": {
+                "name": "akzhan/jwysiwyg",
+                "version": "0.97",
+                "dist": {
+                    "url": "https://github.com/akzhan/jwysiwyg/zipball/0.97",
+                    "type": "zip"
                 }
 
             }
         },
         {
-            "type":"package",
-            "package":{
-                "name":"angular/angularJS",
-                "version":"1.0.4",
-                "dist":{
-                    "url":"http://code.angularjs.org/1.0.4/angular-1.0.4.zip",
-                    "type":"zip"
+            "type": "package",
+            "package": {
+                "name": "angular/angularJS",
+                "version": "1.0.4",
+                "dist": {
+                    "url": "http://code.angularjs.org/1.0.4/angular-1.0.4.zip",
+                    "type": "zip"
                 }
 
             }
         },
         {
-            "type":"package",
-            "package":{
-                "name":"sanisoft/shiftcheckbox",
-                "version":"1.0",
-                "dist":{
-                    "url":"http://www.sanisoft.com/downloads/shiftcheckbox.zip",
-                    "type":"zip"
+            "type": "package",
+            "package": {
+                "name": "angular/angularUI",
+                "version": "0.4.0",
+                "dist": {
+                    "url": "https://github.com/angular-ui/angular-ui/archive/v0.4.0.zip",
+                    "type": "zip"
                 }
 
             }
         },
         {
-            "type":"package",
-            "package":{
-                "name":"fortawesome/font-awesome",
-                "version":"3.0.2",
-                "dist":{
-                    "url":"https://github.com/FortAwesome/Font-Awesome/zipball/master",
-                    "type":"zip"
+            "type": "package",
+            "package": {
+                "name": "sanisoft/shiftcheckbox",
+                "version": "1.0",
+                "dist": {
+                    "url": "http://www.sanisoft.com/downloads/shiftcheckbox.zip",
+                    "type": "zip"
+                }
+
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "fortawesome/font-awesome",
+                "version": "3.0.2",
+                "dist": {
+                    "url": "https://github.com/FortAwesome/Font-Awesome/zipball/master",
+                    "type": "zip"
                 }
 
             }
         }
 
     ],
-    "scripts":{
-        "post-install-cmd":[
+    "scripts": {
+        "post-install-cmd": [
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ],
-        "post-update-cmd":[
+        "post-update-cmd": [
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ]
     },
-    "config":{
-        "bin-dir":"bin"
+    "config": {
+        "bin-dir": "bin"
     },
-    "minimum-stability":"dev",
-    "extra":{
-        "symfony-app-dir":"app",
-        "symfony-web-dir":"web",
+    "minimum-stability": "dev",
+    "extra": {
+        "symfony-app-dir": "app",
+        "symfony-web-dir": "web",
         "symfony-assets-install": "symlink"
     }
 }

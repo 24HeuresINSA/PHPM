@@ -33,6 +33,21 @@ class AnimationController extends Controller {
     }
 
     /**
+     * @Route("/map", name="anim_animation_map")
+     * @Template()
+     */
+    public function mapAction() {
+        $em = $this->getDoctrine()->getEntityManager();
+        $config = $e = $this->get('config.extension');
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        $animations = $em->createQuery("SELECT a,r,e FROM AssoMakerAnimBundle:Animation a JOIN a.responsable r JOIN a.equipe e ORDER BY a.statut DESC ")->getArrayResult();
+        return array('animations' => json_encode($animations),
+            'types' => json_encode(Animation::$animTypes)
+        );
+    }
+
+    /**
      * @Route("/animations.json", name="anim_animation_index_json")
      */
     public function indexJsonAction() {
