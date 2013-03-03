@@ -1,0 +1,21 @@
+{% extends "AssoMakerBaseBundle::layout.html.twig"  %}
+
+{% block content %}
+
+
+<div class="hero-unit">
+	{{ phpm_contenu_page_principale |raw}}
+    {% if app.session.hasFlash('notice') %}
+        <div class="alert alert-error">
+            {{ app.session.flash('notice') }}
+            </div>
+    {% endif %}
+            <p>
+                <a class="btn btn-primary btn-large" href="{{ url('base_accueil') }}">Se connecter</a>
+            </p>
+        </div>
+
+
+
+{% endblock %}
+

@@ -6,7 +6,6 @@
 
 {% block content %}
 
-{% if is_granted('ROLE_VISITOR') %}
 <div class="row-fluid">
     <h1>Bonsoir {{ app.user.prenom }} !</h1>
     <hr>
@@ -228,21 +227,6 @@
                                         </div>
                                     </div>
 
-
-{% else %}
-                                    <div class="hero-unit">
-	{{ phpm_contenu_page_principale |raw}}
-    {% if app.session.hasFlash('notice') %}
-                                            <div class="alert alert-error">
-            {{ app.session.flash('notice') }}
-                                                </div>
-    {% endif %}
-                                                <p>
-                                                    <a class="btn btn-primary btn-large" href="{{ url('login') }}">Se connecter</a>
-                                                </p>
-                                            </div>
-
-{% endif %}
 
 {% endblock %}
 

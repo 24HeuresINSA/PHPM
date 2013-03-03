@@ -30,6 +30,7 @@ security:
             provider: db
             form_login:
                 login_path:  /login
+                use_forward: true
 
             logout:
                 path:   /logout
