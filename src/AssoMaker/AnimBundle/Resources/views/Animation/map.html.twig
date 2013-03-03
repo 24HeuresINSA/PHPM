@@ -1,18 +1,85 @@
 {% extends "AssoMakerBaseBundle::layout.html.twig"  %}
-{% set pageTitle = 'Carte des animations' %}
-
 {% block content %}
-<script type="text/javascript">
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZDxtSjmKe1AsGme00GmrIsRCd2e1IxMw&sensor=false"></script>
+<script>
+    var map;
+    var bounds = new google.maps.LatLngBounds();
+    var animTypes = {{ types|raw }};
+            function initialize() {
+
+                var animations
+                        ={{ animations |raw }} ;
+                        var mapOptions = {
+                    zoom: 17,
+                    mapTypeControl: true,
+                    zoomControl: true,
+                    streetViewControl: false,
+                    panControl: false,
+                    scrollwheel: true,
+                    mapTypeId: google.maps.MapTypeId.SATELLITE
+                };
+                map = new google.maps.Map(document.getElementById('map_canvas'),
+                        mapOptions);
+                map.setTilt(0)
 
 
-    function Ctrl($scope) {
-    }
+                var windows = [];
 
+
+                angular.forEach(animations, function(a) {
+                    var contentString = '<div id="content">' +
+                            '<h1 id="firstHeading" class="firstHeading statut' + a.statut + '">' + a.nom + '</h1>' +
+                            '<div id="bodyContent">' +
+                            '<p>' + animTypes[a.type] + '</p>' +
+                            '<p>' + a.description + '</p>' +
+                            '<p><a href="' + a.id + '/edit">Accéder à la fiche</a></p>' +
+                            '</div>' +
+                            '</div>';
+
+                    var infowindow = new google.maps.InfoWindow({
+                        content: contentString
+                    });
+
+                    windows.push(infowindow);
+
+                    var pos = new google.maps.LatLng(a.locX, a.locY);
+                    var marker = new google.maps.Marker({
+                        position: pos,
+                        map: map,
+                        title: a.nom
+                    });
+                    bounds.extend(pos);
+                    google.maps.event.addListener(marker, 'click', function() {
+                        angular.forEach(windows, function(w) {
+                            w.close();
+                        });
+                        infowindow.open(map, marker);
+                    });
+                });
+                map.fitBounds(bounds);
+                map.panToBounds(bounds);
+
+
+
+            }
+    google.maps.event.addDomListener(window, 'load', initialize);
 
     </script>
+    <script type="text/javascript">
 
-    <div class="row-fluid"  ng-app="app" ng-controller="Ctrl">
-        <p ui-scrollfix>They see me scrollin...</p>
-    </div>
+
+        function Ctrl($scope) {
+        }
+
+
+        </script>
+
+        <div class="row-fluid"  ng-app ng-controller="Ctrl">
+            <div class="span12">
+                <div id="map_canvas" class="span12" style="height:750px">
+                </div>
+            </div>
+
+        </div>
 
 {% endblock %}

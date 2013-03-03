@@ -7,7 +7,7 @@
     function initialize() {
         var latlng = new google.maps.LatLng($("#assomaker_animbundle_animationtype_entity_locX")[0].value, $("#assomaker_animbundle_animationtype_entity_locY")[0].value);
         var mapOptions = {
-            zoom: 17,
+            zoom: 19,
             mapTypeControl: false,
             zoomControl: true,
             streetViewControl: false,
@@ -18,8 +18,8 @@
         };
         map = new google.maps.Map(document.getElementById('map_canvas'),
                 mapOptions);
-
-        google.maps.event.addListener(map, 'center_changed', function() {
+        map.setTilt(0);
+                google.maps.event.addListener(map, 'center_changed', function() {
             $("#assomaker_animbundle_animationtype_entity_locX")[0].value = map.getCenter().lat();
             $("#assomaker_animbundle_animationtype_entity_locY")[0].value = map.getCenter().lng();
         });
