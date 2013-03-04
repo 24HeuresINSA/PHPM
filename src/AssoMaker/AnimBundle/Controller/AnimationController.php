@@ -56,7 +56,7 @@ class AnimationController extends Controller {
         $config = $this->get('config.extension');
         $user = $this->get('security.context')->getToken()->getUser();
 
-        $animations = $em->createQuery("SELECT a FROM AssoMakerAnimBundle:Animation a")->getResult();
+        $animations = $em->createQuery("SELECT a FROM AssoMakerAnimBundle:Animation a WHERE a.statut =2 and a.public = TRUE")->getResult();
         $animationsArray = array();
 
         foreach ($animations as $animation) {
