@@ -69,6 +69,7 @@ class AnimationController extends Controller {
             $animArray['horaires'] = $animation->getHoraires();
             $animArray['gosses'] = $animation->getAnimGosses();
             $animArray['phare'] = $animation->getAnimPhare();
+            $animArray['description'] = $animation->getDescription();
 
 
             $animationsArray[] = $animArray;
