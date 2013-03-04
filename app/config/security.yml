@@ -41,6 +41,7 @@ security:
              - { path: /_wdt/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: /_profiler/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/test, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+             - { path: ^/home, roles: IS_AUTHENTICATED_ANONYMOUSLY}
              - { path: ^/orga/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY}
              - { path: ^/groupetache/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY}
              - { path: ^/tache/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY}
