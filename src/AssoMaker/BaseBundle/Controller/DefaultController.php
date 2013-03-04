@@ -31,8 +31,9 @@ class DefaultController extends Controller {
         if (!$this->get('security.context')->isGranted('ROLE_VISITOR')) {
             if ($config->getValue('base_admin_login') == 1) {
                 return $this->adminLogin();
+            } else {
+                throw new AccessDeniedException();
             }
-            return array();
         }
 
         $statsUser = $em->getRepository('AssoMakerBaseBundle:Orga')->getStats($user);
