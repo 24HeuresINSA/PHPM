@@ -56,17 +56,25 @@ class AnimationController extends Controller {
         $config = $this->get('config.extension');
         $user = $this->get('security.context')->getToken()->getUser();
 
-        $animations = $em->createQuery("SELECT a FROM AssoMakerAnimBundle:Animation a ")->getResult();
-        $responseArray = array();
+        $animations = $em->createQuery("SELECT a FROM AssoMakerAnimBundle:Animation a")->getResult();
+        $animationsArray = array();
+
         foreach ($animations as $animation) {
             $animArray = array();
             $animArray['nom'] = $animation->getNom();
             $animArray['lieu'] = $animation->getLieu();
-            if ($this->get('security.context')->isGranted('ROLE_USER')) {
+            $animArray['type'] = $animation->getType();
+            $animArray['locX'] = $animation->getLocX();
+            $animArray['locY'] = $animation->getLocY();
+            $animArray['horaires'] = $animation->getHoraires();
+            $animArray['gosses'] = $animation->getAnimGosses();
+            $animArray['phare'] = $animation->getAnimPhare();
 
-            }
-            $responseArray[] = $animArray;
+
+            $animationsArray[] = $animArray;
         }
+
+        $responseArray = array('animations' => $animationsArray, 'types' => Animation::$animTypes);
 
         $response = new Response(json_encode($responseArray));
         $response->headers->set('Content-Type', 'application/json');
