@@ -2,7 +2,7 @@
 {% set pageTitle = entity.prenom~' '~entity.nom %}
 
 {% block content %}
-<form action="{%if entity.id is null%}{{ path('orga_register') }}{%else%}{{ path('orga_edit', { 'id': entity.id }) }}{%endif%}" method="post" {{ form_enctype(form) }}>
+<form action="{%if entity.id is null%}{{ path('orga_register_user') }}{%else%}{{ path('orga_edit', { 'id': entity.id }) }}{%endif%}" method="post" {{ form_enctype(form) }}>
     <div class="row-fluid">
         <div class="span4 well">
             <fieldset>

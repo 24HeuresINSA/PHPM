@@ -104,6 +104,9 @@ class OrgaController extends Controller {
         $email = $this->getRequest()->getSession()->get('email');
 
         $confiance = $em->getRepository('AssoMakerBaseBundle:Confiance')->findOneByCode($confianceCode);
+        if (!$confiance) {
+            throw new \Exception('Code d\'inscription incorrect!');
+        }
 
         $entity = new Orga();
         $entity->setEmail($email);
