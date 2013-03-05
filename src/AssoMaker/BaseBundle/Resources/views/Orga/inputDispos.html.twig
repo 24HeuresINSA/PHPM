@@ -9,146 +9,144 @@
 {% block content %}
 {% if (app.request.get('new')==true) %}
 <script>
-    function unloadMess(){
-    mess = "Attention, tes changements n'ont pas été enregistrés";
-    return mess;
+    function unloadMess() {
+        mess = "Attention, tes changements n'ont pas été enregistrés";
+        return mess;
     }
-    function setBunload(on){
-    window.onbeforeunload = (on) ? unloadMess : null;
+    function setBunload(on) {
+        window.onbeforeunload = (on) ? unloadMess : null;
     }
     setBunload(true);
-</script>
+    </script>
 {% endif %}
-<script>
-    function Ctrl($scope) {
+    <script>
+        function Ctrl($scope) {
 
-    	$scope.messageCharisme=function() {
-    		messages = {{ messagesCharisme |raw }};
-    		
-    		for(var key in messages) {
-    			if($scope.charisme() >= key){
-    			    message = messages[key];
-        			} 
-    			}
-    		  return message;
+            $scope.messageCharisme = function() {
+                messages = {{ messagesCharisme |raw }};
+                        for (var key in messages) {
+                    if ($scope.charisme() >= key) {
+                        message = messages[key];
+                    }
+                }
+                return message;
 
-    		}
-       
-  $scope.charisme = function() {
-	  var count = 0;
-	  var len=$scope.dispos.length;
-	  for(var i=0; i<len; i++) {
-		  if(!isNaN($scope.points[i])&&($scope.dispos[i])){
-			  count = count + $scope.points[i];
-			 }
+            }
 
-	  }
-	    return count;
-	  };
+            $scope.charisme = function() {
+                var count = 0;
+                var len = $scope.dispos.length;
+                for (var i = 0; i < len; i++) {
+                    if (!isNaN($scope.points[i]) && ($scope.dispos[i])) {
+                        count = count + $scope.points[i];
+                    }
 
-	  $scope.maxpoints = function() {
-		  var count = 0;
-		  var len=$scope.dispos.length;
-		  for(var i=0; i<len; i++) {
-		  	  if(!isNaN($scope.points[i])){
-		  		  count = count + $scope.points[i];
-		  		 }
-		  	  	
-		    }
-		      
-		    return count;
-		  }
+                }
+                return count;
+            };
 
-		  $scope.ratiocharisme = function() {
-		  		  return 100*$scope.charisme()/$scope.maxpoints();
-		  	}
+            $scope.maxpoints = function() {
+                var count = 0;
+                var len = $scope.dispos.length;
+                for (var i = 0; i < len; i++) {
+                    if (!isNaN($scope.points[i])) {
+                        count = count + $scope.points[i];
+                    }
 
-		  
-    	  $scope.dispos = new Array();
-    	  $scope.points = new Array();
-{% for categorie,di_jour in entities%}		   
-{% for jour,d in di_jour %}					    
-{% for e in d %}
-          $scope.dispos[{{ e.id }}]= {% if e in orga.disponibilitesInscription %}true{% else %}false{% endif %};
-          $scope.points[{{ e.id }}]= {{ e.pointsCharisme }};
-{% endfor %}
-{% endfor %}
-{% endfor %}  
+                }
+
+                return count;
+            }
+
+            $scope.ratiocharisme = function() {
+                return 100 * $scope.charisme() / $scope.maxpoints();
+            }
 
 
-    		  
-    }
-</script>
+            $scope.dispos = new Array();
+            $scope.points = new Array();
+    {% for categorie,di_jour in entities%}
+    {% for jour,d in di_jour %}
+    {% for e in d %}
+            $scope.dispos[{{ e.id }}] = {% if e in orga.disponibilitesInscription %}true{% else %}false{% endif %};
+                    $scope.points[{{ e.id }}] = {{ e.pointsCharisme }};    {% endfor %}
+    {% endfor %}
+    {% endfor %}
 
 
-    <form ng-app ng-controller="Ctrl" {% if (app.request.get('new')==true) %}onsubmit="javascript:setBunload(false);"{% endif %} action="{{ path('orga_inputdispos',{'id':orga.id }) }}" method="post" {{ form_enctype(form) }}>
-	    <div class="row-fluid">   
-	        <div class="well">    
+
+        }
+        </script>
+
+
+        <form ng-app ng-controller="Ctrl" {% if (app.request.get('new')==true) %}onsubmit="javascript:setBunload(false);"{% endif %} action="{{ path('orga_inputdispos',{'id':orga.id }) }}" method="post" {{ form_enctype(form) }}>
+            <div class="row-fluid">
+                <div class="well">
 	         	{% if is_granted('ROLE_HUMAIN') %}
-	         		<h1>Disponibilités de {{ orga.prenom }} {{ orga.nom }}</h1>
+                        <h1>Disponibilités de {{ orga.prenom }} {{ orga.nom }}</h1>
 	         	{% else %}
-	         		<h1>Tes disponibilités</h1>
+                        <h1>Tes disponibilités</h1>
 	         	{% endif %}
-         
-		    
+
+
 	         		{{ phpm_inscription_disponibilites_consignes | raw }}
 		    {% if is_granted('ROLE_USER') %}
-		    	<em>Les créneaux oranges ne sont plus modifiables une fois cochés.</em>
-		    {% endif %}	
+                        <em>Les créneaux oranges ne sont plus modifiables une fois cochés.</em>
+		    {% endif %}
 		    {{ form_errors(form) }}
-		    
+
 		    {% raw %}
-		    <h3 style="text-align: center;">Points de charisme : {{ charisme() }}/{{ maxpoints() }}</h3>
-		    <h3 style="text-align: center;">{{ messageCharisme() }}</h3>
-		    <div class="progress">
-              <div class="bar bar-success" style="width: {{ ratiocharisme() }}%;"></div>
-            </div>
+                        <h3 style="text-align: center;">Points de charisme : {{ charisme() }}/{{ maxpoints() }}</h3>
+                        <h3 style="text-align: center;">{{ messageCharisme() }}</h3>
+                        <div class="progress">
+                            <div class="bar bar-success" style="width: {{ ratiocharisme() }}%;"></div>
+                        </div>
             {% endraw %}
-		    
-		    </div>
+
+                    </div>
 		    {% if charismeInsuffisant is defined%}
-		       	<div class="alert alert-block alert-error fade in">
-		            <h4 class="alert-heading">Attention : Tu n'as pas rempli assez de disponibilités.</h4>
-		    </div>
+                    <div class="alert alert-block alert-error fade in">
+                        <h4 class="alert-heading">Attention : Tu n'as pas rempli assez de disponibilités.</h4>
+                    </div>
 		        {% endif %}
 		    {% for categorie,di_jour in entities%}
-		    <div style="display:inline-block; margin-right: 2em" class="well">
-				<h3>{{ (missions[categorie]).nom }}</h3>
-				<p><em>{{ (missions[categorie]).description }}</em></p>
+                    <div style="display:inline-block; margin-right: 2em" class="well">
+                        <h3>{{ (missions[categorie]).nom }}</h3>
+                        <p><em>{{ (missions[categorie]).description }}</em></p>
 					    {% for jour,d in di_jour %}
-					    <div style="min-width:9em; float:left; margin-right: 1em">
-					    <h4>{{ jour }}</h4>
+                        <div style="min-width:11em; float:left; margin-right: 1em">
+                            <h4>{{ jour }}</h4>
 							{% for e in d %}<div>
-						            <label class="checkbox {% if e.statut == 1 %}statut1{% endif %}">
+                                <label class="checkbox {% if e.statut == 1 %}statut1{% endif %}">
 					    			{{ e.debut |format_datetime('HH:mm')}} <i class="icon-arrow-right"></i> {{ e.fin |format_datetime('HH:mm')}} <span class="badge badge-info">{{ e.pointsCharisme }}</span>
-					    			<input class="shiftkeybox"type="checkbox" name="phpm_bundle_inputdispostype[disponibiliteInscriptionItems][{{ e.id }}]"
-					    			id="phpm_bundle_inputdispostype_disponibiliteInscriptionItems_{{ e.id }}" value="{{ e.id }}"
-					    			{% if e in orga.disponibilitesInscription %}checked="checked"{% endif %} 
+                                        <input class="shiftkeybox"type="checkbox" name="phpm_bundle_inputdispostype[disponibiliteInscriptionItems][{{ e.id }}]"
+                                               id="phpm_bundle_inputdispostype_disponibiliteInscriptionItems_{{ e.id }}" value="{{ e.id }}"
+					    			{% if e in orga.disponibilitesInscription %}checked="checked"{% endif %}
 					    			{% if ((e.statut == 0) or ((e.statut==1) and (e in orga.disponibilitesInscription))or (e.debut.timestamp - now.timestamp < 0)) and not is_granted('ROLE_HUMAIN') %}disabled{% endif %}
-					    			ng-model="dispos[{{ e.id }}]"
-					    			>
-					               </label></div>
+                                               ng-model="dispos[{{ e.id }}]"
+                                               >
+                                    </label></div>
 							{% endfor %}
-						</div>
+                            </div>
 					     {% endfor %}
-					     <div class="clear"></div>
-						
-				
-			</div>
+                            <div class="clear"></div>
+
+
+                        </div>
 			{% endfor %}
-		</div>
-		
-		
-		<div class="form-fluid">
-			<div class="form-actions">
-				<button class="btn btn-primary" type="submit" name="action" value="save" >Valider</button>
-			</div>
-	    </div>
+                    </div>
+
+
+                    <div class="form-fluid">
+                        <div class="form-actions">
+                            <button class="btn btn-primary" type="submit" name="action" value="save" >Valider</button>
+                        </div>
+                    </div>
 
 
 
 {{ form_widget(form._token) }}
-</form>
+                </form>
 
 
 
