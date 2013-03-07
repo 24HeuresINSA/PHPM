@@ -73,7 +73,7 @@ class AnimationController extends Controller {
             $animArray['description'] = $animation->getDescription();
 
 
-            $animationsArray[] = $animArray;
+            $animationsArray[$animation->getType()][] = $animArray;
         }
 
         $responseArray = array('animations' => $animationsArray, 'types' => Animation::$animTypes);
