@@ -19,7 +19,7 @@
         map = new google.maps.Map(document.getElementById('map_canvas'),
                 mapOptions);
         map.setTilt(0);
-                google.maps.event.addListener(map, 'center_changed', function() {
+        google.maps.event.addListener(map, 'center_changed', function() {
             $("#assomaker_animbundle_animationtype_entity_locX")[0].value = map.getCenter().lat();
             $("#assomaker_animbundle_animationtype_entity_locY")[0].value = map.getCenter().lng();
         });
@@ -193,7 +193,7 @@
                                         <div class="span4" ng-show="pub">{{ form_row(form.entity.animGosses) }}</div>
                                     </div>
                                     <div class="row-fluid" ng-show="pub">
-                                        <div class="span12">{{ form_row(form.entity.description) }}</div>
+                                        <div class="span12">{{ form_row(form.entity.description, {'attr':{'class':'winput'}}) }}</div>
 
                                     </div>
                                 </div>
