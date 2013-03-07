@@ -61,6 +61,7 @@ class AnimationController extends Controller {
 
         foreach ($animations as $animation) {
             $animArray = array();
+            $animArray['id'] = $animation->getId();
             $animArray['nom'] = $animation->getNom();
             $animArray['lieu'] = $animation->getLieu();
             $animArray['type'] = $animation->getType();
