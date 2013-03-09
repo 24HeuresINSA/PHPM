@@ -4,12 +4,14 @@ namespace AssoMaker\SponsoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * AssoMaker\SponsoBundle\Entity\Projet
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AssoMaker\SponsoBundle\Entity\ProjetRepository")
+ * @UniqueEntity(fields="nom", message="Un projet du même nom existe déjà")
  */
 class Projet {
 
@@ -25,7 +27,7 @@ class Projet {
     /**
      * @var string $nom
      *
-     * @ORM\Column(name="nom", type="string", length=255)
+     * @ORM\Column(name="nom", type="string", length=255, unique=true)
      * @Assert\NotBlank()
      */
     private $nom;
