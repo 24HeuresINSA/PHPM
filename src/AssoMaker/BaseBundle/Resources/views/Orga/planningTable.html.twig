@@ -1,21 +1,21 @@
 {% if disponibilites %}
-	<table class="table well">
-		<thead>
-		<tr>
-			<th>Horaires</th><th>Tâche</th><th>Lieu</th>
-		</tr>
-		<tbody>
+<table class="table well">
+    <thead>
+        <tr>
+            <th>Horaires</th><th>Tâche</th><th>Lieu</th>
+        </tr>
+    <tbody>
 			{% for d in disponibilites %}
 				{% for creneau in d.creneaux %}
-					<tr>
-					<td>{{ creneau.debut | format_datetime('EEEE dd MMM Y HH:mm') }}
-	  									-> {{ creneau.fin | format_datetime('EEEE dd MMM HH:mm') }}</td>
-	  								<td>{{ creneau.plageHoraire.tache.groupeTache.nom }} / {{ entitiesMacro.tache(creneau.plageHoraire.tache) }}</td>
-	  								<td>{{ creneau.plageHoraire.tache.lieu }}</td>
-					</tr>
+            <tr>
+                <td>{{ creneau.debut | format_datetime('EEEE dd MMM Y HH:mm') }}
+                    -> {{ creneau.fin | format_datetime('EEEE dd MMM HH:mm') }}</td>
+                <td>{{ creneau.plageHoraire.tache.groupeTache.nom }} / {% if is_granted('ROLE_USER') %} {{ entitiesMacro.tache(creneau.plageHoraire.tache) }}{%else%}{{creneau.plageHoraire.tache.nom}}{%endif%}</td>
+                <td>{{ creneau.plageHoraire.tache.lieu }}</td>
+            </tr>
 				{% endfor %}
 			{% endfor %}
-		</tbody>
-	
-	</table>
+        </tbody>
+
+    </table>
 {% endif %}

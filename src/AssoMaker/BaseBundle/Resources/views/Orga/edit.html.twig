@@ -97,7 +97,6 @@
                             <a class="btn" href="{{ path('orga_inputdispos', { 'id': entity.id }) }}"><i class="icon-calendar"></i>Disponibilités</a>
                             <a class="btn" href="{{ path('orga_affectation', { 'orga_id': entity.id }) }}"><i class="icon-book"></i>Affecter</a>
                             <a class="btn" href="{{ path('orga_print', { 'orgaid': entity.id })  }}"><i class="icon-print"></i> Imprimer le planning</a>
-                            <a class="btn" href="{{ path('orga_ical', { 'orgaid': entity.id })  }}"> Planning Google Agenda</a>
                             <a class="btn" target="_blank" href="https://www.facebook.com/search/results.php?q={{ entity.prenom~"%20"~entity.nom |url_encode }}"><i class="icon-search"></i> Rechercher sur Facebook</a>
 				{% if entity.groupePC%}
                             <a class="btn" target="_blank" href="http://cipcnet.insa-lyon.fr/scol/php/apprec_groupe?id_annee=2011&id_groupe={{ entity.groupePC |url_encode }}"><i class="icon-search"></i> Afficher le trombi du groupe</a>

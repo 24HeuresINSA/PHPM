@@ -65,167 +65,196 @@
                     <div class="row-fluid">
                         <p>
                             <a class="btn" href="{{ path('orga_edit',{'id':app.user.id }) }}"><i class="icon-pencil"></i> Modifier mes informations »</a>
-						    		{% if base_signature_actif ==1 %}
+						    		{% if base_signature_actif ==1 and is_granted('ROLE_USER') %}
                             <a class="btn" href="{{ path('orga_signature') }}"><i class="icon-envelope"></i> Générer ma signature email »</a>
 						    	    {% endif %}
                         </p>
                     </div>
                 </div>
-            </div>
+        {% if comptes_perso_actif and (app.user.equipe.comptesPersoEnabled or is_granted('ROLE_HUMAIN') ) %}
 
-            <div class="span4">
-	   {% if comptes_perso_actif and (app.user.equipe.comptesPersoEnabled or is_granted('ROLE_HUMAIN') ) %}
-
-                    <h2>Mon compte perso</h2>
+                <h2>Mon compte perso</h2>
                   {% if soldeCP < 0 %}
-                    <div class="alert alert-block alert-error">
-                        <h4 class="alert-heading">Attention : ton compte perso est déficitaire !</h4>
-                        <p>
-                            Tu dois actuellement <em>{{ soldeCP|number_format(2) }}€</em>  à l'association !
-                        </p>
+                <div class="alert alert-block alert-error">
+                    <h4 class="alert-heading">Attention : ton compte perso est déficitaire !</h4>
+                    <p>
+                        Tu dois actuellement <em>{{ soldeCP|number_format(2) }}€</em>  à l'association !
+                    </p>
 
 		  {% else %}
-                        <div class="well">
-                            <p>Il te reste actuellement <em>{{ soldeCP|number_format(2) }}€</em> sur ton compte.</p>
+                    <div class="well">
+                        <p>Il te reste actuellement <em>{{ soldeCP|number_format(2) }}€</em> sur ton compte.</p>
 
 		  {% endif %}
-                            <h4>Détail des transactions</h4>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Montant</th>
-                                        <th>Date</th>
-                                        <th>Détail</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                        <h4>Détail des transactions</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Montant</th>
+                                    <th>Date</th>
+                                    <th>Détail</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                     {% for transaction in transactionsCP %}
                     {% if loop.index == '6' %}
 
-                                    </tbody>
-                                </table>
-                                <div id="demo" class="collapse">
-                                    <table class="table">
-                                        <tbody>
+                                </tbody>
+                            </table>
+                            <div id="demo" class="collapse">
+                                <table class="table">
+                                    <tbody>
                     {% endif %}
-                                                <tr>
-                                                    <td>{{ transaction.amount |number_format(2) }}€</td>
-                                                    <td>{{ transaction.commitDate |format_date('dd MMM Y HH:mm')}}</td>
-                                                    <td>{{ transaction.comment }}</td>
-                                                </tr>
+                                            <tr>
+                                                <td>{{ transaction.amount |number_format(2) }}€</td>
+                                                <td>{{ transaction.commitDate |format_date('dd MMM Y HH:mm')}}</td>
+                                                <td>{{ transaction.comment }}</td>
+                                            </tr>
 
                     {% endfor %}
-                                            </tbody>
-                                        </table>
+                                        </tbody>
+                                    </table>
             {% if transactionsCP|length > 5 %}
-                                    </div>
-            {% endif %}
-                                    <button type="button" class="btn" data-toggle="collapse" data-target="#demo">  Afficher toutes les transactions </button>
-                                    <a class="btn" href="{{ url('comptesPerso_virement') }}"><i class="icon-credit-card"></i> Effectuer un virement »</a>
                                 </div>
-
-
-	    {% endif %}
+            {% endif %}
+                                <button type="button" class="btn" data-toggle="collapse" data-target="#demo">  Afficher toutes les transactions </button>
+                                <a class="btn" href="{{ url('comptesPerso_virement') }}"><i class="icon-credit-card"></i> Effectuer un virement »</a>
                             </div>
 
 
-                            <div class="span4">
-                                {% if is_granted('ROLE_HUMAIN') %}
-                                    <div class="row-fluid">
-                                        <h2>Gestion des Inscriptions</h2>
-    	        	{% if statsOrga.nonValidated > 0%}
-                                        <div class="alert alert-block alert-info fade in">
-                                            <h4 class="alert-heading">Il reste {{ statsOrga.nonValidated }} orgas non validés.</h4>
-                                            <a class="btn" href="{{ path('orga', {'statut':0}) }}"><i class="icon-list"></i> Afficher la liste »</a>
-                                        </div>
+	    {% endif %}
+                        </div>
 
-                                    </div>
+                        <div class="span4">
+
+                                {% if is_granted('ROLE_USER') %}
+                            {% if (planning[0] is defined)  %}
+                            <div class="row-fluid">
+
+
+                                <div class="span12">
+                                    <h2>Planning prévisionnel</h2>
+                                    Planning valable du {{ debutPlanning | format_datetime('EEEE dd MMM Y HH:mm') }} au  {{ finPlanning | format_datetime('EEEE dd MMM Y HH:mm') }}.
+				{% include 'AssoMakerBaseBundle:Orga:planningTable.html.twig' with {'disponibilites': planning[0].disponibilites}%}
+                                    <a class="btn btn-primary" href="{{ path('orga_print', {'orgaid':app.user.id }) }}"><i class="icon-print"></i> Imprimer mon planning »</a>
+                                    <a class="btn" href="https://www.google.com/calendar/render?cid={{ url('orga_ical', {'orgaid':app.user.id }) }}"><i class="icon-calendar"></i> Importer dans Google Agenda »</a>
+                                </div>
+
+
+                            </div>
+                            {%endif%}
+                                {%else%}
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <h2>Actions</h2>
+                                    <div class="well">
+
+                                        {% if statsOrga.PCMax>0%}
+                                        <p><a class="btn  btn-large btn-block" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Renseigner mes disponibilités »</a></p>
                                     {% endif %}
-                                    <div class="row-fluid">
+                                    {% if (planning[0] is defined)  %}
+                                        <p>
+                                            <a class="btn btn-large btn-block" href="{{ path('orga_print', {'orgaid':app.user.id }) }}"><i class="icon-print"></i> Imprimer mon planning »</a>
+                                        </p>
+                                        <p>
+                                            <a class="btn btn-large btn-block" href="https://www.google.com/calendar/render?cid={{ url('orga_ical', {'orgaid':app.user.id }) }}"><i class="icon-arrow-right"></i> Exporter mon planning vers Google Agenda »</a>
+                                        </p>
+                                    {%endif%}
+                                    </div>
+                                </div>
+
+
+                            </div>
+                                {%endif%}
+
+
+
+                        </div>
+
+
+                        <div class="span4">
+                                {% if is_granted('ROLE_HUMAIN') %}
+                                <div class="row-fluid">
+                                    <h2>Gestion des Inscriptions</h2>
+    	        	{% if statsOrga.nonValidated > 0%}
+                                    <div class="alert alert-block alert-info fade in">
+                                        <h4 class="alert-heading">Il reste {{ statsOrga.nonValidated }} orgas non validés.</h4>
+                                        <a class="btn" href="{{ path('orga', {'statut':0}) }}"><i class="icon-list"></i> Afficher la liste »</a>
+                                    </div>
+
+                                </div>
+                                    {% endif %}
+                                <div class="row-fluid">
     		        {% if is_granted('ROLE_HUMAIN') and phpm_actif %}
-                                            <div class="span12">
-                                                <h2>Impression des Plannings</h2>
-                                                <div class="alert alert-block alert-info fade in">
-                                                    <form name="input" action="{{ path('orga_plannings') }}" method="post">
-                                                        <fieldset>
-                                                            Début : {{ form_widget(printPlanningForm.debut,  { 'attr': {'class': 'datep'} }) }}
-                                                            Fin : {{ form_widget(printPlanningForm.fin,  { 'attr': {'class': ' datep'} }) }}
-                                                            <br>
-                                                            Orga : {{ form_widget(printPlanningForm.orga)}} <b>OU</b>
-                                                            Équipe : {{ form_widget(printPlanningForm.equipe) }}
-                                                            <br>
-                                                            <button class="btn btn-primary" type="submit" name="action" value="print" >Imprimer</button>
-                                                            <button class="btn" type="submit" name="action" value="show" >Afficher</button>
-                                                        </fieldset>
-                                                    </form>
-                                                </div>
+                                        <div class="span12">
+                                            <h2>Impression des Plannings</h2>
+                                            <div class="alert alert-block alert-info fade in">
+                                                <form name="input" action="{{ path('orga_plannings') }}" method="post">
+                                                    <fieldset>
+                                                        Début : {{ form_widget(printPlanningForm.debut,  { 'attr': {'class': 'datep'} }) }}
+                                                        Fin : {{ form_widget(printPlanningForm.fin,  { 'attr': {'class': ' datep'} }) }}
+                                                        <br>
+                                                        Orga : {{ form_widget(printPlanningForm.orga)}} <b>OU</b>
+                                                        Équipe : {{ form_widget(printPlanningForm.equipe) }}
+                                                        <br>
+                                                        <button class="btn btn-primary" type="submit" name="action" value="print" >Imprimer</button>
+                                                        <button class="btn" type="submit" name="action" value="show" >Afficher</button>
+                                                    </fieldset>
+                                                </form>
                                             </div>
-            	    {% endif %}
                                         </div>
+            	    {% endif %}
+                                    </div>
                                     {% endif %}
 
 
 
 	    {% if is_granted('ROLE_USER') %}
-                                        <div class="row-fluid">
-                                            <h2>Disponibilités</h2>
+                                    <div class="row-fluid">
+                                        <h2>Disponibilités</h2>
 	       {% if statsOrga.PCMax ==0 %}
-                                            <div class="alert alert-block alert-info fade in">
-                                                <h4 class="alert-heading">Il n'est pas encore possible de renseigner de disponibilités.</h4>
-                                            </div>
+                                        <div class="alert alert-block alert-info fade in">
+                                            <h4 class="alert-heading">Il n'est pas encore possible de renseigner de disponibilités.</h4>
+                                        </div>
 	       {% else %}
 	    	{% if statsOrga.PCOrga==0 and statsOrga.PCMax>0%}
-                                            <div class="alert alert-block alert-error fade in">
-                                                <h4 class="alert-heading">Aucun charisme !</h4>
-                                                <p>Tu n'as pas encore renseigné tes disponibilités.</p>
-                                                <p><a class="btn" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Renseigner mes disponibilités »</a></p>
-                                            </div>
+                                        <div class="alert alert-block alert-error fade in">
+                                            <h4 class="alert-heading">Aucun charisme !</h4>
+                                            <p>Tu n'as pas encore renseigné tes disponibilités.</p>
+                                            <p><a class="btn" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Renseigner mes disponibilités »</a></p>
+                                        </div>
 			{% else %}
 				{% if statsOrga.nbOrgas != 0 and statsOrga.PCOrga<(statsOrga.PCTotal/statsOrga.nbOrgas) %}
-                                            <div class="alert alert-block  fade in">
-                                                <a class="close" data-dismiss="alert" href="#">×</a>
-                                                <h4 class="alert-heading">Faible charisme !</h4>
-                                                <p>Tu as renseigné peu de disponibilités.</p>
-                                                <p><a class="btn" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Ajouter des disponibilités</a></p>
-                                            </div>
-				{% endif %}
-                                            <div class="well">
-                                                <h2>Ton charisme :</h2>
-                                                <div class="progress progress-success progress-striped">
-                                                    <div id="barreCharisme" class="bar"></div>
-                                                    <script type="text/javascript">
-                                                        $('#barreCharisme').attr('style', "width: {{ statsOrga.PCOrga/statsOrga.PCMax*100 }}%");
-                                                        </script>
-                                                    </div>
-                                                    <div style="text-align: center;">
-                                                        <p>Points de charisme : {{ statsOrga.PCOrga}}/{{statsOrga.PCMax }}<br>
-                                                            Classement : {{ statsOrga.rangCharisme}}/{{statsOrga.nbOrgas }}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div class="btn-toolbar"><a class="btn btn-primary" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Modifier mes disponibilités »</a>
-                                                    <a class="btn" href="{{ path('orga_charisme') }}">Statistiques Charisme »</a></div>
-			{% endif %}
-			{% endif %}
-                                            </div>
-	    	{% endif %}
-{% if (planning[0] is defined) and (is_granted('ROLE_USER')) %}
-                                            <div class="row-fluid">
-
-
-                                                <div class="span{% if is_granted('ROLE_HUMAIN') %}8{% else %}12{% endif %}">
-                                                    <h2>Planning prévisionnel</h2>
-                                                    Planning valable du {{ debutPlanning | format_datetime('EEEE dd MMM Y HH:mm') }} au  {{ finPlanning | format_datetime('EEEE dd MMM Y HH:mm') }}.
-				{% include 'AssoMakerBaseBundle:Orga:planningTable.html.twig' with {'disponibilites': planning[0].disponibilites}%}
-                                                    <a class="btn btn-primary" href="{{ path('orga_print', {'orgaid':app.user.id }) }}"><i class="icon-print"></i> Imprimer mon planning »</a>
-                                                    <a class="btn" href="https://www.google.com/calendar/render?cid={{ url('orga_ical', {'orgaid':app.user.id }) }}"><i class="icon-calendar"></i> Importer dans Google Agenda »</a>
-                                                </div>
-
-
-                                            </div>
-                                        	{% endif %}
+                                        <div class="alert alert-block  fade in">
+                                            <a class="close" data-dismiss="alert" href="#">×</a>
+                                            <h4 class="alert-heading">Faible charisme !</h4>
+                                            <p>Tu as renseigné peu de disponibilités.</p>
+                                            <p><a class="btn" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Ajouter des disponibilités</a></p>
                                         </div>
+				{% endif %}
+                                        <div class="well">
+                                            <h2>Ton charisme :</h2>
+                                            <div class="progress progress-success progress-striped">
+                                                <div id="barreCharisme" class="bar"></div>
+                                                <script type="text/javascript">
+                                                    $('#barreCharisme').attr('style', "width: {{ statsOrga.PCOrga/statsOrga.PCMax*100 }}%");
+                                                    </script>
+                                                </div>
+                                                <div style="text-align: center;">
+                                                    <p>Points de charisme : {{ statsOrga.PCOrga}}/{{statsOrga.PCMax }}<br>
+                                                        Classement : {{ statsOrga.rangCharisme}}/{{statsOrga.nbOrgas }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="btn-toolbar"><a class="btn btn-primary" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Modifier mes disponibilités »</a>
+                                                <a class="btn" href="{{ path('orga_charisme') }}">Statistiques Charisme »</a></div>
+			{% endif %}
+			{% endif %}
+                                        </div>
+	    	{% endif %}
+
                                     </div>
+                                </div>
 
 
 {% endblock %}
