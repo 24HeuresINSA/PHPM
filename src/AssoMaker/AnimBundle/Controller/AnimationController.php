@@ -137,7 +137,8 @@ class AnimationController extends Controller {
             throw $this->createNotFoundException('Unable to find Animation entity.');
         }
 
-        $readOnly = (!($admin || $secu || $log) && ($entity->getStatut() >= 1));
+
+        $readOnly = array("h" => (!$admin) && ( $entity->getValidHumain() || ($entity->getStatut() >= 1) ), "s" => (!$secu) && ( $entity->getValidSecu() || ($entity->getStatut() >= 1) ), "l" => (!$log) && ( $entity->getValidLog() || ($entity->getStatut() >= 1) ));
 
         $defaultValues = array('entity' => $entity, "commentaire" => '');
         $editForm = $this->createForm(new AnimationType($admin, $config, false, $readOnly), $defaultValues);
@@ -196,18 +197,18 @@ class AnimationController extends Controller {
 
 
 
-                if ($entity->getStatut() >= 1 && ($log) && $param['action'] == 'validateLog') {
+                if (($log) && $param['action'] == 'validateLog') {
                     $entity->setValidLog(true);
                     $typeCommentaire = 5;
                 }
 
 
-                if ($entity->getStatut() >= 1 && ($secu) && $param['action'] == 'validateSecu') {
+                if (($secu) && $param['action'] == 'validateSecu') {
                     $entity->setValidSecu(true);
                     $typeCommentaire = 6;
                 }
 
-                if ($entity->getStatut() >= 1 && ($admin) && $param['action'] == 'validateHumain') {
+                if (($admin) && $param['action'] == 'validateHumain') {
                     $entity->setValidHumain(true);
                     $typeCommentaire = 7;
                 }
@@ -221,7 +222,7 @@ class AnimationController extends Controller {
                     $typeCommentaire = 4;
                 }
 
-                if ($entity->getValidHumain() && $entity->getValidHumain() && $entity->getValidHumain()) {
+                if ($entity->getValidHumain() && $entity->getValidLog() && $entity->getValidSecu()) {
                     $entity->setStatut(2);
                 }
 
@@ -231,13 +232,14 @@ class AnimationController extends Controller {
                     $entity->addCommentaire($user, $data['commentaire'], $typeCommentaire);
                 }
 
+
                 $em->persist($entity);
                 $em->flush();
 
                 if ($entity->getBesoinPass() && $entity->getPassAssocies()->count() == 0) {
                     return $this->redirect($this->generateUrl('pass_pass_new', array('animId' => $entity->getId())));
                 }
-                if ($this->get('security.context')->isGranted('ROLE_USER')) {
+                if (!$this->get('security.context')->isGranted('ROLE_ADMIN')) {
                     return $this->redirect($this->generateUrl('anim_animation_index'));
                 }
                 return $this->redirect($this->generateUrl('anim_animation_edit', array('id' => $entity->getId())));

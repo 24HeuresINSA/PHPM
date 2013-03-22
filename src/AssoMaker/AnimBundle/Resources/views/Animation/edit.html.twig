@@ -160,6 +160,7 @@
                     {% if entity.statut ==0 %}<i class="icon-pencil"></i> {% endif %}
                     {% if entity.statut ==1 %}<i class="icon-eye-open"></i> {% endif %}
                     {% if entity.statut >=2 %}<i class="icon-ok"></i> {% endif %}
+                    {% if entity.validHumain %}<i class="icon-user"></i> {% endif %}
                     {% if entity.validSecu %}<i class="icon-bullhorn"></i> {% endif %}
                     {% if entity.validLog %}<i class="icon-wrench"></i>{% endif %}
 
@@ -191,8 +192,11 @@
                                         <div class="span4" ng-show="pub">{{ form_row(form.entity.animGosses) }}</div>
                                     </div>
                                     <div class="row-fluid" ng-show="pub">
+                                        {% if not readOnly['h'] %}
                                         <div class="span12">{{ form_row(form.entity.description, {'attr':{'class':'winput'}}) }}</div>
-
+                                           {%else%}
+                                        <div class="span12">{{ form_row(form.entity.description, {'attr':{'class':'winput-ro'}}) }}</div>
+                                        {%endif%}
                                     </div>
                                 </div>
                                 <div class="span3">
@@ -275,11 +279,11 @@
                                                                             <li ng-repeat="(kc,c) in materiel">
                 {% raw %}{{ c.nom }}{% endraw %}
                                                                                     <ul>
-                          {% if not readOnly %}
+                          {% if not readOnly['l'] %}
                                                                                             <input type="hidden" ng-model="c.nom" class="input" name="assomaker_animbundle_animationtype[entity][materiel][{%raw%}{{kc}}{% endraw %}][nom]" value="{%raw%}{{c.nom}}{% endraw %}">
                           {% endif %}
                                                                                             <li ng-repeat="(km,m) in c.items">
-                           {% if readOnly %}
+                           {% if readOnly['l'] %}
                            {%raw%}{{ m.nom }} x {{ m.qte }}{% endraw %}
                            {% else %}
                                                                                                     <input type="text" ng-model="m.nom" class="input" name="assomaker_animbundle_animationtype[entity][materiel][{%raw%}{{kc}}{% endraw %}][items][{%raw%}{{km}}{% endraw %}][nom]">
@@ -292,7 +296,7 @@
                                                                                 </div>
                                                                             </div>
 
-                                                                                                    {% if not readOnly %}
+                                                                                                    {% if not readOnly['l']  %}
                                                                             <div class="span6 well">
                                                                                 <h5>Ajouter du matériel</h5>
                                                                                 <ul class="nav nav-list">
@@ -381,14 +385,14 @@
                         <div class="row-fluid">
                             <fieldset>
                                 <legend>Horaires
-                                {% if not readOnly %}
+                                {% if not readOnly['h'] %}
                                         <a class="btn btn-success btn-small" ng-click="addHoraire()"><i class="icon-plus"></i></a>
                                 {% endif %}
                                         </legend>
                                         <div class="row-fluid">
                                             <ul>
                                                 <li ng-repeat="h in horaires">
-                                            {% if readOnly %}
+                                            {% if readOnly['h'] %}
                                             {% raw %}{{h.jour}} : {{h.debut}} <i class="icon-arrow-right"></i> {{h.fin}}{% endraw %}
                                             {% else %}
                                                         <select class="input-medium" name="assomaker_animbundle_animationtype[entity][horaires][{%raw%}{{$index}}{% endraw %}][jour]" ng-model="h.jour">
@@ -470,11 +474,11 @@
                                             <div class="form-fluid">
                                                 <div class="form-actions">
                                                     <button class="btn btn-primary" type="submit" name="action" value="save">Enregistrer les modifications</button>
-                                    {% if entity.statut == 0 %}
+                                    {% if entity.statut == 0 and not is_granted('ROLE_ADMIN') %}
                                                     <button class="btn btn-success" type="submit" name="action" value="submit_validation"><i class="icon-eye-open"></i> Demander la validation</button>
                                     {% endif %}
                                                     
-                                    {% if is_granted('ROLE_HUMAIN') and entity.statut == 1 %}
+                                    {% if is_granted('ROLE_HUMAIN') %}
                                                 {% if not (entity.validLog and entity.validSecu and entity.validSecu)%}
                                                     <button class="btn btn-warning" type="submit" name="action" value="validate"><i class="icon-ok"></i>
                                                         Forcer la validation

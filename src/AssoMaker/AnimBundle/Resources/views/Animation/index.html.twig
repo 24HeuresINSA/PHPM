@@ -37,7 +37,7 @@
         $scope.countLog = function() {
             var count = 0;
             angular.forEach($scope.animations, function(anim) {
-                if (anim.statut == 1 && anim.validLog != true) {
+                if (anim.statut >= 1 && anim.validLog != true) {
                     count = count + 1;
                 }
             });
@@ -47,7 +47,7 @@
         $scope.countHumain = function() {
             var count = 0;
             angular.forEach($scope.animations, function(anim) {
-                if (anim.statut == 1 && anim.validHumain != true) {
+                if (anim.statut >= 1 && anim.validHumain != true) {
                     count = count + 1;
                 }
             });
@@ -57,7 +57,7 @@
         $scope.countSecu = function() {
             var count = 0;
             angular.forEach($scope.animations, function(anim) {
-                if (anim.statut == 1 && anim.validSecu != true) {
+                if (anim.statut >= 1 && anim.validSecu != true) {
                     count = count + 1;
                 }
             });
