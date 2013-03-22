@@ -176,19 +176,19 @@ class AnimationController extends Controller {
 
 
 
-                if ($entity->getValidLog() && $param['action'] == 'rejectLog' && ($log)) {
+                if ($param['action'] == 'rejectLog' && ($log)) {
                     $entity->setStatut(0);
                     $typeCommentaire = 3;
                     $entity->setValidLog(false);
                 }
 
-                if ($entity->getValidSecu() && $param['action'] == 'rejectSecu' && ($secu)) {
+                if ($param['action'] == 'rejectSecu' && ($secu)) {
                     $entity->setStatut(0);
                     $typeCommentaire = 3;
                     $entity->setValidSecu(false);
                 }
 
-                if ($entity->getValidHumain() && $param['action'] == 'rejectHumain' && ($admin)) {
+                if ($param['action'] == 'rejectHumain' && ($admin)) {
                     $entity->setStatut(0);
                     $typeCommentaire = 3;
                     $entity->setValidHumain(false);
