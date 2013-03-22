@@ -486,25 +486,24 @@
                                     {% if is_granted('ROLE_LOG') and (entity.statut >= 1) %}
                                         {% if (not entity.validLog)  %}
                                         <button class="btn btn-success" type="submit" name="action" value="validateLog"><i class="icon-wrench"></i> Valider la partie logistique</button>
-                                        {% else %}
-                                        <button class="btn btn-danger" type="submit" name="action" value="rejectLog"><i class="icon-wrench"></i> Rejeter la partie logistique</button>
                                         {% endif %}
+                                        <button class="btn btn-danger" type="submit" name="action" value="rejectLog"><i class="icon-wrench"></i> Rejeter la partie logistique</button>
+
                                     {% endif %}
                                         
                                     {% if is_granted('ROLE_SECU') and (entity.statut >= 1) %}
                                         {% if (not entity.validSecu)  %}
                                         <button class="btn btn-success" type="submit" name="action" value="validateSecu"><i class="icon-wrench"></i> Valider la partie sécurité</button>
-                                        {% else %}
-                                        <button class="btn btn-danger" type="submit" name="action" value="rejectSecu"><i class="icon-wrench"></i> Rejeter la partie sécurité</button>
                                         {% endif %}
+                                        <button class="btn btn-danger" type="submit" name="action" value="rejectSecu"><i class="icon-wrench"></i> Rejeter la partie sécurité</button>
+
                                     {% endif %}
                                         
                                     {% if is_granted('ROLE_HUMAIN') and (entity.statut >= 1) %}
                                         {% if (not entity.validHumain)  %}
                                         <button class="btn btn-success" type="submit" name="action" value="validateHumain"><i class="icon-wrench"></i> Valider la partie humain</button>
-                                        {% else %}
-                                        <button class="btn btn-danger" type="submit" name="action" value="rejectHumain"><i class="icon-wrench"></i> Rejeter la partie humain</button>
                                         {% endif %}
+                                        <button class="btn btn-danger" type="submit" name="action" value="rejectHumain"><i class="icon-wrench"></i> Rejeter la partie humain</button>
                                     {% endif %}
                                         
 
