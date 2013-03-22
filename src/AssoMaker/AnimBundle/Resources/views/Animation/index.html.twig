@@ -44,6 +44,16 @@
             return count;
         }
 
+        $scope.countHumain = function() {
+            var count = 0;
+            angular.forEach($scope.animations, function(anim) {
+                if (anim.statut == 1 && anim.validHumain != true) {
+                    count = count + 1;
+                }
+            });
+            return count;
+        }
+
         $scope.countSecu = function() {
             var count = 0;
             angular.forEach($scope.animations, function(anim) {
@@ -98,7 +108,7 @@
                     <li ng-class="{active: search.statut=='1'}">
                         <a ng-click="search.statut='1'" >
                             <i class="icon-eye-open"></i> À valider
-                            <span class="badge" ng-class="{true:'badge-important', false:''}[isHumain]"><i class="icon-user"></i>{{ countStatut(1) }}</span>
+                            <span class="badge" ng-class="{true:'badge-important', false:''}[isHumain]"><i class="icon-user"></i>{{ countHumain() }}</span>
                             <span class="badge" ng-class="{true:'badge-important', false:''}[isLog]"><i class="icon-wrench"></i>{{ countLog() }}</span>
                             <span class="badge" ng-class="{true:'badge-important', false:''}[isSecu]"><i class="icon-bullhorn"></i>{{ countSecu() }}</span>
                         </a>
@@ -130,9 +140,7 @@
                         <div class="row-fluid">
                             <div class="span5" ><a href="{{ a.id }}/edit" class="statut{{ a.statut }}">
                             {{a.nom}}
-                                            <i class="icon-pencil" ng-show="a.statut==0"> </i>
-                                            <i class="icon-eye-open" ng-show="a.statut==1"> </i>
-                                            <i class="icon-ok" ng-show="a.statut>=2"> </i>
+                                            <i class="icon-user" ng-show="a.validHumain"> </i>
                                             <i class="icon-bullhorn" ng-show="a.validSecu"> </i>
                                             <i class="icon-wrench" ng-show="a.validLog"> </i>
 

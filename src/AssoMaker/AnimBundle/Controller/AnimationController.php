@@ -174,11 +174,42 @@ class AnimationController extends Controller {
                     $typeCommentaire = 2;
                 }
 
-                if (($admin || $log || $secu) && $param['action'] == 'reject') {
+
+
+                if ($entity->getValidLog() && $param['action'] == 'rejectLog' && ($log)) {
                     $entity->setStatut(0);
                     $typeCommentaire = 3;
                     $entity->setValidLog(false);
+                }
+
+                if ($entity->getValidSecu() && $param['action'] == 'rejectSecu' && ($secu)) {
+                    $entity->setStatut(0);
+                    $typeCommentaire = 3;
                     $entity->setValidSecu(false);
+                }
+
+                if ($entity->getValidHumain() && $param['action'] == 'rejectHumain' && ($admin)) {
+                    $entity->setStatut(0);
+                    $typeCommentaire = 3;
+                    $entity->setValidHumain(false);
+                }
+
+
+
+                if ($entity->getStatut() >= 1 && ($log) && $param['action'] == 'validateLog') {
+                    $entity->setValidLog(true);
+                    $typeCommentaire = 5;
+                }
+
+
+                if ($entity->getStatut() >= 1 && ($secu) && $param['action'] == 'validateSecu') {
+                    $entity->setValidSecu(true);
+                    $typeCommentaire = 6;
+                }
+
+                if ($entity->getStatut() >= 1 && ($admin) && $param['action'] == 'validateHumain') {
+                    $entity->setValidHumain(true);
+                    $typeCommentaire = 7;
                 }
 
                 if (($entity->getStatut() <= 1 || $admin) && $param['action'] == 'delete') {
@@ -190,15 +221,8 @@ class AnimationController extends Controller {
                     $typeCommentaire = 4;
                 }
 
-                if ($entity->getStatut() >= 1 && ($log) && $param['action'] == 'validateLog') {
-                    $entity->setValidLog(true);
-                    $typeCommentaire = 5;
-                }
-
-
-                if ($entity->getStatut() >= 1 && ($secu) && $param['action'] == 'validateSecu') {
-                    $entity->setValidSecu(true);
-                    $typeCommentaire = 6;
+                if ($entity->getValidHumain() && $entity->getValidHumain() && $entity->getValidHumain()) {
+                    $entity->setStatut(2);
                 }
 
 

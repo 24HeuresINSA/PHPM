@@ -68,6 +68,12 @@ class Animation {
      * @ORM\Column(type="boolean")
      */
     protected $validSecu = false;
+    
+        /**
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $validHumain = false;
 
     /**
      * @var smallint $statut
@@ -1269,5 +1275,27 @@ class Animation {
         return $this;
     }
 
-}
 
+    /**
+     * Set validHumain
+     *
+     * @param boolean $validHumain
+     * @return Animation
+     */
+    public function setValidHumain($validHumain)
+    {
+        $this->validHumain = $validHumain;
+    
+        return $this;
+    }
+
+    /**
+     * Get validHumain
+     *
+     * @return boolean 
+     */
+    public function getValidHumain()
+    {
+        return $this->validHumain;
+    }
+}

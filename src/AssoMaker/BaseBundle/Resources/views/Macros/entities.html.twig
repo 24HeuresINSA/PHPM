@@ -45,6 +45,7 @@
 {% if com.type == 4 %}<i class="icon-share-alt"></i>{% endif %}
 {% if com.type == 5 %}<i class="icon-wrench"></i>{% endif %}
 {% if com.type == 6 %}<i class="icon-bullhorn"></i>{% endif %}
+{% if com.type == 7 %}<i class="icon-user"></i>{% endif %}
 {% endmacro %}
 
 {% macro supTextCom(com) %}
@@ -58,6 +59,7 @@
 {% if com.type == 4 %}Fiche restaurée{% endif %}
 {% if com.type == 5 %}Fiche vérifiée par la logistique{% endif %}
 {% if com.type == 6 %}Fiche vérifiée par la sécurité{% endif %}
+{% if com.type == 7 %}Fiche vérifiée par l'humain{% endif %}
 </b>
 {% endif %}
 {% endmacro %}

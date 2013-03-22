@@ -156,8 +156,6 @@
 
                 <div class="span7">
                     <fieldset>
-
-
                         <legend class="statut{{entity.statut }}">
                     {% if entity.statut ==0 %}<i class="icon-pencil"></i> {% endif %}
                     {% if entity.statut ==1 %}<i class="icon-eye-open"></i> {% endif %}
@@ -217,314 +215,306 @@
                                 <legend>Sécurité</legend>
                                 <div class="row-fluid">
                                     <div class="span6">{{ form_row(form.entity.besoinSecu,{'attr':{'ng-model':'besoinSecu'}} ) }}
-                                        <div class="row-fluid" ng-show="besoinSecu">
-                        {{ form_row(form.entity.detailSecu) }}
-                                            </div>
-
+                                        <div class="row-fluid" ng-show="besoinSecu">        {{ form_row(form.entity.detailSecu) }}
                                         </div>
-                                        <div class="span6">
-                        {{ form_row(form.entity.besoinPass,{'attr':{'ng-model':'besoinPass'}} ) }}
 
-                                                <div class="row-fluid" ng-show="besoinPass">
+                                    </div>
+                                    <div class="span6">{{ form_row(form.entity.besoinPass,{'attr':{'ng-model':'besoinPass'}} ) }}
 
-                        {% if entity.passAssocies | length >0 %}
-                                                    <h5> Liste des Pass Voiture :</h5>
-                                                    <ul>
-                                {% for k,p in entity.passAssocies %}
-                                                            <li><a class="statut{{ p.statut }}" href="{{ path('pass_pass_edit',{"id":p.id,"code":p.accessCode}) }}">Pass {{k}} : {{ p.entite }}</a></li>
-                                {% endfor %}
-                                                            </ul>
-                            {% else %}
-                                                            <div class="alert alert-info"><h5>Un pass voiture sera généré à l'enregistrement de la fiche.</h5></div>
-                                                            </p>
-                            {% endif %}
-                                                        </div>
+                                        <div class="row-fluid" ng-show="besoinPass">
+                                             {% if entity.passAssocies | length >0 %}
+                                                <h5> Liste des Pass Voiture :</h5>
+                                                <ul>
+                                                {% for k,p in entity.passAssocies %}
+                                                        <li><a class="statut{{ p.statut }}" href="{{ path('pass_pass_edit',{"id":p.id,"code":p.accessCode}) }}">Pass {{k}} : {{ p.entite }}</a></li>
+                                                 {% endfor %}
+                                                        </ul>
+                                                  {% else %}
+                                                        <div class="alert alert-info"><h5>Un pass voiture sera généré à l'enregistrement de la fiche.</h5></div>
+                                                        </p>
+                                                     {% endif %}
+                                                    </div>
+
+                                          </div>
+                                       </div>
+
+
+                               </fieldset>
+                                        <fieldset>
+                                            <legend {% if(entity.validLog) %}class="statut2"{% else %}class="statut0"{% endif %}>Logistique</legend>
+                                            <div class="row-fluid">
+                                                <div class="span4">
+        {{ form_row(form.entity.elec,{'attr':{'ng-model':'besoinElec'}}) }}
 
                                                     </div>
-                                                </div>
-
-
-                                            </fieldset>
-                                            <fieldset>
-                                                <legend {% if(entity.validLog) %}class="statut2"{% else %}class="statut0"{% endif %}>Logistique</legend>
-                                                <div class="row-fluid">
-                                                    <div class="span4">
-                            {{ form_row(form.entity.elec,{'attr':{'ng-model':'besoinElec'}}) }}
-
+                                                    <div class="span4" ng-show="besoinElec">
+        {{ form_row(form.entity.elecAmperes,{'attr':{'class':'input-small'}}) }}
                                                         </div>
                                                         <div class="span4" ng-show="besoinElec">
-                            {{ form_row(form.entity.elecAmperes,{'attr':{'class':'input-small'}}) }}
-                                                            </div>
-                                                            <div class="span4" ng-show="besoinElec">
-                            {{ form_row(form.entity.elecTri) }}
-                                                                </div>
-
+        {{ form_row(form.entity.elecTri) }}
                                                             </div>
 
+                                                        </div>
 
 
 
-                                                            <div class="row-fluid">
-                                                                <div class="span6">
-                                                                    <div class="row_fluid">
-                    {% if entity.statut > 0 and not entity.validLog  %}
-                                                                            <div class="alert alert-error">
-                                                                                <h5>Attention !</h5> Cette fiche n'a pas été validée par un responsable logistique.
-                                                                            </div>
-                    {% endif %}
+
+                                                        <div class="row-fluid">
+                                                            <div class="span6">
+                                                                <div class="row_fluid">
+        {% if entity.statut > 0 and not entity.validLog  %}
+                                                                        <div class="alert alert-error">
+                                                                            <h5>Attention !</h5> Cette fiche n'a pas été validée par un responsable logistique.
                                                                         </div>
-                                                                        <div class="row_fluid">
-                                                                            <h4>Matériel et quantité requise</h4>
-                            {{ form_row(form.entity.lieuDepotLog) }}
-                                                                            <ul>
-                                                                                <li ng-repeat="(kc,c) in materiel">
-                                    {% raw %}{{ c.nom }}{% endraw %}
-                                                                                        <ul>
-                                              {% if not readOnly %}
-                                                                                                <input type="hidden" ng-model="c.nom" class="input" name="assomaker_animbundle_animationtype[entity][materiel][{%raw%}{{kc}}{% endraw %}][nom]" value="{%raw%}{{c.nom}}{% endraw %}">
-                                              {% endif %}
-                                                                                                <li ng-repeat="(km,m) in c.items">
-                                               {% if readOnly %}
-                                               {%raw%}{{ m.nom }} x {{ m.qte }}{% endraw %}
-                                               {% else %}
-                                                                                                        <input type="text" ng-model="m.nom" class="input" name="assomaker_animbundle_animationtype[entity][materiel][{%raw%}{{kc}}{% endraw %}][items][{%raw%}{{km}}{% endraw %}][nom]">
-                                                                                                        <input type="number" class="input-mini" ng-model="m.qte" ng-click="cleanMatos()" name="assomaker_animbundle_animationtype[entity][materiel][{%raw%}{{kc}}{% endraw %}][items][{%raw%}{{km}}{% endraw %}][qte]">
-                                              {% endif %}
-                                                                                                    </li>
-                                                                                                </ul>
-                                                                                            </li>
-                                                                                        </ul>
-                                                                                    </div>
-                                                                                </div>
-
-                    {% if not readOnly %}
-                                                                                <div class="span6 well">
-                                                                                    <h5>Ajouter du matériel</h5>
-                                                                                    <ul class="nav nav-list">
-                                                                                        <li class="dropdown" ng-repeat="(kc,c) in materielStandard">
-                                                                                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">{% raw %}{{ c.nom }}{% endraw %}<b class="caret"></b></a>
-                                                                                            <ul class="dropdown-menu">
-                                                                                                <li ng-repeat="(km,m) in c.items"><a ng-click="addMatos(c.nom,m)">{% raw %}{{ m }}{% endraw %}</a>
+        {% endif %}
+                                                                    </div>
+                                                                    <div class="row_fluid">
+                                                                        <h4>Matériel et quantité requise</h4>
+        {{ form_row(form.entity.lieuDepotLog) }}
+                                                                        <ul>
+                                                                            <li ng-repeat="(kc,c) in materiel">
+                {% raw %}{{ c.nom }}{% endraw %}
+                                                                                    <ul>
+                          {% if not readOnly %}
+                                                                                            <input type="hidden" ng-model="c.nom" class="input" name="assomaker_animbundle_animationtype[entity][materiel][{%raw%}{{kc}}{% endraw %}][nom]" value="{%raw%}{{c.nom}}{% endraw %}">
+                          {% endif %}
+                                                                                            <li ng-repeat="(km,m) in c.items">
+                           {% if readOnly %}
+                           {%raw%}{{ m.nom }} x {{ m.qte }}{% endraw %}
+                           {% else %}
+                                                                                                    <input type="text" ng-model="m.nom" class="input" name="assomaker_animbundle_animationtype[entity][materiel][{%raw%}{{kc}}{% endraw %}][items][{%raw%}{{km}}{% endraw %}][nom]">
+                                                                                                    <input type="number" class="input-mini" ng-model="m.qte" ng-click="cleanMatos()" name="assomaker_animbundle_animationtype[entity][materiel][{%raw%}{{kc}}{% endraw %}][items][{%raw%}{{km}}{% endraw %}][qte]">
+                          {% endif %}
                                                                                                 </li>
                                                                                             </ul>
                                                                                         </li>
-                                                                                        <li>
-                                                                                            Autre : <input type="text" ng-model="customMatos" class="input"> <span class="" ng-click="addMatos('Autre',customMatos)"><i class="icon-plus"></i></span>
-
-                                                                                        </li>
-                                                                                        <li></li>
                                                                                     </ul>
                                                                                 </div>
-                  {% endif %}
-
                                                                             </div>
 
+                                                                                                    {% if not readOnly %}
+                                                                            <div class="span6 well">
+                                                                                <h5>Ajouter du matériel</h5>
+                                                                                <ul class="nav nav-list">
+                                                                                    <li class="dropdown" ng-repeat="(kc,c) in materielStandard">
+                                                                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">{% raw %}{{ c.nom }}{% endraw %}<b class="caret"></b></a>
+                                                                                        <ul class="dropdown-menu">
+                                                                                            <li ng-repeat="(km,m) in c.items"><a ng-click="addMatos(c.nom,m)">{% raw %}{{ m }}{% endraw %}</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        Autre : <input type="text" ng-model="customMatos" class="input"> <span class="" ng-click="addMatos('Autre',customMatos)"><i class="icon-plus"></i></span>
 
-
-                                                                        </fieldset>
-                                                                        <fieldset>
-                                                                            <legend>Signalétique</legend>
-                                                                            <div class="row-fluid">
-                        {{ form_row(form.entity.besoinSigna,{'attr':{'ng-model':'besoinSigna'}} ) }}
-                                                                                </div>
-                                                                                <div class="row-fluid" ng-show="besoinSigna">
-                        {{ form_row(form.entity.detailSigna) }}
-                                                                                    </div>
-                                                                                </fieldset>
-
-
-
-
-
-
+                                                                                    </li>
+                                                                                    <li></li>
+                                                                                </ul>
                                                                             </div>
-                                                                            <div class="span5">
-                                                                                <div class="row-fluid">
-                                                                                    <fieldset>
-                                                                                        <legend>Emplacement</legend>
-                                                                                        <div class="row-fluid">
-                        {{ form_row(form.entity.lieu,{'attr':{'data-provide':'typeahead','data-source':listeLieux,'autocomplete':'off'}}) }}
-                                                                                                <datalist id="lieux">
-                            {% for anim in listeLieux %}
-                                                                                                        <option value="{{ anim.lieu }}">
-                            {% endfor %}
-                                                                                                        </datalist>
-                                                                                                    </div>
-                                                                                                    <div class="row-fluid">
-                                                                                                        <div class="span12">
-                                                                                                            <div id="map_canvas" class="span12" style="height:200px">
-                                                                                                            </div>
+                                                                                                  {% endif %}
+
+                                                                        </div>
+
+
+
+                                                                    </fieldset>
+                                <fieldset>
+                                    <legend>Signalétique</legend>
+                                    <div class="row-fluid">
+                                                                    {{ form_row(form.entity.besoinSigna,{'attr':{'ng-model':'besoinSigna'}} ) }}
+                                        </div>
+                                        <div class="row-fluid" ng-show="besoinSigna">
+                                                                    {{ form_row(form.entity.detailSigna) }}
+                                            </div>
+                                        </fieldset>
+
+
+
+
+
+
+                </div>
+        <div class="span5">
+            <div class="row-fluid">
+                <fieldset>
+                    <legend>Emplacement</legend>
+                    <div class="row-fluid">
+                                        {{ form_row(form.entity.lieu,{'attr':{'data-provide':'typeahead','data-source':listeLieux,'autocomplete':'off'}}) }}
+                            <datalist id="lieux">
+                                            {% for anim in listeLieux %}
+                                    <option value="{{ anim.lieu }}">
+                                            {% endfor %}
+                                    </datalist>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span12">
+                                        <div id="map_canvas" class="span12" style="height:200px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+
+                        <div class="row-fluid">
+                            <fieldset>
+                                <legend>Intervenant Extérieur</legend>
+                                <div class="row-fluid">
+                                    <div class="span8">{{ form_row(form.entity.extNom,{'attr':{'class':'input-block-level'}}) }}</div>
+                                    <div class="span4">{{ form_row(form.entity.extType,{'attr':{'class':'input-medium'}}) }}</div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span6">{{ form_row(form.entity.extTelephone,{'attr':{'class':'input-medium'}}) }}</div>
+                                    <div class="span6">{{ form_row(form.entity.extEmail) }}</div>
+                                </div>
+
+                                <div class="row-fluid">
+                                    <div class="span12">{{ form_row(form.entity.extCommentaire) }}</div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span3">{{ form_row(form.entity.extPresent,{'attr':{'ng-model':'extPresent'}}) }}</div>
+                                    <div class="span3" ng-show="extPresent">{{ form_row(form.entity.extBoisson) }}</div>
+                                    <div class="span3" ng-show="extPresent">{{ form_row(form.entity.extBouffe) }}</div>
+                                    <div class="span3" ng-show="extPresent">{{ form_row(form.entity.extCatering) }}</div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="row-fluid">
+                            <fieldset>
+                                <legend>Horaires
+                                {% if not readOnly %}
+                                        <a class="btn btn-success btn-small" ng-click="addHoraire()"><i class="icon-plus"></i></a>
+                                {% endif %}
+                                        </legend>
+                                        <div class="row-fluid">
+                                            <ul>
+                                                <li ng-repeat="h in horaires">
+                                            {% if readOnly %}
+                                            {% raw %}{{h.jour}} : {{h.debut}} <i class="icon-arrow-right"></i> {{h.fin}}{% endraw %}
+                                            {% else %}
+                                                        <select class="input-medium" name="assomaker_animbundle_animationtype[entity][horaires][{%raw%}{{$index}}{% endraw %}][jour]" ng-model="h.jour">
+                                                            <option>Mercredi</option>
+                                                            <option>Jeudi</option>
+                                                            <option>Vendredi</option>
+                                                            <option>Samedi</option>
+                                                            <option>Dimanche</option>
+                                                            <option>Lundi</option>
+                                                        </select>
+                                                        <select class="input-small" name="assomaker_animbundle_animationtype[entity][horaires][{%raw%}{{$index}}{% endraw %}][debut]" ng-model="h.debut">
+                                            {% for i in 7..23 %}
+                                                {% for j in ['00','15', '30', '45'] %}
+                                                                <option>{{ i~'h'~j }}</option>
+                                                {% endfor %}
+                                            {% endfor %}
+                                            {% for i in 0..6 %}
+                                                {% for j in ['00','15', '30', '45'] %}
+                                                                <option>{{ i~'h'~j }}</option>
+                                                {% endfor %}
+                                            {% endfor %}
+                                                            </select>
+                                                            <i class="icon-arrow-right"></i>
+                                                            <select class="input-small" name="assomaker_animbundle_animationtype[entity][horaires][{%raw%}{{$index}}{% endraw %}][fin]" ng-model="h.fin">
+                                            {% for i in 18..23 %}
+                                                {% for j in ['00','15', '30', '45'] %}
+                                                                    <option>{{ i~'h'~j }}</option>
+                                                {% endfor %}
+                                            {% endfor %}
+                                            {% for i in 0..17 %}
+                                                {% for j in ['00','15', '30', '45'] %}
+                                                                    <option>{{ i~'h'~j }}</option>
+                                                {% endfor %}
+                                            {% endfor %}
+                                                                </select>
+
+                                                                <a class="btn btn-small btn-danger" ng-click="remHoraire($index)"><i class="icon-remove"></i></a>
+                                          {% endif %}
+                                                                </li>
+
+
+                                                            </ul>
+                                                        </div>
+
+
+
+
+                                                    </fieldset>
+                                                </div>
+
+                                            </div>
+
+                                                                                        {{ form_widget(form.entity.locX) }}
+                                                                                        {{ form_widget(form.entity.locY) }}
+                                                                                        {{ form_widget(form._token) }}
                                                                                                         </div>
-                                                                                                    </div>
-                                                                                                </fieldset>
-                                                                                            </div>
-
-
-                                                                                            <div class="row-fluid">
-                                                                                                <fieldset>
-                                                                                                    <legend>Intervenant Extérieur</legend>
-                                                                                                    <div class="row-fluid">
-                                                                                                        <div class="span8">{{ form_row(form.entity.extNom,{'attr':{'class':'input-block-level'}}) }}</div>
-                                                                                                        <div class="span4">{{ form_row(form.entity.extType,{'attr':{'class':'input-medium'}}) }}</div>
-                                                                                                    </div>
-                                                                                                    <div class="row-fluid">
-                                                                                                        <div class="span6">{{ form_row(form.entity.extTelephone,{'attr':{'class':'input-medium'}}) }}</div>
-                                                                                                        <div class="span6">{{ form_row(form.entity.extEmail) }}</div>
-                                                                                                    </div>
-
-                                                                                                    <div class="row-fluid">
-                                                                                                        <div class="span12">{{ form_row(form.entity.extCommentaire) }}</div>
-                                                                                                    </div>
-                                                                                                    <div class="row-fluid">
-                                                                                                        <div class="span3">{{ form_row(form.entity.extPresent,{'attr':{'ng-model':'extPresent'}}) }}</div>
-                                                                                                        <div class="span3" ng-show="extPresent">{{ form_row(form.entity.extBoisson) }}</div>
-                                                                                                        <div class="span3" ng-show="extPresent">{{ form_row(form.entity.extBouffe) }}</div>
-                                                                                                        <div class="span3" ng-show="extPresent">{{ form_row(form.entity.extCatering) }}</div>
-                                                                                                    </div>
-                                                                                                </fieldset>
-                                                                                            </div>
-                                                                                            <div class="row-fluid">
-                                                                                                <fieldset>
-                                                                                                    <legend>Horaires
-                {% if not readOnly %}
-                                                                                                            <a class="btn btn-success btn-small" ng-click="addHoraire()"><i class="icon-plus"></i></a>
-                {% endif %}
-                                                                                                            </legend>
-                                                                                                            <div class="row-fluid">
-                                                                                                                <ul>
-                                                                                                                    <li ng-repeat="h in horaires">
-                            {% if readOnly %}
-                            {% raw %}{{h.jour}} : {{h.debut}} <i class="icon-arrow-right"></i> {{h.fin}}{% endraw %}
-                            {% else %}
-                                                                                                                            <select class="input-medium" name="assomaker_animbundle_animationtype[entity][horaires][{%raw%}{{$index}}{% endraw %}][jour]" ng-model="h.jour">
-                                                                                                                                <option>Mercredi</option>
-                                                                                                                                <option>Jeudi</option>
-                                                                                                                                <option>Vendredi</option>
-                                                                                                                                <option>Samedi</option>
-                                                                                                                                <option>Dimanche</option>
-                                                                                                                                <option>Lundi</option>
-                                                                                                                            </select>
-                                                                                                                            <select class="input-small" name="assomaker_animbundle_animationtype[entity][horaires][{%raw%}{{$index}}{% endraw %}][debut]" ng-model="h.debut">
-                            {% for i in 7..23 %}
-                                {% for j in ['00','15', '30', '45'] %}
-                                                                                                                                    <option>{{ i~'h'~j }}</option>
-                                {% endfor %}
+                                    <div class=row-fluid>
+                                        <fieldset>
+                                            <legend>Commentaires</legend>
+                                            <div class="row-fluid">
+                                                <ul>
+                            {% for c in entity.commentaires%}
+                                                        <div class="com">
+                                                            <div class="com_infos">{{loop.index}}/{{loop.length}}
+                                                                <span class="com_auteur">{{c.auteur}}</span>
+                                                                <span class="com_heure"> {{ c.date|format_datetime('EEEE dd MMM HH:mm') }}</span>
+                                                            </div>
+                                                            <div class="com_texte">{{  entitiesMacro.iconCom(c) }} {{c.texte}} {{  entitiesMacro.supTextCom(c) }}</div>
+                                                        </div>
                             {% endfor %}
-                            {% for i in 0..6 %}
-                                {% for j in ['00','15', '30', '45'] %}
-                                                                                                                                    <option>{{ i~'h'~j }}</option>
-                                {% endfor %}
-                            {% endfor %}
-                                                                                                                                </select>
-                                                                                                                                <i class="icon-arrow-right"></i>
-                                                                                                                                <select class="input-small" name="assomaker_animbundle_animationtype[entity][horaires][{%raw%}{{$index}}{% endraw %}][fin]" ng-model="h.fin">
-                            {% for i in 18..23 %}
-                                {% for j in ['00','15', '30', '45'] %}
-                                                                                                                                        <option>{{ i~'h'~j }}</option>
-                                {% endfor %}
-                            {% endfor %}
-                            {% for i in 0..17 %}
-                                {% for j in ['00','15', '30', '45'] %}
-                                                                                                                                        <option>{{ i~'h'~j }}</option>
-                                {% endfor %}
-                            {% endfor %}
-                                                                                                                                    </select>
+                                                    </ul>
+                                                </div>
+                                                <div class="row-fluid">
+                                {{ form_row(form.commentaire) }}
+                                                    </div>
+                                                </fieldset>
+                                            </div>
 
-                                                                                                                                    <a class="btn btn-small btn-danger" ng-click="remHoraire($index)"><i class="icon-remove"></i></a>
-                          {% endif %}
-                                                                                                                                    </li>
-
-
-                                                                                                                                </ul>
-                                                                                                                            </div>
+                                            <div class="form-fluid">
+                                                <div class="form-actions">
+                                                    <button class="btn btn-primary" type="submit" name="action" value="save">Enregistrer les modifications</button>
+                                    {% if entity.statut == 0 %}
+                                                    <button class="btn btn-success" type="submit" name="action" value="submit_validation"><i class="icon-eye-open"></i> Demander la validation</button>
+                                    {% endif %}
+                                                    
+                                    {% if is_granted('ROLE_HUMAIN') and entity.statut == 1 %}
+                                                {% if not (entity.validLog and entity.validSecu and entity.validSecu)%}
+                                                    <button class="btn btn-warning" type="submit" name="action" value="validate"><i class="icon-ok"></i>
+                                                        Forcer la validation
+                                                    </button>
+                                                {% endif %}
+                                    {% endif %}
 
 
+                                    {% if is_granted('ROLE_LOG') and (entity.statut >= 1) %}
+                                        {% if (not entity.validLog)  %}
+                                        <button class="btn btn-success" type="submit" name="action" value="validateLog"><i class="icon-wrench"></i> Valider la partie logistique</button>
+                                        {% else %}
+                                        <button class="btn btn-danger" type="submit" name="action" value="rejectLog"><i class="icon-wrench"></i> Rejeter la partie logistique</button>
+                                        {% endif %}
+                                    {% endif %}
+                                        
+                                    {% if is_granted('ROLE_SECU') and (entity.statut >= 1) %}
+                                        {% if (not entity.validSecu)  %}
+                                        <button class="btn btn-success" type="submit" name="action" value="validateSecu"><i class="icon-wrench"></i> Valider la partie sécurité</button>
+                                        {% else %}
+                                        <button class="btn btn-danger" type="submit" name="action" value="rejectSecu"><i class="icon-wrench"></i> Rejeter la partie sécurité</button>
+                                        {% endif %}
+                                    {% endif %}
+                                        
+                                    {% if is_granted('ROLE_HUMAIN') and (entity.statut >= 1) %}
+                                        {% if (not entity.validHumain)  %}
+                                        <button class="btn btn-success" type="submit" name="action" value="validateHumain"><i class="icon-wrench"></i> Valider la partie humain</button>
+                                        {% else %}
+                                        <button class="btn btn-danger" type="submit" name="action" value="rejectHumain"><i class="icon-wrench"></i> Rejeter la partie humain</button>
+                                        {% endif %}
+                                    {% endif %}
+                                        
 
-
-                                                                                                                        </fieldset>
-                                                                                                                    </div>
-
-                                                                                                                </div>
-
-        {{ form_widget(form.entity.locX) }}
-        {{ form_widget(form.entity.locY) }}
-        {{ form_widget(form._token) }}
-                                                                                                            </div>
-                                                                                                            <div class=row-fluid>
-                                                                                                                <fieldset>
-                                                                                                                    <legend>Commentaires</legend>
-                                                                                                                    <div class="row-fluid">
-                                                                                                                        <ul>
-                {% for c in entity.commentaires%}
-                                                                                                                                <div class="com">
-                                                                                                                                    <div class="com_infos">{{loop.index}}/{{loop.length}}
-                                                                                                                                        <span class="com_auteur">{{c.auteur}}</span>
-                                                                                                                                        <span class="com_heure"> {{ c.date|format_datetime('EEEE dd MMM HH:mm') }}</span>
-                                                                                                                                    </div>
-                                                                                                                                    <div class="com_texte">{{  entitiesMacro.iconCom(c) }} {{c.texte}} {{  entitiesMacro.supTextCom(c) }}</div>
-                                                                                                                                </div>
-                {% endfor %}
-                                                                                                                            </ul>
-                                                                                                                        </div>
-                                                                                                                        <div class="row-fluid">
-                    {{ form_row(form.commentaire) }}
-                                                                                                                            </div>
-                                                                                                                        </fieldset>
-                                                                                                                    </div>
-
-                                                                                                                    <div class="form-fluid">
-                                                                                                                        <div class="form-actions">
-                                                                                                                            <button class="btn btn-primary" type="submit" name="action" value="save">Enregistrer les modifications</button>
-	            {% if entity.statut == 0 %}
-                                                                                                                            <button class="btn btn-success" type="submit" name="action" value="submit_validation"><i class="icon-eye-open"></i> Demander la validation</button>
-		        {% endif %}
-		        {% if is_granted('ROLE_HUMAIN') %}
-		        	{% if entity.statut == 1 %}
-		        	    {% if entity.validLog and entity.validSecu%}
-                                                                                                                            <button class="btn btn-success" type="submit" name="action" value="validate"><i class="icon-ok"></i> Valider la fiche</button>
-		                {% else %}
-                                                                                                                            <button class="btn btn-warning" type="submit" name="action" value="validate"><i class="icon-ok"></i>
-                                                                                                                                Forcer la validation sans vérif
-		                {% if not entity.validLog and not entity.validSecu %}logistique ni sécurité
-		                {% elseif(not entity.validLog) %}
-                                                                                                                                logistique
-		                {% else %}
-                                                                                                                                sécurité
-		                {% endif %}.
-                                                                                                                            </button>
-		                {% endif %}
-		            {% endif %}
-
-		        {% endif %}
-
-		        	{% if entity.statut >= 1 and (is_granted('ROLE_LOG') or is_granted('ROLE_HUMAIN') or is_granted('ROLE_SECU')) %}
-                                                                                                                            <button class="btn btn-danger" type="submit" name="action" value="reject"><i class="icon-remove"></i> Rejeter la fiche</button>
-		            {% endif %}
-
-
-        	        {% if (not entity.validLog) and (entity.statut >= 1) and is_granted('ROLE_LOG') %}
-                                                                                                                            <button class="btn btn-success" type="submit" name="action" value="validateLog"><i class="icon-wrench"></i> Valider la partie logistique</button>
-                    {% endif %}
-
-
-
-
-
-
-            	    {% if (entity.statut >= 1) and (not entity.validSecu) and is_granted('ROLE_SECU') %}
-                                                                                                                            <button class="btn btn-success" type="submit" name="action" value="validateSecu"><i class="icon-wrench"></i> Valider la partie sécurité</button>
-            	    {% endif %}
-
-
-
-
-		        {% if entity.statut != -1  %}
-                                                                                                                            <button class="btn btn-inverse" type="submit" name="action" value="delete"><i class="icon-remove"></i> Supprimer la tâche</button>
-		        {% endif %}
-		        {% if entity.statut == -1 %}
-                                                                                                                            <button class="btn btn-inverse" type="submit" name="action" value="restore"><i class="icon-share-alt"></i>Restaurer la fiche</button>
-		     	{% endif %}
-                                                                                                                        </div>
-                                                                                                                    </div>
-                                                                                                                </form>
+                                    {% if entity.statut != -1  %}
+                                                    <button class="btn btn-inverse" type="submit" name="action" value="delete"><i class="icon-remove"></i> Supprimer la tâche</button>
+                                    {% endif %}
+                                    {% if entity.statut == -1 %}
+                                                    <button class="btn btn-inverse" type="submit" name="action" value="restore"><i class="icon-share-alt"></i>Restaurer la fiche</button>
+                                        {% endif %}
+                                                </div>
+                                            </div>
+                                        </form>
 {% endblock %}
