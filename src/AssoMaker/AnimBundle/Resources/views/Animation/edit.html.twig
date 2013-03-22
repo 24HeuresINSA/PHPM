@@ -474,7 +474,7 @@
                                             <div class="form-fluid">
                                                 <div class="form-actions">
                                                     <button class="btn btn-primary" type="submit" name="action" value="save">Enregistrer les modifications</button>
-                                    {% if entity.statut == 0 and not is_granted('ROLE_ADMIN') %}
+                                    {% if entity.statut == 0 %}
                                                     <button class="btn btn-success" type="submit" name="action" value="submit_validation"><i class="icon-eye-open"></i> Demander la validation</button>
                                     {% endif %}
                                                     
