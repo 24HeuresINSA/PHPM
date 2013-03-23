@@ -510,6 +510,12 @@
                                         <button class="btn btn-danger" type="submit" name="action" value="rejectHumain"><i class="icon-wrench"></i> Rejeter la partie humain</button>
                                     {% endif %}
                                         
+                                    {% if not is_granted('ROLE_ADMIN') and (entity.statut == 1) %}
+                                        {% if (not entity.validHumain)  %}
+                                        <button class="btn btn-warning" type="submit" name="action" value="devalidate"><i class="icon-undo"></i> Annuler la demande de validation</button>
+                                        {% endif %}                                        
+                                    {% endif %}
+                                        
 
                                     {% if entity.statut != -1  %}
                                                     <button class="btn btn-inverse" type="submit" name="action" value="delete"><i class="icon-remove"></i> Supprimer la tâche</button>

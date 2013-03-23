@@ -41,11 +41,13 @@
 {% if com.type == -1 %}<i class="icon-trash"></i>{% endif %}
 {% if com.type == 1 %}<i class="icon-eye-open"></i>{% endif %}
 {% if com.type == 2 %}<i class="icon-ok"></i>{% endif %}
-{% if com.type == 3 %}<i class="icon-remove"></i>{% endif %}
+{% if com.type in [3,8,9,10] %}<i class="icon-remove"></i>{% endif %}
 {% if com.type == 4 %}<i class="icon-share-alt"></i>{% endif %}
 {% if com.type == 5 %}<i class="icon-wrench"></i>{% endif %}
 {% if com.type == 6 %}<i class="icon-bullhorn"></i>{% endif %}
 {% if com.type == 7 %}<i class="icon-user"></i>{% endif %}
+
+{% if com.type == 11 %}<i class="icon-undo"></i>{% endif %}
 {% endmacro %}
 
 {% macro supTextCom(com) %}
@@ -60,6 +62,10 @@
 {% if com.type == 5 %}Fiche vérifiée par la logistique{% endif %}
 {% if com.type == 6 %}Fiche vérifiée par la sécurité{% endif %}
 {% if com.type == 7 %}Fiche vérifiée par l'humain{% endif %}
+{% if com.type == 8 %}Fiche rejetée par la logistique{% endif %}
+{% if com.type == 9 %}Fiche rejetée par la sécurité{% endif %}
+{% if com.type == 10 %}Fiche rejetée par l'humain{% endif %}
+{% if com.type == 11 %}Demande de validation annulée{% endif %}
 </b>
 {% endif %}
 {% endmacro %}

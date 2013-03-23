@@ -179,20 +179,25 @@ class AnimationController extends Controller {
 
                 if ($param['action'] == 'rejectLog' && ($log)) {
                     $entity->setStatut(0);
-                    $typeCommentaire = 3;
+                    $typeCommentaire = 8;
                     $entity->setValidLog(false);
                 }
 
                 if ($param['action'] == 'rejectSecu' && ($secu)) {
                     $entity->setStatut(0);
-                    $typeCommentaire = 3;
+                    $typeCommentaire = 9;
                     $entity->setValidSecu(false);
                 }
 
                 if ($param['action'] == 'rejectHumain' && ($admin)) {
                     $entity->setStatut(0);
-                    $typeCommentaire = 3;
+                    $typeCommentaire = 10;
                     $entity->setValidHumain(false);
+                }
+
+                if ($param['action'] == 'devalidate') {
+                    $entity->setStatut(0);
+                    $typeCommentaire = 11;
                 }
 
 
@@ -239,6 +244,10 @@ class AnimationController extends Controller {
                 if ($entity->getBesoinPass() && $entity->getPassAssocies()->count() == 0) {
                     return $this->redirect($this->generateUrl('pass_pass_new', array('animId' => $entity->getId())));
                 }
+                if ($param['action'] == 'devalidate') {
+                    return $this->redirect($this->generateUrl('anim_animation_edit', array('id' => $entity->getId())));
+                }
+
                 if (!$this->get('security.context')->isGranted('ROLE_ADMIN')) {
                     return $this->redirect($this->generateUrl('anim_animation_index'));
                 }
