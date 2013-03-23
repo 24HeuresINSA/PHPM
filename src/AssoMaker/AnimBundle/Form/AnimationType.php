@@ -77,7 +77,7 @@ class AnimationType extends AbstractType {
                     ->add('detailSigna', null, array('label' => 'Desctiption du dispositif', 'attr' => array('placeholder' => 'Texte à mettre sur les panneaux, nombre, etc'), 'disabled' => $this->disabled['h']))
                     ->add('horaires', 'hidden', array('disabled' => $this->disabled['h']))
                     ->add('materiel', 'hidden', array('disabled' => $this->disabled['l']))
-                    ->add('lieuDepotLog', 'choice', array('label' => 'Lieu de dépôt du matériel', 'choices' => Animation::$lieuxDepotLog, 'required' => false, 'disabled' => !$this->admin, 'disabled' => $this->disabled['l']))
+                    ->add('lieuDepotLog', 'choice', array('label' => 'Lieu de dépôt du matériel', 'choices' => Animation::$lieuxDepotLog, 'required' => false, 'disabled' => !$this->admin))
             ;
             $builder->add('commentaire', 'textarea', array('label' => 'Ajouter un commentaire', 'required' => false));
         }

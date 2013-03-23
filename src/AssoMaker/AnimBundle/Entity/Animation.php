@@ -17,7 +17,7 @@ class Animation {
 
     public static $extTypes = array('Aucun', 'Asso INSA', 'Association', 'Entreprise', 'Particulier');
     public static $animTypes = array('Divertissement', 'Spectacle', 'Initiation', 'Démo sportive', 'Match de Gala', 'Tournoi', 'Course', 'Concert', 'Prévention', 'Vente', 'Autre');
-    public static $lieuxDepotLog = array('Dépôt AIP', 'Dépôt Humanités', 'QG Orga', 'QG Courses', 'QG Culture', 'Local 24h');
+    public static $lieuxDepotLog = array('Dépôt AIP', 'Dépôt Humanités', 'QG Orga', 'QG Courses', 'QG Culture', 'Local 24h', 'Autre');
 
     /**
      * @var integer
