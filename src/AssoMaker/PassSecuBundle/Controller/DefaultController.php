@@ -3,17 +3,12 @@
 namespace AssoMaker\PassSecuBundle\Controller;
 
 use AssoMaker\AnimBundle\Entity\Animation;
-
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
-
 use AssoMaker\PassSecuBundle\Form\PassType;
-
 use AssoMaker\PassSecuBundle\Entity\Pass;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 
 /**
  *
@@ -21,40 +16,36 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  *
  *
  */
-class DefaultController extends Controller
-{
+class DefaultController extends Controller {
+
     /**
      * @Route("/",name="pass_pass_index")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getEntityManager();
         $config = $e = $this->get('config.extension');
         $user = $this->get('security.context')->getToken()->getUser();
-    
+
         $passes = $em->createQuery("SELECT p FROM AssoMakerPassSecuBundle:Pass p")->getArrayResult();
         return array('passes' => json_encode($passes)
         );
-    
     }
-    
-    
+
     /**
      *
      * @Route("/new/{animId}", defaults={"animId"=""},name="pass_pass_new")
      * @Template
      */
-    public function newAction($animId)
-    {
+    public function newAction($animId) {
         $em = $this->getDoctrine()->getEntityManager();
         $config = $e = $this->get('config.extension');
         $user = $this->get('security.context')->getToken()->getUser();
         $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
-        
+
         $entity = new Pass();
-        
-        if($animId!=''){
+
+        if ($animId != '') {
             $anim = $em->getRepository('AssoMakerAnimBundle:Animation')->find($animId);
             if (!$anim) {
                 throw $this->createNotFoundException('Unable to find Animation entity.');
@@ -62,38 +53,36 @@ class DefaultController extends Controller
             $entity->setAnimationLiee($anim);
             $entity->setEmailDemandeur($anim->getExtEmail());
             $entity->setTelephoneDemandeur($anim->getExtTelephone());
-            $entity->setEntite(Animation::$extTypes[$anim->getType()].' '.$anim->getExtNom());
-            $entity->setInfosSupplementaires('Pass demandé par '.$user->getPrenom().' '.$user->getNom());
+            $entity->setEntite(Animation::$extTypes[$anim->getExtType()] . ' ' . $anim->getExtNom());
+            $entity->setInfosSupplementaires('Pass demandé par ' . $user->getPrenom() . ' ' . $user->getNom());
         }
-        
+
         $entity->setAccessCode(md5(uniqid(rand(), true)));
-        
-        $editForm = $this->createForm(new PassType(false,$config,true), $entity);
-    
+
+        $editForm = $this->createForm(new PassType(false, $config, true), $entity);
+
         if ($this->get('request')->getMethod() == 'POST') {
             $request = $this->getRequest();
             $editForm->bindRequest($request);
-    
+
             if ($editForm->isValid()) {
                 $em->persist($entity);
                 $em->flush();
-    
+
                 return $this
-                ->redirect($this->generateUrl('pass_pass_edit',array('id'=>$entity->getId(),'code'=>$entity->getAccessCode())));
+                                ->redirect($this->generateUrl('pass_pass_edit', array('id' => $entity->getId(), 'code' => $entity->getAccessCode())));
             }
         }
-    
+
         return array('entity' => $entity, 'form' => $editForm->createView());
-    
     }
-    
+
     /**
      *
      * @Route("/{id}/{code}", name="pass_pass_edit")
      * @Template
      */
-    public function editAction($id,$code)
-    {
+    public function editAction($id, $code) {
         $em = $this->getDoctrine()->getEntityManager();
         $config = $this->get('config.extension');
         $entity = $em->getRepository('AssoMakerPassSecuBundle:Pass')->find($id);
@@ -101,69 +90,67 @@ class DefaultController extends Controller
         $admin = $this->get('security.context')->isGranted('ROLE_SECU');
         $request = $this->getRequest();
         $param = $request->request->all();
-        
+
         $guest = !$this->get('security.context')->isGranted('ROLE_USER');
-    
-    
+
+
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Pass entity.');
         }
-        
-        if ($entity->getAccessCode()!=$code) {
+
+        if ($entity->getAccessCode() != $code) {
             throw new AccessDeniedException();
         }
-    
-        $editForm = $this->createForm(new PassType($guest,$config,false), $entity);
 
-    
+        $editForm = $this->createForm(new PassType($guest, $config, false), $entity);
+
+
         if ($this->get('request')->getMethod() == 'POST') {
             $request = $this->getRequest();
             $editForm->bindRequest($request);
             $data = $editForm->getData();
-            
-    
+
+
             if ($editForm->isValid()) {
-                
+
                 $data = $editForm->getData();
-                
-                
-                
-                if($param['action']=='submit'){
+
+
+
+                if ($param['action'] == 'submit') {
                     $entity->setStatut(1);
                 }
-                
-                if($admin && $param['action']=='validate'){
+
+                if ($admin && $param['action'] == 'validate') {
                     $entity->setStatut(2);
                 }
-    
-                
+
+
                 $em->persist($entity);
                 $em->flush();
-    
-                return $this->redirect($this->generateUrl('pass_pass_edit',array('id'=>$entity->getId(),'code'=>$entity->getAccessCode())));
+
+                return $this->redirect($this->generateUrl('pass_pass_edit', array('id' => $entity->getId(), 'code' => $entity->getAccessCode())));
             }
         }
-        
-        
-        if(!$admin && $entity->getStatut()==2){
-            return $this->redirect($this->generateUrl('pass_pass_print',array('id'=>$entity->getId(),'code'=>$entity->getAccessCode())));
-            
+
+
+        if (!$admin && $entity->getStatut() == 2) {
+            return $this->redirect($this->generateUrl('pass_pass_print', array('id' => $entity->getId(), 'code' => $entity->getAccessCode())));
         }
-    
+
         return array(
-                'entity'      => $entity,
-                'form'   => $editForm->createView(),
-                'points'=>Pass::$points
+            'entity' => $entity,
+            'form' => $editForm->createView(),
+            'points' => Pass::$points
         );
     }
-    
+
     /**
      *
      * @Route("/print/{id}/{code}", name="pass_pass_print")
      * @Template
      */
-    public function printAction($id,$code)
-    {
+    public function printAction($id, $code) {
         $em = $this->getDoctrine()->getEntityManager();
         $config = $this->get('config.extension');
         $entity = $em->getRepository('AssoMakerPassSecuBundle:Pass')->find($id);
@@ -171,27 +158,28 @@ class DefaultController extends Controller
         $admin = $this->get('security.context')->isGranted('ROLE_SECU');
         $request = $this->getRequest();
         $param = $request->request->all();
-    
+
         $guest = !$this->get('security.context')->isGranted('ROLE_USER');
-        
-        if(!$admin && $entity->getStatut()!=2){
+
+        if (!$admin && $entity->getStatut() != 2) {
             throw new AccessDeniedException();
         }
-    
-    
+
+
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Pass entity.');
         }
-    
-        if ($entity->getAccessCode()!=$code) {
+
+        if ($entity->getAccessCode() != $code) {
             throw new AccessDeniedException();
         }
-    
-    
+
+
         return array(
-                'entity'      => $entity,
-                'points'=>Pass::$points,
-                'validites'=>Pass::$validiteChoices
+            'entity' => $entity,
+            'points' => Pass::$points,
+            'validites' => Pass::$validiteChoices
         );
     }
+
 }
