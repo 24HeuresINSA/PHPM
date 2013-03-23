@@ -75,7 +75,7 @@ class AnimationType extends AbstractType {
                     ->add('detailSecu', null, array('label' => 'Détails', 'attr' => array('placeholder' => 'Description du dispositif de sécurité à mettre en place (AS, barrièrage, ERP spécial, autorisation spéciale, types de risques, etc.)'), 'disabled' => $this->disabled['s']))
                     ->add('besoinSigna', null, array('label' => 'Besoin de signalétique', 'disabled' => $this->disabled['h']))
                     ->add('detailSigna', null, array('label' => 'Desctiption du dispositif', 'attr' => array('placeholder' => 'Texte à mettre sur les panneaux, nombre, etc'), 'disabled' => $this->disabled['h']))
-                    ->add('horaires', 'hidden', array('disabled' => $this->disabled['l']))
+                    ->add('horaires', 'hidden', array('disabled' => $this->disabled['h']))
                     ->add('materiel', 'hidden', array('disabled' => $this->disabled['l']))
                     ->add('lieuDepotLog', 'choice', array('label' => 'Lieu de dépôt du matériel', 'choices' => Animation::$lieuxDepotLog, 'required' => false, 'disabled' => !$this->admin, 'disabled' => $this->disabled['l']))
             ;
