@@ -10,13 +10,13 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class AnimationType extends AbstractType {
 
-    protected $admin;
+    protected $log;
     protected $create;
     protected $config;
     protected $disabled;
 
-    function __construct($admin, $config, $create, $readOnly = false) {
-        $this->admin = $admin;
+    function __construct($log, $config, $create, $readOnly = false) {
+        $this->log = $log;
         $this->config = $config;
         $this->create = $create;
         $this->disabled = $readOnly;
@@ -77,7 +77,7 @@ class AnimationType extends AbstractType {
                     ->add('detailSigna', null, array('label' => 'Desctiption du dispositif', 'attr' => array('placeholder' => 'Texte à mettre sur les panneaux, nombre, etc'), 'disabled' => $this->disabled['h']))
                     ->add('horaires', 'hidden', array('disabled' => $this->disabled['h']))
                     ->add('materiel', 'hidden', array('disabled' => $this->disabled['l']))
-                    ->add('lieuDepotLog', 'choice', array('label' => 'Lieu de dépôt du matériel', 'choices' => Animation::$lieuxDepotLog, 'required' => false, 'disabled' => !$this->admin))
+                    ->add('lieuDepotLog', 'choice', array('label' => 'Lieu de dépôt du matériel', 'choices' => Animation::$lieuxDepotLog, 'required' => false, 'disabled' => !$this->log))
             ;
             $builder->add('commentaire', 'textarea', array('label' => 'Ajouter un commentaire', 'required' => false));
         }

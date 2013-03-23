@@ -126,7 +126,8 @@ class AnimationController extends Controller {
         $config = $e = $this->get('config.extension');
         $entity = $em->getRepository('AssoMakerAnimBundle:Animation')->find($id);
         $user = $this->get('security.context')->getToken()->getUser();
-        $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
+        $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+        $humain = $this->get('security.context')->isGranted('ROLE_HUMAIN');
         $log = $this->get('security.context')->isGranted('ROLE_LOG');
         $secu = $this->get('security.context')->isGranted('ROLE_SECU');
         $request = $this->getRequest();
@@ -138,10 +139,10 @@ class AnimationController extends Controller {
         }
 
 
-        $readOnly = array("h" => (!$admin) && ( $entity->getValidHumain() || ($entity->getStatut() >= 1) ), "s" => (!$secu) && ( $entity->getValidSecu() || ($entity->getStatut() >= 1) ), "l" => (!$log) && ( $entity->getValidLog() || ($entity->getStatut() >= 1) ));
+        $readOnly = array("h" => (!$humain) && ( $entity->getValidHumain() || ($entity->getStatut() >= 1) ), "s" => (!$secu) && ( $entity->getValidSecu() || ($entity->getStatut() >= 1) ), "l" => (!$log) && ( $entity->getValidLog() || ($entity->getStatut() >= 1) ));
 
         $defaultValues = array('entity' => $entity, "commentaire" => '');
-        $editForm = $this->createForm(new AnimationType($admin, $config, false, $readOnly), $defaultValues);
+        $editForm = $this->createForm(new AnimationType($log, $config, false, $readOnly), $defaultValues);
 
         $rawListeLieux = $em->createQuery("SELECT a.lieu FROM AssoMakerAnimBundle:Animation a WHERE a.lieu IS NOT NULL GROUP BY a.lieu")->getScalarResult();
         $listeLieux = array();
@@ -170,7 +171,7 @@ class AnimationController extends Controller {
                     $typeCommentaire = 1;
                 }
 
-                if ($admin && $param['action'] == 'validate') {
+                if ($humain && $param['action'] == 'validate') {
                     $entity->setStatut(2);
                     $typeCommentaire = 2;
                 }
@@ -189,7 +190,7 @@ class AnimationController extends Controller {
                     $entity->setValidSecu(false);
                 }
 
-                if ($param['action'] == 'rejectHumain' && ($admin)) {
+                if ($param['action'] == 'rejectHumain' && ($humain)) {
                     $entity->setStatut(0);
                     $typeCommentaire = 10;
                     $entity->setValidHumain(false);
@@ -213,12 +214,12 @@ class AnimationController extends Controller {
                     $typeCommentaire = 6;
                 }
 
-                if (($admin) && $param['action'] == 'validateHumain') {
+                if (($humain) && $param['action'] == 'validateHumain') {
                     $entity->setValidHumain(true);
                     $typeCommentaire = 7;
                 }
 
-                if (($entity->getStatut() <= 1 || $admin) && $param['action'] == 'delete') {
+                if (($entity->getStatut() <= 1 || $humain) && $param['action'] == 'delete') {
                     $entity->setStatut(-1);
                     $typeCommentaire = -1;
                 }
