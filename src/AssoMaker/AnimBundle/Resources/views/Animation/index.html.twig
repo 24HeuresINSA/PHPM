@@ -67,12 +67,17 @@
 
         {% if is_granted('ROLE_ADMIN') %}
                 $scope.myCom = false;{%else%}
-                $scope.myCom = true;{% endif %}{% if is_granted('ROLE_LOG') %}
+                $scope.myCom = true;{% endif %}
+                {% if is_granted('ROLE_LOG') %}
                 $scope.showLog = true;
-                $scope.isLog = true;{% endif %}{% if is_granted('ROLE_SECU') %}
+                $scope.isLog = true;{% endif %}
+                {% if is_granted('ROLE_SECU') %}
                 $scope.showSecu = true;
-                $scope.isSecu = true;{% endif %}{% if is_granted('ROLE_HUMAIN') %}
-                $scope.isHumain = true;{% endif %}
+                $scope.isSecu = true;
+                {% endif %}
+                {% if is_granted('ROLE_HUMAIN') %}
+                $scope.isHumain = true;
+                {% endif %}
             }
     </script>
 
