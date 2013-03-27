@@ -230,7 +230,7 @@
                                                     <h5> Liste des Pass Voiture :</h5>
                                                     <ul>
                                              {% for k,p in entity.passAssocies %}
-                                                            <li><a class="statut{{ p.statut }}" href="{{ path('pass_pass_edit',{"id":p.id,"code":p.accessCode}) }}">Pass {{k}} : {{ p.entite }}</a></li>
+                                                            <li><a class="statut{{ p.statut }}" href="{{ path('pass_pass_edit',{"id":p.id,"code":p.accessCode}) }}">Pass {{p.id}} : {{ p.entite }}</a></li>
                                              {% endfor %}
                                                             </ul>
                                              {% else %}
