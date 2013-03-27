@@ -125,6 +125,10 @@ class DefaultController extends Controller {
                     $entity->setStatut(2);
                 }
 
+                if ($admin && $param['action'] == 'devalidate') {
+                    $entity->setStatut(0);
+                }
+
 
                 $em->persist($entity);
                 $em->flush();
