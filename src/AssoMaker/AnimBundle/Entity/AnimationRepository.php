@@ -20,4 +20,11 @@ class AnimationRepository extends EntityRepository {
         ;
     }
 
+    public function search($s) {
+        return $this->getEntityManager()
+                        ->createQuery("SELECT a FROM AssoMakerAnimBundle:Animation a WHERE (a.nom LIKE :s)")
+                        ->setParameter('s', "%" . $s . "%")
+                        ->getResult();
+    }
+
 }

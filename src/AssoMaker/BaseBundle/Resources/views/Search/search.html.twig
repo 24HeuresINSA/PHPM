@@ -1,25 +1,30 @@
-{% extends "AssoMakerPHPMBundle:Search:layout.html.twig"  %}
-{% set pageTitle = searchString %}
+{% extends "AssoMakerBaseBundle:Search:layout.html.twig"  %}
+{% set pageTitle = '' %}
 
 
 {% block content %}
+<h2>Recherche : <i>{{searchString}}</i></h2>
 
 	{% if orgas %}
-   		<h2>Orgas :</h2>
+   		<h3>Orgas :</h3>
   	 	{% include 'AssoMakerBaseBundle:Orga:afficheListe.html.twig' with {'entities': orgas} %}
    		<br />
 	{% endif %}
 
 	{% if taches %}
-   		<h2>Taches :</h2>
+   		<h3>Taches :</h3>
    		{% include 'AssoMakerPHPMBundle:Tache:afficheListe.html.twig' with {'entities': taches} %}
 	{% endif %}
 	
 	{% if groupe_taches %}
-   		<h2>Groupes de taches :</h2>
+   		<h3>Groupes de taches :</h3>
    		{% include 'AssoMakerPHPMBundle:GroupeTache:afficheListe.html.twig' with {'entities': groupe_taches} %}
 	{% endif %}
 
+        {% if animations %}
+   		<h3>Animations :</h3>
+   		{% include 'AssoMakerAnimBundle:Animation:afficheListe.html.twig' with {'entities': animations} %}
+	{% endif %}
 {% endblock %}
 
 {% block menu_action %}
