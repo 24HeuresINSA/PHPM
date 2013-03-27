@@ -9,6 +9,9 @@
 
         $scope.lieu = "{{entity.lieu}}";
         $scope.animations = {% if (animations | length > 0) and anim_actif %}{{animations|json_encode | raw}}{%else%}[]{%endif%};
+        {%if entity.animLiee%}
+        $scope.animLiee={{entity.animLiee.id}};
+        {%endif%}
     }
     </script>
     <form class="form-horizontal" action="{{ path('groupetache_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }} >

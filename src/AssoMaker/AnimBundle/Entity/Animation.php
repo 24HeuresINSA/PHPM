@@ -114,7 +114,7 @@ class Animation {
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Regex(
-     *     pattern="/^0[67][0-9]{8}$/",
+     *     pattern="/^0[0-9]{9}$/",
      *     message="Veuillez renseigner un numéro de portable valide."
      * )
      */
