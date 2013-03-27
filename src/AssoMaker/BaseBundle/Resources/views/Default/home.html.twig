@@ -173,6 +173,49 @@
 
 
                         <div class="span4">
+                         {% if is_granted('ROLE_USER') and phpm_actif %}
+           <h2>Fiches Tâches</h2>
+		          {% if (statsOrga.taches.orga[0] + statsOrga.taches.equipe[0]) > 0 %}
+            <div class="alert alert-block alert-error fade in">
+                <h4 class="alert-heading">Il te reste des fiches tâches à rédiger.</h4>
+            </div>
+			  	  {% endif %}
+			  	  {% if deadlineFT %}
+            <div class="alert alert-block alert-warning">
+                <h4 class="alert-heading" >Date Limite</h4>
+                <em>{{ deadlineFT | format_datetime('EEEE dd MMM \à HH:mm') }}</em>
+            </div>
+			  	  {% endif %}
+            <h3>Statistiques</h3>
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <td></td>
+                        <th>Toi</th>
+                        <th>Ton équipe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="statut0">
+                        <td>En rédaction</td>
+                        <td>{{ statsOrga.taches.orga[0]}}</td>
+                        <td>{{ statsOrga.taches.equipe[0]}}</td>
+                    </tr>
+                    <tr class="statut1">
+                        <td>En validation</td>
+                        <td>{{ statsOrga.taches.orga[1]}}</td>
+                        <td>{{ statsOrga.taches.equipe[1]}}</td>
+                    </tr>
+                    <tr class="statut2">
+                        <td>Validées</td>
+                        <td>{{ statsOrga.taches.orga[2]}}</td>
+                        <td>{{ statsOrga.taches.equipe[2]}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><a class="btn" href="{{ path('tache',{'orgaid': app.user.id}) }}"><i class="icon-file"></i> Accéder aux fiches tâches »</a></p>
+                         {% endif %}
                                 {% if is_granted('ROLE_HUMAIN') %}
                                 <div class="row-fluid">
                                     <h2>Gestion des Inscriptions</h2>
