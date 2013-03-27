@@ -4,6 +4,7 @@ namespace AssoMaker\PHPMBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use AssoMaker\AnimBundle\Entity\AnimationRepository;
 
 class GroupeTacheType extends AbstractType {
 
@@ -22,7 +23,10 @@ class GroupeTacheType extends AbstractType {
                 ->add('nom')
                 ->add('responsable')
                 ->add('equipe')
-                ->add('animLiee', 'entity', array('class' => 'AssoMakerAnimBundle:Animation', 'required' => false, 'label' => 'Animation Liée'))
+                ->add('animLiee', 'entity', array('class' => 'AssoMakerAnimBundle:Animation', 'required' => false, 'label' => 'Animation Liée',
+                    'query_builder' => function(AnimationRepository $ar) {
+                        return $ar->findAllNonDeleted();
+                    }))
                 ->add('lieu')
         ;
     }
@@ -32,3 +36,4 @@ class GroupeTacheType extends AbstractType {
     }
 
 }
+

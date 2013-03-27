@@ -82,7 +82,8 @@ height:40em;
                      {% if entity.groupeTache.animLiee %}
                                                         <div class="row-fluid">
                                     <div class="span12">
-                                    <legend><a class="ttip" href="#" data-toggle="tooltip" data-placement="left" data-container="body" title="" data-original-title="Texte non visible sur les plannings orgas. Copiez-collez les infos utiles dans les Consignes.">Animation Liée :</a></legend>
+                                        
+                                        <legend>Animation Liée :<small>Texte non visible sur les plannings orgas. Copiez-collez les infos utiles dans les Consignes</small></legend>
                                     </div>
                                     </div>
                         <div class="row-fluid">
@@ -90,7 +91,7 @@ height:40em;
 
                                     <div class="row-fluid">
                                     <div class="span6">
-                                    <b>{{entity.groupeTache.animLiee.nom}}</b><br>
+                                        <b><a href="{{path('anim_animation_edit',{'id':entity.groupeTache.animLiee.id})}}" target="_blank">{{entity.groupeTache.animLiee.nom}}</a></b><br>
                                     {% if entity.groupeTache.animLiee.extNom %}
                                     <b>Prestataire : </b><b>{{entity.groupeTache.animLiee.extNom}} - {{entity.groupeTache.animLiee.extTelephone}}</b><br><br>
                                     {%endif%}
