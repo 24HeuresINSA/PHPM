@@ -18,6 +18,7 @@
         $scope.myComFilter = function(elem) {
             return ((elem.equipe.id == {{app.user.equipe.id}}) && ($scope.myCom)) || !$scope.myCom;
         }
+        
 
         $scope.lastCom = function(coms) {
             console.log(coms.length)
@@ -100,7 +101,7 @@
                     </li>
                     <li class="nav-header">Statut</li>
                     <li ng-class="{active: search.statut==''}">
-                        <a ng-click="search.statut=''" >Toutes</a>
+                        <a ng-click="search.statut='';search.validLog=''" >Toutes</a>
                     </li>
                     <li ng-class="{active: search.statut=='0'}">
                         <a ng-click="search.statut='0'" ><i class="icon-pencil"></i> En rédaction</a>
@@ -108,9 +109,6 @@
                     <li ng-class="{active: search.statut=='1'}">
                         <a ng-click="search.statut='1'" >
                             <i class="icon-eye-open"></i> À valider
-                            <span class="badge" ng-class="{true:'badge-important', false:''}[isHumain]"><i class="icon-user"></i>{{ countHumain() }}</span>
-                            <span class="badge" ng-class="{true:'badge-important', false:''}[isLog]"><i class="icon-wrench"></i>{{ countLog() }}</span>
-                            <span class="badge" ng-class="{true:'badge-important', false:''}[isSecu]"><i class="icon-bullhorn"></i>{{ countSecu() }}</span>
                         </a>
                     </li>
                     <li ng-class="{active: search.statut=='2'}">
@@ -118,6 +116,19 @@
                     </li>
                     <li ng-class="{active: search.statut==-1}">
                         <a ng-click="search.statut=-1"><i class="icon-trash"></i> Supprimées</a>
+                    </li>
+                    <li class="nav-header">Non validées</li>
+                    <li ng-class="{active: search.validLog==''&&search.validSecu==''&&search.validHumain==''}">
+                        <a ng-click="search.validLog='';search.validSecu='';search.validHumain=''" >Toutes</a>
+                    </li>
+                    <li ng-class="{active: search.validLog=='false'}">
+                        <a ng-click="search.validLog='false';search.validSecu='';search.validHumain=''" ><i class="icon-wrench"></i>Par la log <span class="badge">{{ countLog() }}</span></a>
+                    </li>
+                    <li ng-class="{active: search.validSecu=='false'}">
+                        <a ng-click="search.validLog='';search.validSecu='false';search.validHumain=''" ><i class="icon-bullhorn"></i>Par la sécu <span class="badge">{{ countSecu() }}</span></a>
+                    </li>
+                    <li ng-class="{active: search.validHumain=='false'}">
+                        <a ng-click="search.validLog='';search.validSecu='';search.validHumain='false'" ><i class="icon-user"></i>Par l'humain <span class="badge">{{ countHumain() }}</span></a>
                     </li>
                     <li class="nav-header">Affichage</li>
                     <li ng-class="{active: showLog}">
