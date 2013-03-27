@@ -67,6 +67,10 @@ class DefaultController extends Controller {
      */
     public function publicHomeAction() {
 
+        if ($this->get('security.context')->isGranted('ROLE_VISITOR')) {
+            return $this->redirect($this->generateUrl('base_accueil'));
+        }
+
         return array();
     }
 
