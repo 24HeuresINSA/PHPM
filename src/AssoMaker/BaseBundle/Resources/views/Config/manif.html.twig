@@ -50,6 +50,7 @@
 		<div id="equipeItems"  class="tab-pane fade">
 			<table class="table table-condensed">
 		        <thead>
+                        <th>Id</th>
 		            <th>Nom</th>
 		            <th>Responsable</th>
 		            <th>Confiance</th>
@@ -63,13 +64,17 @@
 				{% for i in form.equipeItems %}
 				
 				    <tr>
+                                        <td>{{i.vars.value.id}}</td>
 				    <td>{{ form_row(i.nom) }}</td>
 				    <td>{{ form_row(i.responsable, {'label':'false'}) }}</td>
 				    <td>{{ form_row(i.confiance, {'label':'false'}) }}</td>
 				    <td>{{ form_row(i.couleur) }}</td>
 				    <td>{{ form_row(i.showOnTrombi) }}</td>
 				    <td>{{ form_row(i.comptesPersoEnabled) }}</td>
-				    <td><a class="btn btn-danger" href="{{ path('equipe_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a></td>
+				    <td>
+                                        <a class="btn" href="{{ path('orga_registersoft', { 'equipeId': i.vars.value.id,'confianceCode': i.get('value').confiance.code }) }}"><i class="icon-link"></i> Lien visiteur</a>
+                                        
+                                        <a class="btn btn-danger" href="{{ path('equipe_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a></td>
 				    </tr>
 				{% endfor %}
 				
@@ -84,6 +89,7 @@
 		<div id="confianceItems"  class="tab-pane fade">
 			<table class="table table-condensed">
 		        <thead>
+                            <th>Id</th>
 		            <th>Nom</th>
 		            <th>Valeur</th>
 		            <th>Couleur</th>
@@ -95,12 +101,14 @@
 				
 					{% for i in form.confianceItems %}
 				    <tr>
-				    <td>{{ form_row(i.nom) }}</td>
+                                        <td>{{i.vars.value.id}}</td>
+                                    <td><label>{{ form_row(i.nom,{'label':2}) }}</label></td>
 				    <td>{{ form_row(i.valeur, {'label':'false'}) }}</td>
 				    <td>{{ form_row(i.couleur, {'label':'false'}) }}</td>
 				    <td>{{ form_row(i.code) }}</td>
 				    <td>{{ form_row(i.privileges) }}</td>
-				    <td><a class="btn btn-danger" href="{{ path('confiance_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a></td>
+				    <td><a class="btn" href="{{ path('login', { 'confianceCode': i.vars.value.code }) }}"><i class="icon-link"></i> Lien hard</a>
+                                        <a class="btn btn-danger" href="{{ path('confiance_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a></td>
 				    </tr>
 					{% endfor %}
 				
