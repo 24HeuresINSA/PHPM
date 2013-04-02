@@ -114,7 +114,7 @@
                         <h3>{{ (missions[categorie]).nom }}</h3>
                         <p><em>{{ (missions[categorie]).description }}</em></p>
 					    {% for jour,d in di_jour %}
-                        <div style="min-width:11em; float:left; margin-right: 1em">
+                        <div style="min-width:13em; float:left; margin-right: 1em">
                             <h4>{{ jour }}</h4>
 							{% for e in d %}<div>
                                 <label class="checkbox {% if e.statut == 1 %}statut1{% endif %}">
