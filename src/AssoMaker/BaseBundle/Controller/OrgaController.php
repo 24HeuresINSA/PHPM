@@ -367,10 +367,13 @@ class OrgaController extends Controller {
         $queryResult = $this->getDoctrine()->getEntityManager()->createQuery("SELECT d FROM AssoMakerPHPMBundle:DisponibiliteInscription d JOIN d.mission m WHERE m.confianceMin <= $confianceOrga ORDER BY d.debut")->getResult();
         $DIs = array();
 
+
         foreach ($queryResult as $entity) {
 
             $fmt = new \IntlDateFormatter(null, \IntlDateFormatter::FULL, \IntlDateFormatter::FULL, null, null, 'EEEE d MMMM');
+            $fmt2 = new \IntlDateFormatter(null, \IntlDateFormatter::FULL, \IntlDateFormatter::FULL);
             $DIs[$entity->getMission()->getId()][$fmt->format($entity->getDebut()->getTimestamp())][$entity->getId()] = $entity;
+            print($entity->getId() . $fmt2->format($entity->getDebut()->getTimestamp()) . '<br>');
         }
         $form = $this->createForm(new InputDisposType());
 

@@ -1,0 +1,131 @@
+{% extends "AssoMakerPHPMBundle::layout.html.twig"  %}
+{% set pageTitle = 'Logistique' %}
+
+
+{% block pageHeader %}
+{% endblock %}
+
+{% block content %}
+
+<div class="row-fluid">       
+        	<div class="page-header">
+	        	<h1>Logistique</h1>
+	            
+	        </div>
+</div>
+<script type="text/javascript">
+
+
+    function Ctrl($scope,$http) {
+        
+        
+    $scope.successMaj = [];
+
+$scope.taches={{taches |raw}};
+        
+                        {% if is_granted('ROLE_LOG') %}
+                $scope.isLog = true;{% endif %}
+                
+                            $scope.changeCom = function($id,$com) {
+
+                var data = {'id': $id, 'com':$com};
+                
+        $http.post('{{path('phpm_besoinmateriel_changecom')}}', JSON.stringify(data)).success(function(data) {
+$scope.successMaj[$id] = true;
+                }).error(function(data) {
+$scope.successMaj[$id] = false;
+                });
+            }
+            
+            $scope.non = function($str) {
+            return $str.substring(0, 3) === 'non';
+            }
+		
+            }
+    </script>
+
+    <div class="row-fluid" ng-app ng-controller="Ctrl">
+
+
+
+	<table class="table table-condensed">
+        <thead>
+        	<tr>
+	        	<th>Tâche</th>
+                        <th>Qui</th>
+	            <th>Horaires</th>
+                    <th>Matos</th>
+	            <th>Quantité</th>
+                    <th>Check Log</th>
+            </tr>
+        </thead>
+                {% raw %}
+        <tbody  ng-repeat="t in taches">
+
+                
+
+			
+
+            <tr ng-repeat="b in t.besoinsMateriel" ng-class="{false: '', true: 'error'}[non(b.commentaireLog)]">
+            	<td class="statut{{ t.statut }}">
+                    {{t.nom}}
+                </td>
+                <td>
+                    {{t.groupeTache.equipe.nom}}
+                </td>            	
+                <td>
+                    <ul>
+                    <li ng-repeat="p in t.plagesHoraire">{{p.debut.date |  date:'fullDate'}} &rarr; {{p.fin.date |  date:'fullDate'}}</li>
+                    </ul>
+                </td>
+<td>{{b.materiel.nom}}</td>   
+<td>{{b.quantite}}</td> 
+<td ng-show="!isLog">
+    
+    
+{{b.commentaireLog}}
+
+</td> 
+<td ng-show="isLog">
+
+<form class="form-search ">
+  <input type="text" ng-change="successMaj[b.id]=false" class="input-large danger" ng-model="b.commentaireLog">
+<button class="btn"type="submit"  ng-click="changeCom(b.id,b.commentaireLog)" ng-class="{false: 'btn-warning', true: 'btn-success'}[successMaj[b.id]]" ><i class="icon-ok"></i></button>
+</form>
+
+</td> 
+
+                
+                
+            </tr>
+	
+			
+
+            
+
+                    
+        </tbody>
+        {% endraw %}
+        
+                    {#
+		{{ t.groupeTache.nom }} / {{ entitiesMacro.tache(t) }}</td>
+                <td>{{t.groupeTache.equipe}}</td>
+            	<td><ul>{% for ph in t.plagesHoraire %}
+                    
+                        <li>{{ ph.debut | format_datetime('EEEE dd MMM Y HH:mm') }} </li>{% endfor %}</ul></td>
+                        <td><ul>{% for ph in t.plagesHoraire %}
+                    
+                        <li>{{ ph.fin | format_datetime('EEEE dd MMM Y HH:mm') }} </li>{% endfor %}</ul></td>
+                <td>{{bm.materiel}}</td>
+                <td>{{bm.quantite}}</td>
+                <td>
+                    <input ng-model="coms[{{bm.id}}]" type="text" placeholder="">
+#}
+    </table>
+
+
+
+</div>
+   
+
+{% endblock %}
