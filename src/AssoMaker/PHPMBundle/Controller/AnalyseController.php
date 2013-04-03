@@ -128,7 +128,7 @@ class AnalyseController extends Controller {
 
 
         $result = $em
-                ->createQuery("SELECT t,g,b,m,p,e FROM AssoMakerPHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e JOIN t.plagesHoraire p JOIN t.besoinsMateriel b JOIN b.materiel m")
+                ->createQuery("SELECT t,g,b,m,p,e FROM AssoMakerPHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e JOIN t.plagesHoraire p JOIN t.besoinsMateriel b JOIN b.materiel m WHERE t.statut >=0 ")
                 ->getArrayResult();
 
         return array('taches' => json_encode($result));
