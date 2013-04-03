@@ -38,6 +38,9 @@ $scope.successMaj[$id] = false;
             }
             
             $scope.non = function($str) {
+            if($str==null){
+            return false;
+        }
             return $str.substring(0, 3) === 'non';
             }
 		
