@@ -6,10 +6,21 @@
 {% endblock %}
 
 {% block content %}
-
+<div ng-app ng-controller="Ctrl">
 <div class="row-fluid">       
         	<div class="page-header">
-	        	<h1>Logistique</h1>
+                    <h1>Logistique <a ng-click="showHelp=!showHelp"><i class="icon-question-sign" ></i> </a></h1>
+
+                    
+	        </div>
+</div>
+<div class="row-fluid" ng-show="showHelp">       
+        	<div class="span12 alert alert-info">
+                    <h5>Instructions</h5>
+                    Les orgas logistiques sont seuls à pouvoir changer le champ "Check Log"<br>
+                    Si ce champ commence par non, le matériel n'a pas été checké, et la ligne s'affiche en rouge<br>
+                    En cas de modification d'une fiche tâche affectant une ligne, le Check Log revient à non, et comprend entre parenthèses l'ancienne valeur.<br>
+                    <b>Pour la log : </b> Cliquer sur le bouton <i class="icon-ok"></i> pour valider les modifications.
 	            
 	        </div>
 </div>
@@ -47,7 +58,7 @@ $scope.successMaj[$id] = false;
             }
     </script>
 
-    <div class="row-fluid" ng-app ng-controller="Ctrl">
+    <div class="row-fluid" >
 
 
 
@@ -78,7 +89,7 @@ $scope.successMaj[$id] = false;
                 </td>            	
                 <td>
                     <ul>
-                    <li ng-repeat="p in t.plagesHoraire">{{p.debut.date |  date:'fullDate'}} &rarr; {{p.fin.date |  date:'fullDate'}}</li>
+                    <li ng-repeat="p in t.plagesHoraire">{{p.debut}} &rarr; {{p.fin}}</li>
                     </ul>
                 </td>
 <td>{{b.materiel.nom}}</td>   
@@ -129,6 +140,6 @@ $scope.successMaj[$id] = false;
 
 
 </div>
-   
+</div>
 
 {% endblock %}

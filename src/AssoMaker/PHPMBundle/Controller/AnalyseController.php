@@ -131,6 +131,18 @@ class AnalyseController extends Controller {
                 ->createQuery("SELECT t,g,b,m,p,e FROM AssoMakerPHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e JOIN t.plagesHoraire p JOIN t.besoinsMateriel b JOIN b.materiel m WHERE t.statut >=0 ")
                 ->getArrayResult();
 
+        foreach ($result as &$t) {
+
+            foreach ($t['plagesHoraire'] as &$p) {
+
+                $fmt = new \IntlDateFormatter(null, \IntlDateFormatter::FULL, \IntlDateFormatter::FULL, null, null, 'EEEE d MMMM HH:mm');
+                $p['debut'] = $fmt->format(date_timestamp_get($p['debut']));
+                $p['fin'] = $fmt->format(date_timestamp_get($p['fin']));
+            }
+        }
+
+
+
         return array('taches' => json_encode($result));
     }
 
