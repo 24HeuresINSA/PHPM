@@ -238,12 +238,18 @@ height:40em;
 		</div>
 		<div class="form-fluid">
 			<div class="form-actions">
+                                                            {% if entity.statut == 1 and not is_granted('ROLE_HUMAIN')%}
+			            <button class="btn btn-warning" type="submit" name="action" value="devalidate"><i class="icon-undo"></i> Annuler l'envoi en validation</button>
+			        {% endif %}
 			    {% if not rOnly %}
 			    	<button class="btn btn-primary" type="submit" name="action" value="save" >Enregistrer</button>
 					<button class="btn btn-info" type="submit" name="action" value="save_return" ><i class="icon-share-alt"></i> Enregistrer et revenir au groupe</button>
 			        {% if entity.statut == 0 and ((deadlinePassed==false) or is_granted('ROLE_HUMAIN'))%}
 			            <button class="btn btn-success" type="submit" name="action" value="submit_validation"><i class="icon-eye-open"></i> Demander la validation</button>
-			        {% endif %}
+			        
+
+
+                                {% endif %}
 			        {% if is_granted('ROLE_HUMAIN') %}
 			        	{% if entity.statut == 1 %}
 			                <button class="btn btn-success" type="submit" name="action" value="validate"><i class="icon-ok"></i> Valider la tâche</button>
