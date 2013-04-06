@@ -135,7 +135,7 @@ class AnalyseController extends Controller {
 
             foreach ($t['plagesHoraire'] as &$p) {
 
-                $fmt = new \IntlDateFormatter(null, \IntlDateFormatter::FULL, \IntlDateFormatter::FULL, null, null, 'EEEE d MMMM HH:mm');
+                $fmt = new \IntlDateFormatter(null, \IntlDateFormatter::FULL, \IntlDateFormatter::FULL, 'Europe/Paris', null, 'EEEE d MMMM HH:mm');
                 $p['debut'] = $fmt->format(date_timestamp_get($p['debut']));
                 $p['fin'] = $fmt->format(date_timestamp_get($p['fin']));
             }

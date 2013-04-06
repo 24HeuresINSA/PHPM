@@ -370,12 +370,11 @@ class OrgaController extends Controller {
 
         foreach ($queryResult as $entity) {
 
-            $fmt = new \IntlDateFormatter(null, \IntlDateFormatter::FULL, \IntlDateFormatter::FULL, null, null, 'EEEE d MMMM');
-            $fmt2 = new \IntlDateFormatter(null, \IntlDateFormatter::FULL, \IntlDateFormatter::FULL);
+            $fmt = new \IntlDateFormatter(null, \IntlDateFormatter::FULL, \IntlDateFormatter::FULL, 'Europe/Paris', null, 'EEEE d MMMM');
+            $fmt2 = new \IntlDateFormatter(null, \IntlDateFormatter::FULL, \IntlDateFormatter::FULL, 'Europe/Paris');
             $DIs[$entity->getMission()->getId()][$fmt->format($entity->getDebut()->getTimestamp())][$entity->getId()] = $entity;
         }
         $form = $this->createForm(new InputDisposType());
-
 
 
         if ($request->getMethod() == 'POST') {
@@ -592,7 +591,7 @@ class OrgaController extends Controller {
 
             if ($action == 'mail') {
 
-                $timeFormatter = new \IntlDateFormatter(null, \IntlDateFormatter::FULL, \IntlDateFormatter::FULL, null, null, 'EEEE d MMMM HH:mm');
+                $timeFormatter = new \IntlDateFormatter(null, \IntlDateFormatter::FULL, \IntlDateFormatter::FULL, 'Europe/Paris', null, 'EEEE d MMMM HH:mm');
                 $subject = 'Planning Orga ' . $timeFormatter->format($debut) . ' - ' . $timeFormatter->format($fin);
 
                 $message = \Swift_Message::newInstance()

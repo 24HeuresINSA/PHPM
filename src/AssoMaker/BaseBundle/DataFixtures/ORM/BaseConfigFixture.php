@@ -64,6 +64,9 @@ class BaseConfigFixture implements FixtureInterface {
         $manager
                 ->persist(
                         new Config('phpm_ws_access_code', 'Code des WebServices', mt_rand(), NULL));
+        $manager
+                ->persist(
+                        new Config('phpm_anneetrombi', 'Annee du trombi PC', 2013, NULL));
 
 
         $manager->flush();
