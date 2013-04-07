@@ -1,0 +1,100 @@
+{% extends "AssoMakerPHPMBundle::layout.html.twig"  %}
+{% set pageTitle = 'Fiches Responsable' %}
+
+{% block body %}
+<style>
+
+p{
+font-size: 10pt;
+}        
+        
+h1{
+font-size: 14pt;
+}
+
+h2{
+font-size: 12pt;
+}
+
+
+
+.orga{
+	width:100%;
+    margin-bottom:15pt;
+    
+}
+.pagebreak{
+    page-break-before:always;
+
+    
+}
+
+.creneau{
+	width:100%;
+    page-break-inside: avoid;
+    page-break-before:auto;
+    page-break-after: auto;
+    margin-bottom:15pt;
+    
+}
+.creneau > div{
+
+    border-bottom:solid 1pt lightgray;
+
+}
+
+.horaires{
+float:left;
+}
+
+.responsable{
+float:right;
+text-align:center;
+}
+
+.lieu{
+float:right;
+}
+.infos{
+overflow:auto;
+}
+
+.p{
+line-height:3em;
+}
+
+</style>
+<div class="row-fluid " >
+{% for key,orga in orgas %}
+
+<div class="pagebreak"></div>
+
+<div class="orga">
+<h1>{{ entitiesMacro.orga(orga) }}</h1>
+{% for t in orga.tachesResponsable %}
+<h2>{{t.nom}}</h2>
+<p>
+{% for p in t.plagesHoraire%}
+<b>
+    	      {{ p.debut | format_datetime('EEEE dd MMM HH:mm') }}
+	  	    <i class="icon-arrow-right"></i>
+	  	  {%  if (p.debut | format_datetime('dd'))==(p.fin | format_datetime('dd')) %}
+	  	  {{ p.fin | format_datetime('HH:mm') }}
+	  	  {% else %}
+	  	  {{ p.fin | format_datetime('EEEE dd MMM HH:mm') }}
+	  	  {% endif %}
+    
+    : </b>
+{% for c in p.creneaux%}
+{{c.disponibilite.orga.prenom}} {{c.disponibilite.orga.nom}} ({{c.disponibilite.orga.telephone}}), 
+{% endfor %}
+<br/>
+{% endfor %}
+</p>
+{% endfor %}
+</div>
+
+	{% endfor %}
+
+</div>
+{% endblock %}

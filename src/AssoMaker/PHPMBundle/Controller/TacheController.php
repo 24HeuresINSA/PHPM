@@ -451,6 +451,27 @@ class TacheController extends Controller {
     }
 
     /**
+     * Fiches Resp
+     *
+     * @Route("/fichesresp",  name="phpm_analyse_fiches_resp")
+     * @Template()
+     */
+    public function fichesRespAction() {
+
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
+
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entities = $em->createQuery("SELECT o,t,p,c,d,oa FROM AssoMakerBaseBundle:Orga o JOIN o.tachesResponsable t JOIN t.plagesHoraire p JOIN p.creneaux c JOIN c.disponibilite d JOIN d.orga oa WHERE o.statut >=0")
+                ->getResult();
+
+        return array('orgas' => $entities);
+    }
+
+    /**
      * Lists all Tache entities.
      *
      * @Route("/query.json", name="tache_query_json")
