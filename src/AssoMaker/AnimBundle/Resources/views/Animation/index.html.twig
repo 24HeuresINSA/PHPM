@@ -8,6 +8,7 @@
     function Ctrl($scope) {
 
 
+        
         $scope.search = {'statut': ''};
         $scope.animations ={{ animations |raw }}
                 $scope.types = {{ types|raw }};
@@ -64,7 +65,9 @@
             });
             return count;
         }
-
+        
+        $scope.showSigna = false;
+        
         {% if is_granted('ROLE_ADMIN') %}
                 $scope.myCom = false;{%else%}
                 $scope.myCom = true;{% endif %}
@@ -78,6 +81,7 @@
                 {% if is_granted('ROLE_HUMAIN') %}
                 $scope.isHumain = true;
                 {% endif %}
+                    
             }
     </script>
 
@@ -142,6 +146,9 @@
                     <li ng-class="{active: showSecu}">
                         <a ng-click="showSecu=!showSecu" ><i class="icon-bullhorn"></i>Sécurité</a>
                     </li>
+                    <li ng-class="{active: showSigna}">
+                        <a ng-click="showSigna=!showSigna" ><i class="icon-picture"></i>Signalétique</a>
+                    </li>
 
 
                 </ul>
@@ -193,6 +200,9 @@
                                     </div>
                                     <div class="row-fluid" ng-show="showSecu">
                                         <div class="span5" ng-show="a.besoinSecu"><b>Dispositif de sécurité :</b> {{a.detailSecu}}</div>
+                                    </div>
+                                    <div class="row-fluid" ng-show="showSigna && a.besoinSigna">
+                                        <div class="span12"><b>Signalétique :</b> {{a.detailSigna}}</div>
                                     </div>
                                 </div>
                             </div>
