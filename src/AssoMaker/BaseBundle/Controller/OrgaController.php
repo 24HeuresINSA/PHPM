@@ -240,10 +240,13 @@ class OrgaController extends Controller {
         $editForm = $this->createForm($this->get('form.type.orga'), $entity, array("confianceCode" => $entity->getEquipe()->getConfiance()->getCode()));
 
         if ($this->get('request')->getMethod() == 'POST') {
+
             $request = $this->getRequest();
             $editForm->bindRequest($request);
 
             if ($editForm->isValid()) {
+                var_dump(4);
+                exit;
 
                 $param = $request->request->all();
                 if ($param['action'] == 'delPermis') {
@@ -258,11 +261,8 @@ class OrgaController extends Controller {
 
                 return $this->redirect($this->generateUrl('base_accueil'));
             }
-
-
-            $em->persist($entity);
-            $em->flush();
         }
+
 
         return array(
             'entity' => $entity,
@@ -695,17 +695,6 @@ class OrgaController extends Controller {
             'orgas' => $orgas,
             'departs' => $departs,
             'equipes' => $equipes);
-    }
-
-    public function updateLastActivityAction() {
-        $user = $this->get('security.context')->getToken()->getUser();
-        $user->setLastActivity(new \DateTime());
-        $em = $this->getDoctrine()->getEntityManager();
-        $errors = $this->container->get('validator')->validate($user);
-        if ((count($errors) == 0)) {
-            $em->flush();
-        }
-        return new Response();
     }
 
     /**

@@ -48,6 +48,8 @@ class DefaultController extends Controller {
 
         $printPlanningForm = $this->createForm(new PrintPlanningType(), array('debut' => new \DateTime(), 'fin' => new \DateTime()));
 
+        $user->setLastActivity(new \DateTime());
+        $em->flush();
 
         return array('soldeCP' => $soldeCP,
             'transactionsCP' => $transactionsCP,
