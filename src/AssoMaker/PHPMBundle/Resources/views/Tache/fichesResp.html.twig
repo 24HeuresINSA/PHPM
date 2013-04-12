@@ -72,7 +72,7 @@ line-height:3em;
 <div class="orga">
 <h1>{{ entitiesMacro.orga(orga) }}</h1>
 {% for t in orga.tachesResponsable %}
-<h2>{{t.nom}}</h2>
+<h2>{{t.groupeTache.nom}} - {{t.nom}}</h2>
 <p>
 {% for p in t.plagesHoraire%}
 <b>

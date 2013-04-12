@@ -453,19 +453,24 @@ class TacheController extends Controller {
     /**
      * Fiches Resp
      *
-     * @Route("/fichesresp",  name="phpm_analyse_fiches_resp")
+     * @Route("/fichesresp/{sdebut}/{sfin}",  name="phpm_tache_fiches_resp")
      * @Template()
      */
-    public function fichesRespAction() {
+    public function fichesRespAction($sdebut, $sfin) {
 
         if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
             throw new AccessDeniedException();
         }
 
+        $debut = new \DateTime($sdebut);
+        $fin = new \DateTime($sfin);
+
 
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->createQuery("SELECT o,t,p,c,d,oa FROM AssoMakerBaseBundle:Orga o JOIN o.tachesResponsable t JOIN t.plagesHoraire p JOIN p.creneaux c JOIN c.disponibilite d JOIN d.orga oa WHERE o.statut >=0")
+        $entities = $em->createQuery("SELECT o,t,p,c,d,oa,g FROM AssoMakerBaseBundle:Orga o JOIN o.tachesResponsable t JOIN t.plagesHoraire p JOIN p.creneaux c JOIN c.disponibilite d JOIN d.orga oa JOIN t.groupeTache g WHERE o.statut >=0 AND p.debut > :debut  AND p.fin < :fin ORDER BY o.nom, c.debut")
+                ->setParameter('debut', $debut)
+                ->setParameter('fin', $fin)
                 ->getResult();
 
         return array('orgas' => $entities);
