@@ -245,8 +245,7 @@ class OrgaController extends Controller {
             $editForm->bindRequest($request);
 
             if ($editForm->isValid()) {
-                var_dump(4);
-                exit;
+
 
                 $param = $request->request->all();
                 if ($param['action'] == 'delPermis') {
