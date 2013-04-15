@@ -66,34 +66,28 @@ $scope.successMaj[$id] = false;
         <thead>
         	<tr>
 	        	<th>Tâche</th>
-                        <th>Qui</th>
-	            <th>Horaires</th>
-                    <th>Matos</th>
-	            <th>Quantité</th>
+	            <th>Autre Matos</th>
                     <th>Check Log</th>
             </tr>
         </thead>
                 {% raw %}
         <tbody  ng-repeat="t in taches">
+<tr class="info"><td colspan="3"><h5><a href="{% endraw %}{{path("tache")}}{% raw %}/../{{t.id}}/edit" class="statut{{ t.statut }}" target="_blank">{{t.groupeTache.nom}} {{t.nom}}</a><small>({{t.groupeTache.equipe.nom}})</small></h5> 
 
-                
-
-			
-
-            <tr ng-repeat="b in t.besoinsMateriel" ng-class="{false: '', true: 'error'}[non(b.commentaireLog)]">
-            	<td class="statut{{ t.statut }}">
-                    {{t.nom}}
-                </td>
-                <td>
-                    {{t.groupeTache.equipe.nom}}
-                </td>            	
-                <td>
                     <ul>
                     <li ng-repeat="p in t.plagesHoraire">{{p.debut}} &rarr; {{p.fin}}</li>
                     </ul>
                 </td>
-<td>{{b.materiel.nom}}</td>   
-<td>{{b.quantite}}</td> 
+        </tr>
+    <td ROWSPAN="100" style="width: 30em;"><b>Matériel supplémentaire : </b><br>{{t.materielSupplementaire}}</td>            
+            <tr ng-repeat="b in t.besoinsMateriel" ng-class="{false: '', true: 'error'}[non(b.commentaireLog)]">
+            	
+                    
+         	
+
+<td>{{b.quantite}} x {{b.materiel.nom}}</td>   
+
+
 <td ng-show="!isLog">
     
     
@@ -113,7 +107,7 @@ $scope.successMaj[$id] = false;
                 
             </tr>
 	
-			
+		
 
             
 
