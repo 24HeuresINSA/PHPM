@@ -30,9 +30,26 @@
     function Ctrl($scope,$http) {
         
         
+    $scope.setRidm = function($id) {
+            $scope.ridm = $id;
+        }
+        
+        $scope.search = {};
+        $scope.ridm=0;
+    
     $scope.successMaj = [];
+    
+    $scope.showRaf=false;
+    
+     $scope.raFilter = function(elem) {
+         console.log(elem);
+     
+            return false;
+       }
+    $scope.predicate = 'groupeTache.animLiee.id';
 
 $scope.taches={{taches |raw}};
+$scope.materiel={{materiel|raw}};
         
                         {% if is_granted('ROLE_LOG') %}
                 $scope.isLog = true;{% endif %}
@@ -60,8 +77,20 @@ $scope.successMaj[$id] = false;
 
     <div class="row-fluid" >
 
+                {% raw %}
+<input type="text" class="input-medium search-query" ng-model="search.$">
 
+<div class="btn-group">
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Matériel<span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a ng-click="setRidm(0)"><b>Tous</b></a> </li>
+   <li ng-repeat="m in materiel"><a ng-click="setRidm(m.id)">{{m.nom}}</a> </li>
+                </ul>
+              </div>
 
+                    
+                        <a ng-click="showRaf=!showRaf" ng-class="{active: showRaf}" class="btn btn-info">Afficher RAF</a>
+                    
 	<table class="table table-condensed">
         <thead>
         	<tr>
@@ -70,9 +99,9 @@ $scope.successMaj[$id] = false;
                     <th>Check Log</th>
             </tr>
         </thead>
-                {% raw %}
-        <tbody  ng-repeat="t in taches">
-<tr class="info"><td colspan="3"><h5><a href="{% endraw %}{{path("tache")}}{% raw %}/../{{t.id}}/edit" class="statut{{ t.statut }}" target="_blank">{{t.groupeTache.nom}} {{t.nom}}</a><small>({{t.groupeTache.equipe.nom}})</small></h5> 
+
+        <tbody  ng-repeat="t in taches | orderBy:predicate | filter:search">
+<tr class="info"><td colspan="3"><h5><a href="{% endraw %}{{path("anim_animation_index")}}{% raw %}/../{{t.groupeTache.animLiee.id}}/edit" class="statut{{ t.groupeTache.animLiee.statut }}" target="_blank">{{t.groupeTache.animLiee.nom}}</a> => <a href="{% endraw %}{{path("tache")}}{% raw %}/../{{t.id}}/edit" class="statut{{ t.statut }}" target="_blank">{{t.groupeTache.nom}} {{t.nom}}</a><small>({{t.groupeTache.equipe.nom}})</small></h5> 
 
                     <ul>
                     <li ng-repeat="p in t.plagesHoraire">{{p.debut}} &rarr; {{p.fin}}</li>
@@ -80,13 +109,8 @@ $scope.successMaj[$id] = false;
                 </td>
         </tr>
     <td ROWSPAN="100" style="width: 30em;"><b>Matériel supplémentaire : </b><br>{{t.materielSupplementaire}}</td>            
-            <tr ng-repeat="b in t.besoinsMateriel" ng-class="{false: '', true: 'error'}[non(b.commentaireLog)]">
-            	
-                    
-         	
-
+            <tr ng-repeat="b in t.besoinsMateriel" ng-class="{false: '', true: 'error'}[non(b.commentaireLog)]" ng-show="((b.commentaireLog!='raf')||showRaf)&&((ridm==0)||(b.materiel.id==ridm))">
 <td>{{b.quantite}} x {{b.materiel.nom}}</td>   
-
 
 <td ng-show="!isLog">
     
@@ -99,6 +123,7 @@ $scope.successMaj[$id] = false;
 <form class="form-search ">
   <input type="text" ng-change="successMaj[b.id]=false" class="input-large danger" ng-model="b.commentaireLog">
 <button class="btn"type="submit"  ng-click="changeCom(b.id,b.commentaireLog)" ng-class="{false: 'btn-warning', true: 'btn-success'}[successMaj[b.id]]" ><i class="icon-ok"></i></button>
+<button class="btn btn-danger" type="submit"  ng-click="changeCom(b.id,'raf');b.commentaireLog='raf'" ><i class="icon-remove"></i> RAF</button>
 </form>
 
 </td> 
