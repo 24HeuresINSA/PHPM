@@ -61,13 +61,12 @@
                             <div class="well">
                                 <fieldset>
                                     <legend>Noms des potes avec qui tu veux bosser</legend>
-                                    <textarea id="phpm_bundle_orgatype_amis" name="phpm_bundle_orgatype[amis]" class="row-fluid"></textarea>
+                                    {{ form_widget(form.amis) }}
 
                                 </fieldset>
                                 <fieldset>
                                     <legend>Des commentaires ?</legend>
-                                    <textarea id="phpm_bundle_orgatype_commentaire" name="phpm_bundle_orgatype[commentaire]" class="row-fluid"></textarea>
-
+                                    {{ form_widget(form.commentaire) }}
                                 </fieldset>
                             </div>
                         </div>

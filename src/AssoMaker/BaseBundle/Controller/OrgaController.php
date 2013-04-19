@@ -166,7 +166,6 @@ class OrgaController extends Controller {
 
 
 
-
         if ($this->get('request')->getMethod() == 'POST') {
             $form->bindRequest($request);
             $data = $form->getData();
@@ -190,6 +189,7 @@ class OrgaController extends Controller {
                         ->setBody($this->renderView('AssoMakerBaseBundle:Orga:emailConfirmationSoft.html.twig', array('orga' => $entity)), 'text/html')
                 ;
                 $this->get('mailer')->send($message);
+
 
 
                 return $this->redirect($this->generateUrl('orga_inputdispos', array('id' => $entity->getId(), "new" => true)));
