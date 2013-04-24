@@ -128,7 +128,7 @@ class AnalyseController extends Controller {
 
 
         $result = $em
-                ->createQuery("SELECT t,g,b,m,p,e,a FROM AssoMakerPHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e JOIN t.plagesHoraire p JOIN t.besoinsMateriel b JOIN b.materiel m JOIN g.animLiee a WHERE t.statut >=0 ")
+                ->createQuery("SELECT t,g,b,m,p,e,a FROM AssoMakerPHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e JOIN t.plagesHoraire p JOIN t.besoinsMateriel b JOIN b.materiel m LEFT OUTER JOIN g.animLiee a WHERE t.statut >=0 ")
                 ->getArrayResult();
 
         foreach ($result as &$t) {
@@ -153,261 +153,261 @@ class AnalyseController extends Controller {
      * @Template()
      */
     public function plagesOrgaAction($orgaid) {
-    if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-    throw new AccessDeniedException();
-}
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
 
-$em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
-if ($orgaid == 'all') {
-$respDQL = "SELECT o,bo,p,t,g FROM AssoMakerBaseBundle:Orga o
+        if ($orgaid == 'all') {
+            $respDQL = "SELECT o,bo,p,t,g FROM AssoMakerBaseBundle:Orga o
     		JOIN o.besoinsOrgaHint bo  JOIN bo.plageHoraire p JOIN p.tache t JOIN t.groupeTache g  WHERE t.statut >=0
     		ORDER BY o.nom, p.debut ";
-} else {
+        } else {
 
-$respDQL = "SELECT o,bo,p,t,g FROM AssoMakerBaseBundle:Orga o
+            $respDQL = "SELECT o,bo,p,t,g FROM AssoMakerBaseBundle:Orga o
     		JOIN o.besoinsOrgaHint bo  JOIN bo.plageHoraire p JOIN p.tache t JOIN t.groupeTache g  WHERE t.statut >=0 AND o.id = $orgaid
     		ORDER BY o.nom, p.debut ";
-}
+        }
 
 
-$respResult = $em
-->createQuery($respDQL)
-->getArrayResult();
+        $respResult = $em
+                ->createQuery($respDQL)
+                ->getArrayResult();
 
 
 //     	var_dump($respResult);
 
-return array('respResult' => $respResult);
-}
+        return array('respResult' => $respResult);
+    }
 
-/**
- * Rapport besoinsOrga
- *
- * @Route("/besoinsorga/{plageId}/{showBonusOrgas}", defaults={"plageId"=0,"showBonusOrgas"=false}, name="analyse_besoinsorga")
- * @Template()
- */
-public function besoinsOrgaAction($plageId, $showBonusOrgas) {
+    /**
+     * Rapport besoinsOrga
+     *
+     * @Route("/besoinsorga/{plageId}/{showBonusOrgas}", defaults={"plageId"=0,"showBonusOrgas"=false}, name="analyse_besoinsorga")
+     * @Template()
+     */
+    public function besoinsOrgaAction($plageId, $showBonusOrgas) {
 
-if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
-throw new AccessDeniedException();
-}
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
+            throw new AccessDeniedException();
+        }
 
-$em = $this->getDoctrine()->getEntityManager();
-$config = $this->get('config.extension');
-
-
-
-$plages = json_decode($config->getValue('manifestation_plages'),  TRUE);
-$plage = $plages[$plageId];
-$debutPlage = new \DateTime($plage['debut']);
-$finPlage = new \DateTime($plage['fin']);
+        $em = $this->getDoctrine()->getEntityManager();
+        $config = $this->get('config.extension');
 
 
-$result = array();
-$id = 0;
-$debut = $debutPlage;
-$fin = clone $debutPlage;
-$fin->add(new \DateInterval('PT' . (900) . 'S'));
-$days = array();
 
-while ($debut < $finPlage) {
+        $plages = json_decode($config->getValue('manifestation_plages'), TRUE);
+        $plage = $plages[$plageId];
+        $debutPlage = new \DateTime($plage['debut']);
+        $finPlage = new \DateTime($plage['fin']);
 
 
-$t = $em
-->createQuery("SELECT count(c) FROM AssoMakerPHPMBundle:Creneau c WHERE c.debut < :fin AND c.fin > :debut")
-->setParameter('debut', $debut->format('Y-m-d H:i:s'))
-->setParameter('fin', $fin->format('Y-m-d H:i:s'))
-->getSingleScalarResult();
+        $result = array();
+        $id = 0;
+        $debut = $debutPlage;
+        $fin = clone $debutPlage;
+        $fin->add(new \DateInterval('PT' . (900) . 'S'));
+        $days = array();
 
-if ($showBonusOrgas || $t != 0) {
-$o = $em
-->createQuery("SELECT count(di) FROM AssoMakerPHPMBundle:DisponibiliteInscription di JOIN di.orgas o WHERE di.debut < :fin AND di.fin > :debut")
-->setParameter('debut', $debut->format('Y-m-d H:i:s'))
-->setParameter('fin', $fin->format('Y-m-d H:i:s'))
-->getSingleScalarResult();
-} else {
-$o = false;
-}
+        while ($debut < $finPlage) {
 
 
-if ($t != 0) {
-$a = $em
-->createQuery("SELECT count(c) FROM AssoMakerPHPMBundle:Creneau c JOIN c.disponibilite d WHERE c.debut < :fin AND c.fin > :debut")
-->setParameter('debut', $debut->format('Y-m-d H:i:s'))
-->setParameter('fin', $fin->format('Y-m-d H:i:s'))
-->getSingleScalarResult();
-} else {
-$a = false;
-}
+            $t = $em
+                    ->createQuery("SELECT count(c) FROM AssoMakerPHPMBundle:Creneau c WHERE c.debut < :fin AND c.fin > :debut")
+                    ->setParameter('debut', $debut->format('Y-m-d H:i:s'))
+                    ->setParameter('fin', $fin->format('Y-m-d H:i:s'))
+                    ->getSingleScalarResult();
+
+            if ($showBonusOrgas || $t != 0) {
+                $o = $em
+                        ->createQuery("SELECT count(di) FROM AssoMakerPHPMBundle:DisponibiliteInscription di JOIN di.orgas o WHERE di.debut < :fin AND di.fin > :debut")
+                        ->setParameter('debut', $debut->format('Y-m-d H:i:s'))
+                        ->setParameter('fin', $fin->format('Y-m-d H:i:s'))
+                        ->getSingleScalarResult();
+            } else {
+                $o = false;
+            }
 
 
-if ($o == 0) {
-$color = "white";
-$data = "";
-} else {
-if ($t == 0) {
-$data = "+$o";
-$color = "#CCE0FF";
-} else {
-if ($o > $t) {
-if ($a == $t) {
-$r = 50;
-$g = 128;
-$b = 255;
-} else {
-$g = 255;
-$r = $b = 128;
-}
-} elseif ($o == $t) {
-$g = 255;
-$r = $b = 200;
-} elseif ($o / $t < .75) {
-$r = 255;
-$g = $b = 0;
-} else {
-$r = 255;
-$g = $b = round(192 * ($o / $t));
-}
-$color = "rgb($r,$g,$b)";
-$data = "$o/$t ($a)";
-}
+            if ($t != 0) {
+                $a = $em
+                        ->createQuery("SELECT count(c) FROM AssoMakerPHPMBundle:Creneau c JOIN c.disponibilite d WHERE c.debut < :fin AND c.fin > :debut")
+                        ->setParameter('debut', $debut->format('Y-m-d H:i:s'))
+                        ->setParameter('fin', $fin->format('Y-m-d H:i:s'))
+                        ->getSingleScalarResult();
+            } else {
+                $a = false;
+            }
 
 
-if ($a === false) {
+            if ($o == 0) {
+                $color = "white";
+                $data = "";
+            } else {
+                if ($t == 0) {
+                    $data = "+$o";
+                    $color = "#CCE0FF";
+                } else {
+                    if ($o > $t) {
+                        if ($a == $t) {
+                            $r = 50;
+                            $g = 128;
+                            $b = 255;
+                        } else {
+                            $g = 255;
+                            $r = $b = 128;
+                        }
+                    } elseif ($o == $t) {
+                        $g = 255;
+                        $r = $b = 200;
+                    } elseif ($o / $t < .75) {
+                        $r = 255;
+                        $g = $b = 0;
+                    } else {
+                        $r = 255;
+                        $g = $b = round(192 * ($o / $t));
+                    }
+                    $color = "rgb($r,$g,$b)";
+                    $data = "$o/$t ($a)";
+                }
 
-}
-}
 
-$row = array('debut' => $debut->format('Y-m-d H:i:s'), 'fin' => $fin->format('Y-m-d H:i:s'), 'data' => $data, 'color' => $color);
+                if ($a === false) {
 
-$result[$debut->format('H:i') . ' - ' . $fin->format('H:i')][$debut->format('d')] = $row;
+                }
+            }
 
-$id++;
-$days[$debut->format('d')] = $debut->format('l d F');
-$debut->add(new \DateInterval('PT' . (900) . 'S'));
-$fin->add(new \DateInterval('PT' . (900) . 'S'));
-}
+            $row = array('debut' => $debut->format('Y-m-d H:i:s'), 'fin' => $fin->format('Y-m-d H:i:s'), 'data' => $data, 'color' => $color);
 
-return array('result' => $result,
- 'days' => $days,
- 'plageId' => $plageId,
- 'debutPlage' => $debutPlage,
- 'finPlage' => $finPlage,
- 'plages' => $plages,
- 'showBonusOrgas' => $showBonusOrgas
-);
-}
+            $result[$debut->format('H:i') . ' - ' . $fin->format('H:i')][$debut->format('d')] = $row;
 
-/**
- * Rapport tâches
- *
- * @Route("/taches/{groupeid}", defaults={"groupeid"="all"}, name="analyse_taches")
- * @Template()
- */
-public function tachesAction($groupeid) {
-if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-throw new AccessDeniedException();
-}
+            $id++;
+            $days[$debut->format('d')] = $debut->format('l d F');
+            $debut->add(new \DateInterval('PT' . (900) . 'S'));
+            $fin->add(new \DateInterval('PT' . (900) . 'S'));
+        }
 
-$em = $this->getDoctrine()->getEntityManager();
+        return array('result' => $result,
+            'days' => $days,
+            'plageId' => $plageId,
+            'debutPlage' => $debutPlage,
+            'finPlage' => $finPlage,
+            'plages' => $plages,
+            'showBonusOrgas' => $showBonusOrgas
+        );
+    }
 
-if ($groupeid == 'all') {
-$tacheDQL = "SELECT g,t,p,c,d,o FROM AssoMakerPHPMBundle:GroupeTache g JOIN g.taches t
+    /**
+     * Rapport tâches
+     *
+     * @Route("/taches/{groupeid}", defaults={"groupeid"="all"}, name="analyse_taches")
+     * @Template()
+     */
+    public function tachesAction($groupeid) {
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        if ($groupeid == 'all') {
+            $tacheDQL = "SELECT g,t,p,c,d,o FROM AssoMakerPHPMBundle:GroupeTache g JOIN g.taches t
     		JOIN t.plagesHoraire p JOIN p.creneaux c LEFT JOIN c.disponibilite d LEFT JOIN d.orga o
     		 ORDER BY g.id ";
-$tacheResult = $em->createQuery($tacheDQL)->getArrayResult();
-return array('tacheResult' => $tacheResult);
-} else {
-$tacheDQL = "SELECT g,t,p,c,d,o FROM AssoMakerPHPMBundle:GroupeTache g JOIN g.taches t
+            $tacheResult = $em->createQuery($tacheDQL)->getArrayResult();
+            return array('tacheResult' => $tacheResult);
+        } else {
+            $tacheDQL = "SELECT g,t,p,c,d,o FROM AssoMakerPHPMBundle:GroupeTache g JOIN g.taches t
     		JOIN t.plagesHoraire p JOIN p.creneaux c LEFT OUTER JOIN c.disponibilite d JOIN d.orga o
     		WHERE g.id = :groupeId ORDER BY g.id ";
-$tacheResult = $em->createQuery($tacheDQL)->setParameter('groupeId', $groupeid)->getArrayResult();
-$groupe = $em->getRepository('AssoMakerPHPMBundle:GroupeTache')->find($groupeid);
+            $tacheResult = $em->createQuery($tacheDQL)->setParameter('groupeId', $groupeid)->getArrayResult();
+            $groupe = $em->getRepository('AssoMakerPHPMBundle:GroupeTache')->find($groupeid);
 
-if (!$groupe) {
-throw $this->createNotFoundException('GroupeTache inconnu.');
-}
-return array('tacheResult' => $tacheResult, 'groupe' => $groupe);
-}
-}
+            if (!$groupe) {
+                throw $this->createNotFoundException('GroupeTache inconnu.');
+            }
+            return array('tacheResult' => $tacheResult, 'groupe' => $groupe);
+        }
+    }
 
-/**
- * Besoins Orga v2
- *
- * @Route("/besoinsorga2/{plageId}/{confianceId}", defaults={"plageId"=0,"confianceId"="all"}, name="analyse_besoinsorga2")
- * @Template()
- */
-public function besoinsOrga2Action($plageId, $confianceId) {
+    /**
+     * Besoins Orga v2
+     *
+     * @Route("/besoinsorga2/{plageId}/{confianceId}", defaults={"plageId"=0,"confianceId"="all"}, name="analyse_besoinsorga2")
+     * @Template()
+     */
+    public function besoinsOrga2Action($plageId, $confianceId) {
 
-ini_set("memory_limit", "1024M");
+        ini_set("memory_limit", "1024M");
 
-if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
-throw new AccessDeniedException();
-}
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
+            throw new AccessDeniedException();
+        }
 
-$em = $this->getDoctrine()->getEntityManager();
-$config = $this->get('config.extension');
-
-
-
-$plages = json_decode($config->getValue('manifestation_plages'),  TRUE);
-$plage = $plages[$plageId];
-$debutPlage = new \DateTime($plage['debut']);
-$finPlage = new \DateTime($plage['fin']);
-$debutPlage = $debutPlage->gettimestamp();
-$finPlage = $finPlage->gettimestamp();
-
-$debut = $debutPlage;
-$fin = $debutPlage + 900;
-$tabHoraires = array();
-
-while ($debut < $finPlage) {
-
-$debut+=900;
-$fin+=900;
-$tabHoraires[$debut] = 0;
-}
-
-if ($confianceId == 'all') {
-
-$taches = $em
-->createQuery("SELECT t,p,c FROM AssoMakerPHPMBundle:Tache t JOIN t.plagesHoraire p JOIN p.creneaux c ORDER BY c.debut")
-->getResult();
-var_dump(2);
-} else {
-
-$taches = $em
-->createQuery("SELECT t,p,c,e,ec,g,ge,r FROM AssoMakerPHPMBundle:Tache t JOIN t.plagesHoraire p JOIN p.creneaux c JOIN c.equipeHint e JOIN e.confiance ec JOIN t.responsable r JOIN t.groupeTache g JOIN g.equipe ge WHERE ec.id= :ecid ORDER BY c.debut")
-->setParameter("ecid", $confianceId)
-->getResult();
-}
-
-$r = array();
-$listeTaches = array();
-
-foreach ($taches as $tache) {
-$r[$tache->getId()] = $tabHoraires;
-$listeTaches[$tache->getId()] = $tache;
-foreach ($tache->getPlagesHoraire() as $ph) {
-print "\n";
-foreach ($ph->getCreneaux() as $c) {
-$debutCreneau = $c->getDebut()->getTimestamp();
-$finCreneau = $c->getFin()->getTimestamp();
-foreach ($tabHoraires as $key => $total) {
-if ( ($key >= $debutCreneau) && ($key < $finCreneau)) {
-$r[$tache->getId()][$key]+=1;
-}
-}
-}
-}
-}
+        $em = $this->getDoctrine()->getEntityManager();
+        $config = $this->get('config.extension');
 
 
-return array("horaires" => $tabHoraires,
- "data" => $r,
- "taches" => $listeTaches
-);
-}
+
+        $plages = json_decode($config->getValue('manifestation_plages'), TRUE);
+        $plage = $plages[$plageId];
+        $debutPlage = new \DateTime($plage['debut']);
+        $finPlage = new \DateTime($plage['fin']);
+        $debutPlage = $debutPlage->gettimestamp();
+        $finPlage = $finPlage->gettimestamp();
+
+        $debut = $debutPlage;
+        $fin = $debutPlage + 900;
+        $tabHoraires = array();
+
+        while ($debut < $finPlage) {
+
+            $debut+=900;
+            $fin+=900;
+            $tabHoraires[$debut] = 0;
+        }
+
+        if ($confianceId == 'all') {
+
+            $taches = $em
+                    ->createQuery("SELECT t,p,c FROM AssoMakerPHPMBundle:Tache t JOIN t.plagesHoraire p JOIN p.creneaux c ORDER BY c.debut")
+                    ->getResult();
+            var_dump(2);
+        } else {
+
+            $taches = $em
+                    ->createQuery("SELECT t,p,c,e,ec,g,ge,r FROM AssoMakerPHPMBundle:Tache t JOIN t.plagesHoraire p JOIN p.creneaux c JOIN c.equipeHint e JOIN e.confiance ec JOIN t.responsable r JOIN t.groupeTache g JOIN g.equipe ge WHERE ec.id= :ecid ORDER BY c.debut")
+                    ->setParameter("ecid", $confianceId)
+                    ->getResult();
+        }
+
+        $r = array();
+        $listeTaches = array();
+
+        foreach ($taches as $tache) {
+            $r[$tache->getId()] = $tabHoraires;
+            $listeTaches[$tache->getId()] = $tache;
+            foreach ($tache->getPlagesHoraire() as $ph) {
+                print "\n";
+                foreach ($ph->getCreneaux() as $c) {
+                    $debutCreneau = $c->getDebut()->getTimestamp();
+                    $finCreneau = $c->getFin()->getTimestamp();
+                    foreach ($tabHoraires as $key => $total) {
+                        if (($key >= $debutCreneau) && ($key < $finCreneau)) {
+                            $r[$tache->getId()][$key]+=1;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        return array("horaires" => $tabHoraires,
+            "data" => $r,
+            "taches" => $listeTaches
+        );
+    }
 
 }
