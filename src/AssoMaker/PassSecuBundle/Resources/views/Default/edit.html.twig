@@ -63,6 +63,7 @@ function Ctrl($scope){
                     La majorité des champs ont été préremplis, il vous suffit de contrôler ces données.<br>
                     Ensuite, remplissez la partie "<em>Personnes devant bénéficier d'un laissez-passer</em>" en ajoutant autant de personnes que nécessaires.<br>
                     Quand vous avexz terminé, cliquez sur le bouton "<em>Soumettre la demande</em>"<br>
+                    Il vous est possible de renseigner ces informations en plusieurs fois, dans ce cas, cliquez sur "Enregistrer les informations" pour enregistrer vos modifications. Vous pourrez le modifier ou le soumetre à validation ultérieurement.<br>
                     Vous receverez un email de confirmation si votre demande est acceptée.                
                     </p>
                     {% endif %}
@@ -185,7 +186,7 @@ function Ctrl($scope){
             {{ form_widget(form._token) }}
     <div class="form-fluid">
 			<div class="form-actions">
-				{% if (is_granted('ROLE_SECU')) or (is_granted('ROLE_USER') and entity.statut == 0)%}
+				{% if (is_granted('ROLE_SECU')) or ( entity.statut == 0)%}
 			    <button class="btn btn-primary" type="submit" name="action" value="save">Enregistrer les informations</button>
 			    {% endif %}
 			    {% if entity.statut == 0%}
