@@ -17,6 +17,8 @@ use AssoMaker\BaseBundle\Entity\Confiance;
 // use AssoMaker\PHPMBundle\Entity\Categorie;
 use AssoMaker\PHPMBundle\Form\TacheType;
 use AssoMaker\PHPMBundle\Form\TacheBesoinsType;
+use JMS\SecurityExtraBundle\Annotation\Secure;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Tache controller.
@@ -511,6 +513,39 @@ class TacheController extends Controller {
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;
+    }
+
+    /**
+     *
+     *
+     * @Route("/changeCom", name="phpm_tache_changecom")
+     * @Secure("ROLE_LOG")
+     * @Method("post")
+     *
+     */
+    public function changeComAction(Request $request) {
+        $em = $this->getDoctrine()->getEntityManager();
+
+
+        $data = json_decode($request->getContent(), true);
+
+        $id = $data['id'];
+
+        $entity = $em->getRepository('AssoMakerPHPMBundle:Tache')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find T entity.');
+        }
+
+        $com = $data['com'];
+
+        $entity->setCommentaireLog($com);
+
+        $em->persist($entity);
+        $em->flush();
+
+
+        return new Response();
     }
 
 }

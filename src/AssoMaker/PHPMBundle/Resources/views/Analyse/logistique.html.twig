@@ -38,14 +38,11 @@
         $scope.ridm=0;
     
     $scope.successMaj = [];
+    $scope.successTacheMaj = [];
     
     $scope.showRaf=false;
     
-     $scope.raFilter = function(elem) {
-         console.log(elem);
-     
-            return false;
-       }
+
     $scope.predicate = 'groupeTache.animLiee.id';
 
 $scope.taches={{taches |raw}};
@@ -62,6 +59,17 @@ $scope.materiel={{materiel|raw}};
 $scope.successMaj[$id] = true;
                 }).error(function(data) {
 $scope.successMaj[$id] = false;
+                });
+            }
+            
+          $scope.changeTacheCom = function($id,$com) {
+
+                var data = {'id': $id, 'com':$com};
+                
+        $http.post('{{path('phpm_tache_changecom')}}', JSON.stringify(data)).success(function(data) {
+$scope.successTacheMaj[$id] = true;
+                }).error(function(data) {
+$scope.successTacheMaj[$id] = false;
                 });
             }
             
@@ -100,7 +108,7 @@ $scope.successMaj[$id] = false;
             </tr>
         </thead>
 
-        <tbody  ng-repeat="t in taches | orderBy:predicate | filter:search">
+        <tbody  ng-repeat="t in taches | orderBy:predicate | filter:search" ng-show="((t.commentaireLog!='raf')||showRaf)">
 <tr class="info"><td colspan="3"><h5><a href="{% endraw %}{{path("anim_animation_index")}}{% raw %}/../{{t.groupeTache.animLiee.id}}/edit" class="statut{{ t.groupeTache.animLiee.statut }}" target="_blank">{{t.groupeTache.animLiee.nom}}</a> => <a href="{% endraw %}{{path("tache")}}{% raw %}/../{{t.id}}/edit" class="statut{{ t.statut }}" target="_blank">{{t.groupeTache.nom}} {{t.nom}}</a><small>({{t.groupeTache.equipe.nom}})</small></h5> 
 
                     <ul>
@@ -108,7 +116,13 @@ $scope.successMaj[$id] = false;
                     </ul>
                 </td>
         </tr>
-    <td ROWSPAN="100" style="width: 30em;"><b>Matériel supplémentaire : </b><br>{{t.materielSupplementaire}}</td>            
+    <td ROWSPAN="100" style="width: 30em;"><b>Matériel supplémentaire : </b><br>{{t.materielSupplementaire}}<br>
+        <input type="text" ng-change="successTacheMaj[b.id]=false" class="input-large danger" ng-model="t.commentaireLog">
+    <button class="btn"type="submit"  ng-click="changeTacheCom(t.id,t.commentaireLog)" ng-class="{false: 'btn-warning', true: 'btn-success'}[successMaj[b.id]]" ><i class="icon-ok"></i></button>
+<button class="btn btn-danger" type="submit"  ng-click="changeTacheCom(t.id,'raf');b.commentaireLog='raf'" ><i class="icon-remove"></i> RAF</button>
+    
+    
+    </td>            
             <tr ng-repeat="b in t.besoinsMateriel" ng-class="{false: '', true: 'error'}[non(b.commentaireLog)]" ng-show="((b.commentaireLog!='raf')||showRaf)&&((ridm==0)||(b.materiel.id==ridm))">
 <td>{{b.quantite}} x {{b.materiel.nom}}</td>   
 

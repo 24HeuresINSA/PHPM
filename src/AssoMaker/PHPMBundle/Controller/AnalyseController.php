@@ -127,11 +127,15 @@ class AnalyseController extends Controller {
 
 
 
-        $result = $em
-                ->createQuery("SELECT t,g,b,m,p,e,a FROM AssoMakerPHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e JOIN t.plagesHoraire p JOIN t.besoinsMateriel b JOIN b.materiel m LEFT OUTER JOIN g.animLiee a WHERE t.statut >=0 ")
+        $rawResult = $em
+                ->createQuery("SELECT t,g,b,m,p,e,a FROM AssoMakerPHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e JOIN t.plagesHoraire p LEFT OUTER JOIN t.besoinsMateriel b LEFT OUTER JOIN b.materiel m LEFT OUTER JOIN g.animLiee a WHERE t.statut >=0 ")
                 ->getArrayResult();
 
-        foreach ($result as &$t) {
+
+        foreach ($rawResult as $key => &$t) {
+
+
+
 
             foreach ($t['plagesHoraire'] as &$p) {
 
@@ -139,11 +143,16 @@ class AnalyseController extends Controller {
                 $p['debut'] = $fmt->format(date_timestamp_get($p['debut']));
                 $p['fin'] = $fmt->format(date_timestamp_get($p['fin']));
             }
+
+            if (($t['materielSupplementaire'] == null) && (count($t['besoinsMateriel']) == 0)) {
+                //var_dump($t['id']);
+                unset($rawResult[$key]);
+            }
         }
 
         $materiel = $em->createQuery("SELECT m FROM AssoMakerPHPMBundle:Materiel m ORDER BY m.categorie ")->getArrayResult();
 
-        return array('taches' => json_encode($result), 'materiel' => json_encode($materiel));
+        return array('taches' => json_encode($rawResult), 'materiel' => json_encode($materiel));
     }
 
     /**

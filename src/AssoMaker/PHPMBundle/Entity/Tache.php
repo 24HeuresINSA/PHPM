@@ -121,6 +121,14 @@ class Tache {
     protected $besoinsMateriel;
 
     /**
+     *
+     *
+     * @ORM\Column(type="string")
+     *
+     */
+    protected $commentaireLog = 'non';
+
+    /**
      * Get id
      *
      * @return integer
@@ -421,6 +429,7 @@ class Tache {
      */
     public function setMaterielSupplementaire($materielSupplementaire) {
         $this->materielSupplementaire = $materielSupplementaire;
+        $this->invalidateComLog();
     }
 
     /**
@@ -512,9 +521,36 @@ class Tache {
     }
 
     public function invalidBesoinsMateriel() {
+        $this->invalidateComLog();
         foreach ($this->besoinsMateriel as $b) {
             $b->invalidateComLog();
         }
+    }
+
+    /**
+     * Set commentaireLog
+     *
+     * @param string $commentaireLog
+     * @return BesoinMateriel
+     */
+    public function setCommentaireLog($commentaireLog) {
+        $this->commentaireLog = $commentaireLog;
+
+        return $this;
+    }
+
+    /**
+     * Get commentaireLog
+     *
+     * @return string
+     */
+    public function getCommentaireLog() {
+        return $this->commentaireLog;
+    }
+
+    public function invalidateComLog() {
+        if (strncmp($this->getCommentaireLog(), 'non', 3))
+            $this->setCommentaireLog('non (' . $this->getCommentaireLog() . ')');
     }
 
 }
