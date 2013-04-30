@@ -116,12 +116,12 @@ $scope.successTacheMaj[$id] = false;
                     </ul>
                 </td>
         </tr>
-    <td ROWSPAN="100" style="width: 30em;">
+    <td ROWSPAN="100" style="width: 30em;"  >
                 <input type="text" ng-change="successTacheMaj[t.id]=false" class="input-large danger" ng-model="t.commentaireLog">
     <button class="btn"type="submit"  ng-click="changeTacheCom(t.id,t.commentaireLog)" ng-class="{false: 'btn-warning', true: 'btn-success'}[successTacheMaj[t.id]]" ><i class="icon-ok"></i></button>
 <button class="btn btn-danger" type="submit"  ng-click="changeTacheCom(t.id,'raf');t.commentaireLog='raf'" ><i class="icon-remove"></i> RAF</button><br>
         
-        <b>Matériel supplémentaire : </b><br>{{t.materielSupplementaire}}
+        <div class="alert" ng-class="{false: 'alert-success', true: 'alert-error'}[non(t.commentaireLog)]"><b>Matériel supplémentaire : </b><br>{{t.materielSupplementaire}}</div>
 
     
     

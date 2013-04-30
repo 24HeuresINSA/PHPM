@@ -128,7 +128,7 @@ class AnalyseController extends Controller {
 
 
         $rawResult = $em
-                ->createQuery("SELECT t,g,b,m,p,e,a FROM AssoMakerPHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e JOIN t.plagesHoraire p LEFT OUTER JOIN t.besoinsMateriel b LEFT OUTER JOIN b.materiel m LEFT OUTER JOIN g.animLiee a WHERE t.statut >=0 ")
+                ->createQuery("SELECT t,g,b,m,p,e,a FROM AssoMakerPHPMBundle:Tache t JOIN t.groupeTache g JOIN g.equipe e JOIN t.plagesHoraire p LEFT OUTER JOIN t.besoinsMateriel b LEFT OUTER JOIN b.materiel m LEFT OUTER JOIN g.animLiee a WHERE t.statut >=0 AND t.statut<=2 ")
                 ->getArrayResult();
 
 
