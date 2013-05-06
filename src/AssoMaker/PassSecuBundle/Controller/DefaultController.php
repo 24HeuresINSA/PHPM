@@ -110,8 +110,8 @@ class DefaultController extends Controller {
             $editForm->bindRequest($request);
             $data = $editForm->getData();
 
-
             if ($editForm->isValid()) {
+
 
                 $data = $editForm->getData();
 
@@ -137,6 +137,9 @@ class DefaultController extends Controller {
                 $em->persist($entity);
                 $em->flush();
 
+                if ($param['action'] == 'sent') {
+                    return $this->redirect($this->generateUrl('pass_pass_index'));
+                }
                 return $this->redirect($this->generateUrl('pass_pass_edit', array('id' => $entity->getId(), 'code' => $entity->getAccessCode())));
             }
         }

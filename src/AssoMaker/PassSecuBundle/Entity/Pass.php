@@ -11,16 +11,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AssoMaker\PassSecuBundle\Entity\PassRepository")
  */
-class Pass
-{
-    public static $validiteChoices=array(
-            "Vendredi 18h00",
-            "Samedi 8h00","Samedi 10h00","Samedi 12h00","Samedi 16h00","Samedi 20h00","Dimanche 00h00",
-            "Dimanche 8h00","Dimanche 10h00","Dimanche 12h00","Dimanche 16h00","Dimanche 20h00","Lundi 0h00");
-    
-    public static $points = array("PS1 Laurent Bonnevay","PS2 Dermscan","PS3 Croix Luizet","PS4 Einstein","PS5 Double Mixte","PS6 UCBL");
-    
-    
+class Pass {
+
+    public static $validiteChoices = array(
+        "Vendredi 18h00",
+        "Samedi 8h00", "Samedi 10h00", "Samedi 12h00", "Samedi 16h00", "Samedi 20h00", "Dimanche 00h00",
+        "Dimanche 8h00", "Dimanche 10h00", "Dimanche 12h00", "Dimanche 16h00", "Dimanche 20h00", "Lundi 0h00");
+    public static $points = array("PS1 Laurent Bonnevay", "PS2 Dermscan", "PS3 Croix Luizet", "PS4 Einstein", "PS5 Double Mixte", "PS6 UCBL");
+
     /**
      * @var integer
      *
@@ -44,7 +42,7 @@ class Pass
      * @ORM\Column( type="string", length=255)
      */
     private $validiteDebut;
-    
+
     /**
      * @var string
      *
@@ -58,51 +56,51 @@ class Pass
      * @ORM\Column(type="text",nullable=true)
      */
     private $message;
-    
+
     /**
      * @var string
      *
      * @ORM\Column( type="text",nullable=true)
      */
     private $infosSupplementaires;
-        
+
     /**
      * @ORM\ManyToOne(targetEntity="AssoMaker\AnimBundle\Entity\Animation")
      * @ORM\JoinColumn(referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */
     protected $animationLiee;
-    
+
     /**
      * @ORM\Column(type="array")
      */
     protected $personnes;
-    
+
     /**
      * @var smallint $statut
-     * @Assert\Choice(choices = {"0", "1", "2"})
+     * @Assert\Choice(choices = {"0", "1", "2", "3"})
      * @ORM\Column(type="smallint")
      */
     protected $statut = 0;
-    
+
     /**
      * @var string
      *
      * @ORM\Column(type="string")
      */
     protected $accessCode;
-    
+
     /**
      * @ORM\Column(type="array")
      */
-    protected $pointsPassage = array("1"=>false,"2"=>false,"3"=>false,"4"=>false,"5"=>false,"6"=>false);
-    
+    protected $pointsPassage = array("1" => false, "2" => false, "3" => false, "4" => false, "5" => false, "6" => false);
+
     /**
-     * 
+     *
      * @ORM\Column(type="smallint")
      */
-    protected $maxPersonnes=2;
-    
+    protected $maxPersonnes = 2;
+
     /**
      *
      * @ORM\Column( type="string", length=255, nullable=true)
@@ -113,7 +111,7 @@ class Pass
      * )
      */
     protected $emailDemandeur;
-    
+
     /**
      * @var string $telephone
      *
@@ -121,14 +119,12 @@ class Pass
      */
     protected $telephoneDemandeur;
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -138,20 +134,18 @@ class Pass
      * @param string $entite
      * @return Pass
      */
-    public function setEntite($entite)
-    {
+    public function setEntite($entite) {
         $this->entite = $entite;
-    
+
         return $this;
     }
 
     /**
      * Get entite
      *
-     * @return string 
+     * @return string
      */
-    public function getEntite()
-    {
+    public function getEntite() {
         return $this->entite;
     }
 
@@ -161,20 +155,18 @@ class Pass
      * @param string $debut
      * @return Pass
      */
-    public function setDebut($debut)
-    {
+    public function setDebut($debut) {
         $this->debut = $debut;
-    
+
         return $this;
     }
 
     /**
      * Get debut
      *
-     * @return string 
+     * @return string
      */
-    public function getDebut()
-    {
+    public function getDebut() {
         return $this->debut;
     }
 
@@ -184,20 +176,18 @@ class Pass
      * @param string $commentaire
      * @return Pass
      */
-    public function setCommentaire($commentaire)
-    {
+    public function setCommentaire($commentaire) {
         $this->commentaire = $commentaire;
-    
+
         return $this;
     }
 
     /**
      * Get commentaire
      *
-     * @return string 
+     * @return string
      */
-    public function getCommentaire()
-    {
+    public function getCommentaire() {
         return $this->commentaire;
     }
 
@@ -207,20 +197,18 @@ class Pass
      * @param string $validite
      * @return Pass
      */
-    public function setValidite($validite)
-    {
+    public function setValidite($validite) {
         $this->validite = $validite;
-    
+
         return $this;
     }
 
     /**
      * Get validite
      *
-     * @return string 
+     * @return string
      */
-    public function getValidite()
-    {
+    public function getValidite() {
         return $this->validite;
     }
 
@@ -230,20 +218,18 @@ class Pass
      * @param array $personnes
      * @return Pass
      */
-    public function setPersonnes($personnes)
-    {
+    public function setPersonnes($personnes) {
         $this->personnes = $personnes;
-    
+
         return $this;
     }
 
     /**
      * Get personnes
      *
-     * @return array 
+     * @return array
      */
-    public function getPersonnes()
-    {
+    public function getPersonnes() {
         return $this->personnes;
     }
 
@@ -253,20 +239,18 @@ class Pass
      * @param integer $statut
      * @return Pass
      */
-    public function setStatut($statut)
-    {
+    public function setStatut($statut) {
         $this->statut = $statut;
-    
+
         return $this;
     }
 
     /**
      * Get statut
      *
-     * @return integer 
+     * @return integer
      */
-    public function getStatut()
-    {
+    public function getStatut() {
         return $this->statut;
     }
 
@@ -276,20 +260,18 @@ class Pass
      * @param \AssoMaker\BaseBundle\Entity\Orga $responsable
      * @return Pass
      */
-    public function setResponsable(\AssoMaker\BaseBundle\Entity\Orga $responsable = null)
-    {
+    public function setResponsable(\AssoMaker\BaseBundle\Entity\Orga $responsable = null) {
         $this->responsable = $responsable;
-    
+
         return $this;
     }
 
     /**
      * Get responsable
      *
-     * @return \AssoMaker\BaseBundle\Entity\Orga 
+     * @return \AssoMaker\BaseBundle\Entity\Orga
      */
-    public function getResponsable()
-    {
+    public function getResponsable() {
         return $this->responsable;
     }
 
@@ -299,20 +281,18 @@ class Pass
      * @param \AssoMaker\AnimBundle\Entity\Animation $animationLiee
      * @return Pass
      */
-    public function setAnimationLiee(\AssoMaker\AnimBundle\Entity\Animation $animationLiee = null)
-    {
+    public function setAnimationLiee(\AssoMaker\AnimBundle\Entity\Animation $animationLiee = null) {
         $this->animationLiee = $animationLiee;
-    
+
         return $this;
     }
 
     /**
      * Get animationLiee
      *
-     * @return \AssoMaker\AnimBundle\Entity\Animation 
+     * @return \AssoMaker\AnimBundle\Entity\Animation
      */
-    public function getAnimationLiee()
-    {
+    public function getAnimationLiee() {
         return $this->animationLiee;
     }
 
@@ -322,20 +302,18 @@ class Pass
      * @param \AssoMaker\BaseBundle\Entity\Orga $delivrePar
      * @return Pass
      */
-    public function setDelivrePar(\AssoMaker\BaseBundle\Entity\Orga $delivrePar = null)
-    {
+    public function setDelivrePar(\AssoMaker\BaseBundle\Entity\Orga $delivrePar = null) {
         $this->delivrePar = $delivrePar;
-    
+
         return $this;
     }
 
     /**
      * Get delivrePar
      *
-     * @return \AssoMaker\BaseBundle\Entity\Orga 
+     * @return \AssoMaker\BaseBundle\Entity\Orga
      */
-    public function getDelivrePar()
-    {
+    public function getDelivrePar() {
         return $this->delivrePar;
     }
 
@@ -345,20 +323,18 @@ class Pass
      * @param string $accessCode
      * @return Pass
      */
-    public function setAccessCode($accessCode)
-    {
+    public function setAccessCode($accessCode) {
         $this->accessCode = $accessCode;
-    
+
         return $this;
     }
 
     /**
      * Get accessCode
      *
-     * @return string 
+     * @return string
      */
-    public function getAccessCode()
-    {
+    public function getAccessCode() {
         return $this->accessCode;
     }
 
@@ -368,20 +344,18 @@ class Pass
      * @param string $validiteDebut
      * @return Pass
      */
-    public function setValiditeDebut($validiteDebut)
-    {
+    public function setValiditeDebut($validiteDebut) {
         $this->validiteDebut = $validiteDebut;
-    
+
         return $this;
     }
 
     /**
      * Get validiteDebut
      *
-     * @return string 
+     * @return string
      */
-    public function getValiditeDebut()
-    {
+    public function getValiditeDebut() {
         return $this->validiteDebut;
     }
 
@@ -391,20 +365,18 @@ class Pass
      * @param string $validiteFin
      * @return Pass
      */
-    public function setValiditeFin($validiteFin)
-    {
+    public function setValiditeFin($validiteFin) {
         $this->validiteFin = $validiteFin;
-    
+
         return $this;
     }
 
     /**
      * Get validiteFin
      *
-     * @return string 
+     * @return string
      */
-    public function getValiditeFin()
-    {
+    public function getValiditeFin() {
         return $this->validiteFin;
     }
 
@@ -414,20 +386,18 @@ class Pass
      * @param array $pointsPassage
      * @return Pass
      */
-    public function setPointsPassage($pointsPassage)
-    {
+    public function setPointsPassage($pointsPassage) {
         $this->pointsPassage = $pointsPassage;
-    
+
         return $this;
     }
 
     /**
      * Get pointsPassage
      *
-     * @return array 
+     * @return array
      */
-    public function getPointsPassage()
-    {
+    public function getPointsPassage() {
         return $this->pointsPassage;
     }
 
@@ -437,20 +407,18 @@ class Pass
      * @param string $message
      * @return Pass
      */
-    public function setMessage($message)
-    {
+    public function setMessage($message) {
         $this->message = $message;
-    
+
         return $this;
     }
 
     /**
      * Get message
      *
-     * @return string 
+     * @return string
      */
-    public function getMessage()
-    {
+    public function getMessage() {
         return $this->message;
     }
 
@@ -460,20 +428,18 @@ class Pass
      * @param string $infosSupplementaires
      * @return Pass
      */
-    public function setInfosSupplementaires($infosSupplementaires)
-    {
+    public function setInfosSupplementaires($infosSupplementaires) {
         $this->infosSupplementaires = $infosSupplementaires;
-    
+
         return $this;
     }
 
     /**
      * Get infosSupplementaires
      *
-     * @return string 
+     * @return string
      */
-    public function getInfosSupplementaires()
-    {
+    public function getInfosSupplementaires() {
         return $this->infosSupplementaires;
     }
 
@@ -483,20 +449,18 @@ class Pass
      * @param integer $maxPersonnes
      * @return Pass
      */
-    public function setMaxPersonnes($maxPersonnes)
-    {
+    public function setMaxPersonnes($maxPersonnes) {
         $this->maxPersonnes = $maxPersonnes;
-    
+
         return $this;
     }
 
     /**
      * Get maxPersonnes
      *
-     * @return integer 
+     * @return integer
      */
-    public function getMaxPersonnes()
-    {
+    public function getMaxPersonnes() {
         return $this->maxPersonnes;
     }
 
@@ -506,20 +470,18 @@ class Pass
      * @param string $emailDemandeur
      * @return Pass
      */
-    public function setEmailDemandeur($emailDemandeur)
-    {
+    public function setEmailDemandeur($emailDemandeur) {
         $this->emailDemandeur = $emailDemandeur;
-    
+
         return $this;
     }
 
     /**
      * Get emailDemandeur
      *
-     * @return string 
+     * @return string
      */
-    public function getEmailDemandeur()
-    {
+    public function getEmailDemandeur() {
         return $this->emailDemandeur;
     }
 
@@ -529,20 +491,20 @@ class Pass
      * @param string $telephoneDemandeur
      * @return Pass
      */
-    public function setTelephoneDemandeur($telephoneDemandeur)
-    {
+    public function setTelephoneDemandeur($telephoneDemandeur) {
         $this->telephoneDemandeur = $telephoneDemandeur;
-    
+
         return $this;
     }
 
     /**
      * Get telephoneDemandeur
      *
-     * @return string 
+     * @return string
      */
-    public function getTelephoneDemandeur()
-    {
+    public function getTelephoneDemandeur() {
         return $this->telephoneDemandeur;
     }
+
 }
+

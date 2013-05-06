@@ -76,7 +76,8 @@ function Ctrl($scope){
                         <div class="span8" ><a href="{{ p.id }}/{{ p.accessCode }}" class="statut{{ p.statut }}">
                             <i class="icon-pencil" ng-show="p.statut==0"> </i>
                             <i class="icon-eye-open" ng-show="p.statut==1"> </i>
-                            <i class="icon-ok" ng-show="p.statut>=2"> </i>                       
+                            <i class="icon-ok" ng-show="p.statut==2"> </i>         
+                            <i class="icon-arrow-right" ng-show="p.statut==3"> </i>  
                             {{p.entite}}
                             </a> <small>({{p.email}})</small>
                             <a href="mailto:{{p.email}}?&subject=Votre%20laissez-passer%2024Heures%20INSA&body=Bonjour%2C%0A%0AVous+avez+demand%C3%A9+un+pass+s%C3%A9curit%C3%A9+afin+d%27acc%C3%A9der+au+campus+LyonTech-La+Doua+pendant+le+festival+des+24+heures+de+l%27INSA.%0ACette+demande+vient+d%27%C3%AAtre+accept%C3%A9e+par+la+direction+s%C3%A9curit%C3%A9+du+festival.%0AVous+pouvez+imprimer+vos+laissez-passer+%C3%A0+l%27adresse+suivante+%3A%0A%0A{{prelink}}print/{{ p.id }}/{{ p.accessCode }}%0A%0ATr%C3%A8s+Cordialement%2C">
