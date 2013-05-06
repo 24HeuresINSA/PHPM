@@ -125,6 +125,10 @@ class DefaultController extends Controller {
                     $entity->setStatut(2);
                 }
 
+                if ($admin && $param['action'] == 'sent') {
+                    $entity->setStatut(3);
+                }
+
                 if ($admin && $param['action'] == 'devalidate') {
                     $entity->setStatut(0);
                 }
@@ -138,7 +142,7 @@ class DefaultController extends Controller {
         }
 
 
-        if (!$admin && $entity->getStatut() == 2) {
+        if (!$admin && $entity->getStatut() >= 2) {
             return $this->redirect($this->generateUrl('pass_pass_print', array('id' => $entity->getId(), 'code' => $entity->getAccessCode())));
         }
 
@@ -165,7 +169,7 @@ class DefaultController extends Controller {
 
         $guest = !$this->get('security.context')->isGranted('ROLE_USER');
 
-        if (!$admin && $entity->getStatut() != 2) {
+        if (!$admin && $entity->getStatut() < 2) {
             throw new AccessDeniedException();
         }
 

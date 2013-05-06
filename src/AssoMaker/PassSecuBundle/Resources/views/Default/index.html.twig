@@ -60,6 +60,9 @@ function Ctrl($scope){
 			<li ng-class="{active: search.statut=='2'}">
 			    <a ng-click="search.statut='2'" ><i class="icon-ok"></i> Validés</a>
 			</li>
+                        <li ng-class="{active: search.statut=='3'}">
+			    <a ng-click="search.statut='3'" ><i class="icon-arrow-right"></i> Envoyés</a>
+			</li>
 			<li ng-class="{active: search.statut==-1}">
 			    <a ng-click="search.statut=-1"><i class="icon-trash"></i> Supprimés</a>
 			</li>
