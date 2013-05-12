@@ -88,7 +88,9 @@ class DefaultController extends Controller {
 
         $user = $em->getRepository('AssoMakerBaseBundle:Orga')->findOneById($id);
         $secretSalt = $config->getValue('phpm_secret_salt');
-        if ((!$user) || ($loginkey !== crypt($secretSalt . $id, 24))) {
+
+        if ((!$user) || ($loginkey !== crypt($secretSalt . $id, 'slt'))) {
+
             return $this->redirect($config->getValue('phpm_orgasoft_inscription_returnURL'));
         }
 
