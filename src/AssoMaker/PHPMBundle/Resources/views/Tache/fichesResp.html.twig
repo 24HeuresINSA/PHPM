@@ -60,7 +60,7 @@ overflow:auto;
 }
 
 p,h2{
-line-height:1em;
+line-height:1.2em;
 }
 
 </style>
@@ -78,9 +78,9 @@ line-height:1em;
 {% set prevd = null%}
 {% for c in p.creneaux%}
 {%if c.debut!=prevd%}
-{%if not loop.first %}
+
 <br>
-{%endif%}
+
 <b>
     	      {{ p.debut | format_datetime('EEEE dd MMM HH:mm') }}
 	  	    <i class="icon-arrow-right"></i>
