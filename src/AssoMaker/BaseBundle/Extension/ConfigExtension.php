@@ -39,7 +39,7 @@ class ConfigExtension extends \Twig_Extension {
 
     public function phpm_crypt($string) {
 
-        return crypt($this->configs['phpm_secret_salt'] . $string, 'slt');
+        return urlencode(md5($this->configs['phpm_secret_salt'] . $string, 'slt'));
     }
 
     public function getValue($field) {
