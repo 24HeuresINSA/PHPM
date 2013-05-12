@@ -264,7 +264,7 @@ class OrgaRepository extends EntityRepository {
         foreach ($result as $oid => &$orga) {
             foreach ($orga['disponibilites'] as $did => &$disponibilite) {
                 foreach ($disponibilite['creneaux'] as $id => &$creneau) {
-                    if (array_key_exists('del', $creneau)) {
+                    if ($creneau == null || array_key_exists('del', $creneau)) {
                         unset($disponibilite['creneaux'][$id]);
                     }
                 }

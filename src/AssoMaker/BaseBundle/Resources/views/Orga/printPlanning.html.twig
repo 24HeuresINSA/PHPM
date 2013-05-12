@@ -2,25 +2,37 @@
 {% set pageTitle = 'Impression Planning' %}
 
 {% block body %}
+
 <style>
 
+p{
+font-size: 10pt;
+}        
+        
 h1{
-font-size: 20pt;
+font-size: 14pt;
 }
 
 h2{
-font-size: 18pt;
+font-size: 12pt;
 }
 
 h3{
-font-size: 15pt;
+font-size: 12pt;
 }
+
+p,h2,h3{
+line-height:1em;
+}
+
+
 
 .orga{
 	width:100%;
-    margin-bottom:15pt;
+    
     
 }
+
 .pagebreak{
     page-break-before:always;
 
@@ -32,14 +44,10 @@ font-size: 15pt;
     page-break-inside: avoid;
     page-break-before:auto;
     page-break-after: auto;
-    margin-bottom:15pt;
+     border-bottom:solid 1pt lightgray;
     
 }
-.creneau > div{
 
-    border-bottom:solid 1pt lightgray;
-
-}
 
 .horaires{
 float:left;
@@ -57,14 +65,13 @@ float:right;
 overflow:auto;
 }
 
-.p{
-line-height:3em;
-}
+
 
 </style>
 <div class="row-fluid " >
 {% for key,orga in orgas %}
 
+<div class="pagebreak"></div>&nbsp;
 <div class="pagebreak"></div>
 
 <div class="orga">
@@ -91,7 +98,7 @@ line-height:3em;
 	  	
 	  <div class="lieu"><h3><small>{{ creneau.plageHoraire.tache.lieu }}</small></h2></div>
 	 </div>
-	 	<div class="infos">
+	 	<div>
 	 		<div class="titre"><h3>{{ creneau.plageHoraire.tache.groupeTache.nom }} / {{ creneau.plageHoraire.tache.nom }}</h3></div>
 	 		{% if creneau.plageHoraire.creneaux| length > 1 %}
 		 		<b>Avec : </b>
@@ -108,7 +115,7 @@ line-height:3em;
 	 	</div>
 	  {% if creneau.plageHoraire.tache.consignes  %}
 		  <div class="consignes">
-		    <h4>Consignes</h4>{{ creneau.plageHoraire.tache.consignes |raw}}
+		    <h3>Consignes</h3>{{ creneau.plageHoraire.tache.consignes |raw}}
 		  </div>
 	  {% endif %}
 	  {% if creneau.plageHoraire.tache.besoinsMateriel | length >0 %}
