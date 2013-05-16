@@ -210,7 +210,9 @@ class OrgaRepository extends EntityRepository {
     public function getPlanning($orga_id = 'all', $equipe_id = 'all', \DateTime $debut, \DateTime $fin) {
 
         if ($orga_id == '') {
+            echo 'o';
             if ($equipe_id == '') {
+                echo 'e';
                 $result = $this->getEntityManager()->createQuery("SELECT o,d,c,p,t,g,r,bm,m,c2,d2,o2 FROM AssoMakerBaseBundle:Orga o JOIN o.disponibilites d JOIN d.creneaux c JOIN
 					c.plageHoraire p JOIN p.tache t JOIN t.groupeTache g JOIN t.responsable r  LEFT JOIN t.besoinsMateriel bm LEFT JOIN bm.materiel m
 					JOIN p.creneaux c2 JOIN c2.disponibilite d2 JOIN d2.orga o2
@@ -221,10 +223,11 @@ class OrgaRepository extends EntityRepository {
                         ->setParameter('fin', $fin, \Doctrine\DBAL\Types\Type::DATETIME)
                         ->getArrayResult();
             } else {
-                $result = $this->getEntityManager()->createQuery("SELECT o,d,c,p,t,g,r,bm,m,c2,d2,o2,e FROM AssoMakerBaseBundle:Orga o JOIN o.disponibilites d JOIN d.creneaux c JOIN
+                echo 'ne';
+                $result = $this->getEntityManager()->createQuery("SELECT o,d,c,p,t,g,r,bm,m,c2,d2,o2 FROM AssoMakerBaseBundle:Orga o JOIN o.disponibilites d JOIN d.creneaux c JOIN
 						c.plageHoraire p JOIN p.tache t JOIN t.groupeTache g JOIN t.responsable r  LEFT JOIN t.besoinsMateriel bm LEFT JOIN bm.materiel m
 						JOIN p.creneaux c2 JOIN c2.disponibilite d2 JOIN d2.orga o2 JOIN o.equipe e
-						WHERE c.fin >= :debut AND c.debut <= :fin AND e.id = :eid
+						WHERE e.id = :eid AND c.fin >= :debut AND c.debut <= :fin
 						AND c2.debut = c.debut AND c2.fin = c.fin
 						ORDER BY o.nom,d.debut, c.debut")
                         ->setParameter('eid', $equipe_id)
@@ -259,12 +262,13 @@ class OrgaRepository extends EntityRepository {
                 }
                 unset($creneau);
             }
+            unset($prevCreneau);
         }
 
         foreach ($result as $oid => &$orga) {
             foreach ($orga['disponibilites'] as $did => &$disponibilite) {
                 foreach ($disponibilite['creneaux'] as $id => &$creneau) {
-                    if ($creneau == null || array_key_exists('del', $creneau)) {
+                    if (array_key_exists('del', $creneau)) {
                         unset($disponibilite['creneaux'][$id]);
                     }
                 }
