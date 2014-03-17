@@ -134,7 +134,7 @@ class DefaultController extends Controller {
             $openid = new \LightOpenID($serverurl);
             if (!$openid->mode) {
 
-                $session->set('originalUrl', $this->container->get('request')->server->get('PHP_SELF'));
+                $session->set('originalUrl', $this->container->get('request')->headers->get('referer'));
                 //                 if(isset($_GET['login'])) {
                 $openid->identity = 'https://www.google.com/accounts/o8/id';
                 $openid->required = array('contact/email');
