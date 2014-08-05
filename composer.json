@@ -141,7 +141,7 @@
                 "name": "fortawesome/font-awesome",
                 "version": "3.0.2",
                 "dist": {
-                    "url": "https://github.com/FortAwesome/Font-Awesome/zipball/master",
+                    "url": "https://github.com/FortAwesome/Font-Awesome/archive/v3.0.2.zip",
                     "type": "zip"
                 }
 
