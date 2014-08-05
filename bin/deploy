@@ -1,9 +1,9 @@
 #!/bin/sh
 set -e
 composer.phar update
-cd vendor/twitter/bootstrap/
-make bootstrap
-cd ../../../
+#cd vendor/twitter/bootstrap/
+#make bootstrap
+#cd ../../../
 cp -r vendor/twitter/bootstrap/bootstrap web/lib/
 cp -r vendor/jquery/jquery/jquery-latest.min.js web/lib/jquery.min.js
 cp -r vendor/jquery/jqueryui/ web/lib/
