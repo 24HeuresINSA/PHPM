@@ -22,7 +22,7 @@
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
         "fp/lightopenid": "dev-master",
-        "sonata-project/intl-bundle": "dev-master",
+        "sonata-project/intl-bundle": "2.1.*",
         "twitter/bootstrap": "2.2.3",
         "jquery/jquery": "master",
         "jquery/jqueryui": "1.9.1",
