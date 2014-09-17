@@ -22,8 +22,8 @@
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
         "fp/lightopenid": "dev-master",
-        "sonata-project/intl-bundle": "dev-master",
-        "twitter/bootstrap": "2.2.3",
+        "sonata-project/intl-bundle": "2.1.*",
+        "twitter/bootstrap": "2.3.2",
         "jquery/jquery": "master",
         "jquery/jqueryui": "1.9.1",
         "trentrichardson/jquerytimepickeraddon": "1.0.3",
@@ -39,12 +39,16 @@
             "type": "package",
             "package": {
                 "name": "twitter/bootstrap",
-                "version": "2.2.3",
+                "version": "2.3.2",
                 "dist": {
-                    "url": "http://twitter.github.com/bootstrap/assets/bootstrap.zip",
+                    "url": "http://getbootstrap.com/2.3.2/assets/bootstrap.zip",
                     "type": "zip"
                 }
             }
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/formapro-forks/LightOpenID.git"
         },
         {
             "type": "package",
@@ -137,7 +141,7 @@
                 "name": "fortawesome/font-awesome",
                 "version": "3.0.2",
                 "dist": {
-                    "url": "https://github.com/FortAwesome/Font-Awesome/zipball/master",
+                    "url": "https://github.com/FortAwesome/Font-Awesome/archive/v3.0.2.zip",
                     "type": "zip"
                 }
 
