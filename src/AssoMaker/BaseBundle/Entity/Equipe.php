@@ -128,7 +128,7 @@ class Equipe
     /**
      * Set responsable
      *
-     * @param AssoMaker\BaseBundle\Entity\Orga $responsable
+     * @param \AssoMaker\BaseBundle\Entity\Orga $responsable
      */
     public function setResponsable(\AssoMaker\BaseBundle\Entity\Orga $responsable)
     {
@@ -138,7 +138,7 @@ class Equipe
     /**
      * Get responsable
      *
-     * @return AssoMaker\BaseBundle\Entity\Orga 
+     * @return \AssoMaker\BaseBundle\Entity\Orga
      */
     public function getResponsable()
     {
@@ -148,7 +148,7 @@ class Equipe
     /**
      * Add groupesTache
      *
-     * @param AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTache
+     * @param \AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTache
      */
     public function addGroupeTache(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTache)
     {
@@ -158,7 +158,7 @@ class Equipe
     /**
      * Get groupesTache
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getGroupesTache()
     {
@@ -168,7 +168,7 @@ class Equipe
     /**
      * Add orgas
      *
-     * @param AssoMaker\BaseBundle\Entity\Orga $orgas
+     * @param \AssoMaker\BaseBundle\Entity\Orga $orgas
      */
     public function addOrga(\AssoMaker\BaseBundle\Entity\Orga $orgas)
     {
@@ -178,7 +178,7 @@ class Equipe
     /**
      * Get orgas
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getOrgas()
     {
@@ -208,7 +208,7 @@ class Equipe
     /**
      * Set confiance
      *
-     * @param AssoMaker\BaseBundle\Entity\Confiance $confiance
+     * @param \AssoMaker\BaseBundle\Entity\Confiance $confiance
      */
     public function setConfiance(\AssoMaker\BaseBundle\Entity\Confiance $confiance)
     {
@@ -218,7 +218,7 @@ class Equipe
     /**
      * Get confiance
      *
-     * @return AssoMaker\BaseBundle\Entity\Confiance 
+     * @return \AssoMaker\BaseBundle\Entity\Confiance
      */
     public function getConfiance()
     {
@@ -274,7 +274,7 @@ class Equipe
     /**
      * Add groupesTache
      *
-     * @param AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTache
+     * @param \AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTache
      * @return Equipe
      */
     public function addGroupesTache(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTache)
@@ -287,7 +287,7 @@ class Equipe
     /**
      * Remove groupesTache
      *
-     * @param AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTache
+     * @param \AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTache
      */
     public function removeGroupesTache(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTache)
     {
@@ -297,7 +297,7 @@ class Equipe
     /**
      * Remove orgas
      *
-     * @param AssoMaker\BaseBundle\Entity\Orga $orgas
+     * @param \AssoMaker\BaseBundle\Entity\Orga $orgas
      */
     public function removeOrga(\AssoMaker\BaseBundle\Entity\Orga $orgas)
     {

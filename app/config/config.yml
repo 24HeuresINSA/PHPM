@@ -16,6 +16,12 @@ framework:
     default_locale: %locale%
     trust_proxy_headers: false 
     session:         ~
+    translator: ~
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: AssoMaker\BaseBundle\Entity\Orga
 
 # Twig Configuration
 twig:

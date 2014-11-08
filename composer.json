@@ -32,7 +32,8 @@
         "angular/angularJS": "1.0.4",
         "fortawesome/font-awesome": "3.0.2",
         "leafo/lessphp": "dev-master",
-        "angular/angularUI": "0.4.0"
+        "angular/angularUI": "0.4.0",
+        "friendsofsymfony/user-bundle": "v1.3.5"
     },
     "repositories": [
         {

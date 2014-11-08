@@ -86,7 +86,6 @@
                             {{ _self.navBarItem('Celles de ma com\'','tache',{'equipeid': app.user.equipe.id}) }}
                             {{ _self.navBarItem('Groupes de tâches','groupetache',{'orgaid': app.user.id}) }}
                        {% endif %}
-                          {{ _self.navBarItem('Fiches de Responsables','phpm_tache_fiches_resp',{sdebut:("now"|format_datetime('yyyy-M-dd')),sfin:(phpm_planning_fin|format_datetime('yyyy-M-dd'))}) }}     
                                                     
                                                 </ul>
                                             </li>
