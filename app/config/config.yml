@@ -22,6 +22,15 @@ fos_user:
     firewall_name: main
     user_class: AssoMaker\BaseBundle\Entity\Orga
 
+hwi_oauth:
+  firewall_name: main
+  resource_owners:
+    google:
+      type: google
+      client_id: %oauth.google.id%
+      client_secret: %oauth.google.secret%
+      scope: "email profile"
+
 # Twig Configuration
 twig:
     debug:            %kernel.debug%

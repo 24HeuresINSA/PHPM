@@ -63,6 +63,13 @@ class Orga extends BaseUser implements UserInterface {
     protected $surnom;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="google_id", type="string", length=511, nullable=true)
+     */
+    protected $google_id;
+
+    /**
      * @var string $role
      *
      * @ORM\Column(name="role", type="string", length=255, nullable=true)
@@ -1326,5 +1333,38 @@ class Orga extends BaseUser implements UserInterface {
     public function getMembreBureau()
     {
         return $this->membreBureau;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set googleId
+     *
+     * @param string $googleId
+     * @return Orga
+     */
+    public function setGoogleId($googleId)
+    {
+        $this->google_id = $googleId;
+
+        return $this;
+    }
+
+    /**
+     * Get googleId
+     *
+     * @return string 
+     */
+    public function getGoogleId()
+    {
+        return $this->google_id;
     }
 }

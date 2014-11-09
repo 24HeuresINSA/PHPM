@@ -15,6 +15,8 @@ security:
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username
+        oauth.user_provider:
+            id: oauth.user_provider
 
 
     encoders:
@@ -27,14 +29,20 @@ security:
 
         main:
             pattern: ^/
-            form_login:
-                provider: fos_userbundle
-                csrf_provider: form.csrf_provider
-            logout:       true
-            anonymous:    true
+            oauth:
+                    resource_owners:
+                      google: "/login/check-google"
+                    login_path: /login
+                    failure_path: /login
+                    default_target_path: /home
+                    oauth_user_provider:
+                      service: oauth.user_provider
+            logout: true
+            anonymous: true
 
     access_control:
              - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+             - { path: ^/connect$, role: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/admin/, role: ROLE_ADMIN }

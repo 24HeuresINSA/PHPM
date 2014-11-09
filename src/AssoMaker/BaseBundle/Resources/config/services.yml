@@ -9,6 +9,9 @@ services:
        arguments: [@doctrine]
        tags:
             -  { name: twig.extension }
+    oauth.user_provider:
+       class:      AssoMaker\BaseBundle\OAuth\UserProvider
+       arguments: ["@fos_user.user_manager",{google: google_id}]
     form.type.orga:
         class: AssoMaker\BaseBundle\Form\OrgaUserType
         arguments: ["@security.context","@config.extension"]

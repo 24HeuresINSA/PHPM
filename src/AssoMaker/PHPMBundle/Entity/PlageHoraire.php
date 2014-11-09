@@ -48,7 +48,7 @@ class PlageHoraire {
      * @var smallint $dureeCreneau
      *
      * @ORM\Column(name="dureeCreneau", type="smallint")
-     * @Assert\Min(limit = "0")
+     * @Assert\Range(min = "0")
      * @QuartHeure()
      */
     protected $dureeCreneau;
@@ -64,7 +64,7 @@ class PlageHoraire {
      * @var smallint $recoupementCreneau
      *
      * @ORM\Column(name="recoupementCreneau", type="smallint")
-     * @Assert\Min(limit = "0")
+     * @Assert\Range(min = "0")
      * @QuartHeure()
      */
     protected $recoupementCreneau;
@@ -313,7 +313,7 @@ class PlageHoraire {
     /**
      * Get besoinsOrga
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getBesoinsOrga() {
         return $this->besoinsOrga;
@@ -322,7 +322,7 @@ class PlageHoraire {
     /**
      * Set besoinsOrga
      *
-     * @param AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrga
+     * @param \AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrga
      */
     public function setBesoinsOrga($besoinsOrga) {
         foreach ($besoinsOrga as $bo)
@@ -333,7 +333,7 @@ class PlageHoraire {
     /**
      * Set tache
      *
-     * @param AssoMaker\PHPMBundle\Entity\Tache $tache
+     * @param \AssoMaker\PHPMBundle\Entity\Tache $tache
      */
     public function setTache(\AssoMaker\PHPMBundle\Entity\Tache $tache) {
         $this->tache = $tache;
@@ -342,7 +342,7 @@ class PlageHoraire {
     /**
      * Get tache
      *
-     * @return AssoMaker\PHPMBundle\Entity\Tache
+     * @return \AssoMaker\PHPMBundle\Entity\Tache
      */
     public function getTache() {
         return $this->tache;
