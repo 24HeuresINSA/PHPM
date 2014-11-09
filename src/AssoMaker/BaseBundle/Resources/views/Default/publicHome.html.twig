@@ -5,11 +5,11 @@
 
 <div class="hero-unit">
 	{{ phpm_contenu_page_principale |raw}}
-    {% if app.session.hasFlash('notice') %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
         <div class="alert alert-error">
-            {{ app.session.flash('notice') }}
-            </div>
-    {% endif %}
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
             <p>
                 <a class="btn btn-primary btn-large" href="{{ url('base_accueil') }}">Se connecter</a>
             </p>

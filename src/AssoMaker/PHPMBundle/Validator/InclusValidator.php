@@ -44,5 +44,19 @@ class InclusValidator extends ConstraintValidator  // vérifie si un créneau es
     			
     		
 		return TRUE;	
-	}			
+	}
+
+    /**
+     * Checks if the passed value is valid.
+     *
+     * @param mixed $value The value that should be validated
+     * @param Constraint $constraint The constraint for the validation
+     *
+     * @api
+     */
+    public function validate($value, Constraint $constraint)
+    {
+        if(!$this->isValid($value,$constraint))
+            $this->context->addViolation("");
+    }
 }
