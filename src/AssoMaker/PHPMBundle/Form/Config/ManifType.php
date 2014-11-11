@@ -54,7 +54,7 @@ class ManifType extends AbstractType
                                 'allow_add' => true, 'allow_delete' => true,
                                 'by_reference' => false,
                                 'label' => 'Matériel',
-                				'options'  => array('error_bubbling'=>true)));
+                				'options'  => array('error_bubbling'=>true, 'data_class' => 'AssoMaker\PHPMBundle\Entity\Materiel')));
 
         $form = $builder->getForm();
 

@@ -49,7 +49,12 @@ class Equipe
      * @ORM\OneToMany(targetEntity="Orga", mappedBy="equipe")
      */
     protected $orgas;
-    
+
+    /**
+     * @ORM\OneToMany(targetEntity="RegistrationToken", mappedBy="equipe")
+     */
+    protected $tokens;
+
     /**
      * @var string $couleur
      *
@@ -302,5 +307,38 @@ class Equipe
     public function removeOrga(\AssoMaker\BaseBundle\Entity\Orga $orgas)
     {
         $this->orgas->removeElement($orgas);
+    }
+
+    /**
+     * Add tokens
+     *
+     * @param \AssoMaker\BaseBundle\Entity\RegistrationToken $tokens
+     * @return Equipe
+     */
+    public function addToken(\AssoMaker\BaseBundle\Entity\RegistrationToken $tokens)
+    {
+        $this->tokens[] = $tokens;
+
+        return $this;
+    }
+
+    /**
+     * Remove tokens
+     *
+     * @param \AssoMaker\BaseBundle\Entity\RegistrationToken $tokens
+     */
+    public function removeToken(\AssoMaker\BaseBundle\Entity\RegistrationToken $tokens)
+    {
+        $this->tokens->removeElement($tokens);
+    }
+
+    /**
+     * Get tokens
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTokens()
+    {
+        return $this->tokens;
     }
 }

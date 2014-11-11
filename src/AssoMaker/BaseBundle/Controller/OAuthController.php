@@ -10,6 +10,8 @@ namespace AssoMaker\BaseBundle\Controller;
 
 
 use AssoMaker\BaseBundle\Entity\Orga;
+use AssoMaker\BaseBundle\Entity\RegistrationToken;
+use Doctrine\Common\Persistence\AbstractManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -59,19 +61,37 @@ class OAuthController extends Controller {
     public function registerAction(Request $request){
         $this->securityContext=$this->get('security.context');
         $this->token = $this->securityContext->getToken();
+        /**
+         * @var AbstractManagerRegistry
+         */
         $em = $this->getDoctrine()->getManager();
-        $email = $request->getSession()->get('email');
 
         $entity = $this->token->getUser();
 
-        $form = $this->createForm($this->get('form.type.registration'), $entity, array("confianceCode" => null));
+        $token_id = $request->getSession()->get('token_id');
+        if($token_id===null){
+            $this->refuseRegistration($em, $entity);
+        }
+        /**
+         * @var RegistrationToken
+         */
+        $registrationToken = $em->getRepository('AssoMakerBaseBundle:RegistrationToken')->findOneBy(array('id'=>$token_id));
+        if($registrationToken==null){
+            $this->refuseRegistration($em,$entity);
+        }
+
+        $form = $this->createForm($this->get('form.type.registration'), $entity, array());
 
         $form->handleRequest($request);
 
         if ($request->getMethod() == 'POST') {
             if ($form->isValid()) {
                 $entity->setEnabled(true);
-                $entity->addRole('ROLE_ADMIN');
+                $entity->addRole('ROLE_ORGA');
+                $entity->setEquipe($registrationToken->getEquipe());
+                if($em->getRepository('AssoMakerBaseBundle:Orga')->count()<=1)
+                    $entity->addRole('ROLE_SUPER_ADMIN');
+                $em->remove($registrationToken);
                 $em->persist($entity);
                 $em->flush();
                 return $this->redirect($this->generateUrl('check_oauth'));
@@ -83,6 +103,27 @@ class OAuthController extends Controller {
             'entity' => $entity,
             'form' => $form->createView()
         );
+    }
+
+    public function generateAction($equipe_id){
+        $em = $this->getDoctrine()->getManager();
+        $token = new RegistrationToken();
+        $token->setEquipe($em->getRepository('AssoMakerBaseBundle:Equipe')->findOneById($equipe_id));
+        $em->persist($token);
+        $em->flush();
+        return $this->render($token->getToken());
+    }
+
+    /**
+     * @param $entityManager
+     * @param $user
+     */
+    private function refuseRegistration($entityManager, $user)
+    {
+        $entityManager->remove($user);
+        $entityManager->flush();
+        $this->securityContext->setToken(null);
+        throw new AccessDeniedException("Vous avez essayé de vous inscrire sans clef valide");
     }
 
 } 
