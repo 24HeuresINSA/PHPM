@@ -349,7 +349,7 @@ COMMIT;
 		
 		$valid = null;
 		if ($this->get('request')->getMethod() == 'POST') {
-		$form->bindRequest($request);
+		$form->handleRequest($request);
 		$data = $form->getData();
 		$valid=$form->isValid();
 		

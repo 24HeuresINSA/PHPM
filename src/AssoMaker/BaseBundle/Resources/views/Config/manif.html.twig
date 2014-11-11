@@ -65,15 +65,13 @@
 				
 				    <tr>
                                         <td>{{i.vars.value.id}}</td>
-				    <td>{{ form_row(i.nom) }}</td>
-				    <td>{{ form_row(i.responsable, {'label':'false'}) }}</td>
-				    <td>{{ form_row(i.confiance, {'label':'false'}) }}</td>
-				    <td>{{ form_row(i.couleur) }}</td>
-				    <td>{{ form_row(i.showOnTrombi) }}</td>
-				    <td>{{ form_row(i.comptesPersoEnabled) }}</td>
+				    <td>{{ form_row(i.nom, {'label':false}) }}</td>
+				    <td>{{ form_row(i.responsable, {'label':false}) }}</td>
+				    <td>{{ form_row(i.confiance, {'label':false}) }}</td>
+				    <td>{{ form_row(i.couleur, {'label':false}) }}</td>
+				    <td>{{ form_row(i.showOnTrombi, {'label':false}) }}</td>
+				    <td>{{ form_row(i.comptesPersoEnabled, {'label':false}) }}</td>
 				    <td>
-                                        <a class="btn" href="{{ path('orga_registersoft', { 'equipeId': i.vars.value.id,'confianceCode': i.get('value').confiance.code }) }}"><i class="icon-link"></i> Lien visiteur</a>
-                                        
                                         <a class="btn btn-danger" href="{{ path('equipe_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a></td>
 				    </tr>
 				{% endfor %}
@@ -142,14 +140,14 @@
 				
 		        </tbody>
 	    	</table>
-			
+
 			<div class="row-fluid">
 				<a class="btn btn-success" href="{{ path('materiel_new') }}"><i class="icon-plus"></i> Nouveau matériel</a>
 			</div>
 	</div>
-
-{{ form_rest(form) }}
-
+    <div style="display: none">
+    {{ form_rest(form) }}
+    </div>
         
     </p>
     </div>

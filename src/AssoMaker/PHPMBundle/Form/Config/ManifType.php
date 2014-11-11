@@ -30,7 +30,7 @@ class ManifType extends AbstractType
                                 'allow_delete' => true,
                                 'by_reference' => false,
                                 'label' => 'Clés de Configuration',
-                				'options'  => array('error_bubbling'=>true)));
+                				'options'  => array('error_bubbling'=>true,'data_class' => 'AssoMaker\PHPMBundle\Entity\Config')));
 
         $builder
                 ->add('equipeItems', 'collection',
@@ -38,7 +38,7 @@ class ManifType extends AbstractType
                                 'allow_delete' => true,
                                 'by_reference' => false,
                                 'label' => 'Équipes',
-                				'options'  => array('error_bubbling'=>true)));
+                				'options'  => array('error_bubbling'=>true,'data_class'=>'AssoMaker\BaseBundle\Entity\Equipe')));
 
         $builder
                 ->add('confianceItems', 'collection',
@@ -46,7 +46,7 @@ class ManifType extends AbstractType
                                 'allow_add' => true, 'allow_delete' => true,
                                 'by_reference' => false,
                                 'label' => 'Niveaux de Confiance',
-                				'options'  => array('error_bubbling'=>true)));
+                				'options'  => array('error_bubbling'=>true,'data_class'=>'AssoMaker\BaseBundle\Entity\Confiance')));
 
         $builder
                 ->add('materielItems', 'collection',

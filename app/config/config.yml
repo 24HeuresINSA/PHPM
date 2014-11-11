@@ -21,6 +21,9 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: AssoMaker\BaseBundle\Entity\Orga
+    registration:
+        confirmation:
+            enabled:    true # change to true for required email confirmation
 
 hwi_oauth:
   firewall_name: main

@@ -55,7 +55,7 @@ class UserProvider extends FOSUBUserProvider
         if (null === $this->userManager->findUserByUsername($response->getNickname())) {
             $user->setUsername($response->getNickname());
         }
-        $user->setEnabled(true);
+        $user->setEnabled(false);
         return $user;
     }
     /**

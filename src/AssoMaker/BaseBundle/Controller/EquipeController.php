@@ -104,7 +104,7 @@ class EquipeController extends Controller
         $entity  = new Equipe();
         $request = $this->getRequest();
         $form    = $this->createForm(new EquipeType(), $entity);
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();

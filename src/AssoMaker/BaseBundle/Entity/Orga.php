@@ -19,7 +19,6 @@ use AssoMaker\PHPMBundle\Entity\Disponibilite;
  * @ORM\Entity(repositoryClass="AssoMaker\BaseBundle\Entity\OrgaRepository")
  * @UniqueEntity(fields={"email"}, message="Un orga possédant cet email est déjà inscrit.")
  * @UniqueEntity(fields={"telephone"}, message="Un orga possédant ce numéro de téléphone est déjà inscrit.")
- * @Assert\Callback(methods = { "isBirthdayValid","isLicenceDateValid" })
  */
 class Orga extends BaseUser implements UserInterface {
 
@@ -1279,14 +1278,15 @@ class Orga extends BaseUser implements UserInterface {
     }
 
     public function isBirthDayValid(ExecutionContext $context) {
+        echo 'a';die;
         if ($this->dateDeNaissance >= new \DateTime()) {
-            $context->addViolationAtSubPath('dateDeNaissance', 'Cette date doit être dans le passé.');
+            $context->addViolation('dateDeNaissance', 'Cette date doit être dans le passé.');
         }
     }
 
     public function isLicenceDateValid(ExecutionContext $context) {
         if ($this->datePermis != null && $this->datePermis >= new \DateTime()) {
-            $context->addViolationAtSubPath('datePermis', 'Cette date doit être dans le passé.');
+            $context->addViolation('datePermis', 'Cette date doit être dans le passé.');
         }
     }
 

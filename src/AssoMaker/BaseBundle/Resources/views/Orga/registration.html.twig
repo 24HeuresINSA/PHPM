@@ -1,0 +1,73 @@
+{% extends "AssoMakerBaseBundle::layout.html.twig"  %}
+{% set pageTitle = entity.prenom~' '~entity.nom %}
+
+{% block content %}
+<form action="{{ path('register_oauth') }}" method="post" {{ form_enctype(form) }}>
+    <div class="row-fluid">
+        <div class="span4 well">
+            <fieldset>
+                <legend>Informations de base</legend>
+                <div class="row-fluid">
+                    <div class="span5">
+					    		{% if entity.profilePictureSet == 1 %}
+                            <img src="{{ asset( 'up/profilePictures/'~entity.id~'.jpg' ) }}"/>
+							    {% else %}
+                            Pas de Photo
+							    {% endif %}
+                        </div>
+                        <div class="span7">
+								{{ form_row(form.nom) }}
+								{{ form_row(form.prenom) }}
+								{{ form_row(form.surnom) }}
+								{{ form_row(form.telephone) }}
+								{{ form_row(form.dateDeNaissance) }}
+
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+                <div class="span4 well">
+                        </div>
+                        <div class="span4 well">
+                        </div>
+                    </div>
+	    {% if is_granted('ROLE_HUMAIN')  %}
+                    <div class="row-fluid">
+                        <div class="span12 well">
+                            <fieldset>
+                                <legend>Options Admin</legend>
+                                {% if is_granted('ROLE_BUREAU')%}
+					              {{ form_row(form.privileges) }}
+					              {{ form_row(form.membreBureau) }}
+                                {% endif %}
+
+					              {{ form_row(form.statut) }}
+
+
+                            </fieldset>
+                        </div>
+                    </div>
+		{% endif %}
+
+
+	{{ form_widget(form._token) }}
+                    <div class="form-actions">
+                        <div class="btn-toolbar">
+                            <button class="btn btn-primary" name="action" value="save" type="submit">Enregistrer</button>
+
+			{% if is_granted('ROLE_HUMAIN') %}
+                            <a class="btn" href="{{ path('orga_inputdispos', { 'id': entity.id }) }}"><i class="icon-calendar"></i>Disponibilités</a>
+                            <a class="btn" href="{{ path('orga_affectation', { 'orga_id': entity.id }) }}"><i class="icon-book"></i>Affecter</a>
+                            <a class="btn" href="{{ path('orga_print', { 'orgaid': entity.id })  }}"><i class="icon-print"></i> Imprimer le planning</a>
+                            <a class="btn" target="_blank" href="https://www.facebook.com/search/results.php?q={{ entity.prenom~"%20"~entity.nom |url_encode }}"><i class="icon-search"></i> Rechercher sur Facebook</a>
+				{% if entity.groupePC%}
+                            <a class="btn" target="_blank" href="http://cipcnet.insa-lyon.fr/scol/php/apprec_groupe?id_annee={{phpm_anneetrombi}}&id_groupe={{ entity.groupePC |url_encode }}"><i class="icon-search"></i> Afficher le trombi du groupe</a>
+				{% endif %}
+                            <a class="btn" href="{{ path('autologin', { 'id': entity.id, 'loginkey': (entity.id)|phpm_crypt }) }}">Se connecter en tant que cet orga.</a>
+			{% endif %}
+
+                        </div>
+                    </div>
+                </form>
+{% endblock %}

@@ -5,6 +5,7 @@ security:
 
     role_hierarchy:
         ROLE_USER:        ROLE_VISITOR
+        ROLE_ORGA:        ROLE_USER
         ROLE_ADMIN: [ROLE_USER, ROLE_VISITOR]
         ROLE_HUMAIN:       [ROLE_ADMIN]
         ROLE_LOG:       [ROLE_ADMIN]
@@ -15,8 +16,8 @@ security:
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username
-        oauth.user_provider:
-            id: oauth.user_provider
+        #oauth.user_provider:
+        #    id: oauth.user_provider
 
 
     encoders:
@@ -30,37 +31,30 @@ security:
         main:
             pattern: ^/
             oauth:
-                    resource_owners:
-                      google: "/login/check-google"
-                    login_path: /login
-                    failure_path: /login
-                    default_target_path: /home
-                    oauth_user_provider:
-                      service: oauth.user_provider
+                resource_owners:
+                  google: "/login/check-google"
+                login_path: /login
+                failure_path: /login
+                default_target_path: /oauth/check
+                oauth_user_provider:
+                  service: oauth.user_provider
             logout: true
             anonymous: true
 
     access_control:
              - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-             - { path: ^/connect$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-             - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-             - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/admin/, role: ROLE_ADMIN }
              - { path: /_wdt/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: /_profiler/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
-             - { path: ^/test, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-             - { path: ^/home, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-             - { path: ^/orga/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY}
              - { path: ^/groupetache/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY}
              - { path: ^/tache/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-             - { path: ^/autologin, roles: IS_AUTHENTICATED_ANONYMOUSLY}
              - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
              - { path: ^/pass/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-             - { path: ^/config/initiale, roles: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/comptesPerso/virement, roles: ROLE_VISITOR }
              - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/.*json, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-             - { path: ^/.*, roles: ROLE_USER }
+             - { path: ^/oauth, roles: ROLE_USER }
+             - { path: ^/.*, roles: ROLE_ORGA }
 #             - { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
 jms_security_extra:
     secure_all_services: false

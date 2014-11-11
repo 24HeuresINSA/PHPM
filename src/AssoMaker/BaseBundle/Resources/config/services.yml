@@ -17,3 +17,8 @@ services:
         arguments: ["@security.context","@config.extension"]
         tags:
             - { name: form.type }
+    form.type.registration:
+        class: AssoMaker\BaseBundle\Form\RegistrationUserType
+        arguments: ["@security.context","@config.extension"]
+        tags:
+            - { name: form.type }

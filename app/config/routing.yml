@@ -62,7 +62,6 @@ hwi_oauth_redirect:
     resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
     prefix:   /login
 
-
 google_login:
     pattern: /login/check-google
 
