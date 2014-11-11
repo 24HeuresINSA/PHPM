@@ -1,6 +1,8 @@
 <?php
 
 namespace AssoMaker\BaseBundle\Controller;
+use AssoMaker\BaseBundle\Entity\RegistrationToken;
+use AssoMaker\PHPMBundle\Form\RegistrationTokenType;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -206,6 +208,21 @@ class ConfigController extends Controller {
 				->add('id', 'hidden')->getForm();
 	}
 
+    /**
+     * Crée un nouveau token à partir des paramètres
+     * @Route("/token/new/{e_id}", name="token_new")
+     */
+
+    public function newTokenAction($e_id=null){
+        $em=$this->getDoctrine()->getManager();
+        $equipe = $em->getRepository('AssoMakerBaseBundle:Equipe')->find($e_id);
+        $token = new RegistrationToken();
+        $token->setEquipe($equipe);
+        $em->persist($token);
+        $em->flush();
+        return $this->redirect($this->generateUrl('config'));
+    }
+
 	/**
 	 * Renvoie la préférence "string" 
 	 *
@@ -332,6 +349,7 @@ COMMIT;
 	
 		
 		$configItems = $em->getRepository('AssoMakerPHPMBundle:Config')->findAll();
+        $tokens = $em->getRepository('AssoMakerBaseBundle:RegistrationToken')->findAll();
 		$equipeItems = $em->createQuery("SELECT e,r,c FROM AssoMakerBaseBundle:Equipe e JOIN e.responsable r JOIN e.confiance c ")->getResult();
 		$confianceItems = $em->getRepository('AssoMakerBaseBundle:Confiance')->findAll();
 		$materielItems = $em->createQuery("SELECT m FROM AssoMakerPHPMBundle:Materiel m ORDER BY m.categorie ")->getResult();
@@ -339,7 +357,8 @@ COMMIT;
 		        'configItems'=>$configItems,
 		        'equipeItems'=>$equipeItems,
 		        'confianceItems'=>$confianceItems,
-		        'materielItems'=>$materielItems
+		        'materielItems'=>$materielItems,
+            'registrationTokenItems'=>$tokens
 		        );
 		
 
@@ -365,6 +384,7 @@ COMMIT;
 
 		return array(	
 				'form' => $form->createView(),
+            'equipes' => $this->getDoctrine()->getManager()->getRepository('AssoMakerBaseBundle:Equipe')->findAll(),
 						'valid' => $valid);
 
 	}

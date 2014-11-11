@@ -28,6 +28,7 @@
 	<ul id="tab" class="nav nav-tabs">
 	    <li><a href="#configItems" data-toggle="tab">Clés de configuration</a></li>
 		<li><a href="#equipeItems" data-toggle="tab">Équipes</a></li>
+		<li><a href="#registrationTokenItems" data-toggle="tab">Jetons</a></li>
 		<li><a href="#confianceItems" data-toggle="tab">Niveaux de Confiance</a></li>
 		<li><a href="#materielItems" data-toggle="tab">Matériel</a></li>
             
@@ -83,6 +84,49 @@
 			<a class="btn btn-success" href="{{ path('equipe_new') }}"><i class="icon-plus"></i> Nouvelle équipe</a>
 			</div>
 		</div>
+
+              <div id="registrationTokenItems"  class="tab-pane fade">
+                  <table class="table table-condensed">
+                      <thead>
+                      <th>Id</th>
+                      <th>Clef</th>
+                      <th>Equipe</th>
+
+                      </thead>
+                      <tbody>
+
+                      {% for i in form.registrationTokenItems %}
+
+                          <tr>
+                              <td>{{i.vars.value.id}}</td>
+                              <td><a href="{{ path('login_token', { 'token': i.vars.value.token }) }}">{{ path('login_token', { 'token': i.vars.value.token }) }}</a></td>
+                              <td>{{ form_row(i.equipe, {'label':false}) }}</td>
+                              <td>
+                                  <a class="btn btn-danger" href="{{ path('equipe_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a></td>
+                          </tr>
+                      {% endfor %}
+
+                      </tbody>
+                  </table>
+
+                  <div class="row-fluid">
+                      <label for="teamsForToken">Equipe : </label>
+                      <select id="teamsForToken" onchange="teamTokenLink()">
+                          {% for equipe in equipes %}
+                              <option value="{{ equipe.id }}">{{ equipe.nom }}</option>
+                          {% endfor %}
+                      </select>
+                      <a class="btn btn-success" href="{{ path('token_new') }}" id="tokenLink"><i class="icon-plus"></i> Nouveau Jeton</a>
+                      <script>
+                          var link="{{ path('token_new') }}";
+                          function teamTokenLink(){
+                              var e = document.getElementById("teamsForToken");
+                              var strUser = e.options[e.selectedIndex].value;
+                              document.getElementById('tokenLink').setAttribute("href",link+"/"+strUser);
+                          }
+                      </script>
+                  </div>
+              </div>
 
 		<div id="confianceItems"  class="tab-pane fade">
 			<table class="table table-condensed">

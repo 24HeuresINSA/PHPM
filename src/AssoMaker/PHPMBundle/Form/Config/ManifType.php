@@ -1,6 +1,7 @@
 <?php
 
 namespace AssoMaker\PHPMBundle\Form\Config;
+use AssoMaker\PHPMBundle\Form\RegistrationTokenType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use AssoMaker\PHPMBundle\Form\EventListener\ConfigFormSubscriber;
@@ -39,6 +40,14 @@ class ManifType extends AbstractType
                                 'by_reference' => false,
                                 'label' => 'Équipes',
                 				'options'  => array('error_bubbling'=>true,'data_class'=>'AssoMaker\BaseBundle\Entity\Equipe')));
+
+        $builder
+            ->add('registrationTokenItems', 'collection',
+                array('type' => new RegistrationTokenType(), 'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                    'label' => "Jetons d'inscription",
+                    'options'  => array('error_bubbling'=>true,'data_class'=>'AssoMaker\BaseBundle\Entity\RegistrationToken')));
 
         $builder
                 ->add('confianceItems', 'collection',
