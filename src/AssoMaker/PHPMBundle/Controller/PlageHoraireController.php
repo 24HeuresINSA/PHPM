@@ -120,7 +120,7 @@ class PlageHoraireController extends Controller
         $config = $e=$this->get('config.extension');
         $form    = $this->createForm(new PlageHoraireType($config), $entity);
 
-        $form->bindRequest($request);
+        $form->handleRequest($request);
         
         
 
@@ -233,7 +233,7 @@ class PlageHoraireController extends Controller
 
         $request = $this->getRequest();
 
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
         $data = $editForm->getData();
 
         $valid=$editForm->isValid();

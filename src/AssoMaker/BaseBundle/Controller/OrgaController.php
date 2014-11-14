@@ -117,7 +117,7 @@ class OrgaController extends Controller {
         $form->forcedConfiance = $confianceCode;
 
         if ($this->get('request')->getMethod() == 'POST') {
-            $form->bindRequest($request);
+            $form->handleRequest($request);
             $data = $form->getData();
 
             if ($form->isValid()) {
@@ -167,7 +167,7 @@ class OrgaController extends Controller {
 
 
         if ($this->get('request')->getMethod() == 'POST') {
-            $form->bindRequest($request);
+            $form->handleRequest($request);
             $data = $form->getData();
 
             if ($form->isValid()) {
@@ -242,7 +242,7 @@ class OrgaController extends Controller {
         if ($this->get('request')->getMethod() == 'POST') {
 
             $request = $this->getRequest();
-            $editForm->bindRequest($request);
+            $editForm->handleRequest($request);
 
             if ($editForm->isValid()) {
 
@@ -377,7 +377,7 @@ class OrgaController extends Controller {
 
 
         if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
+            $form->handleRequest($request);
             $data = $form->getData();
             $submittedDI = $data['disponibiliteInscriptionItems'];
 

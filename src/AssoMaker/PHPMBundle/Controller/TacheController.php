@@ -157,7 +157,7 @@ class TacheController extends Controller {
 
         if ($config->getValue('phpm_tache_heure_limite_validation')) {
             $heureLimite = $config->getValue('phpm_tache_heure_limite_validation');
-            $deadlinePassed = (new \DateTime($heureLimite) < new \DateTime());
+            $deadlinePassed = ((new \DateTime($heureLimite)) < (new \DateTime()));
         } else {
             $deadlinePassed = false;
         }
@@ -201,7 +201,7 @@ class TacheController extends Controller {
         $rOnly = (($entity->getStatut() >= 1 ) && (!$admin)) || ($entity->getStatut() == 3 );
         if ($config->getValue('phpm_tache_heure_limite_validation')) {
             $heureLimite = $config->getValue('phpm_tache_heure_limite_validation');
-            $deadlinePassed = (new \DateTime($heureLimite) < new \DateTime());
+            $deadlinePassed = ((new \DateTime($heureLimite)) < (new \DateTime()));
         } else {
             $deadlinePassed = false;
         }
@@ -215,7 +215,7 @@ class TacheController extends Controller {
         $editForm = $this->createForm(new TacheType($admin, $em, $config, $rOnly), $defaultValues);
 
 
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
 
         $data = $editForm->getData();
 

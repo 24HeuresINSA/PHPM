@@ -99,7 +99,7 @@ class ConfigController extends Controller {
 		$entity = new Config();
 		$request = $this->getRequest();
 		$form = $this->createForm(new ConfigType(), $entity);
-		$form->bindRequest($request);
+		$form->handleRequest($request);
 
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getEntityManager();
@@ -163,7 +163,7 @@ class ConfigController extends Controller {
 
 		$request = $this->getRequest();
 
-		$editForm->bindRequest($request);
+		$editForm->handleRequest($request);
 
 		if ($editForm->isValid()) {
 			$em->persist($entity);

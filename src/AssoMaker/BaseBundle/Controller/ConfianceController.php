@@ -111,7 +111,7 @@ class ConfianceController extends Controller
         $entity  = new Confiance();
         $request = $this->getRequest();
         $form    = $this->createForm(new ConfianceType(), $entity);
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
@@ -182,7 +182,7 @@ class ConfianceController extends Controller
 
         $request = $this->getRequest();
 
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);

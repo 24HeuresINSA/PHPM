@@ -93,7 +93,7 @@ class AvancementController extends Controller {
 
         if ($this->get('request')->getMethod() == 'POST') {
             $request = $this->getRequest();
-            $editForm->bindRequest($request);
+            $editForm->handleRequest($request);
 
             if ($editForm->isValid()) {
                 $em->persist($entity);
@@ -131,7 +131,7 @@ class AvancementController extends Controller {
 
         if ($this->get('request')->getMethod() == 'POST') {
             $request = $this->getRequest();
-            $editForm->bindRequest($request);
+            $editForm->handleRequest($request);
 
             if ($editForm->isValid()) {
                 $em->persist($entity);
@@ -166,7 +166,7 @@ class AvancementController extends Controller {
         $editForm = $this->createForm(new NoteType(), $entity);
 
         $request = $this->getRequest();
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
         $entity->setDate(new \DateTime());
 
 

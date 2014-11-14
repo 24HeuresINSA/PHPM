@@ -80,7 +80,7 @@ class BesoinMaterielController extends Controller {
         $entity = new BesoinMateriel();
         $request = $this->getRequest();
         $form = $this->createForm(new BesoinMaterielType(), $entity);
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
@@ -139,7 +139,7 @@ class BesoinMaterielController extends Controller {
 
         $request = $this->getRequest();
 
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
@@ -197,7 +197,7 @@ class BesoinMaterielController extends Controller {
         $form = $this->createDeleteForm($id);
         $request = $this->getRequest();
 
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();

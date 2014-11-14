@@ -35,7 +35,7 @@ class CreneauController extends Controller
         $entity  = new Creneau();
         $request = $this->getRequest();
         $form    = $this->createForm(new CreneauType(), $entity);
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
@@ -100,7 +100,7 @@ class CreneauController extends Controller
 
         $request = $this->getRequest();
 
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
@@ -297,7 +297,7 @@ class CreneauController extends Controller
     	$response->headers->set('Content-Type', 'application/json');
     	
     	if (!$creneau) {
-    		$response->setContent(json_encode($err->getMessageTemplate()));
+    		$response->setContent('KO');
     		return $response;
     	}
     	$orga=$creneau->getDisponibilite()->getOrga();
