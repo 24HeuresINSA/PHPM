@@ -20,7 +20,7 @@ class BesoinOrgaType extends AbstractType {
         $minConfianceOrgaHint = $this->config->getValue('manifestation_orga_plagehoraireconfiancemin');
 
         $builder
-                ->add('orgaHint', null, array('label' => 'Orga précis nécessaire', 'empty_value' => 'N\'importe qui', 'required' => false,
+                ->add('orgaHint', 'entity', array('label' => 'Orga précis nécessaire', 'empty_value' => 'N\'importe qui', 'required' => false,
                     'class' => 'AssoMakerBaseBundle:Orga',
                     'query_builder' => function(OrgaRepository $or)use($minConfianceOrgaHint) {
                         return $or->findAllWithConfianceValueMin($minConfianceOrgaHint);

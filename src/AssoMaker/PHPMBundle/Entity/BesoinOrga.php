@@ -29,14 +29,14 @@ class BesoinOrga {
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PlageHoraire",inversedBy="besoinsOrga")
+     * @ORM\ManyToOne(targetEntity="\AssoMaker\PHPMBundle\Entity\PlageHoraire",inversedBy="besoinsOrga")
      * @ORM\JoinColumn(name="plageHoraire_id", referencedColumnName="id",onDelete="CASCADE")
      * @Assert\Valid
      */
     protected $plageHoraire;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Equipe")
+     * @ORM\ManyToOne(targetEntity="\AssoMaker\BaseBundle\Entity\Equipe")
      * @ORM\JoinColumn(name="equipe_id", referencedColumnName="id", nullable=false)
      * @Assert\Valid
      */
@@ -50,7 +50,7 @@ class BesoinOrga {
     protected $nbOrgasNecessaires;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Orga", inversedBy="besoinsOrgaHint")
+     * @ORM\ManyToOne(targetEntity="\AssoMaker\BaseBundle\Entity\Orga", inversedBy="besoinsOrgaHint")
      * @ORM\JoinColumn(name="orgaHint_id", referencedColumnName="id",onDelete="SET NULL")
      * @Assert\Valid
      */

@@ -82,7 +82,7 @@ class PlageHoraire {
     protected $creneaux;
 
     /**
-     * @ORM\OneToMany(targetEntity="BesoinOrga", mappedBy="plageHoraire",orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="\AssoMaker\PHPMBundle\Entity\BesoinOrga", mappedBy="plageHoraire",orphanRemoval=true, cascade={"persist", "remove"})
      */
     protected $besoinsOrga;
 
@@ -325,9 +325,25 @@ class PlageHoraire {
      * @param \AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrga
      */
     public function setBesoinsOrga($besoinsOrga) {
-        foreach ($besoinsOrga as $bo)
-            $bo->setPlageHoraire($this);
-        $this->besoinsOrga = $besoinsOrga;
+        $a = $besoinsOrga->getValues();
+        foreach($besoinsOrga as &$bo) {
+            $besoin=$bo;
+            if(is_array($bo)){ // Si les données sont sous forme de tableau, on crée les objets
+                // new entity
+                $besoin = new BesoinOrga();
+
+                // now loop over the properties of each post array...
+                foreach ($bo as $property => $value) {
+                    // create a setter
+                    $method = sprintf('set%s', ucwords($property)); // or you can cheat and omit ucwords() because PHP method calls are case insensitive
+                    // use the method as a variable variable to set your value
+                    $besoin->$method($value);
+                }
+            }
+            $besoin->setPlageHoraire($this);
+            $bo=$besoin;
+            $this->besoinsOrga->add($bo);
+        }
     }
 
     /**

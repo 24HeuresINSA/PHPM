@@ -9,6 +9,13 @@ use Symfony\Component\HttpFoundation\Request;
 $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
 require_once __DIR__.'/../app/AppKernel.php';
 
+use Symfony\Component\Debug\Debug;
+Debug::enable();
+use Symfony\Component\Debug\ErrorHandler;
+ErrorHandler::register();
+use Symfony\Component\Debug\ExceptionHandler;
+ExceptionHandler::register();
+
 $kernel = new AppKernel('dev', true);
 $kernel->loadClassCache();
 $request = Request::createFromGlobals();
