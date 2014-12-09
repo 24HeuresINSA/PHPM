@@ -16,8 +16,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="{{ path('base_accueil') }}">AssoMaker</a>
-                    <a class="brand" href="http://portail.24heures.org">Portail</a>
+                    <a class="brand" href="{{ path('base_accueil') }}">Gala</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
             {% if sponso_actif ==1 and is_granted("ROLE_USER") %}
@@ -42,7 +41,9 @@
                                     <li class="dropdown" id="menu_topnav_orgas">
                                         <a class="dropdown-toggle" data-toggle="dropdown" href="">Orgas <b class="caret"></b></a>
                                         <ul class="dropdown-menu">
-                    {{ _self.navBarItem('Liste','orga') }}
+                                            {% if is_granted('ROLE_ORGA') and (phpm_actif ==1) %}
+                                            {{ _self.navBarItem('Liste','orga') }}
+                                            {% endif %}
 
                     {% if is_granted('ROLE_HUMAIN') and (phpm_actif ==1) %}
                         {{ _self.navBarItem('Affectation','orga_affectation') }}
@@ -74,7 +75,7 @@
                                         </li>
             {% endif %}
 
-            {% if is_granted('ROLE_ORGA') and (phpm_actif ==1) %}
+            {% if is_granted('ROLE_ADMIN') and (phpm_actif ==1) %}
                                         <li class="dropdown" id="menu_topnav_taches">
                                             <a class="dropdown-toggle" data-toggle="dropdown" href="">Fiches Tâches <b class="caret"></b></a>
                                             <ul class="dropdown-menu">

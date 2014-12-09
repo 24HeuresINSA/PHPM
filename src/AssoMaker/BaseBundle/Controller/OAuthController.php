@@ -88,6 +88,7 @@ class OAuthController extends Controller {
             if ($form->isValid()) {
                 $entity->setEnabled(true);
                 $entity->addRole('ROLE_ORGA');
+                $entity->setStatut(0);
                 $entity->setEquipe($registrationToken->getEquipe());
                 if($em->getRepository('AssoMakerBaseBundle:Orga')->count()<=1)
                     $entity->addRole('ROLE_SUPER_ADMIN');
