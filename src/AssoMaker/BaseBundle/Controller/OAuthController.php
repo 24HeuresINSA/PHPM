@@ -91,10 +91,16 @@ class OAuthController extends Controller {
                 $entity->setEquipe($registrationToken->getEquipe());
                 if($em->getRepository('AssoMakerBaseBundle:Orga')->count()<=1)
                     $entity->addRole('ROLE_SUPER_ADMIN');
-                $em->remove($registrationToken);
+                if($registrationToken->getCount()<=2) {
+                    $em->remove($registrationToken);
+                }else{
+                    $registrationToken->oneUse();
+                    $em->persist($registrationToken);
+                }
                 $em->persist($entity);
                 $em->flush();
-                return $this->redirect($this->generateUrl('check_oauth'));
+                $this->container->get('security.context')->setToken(NULL);
+                return $this->redirect($this->generateUrl('hwi_oauth_service_redirect',array('service'=>'google')));
             }
         }
 

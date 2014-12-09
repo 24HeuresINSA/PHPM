@@ -2,6 +2,7 @@
 
 namespace AssoMaker\BaseBundle\Controller;
 
+use HWI\Bundle\OAuthBundle\Templating\Helper\OAuthHelper;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Process\Exception\LogicException;
@@ -130,7 +131,7 @@ class DefaultController extends Controller
             throw new LogicException('La clef donnée est invalide');
         } else {
             $session->set('token_id', $token->getId());
-            return $this->redirect($this->generateUrl('login'));
+            return $this->redirect($this->generateUrl('hwi_oauth_service_redirect',array('service'=>'google')));
         }
     }
 

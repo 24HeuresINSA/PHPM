@@ -210,14 +210,16 @@ class ConfigController extends Controller {
 
     /**
      * Crée un nouveau token à partir des paramètres
-     * @Route("/token/new/{e_id}", name="token_new")
+     * @Route("/token/new/{e_id}/{e_count}", name="token_new")
      */
 
-    public function newTokenAction($e_id=null){
+    public function newTokenAction($e_id=null,$e_count=1){
         $em=$this->getDoctrine()->getManager();
         $equipe = $em->getRepository('AssoMakerBaseBundle:Equipe')->find($e_id);
         $token = new RegistrationToken();
         $token->setEquipe($equipe);
+        $token->setEmail("");
+        $token->setCount($e_count);
         $em->persist($token);
         $em->flush();
         return $this->redirect($this->generateUrl('config'));

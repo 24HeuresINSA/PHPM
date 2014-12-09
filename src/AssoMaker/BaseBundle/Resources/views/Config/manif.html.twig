@@ -90,6 +90,7 @@
                       <thead>
                       <th>Id</th>
                       <th>Clef</th>
+                      <th>Nombre utilisation restantes</th>
                       <th>Equipe</th>
 
                       </thead>
@@ -100,6 +101,7 @@
                           <tr>
                               <td>{{i.vars.value.id}}</td>
                               <td><a href="{{ path('login_token', { 'token': i.vars.value.token }) }}">{{ path('login_token', { 'token': i.vars.value.token }) }}</a></td>
+                              <td>{{ i.vars.value.count }}</td>
                               <td>{{ form_row(i.equipe, {'label':false}) }}</td>
                               <td>
                                   <a class="btn btn-danger" href="{{ path('equipe_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a></td>
@@ -116,14 +118,20 @@
                               <option value="{{ equipe.id }}">{{ equipe.nom }}</option>
                           {% endfor %}
                       </select>
-                      <a class="btn btn-success" href="{{ path('token_new') }}" id="tokenLink"><i class="icon-plus"></i> Nouveau Jeton</a>
+                      <br/>
+                      <label for="countTokenInput">Nombre d'inscriptions : </label>
+                      <input type="number" step="1" value="1" min="1" max="350" id="countTokenInput"/>
+                      <br/>
+                      <a class="btn btn-success" href="{{ path('token_new') }}" onmousedown="teamTokenLink()" id="tokenLink"><i class="icon-plus"></i> Nouveau Jeton</a>
                       <script>
                           var link="{{ path('token_new') }}";
                           function teamTokenLink(){
                               var e = document.getElementById("teamsForToken");
                               var strUser = e.options[e.selectedIndex].value;
-                              document.getElementById('tokenLink').setAttribute("href",link+"/"+strUser);
+                              document.getElementById('tokenLink').setAttribute("href",link+"/"+strUser+"/"+document.getElementById('countTokenInput').value);
+                              setTimeout(teamTokenLink, 100);
                           }
+                          setTimeout(teamTokenLink, 100);
                       </script>
                   </div>
               </div>

@@ -27,6 +27,8 @@ fos_user:
 
 hwi_oauth:
   firewall_name: main
+  http_client:
+          verify_peer: false
   resource_owners:
     google:
       type: google

@@ -30,6 +30,13 @@ class RegistrationToken
     private $equipe;
 
     /**
+     * @var id
+     *
+     * @ORM\Column(name="count", type="integer", nullable=false)
+     */
+    private $count;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="token", type="string", length=255, nullable=false, unique=true)
@@ -136,5 +143,28 @@ class RegistrationToken
     public function getEquipe()
     {
         return $this->equipe;
+    }
+
+    /**
+     * @return id
+     */
+    public function getCount()
+    {
+        return $this->count;
+    }
+
+    /**
+     * @param id $count
+     */
+    public function setCount($count)
+    {
+        $this->count = $count;
+    }
+
+    /**
+     * Enregistre une utilisation
+     */
+    public function oneUse(){
+        $this->count--;
     }
 }
