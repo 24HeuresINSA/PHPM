@@ -44,6 +44,8 @@ class Orga extends BaseUser implements UserInterface {
      * @var string $nom
      *
      * @ORM\Column(name="nom", type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(min = "3")
      */
     protected $nom;
 
@@ -51,6 +53,8 @@ class Orga extends BaseUser implements UserInterface {
      * @var string $prenom
      *
      * @ORM\Column(name="prenom", type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(min = "3")
      */
     protected $prenom;
 
@@ -85,6 +89,7 @@ class Orga extends BaseUser implements UserInterface {
      * @var string $telephone
      *
      * @ORM\Column(name="telephone", type="string", length=255, unique=true, nullable=true)
+     * @Assert\NotBlank()
      */
     protected $telephone;
 
