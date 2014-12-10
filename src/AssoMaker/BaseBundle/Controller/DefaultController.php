@@ -128,7 +128,8 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $token=$em->getRepository('AssoMakerBaseBundle:RegistrationToken')->findOneBy(array('token'=>$token));
         if($token == null){
-            throw new LogicException('La clef donnée est invalide');
+            $request->getSession()->getFlashBag()->add('error', "La clef d'inscription n'est pas valide");
+            return $this->redirect($this->generateUrl('base_publichome'));
         } else {
             $session->set('token_id', $token->getId());
             return $this->redirect($this->generateUrl('hwi_oauth_service_redirect',array('service'=>'google')));

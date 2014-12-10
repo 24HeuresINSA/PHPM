@@ -70,14 +70,16 @@ class OAuthController extends Controller {
 
         $token_id = $request->getSession()->get('token_id');
         if($token_id===null){
-            $this->refuseRegistration($em, $entity);
+            $request->getSession()->getFlashBag()->add('error', "Vous n'avez pas de compte lié sur ce site, inscrivez-vous !");
+            return $this->refuseRegistration($em, $entity);
         }
         /**
          * @var RegistrationToken
          */
         $registrationToken = $em->getRepository('AssoMakerBaseBundle:RegistrationToken')->findOneBy(array('id'=>$token_id));
         if($registrationToken==null){
-            $this->refuseRegistration($em,$entity);
+            $request->getSession()->getFlashBag()->add('error', "La clef d'inscription n'est plus valide");
+            return $this->refuseRegistration($em,$entity);
         }
 
         $form = $this->createForm($this->get('form.type.registration'), $entity, array());
@@ -130,7 +132,7 @@ class OAuthController extends Controller {
         $entityManager->remove($user);
         $entityManager->flush();
         $this->securityContext->setToken(null);
-        throw new AccessDeniedException("Vous avez essayé de vous inscrire sans clef valide");
+        return $this->redirect($this->generateUrl('base_publichome'));
     }
 
 } 

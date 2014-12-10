@@ -4,8 +4,13 @@
     <div class="row-fluid">
         <div class="span6">
             <h1>Bienvenu sur PlanningMaker</h1>
-            {% for flashMessage in app.session.flashbag.get('notice') %}
+            {% for flashMessage in app.session.flashbag.get('error') %}
                 <div class="alert alert-error">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="alert alert-warning">
                     {{ flashMessage }}
                 </div>
             {% endfor %}
