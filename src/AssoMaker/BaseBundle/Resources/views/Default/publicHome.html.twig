@@ -1,21 +1,28 @@
 {% extends "AssoMakerBaseBundle::layout.html.twig"  %}
 
 {% block content %}
+    <div class="row-fluid">
+        <div class="span6">
+            <h1>Bienvenu sur PlanningMaker</h1>
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="alert alert-error">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+            <p>Connecte-toi avec l'un des services suivants si tu as déjà un compte :</p>
+            <div id="logins">
+                <p>
+                    <a class="btn btn-danger btn-large" href="{{ hwi_oauth_login_url('google') }}">Se connecter avec Google</a>
+                </p>
+            </div>
+            <p>Sinon contacte le responsable : <a href="mailto:gala.orga@bde-insa-lyon.fr">gala.orga@bde-insa-lyon.fr</a></p>
 
-
-<div class="hero-unit">
-	{{ phpm_contenu_page_principale |raw}}
-    {% for flashMessage in app.session.flashbag.get('notice') %}
-        <div class="alert alert-error">
-            {{ flashMessage }}
         </div>
-    {% endfor %}
-            <p>
-                <a class="btn btn-primary btn-large" href="{{ hwi_oauth_login_url('google') }}">Se connecter avec Google</a>
-            </p>
+        <div class="span6" style="min-width: 700px;">
+            <div class="hero-unit">
+                <iframe width="560" height="315" style="margin:0 auto;display: block;" src="//www.youtube.com/embed/SPF2ZZ3Fg8Q" frameborder="0" allowfullscreen></iframe>
+            </div>
         </div>
-
-
-
+    </div>
 {% endblock %}
 
