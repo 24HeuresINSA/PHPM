@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AssoMaker\PHPMBundle\Entity\GroupeTache;
 use AssoMaker\PHPMBundle\Form\GroupeTacheType;
@@ -15,6 +16,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 /**
  * GroupeTache controller.
  *
+ * @Security("has_role('ROLE_HARD')")
  * @Route("/groupetache")
  */
 class GroupeTacheController extends Controller {

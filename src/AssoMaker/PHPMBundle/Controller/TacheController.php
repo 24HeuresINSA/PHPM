@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AssoMaker\PHPMBundle\Entity\Tache;
 use AssoMaker\PHPMBundle\Entity\Commentaire;
@@ -23,6 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Tache controller.
  *
+ * @Security("has_role('ROLE_HARD')")
  * @Route("/tache")
  */
 class TacheController extends Controller {
