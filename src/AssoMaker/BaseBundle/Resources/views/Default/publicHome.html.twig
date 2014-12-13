@@ -3,7 +3,7 @@
 {% block content %}
     <div class="row-fluid">
         <div class="span6">
-            <h1>Bienvenu sur PlanningMaker</h1>
+            <h1>Bienvenue sur PlanningMaker</h1>
             {% for flashMessage in app.session.flashbag.get('error') %}
                 <div class="alert alert-error">
                     {{ flashMessage }}
@@ -20,7 +20,7 @@
                     <a class="btn btn-danger btn-large" href="{{ hwi_oauth_login_url('google') }}">Se connecter avec Google</a>
                 </p>
             </div>
-            <p>Sinon contacte le responsable : <a href="mailto:gala.orga@bde-insa-lyon.fr">gala.orga@bde-insa-lyon.fr</a></p>
+            <p>Sinon, pour tout problème ou pour t'inscrire, contacte le responsable : <a href="mailto:gala.orga@bde-insa-lyon.fr">gala.orga@bde-insa-lyon.fr</a></p>
 
         </div>
         <div class="span6" style="min-width: 700px;">
