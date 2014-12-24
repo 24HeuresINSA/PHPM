@@ -43,7 +43,7 @@ twig:
     form:
         resources:
             - 'AssoMakerBaseBundle:Form:fields.html.twig'
-            
+
 # Assetic Configuration
 assetic:
     debug:          %kernel.debug%
