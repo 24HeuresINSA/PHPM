@@ -48,7 +48,7 @@ class PlageHoraire {
      * @var smallint $dureeCreneau
      *
      * @ORM\Column(name="dureeCreneau", type="smallint")
-     * @Assert\Min(limit = "0")
+     * @Assert\Range(min = "0")
      * @QuartHeure()
      */
     protected $dureeCreneau;
@@ -64,7 +64,7 @@ class PlageHoraire {
      * @var smallint $recoupementCreneau
      *
      * @ORM\Column(name="recoupementCreneau", type="smallint")
-     * @Assert\Min(limit = "0")
+     * @Assert\Range(min = "0")
      * @QuartHeure()
      */
     protected $recoupementCreneau;
@@ -82,7 +82,7 @@ class PlageHoraire {
     protected $creneaux;
 
     /**
-     * @ORM\OneToMany(targetEntity="BesoinOrga", mappedBy="plageHoraire",orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="\AssoMaker\PHPMBundle\Entity\BesoinOrga", mappedBy="plageHoraire",orphanRemoval=true, cascade={"persist", "remove"})
      */
     protected $besoinsOrga;
 
@@ -313,7 +313,7 @@ class PlageHoraire {
     /**
      * Get besoinsOrga
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getBesoinsOrga() {
         return $this->besoinsOrga;
@@ -322,18 +322,34 @@ class PlageHoraire {
     /**
      * Set besoinsOrga
      *
-     * @param AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrga
+     * @param \AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrga
      */
     public function setBesoinsOrga($besoinsOrga) {
-        foreach ($besoinsOrga as $bo)
-            $bo->setPlageHoraire($this);
-        $this->besoinsOrga = $besoinsOrga;
+        $a = $besoinsOrga->getValues();
+        foreach($besoinsOrga as &$bo) {
+            $besoin=$bo;
+            if(is_array($bo)){ // Si les données sont sous forme de tableau, on crée les objets
+                // new entity
+                $besoin = new BesoinOrga();
+
+                // now loop over the properties of each post array...
+                foreach ($bo as $property => $value) {
+                    // create a setter
+                    $method = sprintf('set%s', ucwords($property)); // or you can cheat and omit ucwords() because PHP method calls are case insensitive
+                    // use the method as a variable variable to set your value
+                    $besoin->$method($value);
+                }
+            }
+            $besoin->setPlageHoraire($this);
+            $bo=$besoin;
+            $this->besoinsOrga->add($bo);
+        }
     }
 
     /**
      * Set tache
      *
-     * @param AssoMaker\PHPMBundle\Entity\Tache $tache
+     * @param \AssoMaker\PHPMBundle\Entity\Tache $tache
      */
     public function setTache(\AssoMaker\PHPMBundle\Entity\Tache $tache) {
         $this->tache = $tache;
@@ -342,7 +358,7 @@ class PlageHoraire {
     /**
      * Get tache
      *
-     * @return AssoMaker\PHPMBundle\Entity\Tache
+     * @return \AssoMaker\PHPMBundle\Entity\Tache
      */
     public function getTache() {
         return $this->tache;

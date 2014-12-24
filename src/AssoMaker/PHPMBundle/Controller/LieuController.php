@@ -97,7 +97,7 @@ class LieuController extends Controller
         $entity  = new Lieu();
         $request = $this->getRequest();
         $form    = $this->createForm(new LieuType(), $entity);
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
@@ -167,7 +167,7 @@ class LieuController extends Controller
 
         $request = $this->getRequest();
 
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);

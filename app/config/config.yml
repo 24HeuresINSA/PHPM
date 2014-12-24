@@ -14,8 +14,27 @@ framework:
     validation:      { enable_annotations: true }
     templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
     default_locale: %locale%
-    trust_proxy_headers: false 
     session:         ~
+    translator: ~
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: AssoMaker\BaseBundle\Entity\Orga
+    registration:
+        confirmation:
+            enabled:    true # change to true for required email confirmation
+
+hwi_oauth:
+  firewall_name: main
+  http_client:
+          verify_peer: false
+  resource_owners:
+    google:
+      type: google
+      client_id: %oauth.google.id%
+      client_secret: %oauth.google.secret%
+      scope: "email profile"
 
 # Twig Configuration
 twig:

@@ -8,7 +8,7 @@
     function Ctrl($scope) {
 
         $scope.lieu = "{{entity.lieu}}";
-        $scope.animations = {% if (animations | length > 0) and anim_actif %}{{animations|json_encode | raw}}{%else%}[]{%endif%};
+        $scope.animations = {% if anim_actif and (animations | length > 0) %}{{animations|json_encode | raw}}{%else%}[]{%endif%};
         {%if entity.animLiee%}
         $scope.animLiee={{entity.animLiee.id}};
         {%endif%}

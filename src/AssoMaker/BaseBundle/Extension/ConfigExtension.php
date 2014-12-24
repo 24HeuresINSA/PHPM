@@ -12,7 +12,7 @@ class ConfigExtension extends \Twig_Extension {
         $this->doctrine = $doctrine;
 
 
-        $this->configs = $this->doctrine->getEntityManager()->getRepository('AssoMakerPHPMBundle:Config')->findAllAsArray();
+        $this->configs = $this->doctrine->getManager()->getRepository('AssoMakerPHPMBundle:Config')->findAllAsArray();
     }
 
     public function getFilters() {

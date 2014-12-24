@@ -63,7 +63,7 @@ class DefaultController extends Controller {
 
         if ($this->get('request')->getMethod() == 'POST') {
             $request = $this->getRequest();
-            $editForm->bindRequest($request);
+            $editForm->handleRequest($request);
 
             if ($editForm->isValid()) {
                 $em->persist($entity);
@@ -107,7 +107,7 @@ class DefaultController extends Controller {
 
         if ($this->get('request')->getMethod() == 'POST') {
             $request = $this->getRequest();
-            $editForm->bindRequest($request);
+            $editForm->handleRequest($request);
             $data = $editForm->getData();
 
             if ($editForm->isValid()) {

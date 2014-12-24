@@ -96,7 +96,7 @@ $(function() {
         changeMonth: true,
         changeYear: true,
         dateFormat: 'yy-mm-dd',
-        yearRange: '1985:1995',
+        yearRange: '1985:1999'
     });
 
     /*

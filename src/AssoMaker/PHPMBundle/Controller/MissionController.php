@@ -55,7 +55,7 @@ class MissionController extends Controller
         $entity  = new Mission();
         $request = $this->getRequest();
         $form    = $this->createForm(new MissionType(), $entity);
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
@@ -124,7 +124,7 @@ class MissionController extends Controller
 
         $request = $this->getRequest();
 
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);

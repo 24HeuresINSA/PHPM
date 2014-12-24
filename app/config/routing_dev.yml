@@ -12,3 +12,7 @@ _configurator:
 
 _main:
     resource: routing.yml
+
+token_generator:
+    path:   /login/token/generate/{equipe_id}
+    defaults:  { _controller: AssoMakerBaseBundle:OAuth:generate }

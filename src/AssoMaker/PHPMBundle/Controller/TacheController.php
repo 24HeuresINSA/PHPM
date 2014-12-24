@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AssoMaker\PHPMBundle\Entity\Tache;
 use AssoMaker\PHPMBundle\Entity\Commentaire;
@@ -23,6 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Tache controller.
  *
+ * @Security("has_role('ROLE_HARD')")
  * @Route("/tache")
  */
 class TacheController extends Controller {
@@ -157,7 +159,7 @@ class TacheController extends Controller {
 
         if ($config->getValue('phpm_tache_heure_limite_validation')) {
             $heureLimite = $config->getValue('phpm_tache_heure_limite_validation');
-            $deadlinePassed = (new \DateTime($heureLimite) < new \DateTime());
+            $deadlinePassed = ((new \DateTime($heureLimite)) < (new \DateTime()));
         } else {
             $deadlinePassed = false;
         }
@@ -201,7 +203,7 @@ class TacheController extends Controller {
         $rOnly = (($entity->getStatut() >= 1 ) && (!$admin)) || ($entity->getStatut() == 3 );
         if ($config->getValue('phpm_tache_heure_limite_validation')) {
             $heureLimite = $config->getValue('phpm_tache_heure_limite_validation');
-            $deadlinePassed = (new \DateTime($heureLimite) < new \DateTime());
+            $deadlinePassed = ((new \DateTime($heureLimite)) < (new \DateTime()));
         } else {
             $deadlinePassed = false;
         }
@@ -215,7 +217,7 @@ class TacheController extends Controller {
         $editForm = $this->createForm(new TacheType($admin, $em, $config, $rOnly), $defaultValues);
 
 
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
 
         $data = $editForm->getData();
 

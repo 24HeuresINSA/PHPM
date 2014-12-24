@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AssoMaker\PHPMBundle\Entity\GroupeTache;
 use AssoMaker\PHPMBundle\Form\GroupeTacheType;
@@ -15,6 +16,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 /**
  * GroupeTache controller.
  *
+ * @Security("has_role('ROLE_HARD')")
  * @Route("/groupetache")
  */
 class GroupeTacheController extends Controller {
@@ -159,7 +161,7 @@ class GroupeTacheController extends Controller {
 
         $request = $this->getRequest();
 
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             if ($param['action'] == 'delete' && $entity->isDeletable()) {
@@ -211,7 +213,7 @@ class GroupeTacheController extends Controller {
         $form = $this->createDeleteForm($id);
         $request = $this->getRequest();
 
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();

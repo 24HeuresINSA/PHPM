@@ -25,7 +25,7 @@ monolog:
             handler: swift
         swift:
             type:       swift_mailer
-            from_email: %mailer_user%
-            to_email:   %admin_email%
+            from_email: planning@gala.bde-insa-lyon.fr
+            to_email:   orga.gala.resp@bde-insa-lyon.fr
             subject:    PHPLanningMaker Error
             level:      debug

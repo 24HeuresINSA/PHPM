@@ -2,7 +2,10 @@
 
 namespace AssoMaker\BaseBundle\Controller;
 
+use HWI\Bundle\OAuthBundle\Templating\Helper\OAuthHelper;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Process\Exception\LogicException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
 use Symfony\Component\Security\Acl\Exception\Exception;
@@ -15,14 +18,16 @@ use AssoMaker\PHPMBundle\Entity\Config;
 use AssoMaker\PHPMBundle\Form\PrintPlanningType;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller {
+class DefaultController extends Controller
+{
 
     /**
      * @Route("/home", name="base_accueil")
      * @Route("/home")
      * @Template()
      */
-    public function homeAction() {
+    public function homeAction()
+    {
         $em = $this->getDoctrine()->getEntityManager();
         $config = $this->get('config.extension');
 
@@ -67,7 +72,8 @@ class DefaultController extends Controller {
      * @Route("/")
      * @Template()
      */
-    public function publicHomeAction() {
+    public function publicHomeAction()
+    {
 
         if ($this->get('security.context')->isGranted('ROLE_VISITOR')) {
             return $this->redirect($this->generateUrl('base_accueil'));
@@ -82,7 +88,8 @@ class DefaultController extends Controller {
      * @Route("/autologin/{id}/{loginkey}",requirements={"loginkey" = ".+"}, name="autologin")
      *
      */
-    public function autologinAction($id, $loginkey) {
+    public function autologinAction($id, $loginkey)
+    {
         $em = $this->getDoctrine()->getEntityManager();
         $config = $this->get('config.extension');
 
@@ -100,7 +107,8 @@ class DefaultController extends Controller {
         return $this->redirect($this->generateUrl('base_accueil'));
     }
 
-    public function adminLogin() {
+    public function adminLogin()
+    {
         $em = $this->getDoctrine()->getEntityManager();
         $config = $this->get('config.extension');
         $orgas = $em->getRepository('AssoMakerBaseBundle:Orga')->findAll();
@@ -110,82 +118,34 @@ class DefaultController extends Controller {
     }
 
     /**
-     * OpenId login
+     * Login
      *
-     * @Route("/login/{confianceCode}", defaults={"confianceCode":""}, name="login")
+     * @Route("/login/token/{token}", defaults={"token":""}, name="login_token")
+     *
+     */
+    public function loginTokenAction(Request $request, $token) {
+        $session = $request->getSession();
+        $em = $this->getDoctrine()->getManager();
+        $token=$em->getRepository('AssoMakerBaseBundle:RegistrationToken')->findOneBy(array('token'=>$token));
+        if($token == null){
+            $request->getSession()->getFlashBag()->add('error', "La clef d'inscription n'est pas valide");
+            return $this->redirect($this->generateUrl('base_publichome'));
+        } else {
+            $session->set('token_id', $token->getId());
+            return $this->redirect($this->generateUrl('hwi_oauth_service_redirect',array('service'=>'google')));
+        }
+    }
+
+    /**
+     * Login
+     *
+     * Cette action permet juste d'afficher une page avec tous les fournisseur de connexion.
+     *
+     * @Route("/login", name="login")
      * @Template()
      *
      */
-    public function loginAction(Request $request, $confianceCode) {
-
-
-
-        $em = $this->getDoctrine()->getEntityManager();
-        $config = $this->get('config.extension');
-        $session = $this->getRequest()->getSession();
-        $serverurl = $this->getRequest()->getHost();
-
-
-
-
-        try {
-
-
-            $openid = new \LightOpenID($serverurl);
-            if (!$openid->mode) {
-
-                $session->set('originalUrl', $this->container->get('request')->headers->get('referer'));
-                //                 if(isset($_GET['login'])) {
-                $openid->identity = 'https://www.google.com/accounts/o8/id';
-                $openid->required = array('contact/email');
-
-                $confiance = $em->getRepository('AssoMakerBaseBundle:Confiance')->findOneByCode($confianceCode);
-                if ($confiance) {
-                    $session->set('confianceCode', $confianceCode);
-                }
-
-                //header('Location: ' . $openid->authUrl());
-
-                $response = new RedirectResponse($openid->authUrl());
-                //$response->headers->set('Location:' , $openid->authUrl());
-
-                return $response;
-
-                //                 }
-            } elseif ($openid->mode == 'cancel') {
-                exit;
-            } else {
-                $attrs = $openid->getAttributes();
-                $email = $attrs['contact/email'];
-                $session->set('email', $email);
-                $em = $this->getDoctrine()->getEntityManager();
-                $user = $em->getRepository('AssoMakerBaseBundle:Orga')->findOneByEmail($email);
-                /*
-                  $confiance = $em->getRepository('AssoMakerBaseBundle:Confiance')->findOneByCode($confianceCode);
-                  if(!$confiance){
-                  throw new AccessDeniedException();
-                  }
-
-                 */
-                if (!$user) {
-                    if ($this->getRequest()->getSession()->get('confianceCode')) {
-                        return $this->redirect($this->generateUrl('orga_register_user'));
-                    }
-
-                    $this->get('session')->setFlash('notice', "L'adresse $email n'est pas dans le système.");
-                    $redirectURL = $config->getValue('manifestation_permis_libelles');
-                    return $this->redirect($this->generateUrl('base_accueil'));
-                }
-
-                $this->get('security.context')->setToken($user->generateUserToken());
-
-
-
-                return $this->redirect($session->get('originalUrl'));
-            }
-        } catch (ErrorException $e) {
-            exit;
-        }
+    public function loginAction(Request $request) {
     }
 
 }

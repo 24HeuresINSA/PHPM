@@ -49,7 +49,7 @@ class DisponibiliteInscriptionController extends Controller
 
         
         if ($this->get('request')->getMethod() == 'POST') {
-        	$form->bindRequest($request);
+        	$form->handleRequest($request);
         	$data = $form->getData();
         	$valid=$form->isValid();
 
@@ -251,7 +251,7 @@ class DisponibiliteInscriptionController extends Controller
         $entity  = new DisponibiliteInscription();
         $request = $this->getRequest();
         $form    = $this->createForm(new DisponibiliteInscriptionType(), $entity);
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         
         if ($form->isValid()) {
@@ -321,7 +321,7 @@ class DisponibiliteInscriptionController extends Controller
 
         $request = $this->getRequest();
 
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);

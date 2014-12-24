@@ -97,7 +97,7 @@ class MaterielController extends Controller
         $entity  = new Materiel();
         $request = $this->getRequest();
         $form    = $this->createForm(new MaterielType(), $entity);
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
@@ -166,7 +166,7 @@ class MaterielController extends Controller
 
         $request = $this->getRequest();
 
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
