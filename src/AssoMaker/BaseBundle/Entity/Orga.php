@@ -3,6 +3,7 @@
 namespace AssoMaker\BaseBundle\Entity;
 
 use AssoMaker\BaseBundle\AssoMakerBaseBundle;
+use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,7 +23,8 @@ use AssoMaker\PHPMBundle\Entity\Disponibilite;
  */
 class Orga extends BaseUser implements UserInterface {
 
-    public static $privilegesTypes = array('Visiteur', 'Orga', 'Humain', 'Responsable Log', 'Responsable Sécurité', 'Super Admin');
+    public static $privilegesTypes = array('Orga', 'Orga Hard', 'Humain', 'Responsable Log', 'Responsable Sécurité', 'Super Admin');
+    public static $privilegesRoles = array('ROLE_ORGA', 'ROLE_HARD', 'ROLE_HUMAIN', 'ROLE_LOG', 'ROLE_SECU', 'ROLE_SUPER_ADMIN');
 
     /**
      * @var integer $id
@@ -78,9 +80,9 @@ class Orga extends BaseUser implements UserInterface {
      * @ORM\Column(name="role", type="string", length=255, nullable=true)
      */
     protected $role;
-    
+
     /**
-     * 
+     *
      * @ORM\Column(name="membreBureau", type="boolean")
      */
     protected $membreBureau=false;
@@ -1371,5 +1373,31 @@ class Orga extends BaseUser implements UserInterface {
     public function getGoogleId()
     {
         return $this->google_id;
+    }
+
+    /**
+     * Generate roles for the user depending on status and privileges.
+     * This function update current roles, you haven't to do it.
+     *
+     * @return array The roles that this user should have.
+     */
+    public function updateRoles(){
+        $roles = array();
+        if($this->isEnabled()){ // If account is not disabled
+            $roles[] = "ROLE_ORGA";
+            if($this->getPrivileges()!=null){ // Add role for this privilege. TODO: Privileges should be SQL saved
+                if (isset(Orga::$privilegesRoles[intval($this->getPrivileges())])) {
+                    if (!empty(Orga::$privilegesRoles[intval($this->getPrivileges())])) {
+                        $roles[] = Orga::$privilegesRoles[intval($this->getPrivileges())];
+                    }
+                }
+            }
+        } else { // A user with a disabled account
+            $roles[] = "ROLE_USER";
+        }
+        foreach($this->roles as $role)
+            $this->removeRole($role);
+        foreach($roles as $role)
+            $this->addRole($role);
     }
 }
