@@ -48,11 +48,15 @@ class BaseEntitiesFixture implements FixtureInterface {
         $admin = new Orga();
         $admin->setNom("Admin");
         $admin->setPrenom("Admin");
+        $admin->setUsername("Admin");
+        $admin->setUsernameCanonical("admin");
+        $admin->setPassword(md5(uniqid(rand(), true)));
         $admin->setAnneeEtudes(0);
         $admin->setDateDeNaissance(new \DateTime());
         $admin->setDepartement("Admin");
         $admin->setTelephone("0699999999");
         $admin->setEmail('admin@admin.com');
+        $admin->setEmailCanonical("admin@admin.com");
         $admin->setEquipe($hardEquipe);
         $admin->setStatut($hardEquipe);
         $admin->setPrivileges(2);
