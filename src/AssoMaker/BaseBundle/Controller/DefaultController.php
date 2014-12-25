@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use AssoMaker\PHPMBundle\Entity\Config;
 use AssoMaker\PHPMBundle\Form\PrintPlanningType;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,8 +24,8 @@ class DefaultController extends Controller
 
     /**
      * @Route("/home", name="base_accueil")
-     * @Route("/home")
      * @Template()
+     * @Secure("ROLE_ORGA")
      */
     public function homeAction()
     {
@@ -83,45 +84,10 @@ class DefaultController extends Controller
     }
 
     /**
-     * Link login
-     *
-     * @Route("/autologin/{id}/{loginkey}",requirements={"loginkey" = ".+"}, name="autologin")
-     *
-     */
-    public function autologinAction($id, $loginkey)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-        $config = $this->get('config.extension');
-
-        $user = $em->getRepository('AssoMakerBaseBundle:Orga')->findOneById($id);
-        $secretSalt = $config->getValue('phpm_secret_salt');
-
-
-        if ((!$user) || ($loginkey != urlencode(md5($secretSalt . $id, 'slt')))) {
-
-            return $this->redirect($config->getValue('phpm_orgasoft_inscription_returnURL'));
-        }
-
-        $this->get('security.context')->setToken($user->generateUserToken());
-
-        return $this->redirect($this->generateUrl('base_accueil'));
-    }
-
-    public function adminLogin()
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-        $config = $this->get('config.extension');
-        $orgas = $em->getRepository('AssoMakerBaseBundle:Orga')->findAll();
-        $admin = $orgas[0];
-        $this->get('security.context')->setToken($admin->generateUserToken());
-        return $this->redirect($this->generateUrl('base_accueil'));
-    }
-
-    /**
      * Login
      *
      * @Route("/login/token/{token}", defaults={"token":""}, name="login_token")
-     *
+     * @Template()
      */
     public function loginTokenAction(Request $request, $token) {
         $session = $request->getSession();
@@ -132,7 +98,7 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('base_publichome'));
         } else {
             $session->set('token_id', $token->getId());
-            return $this->redirect($this->generateUrl('hwi_oauth_service_redirect',array('service'=>'google')));
+            //return $this->redirect($this->generateUrl('hwi_oauth_service_redirect',array('service'=>'google')));
         }
     }
 
@@ -146,6 +112,16 @@ class DefaultController extends Controller
      *
      */
     public function loginAction(Request $request) {
+        return $this->redirect($this->generateUrl('base_publichome'));
+    }
+
+    /**
+     *
+     * @Route("/preRegistration", name="preregistration")
+     * @Template()
+     */
+    public function preRegisterAction(){
+
     }
 
 }

@@ -62,7 +62,7 @@
     pmAffectation.urls.niveaux = "{{ url('confiance', {'_format' : 'json'}) }}";
     pmAffectation.urls.plages = "{{ url('config_get', {'string' : 'manifestation_plages'} ) }}";
     pmAffectation.urls.permis = "{{ url('config_get', {'string' : 'manifestation_permis_libelles'} ) }}";
-    pmAffectation.urls.creneauMaker = "{{ url('creneaumaker_tache', {'id' : ''}) }}";
+    pmAffectation.urls.creneauMaker = "{{ url('creneaumaker_tache',{'id': '_ID_'}) }}";
         </script>
         <div class="affectation-wrapper">
             <div class="message" id="message">

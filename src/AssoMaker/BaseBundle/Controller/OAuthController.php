@@ -11,6 +11,7 @@ namespace AssoMaker\BaseBundle\Controller;
 
 use AssoMaker\BaseBundle\Entity\Orga;
 use AssoMaker\BaseBundle\Entity\RegistrationToken;
+use AssoMaker\PHPMBundle\Form\InputDisposType;
 use Doctrine\Common\Persistence\AbstractManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -84,10 +85,37 @@ class OAuthController extends Controller {
 
         $form = $this->createForm($this->get('form.type.registration'), $entity, array());
 
-        $form->handleRequest($request);
+        $orga = $entity;
+        $config = $e = $this->get('config.extension');
+        $confianceOrga = $registrationToken->getEquipe()->getConfiance()->getValeur();
+        $groupesDIresult = $this->getDoctrine()->getEntityManager()->createQuery("SELECT g FROM AssoMakerPHPMBundle:Mission g WHERE g.confianceMin <= $confianceOrga ORDER BY g.ordre")->getResult();
+        $groupesDI = array();
+
+        foreach ($groupesDIresult as $entity) {
+            $groupesDI[$entity->getId()] = $entity;
+        }
+
+        $queryResult = $this->getDoctrine()->getEntityManager()->createQuery("SELECT d FROM AssoMakerPHPMBundle:DisponibiliteInscription d JOIN d.mission m WHERE m.confianceMin <= $confianceOrga ORDER BY d.debut")->getResult();
+        $DIs = array();
+
+        foreach ($queryResult as $entity) {
+            $fmt = new \IntlDateFormatter(null, \IntlDateFormatter::FULL, \IntlDateFormatter::FULL, 'Europe/Paris', null, 'EEEE d MMMM');
+            $DIs[$entity->getMission()->getId()][$fmt->format($entity->getDebut()->getTimestamp())][$entity->getId()] = $entity;
+        }
+
+        $formDispos = $this->createForm(new InputDisposType());
 
         if ($request->getMethod() == 'POST') {
-            if ($form->isValid()) {
+            $formDispos->handleRequest($request);
+            $form->handleRequest($request);
+            $data = $formDispos->getData();
+            $submittedDI = $data['disponibiliteInscriptionItems'];
+
+            if($form->isValid()){
+                exit;
+            }
+
+            if ($form->isValid()&&$formDispos->isValid()) {
                 $entity->setEnabled(true);
                 $entity->addRole('ROLE_ORGA');
                 $entity->setStatut(0);
@@ -103,14 +131,69 @@ class OAuthController extends Controller {
                 $em->persist($entity);
                 $em->flush();
                 $this->container->get('security.context')->setToken(NULL);
-                return $this->redirect($this->generateUrl('hwi_oauth_service_redirect',array('service'=>'google')));
+
+                $allDI = $this->getDoctrine()->getEntityManager()->createQuery("SELECT d FROM AssoMakerPHPMBundle:DisponibiliteInscription d")->getResult();
+
+                $minCharisme = $config->getValue('manifestation_charisme_minimum');
+
+                $totalCharisme = 0;
+
+                foreach ($submittedDI as $di) {
+                    $totalCharisme+=$di->getPointsCharisme();
+                }
+                $totalCharisme+=$orga->getCharisme();
+
+                if ($totalCharisme < $minCharisme) {
+                    return array('form' => $form->createView(),
+                        'entities' => $DIs,
+                        'missions' => $groupesDI,
+                        'orga' => $orga,
+                        'charismeInsuffisant' => true,
+                        'now' => new \DateTime(),
+                        'messagesCharisme' => $config->getValue('phpm_messages_charisme')
+                    );
+                }
+
+                foreach ($allDI as $di) {
+                    if (!$submittedDI->contains($di)) {
+                        if ($orga->getDisponibilitesInscription()->contains($di) && ($this->get('security.context')->isGranted('ROLE_HUMAIN')) && ($di->getDebut() > new \DateTime())) {
+                            $orga->removeDisponibiliteInscription($di);
+                        }
+                    }
+                }
+
+                foreach ($allDI as $di) {
+
+                    if ($submittedDI->contains($di)) {
+                        if (!$orga->getDisponibilitesInscription()->contains($di) && ($this->get('security.context')->isGranted('ROLE_HUMAIN') || ($di->getStatut() > 0)) && ($di->getDebut() > new \DateTime())) {
+                            $orga->addDisponibiliteInscription($di);
+                            $di->addOrga($orga);
+                        }
+                    }
+                }
+
+                $orga->cleanDisponibilites();
+
+                if ($orga->getStatut() == 2) {
+                    $orga->setStatut(1);
+                }
+
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('orga_thankyou'));
             }
         }
 
 
         return array(
-            'entity' => $entity,
-            'form' => $form->createView()
+            'entity' => $orga,
+            'form' => $form->createView(),
+            'formDispo' => $formDispos->createView(),
+            'entities' => $DIs,
+            'missions' => $groupesDI,
+            'orga' => $orga,
+            'now' => new \DateTime(),
+            'messagesCharisme' => $config->getValue('phpm_messages_charisme')
         );
     }
 

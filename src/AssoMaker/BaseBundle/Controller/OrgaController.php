@@ -40,7 +40,7 @@ class OrgaController extends Controller {
      * Lists all Orga entities.
      *
      * @Route("/index/{statut}/{confiance}",defaults={"statut"="1", "confiance"="all"}, name="orga")
-     * @Secure("ROLE_USER")
+     * @Secure("ROLE_HARD")
      * @Template()
      */
     public function indexAction($statut, $confiance) {
@@ -73,7 +73,7 @@ class OrgaController extends Controller {
      *
      * @Route("/trombi", name="orga_trombi")
      * @Template()
-     * @Secure("ROLE_USER")
+     * @Secure("ROLE_ORGA")
      */
     public function trombiAction() {
 
@@ -89,128 +89,12 @@ class OrgaController extends Controller {
     }
 
     /**
-     * Displays a form to create a new Orga Hard entity.
-     *
-     * @Route("/register/", name="orga_register_user")
-     *
-     *    @Template("AssoMakerBaseBundle:Orga:edit.html.twig")
-     */
-    public function registerUserAction() {
-        $em = $this->getDoctrine()->getEntityManager();
-        $config = $this->get('config.extension');
-        $request = $this->getRequest();
-
-        $confianceCode = $this->getRequest()->getSession()->get('confianceCode');
-        $email = $this->getRequest()->getSession()->get('email');
-
-        $confiance = $em->getRepository('AssoMakerBaseBundle:Confiance')->findOneByCode($confianceCode);
-        if (!$confiance) {
-            throw new \Exception('Code d\'inscription incorrect!');
-        }
-
-        $entity = new Orga();
-        $entity->setEmail($email);
-
-        $entity->setEquipe($confiance->getEquipes()->first());
-
-        $form = $this->createForm($this->get('form.type.orga'), $entity, array("confianceCode" => $confianceCode));
-        $form->forcedConfiance = $confianceCode;
-
-        if ($this->get('request')->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            $data = $form->getData();
-
-            if ($form->isValid()) {
-                $equipe = $data->getEquipe();
-                $entity->setPrivileges($equipe->getConfiance()->getPrivileges());
-                $entity->setRole("Équipe " . $entity->getEquipe()->getNom());
-                $entity->setEmail($email);
-                $entity->setStatut(0);
-                $em->persist($entity);
-                $em->flush();
-                return $this->redirect($this->generateUrl('login'));
-            }
-        }
-
-
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-            'confianceCode' => $confianceCode
-        );
-    }
-
-    /**
-     * Displays a form to create a new Orga Soft entity.
-     *
-     * @Route("/inscriptionorgasoft/{equipeId}/{confianceCode}/{libelle}", defaults={"libelle"="", "confianceCode"="","equipeId"=""}, name="orga_registersoft")
-     *
-     * @Template()
-     */
-    public function registerSoftAction($confianceCode, $equipeId) {
-
-        $em = $this->getDoctrine()->getEntityManager();
-        $config = $this->get('config.extension');
-        $request = $this->getRequest();
-
-        $equipe = $em->getRepository('AssoMakerBaseBundle:Equipe')->find($equipeId);
-
-        if (!$equipe || $equipe->getConfiance()->getCode() != $confianceCode) {
-            throw new AccessDeniedException();
-        }
-
-        $entity = new Orga();
-        $entity->setStatut(0);
-        $entity->setEquipe($equipe);
-        $form = $this->createForm($this->get('form.type.orga'), $entity);
-
-
-
-        if ($this->get('request')->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            $data = $form->getData();
-
-            if ($form->isValid()) {
-
-                $entity->setPrivileges($equipe->getConfiance()->getPrivileges());
-                $entity->setEquipe($equipe);
-                $entity->setLastActivity(new \DateTime());
-                $em->persist($entity);
-                $em->flush();
-
-                $this->get('security.context')->setToken($entity->generateUserToken());
-
-
-                $message = \Swift_Message::newInstance()
-                        ->setSubject('Inscription orga soft ' . $config->getValue('manifestation_nom'))
-                        ->setFrom(array($config->getValue('phpm_admin_email') => 'Orga ' . $config->getValue('manifestation_nom')))
-                        ->setReplyTo($config->getValue('phpm_admin_email'))
-                        ->setTo($entity->getEmail())
-                        ->setBody($this->renderView('AssoMakerBaseBundle:Orga:emailConfirmationSoft.html.twig', array('orga' => $entity)), 'text/html')
-                ;
-                $this->get('mailer')->send($message);
-
-
-
-                return $this->redirect($this->generateUrl('orga_inputdispos', array('id' => $entity->getId(), "new" => true)));
-            }
-        }
-
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView()
-        );
-    }
-
-    /**
-     *
-     *
+     * Génère la signature de Mail pour un orga hard
      * @Route("/signature", name="orga_signature")
-     * @Secure("ROLE_USER")
+     * @Secure("ROLE_HARD")
      * @Template()
      */
     public function signatureAction() {
-
 
         $user = $this->get('security.context')->getToken()->getUser();
 
@@ -235,7 +119,7 @@ class OrgaController extends Controller {
         }
 
         if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN') && $user = $this->get('security.context')->getToken()->getUser() != $entity) {
-            throw new AccessDeniedException();
+            throw new AccessDeniedException("Vous n'êtes pas administrateur");
         }
         $editForm = $this->createForm($this->get('form.type.orga'), $entity, array("confianceCode" => $entity->getEquipe()->getConfiance()->getCode()));
 
@@ -246,12 +130,10 @@ class OrgaController extends Controller {
 
             if ($editForm->isValid()) {
 
-
                 $param = $request->request->all();
                 if ($param['action'] == 'delPermis') {
                     $entity->setFichierPermisSet(false);
                 }
-
 
                 $entity->uploadProfilePicture();
                 $entity->uploadFichierPermis();
@@ -314,7 +196,6 @@ class OrgaController extends Controller {
         $format = $this->get('request')->getRequestFormat();
 
         if ($format == 'html') {
-
             return $this->redirect($this->getRequest()->headers->get('referer'));
         }
 
@@ -699,47 +580,6 @@ class OrgaController extends Controller {
         return array('orga' => $user, 'stats' => $stats);
     }
 
-// 	/**
-// 	 * Manually generate DI -> Dispo
-// 	 *
-// 	 * @Route("/{id}/genDispo", name="orga_gendispo")
-// 	 */
-// 	public function genDispoAction($id)
-// 	{
-// 		if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
-// 			throw new AccessDeniedException();
-// 		}
-// 		$em = $this->getDoctrine()->getEntityManager();
-// // 		if($id = "all"){
-// // 			$orgas = $em->createQuery("SELECT o FROM AssoMakerBaseBundle:Orga o")->getResult();
-// // 		}else
-// 		{
-// 		$orgas = $em->getRepository('AssoMakerBaseBundle:Orga')->find($id);
-// 		if (!$orgas ) {
-// 			throw $this->createNotFoundException('Unable to find Orga.');
-// 		}
-// 		}
-// 		$allDI = $em->createQuery("SELECT d FROM AssoMakerPHPMBundle:DisponibiliteInscription d")->getResult();
-// 		foreach ($orgas as $orga){
-//             foreach ($allDI as $di)
-//             {
-//             		if(!$orga->getDisponibilitesInscription()->contains($di)){
-//             			$orga->removeDIFromDisponibilites($di);
-//             		}
-//             }
-//             foreach ($allDI as $di)
-//             {
-//             	if($orga->getDisponibilitesInscription()->contains($di)){
-//             		$orga->addDIToDisponibilites($di);
-//             	}
-//             }
-//             	$em->flush();
-// 	            $orga->cleanDisponibilites();
-// 	            $em->flush();
-// 		}
-// 		return $this->redirect($this->getRequest()->headers->get('referer'));
-// 	}
-
     /**
      * Auto affect Orga using orga Hints
      *
@@ -857,7 +697,7 @@ class OrgaController extends Controller {
         $em = $this->getDoctrine()->getEntityManager();
         $config = $e = $this->get('config.extension');
 
-        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN') && $user = $this->get('security.context')->getToken()->getUser()->getId() != $orgaid) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
             throw new AccessDeniedException();
         }
 

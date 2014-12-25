@@ -1,0 +1,48 @@
+{% extends "AssoMakerBaseBundle::layout.html.twig"  %}
+
+{% block content %}
+    <div class="row-fluid">
+        <div class="span6">
+            <div class="page-header">
+                <h1>Bienvenue au Gala <small>Inscription</small></h1>
+            </div>
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <div class="alert alert-error">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="alert alert-warning">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+            <div id="welcome" style="text-align: justify; font-size: large">
+                <p>Tu viens t'inscrire comme orga au Gala de l'école ? Quelle bonne idée, tu va voir une super ambiance,
+                organiser un grand événement de plus de 3000 personnes !</p>
+                <p>Ce site va te permettre de donner des disponibilités sur l'événement et de découvrir quelles que
+                    jours avant l'évènement. Pour te connecter, utilise un compte Google (il t'en faut forcément un) :</p>
+            </div>
+            <div id="logins" style="width: 100%">
+                <a
+                        class="btn btn-danger"
+                        style="margin: 0 auto;display: block"
+                        href="{{ hwi_oauth_login_url('google') }}">Inscription avec Google</a>
+            </div>
+            <div class="well well-small" style="margin-top:50px">
+                En cas de problème, contacte le responsable :
+                <a href="mailto:gala.orga@bde-insa-lyon.fr">gala.orga@bde-insa-lyon.fr</a><br/>
+                Clef : {{ token }}
+            </div>
+        </div>
+        <div class="span6" style="min-width: 700px;">
+            <div class="well well-small">
+                <div class="page-header">
+                    <h1>Teaser</h1>
+                </div>
+                <div>
+                    <iframe width="560" height="315" style="margin:0 auto;display: block;" src="//www.youtube.com/embed/SPF2ZZ3Fg8Q" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
