@@ -44,7 +44,7 @@ twig:
         resources:
             - 'AssoMakerBaseBundle:Form:fields.html.twig'
     globals:
-        responsibleEmail: %responsible.email%
+        admin_email: %admin_email%
 
 # Assetic Configuration
 assetic:
