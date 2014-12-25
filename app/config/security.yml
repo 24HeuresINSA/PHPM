@@ -56,6 +56,9 @@ security:
              - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/.*json, roles: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/oauth, roles: ROLE_USER }
+             - { path: ^/configv, roles: ROLE_SUPER_ADMIN }
+             - { path: ^/configv/.*, roles: ROLE_SUPER_ADMIN }
+             - { path: ^/analyse/.*, roles: ROLE_HARD }
              - { path: ^/.*, roles: ROLE_ORGA }
 #             - { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
 jms_security_extra:
