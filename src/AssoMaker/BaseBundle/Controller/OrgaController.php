@@ -40,7 +40,7 @@ class OrgaController extends Controller {
      * Lists all Orga entities.
      *
      * @Route("/index/{statut}/{confiance}",defaults={"statut"="1", "confiance"="all"}, name="orga")
-     * @Secure("ROLE_USER")
+     * @Secure("ROLE_HARD")
      * @Template()
      */
     public function indexAction($statut, $confiance) {
@@ -73,7 +73,7 @@ class OrgaController extends Controller {
      *
      * @Route("/trombi", name="orga_trombi")
      * @Template()
-     * @Secure("ROLE_USER")
+     * @Secure("ROLE_HARD")
      */
     public function trombiAction() {
 
@@ -203,14 +203,11 @@ class OrgaController extends Controller {
     }
 
     /**
-     *
-     *
      * @Route("/signature", name="orga_signature")
-     * @Secure("ROLE_USER")
+     * @Secure("ROLE_HARD")
      * @Template()
      */
     public function signatureAction() {
-
 
         $user = $this->get('security.context')->getToken()->getUser();
 
@@ -649,7 +646,7 @@ class OrgaController extends Controller {
      * Charisme .
      *
      * @Route("/charisme", name="orga_charisme")
-     * @Secure("ROLE_VISITOR")
+     * @Secure("ROLE_ORGA")
      * @Template()
      */
     public function charismeAction() {
@@ -832,7 +829,7 @@ class OrgaController extends Controller {
      */
     public function exportCSVAction() {
 
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HARD')) {
             throw new AccessDeniedException();
         }
 

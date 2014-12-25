@@ -28,6 +28,7 @@ class ConfianceController extends Controller
      */
     public function indexAction()
     {
+
         $em = $this->getDoctrine()->getEntityManager();
         $entities = $em->getRepository('AssoMakerBaseBundle:Confiance')->findAll();
         $format = $this->get('request')->getRequestFormat();
@@ -206,6 +207,9 @@ class ConfianceController extends Controller
      */
     public function deleteAction($id)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
+            throw new AccessDeniedException();
+        }
        
        $em = $this->getDoctrine()->getEntityManager();
        $entity = $em->getRepository('AssoMakerBaseBundle:Confiance')->find($id);

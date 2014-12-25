@@ -5,16 +5,16 @@ security:
 
 
     role_hierarchy:
-        ROLE_USER:        ROLE_VISITOR
-        ROLE_ORGA:        ROLE_USER
-        ROLE_HARD:        ROLE_ORGA
-        ROLE_ADMIN: [ROLE_USER, ROLE_VISITOR, ROLE_HARD]
-        ROLE_HUMAIN:       [ROLE_ADMIN]
+        ROLE_USER:          ROLE_VISITOR
+        ROLE_ORGA:          ROLE_USER
+        ROLE_HARD:          ROLE_ORGA
+        ROLE_ADMIN:         [ROLE_USER, ROLE_VISITOR, ROLE_HARD]
+        ROLE_HUMAIN:        [ROLE_ADMIN]
         ROLE_SOUSRESP:      [ROLE_ADMIN]
-        ROLE_LOG:       [ROLE_HARD]
-        ROLE_SECU:       [ROLE_HARD]
-        ROLE_BUREAU:       [ROLE_SUPER_ADMIN]
-        ROLE_SUPER_ADMIN: [ROLE_HUMAIN, ROLE_LOG, ROLE_SOUSRESP, ROLE_SECU, ROLE_HARD, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_LOG:           [ROLE_HARD]
+        ROLE_SECU:          [ROLE_HARD]
+        ROLE_BUREAU:        [ROLE_ADMIN, ROLE_HUMAIN]
+        ROLE_SUPER_ADMIN:   [ROLE_HUMAIN, ROLE_LOG, ROLE_SOUSRESP, ROLE_SECU, ROLE_HARD, ROLE_ALLOWED_TO_SWITCH, ROLE_BUREAU]
 
     providers:
         fos_userbundle:
@@ -46,11 +46,14 @@ security:
              - { path: ^/admin/, role: ROLE_ADMIN }
              - { path: /_wdt/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: /_profiler/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
-             - { path: ^/groupetache/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-             - { path: ^/tache/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+             - { path: ^/groupetache/.*, roles: ROLE_ORGA}
+             - { path: ^/tache/.*, roles: ROLE_ORGA}
+             - { path: ^/anim/.*, roles: ROLE_HARD}
+             - { path: ^/sponso/.*, roles: ROLE_HARD}
+             - { path: ^/analyse/.*, roles: ROLE_ADMIN}
              - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-             - { path: ^/pass/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-             - { path: ^/comptesPerso/virement, roles: ROLE_VISITOR }
+             - { path: ^/pass/.*, roles: ROLE_SECU }
+             - { path: ^/comptesPerso/virement, roles: ROLE_HARD }
              - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/.*json, roles: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/oauth, roles: ROLE_USER }
