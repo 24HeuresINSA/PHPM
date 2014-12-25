@@ -1,5 +1,5 @@
 {% extends "AssoMakerBaseBundle::layout.html.twig"  %}
-{% set pageTitle = entity.prenom~' '~entity.nom %}
+{% set pageTitle = "Inscription" %}
 
 {% block content %}
     {% block body %}
@@ -16,9 +16,7 @@
         <form class="form-horizontal" onsubmit="javascript:setBunload(false);" action="{{ path('register_oauth') }}" method="post" {{ form_enctype(form) }}>
             <div class="container-fluid">
                 <div class="row-fluid">
-                    <h1>Inscription Orga
-                        {% if app.request.get('confianceCode') != "" %} {{ app.request.get('libelle') }}{% else %} {{ entity.equipe }} {% endif %}
-                        - {{ manifestation_nom }}</h1>
+                    <h1>Inscription Orga - {{ manifestation_nom }}</h1>
                     <hr>
                 </div>
 
@@ -71,129 +69,6 @@
                     </div>
                 </div>
 
-        {% if (app.request.get('new')==true) %}
-            <script>
-                function unloadMess() {
-                    mess = "Attention, tes changements n'ont pas été enregistrés";
-                    return mess;
-                }
-                function setBunload(on) {
-                    window.onbeforeunload = (on) ? unloadMess : null;
-                }
-                setBunload(true);
-            </script>
-        {% endif %}
-        <script>
-            function Ctrl($scope) {
-
-                $scope.messageCharisme = function() {
-                    messages = {{ messagesCharisme |raw }};
-                    for (var key in messages) {
-                        if ($scope.charisme() >= key) {
-                            message = messages[key];
-                        }
-                    }
-                    return message;
-
-                }
-
-                $scope.charisme = function() {
-                    var count = 0;
-                    var len = $scope.dispos.length;
-                    for (var i = 0; i < len; i++) {
-                        if (!isNaN($scope.points[i]) && ($scope.dispos[i])) {
-                            count = count + $scope.points[i];
-                        }
-
-                    }
-                    return count;
-                };
-
-                $scope.maxpoints = function() {
-                    var count = 0;
-                    var len = $scope.dispos.length;
-                    for (var i = 0; i < len; i++) {
-                        if (!isNaN($scope.points[i])) {
-                            count = count + $scope.points[i];
-                        }
-
-                    }
-
-                    return count;
-                }
-
-                $scope.ratiocharisme = function() {
-                    return 100 * $scope.charisme() / $scope.maxpoints();
-                }
-
-
-                $scope.dispos = new Array();
-                $scope.points = new Array();
-                {% for categorie,di_jour in entities%}
-                {% for jour,d in di_jour %}
-                {% for e in d %}
-                $scope.dispos[{{ e.id }}] = {% if e in orga.disponibilitesInscription %}true{% else %}false{% endif %};
-                $scope.points[{{ e.id }}] = {{ e.pointsCharisme }};    {% endfor %}
-                {% endfor %}
-                {% endfor %}
-
-
-
-            }
-        </script>
-
-
-        <div class="row-fluid">
-                <div class="well">
-                    <h1>Tes disponibilités</h1>
-
-                    {{ phpm_inscription_disponibilites_consignes | raw }}
-                    {% if is_granted('ROLE_ORGA') %}
-                        <em>Les créneaux oranges ne sont plus modifiables une fois cochés.</em>
-                    {% endif %}
-                    {{ form_errors(formDispo) }}
-
-                    {% raw %}
-                    <h3 style="text-align: center;">Points de charisme : {{ charisme() }}/{{ maxpoints() }}</h3>
-                    <h3 style="text-align: center;">{{ messageCharisme() }}</h3>
-                    <div class="progress">
-                        <div class="bar bar-success" style="width: {{ ratiocharisme() }}%;"></div>
-                    </div>
-                    {% endraw %}
-
-                </div>
-                {% if charismeInsuffisant is defined%}
-                    <div class="alert alert-block alert-error fade in">
-                        <h4 class="alert-heading">Attention : Tu n'as pas rempli assez de disponibilités.</h4>
-                    </div>
-                {% endif %}
-                {% for categorie,di_jour in entities%}
-                    <div style="display:inline-block; margin-right: 2em" class="well">
-                        <h3>{{ (missions[categorie]).nom }}</h3>
-                        <p><em>{{ (missions[categorie]).description }}</em></p>
-                        {% for jour,d in di_jour %}
-                            <div style="min-width:13em; float:left; margin-right: 1em">
-                                <h4>{{ jour }}</h4>
-                                {% for e in d %}<div>
-                                    <label class="checkbox {% if e.statut == 1 %}statut1{% endif %}">
-                                        {{ e.debut |format_datetime('HH:mm')}} <i class="icon-arrow-right"></i> {{ e.fin |format_datetime('HH:mm')}} <span class="badge badge-info">{{ e.pointsCharisme }}</span>
-                                        <input class="shiftkeybox"type="checkbox" name="phpm_bundle_inputdispostype[disponibiliteInscriptionItems][{{ e.id }}]"
-                                               id="phpm_bundle_inputdispostype_disponibiliteInscriptionItems_{{ e.id }}" value="{{ e.id }}"
-                                               {% if e in orga.disponibilitesInscription %}checked="checked"{% endif %}
-                                                {% if ((e.statut == 0) or ((e.statut==1) and (e in orga.disponibilitesInscription))or (e.debut.timestamp - now.timestamp < 0)) and not is_granted('ROLE_HUMAIN') %}disabled{% endif %}
-                                               ng-model="dispos[{{ e.id }}]"
-                                                >
-                                    </label></div>
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
-                        <div class="clear"></div>
-
-
-                    </div>
-                {% endfor %}
-            </div>
-
                 <div class="form-fluid">
                     <div class="form-actions ">
                         <button class="btn btn-success pull-right" type="submit">Continuer »</button>
@@ -201,29 +76,8 @@
                 </div>
 
                 {{ form_widget(form._token) }}
-                {{ form_widget(formDispo._token) }}
             </div>
         </form>
 
     {% endblock %}
-
-	{{ form_widget(form._token) }}
-                    <div class="form-actions">
-                        <div class="btn-toolbar">
-                            <button class="btn btn-primary" name="action" value="save" type="submit">Enregistrer</button>
-
-			{% if is_granted('ROLE_HUMAIN') %}
-                            <a class="btn" href="{{ path('orga_inputdispos', { 'id': entity.id }) }}"><i class="icon-calendar"></i>Disponibilités</a>
-                            <a class="btn" href="{{ path('orga_affectation', { 'orga_id': entity.id }) }}"><i class="icon-book"></i>Affecter</a>
-                            <a class="btn" href="{{ path('orga_print', { 'orgaid': entity.id })  }}"><i class="icon-print"></i> Imprimer le planning</a>
-                            <a class="btn" target="_blank" href="https://www.facebook.com/search/results.php?q={{ entity.prenom~"%20"~entity.nom |url_encode }}"><i class="icon-search"></i> Rechercher sur Facebook</a>
-				{% if entity.groupePC%}
-                            <a class="btn" target="_blank" href="http://cipcnet.insa-lyon.fr/scol/php/apprec_groupe?id_annee={{phpm_anneetrombi}}&id_groupe={{ entity.groupePC |url_encode }}"><i class="icon-search"></i> Afficher le trombi du groupe</a>
-				{% endif %}
-                            <a class="btn" href="{{ path('autologin', { 'id': entity.id, 'loginkey': (entity.id)|phpm_crypt }) }}">Se connecter en tant que cet orga.</a>
-			{% endif %}
-
-                        </div>
-                    </div>
-                </form>
 {% endblock %}
