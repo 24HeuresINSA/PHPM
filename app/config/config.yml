@@ -33,7 +33,7 @@ hwi_oauth:
     google:
       type: google
       client_id: %oauth.google.id%
-      client_secret: %oauth.google.secret%
+      client_secret: %oauth.google.secret
       scope: "email profile"
 
 # Twig Configuration
@@ -43,6 +43,8 @@ twig:
     form:
         resources:
             - 'AssoMakerBaseBundle:Form:fields.html.twig'
+    globals:
+        responsibleEmail: %responsible.email%
 
 # Assetic Configuration
 assetic:

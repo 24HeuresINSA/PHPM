@@ -37,13 +37,13 @@ class BaseConfigFixture implements FixtureInterface {
                         new Config('base_admin_login', 'Login admin automatique', '1', NULL));
         $manager
                 ->persist(
-                        new Config('manifestation_nom', 'Nom de la manifestation', '24 Heures de l\'INSA 38e', NULL));
+                        new Config('manifestation_nom', 'Nom de la manifestation', '24 Heures de l\'INSA 41e', NULL));
         $manager
                 ->persist(
-                        new Config('manifestation_edition', 'Numéro de l\'édition', '38', NULL));
+                        new Config('manifestation_edition', 'Numéro de l\'édition', '41', NULL));
         $manager
                 ->persist(
-                        new Config('phpm_contenu_page_principale', 'Contenu de la page principale', '<h1>Gala PlanningMaker<h2><p>Gestion des ressources humaines.</p>', NULL));
+                        new Config('phpm_contenu_page_principale', 'Contenu de la page principale', '<h1>PHPlanningMaker<h2><p>Gestion des ressources humaines.</p>', NULL));
 
         $manager
                 ->persist(

@@ -20,12 +20,12 @@
                     <a class="btn btn-danger btn-large" href="{{ hwi_oauth_login_url('google') }}">Se connecter avec Google</a>
                 </p>
             </div>
-            <p>Sinon, pour tout problème ou pour t'inscrire, contacte le responsable : <a href="mailto:gala.orga@bde-insa-lyon.fr">gala.orga@bde-insa-lyon.fr</a></p>
+            <p>Sinon, pour tout problème ou pour t'inscrire, contacte le responsable : <a href="mailto:{{ admin_email }}">{{ admin_email }}</a></p>
 
         </div>
         <div class="span6" style="min-width: 700px;">
             <div class="hero-unit">
-                <iframe width="560" height="315" style="margin:0 auto;display: block;" src="//www.youtube.com/embed/SPF2ZZ3Fg8Q" frameborder="0" allowfullscreen></iframe>
+                {{ phpm_contenu_page_principale |raw}}
             </div>
         </div>
     </div>
