@@ -22,19 +22,21 @@ fos_user:
     firewall_name: main
     user_class: AssoMaker\BaseBundle\Entity\Orga
     registration:
+        form:
+            type: form.type.quickRegistration
         confirmation:
             enabled:    true # change to true for required email confirmation
 
 hwi_oauth:
-  firewall_name: main
-  http_client:
-          verify_peer: false
-  resource_owners:
-    google:
-      type: google
-      client_id: %oauth.google.id%
-      client_secret: %oauth.google.secret
-      scope: "email profile"
+    firewall_name: main
+    http_client:
+        verify_peer: false
+    resource_owners:
+        google:
+            type: google
+            client_id: %oauth.google.id%
+            client_secret: %oauth.google.secret%
+            scope: "email profile"
 
 # Twig Configuration
 twig:

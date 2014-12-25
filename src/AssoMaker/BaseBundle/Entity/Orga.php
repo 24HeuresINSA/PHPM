@@ -103,7 +103,7 @@ class Orga extends BaseUser implements UserInterface {
      *     checkMX = true
      * )
      */
-    //protected $email;
+    protected $email;
 
     /**
      * @var string $publicEmail
@@ -122,7 +122,7 @@ class Orga extends BaseUser implements UserInterface {
      *
      * @ORM\Column(name="dateDeNaissance", type="date", nullable=true)
      *
-     * @Assert\Date(message="La date de naissance doît être valide")
+     * @Assert\Date(message = "La date de naissance doît être valide")
      */
     protected $dateDeNaissance;
 
@@ -165,7 +165,7 @@ class Orga extends BaseUser implements UserInterface {
      *
      * @ORM\Column(name="datePermis", type="date", nullable=true)
      *
-     * @Assert\Date(message="La date de permis doît être valide")
+     * @Assert\Date(message = "La date de permis doît être valide")
      */
     protected $datePermis;
 

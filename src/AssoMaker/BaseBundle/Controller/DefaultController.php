@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Process\Exception\LogicException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Acl\Exception\Exception;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,11 +16,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AssoMaker\PHPMBundle\Entity\Config;
+use AssoMaker\BaseBundle\Entity\Orga as BaseUser;
 use AssoMaker\PHPMBundle\Form\PrintPlanningType;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
+    /**
+     * @var TokenInterface
+     */
+    private $token;
 
     /**
      * @Route("/home", name="base_accueil")
@@ -132,7 +138,7 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('base_publichome'));
         } else {
             $session->set('token_id', $token->getId());
-            return $this->redirect($this->generateUrl('hwi_oauth_service_redirect',array('service'=>'google')));
+            return $this->redirect($this->generateUrl('register'));
         }
     }
 
@@ -146,6 +152,130 @@ class DefaultController extends Controller
      *
      */
     public function loginAction(Request $request) {
+
     }
+
+    /**
+     * Cette action propose à l'utilisateur de s'enregistrer (avec ou sans fournisseur de connexion).
+     *
+     * @Route("/register/", name="register")
+     * @Template()
+     *
+     */
+    public function registerAction(Request $request) {
+
+        /**
+         * @var AbstractManagerRegistry
+         */
+        $em = $this->getDoctrine()->getManager();
+
+        // Token défini ?
+        $session = $request->getSession();
+        $token_id = $session->get('token_id');
+        if ($token_id == null) {
+            $request->getSession()->getFlashBag()->add('error', "Vous ne pouvez pas vous enregistrer sans clé d'inscription.");
+            return $this->redirect($this->generateUrl('base_publichome'));
+        }
+
+        // Token valide ?
+        $em = $this->getDoctrine()->getManager();
+        $token = $em->getRepository('AssoMakerBaseBundle:RegistrationToken')->findOneBy(array('id' => $token_id));
+        if ($token == null || $token->getCount() < 1){
+            $request->getSession()->getFlashBag()->add('error', "La clé d'inscription n'est pas valide.");
+            return $this->redirect($this->generateUrl('base_publichome'));
+        }
+
+        // L'utilisateur s'est enregistré via OAuth ?
+        $this->securityContext=$this->get('security.context');
+        $this->token = $this->securityContext->getToken();
+        $user = $this->token->getUser();
+        if ($user != "anon." && !$user->isEnabled()) {
+            
+            // Vérification de l'email du token
+            if ($token->getEmail() != null && $token->getEmail() !== $user->getEmail()) {
+                $request->getSession()->getFlashBag()->add('error', "La clé d'inscription n'est pas valide avec cette adresse mail.");
+                return $this->refuseRegistration($em, $user);
+            }
+
+            // Tout est ok, on complète l'inscription
+            $user->setEnabled(true);
+            $user->addRole('ROLE_ORGA');
+            $user->setStatut(0);
+            $user->setEquipe($token->getEquipe());
+
+            // Utilisation du token
+            if($token->getCount() <= 1) {
+                $em->remove($token);
+            } else {
+                $token->oneUse();
+                $em->persist($token);
+            }
+
+            $em->persist($user);
+            $em->flush();
+
+            // Inscription terminée. On invite l'utilisateur à se reconnecter.
+            $this->container->get('security.context')->setToken(NULL);
+            $request->getSession()->getFlashBag()->add('notice', "Inscription effectuée avec succès, vous pouvez maintenant vous connecter.");
+            return $this->redirect($this->generateUrl('base_publichome'));
+
+        } 
+        
+        // L'utilisateur s'est-il enregistré via formulaire d'inscription ?
+        if ($user == "anon.")
+            $user = new BaseUser();
+
+        $form = $this->createForm($this->get('form.type.quickRegistration'), $user, array());
+        $form->handleRequest($request);
+
+        if ($request->getMethod() == "POST") {
+            if ($form->isValid()) {
+                // On complète l'inscription
+                $canonicalizer = $this->get('fos_user.util.email_canonicalizer');
+                $user->setUsername($user->getPrenom() . " " . $user->getNom());
+                $user->setUsernameCanonical($canonicalizer->canonicalize($user->getUsername()));
+                $user->setEmailCanonical($canonicalizer->canonicalize($user->getEmail()));
+                $user->setEnabled(true);
+                $user->addRole('ROLE_ORGA');
+                $user->setStatut(0);
+                $user->setEquipe($token->getEquipe());
+
+                // Utilisation du token
+                if($token->getCount() <= 1) {
+                    $em->remove($token);
+                } else {
+                    $token->oneUse();
+                    $em->persist($token);
+                }
+
+                $em->persist($user);
+                $em->flush();
+
+                // Inscription terminée. On invite l'utilisateur à se reconnecter.
+                $this->container->get('security.context')->setToken(NULL);
+                $request->getSession()->getFlashBag()->add('notice', "Inscription effectuée avec succès, vous pouvez maintenant vous connecter.");
+                return $this->redirect($this->generateUrl('base_publichome'));
+            }
+        } 
+
+        return array(
+            'entity' => $user,
+            'form' => $form->createView()
+        );
+
+    }
+
+    /**
+     * @param $entityManager
+     * @param $user
+     */
+    private function refuseRegistration($entityManager, $user)
+    {
+        $entityManager->remove($user);
+        $entityManager->flush();
+        $this->securityContext->setToken(null);
+        return $this->redirect($this->generateUrl('base_publichome'));
+    }
+
 
 }

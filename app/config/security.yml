@@ -1,6 +1,7 @@
 security:
     encoders:
         AssoMaker\PHPMBundle\Entity\User: plaintext
+        FOS\UserBundle\Model\UserInterface: sha512
 
 
     role_hierarchy:
@@ -20,10 +21,6 @@ security:
             id: fos_user.user_provider.username
         #oauth.user_provider:
         #    id: oauth.user_provider
-
-
-    encoders:
-        FOS\UserBundle\Model\UserInterface: sha512
 
     firewalls:
         dev:
@@ -45,6 +42,7 @@ security:
 
     access_control:
              - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+             - { path: ^/register/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/admin/, role: ROLE_ADMIN }
              - { path: /_wdt/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: /_profiler/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }

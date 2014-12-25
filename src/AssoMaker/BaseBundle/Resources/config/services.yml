@@ -22,3 +22,8 @@ services:
         arguments: ["@security.context","@config.extension"]
         tags:
             - { name: form.type }
+    form.type.quickRegistration:
+        class: AssoMaker\BaseBundle\Form\QuickRegistrationUserType
+        arguments: ["@security.context","@config.extension"]
+        tags:
+            - { name: form.type }
