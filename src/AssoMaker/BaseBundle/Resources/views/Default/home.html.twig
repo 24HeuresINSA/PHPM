@@ -1,4 +1,4 @@
-{% extends "AssoMakerBaseBundle::layout.html.twig"  %}
+{% extends "AssoMakerBaseBundle::layout.html.twig" %}
 {% set pageTitle = 'Accueil' %}
 
 {% block pageHeader %}
@@ -6,298 +6,328 @@
 
 {% block content %}
 
-<div class="row-fluid">
-    <h1>Bonsoir {{ app.user.prenom }} !</h1>
-    <hr>
-</div>
-<div class="row-fluid">
-    <div class="span4">
+    <div class="row-fluid">
+        <h1>{{ app.user.prenom }} {{ app.user.nom }}</h1>
+        <hr>
+    </div>
+    <div class="row-fluid">
+        <div class="span4">
         <h2>Mes Informations</h2>
-	       		       {%   if not app.user.anneeEtudes
-                                    or not app.user.departement
-                                    or (not app.user.groupePC and (app.user.anneeEtudes == 1 or app.user.anneeEtudes == 2))
-                                    or not app.user.profilePictureSet
-                                    or (app.user.datePermis and not app.user.fichierPermisSet)
-                                %}
-        <div class="alert alert-block alert-error fade in">
-            <h4 class="alert-heading">Tu n'a pas renseigné les informations suivantes :</h4>
-            <ul>
-		            {% if not app.user.anneeEtudes%}<li>Année d'études</li>{% endif %}
-		            {% if not app.user.departement%}<li>Département INSA</li>{% endif %}
-		            {% if not app.user.groupePC and (app.user.anneeEtudes == 1 or app.user.anneeEtudes == 2)  %}<li>Numéro de groupe Premier Cycle</li>{% endif %}
-		            {% if not app.user.profilePictureSet%}<li>Photo de Trombinoscope</li>{% endif %}
-                            {% if not app.user.fichierPermisSet%}<li>Scan du permis de conduire</li>{% endif %}
+        {% if not app.user.anneeEtudes
+        or not app.user.departement
+        or (not app.user.groupePC and (app.user.anneeEtudes == 1 or app.user.anneeEtudes == 2))
+        or not app.user.profilePictureSet
+        or (app.user.datePermis and not app.user.fichierPermisSet) %}
+            <div class="alert alert-block alert-error fade in">
+                <h4 class="alert-heading">Tu n'a pas renseigné les informations suivantes :</h4>
+                <ul>
+                    {% if not app.user.anneeEtudes %}
+                        <li>Année d'études</li>{% endif %}
+                    {% if not app.user.departement %}
+                        <li>Département INSA</li>{% endif %}
+                    {% if not app.user.groupePC and (app.user.anneeEtudes == 1 or app.user.anneeEtudes == 2) %}
+                        <li>Numéro de groupe Premier Cycle</li>{% endif %}
+                    {% if not app.user.profilePictureSet %}
+                        <li>Photo de Trombinoscope</li>{% endif %}
+                    {% if not app.user.fichierPermisSet %}
+                        <li>Scan du permis de conduire</li>{% endif %}
                 </ul>
             </div>
-                              {% endif %}
-            <div class="well">
-                <div class="row-fluid">
-                    <h3>{{ entitiesMacro.orga(app.user) }}</h3>
+        {% endif %}
+        <div class="well">
+            <div class="row-fluid">
+                <h3>{{ entitiesMacro.orga(app.user) }}</h3>
+            </div>
+            <div class="row-fluid">
+                <div class="span3">
+                    {% if app.user.profilePictureSet == 1 %}
+                        <img src="{{ entitiesMacro.orgaProfilePictureLink(app.user.id) }}" class="img-polaroid"
+                             style="width:90%"/>
+                    {% endif %}
                 </div>
-                <div class="row-fluid">
-                    <div class="span3">
-                            {% if app.user.profilePictureSet == 1 %}
-                            <img src="{{ entitiesMacro.orgaProfilePictureLink(app.user.id) }}" class="img-polaroid" style="width:90%"/>
-                            {% endif %}
-                        </div>
-                        <div class="span9">
-                            <p>{{ app.user.email }} - {{ app.user.telephone |telephone}}</p>
-                            <dl class="dl-horizontal">
+                <div class="span9">
+                    <p>{{ app.user.email }} - {{ app.user.telephone |telephone }}</p>
+                    <dl class="dl-horizontal">
 
-                                <b>Date de Naissance : </b>
-                                    {{ app.user.dateDeNaissance|format_date('dd MMM Y') }}<br>
-                                <b>Équipe : </b>
-                                    {{ entitiesMacro.equipe(app.user.equipe) }}<br>
-                                <b>Permis de conduire : </b>
-						        {% if app.user.datePermis %}
-                                obtenu le {{ app.user.datePermis|format_date('dd MMM Y') }}.
-                                                        {% else %}
-                                non titulaire
-						        {% endif%}<br>
-                                <b>Département : </b>
-								{{ app.user.anneeEtudes }}{{ app.user.departement }}
-								{% if app.user.groupePC %}
-                                (groupe {{ app.user.groupePC }})
-						        {% endif %}<br>
-                            </dl>
-                        </div>
-                    </div>
-                    <div class="row-fluid">
-                        <p>
-                            <a class="btn" href="{{ path('orga_edit',{'id':app.user.id }) }}"><i class="icon-pencil"></i> Modifier mes informations »</a>
-						    		{% if base_signature_actif ==1 and is_granted('ROLE_USER') %}
-                            <a class="btn" href="{{ path('orga_signature') }}"><i class="icon-envelope"></i> Générer ma signature email »</a>
-						    	    {% endif %}
-                        </p>
-                    </div>
+                        <b>Date de Naissance : </b>
+                        {{ app.user.dateDeNaissance|format_date('dd MMM Y') }}<br>
+                        <b>Équipe : </b>
+                        {{ entitiesMacro.equipe(app.user.equipe) }}<br>
+                        <b>Permis de conduire : </b>
+                        {% if app.user.datePermis %}
+                        obtenu le {{ app.user.datePermis|format_date('dd MMM Y') }}.
+                    {% else %}
+                        non titulaire
+                        {% endif %}<br>
+                        <b>Département : </b>
+                        {{ app.user.anneeEtudes }}{{ app.user.departement }}
+                        {% if app.user.groupePC %}
+                        (groupe {{ app.user.groupePC }})
+                        {% endif %}<br>
+                    </dl>
                 </div>
+            </div>
+            <div class="row-fluid">
+                <p>
+                    <a class="btn" href="{{ path('orga_edit',{'id':app.user.id }) }}"><i class="icon-pencil"></i> Modifier
+                        mes informations »</a>
+                    {% if base_signature_actif ==1 and is_granted('ROLE_USER') %}
+                        <a class="btn" href="{{ path('orga_signature') }}"><i class="icon-envelope"></i> Générer ma
+                            signature email »</a>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
         {% if comptes_perso_actif and (app.user.equipe.comptesPersoEnabled or is_granted('ROLE_HUMAIN') ) %}
 
-                <h2>Mon compte perso</h2>
-                  {% if soldeCP < 0 %}
-                <div class="alert alert-block alert-error">
-                    <h4 class="alert-heading">Attention : ton compte perso est déficitaire !</h4>
-                    <p>
-                        Tu dois actuellement <em>{{ soldeCP|number_format(2) }}€</em>  à l'association !
-                    </p>
+        <h2>Mon compte perso</h2>
+        {% if soldeCP < 0 %}
+        <div class="alert alert-block alert-error">
+            <h4 class="alert-heading">Attention : ton compte perso est déficitaire !</h4>
 
-		  {% else %}
-                    <div class="well">
-                        <p>Il te reste actuellement <em>{{ soldeCP|number_format(2) }}€</em> sur ton compte.</p>
+            <p>
+                Tu dois actuellement <em>{{ soldeCP|number_format(2) }}€</em> à l'association !
+            </p>
 
-		  {% endif %}
-                        <h4>Détail des transactions</h4>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Montant</th>
-                                    <th>Date</th>
-                                    <th>Détail</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+            {% else %}
+            <div class="well">
+                <p>Il te reste actuellement <em>{{ soldeCP|number_format(2) }}€</em> sur ton compte.</p>
+
+                {% endif %}
+                <h4>Détail des transactions</h4>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Montant</th>
+                        <th>Date</th>
+                        <th>Détail</th>
+                    </tr>
+                    </thead>
+                    <tbody>
                     {% for transaction in transactionsCP %}
                     {% if loop.index == '6' %}
 
-                                </tbody>
-                            </table>
-                            <div id="demo" class="collapse">
-                                <table class="table">
-                                    <tbody>
-                    {% endif %}
-                                            <tr>
-                                                <td>{{ transaction.amount |number_format(2) }}€</td>
-                                                <td>{{ transaction.commitDate |format_date('dd MMM Y HH:mm')}}</td>
-                                                <td>{{ transaction.comment }}</td>
-                                            </tr>
+                    </tbody>
+                </table>
+                <div id="demo" class="collapse">
+                    <table class="table">
+                        <tbody>
+                        {% endif %}
+                        <tr>
+                            <td>{{ transaction.amount |number_format(2) }}€</td>
+                            <td>{{ transaction.commitDate |format_date('dd MMM Y HH:mm') }}</td>
+                            <td>{{ transaction.comment }}</td>
+                        </tr>
 
-                    {% endfor %}
-                                        </tbody>
-                                    </table>
-            {% if transactionsCP|length > 5 %}
-                                </div>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if transactionsCP|length > 5 %}
+                </div>
+                {% endif %}
+                <button type="button" class="btn" data-toggle="collapse" data-target="#demo"> Afficher toutes les
+                    transactions
+                </button>
+                <a class="btn" href="{{ url('comptesPerso_virement') }}"><i class="icon-credit-card"></i> Effectuer un
+                    virement »</a>
+            </div>
+
+
             {% endif %}
-                                <button type="button" class="btn" data-toggle="collapse" data-target="#demo">  Afficher toutes les transactions </button>
-                                <a class="btn" href="{{ url('comptesPerso_virement') }}"><i class="icon-credit-card"></i> Effectuer un virement »</a>
+        </div>
+        <div class="span4">
+
+            {% if is_granted('ROLE_USER') %}
+                <div class="row-fluid">
+                    <h2>Disponibilités</h2>
+                    {% if statsOrga.PCMax ==0 %}
+                        <div class="alert alert-block alert-info fade in">
+                            <h4 class="alert-heading">Il n'est pas encore possible de renseigner de disponibilités.</h4>
+                        </div>
+                    {% else %}
+                        {% if statsOrga.PCOrga==0 and statsOrga.PCMax>0 %}
+                            <div class="alert alert-block alert-error fade in">
+                                <h4 class="alert-heading">Aucun charisme !</h4>
+
+                                <p>Tu n'as pas encore renseigné tes disponibilités.</p>
+
+                                <p><a class="btn" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i
+                                                class="icon-calendar"></i> Renseigner mes disponibilités »</a></p>
                             </div>
+                        {% else %}
+                            {% if statsOrga.nbOrgas != 0 and statsOrga.PCOrga<(statsOrga.PCTotal/statsOrga.nbOrgas) %}
+                                <div class="alert alert-block  fade in">
+                                    <a class="close" data-dismiss="alert" href="#">×</a>
+                                    <h4 class="alert-heading">Faible charisme !</h4>
+
+                                    <p>Tu as renseigné peu de disponibilités.</p>
+
+                                    <p><a class="btn" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i
+                                                    class="icon-calendar"></i> Ajouter des disponibilités</a></p>
+                                </div>
+                            {% endif %}
+                            <div class="well">
+                                <h2>Ton charisme :</h2>
+
+                                <div class="progress progress-success progress-striped">
+                                    <div id="barreCharisme" class="bar"></div>
+                                    <script type="text/javascript">
+                                        $('#barreCharisme').attr('style', "width: {{ statsOrga.PCOrga/statsOrga.PCMax*100 }}%");
+                                    </script>
+                                </div>
+                                <div style="text-align: center;">
+                                    <p>Points de charisme : {{ statsOrga.PCOrga }}/{{ statsOrga.PCMax }}<br>
+                                        Classement : {{ statsOrga.rangCharisme }}/{{ statsOrga.nbOrgas }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="btn-toolbar"><a class="btn btn-primary"
+                                                        href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i
+                                            class="icon-calendar"></i> Modifier mes disponibilités »</a>
+                                <a class="btn" href="{{ path('orga_charisme') }}">Statistiques Charisme »</a></div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            {% if is_granted('ROLE_USER') %}
+                {% if (planning[0] is defined) %}
+                    <div class="row-fluid">
 
 
-	    {% endif %}
+                        <div class="span12">
+                            <h2>Planning prévisionnel</h2>
+                            Planning valable du {{ debutPlanning | format_datetime('EEEE dd MMM Y HH:mm') }}
+                            au  {{ finPlanning | format_datetime('EEEE dd MMM Y HH:mm') }}.
+                            {% include 'AssoMakerBaseBundle:Orga:planningTable.html.twig' with {'disponibilites': planning[0].disponibilites} %}
+                            <a class="btn btn-primary" href="{{ path('orga_print', {'orgaid':app.user.id }) }}"><i
+                                        class="icon-print"></i> Imprimer mon planning »</a>
+                            <a class="btn"
+                               href="https://www.google.com/calendar/render?cid={{ url('orga_ical', {'orgaid':app.user.id }) }}"><i
+                                        class="icon-calendar"></i> Importer dans Google Agenda »</a>
                         </div>
 
-                        <div class="span4">
 
-                                {% if is_granted('ROLE_USER') %}
-                            {% if (planning[0] is defined)  %}
-                            <div class="row-fluid">
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="row-fluid">
+                    <div class="span12">
+                        <h2>Actions</h2>
 
+                        <div class="well">
 
-                                <div class="span12">
-                                    <h2>Planning prévisionnel</h2>
-                                    Planning valable du {{ debutPlanning | format_datetime('EEEE dd MMM Y HH:mm') }} au  {{ finPlanning | format_datetime('EEEE dd MMM Y HH:mm') }}.
-				{% include 'AssoMakerBaseBundle:Orga:planningTable.html.twig' with {'disponibilites': planning[0].disponibilites}%}
-                                    <a class="btn btn-primary" href="{{ path('orga_print', {'orgaid':app.user.id }) }}"><i class="icon-print"></i> Imprimer mon planning »</a>
-                                    <a class="btn" href="https://www.google.com/calendar/render?cid={{ url('orga_ical', {'orgaid':app.user.id }) }}"><i class="icon-calendar"></i> Importer dans Google Agenda »</a>
-                                </div>
-
-
-                            </div>
-                            {%endif%}
-                                {%else%}
-                            <div class="row-fluid">
-                                <div class="span12">
-                                    <h2>Actions</h2>
-                                    <div class="well">
-
-                                        {% if statsOrga.PCMax>0%}
-                                        <p><a class="btn  btn-large btn-block" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Renseigner mes disponibilités »</a></p>
-                                    {% endif %}
-                                    {% if (planning[0] is defined)  %}
-                                        <p>
-                                            <a class="btn btn-large btn-block" href="{{ path('orga_print', {'orgaid':app.user.id }) }}"><i class="icon-print"></i> Imprimer mon planning »</a>
-                                        </p>
-                                        <p>
-                                            <a class="btn btn-large btn-block" href="https://www.google.com/calendar/render?cid={{ url('orga_ical', {'orgaid':app.user.id }) }}"><i class="icon-arrow-right"></i> Exporter mon planning vers Google Agenda »</a>
-                                        </p>
-                                    {%endif%}
-                                    </div>
-                                </div>
-
-
-                            </div>
-                                {%endif%}
-
-
-
+                            {% if statsOrga.PCMax>0 %}
+                                <p><a class="btn  btn-large btn-block"
+                                      href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i
+                                                class="icon-calendar"></i> Renseigner mes disponibilités »</a></p>
+                            {% endif %}
+                            {% if (planning[0] is defined) %}
+                                <p>
+                                    <a class="btn btn-large btn-block"
+                                       href="{{ path('orga_print', {'orgaid':app.user.id }) }}"><i class="icon-print"></i>
+                                        Imprimer mon planning »</a>
+                                </p>
+                                <p>
+                                    <a class="btn btn-large btn-block"
+                                       href="https://www.google.com/calendar/render?cid={{ url('orga_ical', {'orgaid':app.user.id }) }}"><i
+                                                class="icon-arrow-right"></i> Exporter mon planning vers Google Agenda »</a>
+                                </p>
+                            {% endif %}
                         </div>
+                    </div>
 
 
-                        <div class="span4">
-                         {% if is_granted('ROLE_USER') and phpm_actif %}
-           <h2>Fiches Tâches</h2>
-		          {% if (statsOrga.taches.orga[0] + statsOrga.taches.equipe[0]) > 0 %}
-            <div class="alert alert-block alert-error fade in">
-                <h4 class="alert-heading">Il te reste des fiches tâches à rédiger.</h4>
-            </div>
-			  	  {% endif %}
-			  	  {% if deadlineFT %}
-            <div class="alert alert-block alert-warning">
-                <h4 class="alert-heading" >Date Limite</h4>
-                <em>{{ deadlineFT | format_datetime('EEEE dd MMM \à HH:mm') }}</em>
-            </div>
-			  	  {% endif %}
-            <h3>Statistiques</h3>
-            <table class="table table-condensed">
-                <thead>
+                </div>
+            {% endif %}
+
+
+        </div>
+        <div class="span4">
+            {% if is_granted('ROLE_USER') and phpm_actif %}
+                <h2>Fiches Tâches</h2>
+                {% if (statsOrga.taches.orga[0] + statsOrga.taches.equipe[0]) > 0 %}
+                    <div class="alert alert-block alert-error fade in">
+                        <h4 class="alert-heading">Il te reste des fiches tâches à rédiger.</h4>
+                    </div>
+                {% endif %}
+                {% if deadlineFT %}
+                    <div class="alert alert-block alert-warning">
+                        <h4 class="alert-heading">Date Limite</h4>
+                        <em>{{ deadlineFT | format_datetime('EEEE dd MMM \à HH:mm') }}</em>
+                    </div>
+                {% endif %}
+                <h3>Statistiques</h3>
+                <table class="table table-condensed">
+                    <thead>
                     <tr>
                         <td></td>
                         <th>Toi</th>
                         <th>Ton équipe</th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     <tr class="statut0">
                         <td>En rédaction</td>
-                        <td>{{ statsOrga.taches.orga[0]}}</td>
-                        <td>{{ statsOrga.taches.equipe[0]}}</td>
+                        <td>{{ statsOrga.taches.orga[0] }}</td>
+                        <td>{{ statsOrga.taches.equipe[0] }}</td>
                     </tr>
                     <tr class="statut1">
                         <td>En validation</td>
-                        <td>{{ statsOrga.taches.orga[1]}}</td>
-                        <td>{{ statsOrga.taches.equipe[1]}}</td>
+                        <td>{{ statsOrga.taches.orga[1] }}</td>
+                        <td>{{ statsOrga.taches.equipe[1] }}</td>
                     </tr>
                     <tr class="statut2">
                         <td>Validées</td>
-                        <td>{{ statsOrga.taches.orga[2]}}</td>
-                        <td>{{ statsOrga.taches.equipe[2]}}</td>
+                        <td>{{ statsOrga.taches.orga[2] }}</td>
+                        <td>{{ statsOrga.taches.equipe[2] }}</td>
                     </tr>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
 
-            <p><a class="btn" href="{{ path('tache',{'orgaid': app.user.id}) }}"><i class="icon-file"></i> Accéder aux fiches tâches »</a></p>
-                         {% endif %}
-                                {% if is_granted('ROLE_HUMAIN') %}
-                                <div class="row-fluid">
-                                    <h2>Gestion des Inscriptions</h2>
-    	        	{% if statsOrga.nonValidated > 0%}
-                                    <div class="alert alert-block alert-info fade in">
-                                        <h4 class="alert-heading">Il reste {{ statsOrga.nonValidated }} orgas non validés.</h4>
-                                        <a class="btn" href="{{ path('orga', {'statut':0}) }}"><i class="icon-list"></i> Afficher la liste »</a>
-                                    </div>
+                <p><a class="btn" href="{{ path('tache',{'orgaid': app.user.id}) }}"><i class="icon-file"></i> Accéder aux
+                        fiches tâches »</a></p>
+            {% endif %}
+            {% if is_granted('ROLE_HUMAIN') %}
+                <div class="row-fluid">
+                <h2>Gestion des Inscriptions</h2>
+                {% if statsOrga.nonValidated > 0 %}
+                    <div class="alert alert-block alert-info fade in">
+                        <h4 class="alert-heading">Il reste {{ statsOrga.nonValidated }} orgas non validés.</h4>
+                        <a class="btn" href="{{ path('orga', {'statut':0}) }}"><i class="icon-list"></i> Afficher la liste »</a>
+                    </div>
 
-                                </div>
-                                    {% endif %}
-                                <div class="row-fluid">
-    		        {% if is_granted('ROLE_HUMAIN') and phpm_actif %}
-                                        <div class="span12">
-                                            <h2>Impression des Plannings</h2>
-                                            <div class="alert alert-block alert-info fade in">
-                                                <form name="input" action="{{ path('orga_plannings') }}" method="post">
-                                                    <fieldset>
-                                                        Début : {{ form_widget(printPlanningForm.debut,  { 'attr': {'class': 'datep'} }) }}
-                                                        Fin : {{ form_widget(printPlanningForm.fin,  { 'attr': {'class': ' datep'} }) }}
-                                                        <br>
-                                                        Orga : {{ form_widget(printPlanningForm.orga)}} <b>OU</b>
-                                                        Équipe : {{ form_widget(printPlanningForm.equipe) }}
-                                                        <br>
-                                                        <button class="btn btn-primary" type="submit" name="action" value="print" >Imprimer</button>
-                                                        <button class="btn" type="submit" name="action" value="show" >Afficher</button>
-                                                    </fieldset>
-                                                </form>
-                                            </div>
-                                        </div>
-            	    {% endif %}
-                                    </div>
-                                    {% endif %}
+                    </div>
+                {% endif %}
+                <div class="row-fluid">
+                    {% if is_granted('ROLE_HUMAIN') and phpm_actif %}
+                        <div class="span12">
+                            <h2>Impression des Plannings</h2>
+
+                            <div class="alert alert-block alert-info fade in">
+                                <form name="input" action="{{ path('orga_plannings') }}" method="post">
+                                    <fieldset>
+                                        Début : {{ form_widget(printPlanningForm.debut,  { 'attr': {'class': 'datep'} }) }}
+                                        Fin : {{ form_widget(printPlanningForm.fin,  { 'attr': {'class': ' datep'} }) }}
+                                        <br>
+                                        Orga : {{ form_widget(printPlanningForm.orga) }} <b>OU</b>
+                                        Équipe : {{ form_widget(printPlanningForm.equipe) }}
+                                        <br>
+                                        <button class="btn btn-primary" type="submit" name="action" value="print">Imprimer
+                                        </button>
+                                        <button class="btn" type="submit" name="action" value="show">Afficher</button>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
 
 
 
-	    {% if is_granted('ROLE_USER') %}
-                                    <div class="row-fluid">
-                                        <h2>Disponibilités</h2>
-	       {% if statsOrga.PCMax ==0 %}
-                                        <div class="alert alert-block alert-info fade in">
-                                            <h4 class="alert-heading">Il n'est pas encore possible de renseigner de disponibilités.</h4>
-                                        </div>
-	       {% else %}
-	    	{% if statsOrga.PCOrga==0 and statsOrga.PCMax>0%}
-                                        <div class="alert alert-block alert-error fade in">
-                                            <h4 class="alert-heading">Aucun charisme !</h4>
-                                            <p>Tu n'as pas encore renseigné tes disponibilités.</p>
-                                            <p><a class="btn" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Renseigner mes disponibilités »</a></p>
-                                        </div>
-			{% else %}
-				{% if statsOrga.nbOrgas != 0 and statsOrga.PCOrga<(statsOrga.PCTotal/statsOrga.nbOrgas) %}
-                                        <div class="alert alert-block  fade in">
-                                            <a class="close" data-dismiss="alert" href="#">×</a>
-                                            <h4 class="alert-heading">Faible charisme !</h4>
-                                            <p>Tu as renseigné peu de disponibilités.</p>
-                                            <p><a class="btn" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Ajouter des disponibilités</a></p>
-                                        </div>
-				{% endif %}
-                                        <div class="well">
-                                            <h2>Ton charisme :</h2>
-                                            <div class="progress progress-success progress-striped">
-                                                <div id="barreCharisme" class="bar"></div>
-                                                <script type="text/javascript">
-                                                    $('#barreCharisme').attr('style', "width: {{ statsOrga.PCOrga/statsOrga.PCMax*100 }}%");
-                                                    </script>
-                                                </div>
-                                                <div style="text-align: center;">
-                                                    <p>Points de charisme : {{ statsOrga.PCOrga}}/{{statsOrga.PCMax }}<br>
-                                                        Classement : {{ statsOrga.rangCharisme}}/{{statsOrga.nbOrgas }}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="btn-toolbar"><a class="btn btn-primary" href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i class="icon-calendar"></i> Modifier mes disponibilités »</a>
-                                                <a class="btn" href="{{ path('orga_charisme') }}">Statistiques Charisme »</a></div>
-			{% endif %}
-			{% endif %}
-                                        </div>
-	    	{% endif %}
 
-                                    </div>
-                                </div>
+        </div>
     </div>
 
 
