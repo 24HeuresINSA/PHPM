@@ -28,7 +28,7 @@ class GroupeTacheController extends Controller {
      * @Template()
      */
     public function indexAction($equipeid, $statut, $orgaid) {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HARD')) {
             throw new AccessDeniedException();
         }
 
@@ -74,7 +74,7 @@ class GroupeTacheController extends Controller {
      * @Template("AssoMakerPHPMBundle:GroupeTache:new.html.twig")
      */
     public function createAction() {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HARD')) {
             throw new AccessDeniedException();
         }
         $em = $this->getDoctrine()->getEntityManager();
@@ -105,7 +105,7 @@ class GroupeTacheController extends Controller {
      * @Template()
      */
     public function editAction($id) {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HARD')) {
             throw new AccessDeniedException();
         }
         $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
@@ -140,7 +140,8 @@ class GroupeTacheController extends Controller {
      * @Template("AssoMakerPHPMBundle:GroupeTache:edit.html.twig")
      */
     public function updateAction($id) {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+
+        if (false === $this->get('security.context')->isGranted('ROLE_HARD')) {
             throw new AccessDeniedException();
         }
         $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
@@ -194,9 +195,14 @@ class GroupeTacheController extends Controller {
             return $this->redirect($this->generateUrl('groupetache_edit', array('id' => $id)));
         }
 
+        $taches = $em->getRepository('AssoMakerPHPMBundle:Tache')->getNonDeletedTaches($id);
+        $animations = $em->createQuery('SELECT a.id,a.nom,a.lieu FROM AssoMakerAnimBundle:Animation a INDEX BY a.id')->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+
         return array(
             'entity' => $entity,
-            'form' => $editForm->createView()
+            'form' => $editForm->createView(),
+            'animations' => $animations,
+            'taches' => $taches
         );
     }
 
