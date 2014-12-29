@@ -43,7 +43,7 @@ class TransactionRepository extends EntityRepository
         foreach ($entities as $orga) {
 
             $comptes[] = array("id" => $orga->getId(),
-                    "name" => $orga->__toString(),
+                    "name" => $orga->getSurnom() ? $orga->getPrenom() . " " . $orga->getNom() . " (" . $orga->getSurnom() . ")" : $orga->getPrenom() . " " . $orga->getNom(),
                     "balance" => $this->getOrgaBalance($orga->getId()));
         }
         return $comptes;
