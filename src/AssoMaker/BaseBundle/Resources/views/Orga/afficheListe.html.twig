@@ -29,14 +29,14 @@
                             <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>
 
                             <ul class="dropdown-menu">
-                                <li><a href="{{ path('orga_edit', { 'id': entity.id })  }}"><i class="icon-pencil"></i> Éditer</a></li>
-                                <li><a href="{{ path('orga_inputdispos', { 'id': entity.id }) }}"><i class="icon-calendar"></i>Dispos</a></li>
-                                <li><a href="{{ path('orga_affectation', { 'orga_id': entity.id }) }}"><i class="icon-book"></i>Affecter</a></li>
-                                <li><a href="{{ path('orga_print', { 'orgaid': entity.id })  }}"><i class="icon-print"></i> Imprimer le planning</a></li>
-                                <li><a href="{{ path('orga_change_statut', { 'id': entity.id, 'statut': 2 }) }}"><i class="icon-ok-circle"></i> Orga complètement affecté</a></li>
-                                <li><a target="_blank" href="https://www.facebook.com/search/results.php?q={{ entity.prenom~"%20"~entity.nom |url_encode }}"><i class="icon-search"></i> Rechercher sur Facebook</a></li>
+                                <li><a href="{{ path('orga_edit', { 'id': entity.id })  }}"><i class="fa fa-pencil"></i> Éditer</a></li>
+                                <li><a href="{{ path('orga_inputdispos', { 'id': entity.id }) }}"><i class="fa fa-calendar"></i>Dispos</a></li>
+                                <li><a href="{{ path('orga_affectation', { 'orga_id': entity.id }) }}"><i class="fa fa-book"></i>Affecter</a></li>
+                                <li><a href="{{ path('orga_print', { 'orgaid': entity.id })  }}"><i class="fa fa-print"></i> Imprimer le planning</a></li>
+                                <li><a href="{{ path('orga_change_statut', { 'id': entity.id, 'statut': 2 }) }}"><i class="fa fa-check-circle-o"></i> Orga complètement affecté</a></li>
+                                <li><a target="_blank" href="https://www.facebook.com/search/results.php?q={{ entity.prenom~"%20"~entity.nom |url_encode }}"><i class="fa fa-search"></i> Rechercher sur Facebook</a></li>
 				            {% if entity.groupePC%}
-                                    <li><a target="_blank" href="http://cipcnet.insa-lyon.fr/scol/php/apprec_groupe?id_annee={{ phpm_anneetrombi }}&id_groupe={{ entity.groupePC |url_encode }}"><i class="icon-search"></i> Afficher le trombi du groupe</a></li>
+                                    <li><a target="_blank" href="http://cipcnet.insa-lyon.fr/scol/php/apprec_groupe?id_annee={{ phpm_anneetrombi }}&id_groupe={{ entity.groupePC |url_encode }}"><i class="fa fa-search"></i> Afficher le trombi du groupe</a></li>
 				            {% endif %}
                                         <li><a href="{{ path('autologin', { 'id': entity.id, 'loginkey': (entity.id)|phpm_crypt }) }}">Se connecter en tant que cet orga.</a></li>
                                         <li><a href="{{ path('orga_change_statut', { 'id': entity.id, 'statut': -1 }) }}">Mettre en attente</a></li>

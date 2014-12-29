@@ -31,8 +31,8 @@
 	           	   <td>{{ e.description }}</td>
 	           	   <td>{{ e.confianceMin }}</td>
 	               <td>
-	               <a class="btn" href="{{ path('mission_edit', { 'id': e.id }) }}"><i class="icon-pencil"></i> Éditer</a>
-			       <a class="btn  btn-danger" href="{{ path('mission_delete', { 'id': e.id }) }}"><i class="icon-remove"></i> Supprimer</a>
+	               <a class="btn" href="{{ path('mission_edit', { 'id': e.id }) }}"><i class="fa fa-pencil"></i> Éditer</a>
+			       <a class="btn  btn-danger" href="{{ path('mission_delete', { 'id': e.id }) }}"><i class="fa fa-remove"></i> Supprimer</a>
 	               </td>
 	           </tr>
 		     {% endfor %}
@@ -42,7 +42,7 @@
 
 <div class="form-fluid">
 	<div class="form-actions">
-		<a class="btn btn-success" href="{{ path('mission_new') }}"><i class="icon-pencil"></i> Créer une nouvelle mission</a>
+		<a class="btn btn-success" href="{{ path('mission_new') }}"><i class="fa fa-pencil"></i> Créer une nouvelle mission</a>
 	</div>
 </div>
 {% endblock %}

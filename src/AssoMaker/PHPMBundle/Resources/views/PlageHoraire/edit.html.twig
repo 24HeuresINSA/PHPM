@@ -63,8 +63,8 @@
 				    {% endfor %}
 				    </div>
 				    <div class="btn-group" style="padding-left: 150px;">
-				    	<a class="btn btn-success" id="addBOButton" href="#"><i class="icon-plus"></i></a>
-						<a class="btn btn-danger"  id="rmBOButton" href="#"><i class="icon-minus"></i></a>
+				    	<a class="btn btn-success" id="addBOButton" href="#"><i class="fa fa-plus"></i></a>
+						<a class="btn btn-danger"  id="rmBOButton" href="#"><i class="fa fa-minus"></i></a>
 					</div>
 				</fieldset>
 			</div>
@@ -72,8 +72,8 @@
 		<div class="form-fluid">
 			<div class="form-actions">
 				<button class="btn btn-primary" type="submit" name="action" value="save" >Enregistrer</button>
-				<a class="btn btn-warning" href="{{ path('tache_edit',{'id':entity.tache.id })}}"><i class="icon-share-alt"></i> Revenir à la tâche sans enregistrer</a>
-				<a class="btn btn-danger" href="{{ path('plagehoraire_delete',{'id':entity.id })}}"><i class="icon-trash"></i> Supprimer cette plage horaire</a>
+				<a class="btn btn-warning" href="{{ path('tache_edit',{'id':entity.tache.id })}}"><i class="fa fa-share"></i> Revenir à la tâche sans enregistrer</a>
+				<a class="btn btn-danger" href="{{ path('plagehoraire_delete',{'id':entity.id })}}"><i class="fa fa-trash"></i> Supprimer cette plage horaire</a>
 		    </div>
 	    </div>
     	{{ form_rest(form) }}

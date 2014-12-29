@@ -11,13 +11,13 @@
     	<div class="page-header">
          	<h1 class="my-inline-h">Gestion des créneaux : {{ tache.nom }}</h1>
 	        &nbsp;
-	       	<a class="btn btn-mini my-inline-btn" href="{{ path('tache_edit', { 'id': tache.id }) }}" ><i class="icon-share-alt"></i> Retour à la fiche</a>
+	       	<a class="btn btn-mini my-inline-btn" href="{{ path('tache_edit', { 'id': tache.id }) }}" ><i class="fa fa-share"></i> Retour à la fiche</a>
          </div>
     </div>
     <div class="row-fluid">   
 	    {% for ph in tache.plagesHoraire %}
 	    	<div>
-		    	<h3>Plage horaire : {{ ph.debut | format_datetime }} <i class="icon-arrow-right my-inline-icon"></i> {{ ph.fin | format_datetime }}</h3>
+		    	<h3>Plage horaire : {{ ph.debut | format_datetime }} <i class="fa fa-arrow-right my-inline-icon"></i> {{ ph.fin | format_datetime }}</h3>
 		    	<div class="pad10">
 			    	{% if ph.creneauUnique %}
 			    		<h4>Créneau unique !</h4>
@@ -40,7 +40,7 @@
                 </div>
 		    	{% if ph.creneaux.count > 0 %}
 				    <div class="well">
-				    	<a class="btn btn-danger" href="{{ path('creneaumaker_deleteallph', { 'id': ph.id }) }}"><i class="icon-remove"></i> Supprimer tous les créneaux</a>
+				    	<a class="btn btn-danger" href="{{ path('creneaumaker_deleteallph', { 'id': ph.id }) }}"><i class="fa fa-remove"></i> Supprimer tous les créneaux</a>
 				    </div>
 					<table class="table table-condensed">
 				        <thead>
@@ -55,7 +55,7 @@
 						{% for c in ph.creneaux %}
 				            <tr>
 				            	<td>
-				                	{{ c.debut | format_datetime }} <i class="icon-arrow-right"></i> {{ c.fin | format_datetime }}
+				                	{{ c.debut | format_datetime }} <i class="fa fa-arrow-right"></i> {{ c.fin | format_datetime }}
 				                </td>
 				                <td>
 					                {% if c.orgaHint is not null %}
@@ -80,11 +80,11 @@
 				                </td>
 				                
 					                <td>
-						                <a class="btn " href="{{ path('creneau_edit', { 'id': c.id }) }}"><i class="icon-pencil"></i> Éditer</a>
+						                <a class="btn " href="{{ path('creneau_edit', { 'id': c.id }) }}"><i class="fa fa-pencil"></i> Éditer</a>
 						                {% if  c.disponibilite is not null%}
 						                <a class="btn  btn-warning" href="{{ path('creneau_desaffecter', { 'cid': c.id }) }}"> Désaffecter</a>
 						                {% else %}
-						                <a class="btn  btn-danger" href="{{ path('creneau_delete', { 'id': c.id }) }}"><i class="icon-remove"></i> Supprimer</a>
+						                <a class="btn  btn-danger" href="{{ path('creneau_delete', { 'id': c.id }) }}"><i class="fa fa-remove"></i> Supprimer</a>
 					                	{% endif %}
 					                </td>
 				                
@@ -97,7 +97,7 @@
 				    	Cette plage horaire ne comporte pas de créneaux.
 						
 						    <div class="pad10">
-						    	<a class="btn btn-primary" href="{{ path('creneaumaker_genererph', { 'id': ph.id }) }}"><i class="icon-plus"></i> Générer</a>
+						    	<a class="btn btn-primary" href="{{ path('creneaumaker_genererph', { 'id': ph.id }) }}"><i class="fa fa-plus"></i> Générer</a>
 							</div>
 						
 				    </div>
@@ -108,10 +108,10 @@
     <div class="row-fluid">
 		<div class="form-actions">
 	    	{% if tache.statut == 3 %}
-				<a class="btn  btn-danger" href="{{ path('creneaumaker_deoktache', { 'id': tache.id }) }}"><i class="icon-pencil"></i> Modifier la tâche</a>
+				<a class="btn  btn-danger" href="{{ path('creneaumaker_deoktache', { 'id': tache.id }) }}"><i class="fa fa-pencil"></i> Modifier la tâche</a>
 			{% endif %}
 	    	{% if tache.statut == 2  %}
-				<a class="btn btn-success" href="{{ path('tache_okaffectation', { 'id': tache.id }) }}"><i class="icon-arrow-right"></i> Tâche prête pour affectation</a>
+				<a class="btn btn-success" href="{{ path('tache_okaffectation', { 'id': tache.id }) }}"><i class="fa fa-arrow-right"></i> Tâche prête pour affectation</a>
 			{% endif %}
 		</div>
 	</div>

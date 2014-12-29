@@ -38,19 +38,19 @@
 			</li>
 			<li class="nav-header">Statut </li>
 			<li{% if app.request.get('statut') ==0 and app.request.get('statut') !='all' %} class="active" {% endif %}>
-			    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':0}) }}"><i class="icon-pencil"></i> En rédaction</a>
+			    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':0}) }}"><i class="fa fa-pencil"></i> En rédaction</a>
 			</li>
 			<li{% if app.request.get('statut') == 1 %} class="active" {% endif %}>
-			    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':1}) }}"><i class="icon-eye-open"></i> En cours de validation</a>
+			    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':1}) }}"><i class="fa fa-eye"></i> En cours de validation</a>
 			</li>
 			<li{% if app.request.get('statut') == 2 %} class="active" {% endif %}>
-			    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':2}) }}"><i class="icon-ok"></i> Validées</a>
+			    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':2}) }}"><i class="fa fa-check"></i> Validées</a>
 			</li>
 			<li{% if app.request.get('statut') == 3 %} class="active" {% endif %}>
-			    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':3}) }}"><i class="icon-arrow-right"></i> Prêtes pour affectation</a>
+			    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':3}) }}"><i class="fa fa-arrow-right"></i> Prêtes pour affectation</a>
 			</li>
 			<li{% if app.request.get('statut') == -1 %} class="active" {% endif %}>
-			    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':-1}) }}"><i class="icon-trash"></i> Supprimées</a>
+			    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':-1}) }}"><i class="fa fa-trash"></i> Supprimées</a>
 			</li>
 			<li{% if app.request.get('statut') == 'all' %} class="active" {% endif %}>
 			    <a href="{{ path('tache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':'all'}) }}">Pas de filtre</a>
@@ -58,7 +58,7 @@
 			<li class="divider"></li>
 			<li class="nav-header">Actions</li>
 			<li>
-			    <a href="{{ path('groupetache_create') }}"><i class="icon-folder-open"></i> Créer un nouveau groupe de tâches</a>
+			    <a href="{{ path('groupetache_create') }}"><i class="fa fa-folder-open"></i> Créer un nouveau groupe de tâches</a>
 			</li>
 		</ul>
 	</div>

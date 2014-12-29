@@ -29,7 +29,7 @@ height:40em;
         	<div class="page-header">
 	        	<h1 class="statut{{ form.entity.vars.value.statut }} my-inline-h">Tâche n°{{form.entity.vars.value.id }} : {{form.entity.vars.value.nom }}</h1>
 	        	&nbsp;
-	            <a class="btn btn-mini my-inline-btn" href="{{ path('groupetache_edit', { 'id': entity.groupetache.id }) }}" ><i class="icon-share-alt"></i> {{ entity.groupetache.nom }}</a>
+	            <a class="btn btn-mini my-inline-btn" href="{{ path('groupetache_edit', { 'id': entity.groupetache.id }) }}" ><i class="fa fa-share"></i> {{ entity.groupetache.nom }}</a>
         	</div>
     	</div>
 	    {% if valid is defined %}    
@@ -142,7 +142,7 @@ height:40em;
 			        {% for pl in entity.plagesHoraire %}
 			            <tr>
 			            	<td>
-			                	{{ pl.debut | format_datetime('EEEE dd MMM Y HH:mm') }} <i class="icon-arrow-right"></i> {{ pl.fin | format_datetime('EEEE dd MMM Y HH:mm') }}
+			                	{{ pl.debut | format_datetime('EEEE dd MMM Y HH:mm') }} <i class="fa fa-arrow-right"></i> {{ pl.fin | format_datetime('EEEE dd MMM Y HH:mm') }}
 			                </td>
 			                <td>
 				                {% if pl.respNecessaire  %}
@@ -168,8 +168,8 @@ height:40em;
 			                </td>
 			                <td>
 			                {% if not rOnly  %}
-				                <a class="btn" href="{{ path('plagehoraire_edit', { 'id': pl.id }) }}"><i class="icon-pencil"></i> Éditer</a>
-				                <a class="btn  btn-danger" href="{{ path('plagehoraire_delete', { 'id': pl.id }) }}"><i class="icon-remove"></i> Supprimer</a>
+				                <a class="btn" href="{{ path('plagehoraire_edit', { 'id': pl.id }) }}"><i class="fa fa-pencil"></i> Éditer</a>
+				                <a class="btn  btn-danger" href="{{ path('plagehoraire_delete', { 'id': pl.id }) }}"><i class="fa fa-remove"></i> Supprimer</a>
 			                {% endif %}
 			            	</td>
 			            </tr>
@@ -177,7 +177,7 @@ height:40em;
 			        </tbody>
 			    </table>
 			   	{% if not rOnly  %}
-	    			<button class="btn btn-success" type="submit" name="action" value="add_plage" ><i class="icon-plus"></i> Ajouter une plage horaire</button>
+	    			<button class="btn btn-success" type="submit" name="action" value="add_plage" ><i class="fa fa-plus"></i> Ajouter une plage horaire</button>
 	    		{% endif %}
 	    		<br /><br />
 		    </fieldset>
@@ -239,27 +239,27 @@ height:40em;
 		<div class="form-fluid">
 			<div class="form-actions">
                                                             {% if entity.statut == 1 and not is_granted('ROLE_HUMAIN')%}
-			            <button class="btn btn-warning" type="submit" name="action" value="devalidate"><i class="icon-undo"></i> Annuler l'envoi en validation</button>
+			            <button class="btn btn-warning" type="submit" name="action" value="devalidate"><i class="fa fa-undo"></i> Annuler l'envoi en validation</button>
 			        {% endif %}
 			    {% if not rOnly %}
 			    	<button class="btn btn-primary" type="submit" name="action" value="save" >Enregistrer</button>
-					<button class="btn btn-info" type="submit" name="action" value="save_return" ><i class="icon-share-alt"></i> Enregistrer et revenir au groupe</button>
+					<button class="btn btn-info" type="submit" name="action" value="save_return" ><i class="fa fa-share"></i> Enregistrer et revenir au groupe</button>
 			        {% if entity.statut == 0 and ((deadlinePassed==false) or is_granted('ROLE_HUMAIN'))%}
-			            <button class="btn btn-success" type="submit" name="action" value="submit_validation"><i class="icon-eye-open"></i> Demander la validation</button>
+			            <button class="btn btn-success" type="submit" name="action" value="submit_validation"><i class="fa fa-eye"></i> Demander la validation</button>
 			        
 
 
                                 {% endif %}
 			        {% if is_granted('ROLE_HUMAIN') %}
 			        	{% if entity.statut == 1 %}
-			                <button class="btn btn-success" type="submit" name="action" value="validate"><i class="icon-ok"></i> Valider la tâche</button>
+			                <button class="btn btn-success" type="submit" name="action" value="validate"><i class="fa fa-check"></i> Valider la tâche</button>
 			            {% endif %}
 			            {% if entity.statut >= 1  %}
-			                 <button class="btn btn-warning" type="submit" name="action" value="reject"><i class="icon-remove"></i> Rejeter la tâche</button>
+			                 <button class="btn btn-warning" type="submit" name="action" value="reject"><i class="fa fa-remove"></i> Rejeter la tâche</button>
 			            {% endif %}
 			        {% endif %}
 			        {% if entity.statut != -1  %}
-			        	<button class="btn btn-danger" type="submit" name="action" value="delete"><i class="icon-trash"></i> Supprimer la tâche</button>
+			        	<button class="btn btn-danger" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> Supprimer la tâche</button>
 			        {% endif %}
 			        {% if entity.statut == -1 and entity.groupeTache.statut != -1 %}
 			        	<button class="btn btn-inverse" type="submit" name="action" value="restore">Restaurer la fiche</button>
@@ -270,7 +270,7 @@ height:40em;
 			     	{% endif %}
 				{% endif %}
 				{% if entity.statut >= 2  and is_granted('ROLE_HUMAIN')%}
-			                 <button class="btn btn-success" type="submit" name="action" value="creneaumaker"><i class="icon-arrow-right"></i> Ouvrir dans CréneauMaker</button>
+			                 <button class="btn btn-success" type="submit" name="action" value="creneaumaker"><i class="fa fa-arrow-right"></i> Ouvrir dans CréneauMaker</button>
 			    {% endif %}
 			</div>
 		</div>

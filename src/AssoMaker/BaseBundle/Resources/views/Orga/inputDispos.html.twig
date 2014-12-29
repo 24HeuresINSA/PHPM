@@ -118,7 +118,7 @@
                             <h4>{{ jour }}</h4>
 							{% for e in d %}<div>
                                 <label class="checkbox {% if e.statut == 1 %}statut1{% endif %}">
-					    			{{ e.debut |format_datetime('HH:mm')}} <i class="icon-arrow-right"></i> {{ e.fin |format_datetime('HH:mm')}} <span class="badge badge-info">{{ e.pointsCharisme }}</span>
+					    			{{ e.debut |format_datetime('HH:mm')}} <i class="fa fa-arrow-right"></i> {{ e.fin |format_datetime('HH:mm')}} <span class="badge badge-info">{{ e.pointsCharisme }}</span>
                                         <input class="shiftkeybox"type="checkbox" name="phpm_bundle_inputdispostype[disponibiliteInscriptionItems][{{ e.id }}]"
                                                id="phpm_bundle_inputdispostype_disponibiliteInscriptionItems_{{ e.id }}" value="{{ e.id }}"
 					    			{% if e in orga.disponibilitesInscription %}checked="checked"{% endif %}

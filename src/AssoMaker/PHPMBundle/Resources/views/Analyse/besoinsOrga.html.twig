@@ -20,7 +20,7 @@
 			{% for id,plage in plages %}
 				<a class="btn{% if plageId == id %} active{% endif %}"
 				
-				 href="{{ path('analyse_besoinsorga', { 'plageId': id,'showBonusOrgas':showBonusOrgas }) }}">{{ plage.debut | format_datetime('EEEE dd MMM') }} <i class="icon-arrow-right"></i> {{ plage.fin | format_datetime('EEEE dd MMM Y') }}</a>
+				 href="{{ path('analyse_besoinsorga', { 'plageId': id,'showBonusOrgas':showBonusOrgas }) }}">{{ plage.debut | format_datetime('EEEE dd MMM') }} <i class="fa fa-arrow-right"></i> {{ plage.fin | format_datetime('EEEE dd MMM Y') }}</a>
 			{% endfor %}
 		</div>
 		<div class="btn-group">

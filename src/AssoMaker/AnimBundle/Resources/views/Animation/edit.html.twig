@@ -157,16 +157,16 @@
                 <div class="span7">
                     <fieldset>
                         <legend class="statut{{entity.statut }}">
-                    {% if entity.statut ==0 %}<i class="icon-pencil"></i> {% endif %}
-                    {% if entity.statut ==1 %}<i class="icon-eye-open"></i> {% endif %}
-                    {% if entity.statut >=2 %}<i class="icon-ok"></i> {% endif %}
-                    {% if entity.validHumain %}<i class="icon-user"></i> {% endif %}
-                    {% if entity.validSecu %}<i class="icon-bullhorn"></i> {% endif %}
-                    {% if entity.validLog %}<i class="icon-wrench"></i>{% endif %}
+                    {% if entity.statut ==0 %}<i class="fa fa-pencil"></i> {% endif %}
+                    {% if entity.statut ==1 %}<i class="fa fa-eye"></i> {% endif %}
+                    {% if entity.statut >=2 %}<i class="fa fa-check"></i> {% endif %}
+                    {% if entity.validHumain %}<i class="fa fa-user"></i> {% endif %}
+                    {% if entity.validSecu %}<i class="fa fa-bullhorn"></i> {% endif %}
+                    {% if entity.validLog %}<i class="fa fa-wrench"></i>{% endif %}
 
 
 
-                                Animation {{ entity.nom }} - Infos Générales <a class="btn btn-small" href="{{ path("anim_animation_index") }}"><i class="icon-share-alt"></i> Retour</a></legend>
+                                Animation {{ entity.nom }} - Infos Générales <a class="btn btn-small" href="{{ path("anim_animation_index") }}"><i class="fa fa-share"></i> Retour</a></legend>
                             <div class="row-fluid">
                                 <div class="span8">{{ form_row(form.entity.nom,{'attr':{'class':'input-block-level'}}) }}</div>
                                 <div class="span4">{{ form_row(form.entity.type,{'attr':{'class':'input-block-level'}}) }}</div>
@@ -308,7 +308,7 @@
                                                                                             </ul>
                                                                                         </li>
                                                                                         <li>
-                                                                                            Autre : <input type="text" ng-model="customMatos" class="input"> <span class="" ng-click="addMatos('Autre',customMatos)"><i class="icon-plus"></i></span>
+                                                                                            Autre : <input type="text" ng-model="customMatos" class="input"> <span class="" ng-click="addMatos('Autre',customMatos)"><i class="fa fa-plus"></i></span>
 
                                                                                         </li>
                                                                                         <li></li>
@@ -386,14 +386,14 @@
                                                                                                 <fieldset>
                                                                                                     <legend>Horaires
                                 {% if not readOnly['h'] %}
-                                                                                                            <a class="btn btn-success btn-small" ng-click="addHoraire()"><i class="icon-plus"></i></a>
+                                                                                                            <a class="btn btn-success btn-small" ng-click="addHoraire()"><i class="fa fa-plus"></i></a>
                                 {% endif %}
                                                                                                             </legend>
                                                                                                             <div class="row-fluid">
                                                                                                                 <ul>
                                                                                                                     <li ng-repeat="h in horaires">
                                             {% if readOnly['h'] %}
-                                            {% raw %}{{h.jour}} : {{h.debut}} <i class="icon-arrow-right"></i> {{h.fin}}{% endraw %}
+                                            {% raw %}{{h.jour}} : {{h.debut}} <i class="fa fa-arrow-right"></i> {{h.fin}}{% endraw %}
                                             {% else %}
                                                                                                                             <select class="input-medium" name="assomaker_animbundle_animationtype[entity][horaires][{%raw%}{{$index}}{% endraw %}][jour]" ng-model="h.jour">
                                                                                                                                 <option>Mercredi</option>
@@ -415,7 +415,7 @@
                                                 {% endfor %}
                                             {% endfor %}
                                                                                                                                 </select>
-                                                                                                                                <i class="icon-arrow-right"></i>
+                                                                                                                                <i class="fa fa-arrow-right"></i>
                                                                                                                                 <select class="input-small" name="assomaker_animbundle_animationtype[entity][horaires][{%raw%}{{$index}}{% endraw %}][fin]" ng-model="h.fin">
                                             {% for i in 18..23 %}
                                                 {% for j in ['00','15', '30', '45'] %}
@@ -429,7 +429,7 @@
                                             {% endfor %}
                                                                                                                                     </select>
 
-                                                                                                                                    <a class="btn btn-small btn-danger" ng-click="remHoraire($index)"><i class="icon-remove"></i></a>
+                                                                                                                                    <a class="btn btn-small btn-danger" ng-click="remHoraire($index)"><i class="fa fa-remove"></i></a>
                                           {% endif %}
                                                                                                                                     </li>
 
@@ -475,12 +475,12 @@
                                                                                                                         <div class="form-actions">
                                                                                                                             <button class="btn btn-primary" type="submit" name="action" value="save">Enregistrer les modifications</button>
                                     {% if entity.statut == 0 %}
-                                                                                                                            <button class="btn btn-success" type="submit" name="action" value="submit_validation"><i class="icon-eye-open"></i> Demander la validation</button>
+                                                                                                                            <button class="btn btn-success" type="submit" name="action" value="submit_validation"><i class="fa fa-eye"></i> Demander la validation</button>
                                     {% endif %}
 
                                     {% if is_granted('ROLE_HUMAIN') %}
                                                 {% if not (entity.validLog and entity.validSecu and entity.validSecu)%}
-                                                                                                                            <button class="btn btn-warning" type="submit" name="action" value="validate"><i class="icon-ok"></i>
+                                                                                                                            <button class="btn btn-warning" type="submit" name="action" value="validate"><i class="fa fa-check"></i>
                                                                                                                                 Forcer la validation
                                                                                                                             </button>
                                                 {% endif %}
@@ -489,39 +489,39 @@
 
                                     {% if is_granted('ROLE_LOG') and (entity.statut >= 1) %}
                                         {% if (not entity.validLog)  %}
-                                                                                                                            <button class="btn btn-success" type="submit" name="action" value="validateLog"><i class="icon-wrench"></i> Valider la partie logistique</button>
+                                                                                                                            <button class="btn btn-success" type="submit" name="action" value="validateLog"><i class="fa fa-wrench"></i> Valider la partie logistique</button>
                                         {% endif %}
-                                                                                                                            <button class="btn btn-danger" type="submit" name="action" value="rejectLog"><i class="icon-wrench"></i> Rejeter la partie logistique</button>
+                                                                                                                            <button class="btn btn-danger" type="submit" name="action" value="rejectLog"><i class="fa fa-wrench"></i> Rejeter la partie logistique</button>
 
                                     {% endif %}
 
                                     {% if is_granted('ROLE_SECU') and (entity.statut >= 1) %}
                                         {% if (not entity.validSecu)  %}
-                                                                                                                            <button class="btn btn-success" type="submit" name="action" value="validateSecu"><i class="icon-wrench"></i> Valider la partie sécurité</button>
+                                                                                                                            <button class="btn btn-success" type="submit" name="action" value="validateSecu"><i class="fa fa-wrench"></i> Valider la partie sécurité</button>
                                         {% endif %}
-                                                                                                                            <button class="btn btn-danger" type="submit" name="action" value="rejectSecu"><i class="icon-wrench"></i> Rejeter la partie sécurité</button>
+                                                                                                                            <button class="btn btn-danger" type="submit" name="action" value="rejectSecu"><i class="fa fa-wrench"></i> Rejeter la partie sécurité</button>
 
                                     {% endif %}
 
                                     {% if is_granted('ROLE_HUMAIN') and (entity.statut >= 1) %}
                                         {% if (not entity.validHumain)  %}
-                                                                                                                            <button class="btn btn-success" type="submit" name="action" value="validateHumain"><i class="icon-wrench"></i> Valider la partie humain</button>
+                                                                                                                            <button class="btn btn-success" type="submit" name="action" value="validateHumain"><i class="fa fa-wrench"></i> Valider la partie humain</button>
                                         {% endif %}
-                                                                                                                            <button class="btn btn-danger" type="submit" name="action" value="rejectHumain"><i class="icon-wrench"></i> Rejeter la partie humain</button>
+                                                                                                                            <button class="btn btn-danger" type="submit" name="action" value="rejectHumain"><i class="fa fa-wrench"></i> Rejeter la partie humain</button>
                                     {% endif %}
 
                                     {% if not is_granted('ROLE_ADMIN') and (entity.statut == 1) %}
                                         {% if (not entity.validHumain)  %}
-                                                                                                                            <button class="btn btn-warning" type="submit" name="action" value="devalidate"><i class="icon-undo"></i> Annuler la demande de validation</button>
+                                                                                                                            <button class="btn btn-warning" type="submit" name="action" value="devalidate"><i class="fa fa-undo"></i> Annuler la demande de validation</button>
                                         {% endif %}                                        
                                     {% endif %}
 
 
                                     {% if entity.statut != -1  %}
-                                                                                                                            <button class="btn btn-inverse" type="submit" name="action" value="delete"><i class="icon-remove"></i> Supprimer la tâche</button>
+                                                                                                                            <button class="btn btn-inverse" type="submit" name="action" value="delete"><i class="fa fa-remove"></i> Supprimer la tâche</button>
                                     {% endif %}
                                     {% if entity.statut == -1 %}
-                                                                                                                            <button class="btn btn-inverse" type="submit" name="action" value="restore"><i class="icon-share-alt"></i>Restaurer la fiche</button>
+                                                                                                                            <button class="btn btn-inverse" type="submit" name="action" value="restore"><i class="fa fa-share"></i>Restaurer la fiche</button>
                                         {% endif %}
                                                                                                                         </div>
                                                                                                                     </div>

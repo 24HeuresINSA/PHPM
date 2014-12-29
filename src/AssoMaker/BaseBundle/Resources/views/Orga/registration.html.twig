@@ -90,12 +90,12 @@
                             <button class="btn btn-primary" name="action" value="save" type="submit">Enregistrer</button>
 
 			{% if is_granted('ROLE_HUMAIN') %}
-                            <a class="btn" href="{{ path('orga_inputdispos', { 'id': entity.id }) }}"><i class="icon-calendar"></i>Disponibilités</a>
-                            <a class="btn" href="{{ path('orga_affectation', { 'orga_id': entity.id }) }}"><i class="icon-book"></i>Affecter</a>
-                            <a class="btn" href="{{ path('orga_print', { 'orgaid': entity.id })  }}"><i class="icon-print"></i> Imprimer le planning</a>
-                            <a class="btn" target="_blank" href="https://www.facebook.com/search/results.php?q={{ entity.prenom~"%20"~entity.nom |url_encode }}"><i class="icon-search"></i> Rechercher sur Facebook</a>
+                            <a class="btn" href="{{ path('orga_inputdispos', { 'id': entity.id }) }}"><i class="fa fa-calendar"></i>Disponibilités</a>
+                            <a class="btn" href="{{ path('orga_affectation', { 'orga_id': entity.id }) }}"><i class="fa fa-book"></i>Affecter</a>
+                            <a class="btn" href="{{ path('orga_print', { 'orgaid': entity.id })  }}"><i class="fa fa-print"></i> Imprimer le planning</a>
+                            <a class="btn" target="_blank" href="https://www.facebook.com/search/results.php?q={{ entity.prenom~"%20"~entity.nom |url_encode }}"><i class="fa fa-search"></i> Rechercher sur Facebook</a>
 				{% if entity.groupePC%}
-                            <a class="btn" target="_blank" href="http://cipcnet.insa-lyon.fr/scol/php/apprec_groupe?id_annee={{phpm_anneetrombi}}&id_groupe={{ entity.groupePC |url_encode }}"><i class="icon-search"></i> Afficher le trombi du groupe</a>
+                            <a class="btn" target="_blank" href="http://cipcnet.insa-lyon.fr/scol/php/apprec_groupe?id_annee={{phpm_anneetrombi}}&id_groupe={{ entity.groupePC |url_encode }}"><i class="fa fa-search"></i> Afficher le trombi du groupe</a>
 				{% endif %}
                             <a class="btn" href="{{ path('autologin', { 'id': entity.id, 'loginkey': (entity.id)|phpm_crypt }) }}">Se connecter en tant que cet orga.</a>
 			{% endif %}

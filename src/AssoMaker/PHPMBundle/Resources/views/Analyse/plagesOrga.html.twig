@@ -20,7 +20,7 @@
  {% if is_granted('ROLE_HUMAIN') %}
  <div class="btn-toolbar">
 <a class="btn btn-primary" href="{{ path('orga_affectHint', { 'id': o.id })  }}"> Auto affecter les créneaux de l'orga</a>
-<a class="btn" href="{{ path('orga_edit', { 'id': o.id })  }}"><i class="icon-pencil"></i> Éditer</a>
+<a class="btn" href="{{ path('orga_edit', { 'id': o.id })  }}"><i class="fa fa-pencil"></i> Éditer</a>
 
 
 </div>
@@ -44,7 +44,7 @@
             	<td>
                 	{% if b.plageHoraire.debut.timestamp < prev %}
                 <b style="color: red;font-size: medium;">{% endif %}
-        		{{ b.plageHoraire.debut | format_datetime('EEEE dd MMM Y HH:mm') }} <i class="icon-arrow-right"></i> {{ b.plageHoraire.fin | format_datetime('EEEE dd MMM Y HH:mm') }}
+        		{{ b.plageHoraire.debut | format_datetime('EEEE dd MMM Y HH:mm') }} <i class="fa fa-arrow-right"></i> {{ b.plageHoraire.fin | format_datetime('EEEE dd MMM Y HH:mm') }}
                 {% if b.plageHoraire.debut.timestamp < prev %}
                 CONFLIT</b>{% endif %}
                 

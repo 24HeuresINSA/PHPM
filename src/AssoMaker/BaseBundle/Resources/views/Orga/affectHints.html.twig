@@ -24,12 +24,12 @@
 			    <tbody>
 				    {% for e in messages %}
 			           <tr>
-			              <td>{{ e.creneau.debut | format_datetime('EEEE dd MMM Y HH:mm') }} <i class="icon-arrow-right"></i> {{ e.creneau.fin | format_datetime('EEEE dd MMM Y HH:mm') }}
+			              <td>{{ e.creneau.debut | format_datetime('EEEE dd MMM Y HH:mm') }} <i class="fa fa-arrow-right"></i> {{ e.creneau.fin | format_datetime('EEEE dd MMM Y HH:mm') }}
 			              {{ entitiesMacro.tache(e.creneau.plageHoraire.tache) }}</td>
 			              <td>{{ e.msg }}</td>
 {# 			              <td>#}
 {# 			              {% if e.creneau.disponibilite %}#}
-{# 			              <a class="btn" href="{{ path('creneau_desaffecter', { 'cid': e.creneau.id }) }}"><i class="icon-pencil"></i> F</a>#}
+{# 			              <a class="btn" href="{{ path('creneau_desaffecter', { 'cid': e.creneau.id }) }}"><i class="fa fa-pencil"></i> F</a>#}
 {# 			              {% endif %}#}
 {# 			              </td>#}
 			           </tr>
@@ -44,7 +44,7 @@
 		<div class="form-fluid">
 			<div class="form-actions">
 				<div class="btn-toolbar">
-					<a class="btn btn-primary" href="{{ path('orga_affectation', { 'orga_id': orga.id }) }}"><i class="icon-book"></i>Ouvrir dans la vue affectation</a>
+					<a class="btn btn-primary" href="{{ path('orga_affectation', { 'orga_id': orga.id }) }}"><i class="fa fa-book"></i>Ouvrir dans la vue affectation</a>
 				</div>
 				
 			</div>

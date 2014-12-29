@@ -83,7 +83,7 @@ line-height:1.2em;
 
 <b>
     	      {{ p.debut | format_datetime('EEEE dd MMM HH:mm') }}
-	  	    <i class="icon-arrow-right"></i>
+	  	    <i class="fa fa-arrow-right"></i>
 	  	  {%  if (p.debut | format_datetime('dd'))==(p.fin | format_datetime('dd')) %}
 	  	  {{ p.fin | format_datetime('HH:mm') }}
 	  	  {% else %}
