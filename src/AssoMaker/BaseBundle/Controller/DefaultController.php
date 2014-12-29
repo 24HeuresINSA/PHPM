@@ -168,13 +168,16 @@ class DefaultController extends Controller
          * @var AbstractManagerRegistry
          */
         $em = $this->getDoctrine()->getManager();
+        $this->securityContext=$this->get('security.context');
+        $this->token = $this->securityContext->getToken();
+        $user = $this->token->getUser();
 
         // Token défini ?
         $session = $request->getSession();
         $token_id = $session->get('token_id');
         if ($token_id == null) {
             $request->getSession()->getFlashBag()->add('error', "Vous ne pouvez pas vous enregistrer sans clé d'inscription.");
-            return $this->redirect($this->generateUrl('base_publichome'));
+            return $this->refuseRegistration($em, $user);
         }
 
         // Token valide ?
@@ -182,14 +185,11 @@ class DefaultController extends Controller
         $token = $em->getRepository('AssoMakerBaseBundle:RegistrationToken')->findOneBy(array('id' => $token_id));
         if ($token == null || $token->getCount() < 1){
             $request->getSession()->getFlashBag()->add('error', "La clé d'inscription n'est pas valide.");
-            return $this->redirect($this->generateUrl('base_publichome'));
+            return $this->refuseRegistration($em, $user);
         }
 
         // L'utilisateur s'est enregistré via OAuth ?
-        $this->securityContext=$this->get('security.context');
-        $this->token = $this->securityContext->getToken();
-        $user = $this->token->getUser();
-        if ($user != "anon." && !$user->isEnabled()) {
+        if ($user != "anon." && !$user->isEnabled() && $user->hasOAuthProvider()) {
             
             // Vérification de l'email du token
             if ($token->getEmail() != null && $token->getEmail() !== $user->getEmail()) {
@@ -225,15 +225,13 @@ class DefaultController extends Controller
         if ($user == "anon.")
             $user = new BaseUser();
 
-        $form = $this->createForm($this->get('form.type.quickRegistration'), $user, array());
+        $form = $this->createForm($this->get('form.type.quickRegistration'), $user);
         $form->handleRequest($request);
 
         if ($request->getMethod() == "POST") {
             if ($form->isValid()) {
                 // On complète l'inscription
                 $canonicalizer = $this->get('fos_user.util.email_canonicalizer');
-                $user->setUsername($user->getPrenom() . " " . $user->getNom());
-                $user->setUsernameCanonical($canonicalizer->canonicalize($user->getUsername()));
                 $user->setEmailCanonical($canonicalizer->canonicalize($user->getEmail()));
                 $user->setEnabled(true);
                 $user->addRole('ROLE_ORGA');

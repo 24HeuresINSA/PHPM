@@ -17,8 +17,6 @@ use AssoMaker\PHPMBundle\Entity\Disponibilite;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AssoMaker\BaseBundle\Entity\OrgaRepository")
- * @UniqueEntity(fields={"email"}, message="Un orga possédant cet email est déjà inscrit.")
- * @UniqueEntity(fields={"telephone"}, message="Un orga possédant ce numéro de téléphone est déjà inscrit.")
  */
 class Orga extends BaseUser implements UserInterface {
 
@@ -44,8 +42,6 @@ class Orga extends BaseUser implements UserInterface {
      * @var string $nom
      *
      * @ORM\Column(name="nom", type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
-     * @Assert\Length(min = "3")
      */
     protected $nom;
 
@@ -53,8 +49,6 @@ class Orga extends BaseUser implements UserInterface {
      * @var string $prenom
      *
      * @ORM\Column(name="prenom", type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
-     * @Assert\Length(min = "3")
      */
     protected $prenom;
 
@@ -89,31 +83,13 @@ class Orga extends BaseUser implements UserInterface {
      * @var string $telephone
      *
      * @ORM\Column(name="telephone", type="string", length=255, unique=true, nullable=true)
-     * @Assert\NotBlank()
      */
     protected $telephone;
-
-    /*
-     * @var string $email
-     *
-     * @ORM\Column(name="email", type="string", length=255, unique=true)
-     *
-     * @Assert\Email(
-     * 	   message = "L'email doît être valide.",
-     *     checkMX = true
-     * )
-     */
-    protected $email;
 
     /**
      * @var string $publicEmail
      *
      * @ORM\Column(name="publicEmail", type="string", length=255, nullable=true)
-     *
-     * @Assert\Email(
-     * 	   message = "L'email public doît être valide.",
-     *     checkMX = true
-     * )
      */
     protected $publicEmail;
 
@@ -121,19 +97,11 @@ class Orga extends BaseUser implements UserInterface {
      * @var date $dateDeNaissance
      *
      * @ORM\Column(name="dateDeNaissance", type="date", nullable=true)
-     *
-     * @Assert\Date(message = "La date de naissance doît être valide")
      */
     protected $dateDeNaissance;
 
     /**
-     * @Assert\Image(
-     *     minWidth = 600,
-     *     maxWidth = 600,
-     *     minHeight = 800,
-     *     maxHeight = 800,
-     *     mimeTypes = {"image/jpeg"}
-     * )
+     * @var string $profilePicture
      */
     protected $profilePicture;
 
@@ -615,6 +583,26 @@ class Orga extends BaseUser implements UserInterface {
      */
     public function getSurnom() {
         return $this->surnom;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     */
+    public function setEmail($email) {
+        parent::setEmail($email);
+        $this->setUsername($email);
+    }
+
+    /**
+     * Set emailCanonical
+     *
+     * @param string $emailCanonical
+     */
+    public function setEmailCanonical($emailCanonical) {
+        parent::setEmailCanonical($emailCanonical);
+        $this->setUsernameCanonical($emailCanonical);
     }
 
     /**
@@ -1371,5 +1359,18 @@ class Orga extends BaseUser implements UserInterface {
     public function getGoogleId()
     {
         return $this->google_id;
+    }
+
+    /**
+     * Return true if an OAuth provider is set for this user
+     *
+     * @return boolean
+     */
+    public function hasOAuthProvider()
+    {
+        if ($this->google_id)
+            return true;
+        else
+            return false;
     }
 }

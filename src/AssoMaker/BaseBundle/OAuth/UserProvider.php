@@ -52,8 +52,8 @@ class UserProvider extends FOSUBUserProvider
         if (null !== $email = $response->getEmail()) {
             $user->setEmail($email);
         }
-        if (null === $this->userManager->findUserByUsername($response->getNickname())) {
-            $user->setUsername($response->getNickname());
+        if (null === $this->userManager->findUserByUsername($response->getEmail())) {
+            $user->setUsername($response->getEmail());
         }
         $user->setEnabled(false);
         return $user;

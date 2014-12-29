@@ -39,7 +39,8 @@ class QuickRegistrationUserType extends AbstractType {
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'validation_groups' => false
+            'data_class' => 'AssoMaker\BaseBundle\Entity\Orga',
+            'validation_groups' => array('quick_registration')
         ));
     }
 

@@ -25,7 +25,7 @@ fos_user:
         form:
             type: form.type.quickRegistration
         confirmation:
-            enabled:    true # change to true for required email confirmation
+            enabled:    false # change to true for required email confirmation
 
 hwi_oauth:
     firewall_name: main
