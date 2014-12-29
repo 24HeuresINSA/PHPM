@@ -1,16 +1,6 @@
 {% extends "AssoMakerBaseBundle::layout.html.twig"  %}
 
 {% block content %}
-<script>
-    function unloadMess() {
-        mess = "Attention, tes changements n'ont pas été enregistrés";
-        return mess;
-    }
-    function setBunload(on) {
-        window.onbeforeunload = (on) ? unloadMess : null;
-    }
-    setBunload(true);
-</script>
 
 <div class="row">
     <div class="span12">
