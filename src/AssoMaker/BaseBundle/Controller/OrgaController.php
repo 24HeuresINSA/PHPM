@@ -252,6 +252,7 @@ class OrgaController extends Controller {
 
                 $entity->uploadProfilePicture();
                 $entity->uploadFichierPermis();
+                $entity->refreshRoles();
                 $em->persist($entity);
                 $em->flush();
 

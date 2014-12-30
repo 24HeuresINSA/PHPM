@@ -21,6 +21,7 @@ use AssoMaker\PHPMBundle\Entity\Disponibilite;
 class Orga extends BaseUser implements UserInterface {
 
     public static $privilegesTypes = array('Visiteur', 'Orga', 'Humain', 'Responsable Log', 'Responsable Sécurité', 'Super Admin');
+    public static $rolesMapping = array("ROLE_USER", "ROLE_ORGA", "ROLE_HUMAIN", "ROLE_LOG", "ROLE_SECU", "ROLE_SUPER_ADMIN");
 
     /**
      * @var integer $id
@@ -1372,5 +1373,24 @@ class Orga extends BaseUser implements UserInterface {
             return true;
         else
             return false;
+    }
+
+    public function refreshRoles()
+    {
+        $roles = array();
+        if ($this->isEnabled()) {
+            $roles[] = "ROLE_ORGA";
+            if ($this->getPrivileges() !== null) {
+                if (isset(Orga::$rolesMapping[intval($this->getPrivileges())]) && !empty(Orga::$rolesMapping[intval($this->getPrivileges())])) {
+                    $roles[] = Orga::$rolesMapping[intval($this->getPrivileges())];
+                }
+            }
+            if ($this->getMembreBureau())
+                $roles[] = "ROLE_BUREAU";
+        } else {
+            $roles[] = "ROLE_USER";
+        }
+
+        $this->setRoles($roles);
     }
 }

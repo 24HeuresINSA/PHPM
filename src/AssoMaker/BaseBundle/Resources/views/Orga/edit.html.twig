@@ -74,7 +74,7 @@
                         <div class="span12 well">
                             <fieldset>
                                 <legend>Options Admin</legend>
-                                {% if is_granted('ROLE_BUREAU')%}
+                                {% if is_granted('ROLE_SUPER_ADMIN')%}
 					              {{ form_row(form.privileges) }}
 					              {{ form_row(form.membreBureau) }}
                                 {% endif %}
