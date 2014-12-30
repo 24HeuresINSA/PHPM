@@ -16,7 +16,7 @@
                         <span class="fa fa-bar"></span>
                         <span class="fa fa-bar"></span>
                     </a>
-                    <a class="brand" href="{% if app.user %}{{ path('base_accueil') }}{% else %}{ path('base_publichome') }}{% endif %}">Assomaker</a>
+                    <a class="brand" href="{% if app.user %}{{ path('base_accueil') }}{% else %}{{ path('base_publichome') }}{% endif %}">Assomaker</a>
                     {% if app.user %}
                     <div class="nav-collapse collapse">
                         <ul class="nav">
