@@ -114,6 +114,9 @@
                                 </ul>
                             </li>
                         {% endif %}
+                        {% if is_granted('ROLE_HUMAIN') %}
+                            {{ _self.navBarItem('Configuration','config') }}
+                        {% endif %}
 
                         {% if is_granted('ROLE_ORGA') and not is_granted('ROLE_HUMAIN') and (phpm_actif ==1) %}
                             {{ _self.navBarItem('Mes Disponibilités','orga_inputdispos',{'id':app.user.id }) }}
