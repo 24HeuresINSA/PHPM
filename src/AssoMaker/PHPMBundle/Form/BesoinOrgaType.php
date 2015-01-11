@@ -5,6 +5,7 @@ namespace AssoMaker\PHPMBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use AssoMaker\BaseBundle\Entity\OrgaRepository;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class BesoinOrgaType extends AbstractType {
 
@@ -30,10 +31,11 @@ class BesoinOrgaType extends AbstractType {
                 ->add('nbOrgasNecessaires', null, array('label' => 'Orgas nécessaires', 'attr' => array('min' => 1)));
     }
 
-    public function getDefaultOptions(array $options) {
-        return array(
-            'data_class' => 'AssoMaker\PHPMBundle\Entity\BesoinOrga'
-        );
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'AssoMaker\PHPMBundle\Entity\BesoinOrga',
+        ));
     }
 
     public function getName() {

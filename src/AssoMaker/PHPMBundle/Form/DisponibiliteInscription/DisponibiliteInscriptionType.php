@@ -4,6 +4,7 @@ namespace AssoMaker\PHPMBundle\Form\DisponibiliteInscription;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class DisponibiliteInscriptionType extends AbstractType
 {
@@ -33,9 +34,12 @@ class DisponibiliteInscriptionType extends AbstractType
     {
         return 'phpm_bundle_disponibiliteinscriptiontype';
     }
-    
-    public function getDefaultOptions(array $options){
-        return array('data_class' => 'AssoMaker\PHPMBundle\Entity\DisponibiliteInscription');
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'AssoMaker\PHPMBundle\Entity\DisponibiliteInscription',
+        ));
     }
     
 }

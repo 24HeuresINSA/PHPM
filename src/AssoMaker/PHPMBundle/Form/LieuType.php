@@ -4,6 +4,7 @@ namespace AssoMaker\PHPMBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class LieuType extends AbstractType
 {
@@ -16,12 +17,12 @@ class LieuType extends AbstractType
             ->add('longitude')
         ;
     }
-    
-    public function getDefaultOptions(array $options)
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
-                'data_class' => 'AssoMaker\PHPMBundle\Entity\Lieu',
-        );
+        $resolver->setDefaults(array(
+            'data_class' => 'AssoMaker\PHPMBundle\Entity\Lieu',
+        ));
     }
 
     public function getName()
