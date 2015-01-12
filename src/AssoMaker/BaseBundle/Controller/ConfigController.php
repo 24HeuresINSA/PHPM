@@ -208,6 +208,29 @@ class ConfigController extends Controller {
 				->add('id', 'hidden')->getForm();
 	}
 
+	/**
+	 * Supprime un Jeton
+	 *
+	 * @Route("/token/{id}/delete", name="token_delete")
+	 *
+	 */
+	public function deleteTokenAction($id)
+	{
+		if($this->get('security.context')->isGranted('ROLE_HUMAIN')) {
+			$em = $this->getDoctrine()->getEntityManager();
+			$entity = $em->getRepository('AssoMakerBaseBundle:RegistrationToken')->find($id);
+
+			if (!$entity) {
+				throw $this->createNotFoundException('Unable to find Token entity.');
+			}
+
+			$em->remove($entity);
+			$em->flush();
+		}
+
+		return $this->redirect($this->generateUrl('config'));
+	}
+
     /**
      * Crée un nouveau token à partir des paramètres
      * @Route("/token/new/{e_id}/{e_count}", name="token_new")
