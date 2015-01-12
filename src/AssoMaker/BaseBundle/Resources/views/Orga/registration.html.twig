@@ -37,7 +37,7 @@
                                 {{ form_errors(form.competences) }}
                                 {% for comp in form.competences %}
                                     <label class="checkbox">
-                                        {{ form_widget(comp) }} {{ comp.get('label') }} ?
+                                        {{ form_widget(comp) }} {{ comp.vars.label }}
                                     </label>
                                 {% endfor %}
                             </div>
