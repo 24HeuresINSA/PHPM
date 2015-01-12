@@ -46,8 +46,7 @@ class OAuthController extends Controller {
     public function checkAction(){
         $this->securityContext=$this->get('security.context');
         $this->token = $this->securityContext->getToken();
-        $enabled = $this->token->getUser()->isEnabled();
-        if(!$enabled)
+        if(!$this->securityContext->isGranted('ROLE_ORGA')) // Si l'utilisateur ne s'est pas enregistré
             return $this->redirect($this->generateUrl("register_oauth"));
         else
             return $this->redirect($this->generateUrl("base_accueil"));
