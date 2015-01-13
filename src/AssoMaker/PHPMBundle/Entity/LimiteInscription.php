@@ -2,6 +2,7 @@
 
 namespace AssoMaker\PHPMBundle\Entity;
 
+use AssoMaker\BaseBundle\Entity\Confiance;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,18 +30,20 @@ class LimiteInscription
     private $max;
 
     /**
-     * @var integer
+     * @var DisponibiliteInscription
      *
-     * @ORM\Column(name="disponibilite_inscription_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="DisponibiliteInscription", inversedBy="limitesInscriptions")
+     * @ORM\JoinColumn(name="disponibilite_inscription_id", referencedColumnName="id",onDelete="CASCADE")
      */
-    private $disponibiliteInscriptionId;
+    private $disponibiliteInscription;
 
     /**
-     * @var integer
+     * @var \AssoMaker\BaseBundle\Entity\Confiance
      *
-     * @ORM\Column(name="confiance_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="AssoMaker\BaseBundle\Entity\Confiance")
+     * @ORM\JoinColumn(name="confiance_id", referencedColumnName="id",onDelete="CASCADE")
      */
-    private $confianceId;
+    private $confiance;
 
 
     /**
@@ -77,48 +80,34 @@ class LimiteInscription
     }
 
     /**
-     * Set disponibiliteInscriptionId
-     *
-     * @param integer $disponibiliteInscriptionId
-     * @return LimiteInscription
+     * @return DisponibiliteInscription
      */
-    public function setDisponibiliteInscriptionId($disponibiliteInscriptionId)
+    public function getDisponibiliteInscription()
     {
-        $this->disponibiliteInscriptionId = $disponibiliteInscriptionId;
-
-        return $this;
+        return $this->disponibiliteInscription;
     }
 
     /**
-     * Get disponibiliteInscriptionId
-     *
-     * @return integer 
+     * @param DisponibiliteInscription $disponibiliteInscription
      */
-    public function getDisponibiliteInscriptionId()
+    public function setDisponibiliteInscription($disponibiliteInscription)
     {
-        return $this->disponibiliteInscriptionId;
+        $this->disponibiliteInscription = $disponibiliteInscription;
     }
 
     /**
-     * Set confianceId
-     *
-     * @param integer $confianceId
-     * @return LimiteInscription
+     * @return Confiance
      */
-    public function setConfianceId($confianceId)
+    public function getConfiance()
     {
-        $this->confianceId = $confianceId;
-
-        return $this;
+        return $this->confiance;
     }
 
     /**
-     * Get confianceId
-     *
-     * @return integer 
+     * @param Confiance $confiance
      */
-    public function getConfianceId()
+    public function setConfiance($confiance)
     {
-        return $this->confianceId;
+        $this->confiance = $confiance;
     }
 }

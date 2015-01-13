@@ -64,7 +64,6 @@ class DisponibiliteInscription
      * @ORM\Column(name="pointsCharisme", type="smallint")
      */
     protected $pointsCharisme;
-    
 
     /**
      * 
@@ -79,6 +78,10 @@ class DisponibiliteInscription
      */
     protected $mission;
 
+    /**
+     * @ORM\OneToMany(targetEntity="LimiteInscription", mappedBy="disponibiliteInscription")
+     */
+    protected $limitesInscriptions;
     
 
     /**
