@@ -26,11 +26,15 @@ class UserExtension extends \Twig_Extension {
         if($di->getStatut()==0) return false;
         else if($di->getStatut()==2) return true;
         if($orga->getDisponibilitesInscription()->contains($di)) return false;
+        if($di->getLimitesInscriptions() == null) return true;
+        if($di->getOrgas()==null) return true;
         $limit = $di->getLimitesInscriptions()->filter(function(LimiteInscription $limiteInscription)use($orga){
+            if($limiteInscription->getConfiance()==null||$orga->getEquipe()==null||$orga->getEquipe()->getConfiance()==null) return false;
             return $limiteInscription->getConfiance()->getValeur() == $orga->getEquipe()->getConfiance()->getValeur();
         });
         if($limit->count()==0) return true;
         return $di->getOrgas()->filter(function(Orga $orgaAFiltrer)use($orga){
+            if($orgaAFiltrer->getEquipe()==null||$orgaAFiltrer->getEquipe()->getConfiance()==null||$orga->getEquipe()==null||$orga->getEquipe()->getConfiance()==null) return false;
             return $orgaAFiltrer->getEquipe()->getConfiance()->getValeur() == $orga->getEquipe()->getConfiance()->getValeur();
         })->count() < $limit->first()->getMax();
     }
