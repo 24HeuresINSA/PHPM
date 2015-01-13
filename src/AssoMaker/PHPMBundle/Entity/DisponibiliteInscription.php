@@ -79,7 +79,7 @@ class DisponibiliteInscription
     protected $mission;
 
     /**
-     * @ORM\OneToMany(targetEntity="LimiteInscription", mappedBy="disponibiliteInscription")
+     * @ORM\OneToMany(targetEntity="LimiteInscription", mappedBy="disponibiliteInscription",orphanRemoval=true, cascade={"persist", "remove"})
      */
     protected $limitesInscriptions;
     
@@ -245,5 +245,21 @@ class DisponibiliteInscription
     public function removeOrga(\AssoMaker\BaseBundle\Entity\Orga $orgas)
     {
         $this->orgas->removeElement($orgas);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLimitesInscriptions()
+    {
+        return $this->limitesInscriptions;
+    }
+
+    /**
+     * @param mixed $limitesInscriptions
+     */
+    public function setLimitesInscriptions($limitesInscriptions)
+    {
+        $this->limitesInscriptions = $limitesInscriptions;
     }
 }

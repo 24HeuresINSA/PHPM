@@ -2,6 +2,7 @@
 
 namespace AssoMaker\PHPMBundle\Form\DisponibiliteInscription;
 
+use AssoMaker\PHPMBundle\Form\LimiteInscriptionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -26,6 +27,13 @@ class DisponibiliteInscriptionType extends AbstractType
         	)))
         		->add('mission')
         		->add('pointsCharisme')
+            ->add('limitesInscriptions','collection', array('type' => new LimiteInscriptionType($builder,$options),
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'label'  => ' ',
+                'options'  => array('label' => ' ')
+            ))
             
         ;
     }
