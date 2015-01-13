@@ -81,6 +81,8 @@ class OAuthController extends Controller {
             return $this->refuseRegistration($em,$entity);
         }
 
+        $entity->setEquipe($registrationToken->getEquipe());
+
         $config = $e = $this->get('config.extension');
 
         if($request->getSession()->get('registration_step')==null||$request->getSession()->get('registration_step')==0){

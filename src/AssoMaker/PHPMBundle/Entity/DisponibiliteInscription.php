@@ -2,6 +2,7 @@
 
 namespace AssoMaker\PHPMBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AssoMaker\PHPMBundle\Validator\DebutAvantFin;
@@ -49,8 +50,8 @@ class DisponibiliteInscription
      * @QuartHeure()
      */
     protected  $fin;
-    
-    
+
+
     /**
      * @var smallint $statut
      * @Assert\Choice(choices = {"0", "1", "2"})
@@ -151,7 +152,7 @@ class DisponibiliteInscription
     /**
      * Get orgas
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getOrgas()
     {
@@ -194,6 +195,14 @@ class DisponibiliteInscription
     public function getStatut()
     {
         return $this->statut;
+    }
+
+    /**
+     * Determine status for DI depending on User
+     */
+    public function statutFor($orga){
+
+        return $this->getStatut();
     }
 
     /**
@@ -248,7 +257,7 @@ class DisponibiliteInscription
     }
 
     /**
-     * @return mixed
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getLimitesInscriptions()
     {
@@ -256,7 +265,7 @@ class DisponibiliteInscription
     }
 
     /**
-     * @param mixed $limitesInscriptions
+     * @param \Doctrine\Common\Collections\Collection $limitesInscriptions
      */
     public function setLimitesInscriptions($limitesInscriptions)
     {

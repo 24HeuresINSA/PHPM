@@ -122,7 +122,7 @@
                                         <input class="shiftkeybox"type="checkbox" name="phpm_bundle_inputdispostype[disponibiliteInscriptionItems][{{ e.id }}]"
                                                id="phpm_bundle_inputdispostype_disponibiliteInscriptionItems_{{ e.id }}" value="{{ e.id }}"
 					    			{% if e in orga.disponibilitesInscription %}checked="checked"{% endif %}
-					    			{% if ((e.statut == 0) or ((e.statut==1) and (e in orga.disponibilitesInscription))or (e.debut.timestamp - now.timestamp < 0)) and not is_granted('ROLE_HUMAIN') %}disabled{% endif %}
+					    			{% if (not canEditRegisterOnDI(orga,e)) and not is_granted('ROLE_HUMAIN') %}disabled{% endif %}
                                                ng-model="dispos[{{ e.id }}]"
                                                >
                                     </label></div>

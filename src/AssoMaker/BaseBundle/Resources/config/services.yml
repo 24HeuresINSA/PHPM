@@ -4,6 +4,11 @@ services:
        arguments: [@doctrine]
        tags:
             -  { name: twig.extension }
+    user.extension:
+       class:      AssoMaker\BaseBundle\Extension\UserExtension
+       arguments: [@doctrine]
+       tags:
+            -  { name: twig.extension }
     strings.extension:
        class:      AssoMaker\BaseBundle\Extension\StringsExtension
        arguments: [@doctrine]
