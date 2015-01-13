@@ -330,13 +330,15 @@ class DisponibiliteInscriptionController extends Controller
 
             $limitesNouvelles=$data->getLimitesInscriptions();
 
-            foreach ($limitesOrigine as $ob){
-                if(!$limitesNouvelles->contains($ob)){
-                    $em->remove($ob);
+            if($limitesOrigine!=null&&$limitesNouvelles!=null) {
+                foreach ($limitesOrigine as $ob) {
+                    if (!$limitesNouvelles->contains($ob)) {
+                        $em->remove($ob);
+                    }
                 }
-            }
-            foreach($limitesNouvelles as $limite){
-                $limite->setDisponibiliteInscription($entity);
+                foreach ($limitesNouvelles as $limite) {
+                    $limite->setDisponibiliteInscription($entity);
+                }
             }
 
             $em->persist($entity);
