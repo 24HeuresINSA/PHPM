@@ -40,7 +40,7 @@
 			
 			<li class="nav-header">Statut </li>
 				<li{% if app.request.get('statut') == -1 %} class="active" {% endif %}>
-				    <a href="{{ path('groupetache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':-1}) }}"><i class="icon-trash"></i> Supprimés</a>
+				    <a href="{{ path('groupetache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':-1}) }}"><i class="fa fa-trash"></i> Supprimés</a>
 				</li>
 				<li{% if app.request.get('statut') == 'all' %} class="active" {% endif %}>
 				    <a href="{{ path('groupetache', {'orgaid':app.request.get('orgaid'),'equipeid':app.request.get('equipeid'),'statut':'all'}) }}">Pas de filtre</a>
@@ -48,7 +48,7 @@
 			<li class="divider"></li>
 			<li class="nav-header">Actions</li>
 				<li>
-				    <a href="{{ path('groupetache_create') }}"><i class="icon-folder-open"></i> Créer un nouveau groupe de tâches</a>
+				    <a href="{{ path('groupetache_create') }}"><i class="fa fa-folder-open"></i> Créer un nouveau groupe de tâches</a>
 				</li>
 		</ul>
 	</div>

@@ -9,8 +9,21 @@ services:
        arguments: [@doctrine]
        tags:
             -  { name: twig.extension }
+    oauth.user_provider:
+       class:      AssoMaker\BaseBundle\OAuth\UserProvider
+       arguments: ["@fos_user.user_manager",{google: google_id}]
     form.type.orga:
         class: AssoMaker\BaseBundle\Form\OrgaUserType
+        arguments: ["@security.context","@config.extension"]
+        tags:
+            - { name: form.type }
+    form.type.registration:
+        class: AssoMaker\BaseBundle\Form\RegistrationUserType
+        arguments: ["@security.context","@config.extension"]
+        tags:
+            - { name: form.type }
+    form.type.quickRegistration:
+        class: AssoMaker\BaseBundle\Form\QuickRegistrationUserType
         arguments: ["@security.context","@config.extension"]
         tags:
             - { name: form.type }

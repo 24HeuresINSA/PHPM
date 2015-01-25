@@ -115,7 +115,7 @@ class AnimationController extends Controller {
 
         if ($this->get('request')->getMethod() == 'POST') {
             $request = $this->getRequest();
-            $editForm->bindRequest($request);
+            $editForm->handleRequest($request);
 
             if ($editForm->isValid()) {
                 $entity->addCommentaire($user, "Création de la fiche");
@@ -167,7 +167,7 @@ class AnimationController extends Controller {
 
         if ($this->get('request')->getMethod() == 'POST') {
             $request = $this->getRequest();
-            $editForm->bindRequest($request);
+            $editForm->handleRequest($request);
 
 
 

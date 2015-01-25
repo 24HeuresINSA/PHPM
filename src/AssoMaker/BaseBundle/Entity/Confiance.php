@@ -140,13 +140,13 @@ class Confiance
     public function __construct()
     {
         $this->taches = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->orgas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->orgas = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
      * Add taches
      *
-     * @param AssoMaker\PHPMBundle\Entity\Tache $taches
+     * @param \AssoMaker\PHPMBundle\Entity\Tache $taches
      */
     public function addTache(\AssoMaker\PHPMBundle\Entity\Tache $taches)
     {
@@ -156,7 +156,7 @@ class Confiance
     /**
      * Get taches
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTaches()
     {
@@ -181,7 +181,7 @@ class Confiance
     /**
      * Add equipes
      *
-     * @param AssoMaker\BaseBundle\Entity\Equipe $equipes
+     * @param \AssoMaker\BaseBundle\Entity\Equipe $equipes
      */
     public function addEquipe(\AssoMaker\BaseBundle\Entity\Equipe $equipes)
     {
@@ -191,7 +191,7 @@ class Confiance
     /**
      * Get equipes
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEquipes()
     {

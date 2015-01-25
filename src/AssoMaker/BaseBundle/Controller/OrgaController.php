@@ -40,7 +40,7 @@ class OrgaController extends Controller {
      * Lists all Orga entities.
      *
      * @Route("/index/{statut}/{confiance}",defaults={"statut"="1", "confiance"="all"}, name="orga")
-     * @Secure("ROLE_USER")
+     * @Secure("ROLE_HARD")
      * @Template()
      */
     public function indexAction($statut, $confiance) {
@@ -73,7 +73,7 @@ class OrgaController extends Controller {
      *
      * @Route("/trombi", name="orga_trombi")
      * @Template()
-     * @Secure("ROLE_USER")
+     * @Secure("ROLE_HARD")
      */
     public function trombiAction() {
 
@@ -117,7 +117,7 @@ class OrgaController extends Controller {
         $form->forcedConfiance = $confianceCode;
 
         if ($this->get('request')->getMethod() == 'POST') {
-            $form->bindRequest($request);
+            $form->handleRequest($request);
             $data = $form->getData();
 
             if ($form->isValid()) {
@@ -167,7 +167,7 @@ class OrgaController extends Controller {
 
 
         if ($this->get('request')->getMethod() == 'POST') {
-            $form->bindRequest($request);
+            $form->handleRequest($request);
             $data = $form->getData();
 
             if ($form->isValid()) {
@@ -203,14 +203,11 @@ class OrgaController extends Controller {
     }
 
     /**
-     *
-     *
      * @Route("/signature", name="orga_signature")
-     * @Secure("ROLE_USER")
+     * @Secure("ROLE_HARD")
      * @Template()
      */
     public function signatureAction() {
-
 
         $user = $this->get('security.context')->getToken()->getUser();
 
@@ -242,7 +239,7 @@ class OrgaController extends Controller {
         if ($this->get('request')->getMethod() == 'POST') {
 
             $request = $this->getRequest();
-            $editForm->bindRequest($request);
+            $editForm->handleRequest($request);
 
             if ($editForm->isValid()) {
 
@@ -255,6 +252,7 @@ class OrgaController extends Controller {
 
                 $entity->uploadProfilePicture();
                 $entity->uploadFichierPermis();
+                $entity->refreshRoles();
                 $em->persist($entity);
                 $em->flush();
 
@@ -377,7 +375,7 @@ class OrgaController extends Controller {
 
 
         if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
+            $form->handleRequest($request);
             $data = $form->getData();
             $submittedDI = $data['disponibiliteInscriptionItems'];
 
@@ -649,7 +647,7 @@ class OrgaController extends Controller {
      * Charisme .
      *
      * @Route("/charisme", name="orga_charisme")
-     * @Secure("ROLE_VISITOR")
+     * @Secure("ROLE_ORGA")
      * @Template()
      */
     public function charismeAction() {
@@ -832,7 +830,7 @@ class OrgaController extends Controller {
      */
     public function exportCSVAction() {
 
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HARD')) {
             throw new AccessDeniedException();
         }
 

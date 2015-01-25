@@ -1,0 +1,106 @@
+{% extends "AssoMakerBaseBundle::layout.html.twig"  %}
+{% set pageTitle = entity.prenom~' '~entity.nom %}
+
+{% block content %}
+    {% block body %}
+        <script>
+            function unloadMess() {
+                mess = "Attention, tes changements n'ont pas été enregistrés";
+                return mess;
+            }
+            function setBunload(on) {
+                window.onbeforeunload = (on) ? unloadMess : null;
+            }
+            setBunload(true);
+        </script>
+        <form class="form-horizontal" onsubmit="javascript:setBunload(false);" action="{{ path('register_oauth') }}" method="post" {{ form_enctype(form) }}>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <h1>Inscription Orga
+                        {% if app.request.get('confianceCode') != "" %} {{ app.request.get('libelle') }}{% else %} {{ entity.equipe }} {% endif %}
+                        - {{ manifestation_nom }}</h1>
+                    {% if app.request.get('confianceCode') != "" %}
+                        Le lien qui t'a été donné est strictement personnel, ne le donnes à personne.
+                    {% endif %}
+                    <hr>
+                </div>
+
+                <div class="row-fluid">
+                    <div class="well">
+                        <fieldset>
+                            <legend>Renseignements Obligatoires</legend>
+
+                            {{ form_row(form.prenom) }}
+                            {{ form_row(form.nom) }}
+                            {{ form_row(form.email,{"help":"Adresse mail INSA de préférence."}) }}
+                            {{ form_row(form.telephone,{"help":"Sans séparateurs : 0647682792"}) }}
+                            {{ form_row(form.dateDeNaissance) }}
+
+                            <legend>Tu sais </legend>
+                            <div class="control-group {% if form_errors(form.competences)|length > 0 %}error{% endif %}">
+                                {{ form_errors(form.competences) }}
+                                {% for comp in form.competences %}
+                                    <label class="checkbox">
+                                        {{ form_widget(comp) }} {{ comp.get('label') }} ?
+                                    </label>
+                                {% endfor %}
+                            </div>
+                        </fieldset>
+
+                    </div>
+                    <div class="well">
+                        <fieldset>
+                            <legend>Renseignements Supplémentaires</legend>
+                            {{ form_row(form.surnom) }}
+                            {{ form_row(form.anneeEtudes) }}
+                            {{ form_row(form.departement) }}
+                            {{ form_row(form.groupePC) }}
+                            {{ form_row(form.datePermis) }}
+                            {{ form_row(form.celibataire) }}
+                        </fieldset>
+                    </div>
+                    <div class="well">
+                        <fieldset>
+                            <legend>Noms des potes avec qui tu veux bosser</legend>
+                            {{ form_widget(form.amis) }}
+
+                        </fieldset>
+                        <fieldset>
+                            <legend>Des commentaires ?</legend>
+                            {{ form_widget(form.commentaire) }}
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="form-fluid">
+                    <div class="form-actions">
+                        <button class="btn btn-success" type="submit">Continuer »</button>
+                    </div>
+                </div>
+
+                {{ form_widget(form._token) }}
+            </div>
+        </form>
+
+    {% endblock %}
+
+	{{ form_widget(form._token) }}
+                    <div class="form-actions">
+                        <div class="btn-toolbar">
+                            <button class="btn btn-primary" name="action" value="save" type="submit">Enregistrer</button>
+
+			{% if is_granted('ROLE_HUMAIN') %}
+                            <a class="btn" href="{{ path('orga_inputdispos', { 'id': entity.id }) }}"><i class="fa fa-calendar"></i>Disponibilités</a>
+                            <a class="btn" href="{{ path('orga_affectation', { 'orga_id': entity.id }) }}"><i class="fa fa-book"></i>Affecter</a>
+                            <a class="btn" href="{{ path('orga_print', { 'orgaid': entity.id })  }}"><i class="fa fa-print"></i> Imprimer le planning</a>
+                            <a class="btn" target="_blank" href="https://www.facebook.com/search/results.php?q={{ entity.prenom~"%20"~entity.nom |url_encode }}"><i class="fa fa-search"></i> Rechercher sur Facebook</a>
+				{% if entity.groupePC%}
+                            <a class="btn" target="_blank" href="http://cipcnet.insa-lyon.fr/scol/php/apprec_groupe?id_annee={{phpm_anneetrombi}}&id_groupe={{ entity.groupePC |url_encode }}"><i class="fa fa-search"></i> Afficher le trombi du groupe</a>
+				{% endif %}
+                            <a class="btn" href="{{ path('autologin', { 'id': entity.id, 'loginkey': (entity.id)|phpm_crypt }) }}">Se connecter en tant que cet orga.</a>
+			{% endif %}
+
+                        </div>
+                    </div>
+                </form>
+{% endblock %}

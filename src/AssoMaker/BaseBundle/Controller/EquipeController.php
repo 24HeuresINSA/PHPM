@@ -60,6 +60,9 @@ class EquipeController extends Controller
      */
     public function showAction($id)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
+            throw new AccessDeniedException();
+        }
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('AssoMakerBaseBundle:Equipe')->find($id);
@@ -83,6 +86,9 @@ class EquipeController extends Controller
      */
     public function newAction()
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
+            throw new AccessDeniedException();
+        }
         $entity = new Equipe();
         $form   = $this->createForm(new EquipeType(), $entity);
 
@@ -101,10 +107,13 @@ class EquipeController extends Controller
      */
     public function createAction()
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
+            throw new AccessDeniedException();
+        }
         $entity  = new Equipe();
         $request = $this->getRequest();
         $form    = $this->createForm(new EquipeType(), $entity);
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
@@ -129,6 +138,10 @@ class EquipeController extends Controller
      */
     public function editAction($id)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('AssoMakerBaseBundle:Equipe')->find($id);
@@ -156,6 +169,10 @@ class EquipeController extends Controller
      */
     public function updateAction($id)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('AssoMakerBaseBundle:Equipe')->find($id);
@@ -169,7 +186,7 @@ class EquipeController extends Controller
 
         $request = $this->getRequest();
 
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
@@ -193,6 +210,9 @@ class EquipeController extends Controller
      */
     public function deleteAction($id)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
+            throw new AccessDeniedException();
+        }
         
         $request = $this->getRequest();
 

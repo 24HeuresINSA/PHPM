@@ -37,7 +37,7 @@ function Ctrl($scope){
         <ul class="nav nav-list">
 			<li class="nav-header">Actions</li>
 			<li>
-			    <a href="{{ path('pass_pass_new') }}"><i class="icon-plus"></i> Nouveau pass</a>
+			    <a href="{{ path('pass_pass_new') }}"><i class="fa fa-plus"></i> Nouveau pass</a>
 			</li>
 			{%raw%}
 			<li class="nav-header">Rechercher</li>
@@ -49,22 +49,22 @@ function Ctrl($scope){
 			    <a ng-click="search.statut=''" >Tous</a>
 			</li>
 			<li ng-class="{active: search.statut=='0'}">
-			    <a ng-click="search.statut='0'" ><i class="icon-pencil"></i> En rédaction</a>
+			    <a ng-click="search.statut='0'" ><i class="fa fa-pencil"></i> En rédaction</a>
 			</li>
 			<li ng-class="{active: search.statut=='1'}">
 			    <a ng-click="search.statut='1'" >
-    			    <i class="icon-eye-open"></i> À valider
-    			    <span class="badge badge-important"><i class="icon-user"></i>{{ countStatut(1) }}</span> 
+    			    <i class="fa fa-eye"></i> À valider
+    			    <span class="badge badge-important"><i class="fa fa-user"></i>{{ countStatut(1) }}</span> 
 			    </a>
 			</li>
 			<li ng-class="{active: search.statut=='2'}">
-			    <a ng-click="search.statut='2'" ><i class="icon-ok"></i> Validés</a>
+			    <a ng-click="search.statut='2'" ><i class="fa fa-check"></i> Validés</a>
 			</li>
                         <li ng-class="{active: search.statut=='3'}">
-			    <a ng-click="search.statut='3'" ><i class="icon-arrow-right"></i> Envoyés</a>
+			    <a ng-click="search.statut='3'" ><i class="fa fa-arrow-right"></i> Envoyés</a>
 			</li>
 			<li ng-class="{active: search.statut==-1}">
-			    <a ng-click="search.statut=-1"><i class="icon-trash"></i> Supprimés</a>
+			    <a ng-click="search.statut=-1"><i class="fa fa-trash"></i> Supprimés</a>
 			</li>
 
 		</ul>
@@ -74,10 +74,10 @@ function Ctrl($scope){
                 <div class="span12 well well-small">
                     <div class="row-fluid">
                         <div class="span8" ><a href="{{ p.id }}/{{ p.accessCode }}" class="statut{{ p.statut }}">
-                            <i class="icon-pencil" ng-show="p.statut==0"> </i>
-                            <i class="icon-eye-open" ng-show="p.statut==1"> </i>
-                            <i class="icon-ok" ng-show="p.statut==2"> </i>         
-                            <i class="icon-arrow-right" ng-show="p.statut==3"> </i>  
+                            <i class="fa fa-pencil" ng-show="p.statut==0"> </i>
+                            <i class="fa fa-eye" ng-show="p.statut==1"> </i>
+                            <i class="fa fa-check" ng-show="p.statut==2"> </i>         
+                            <i class="fa fa-arrow-right" ng-show="p.statut==3"> </i>  
                             {{p.entite}}
                             </a> <small>({{p.email}})</small>
                             <a href="mailto:{{p.email}}?&subject=Votre%20laissez-passer%2024Heures%20INSA&body=Bonjour%2C%0A%0AVous+avez+demand%C3%A9+un+pass+s%C3%A9curit%C3%A9+afin+d%27acc%C3%A9der+au+campus+LyonTech-La+Doua+pendant+le+festival+des+24+heures+de+l%27INSA.%0ACette+demande+vient+d%27%C3%AAtre+accept%C3%A9e+par+la+direction+s%C3%A9curit%C3%A9+du+festival.%0AVous+pouvez+imprimer+vos+laissez-passer+%C3%A0+l%27adresse+suivante+%3A%0A%0A{{prelink}}print/{{ p.id }}/{{ p.accessCode }}%0A%0ATr%C3%A8s+Cordialement%2C">

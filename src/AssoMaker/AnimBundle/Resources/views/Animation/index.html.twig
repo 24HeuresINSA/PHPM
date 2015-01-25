@@ -91,10 +91,10 @@
             <ul class="nav nav-list">
                 <li class="nav-header">Actions</li>
                 <li>
-                    <a href="{{ path('anim_animation_new') }}"><i class="icon-plus"></i> Nouvelle Animation</a>
+                    <a href="{{ path('anim_animation_new') }}"><i class="fa fa-plus"></i> Nouvelle Animation</a>
                 </li>
                 <li>
-                    <a href="{{ path('anim_animation_map') }}"><i class="icon-map-marker"></i> Afficher la carte</a>
+                    <a href="{{ path('anim_animation_map') }}"><i class="fa fa-map-marker"></i> Afficher la carte</a>
                 </li>
                 <li class="nav-header">Animations</li>
                 <li ng-class="{active: !myCom}">
@@ -113,41 +113,41 @@
                         <a ng-click="search.statut='';search.validLog=''" >Toutes</a>
                     </li>
                     <li ng-class="{active: search.statut=='0'}">
-                        <a ng-click="search.statut='0'" ><i class="icon-pencil"></i> En rédaction</a>
+                        <a ng-click="search.statut='0'" ><i class="fa fa-pencil"></i> En rédaction</a>
                     </li>
                     <li ng-class="{active: search.statut=='1'}">
                         <a ng-click="search.statut='1'" >
-                            <i class="icon-eye-open"></i> À valider
+                            <i class="fa fa-eye"></i> À valider
                         </a>
                     </li>
                     <li ng-class="{active: search.statut=='2'}">
-                        <a ng-click="search.statut='2'" ><i class="icon-ok"></i> Validées</a>
+                        <a ng-click="search.statut='2'" ><i class="fa fa-check"></i> Validées</a>
                     </li>
                     <li ng-class="{active: search.statut==-1}">
-                        <a ng-click="search.statut=-1"><i class="icon-trash"></i> Supprimées</a>
+                        <a ng-click="search.statut=-1"><i class="fa fa-trash"></i> Supprimées</a>
                     </li>
                     <li class="nav-header">Non validées</li>
                     <li ng-class="{active: search.validLog==''&&search.validSecu==''&&search.validHumain==''}">
                         <a ng-click="search.validLog='';search.validSecu='';search.validHumain=''" >Toutes</a>
                     </li>
                     <li ng-class="{active: search.validLog=='false'}">
-                        <a ng-click="search.validLog='false';search.validSecu='';search.validHumain=''" ><i class="icon-wrench"></i>Par la log <span class="badge">{{ countLog() }}</span></a>
+                        <a ng-click="search.validLog='false';search.validSecu='';search.validHumain=''" ><i class="fa fa-wrench"></i>Par la log <span class="badge">{{ countLog() }}</span></a>
                     </li>
                     <li ng-class="{active: search.validSecu=='false'}">
-                        <a ng-click="search.validLog='';search.validSecu='false';search.validHumain=''" ><i class="icon-bullhorn"></i>Par la sécu <span class="badge">{{ countSecu() }}</span></a>
+                        <a ng-click="search.validLog='';search.validSecu='false';search.validHumain=''" ><i class="fa fa-bullhorn"></i>Par la sécu <span class="badge">{{ countSecu() }}</span></a>
                     </li>
                     <li ng-class="{active: search.validHumain=='false'}">
-                        <a ng-click="search.validLog='';search.validSecu='';search.validHumain='false'" ><i class="icon-user"></i>Par l'humain <span class="badge">{{ countHumain() }}</span></a>
+                        <a ng-click="search.validLog='';search.validSecu='';search.validHumain='false'" ><i class="fa fa-user"></i>Par l'humain <span class="badge">{{ countHumain() }}</span></a>
                     </li>
                     <li class="nav-header">Affichage</li>
                     <li ng-class="{active: showLog}">
-                        <a ng-click="showLog=!showLog" ><i class="icon-wrench"></i>Logistique</a>
+                        <a ng-click="showLog=!showLog" ><i class="fa fa-wrench"></i>Logistique</a>
                     </li>
                     <li ng-class="{active: showSecu}">
-                        <a ng-click="showSecu=!showSecu" ><i class="icon-bullhorn"></i>Sécurité</a>
+                        <a ng-click="showSecu=!showSecu" ><i class="fa fa-bullhorn"></i>Sécurité</a>
                     </li>
                     <li ng-class="{active: showSigna}">
-                        <a ng-click="showSigna=!showSigna" ><i class="icon-picture"></i>Signalétique</a>
+                        <a ng-click="showSigna=!showSigna" ><i class="fa fa-picture-o"></i>Signalétique</a>
                     </li>
 
 
@@ -163,9 +163,9 @@
                         <div class="row-fluid">
                             <div class="span5" ><a href="{{ a.id }}/edit" class="statut{{ a.statut }}">
                             {{a.nom}}
-                                            <i class="icon-user" ng-show="a.validHumain"> </i>
-                                            <i class="icon-bullhorn" ng-show="a.validSecu"> </i>
-                                            <i class="icon-wrench" ng-show="a.validLog"> </i>
+                                            <i class="fa fa-user" ng-show="a.validHumain"> </i>
+                                            <i class="fa fa-bullhorn" ng-show="a.validSecu"> </i>
+                                            <i class="fa fa-wrench" ng-show="a.validLog"> </i>
 
                                         </a> <small>({{types[a.type]}} > {{a.equipe.nom}})</small>
                                     </div>

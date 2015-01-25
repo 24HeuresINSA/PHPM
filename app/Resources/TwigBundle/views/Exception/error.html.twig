@@ -1,15 +1,54 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>{{ status_code }} {{ status_text }} - PHPlanningMaker</title>
-    </head>
-    <body>
-        <h1>Erreur</h1>
-        <h2>Le serveur a retourné une erreur "{{ status_code }} {{ status_text }}".</h2>
+<html lang="en"><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>PHPM | Erreur</title>
+    <meta charset="utf-8">
 
-        <div>
-            Veuillez contacter l'équipe chargée du support.
-        </div>
-    </body>
-</html>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <!-- We're linkin the css files here -->
+    <link rel="stylesheet" href="error/style.css">
+    <!-- We're linkin the js files here -->
+    <script type="text/javascript" src="error/jquery.js"></script>
+    <script type="text/javascript" src="error/common.js"></script>
+    <script type="text/javascript" src="error/jQueryRotate.txt"></script>
+
+</head>
+
+<body>
+<!-- Showing the image clouds, stars, and moon -->
+<div style="background-position: -683px 0px;" id="clouds"></div>
+<div style="background-position: 0px -683px;" id="stars"></div>
+<div id="moon"></div>
+
+<!-- BEGIN CONTENT -->
+<div class="wrap_content">
+    <h1>{{ status_code }}</h1>
+    <h2>{{ status_text }}</h2><br>
+    <p>Le serveur a décidé de ne plus marcher.</p>
+    <p>Essayez de retourner à la <a href="/">page principale</a> mais c'est pas sûr que ça marche.</p>
+    <p>Contacter le <a href="mailto:{{ admin_email }}"><img src="error/bug.png">support</a></p>
+</div><!-- End div content -->
+<!-- END CONTENT -->
+
+<!-- BEGIN BOTTOM -->
+<div class="wrap_bottom">
+    <div style="left: 15.6971%; opacity: 1; transform: rotate(-22.5deg); transform-origin: 50% 50% 0px;" id="tumbleweed"></div>
+    <div class="image_wrapper">
+        <div id="house"></div>
+    </div>
+</div><!-- End div content -->
+<!-- END CONTENT -->
+
+<!-- BEGIN FOOTER -->
+<div class="wrap_footer">
+    <div class="content_footer">
+        <div class="left">C'est pas normal ? <a href="mailto:{{ admin_email }}"><img src="error/bug.png"> RAPPORTER UN BUG</a></div>
+        <div class="right">&copy; PHPM</div>
+    </div>
+</div><!-- End div footer -->
+<!-- END FOOTER -->
+
+
+</body></html>

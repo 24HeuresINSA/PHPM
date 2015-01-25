@@ -1,0 +1,58 @@
+{% extends "AssoMakerBaseBundle::layout.html.twig"  %}
+
+{% block content %}
+
+<div class="row">
+    <div class="span12">
+        <h3>Inscription</h3>
+        <div>
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert alert-error">
+                {{ flashMessage }}
+            </div>
+            {% endfor %}
+            <p>Pour vous enregistrer, sélectionnez l'une des méthodes ci-dessous :</p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="span6">
+        <div class="well">
+            {{ form_errors(form) }}
+            <fieldset>
+                <legend>Méthode 1 : par Google</legend>
+
+                {% for owner in hwi_oauth_resource_owners() %}
+                    <a class="btn btn-primary" href="{{ hwi_oauth_login_url(owner) }}">S'inscrire avec mon compte Google</a> <br />
+                {% endfor %}
+            </fieldset>
+        </div>
+    </div>
+    <div class="span6">
+        <div class="well">
+            <form class="form-horizontal" onsubmit="javascript:setBunload(false);" action="{{ path('register') }}" method="post" {{ form_enctype(form) }}>
+                <fieldset>
+                    <legend>Méthode 2 : manuellement</legend>
+
+                    {{ form_row(form.prenom) }}
+                    {{ form_row(form.nom) }}
+                    {{ form_row(form.email,{"help":"Adresse mail INSA de préférence."}) }}
+                    {{ form_row(form.plainPassword.first) }}
+                    {{ form_row(form.plainPassword.second) }}
+                </fieldset>
+
+
+                <div class="form-fluid">
+                    <div class="form-actions">
+                        <button class="btn btn-success" type="submit">Continuer »</button>
+                    </div>
+                </div>
+
+                {{ form_widget(form._token) }}
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

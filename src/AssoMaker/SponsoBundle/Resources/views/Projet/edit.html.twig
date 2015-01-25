@@ -15,7 +15,7 @@
 {#					    {{ form_label(form.avancements) }}
 					    {{ form_widget(form.avancements) }}#}
                             <br/>
-					       {# <a class="btn btn-success" href="{{ path('sponso_contact_new') }}"><i class="icon-plus"></i>Nouveau Contact</a> #}
+					       {# <a class="btn btn-success" href="{{ path('sponso_contact_new') }}"><i class="fa fa-plus"></i>Nouveau Contact</a> #}
                             <br/>
 					    {{ form_widget(form) }}
 
@@ -38,7 +38,7 @@
 
     <div class="row-fluid">
         <div class="row-fluid">
-            <h2>Projet {{entity.nom}} <small>Équipe {{ entity.equipe }}</small> <a class="btn btn-small" href="{{ path("sponso_projet_home") }}"><i class="icon-share-alt"></i> Retour</a></h2>
+            <h2>Projet {{entity.nom}} <small>Équipe {{ entity.equipe }}</small> <a class="btn btn-small" href="{{ path("sponso_projet_home") }}"><i class="fa fa-share"></i> Retour</a></h2>
         </div>
         <div class="row-fluid">
             <h3>Contacts</h3>
@@ -47,8 +47,8 @@
     </div>
     <div class="form-fluid">
         <div class="form-actions">
-            <a href="#editModal" role="button" class="btn" data-toggle="modal"><i class="icon-pencil"></i>Éditer les infos</a>
-            <a class="btn btn-success" href="{{ path('sponso_avancement_new',{'projectId':entity.id}) }}"><i class="icon-plus"></i> Nouveau Contact</a>
+            <a href="#editModal" role="button" class="btn" data-toggle="modal"><i class="fa fa-pencil"></i>Éditer les infos</a>
+            <a class="btn btn-success" href="{{ path('sponso_avancement_new',{'projectId':entity.id}) }}"><i class="fa fa-plus"></i> Nouveau Contact</a>
         </div>
     </div>
 

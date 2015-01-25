@@ -8,13 +8,13 @@
 		<ul class="nav nav-list">
 			<li class="nav-header">Orgas</li>
 			<li{% if app.request.get('statut') ==0  %} class="active" {% endif %}>
-			    <a href="{{ path('orga', {'statut':0, 'confiance':app.request.get('confiance')}) }}"><i class="icon-ban-circle"></i> Non validé</a>
+			    <a href="{{ path('orga', {'statut':0, 'confiance':app.request.get('confiance')}) }}"><i class="fa fa-ban"></i> Non validé</a>
 			</li>
 			<li{% if app.request.get('statut') == 1 %} class="active" {% endif %}>
-			    <a href="{{ path('orga', {'statut':1, 'confiance':app.request.get('confiance')}) }}"><i class="icon-ok-circle"></i> Validé</a>
+			    <a href="{{ path('orga', {'statut':1, 'confiance':app.request.get('confiance')}) }}"><i class="fa fa-check-circle-o"></i> Validé</a>
 			</li>
 			<li{% if app.request.get('statut') == 2 %} class="active" {% endif %}>
-			    <a href="{{ path('orga', {'statut':2, 'confiance':app.request.get('confiance')}) }}"><i class="icon-ok-circle"></i> Complétement affecté</a>
+			    <a href="{{ path('orga', {'statut':2, 'confiance':app.request.get('confiance')}) }}"><i class="fa fa-check-circle-o"></i> Complétement affecté</a>
 			</li>
 			<li{% if app.request.get('statut') == -1 %} class="active" {% endif %}>
 			    <a href="{{ path('orga', {'statut':-1, 'confiance':app.request.get('confiance')}) }}"> Mis en attente</a>

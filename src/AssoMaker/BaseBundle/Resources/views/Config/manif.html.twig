@@ -28,6 +28,7 @@
 	<ul id="tab" class="nav nav-tabs">
 	    <li><a href="#configItems" data-toggle="tab">Clés de configuration</a></li>
 		<li><a href="#equipeItems" data-toggle="tab">Équipes</a></li>
+		<li><a href="#registrationTokenItems" data-toggle="tab">Jetons</a></li>
 		<li><a href="#confianceItems" data-toggle="tab">Niveaux de Confiance</a></li>
 		<li><a href="#materielItems" data-toggle="tab">Matériel</a></li>
             
@@ -65,16 +66,14 @@
 				
 				    <tr>
                                         <td>{{i.vars.value.id}}</td>
-				    <td>{{ form_row(i.nom) }}</td>
-				    <td>{{ form_row(i.responsable, {'label':'false'}) }}</td>
-				    <td>{{ form_row(i.confiance, {'label':'false'}) }}</td>
-				    <td>{{ form_row(i.couleur) }}</td>
-				    <td>{{ form_row(i.showOnTrombi) }}</td>
-				    <td>{{ form_row(i.comptesPersoEnabled) }}</td>
+				    <td>{{ form_row(i.nom, {'label':false}) }}</td>
+				    <td>{{ form_row(i.responsable, {'label':false}) }}</td>
+				    <td>{{ form_row(i.confiance, {'label':false}) }}</td>
+				    <td>{{ form_row(i.couleur, {'label':false}) }}</td>
+				    <td>{{ form_row(i.showOnTrombi, {'label':false}) }}</td>
+				    <td>{{ form_row(i.comptesPersoEnabled, {'label':false}) }}</td>
 				    <td>
-                                        <a class="btn" href="{{ path('orga_registersoft', { 'equipeId': i.vars.value.id,'confianceCode': i.get('value').confiance.code }) }}"><i class="icon-link"></i> Lien visiteur</a>
-                                        
-                                        <a class="btn btn-danger" href="{{ path('equipe_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a></td>
+                                        <a class="btn btn-danger" href="{{ path('equipe_delete', { 'id': i.vars.value.id }) }}"><i class="fa fa-remove"></i> Supprimer</a></td>
 				    </tr>
 				{% endfor %}
 				
@@ -82,9 +81,60 @@
 	    	</table>
 			
 			<div class="row-fluid">
-			<a class="btn btn-success" href="{{ path('equipe_new') }}"><i class="icon-plus"></i> Nouvelle équipe</a>
+			<a class="btn btn-success" href="{{ path('equipe_new') }}"><i class="fa fa-plus"></i> Nouvelle équipe</a>
 			</div>
 		</div>
+
+              <div id="registrationTokenItems"  class="tab-pane fade">
+                  <table class="table table-condensed">
+                      <thead>
+                      <th>Id</th>
+                      <th>Clef</th>
+                      <th>Nombre utilisation restantes</th>
+                      <th>Equipe</th>
+
+                      </thead>
+                      <tbody>
+
+                      {% for i in form.registrationTokenItems %}
+
+                          <tr>
+                              <td>{{i.vars.value.id}}</td>
+                              <td><a href="{{ path('login_token', { 'token': i.vars.value.token }) }}">{{ path('login_token', { 'token': i.vars.value.token }) }}</a></td>
+                              <td>{{ i.vars.value.count }}</td>
+                              <td>{{ form_row(i.equipe, {'label':false}) }}</td>
+                              <td>
+                                  <a class="btn btn-danger" href="{{ path('equipe_delete', { 'id': i.vars.value.id }) }}"><i class="fa fa-remove"></i> Supprimer</a></td>
+                          </tr>
+                      {% endfor %}
+
+                      </tbody>
+                  </table>
+
+                  <div class="row-fluid">
+                      <label for="teamsForToken">Equipe : </label>
+                      <select id="teamsForToken" onchange="teamTokenLink()">
+                          {% for equipe in equipes %}
+                              <option value="{{ equipe.id }}">{{ equipe.nom }}</option>
+                          {% endfor %}
+                      </select>
+                      <br/>
+                      <label for="countTokenInput">Nombre d'inscriptions : </label>
+                      <input type="number" step="1" value="1" min="1" max="350" id="countTokenInput"/>
+                      <br/>
+                      <a class="btn btn-success" href="{{ path('token_new') }}" onmousedown="teamTokenLink()" id="tokenLink"><i class="fa fa-plus"></i> Nouveau Jeton</a>
+                      <script>
+                          var link="{{ path('token_new') }}";
+                          function teamTokenLink(){
+                              var e = document.getElementById("teamsForToken");
+                              var strUser = e.options[e.selectedIndex].value;
+                              document.getElementById('tokenLink').setAttribute("href",link+"/"+strUser+"/"+document.getElementById('countTokenInput').value);
+                              setTimeout(teamTokenLink, 100);
+                          }
+                          setTimeout(teamTokenLink, 100);
+                      </script>
+                  </div>
+              </div>
 
 		<div id="confianceItems"  class="tab-pane fade">
 			<table class="table table-condensed">
@@ -107,8 +157,8 @@
 				    <td>{{ form_row(i.couleur, {'label':'false'}) }}</td>
 				    <td>{{ form_row(i.code) }}</td>
 				    <td>{{ form_row(i.privileges) }}</td>
-				    <td><a class="btn" href="{{ path('login', { 'confianceCode': i.vars.value.code }) }}"><i class="icon-link"></i> Lien hard</a>
-                                        <a class="btn btn-danger" href="{{ path('confiance_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a></td>
+				    <td>
+                                        <a class="btn btn-danger" href="{{ path('confiance_delete', { 'id': i.vars.value.id }) }}"><i class="fa fa-remove"></i> Supprimer</a></td>
 				    </tr>
 					{% endfor %}
 				
@@ -136,20 +186,20 @@
 				    <td>{{ form_row(i.nom) }}</td>
 				    <td>{{ form_row(i.categorie) }}</td>
 				    <td>{{ form_row(i.type) }}</td>
-				    <td><a class="btn btn-danger" href="{{ path('materiel_delete', { 'id': i.vars.value.id }) }}"><i class="icon-remove"></i> Supprimer</a></td>
+				    <td><a class="btn btn-danger" href="{{ path('materiel_delete', { 'id': i.vars.value.id }) }}"><i class="fa fa-remove"></i> Supprimer</a></td>
 				    </tr>
 				{% endfor %}
 				
 		        </tbody>
 	    	</table>
-			
+
 			<div class="row-fluid">
-				<a class="btn btn-success" href="{{ path('materiel_new') }}"><i class="icon-plus"></i> Nouveau matériel</a>
+				<a class="btn btn-success" href="{{ path('materiel_new') }}"><i class="fa fa-plus"></i> Nouveau matériel</a>
 			</div>
 	</div>
-
-{{ form_rest(form) }}
-
+    <div style="display: none">
+    {{ form_rest(form) }}
+    </div>
         
     </p>
     </div>

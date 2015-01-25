@@ -280,6 +280,10 @@ class OrgaRepository extends EntityRepository {
         return $result;
     }
 
+    public function count(){
+        return $this->getEntityManager()->createQueryBuilder('o.id')->select("COUNT(o.id)")->from('AssoMakerBaseBundle:Orga','o')->getQuery()->getSingleScalarResult();
+    }
+
 //	getOrgasWithCriteriaTache numéro 2 pour gérer le tache id
     /*
       public function getOrgasWithCompatibleTache($tache_id)

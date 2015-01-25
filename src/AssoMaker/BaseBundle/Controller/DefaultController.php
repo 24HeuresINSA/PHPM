@@ -2,27 +2,39 @@
 
 namespace AssoMaker\BaseBundle\Controller;
 
+use HWI\Bundle\OAuthBundle\Templating\Helper\OAuthHelper;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Process\Exception\LogicException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Acl\Exception\Exception;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AssoMaker\PHPMBundle\Entity\Config;
+use AssoMaker\BaseBundle\Entity\Orga as BaseUser;
 use AssoMaker\PHPMBundle\Form\PrintPlanningType;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller {
+class DefaultController extends Controller
+{
+    /**
+     * @var TokenInterface
+     */
+    private $token;
 
     /**
      * @Route("/home", name="base_accueil")
      * @Route("/home")
      * @Template()
      */
-    public function homeAction() {
+    public function homeAction()
+    {
         $em = $this->getDoctrine()->getEntityManager();
         $config = $this->get('config.extension');
 
@@ -67,7 +79,8 @@ class DefaultController extends Controller {
      * @Route("/")
      * @Template()
      */
-    public function publicHomeAction() {
+    public function publicHomeAction()
+    {
 
         if ($this->get('security.context')->isGranted('ROLE_VISITOR')) {
             return $this->redirect($this->generateUrl('base_accueil'));
@@ -82,7 +95,8 @@ class DefaultController extends Controller {
      * @Route("/autologin/{id}/{loginkey}",requirements={"loginkey" = ".+"}, name="autologin")
      *
      */
-    public function autologinAction($id, $loginkey) {
+    public function autologinAction($id, $loginkey)
+    {
         $em = $this->getDoctrine()->getEntityManager();
         $config = $this->get('config.extension');
 
@@ -100,7 +114,8 @@ class DefaultController extends Controller {
         return $this->redirect($this->generateUrl('base_accueil'));
     }
 
-    public function adminLogin() {
+    public function adminLogin()
+    {
         $em = $this->getDoctrine()->getEntityManager();
         $config = $this->get('config.extension');
         $orgas = $em->getRepository('AssoMakerBaseBundle:Orga')->findAll();
@@ -110,82 +125,184 @@ class DefaultController extends Controller {
     }
 
     /**
-     * OpenId login
+     * Login
      *
-     * @Route("/login/{confianceCode}", defaults={"confianceCode":""}, name="login")
+     * @Route("/login/token/{token}", defaults={"token":""}, name="login_token")
+     *
+     */
+    public function loginTokenAction(Request $request, $token) {
+        $session = $request->getSession();
+        $em = $this->getDoctrine()->getManager();
+        $token=$em->getRepository('AssoMakerBaseBundle:RegistrationToken')->findOneBy(array('token'=>$token));
+        if($token == null){
+            $request->getSession()->getFlashBag()->add('error', "La clef d'inscription n'est pas valide");
+            return $this->redirect($this->generateUrl('base_publichome'));
+        } else {
+            $session->set('token_id', $token->getId());
+            return $this->redirect($this->generateUrl('register'));
+        }
+    }
+
+    /**
+     * Login
+     *
+     * Cette action permet juste d'afficher une page avec tous les fournisseur de connexion.
+     *
+     * @Route("/login", name="login")
      * @Template()
      *
      */
-    public function loginAction(Request $request, $confianceCode) {
+    public function loginAction(Request $request) {
+        $request = $this->container->get('request');
+        /* @var $request \Symfony\Component\HttpFoundation\Request */
+        $session = $request->getSession();
+        /* @var $session \Symfony\Component\HttpFoundation\Session\Session */
 
-
-
-        $em = $this->getDoctrine()->getEntityManager();
-        $config = $this->get('config.extension');
-        $session = $this->getRequest()->getSession();
-        $serverurl = $this->getRequest()->getHost();
-
-
-
-
-        try {
-
-
-            $openid = new \LightOpenID($serverurl);
-            if (!$openid->mode) {
-
-                $session->set('originalUrl', $this->container->get('request')->headers->get('referer'));
-                //                 if(isset($_GET['login'])) {
-                $openid->identity = 'https://www.google.com/accounts/o8/id';
-                $openid->required = array('contact/email');
-
-                $confiance = $em->getRepository('AssoMakerBaseBundle:Confiance')->findOneByCode($confianceCode);
-                if ($confiance) {
-                    $session->set('confianceCode', $confianceCode);
-                }
-
-                //header('Location: ' . $openid->authUrl());
-
-                $response = new RedirectResponse($openid->authUrl());
-                //$response->headers->set('Location:' , $openid->authUrl());
-
-                return $response;
-
-                //                 }
-            } elseif ($openid->mode == 'cancel') {
-                exit;
-            } else {
-                $attrs = $openid->getAttributes();
-                $email = $attrs['contact/email'];
-                $session->set('email', $email);
-                $em = $this->getDoctrine()->getEntityManager();
-                $user = $em->getRepository('AssoMakerBaseBundle:Orga')->findOneByEmail($email);
-                /*
-                  $confiance = $em->getRepository('AssoMakerBaseBundle:Confiance')->findOneByCode($confianceCode);
-                  if(!$confiance){
-                  throw new AccessDeniedException();
-                  }
-
-                 */
-                if (!$user) {
-                    if ($this->getRequest()->getSession()->get('confianceCode')) {
-                        return $this->redirect($this->generateUrl('orga_register_user'));
-                    }
-
-                    $this->get('session')->setFlash('notice', "L'adresse $email n'est pas dans le système.");
-                    $redirectURL = $config->getValue('manifestation_permis_libelles');
-                    return $this->redirect($this->generateUrl('base_accueil'));
-                }
-
-                $this->get('security.context')->setToken($user->generateUserToken());
-
-
-
-                return $this->redirect($session->get('originalUrl'));
-            }
-        } catch (ErrorException $e) {
-            exit;
+        // get the error if any (works with forward and redirect -- see below)
+        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
+            $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
+        } elseif (null !== $session && $session->has(SecurityContext::AUTHENTICATION_ERROR)) {
+            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
+            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
+        } else {
+            $error = '';
         }
+
+        if ($error) {
+            // TODO: this is a potential security risk (see http://trac.symfony-project.org/ticket/9523)
+            $error = $error->getMessage();
+        }
+        // last username entered by the user
+        $lastUsername = (null === $session) ? '' : $session->get(SecurityContext::LAST_USERNAME);
+
+        $csrfToken = $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate');
+
+        return array(
+            'last_username' => $lastUsername,
+            'error'         => $error,
+            'csrf_token' => $csrfToken,
+        );
     }
+
+    /**
+     * Cette action propose à l'utilisateur de s'enregistrer (avec ou sans fournisseur de connexion).
+     *
+     * @Route("/register/", name="register")
+     * @Template()
+     *
+     */
+    public function registerAction(Request $request) {
+
+        /**
+         * @var AbstractManagerRegistry
+         */
+        $em = $this->getDoctrine()->getManager();
+        $this->securityContext=$this->get('security.context');
+        $this->token = $this->securityContext->getToken();
+        $user = $this->token->getUser();
+
+        // Token défini ?
+        $session = $request->getSession();
+        $token_id = $session->get('token_id');
+        if ($token_id == null) {
+            $request->getSession()->getFlashBag()->add('error', "Vous ne pouvez pas vous enregistrer sans clé d'inscription.");
+            return $this->refuseRegistration($em, $user);
+        }
+
+        // Token valide ?
+        $em = $this->getDoctrine()->getManager();
+        $token = $em->getRepository('AssoMakerBaseBundle:RegistrationToken')->findOneBy(array('id' => $token_id));
+        if ($token == null || $token->getCount() < 1){
+            $request->getSession()->getFlashBag()->add('error', "La clé d'inscription n'est pas valide.");
+            return $this->refuseRegistration($em, $user);
+        }
+
+        // L'utilisateur s'est enregistré via OAuth ?
+        if ($user != "anon." && !$user->isEnabled() && $user->hasOAuthProvider()) {
+            
+            // Vérification de l'email du token
+            if ($token->getEmail() != null && $token->getEmail() !== $user->getEmail()) {
+                $request->getSession()->getFlashBag()->add('error', "La clé d'inscription n'est pas valide avec cette adresse mail.");
+                return $this->refuseRegistration($em, $user);
+            }
+
+            // Tout est ok, on complète l'inscription
+            $user->setEnabled(true);
+            $user->addRole('ROLE_ORGA');
+            $user->setStatut(0);
+            $user->setEquipe($token->getEquipe());
+
+            // Utilisation du token
+            if($token->getCount() <= 1) {
+                $em->remove($token);
+            } else {
+                $token->oneUse();
+                $em->persist($token);
+            }
+
+            $em->persist($user);
+            $em->flush();
+
+            // Inscription terminée. On invite l'utilisateur à se reconnecter.
+            $this->container->get('security.context')->setToken(NULL);
+            $request->getSession()->getFlashBag()->add('notice', "Inscription effectuée avec succès, vous pouvez maintenant vous connecter.");
+            return $this->redirect($this->generateUrl('base_publichome'));
+
+        } 
+        
+        // L'utilisateur s'est-il enregistré via formulaire d'inscription ?
+        if ($user == "anon.")
+            $user = new BaseUser();
+
+        $form = $this->createForm($this->get('form.type.quickRegistration'), $user);
+        $form->handleRequest($request);
+
+        if ($request->getMethod() == "POST") {
+            if ($form->isValid()) {
+                // On complète l'inscription
+                $canonicalizer = $this->get('fos_user.util.email_canonicalizer');
+                $user->setEmailCanonical($canonicalizer->canonicalize($user->getEmail()));
+                $user->setEnabled(true);
+                $user->addRole('ROLE_ORGA');
+                $user->setStatut(0);
+                $user->setEquipe($token->getEquipe());
+
+                // Utilisation du token
+                if($token->getCount() <= 1) {
+                    $em->remove($token);
+                } else {
+                    $token->oneUse();
+                    $em->persist($token);
+                }
+
+                $em->persist($user);
+                $em->flush();
+
+                // Inscription terminée. On invite l'utilisateur à se reconnecter.
+                $this->container->get('security.context')->setToken(NULL);
+                $request->getSession()->getFlashBag()->add('notice', "Inscription effectuée avec succès, vous pouvez maintenant vous connecter.");
+                return $this->redirect($this->generateUrl('base_publichome'));
+            }
+        } 
+
+        return array(
+            'entity' => $user,
+            'form' => $form->createView()
+        );
+
+    }
+
+    /**
+     * @param $entityManager
+     * @param $user
+     */
+    private function refuseRegistration($entityManager, $user)
+    {
+        $entityManager->remove($user);
+        $entityManager->flush();
+        $this->securityContext->setToken(null);
+        return $this->redirect($this->generateUrl('base_publichome'));
+    }
+
 
 }

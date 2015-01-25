@@ -31,7 +31,7 @@
         <tbody>
 		{% for p in t.plagesHoraire %}
 		 	{% for c in p.creneaux %}
-		 	 <tr><td>{{ c.debut | format_datetime('EEEE dd MMM Y HH:mm') }} <i class="icon-arrow-right"></i> {{ c.fin | format_datetime('EEEE dd MMM Y HH:mm') }}
+		 	 <tr><td>{{ c.debut | format_datetime('EEEE dd MMM Y HH:mm') }} <i class="fa fa-arrow-right"></i> {{ c.fin | format_datetime('EEEE dd MMM Y HH:mm') }}
 			    </td>           
 		 	 <td>
 		 	 {% if c.disponibilite %}

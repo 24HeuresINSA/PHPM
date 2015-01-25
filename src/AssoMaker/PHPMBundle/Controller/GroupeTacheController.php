@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AssoMaker\PHPMBundle\Entity\GroupeTache;
 use AssoMaker\PHPMBundle\Form\GroupeTacheType;
@@ -15,6 +16,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 /**
  * GroupeTache controller.
  *
+ * @Security("has_role('ROLE_HARD')")
  * @Route("/groupetache")
  */
 class GroupeTacheController extends Controller {
@@ -26,7 +28,7 @@ class GroupeTacheController extends Controller {
      * @Template()
      */
     public function indexAction($equipeid, $statut, $orgaid) {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HARD')) {
             throw new AccessDeniedException();
         }
 
@@ -72,7 +74,7 @@ class GroupeTacheController extends Controller {
      * @Template("AssoMakerPHPMBundle:GroupeTache:new.html.twig")
      */
     public function createAction() {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HARD')) {
             throw new AccessDeniedException();
         }
         $em = $this->getDoctrine()->getEntityManager();
@@ -103,7 +105,7 @@ class GroupeTacheController extends Controller {
      * @Template()
      */
     public function editAction($id) {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HARD')) {
             throw new AccessDeniedException();
         }
         $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
@@ -138,7 +140,8 @@ class GroupeTacheController extends Controller {
      * @Template("AssoMakerPHPMBundle:GroupeTache:edit.html.twig")
      */
     public function updateAction($id) {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+
+        if (false === $this->get('security.context')->isGranted('ROLE_HARD')) {
             throw new AccessDeniedException();
         }
         $admin = $this->get('security.context')->isGranted('ROLE_HUMAIN');
@@ -159,7 +162,7 @@ class GroupeTacheController extends Controller {
 
         $request = $this->getRequest();
 
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             if ($param['action'] == 'delete' && $entity->isDeletable()) {
@@ -192,9 +195,14 @@ class GroupeTacheController extends Controller {
             return $this->redirect($this->generateUrl('groupetache_edit', array('id' => $id)));
         }
 
+        $taches = $em->getRepository('AssoMakerPHPMBundle:Tache')->getNonDeletedTaches($id);
+        $animations = $em->createQuery('SELECT a.id,a.nom,a.lieu FROM AssoMakerAnimBundle:Animation a INDEX BY a.id')->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+
         return array(
             'entity' => $entity,
-            'form' => $editForm->createView()
+            'form' => $editForm->createView(),
+            'animations' => $animations,
+            'taches' => $taches
         );
     }
 
@@ -211,7 +219,7 @@ class GroupeTacheController extends Controller {
         $form = $this->createDeleteForm($id);
         $request = $this->getRequest();
 
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();

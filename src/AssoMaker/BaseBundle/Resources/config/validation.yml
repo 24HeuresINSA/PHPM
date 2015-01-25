@@ -1,0 +1,57 @@
+AssoMaker\BaseBundle\Entity\Orga:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [email]
+            message: "Un utilisateur existe déjà pour cette adresse email"
+            groups: [quick_registration]
+
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [telephone]
+            message: "Un utilisateur possède déjà ce numéro de téléphone"
+
+    properties:
+        email:
+            - Email:
+                message: "'{{ value }} n'est pas une adresse email valide"
+                checkMX: true
+                groups: [quick_registration]
+
+        publicEmail:
+            - Email:
+                message: "'{{ value }} n'est pas une adresse email valide"
+                checkMX: true
+
+        telephone:
+            - NotBlank: ~
+
+        nom:
+            - NotBlank:
+                groups: [quick_registration]
+            - Length:
+                min: 3
+                groups: [quick_registration]
+
+        prenom:
+            - NotBlank:
+                groups: [quick_registration]
+            - Length:
+                min: 3
+                groups: [quick_registration]
+
+        dateDeNaissance:
+            - Date:
+                message: "'{{ value }}' n'est pas une date de naissance valide"
+
+        profilePicture:
+            - Image:
+                minWidth: 600
+                maxWidth: 600
+                minHeight: 800
+                maxHeight: 800
+                mimeTypes: [image/jpeg]
+
+        fichierPermis:
+            - File:
+                maxSize: 1024k
+                mimeTypes: [application/pdf, application/x-pdf]
+                mimeTypesMessage: "Fichier PDF uniquement"

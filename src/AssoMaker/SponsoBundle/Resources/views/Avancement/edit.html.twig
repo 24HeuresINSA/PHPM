@@ -75,42 +75,42 @@
                             </div>
                             <div class="btn-toolbar">
 	{% if entity.statut == 0 %}
-                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="icon-arrow-right"></i> Soumettre le dossier à validation</button>
+                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="fa fa-arrow-right"></i> Soumettre le dossier à validation</button>
 		{% endif %}
 		{% if entity.statut == 1 and is_granted('ROLE_HUMAIN') %}
-                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="icon-arrow-right"></i> Valider le dossier</button>
-                                    <button type="submit" name="action" value="invalid" class="btn btn-warning" ><i class="icon-arrow-left"></i> Invalider le dossier</button>
+                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="fa fa-arrow-right"></i> Valider le dossier</button>
+                                    <button type="submit" name="action" value="invalid" class="btn btn-warning" ><i class="fa fa-arrow-left"></i> Invalider le dossier</button>
 		{% endif %}
 		{% if entity.statut == 2 %}
-                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="icon-arrow-right"></i> Dossier envoyé</button>
+                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="fa fa-arrow-right"></i> Dossier envoyé</button>
 		{% endif %}
 		{% if entity.statut == 3 %}
-                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="icon-arrow-right"></i> Rendez-vous pris</button>
+                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="fa fa-arrow-right"></i> Rendez-vous pris</button>
 		{% endif %}
 		{% if entity.statut == 4 %}
-                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="icon-arrow-right"></i> Négociations terminées</button>
+                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="fa fa-arrow-right"></i> Négociations terminées</button>
 		{% endif %}
 		{% if entity.statut == 5 and is_granted('ROLE_HUMAIN') %}
-                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="icon-arrow-right"></i> Convention signée</button>
+                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="fa fa-arrow-right"></i> Convention signée</button>
 		{% endif %}
 		{% if entity.statut == 6 %}
-                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="icon-arrow-right"></i> Infos transmises à l'orga</button>
+                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="fa fa-arrow-right"></i> Infos transmises à l'orga</button>
 		{% endif %}
 		{% if entity.statut == 7 and is_granted('ROLE_HUMAIN')%}
-                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="icon-arrow-right"></i> Valider</button>
-                                    <button type="submit" name="action" value="invalid" class="btn btn-warning" ><i class="icon-arrow-left"></i> Invalider</button>
+                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="fa fa-arrow-right"></i> Valider</button>
+                                    <button type="submit" name="action" value="invalid" class="btn btn-warning" ><i class="fa fa-arrow-left"></i> Invalider</button>
 		{% endif %}
 		{% if entity.statut == 8 %}
-                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="icon-arrow-right"></i> Prestation exécutée</button>
+                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="fa fa-arrow-right"></i> Prestation exécutée</button>
 		{% endif %}
 		{% if entity.statut == 9 %}
-                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="icon-arrow-right"></i> Documentation rédigée pour l'an prochain</button>
+                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="fa fa-arrow-right"></i> Documentation rédigée pour l'an prochain</button>
 		{% endif %}
 		{% if entity.statut == 10 or entity.statut == -1 %}
-                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="icon-arrow-right"></i> Relancer le projet</button>
+                                    <button type="submit" name="action" value="valid" class="btn btn-primary" ><i class="fa fa-arrow-right"></i> Relancer le projet</button>
 		{% endif %}
 		{% if entity.statut != -1 and is_granted('ROLE_HUMAIN') %}
-                                    <button type="submit" name="action" value="cancel" class="btn btn-danger" ><i class="icon-remove"></i> Annuler le projet</button>
+                                    <button type="submit" name="action" value="cancel" class="btn btn-danger" ><i class="fa fa-remove"></i> Annuler le projet</button>
 		{% endif %}
                                 </div>
                             </div>
@@ -120,8 +120,8 @@
                     <div class="row-fluid">
                         <div class="span4">
                             <h3>Projet <a href="{{ path('sponso_projet_edit', { 'id': entity.projet.id }) }}" >{{entity.projet}}</a> - {{ entity.entreprise }} </h3>
-                            <a class="btn btn-small" href="{{ path("sponso_projet_home") }}"><i class="icon-share-alt"></i> Retour</a><br>
-                            État : {{ entity.messageStatut }} {%if entity.hasDossier %}<a class="btn btn-small btn-info" href="{{asset( 'up/dossiersSponso/'~entity.dossierFileName )}}"><i class="icon-download-alt"></i> Dossier Sponso</a>{%endif%}
+                            <a class="btn btn-small" href="{{ path("sponso_projet_home") }}"><i class="fa fa-share"></i> Retour</a><br>
+                            État : {{ entity.messageStatut }} {%if entity.hasDossier %}<a class="btn btn-small btn-info" href="{{asset( 'up/dossiersSponso/'~entity.dossierFileName )}}"><i class="fa fa-download-alt"></i> Dossier Sponso</a>{%endif%}
                             <h4>Responsable : {{ entity.responsable }}</h4>
 
 {% if entity.nom %}
@@ -147,8 +147,8 @@
                             <div class="form-fluid">
                                 <div class="form-actions">
 
-                                    <a href="#editModal" role="button" class="btn" data-toggle="modal"><i class="icon-user"></i> Éditer les infos du contact</a>
-                                    <a href="#noteModal" role="button" class="btn btn-success" data-toggle="modal"><i class="icon-pencil"></i> Mettre à jour le projet</a>
+                                    <a href="#editModal" role="button" class="btn" data-toggle="modal"><i class="fa fa-user"></i> Éditer les infos du contact</a>
+                                    <a href="#noteModal" role="button" class="btn btn-success" data-toggle="modal"><i class="fa fa-pencil"></i> Mettre à jour le projet</a>
 
 
                                 </div>

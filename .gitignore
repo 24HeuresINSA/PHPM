@@ -16,6 +16,11 @@ web/vendor/*
 app/config/parameters.ini
 app/config/parameters.yml
 
+# Generated binaries
+bin/doctrine-dbal
+bin/security-checker
+bin/sql-formatter
+
 # Logs and databases #
 ######################
 *.log

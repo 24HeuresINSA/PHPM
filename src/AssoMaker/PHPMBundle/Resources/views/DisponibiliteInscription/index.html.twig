@@ -38,7 +38,7 @@
 			               </td>
 			               <td>
 			                   
-				               {{ e.debut |format_datetime('EEEE dd MMM Y HH:mm')}}<i class="icon-arrow-right"></i>
+				               {{ e.debut |format_datetime('EEEE dd MMM Y HH:mm')}}<i class="fa fa-arrow-right"></i>
 				               {{ e.fin |format_datetime('EEEE dd MMM HH:mm')}}
 			               </td>
 			           	   <td>{{ e.mission }}</td>
@@ -46,8 +46,8 @@
 			           	   <td>{{ e.pointsCharisme }}</td>
 			               <td>{{ e.orgas.count }}</td>
 			               <td>
-			               <a class="btn" href="{{ path('disponibiliteinscription_edit', { 'id': e.id }) }}"><i class="icon-pencil"></i> Éditer</a>
-					       <a class="btn  btn-danger" href="{{ path('disponibiliteinscription_delete', { 'id': e.id }) }}"><i class="icon-remove"></i> Supprimer</a>
+			               <a class="btn" href="{{ path('disponibiliteinscription_edit', { 'id': e.id }) }}"><i class="fa fa-pencil"></i> Éditer</a>
+					       <a class="btn  btn-danger" href="{{ path('disponibiliteinscription_delete', { 'id': e.id }) }}"><i class="fa fa-remove"></i> Supprimer</a>
 			               </td>
 			           </tr>
 				     {% endfor %}
@@ -61,7 +61,7 @@
 		<div class="form-fluid">
 			<div class="form-actions">
 				<div class="btn-toolbar">
-					<a class="btn btn-success" href="{{ path('disponibiliteinscription_new') }}"><i class="icon-pencil"></i> Créer une nouveau créneau</a>
+					<a class="btn btn-success" href="{{ path('disponibiliteinscription_new') }}"><i class="fa fa-pencil"></i> Créer une nouveau créneau</a>
 					<button class="btn btn-danger" type="submit" name="action" value="delete" >Supprimer les créneaux sélectionnés</button>
 				</div>
 				<hr>

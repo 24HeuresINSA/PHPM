@@ -1,58 +1,66 @@
 security:
     encoders:
         AssoMaker\PHPMBundle\Entity\User: plaintext
+        FOS\UserBundle\Model\UserInterface: sha512
 
 
     role_hierarchy:
-        ROLE_USER:        ROLE_VISITOR
-        ROLE_ADMIN: [ROLE_USER, ROLE_VISITOR]
-        ROLE_HUMAIN:       [ROLE_ADMIN]
-        ROLE_LOG:       [ROLE_ADMIN]
-        ROLE_SECU:       [ROLE_ADMIN]
-        ROLE_BUREAU:       [ROLE_HUMAIN]
-        ROLE_SUPER_ADMIN: [ROLE_HUMAIN, ROLE_LOG, ROLE_SECU, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_USER:          ROLE_VISITOR
+        ROLE_ORGA:          ROLE_USER
+        ROLE_HARD:          ROLE_ORGA
+        ROLE_ADMIN:         [ROLE_USER, ROLE_VISITOR, ROLE_HARD]
+        ROLE_HUMAIN:        [ROLE_ADMIN]
+        ROLE_SOUSRESP:      [ROLE_ADMIN]
+        ROLE_LOG:           [ROLE_HARD]
+        ROLE_SECU:          [ROLE_HARD]
+        ROLE_BUREAU:        [ROLE_ADMIN, ROLE_HUMAIN]
+        ROLE_SUPER_ADMIN:   [ROLE_HUMAIN, ROLE_LOG, ROLE_SOUSRESP, ROLE_SECU, ROLE_HARD, ROLE_ALLOWED_TO_SWITCH, ROLE_BUREAU]
 
     providers:
-        db:
-            entity: { class: AssoMakerBaseBundle:Orga, property: email }
+        fos_userbundle:
+            id: fos_user.user_provider.username
+        #oauth.user_provider:
+        #    id: oauth.user_provider
 
     firewalls:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        login:
-            pattern:  ^/demo/secured/login$
-            security: false
-
-        secured_area:
-            pattern:    ^/
-            provider: db
+        main:
+            pattern: ^/
+            oauth:
+                resource_owners:
+                  google: "/login/check-google"
+                login_path: /login
+                failure_path: /login
+                default_target_path: /oauth/check
+                oauth_user_provider:
+                  service: oauth.user_provider
+            logout: true
+            anonymous: true
             form_login:
-                login_path:  /login
-                use_forward: true
-
-            logout:
-                path:   /logout
-                invalidate_session: true
-            anonymous:  ~
+                provider: fos_userbundle
+                csrf_provider: form.csrf_provider
 
     access_control:
+             - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+             - { path: ^/register/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+             - { path: ^/admin/, role: ROLE_ADMIN }
              - { path: /_wdt/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: /_profiler/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
-             - { path: ^/test, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-             - { path: ^/home, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-             - { path: ^/orga/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-             - { path: ^/groupetache/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-             - { path: ^/tache/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-             - { path: ^/autologin, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+             - { path: ^/groupetache/.*, roles: ROLE_ORGA}
+             - { path: ^/tache/.*, roles: ROLE_ORGA}
+             - { path: ^/anim/.*, roles: ROLE_HARD}
+             - { path: ^/sponso/.*, roles: ROLE_HARD}
+             - { path: ^/analyse/.*, roles: ROLE_ADMIN}
              - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-             - { path: ^/pass/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-             - { path: ^/config/initiale, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-             - { path: ^/comptesPerso/virement, roles: ROLE_VISITOR }
+             - { path: ^/pass/.*, roles: ROLE_SECU }
+             - { path: ^/comptesPerso/virement, roles: ROLE_HARD }
              - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/.*json, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-             - { path: ^/.*, roles: ROLE_USER }
+             - { path: ^/oauth, roles: ROLE_USER }
+             - { path: ^/.*, roles: ROLE_ORGA }
 #             - { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
 jms_security_extra:
     secure_all_services: false

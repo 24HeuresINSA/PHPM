@@ -27,6 +27,8 @@ class AppKernel extends Kernel
             new AssoMaker\SponsoBundle\AssoMakerSponsoBundle(),
             new AssoMaker\AnimBundle\AssoMakerAnimBundle(),
             new AssoMaker\PassSecuBundle\AssoMakerPassSecuBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

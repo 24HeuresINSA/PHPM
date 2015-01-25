@@ -156,7 +156,7 @@ function Ctrl($scope){
                 <li ng-repeat="p in personnes">
                     <div class="input-append">
                        <input type="text" class="input-medium" name="assomaker_passsecubundle_passtype[personnes][{%raw%}{{$index}}{% endraw %}][nom]" ng-model="p.nom">
-                       <a class="btn btn-danger" ng-click="personnes.splice($index,1)"><i class="icon-remove"></i></a>
+                       <a class="btn btn-danger" ng-click="personnes.splice($index,1)"><i class="fa fa-remove"></i></a>
                     </div>
                 </li>
                 
@@ -170,7 +170,7 @@ function Ctrl($scope){
                      Vous pouvez encore générer <b>{% raw %}{{passesRestants()}}{% endraw %}</b> laissez-passer sur un total de <b>{% raw %}{{maxPersonnes}}{% endraw %}</b>. <br>
                      </p>
                      <p>
-                     <a class="btn btn-success btn-small" ng-click="addPass()"><i class="icon-plus"></i> Ajouter un nouveau laissez-passer.</a>
+                     <a class="btn btn-success btn-small" ng-click="addPass()"><i class="fa fa-plus"></i> Ajouter un nouveau laissez-passer.</a>
                      </p>
                  </span>
                  <span ng-show="passesRestants()<=0">
@@ -202,9 +202,9 @@ function Ctrl($scope){
 			    {% endif %}
 			    {% if entity.statut == 0%}
 			        {% if not is_granted('ROLE_SECU') %}
-			        <button class="btn btn-success" type="submit" name="action" value="submit"><i class="icon-arrow-right"></i> Soumettre la demande de laissez-passer à validation</button>
+			        <button class="btn btn-success" type="submit" name="action" value="submit"><i class="fa fa-arrow-right"></i> Soumettre la demande de laissez-passer à validation</button>
 			        {% else %}
-			        <button class="btn btn-warning" type="submit" name="action" value="submit"><i class="icon-eye-open"></i> Mettre le pass "en attente de validation"</button>
+			        <button class="btn btn-warning" type="submit" name="action" value="submit"><i class="fa fa-eye"></i> Mettre le pass "en attente de validation"</button>
 			        {% endif %}
 			    {% endif %}
                                 
@@ -212,22 +212,22 @@ function Ctrl($scope){
 			    
                                 
 			    {% if entity.statut >=2 %}
-			     <a href="{{ path('pass_pass_print',{"id":entity.id,"code":entity.accessCode}) }}" class="btn"><i class="icon-print"></i> Imprimer les pass</a>
+			     <a href="{{ path('pass_pass_print',{"id":entity.id,"code":entity.accessCode}) }}" class="btn"><i class="fa fa-print"></i> Imprimer les pass</a>
 			    <a class="btn btn-info" href="mailto:{{entity.emailDemandeur}}?&subject=Votre%20laissez-passer%2024Heures%20INSA&body=Bonjour%2C%0A%0AVous+avez+demand%C3%A9+un+pass+s%C3%A9curit%C3%A9+afin+d%27acc%C3%A9der+au+campus+LyonTech-La+Doua+pendant+le+festival+des+24+heures+de+l%27INSA.%0ACette+demande+vient+d%27%C3%AAtre+accept%C3%A9e+par+la+direction+s%C3%A9curit%C3%A9+du+festival.%0AVous+pouvez+imprimer+vos+laissez-passer+%C3%A0+l%27adresse+suivante+%3A%0A%0A{{ url('pass_pass_index') }}print/{{ entity.id }}/{{ entity.accessCode }}%0A%0ATr%C3%A8s+Cordialement%2C">
-                            <i class="icon-envelope"></i> Envoyer le pass par mail</a> 
+                            <i class="fa fa-envelope"></i> Envoyer le pass par mail</a> 
 			    {% endif %}
 			    
 			    {% if is_granted('ROLE_SECU') and (entity.statut < 2) %}
-			    <button class="btn btn-success" type="submit" name="action" value="validate"><i class="icon-ok"></i> Valider la demande</button>
+			    <button class="btn btn-success" type="submit" name="action" value="validate"><i class="fa fa-check"></i> Valider la demande</button>
 			    {% endif %}
                             
                             {% if is_granted('ROLE_SECU') and (entity.statut == 2) %}
-			    <button class="btn btn-success" type="submit" name="action" value="sent"><i class="icon-arrow-right"></i> Pass envoyé</button>
+			    <button class="btn btn-success" type="submit" name="action" value="sent"><i class="fa fa-arrow-right"></i> Pass envoyé</button>
 			    {% endif %}
                             
                                                         {% if entity.statut >= 1%}
 			        {% if is_granted('ROLE_SECU') %}
-                                <button class="btn btn-danger" type="submit" name="action" value="devalidate"><i class="icon-ok"></i> Dévalider le pass</button>
+                                <button class="btn btn-danger" type="submit" name="action" value="devalidate"><i class="fa fa-check"></i> Dévalider le pass</button>
 			        {% endif %}
 			    {% endif %}
 

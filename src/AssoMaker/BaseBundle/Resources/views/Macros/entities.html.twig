@@ -38,21 +38,21 @@
 {% endmacro %}
 
 {% macro iconCom(com) %}
-{% if com.type == -1 %}<i class="icon-trash"></i>{% endif %}
-{% if com.type == 1 %}<i class="icon-eye-open"></i>{% endif %}
-{% if com.type == 2 %}<i class="icon-ok"></i>{% endif %}
-{% if com.type in [3,8,9,10] %}<i class="icon-remove"></i>{% endif %}
-{% if com.type == 4 %}<i class="icon-share-alt"></i>{% endif %}
-{% if com.type == 5 %}<i class="icon-wrench"></i>{% endif %}
-{% if com.type == 6 %}<i class="icon-bullhorn"></i>{% endif %}
-{% if com.type == 7 %}<i class="icon-user"></i>{% endif %}
+{% if com.type == -1 %}<i class="fa fa-trash"></i>{% endif %}
+{% if com.type == 1 %}<i class="fa fa-eye"></i>{% endif %}
+{% if com.type == 2 %}<i class="fa fa-check"></i>{% endif %}
+{% if com.type in [3,8,9,10] %}<i class="fa fa-remove"></i>{% endif %}
+{% if com.type == 4 %}<i class="fa fa-share"></i>{% endif %}
+{% if com.type == 5 %}<i class="fa fa-wrench"></i>{% endif %}
+{% if com.type == 6 %}<i class="fa fa-bullhorn"></i>{% endif %}
+{% if com.type == 7 %}<i class="fa fa-user"></i>{% endif %}
 
-{% if com.type == 11 %}<i class="icon-undo"></i>{% endif %}
+{% if com.type == 11 %}<i class="fa fa-undo"></i>{% endif %}
 {% endmacro %}
 
 {% macro supTextCom(com) %}
 {% if com.type != 0 %}
-<i class="icon-arrow-right"></i>
+<i class="fa fa-arrow-right"></i>
 <b>
 {% if com.type == -1 %}Fiche supprimée{% endif %}
 {% if com.type == 1 %}Fiche soumise à validation{% endif %}

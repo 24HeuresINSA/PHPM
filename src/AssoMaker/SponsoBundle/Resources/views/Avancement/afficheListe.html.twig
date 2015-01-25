@@ -22,8 +22,8 @@
             </td>
             <td>{{ avancement.responsable }}</td>
             <td>
-                <a href ="{{path("sponso_avancement_edit",{"id":avancement.id})}}#noteModal" class="btn btn-small"><i class="icon-pencil"></i> Mettre à jour</a>
-                            {%if avancement.hasDossier %}<a class="btn btn-small btn-info" href="{{asset( 'up/dossiersSponso/'~avancement.dossierFileName )}}"><i class="icon-download-alt"></i> Dossier Sponso</a>{%endif%}
+                <a href ="{{path("sponso_avancement_edit",{"id":avancement.id})}}#noteModal" class="btn btn-small"><i class="fa fa-pencil"></i> Mettre à jour</a>
+                            {%if avancement.hasDossier %}<a class="btn btn-small btn-info" href="{{asset( 'up/dossiersSponso/'~avancement.dossierFileName )}}"><i class="fa fa-download-alt"></i> Dossier Sponso</a>{%endif%}
             </td>
 
 

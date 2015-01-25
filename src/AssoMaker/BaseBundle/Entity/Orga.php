@@ -2,7 +2,9 @@
 
 namespace AssoMaker\BaseBundle\Entity;
 
+use AssoMaker\BaseBundle\AssoMakerBaseBundle;
 use Symfony\Component\Security\Core\User\UserInterface;
+use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\ExecutionContext;
@@ -15,13 +17,11 @@ use AssoMaker\PHPMBundle\Entity\Disponibilite;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AssoMaker\BaseBundle\Entity\OrgaRepository")
- * @UniqueEntity(fields={"email"}, message="Un orga possédant cet email est déjà inscrit.")
- * @UniqueEntity(fields={"telephone"}, message="Un orga possédant ce numéro de téléphone est déjà inscrit.")
- * @Assert\Callback(methods = { "isBirthdayValid","isLicenceDateValid" })
  */
-class Orga implements UserInterface {
+class Orga extends BaseUser implements UserInterface {
 
     public static $privilegesTypes = array('Visiteur', 'Orga', 'Humain', 'Responsable Log', 'Responsable Sécurité', 'Super Admin');
+    public static $rolesMapping = array("ROLE_USER", "ROLE_ORGA", "ROLE_HUMAIN", "ROLE_LOG", "ROLE_SECU", "ROLE_SUPER_ADMIN");
 
     /**
      * @var integer $id
@@ -42,16 +42,14 @@ class Orga implements UserInterface {
     /**
      * @var string $nom
      *
-     * @ORM\Column(name="nom", type="string", length=255)
-     * @Assert\NotBlank(message="Le nom de l'orga ne doit pas être vide.")
+     * @ORM\Column(name="nom", type="string", length=255, nullable=true)
      */
     protected $nom;
 
     /**
      * @var string $prenom
      *
-     * @ORM\Column(name="prenom", type="string", length=255)
-     * @Assert\NotBlank(message="Le prénom de l'orga ne doit pas être vide.")
+     * @ORM\Column(name="prenom", type="string", length=255, nullable=true)
      */
     protected $prenom;
 
@@ -61,6 +59,13 @@ class Orga implements UserInterface {
      * @ORM\Column(name="surnom", type="string", length=255, nullable=true)
      */
     protected $surnom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="google_id", type="string", length=511, nullable=true)
+     */
+    protected $google_id;
 
     /**
      * @var string $role
@@ -78,63 +83,33 @@ class Orga implements UserInterface {
     /**
      * @var string $telephone
      *
-     * @ORM\Column(name="telephone", type="string", length=255, unique=true)
-     * @Assert\NotBlank(message="Veuillez renseigner un numéro de portable valide.")
-     * @Assert\Regex(
-     *     pattern="/^0[67][0-9]{8}$/",
-     *     message="Veuillez renseigner un numéro de portable valide."
-     * )
+     * @ORM\Column(name="telephone", type="string", length=255, unique=true, nullable=true)
      */
     protected $telephone;
-
-    /**
-     * @var string $email
-     *
-     * @ORM\Column(name="email", type="string", length=255, unique=true)
-     *
-     * @Assert\Email(
-     * 	   message = "L'email doît être valide.",
-     *     checkMX = true
-     * )
-     */
-    protected $email;
 
     /**
      * @var string $publicEmail
      *
      * @ORM\Column(name="publicEmail", type="string", length=255, nullable=true)
-     *
-     * @Assert\Email(
-     * 	   message = "L'email public doît être valide.",
-     *     checkMX = true
-     * )
      */
     protected $publicEmail;
 
     /**
      * @var date $dateDeNaissance
      *
-     * @ORM\Column(name="dateDeNaissance", type="date")
-     *
-     * @Assert\Date(message="La date de naissance doît être valide")
+     * @ORM\Column(name="dateDeNaissance", type="date", nullable=true)
      */
     protected $dateDeNaissance;
 
     /**
-     * @Assert\Image(
-     *     minWidth = 600,
-     *     maxWidth = 600,
-     *     minHeight = 800,
-     *     maxHeight = 800,
-     *     mimeTypes = {"image/jpeg"}
-     * )
+     * @var string $profilePicture
      */
     protected $profilePicture;
 
     /**
      * @var boolean $profilePictureSet
      *
-     * @ORM\Column(name="profilePictureSet", type="boolean")
+     * @ORM\Column(name="profilePictureSet", type="boolean", nullable=true)
      */
     protected $profilePictureSet = false;
 
@@ -159,7 +134,7 @@ class Orga implements UserInterface {
      *
      * @ORM\Column(name="datePermis", type="date", nullable=true)
      *
-     * @Assert\Date(message="La date de permis doît être valide")
+     * @Assert\Date(message = "La date de permis doît être valide")
      */
     protected $datePermis;
 
@@ -243,7 +218,7 @@ class Orga implements UserInterface {
     /**
      * @var smallint $statut
      * @Assert\Choice(choices = {"-1", "0", "1", "2"})
-     * @ORM\Column(name="statut", type="smallint")
+     * @ORM\Column(name="statut", type="smallint", nullable=true)
      */
     protected $statut;
 
@@ -257,7 +232,7 @@ class Orga implements UserInterface {
     protected $disponibilitesInscription;
 
     /**
-     * @ORM\Column(type="smallint", name="privileges")
+     * @ORM\Column(type="smallint", name="privileges", nullable=true)
      * @Assert\Choice(choices = {"0", "1","2","3","4","5"})
      */
     protected $privileges;
@@ -300,16 +275,7 @@ class Orga implements UserInterface {
      */
     protected $besoinsOrgaHint;
 
-    public function __toString() {
-        if ($this->getSurnom() != null) {
-            return $this->prenom . " " . $this->nom . " (" . $this->surnom . ")";
-        } else {
-            return $this->prenom . " " . $this->nom;
-        }
-    }
-
     public function __sleep() {
-
         return array('id', 'email');
     }
 
@@ -534,58 +500,18 @@ class Orga implements UserInterface {
         return new UsernamePasswordToken($this, null, 'main', $options);
     }
 
-    public function getRoles() {
-        return array('ROLE_HUMAIN');
-    }
-
-    public function isEqualTo(UserInterface $user) {
+    public function isEqualTo(UserInterface $user)
+    {
         return $user->getEmail() === $this->email;
     }
 
-    public function eraseCredentials() {
-
-    }
-
-    public function getSalt() {
-        return "";
-    }
-
-    public function getPassword() {
-        return "";
-    }
-
-    /**
-     * Get username
-     *
-     * @return string
-     */
-    public function getUsername() {
-        return $this->email;
-    }
-
-    public function serialize() {
-        return serialize($this->email);
-    }
-
-    public function unserialize($data) {
-        $this->email = unserialize($data);
-    }
-
     public function __construct() {
+        parent::__construct();
         $this->tachesResponsable = new \Doctrine\Common\Collections\ArrayCollection();
         $this->equipesResponsable = new \Doctrine\Common\Collections\ArrayCollection();
         $this->disponibilites = new \Doctrine\Common\Collections\ArrayCollection();
         $this->disponibilitesInscription = new \Doctrine\Common\Collections\ArrayCollection();
         $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId() {
-        return $this->id;
     }
 
     /**
@@ -661,6 +587,26 @@ class Orga implements UserInterface {
     }
 
     /**
+     * Set email
+     *
+     * @param string $email
+     */
+    public function setEmail($email) {
+        parent::setEmail($email);
+        $this->setUsername($email);
+    }
+
+    /**
+     * Set emailCanonical
+     *
+     * @param string $emailCanonical
+     */
+    public function setEmailCanonical($emailCanonical) {
+        parent::setEmailCanonical($emailCanonical);
+        $this->setUsernameCanonical($emailCanonical);
+    }
+
+    /**
      * Set telephone
      *
      * @param string $telephone
@@ -674,26 +620,9 @@ class Orga implements UserInterface {
      *
      * @return string
      */
-    public function getTelephone() {
+    public function getTelephone()
+    {
         return $this->telephone;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     */
-    public function setEmail($email) {
-        $this->email = $email;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail() {
-        return $this->email;
     }
 
     /**
@@ -771,7 +700,7 @@ class Orga implements UserInterface {
     /**
      * Add tachesResponsable
      *
-     * @param AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable
+     * @param \AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable
      */
     public function addTache(\AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable) {
         $this->tachesResponsable[] = $tachesResponsable;
@@ -780,7 +709,7 @@ class Orga implements UserInterface {
     /**
      * Get tachesResponsable
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTachesResponsable() {
         return $this->tachesResponsable;
@@ -789,7 +718,7 @@ class Orga implements UserInterface {
     /**
      * Add equipesResponsable
      *
-     * @param AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable
+     * @param \AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable
      */
     public function addEquipe(\AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable) {
         $this->equipesResponsable[] = $equipesResponsable;
@@ -798,7 +727,7 @@ class Orga implements UserInterface {
     /**
      * Get equipesResponsable
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEquipesResponsable() {
         return $this->equipesResponsable;
@@ -807,7 +736,7 @@ class Orga implements UserInterface {
     /**
      * Add disponibilites
      *
-     * @param AssoMaker\PHPMBundle\Entity\Disponibilite $disponibilites
+     * @param \AssoMaker\PHPMBundle\Entity\Disponibilite $disponibilites
      */
     public function addDisponibilite(\AssoMaker\PHPMBundle\Entity\Disponibilite $disponibilites) {
         $this->disponibilites[] = $disponibilites;
@@ -816,7 +745,7 @@ class Orga implements UserInterface {
     /**
      * remove disponibilite
      *
-     * @param AssoMaker\PHPMBundle\Entity\Disponibilite $disponibilite
+     * @param \AssoMaker\PHPMBundle\Entity\Disponibilite $disponibilite
      */
     public function removeDisponibilite(\AssoMaker\PHPMBundle\Entity\Disponibilite $disponibilite) {
 //     	foreach ($disponibilite->getCreneaux() as $creneau){
@@ -830,7 +759,7 @@ class Orga implements UserInterface {
     /**
      * Get disponibilites
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDisponibilites() {
         return $this->disponibilites;
@@ -839,7 +768,7 @@ class Orga implements UserInterface {
     /**
      * Add disponibilitesInscription
      *
-     * @param AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription
+     * @param \AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription
      */
     public function addDisponibiliteInscription(\AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription) {
 
@@ -850,7 +779,7 @@ class Orga implements UserInterface {
     /**
      * Remove disponibilitesInscription
      *
-     * @param AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription
+     * @param \AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription
      */
     public function removeDisponibiliteInscription(\AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibiliteInscription) {
         if ($this->removeDIFromDisponibilites($disponibiliteInscription)) {
@@ -861,7 +790,7 @@ class Orga implements UserInterface {
     /**
      * Get disponibilitesInscription
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDisponibilitesInscription() {
         return $this->disponibilitesInscription;
@@ -883,7 +812,7 @@ class Orga implements UserInterface {
     /**
      * Set equipe
      *
-     * @param AssoMaker\BaseBundle\Entity\Equipe $equipe
+     * @param \AssoMaker\BaseBundle\Entity\Equipe $equipe
      */
     public function setEquipe(\AssoMaker\BaseBundle\Entity\Equipe $equipe) {
         $this->equipe = $equipe;
@@ -892,7 +821,7 @@ class Orga implements UserInterface {
     /**
      * Get equipe
      *
-     * @return AssoMaker\BaseBundle\Entity\Equipe
+     * @return \AssoMaker\BaseBundle\Entity\Equipe
      */
     public function getEquipe() {
         return $this->equipe;
@@ -901,7 +830,7 @@ class Orga implements UserInterface {
     /**
      * Add commentaires
      *
-     * @param AssoMaker\PHPMBundle\Entity\Commentaire $commentaires
+     * @param \AssoMaker\PHPMBundle\Entity\Commentaire $commentaires
      */
     public function addCommentaire(\AssoMaker\PHPMBundle\Entity\Commentaire $commentaires) {
         $this->commentaires[] = $commentaires;
@@ -910,7 +839,7 @@ class Orga implements UserInterface {
     /**
      * Get commentaires
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCommentaires() {
         return $this->commentaires;
@@ -973,7 +902,7 @@ class Orga implements UserInterface {
     /**
      * Add creneauxHint
      *
-     * @param AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint
+     * @param \AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint
      */
     public function addCreneau(\AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint) {
         $this->creneauxHint[] = $creneauxHint;
@@ -982,7 +911,7 @@ class Orga implements UserInterface {
     /**
      * Get creneauxHint
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCreneauxHint() {
         return $this->creneauxHint;
@@ -991,7 +920,7 @@ class Orga implements UserInterface {
     /**
      * Add besoinsOrgaHint
      *
-     * @param AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint
+     * @param \AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint
      */
     public function addBesoinOrga(\AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint) {
         $this->besoinsOrgaHint[] = $besoinsOrgaHint;
@@ -1000,7 +929,7 @@ class Orga implements UserInterface {
     /**
      * Get besoinsOrgaHint
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getBesoinsOrgaHint() {
         return $this->besoinsOrgaHint;
@@ -1009,7 +938,7 @@ class Orga implements UserInterface {
     /**
      * Add groupesTacheResponsable
      *
-     * @param AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable
+     * @param \AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable
      */
     public function addGroupeTache(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable) {
         $this->groupesTacheResponsable[] = $groupesTacheResponsable;
@@ -1018,7 +947,7 @@ class Orga implements UserInterface {
     /**
      * Get groupesTacheResponsable
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getGroupesTacheResponsable() {
         return $this->groupesTacheResponsable;
@@ -1210,7 +1139,7 @@ class Orga implements UserInterface {
     /**
      * Add groupesTacheResponsable
      *
-     * @param AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable
+     * @param \AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable
      * @return Orga
      */
     public function addGroupesTacheResponsable(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable) {
@@ -1222,7 +1151,7 @@ class Orga implements UserInterface {
     /**
      * Remove groupesTacheResponsable
      *
-     * @param AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable
+     * @param \AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable
      */
     public function removeGroupesTacheResponsable(\AssoMaker\PHPMBundle\Entity\GroupeTache $groupesTacheResponsable) {
         $this->groupesTacheResponsable->removeElement($groupesTacheResponsable);
@@ -1231,7 +1160,7 @@ class Orga implements UserInterface {
     /**
      * Add tachesResponsable
      *
-     * @param AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable
+     * @param \AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable
      * @return Orga
      */
     public function addTachesResponsable(\AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable) {
@@ -1243,7 +1172,7 @@ class Orga implements UserInterface {
     /**
      * Remove tachesResponsable
      *
-     * @param AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable
+     * @param \AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable
      */
     public function removeTachesResponsable(\AssoMaker\PHPMBundle\Entity\Tache $tachesResponsable) {
         $this->tachesResponsable->removeElement($tachesResponsable);
@@ -1252,7 +1181,7 @@ class Orga implements UserInterface {
     /**
      * Add equipesResponsable
      *
-     * @param AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable
+     * @param \AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable
      * @return Orga
      */
     public function addEquipesResponsable(\AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable) {
@@ -1264,7 +1193,7 @@ class Orga implements UserInterface {
     /**
      * Remove equipesResponsable
      *
-     * @param AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable
+     * @param \AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable
      */
     public function removeEquipesResponsable(\AssoMaker\BaseBundle\Entity\Equipe $equipesResponsable) {
         $this->equipesResponsable->removeElement($equipesResponsable);
@@ -1273,7 +1202,7 @@ class Orga implements UserInterface {
     /**
      * Add disponibilitesInscription
      *
-     * @param AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription
+     * @param \AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription
      * @return Orga
      */
     public function addDisponibilitesInscription(\AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription) {
@@ -1285,7 +1214,7 @@ class Orga implements UserInterface {
     /**
      * Remove disponibilitesInscription
      *
-     * @param AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription
+     * @param \AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription
      */
     public function removeDisponibilitesInscription(\AssoMaker\PHPMBundle\Entity\DisponibiliteInscription $disponibilitesInscription) {
         $this->disponibilitesInscription->removeElement($disponibilitesInscription);
@@ -1294,7 +1223,7 @@ class Orga implements UserInterface {
     /**
      * Remove commentaires
      *
-     * @param AssoMaker\PHPMBundle\Entity\Commentaire $commentaires
+     * @param \AssoMaker\PHPMBundle\Entity\Commentaire $commentaires
      */
     public function removeCommentaire(\AssoMaker\PHPMBundle\Entity\Commentaire $commentaires) {
         $this->commentaires->removeElement($commentaires);
@@ -1303,7 +1232,7 @@ class Orga implements UserInterface {
     /**
      * Add creneauxHint
      *
-     * @param AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint
+     * @param \AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint
      * @return Orga
      */
     public function addCreneauxHint(\AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint) {
@@ -1315,7 +1244,7 @@ class Orga implements UserInterface {
     /**
      * Remove creneauxHint
      *
-     * @param AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint
+     * @param \AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint
      */
     public function removeCreneauxHint(\AssoMaker\PHPMBundle\Entity\Creneau $creneauxHint) {
         $this->creneauxHint->removeElement($creneauxHint);
@@ -1324,7 +1253,7 @@ class Orga implements UserInterface {
     /**
      * Add besoinsOrgaHint
      *
-     * @param AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint
+     * @param \AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint
      * @return Orga
      */
     public function addBesoinsOrgaHint(\AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint) {
@@ -1336,21 +1265,22 @@ class Orga implements UserInterface {
     /**
      * Remove besoinsOrgaHint
      *
-     * @param AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint
+     * @param \AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint
      */
     public function removeBesoinsOrgaHint(\AssoMaker\PHPMBundle\Entity\BesoinOrga $besoinsOrgaHint) {
         $this->besoinsOrgaHint->removeElement($besoinsOrgaHint);
     }
 
     public function isBirthDayValid(ExecutionContext $context) {
+        echo 'a';die;
         if ($this->dateDeNaissance >= new \DateTime()) {
-            $context->addViolationAtSubPath('dateDeNaissance', 'Cette date doit être dans le passé.');
+            $context->addViolation('dateDeNaissance', 'Cette date doit être dans le passé.');
         }
     }
 
     public function isLicenceDateValid(ExecutionContext $context) {
         if ($this->datePermis != null && $this->datePermis >= new \DateTime()) {
-            $context->addViolationAtSubPath('datePermis', 'Cette date doit être dans le passé.');
+            $context->addViolation('datePermis', 'Cette date doit être dans le passé.');
         }
     }
 
@@ -1397,5 +1327,70 @@ class Orga implements UserInterface {
     public function getMembreBureau()
     {
         return $this->membreBureau;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set googleId
+     *
+     * @param string $googleId
+     * @return Orga
+     */
+    public function setGoogleId($googleId)
+    {
+        $this->google_id = $googleId;
+
+        return $this;
+    }
+
+    /**
+     * Get googleId
+     *
+     * @return string 
+     */
+    public function getGoogleId()
+    {
+        return $this->google_id;
+    }
+
+    /**
+     * Return true if an OAuth provider is set for this user
+     *
+     * @return boolean
+     */
+    public function hasOAuthProvider()
+    {
+        if ($this->google_id)
+            return true;
+        else
+            return false;
+    }
+
+    public function refreshRoles()
+    {
+        $roles = array();
+        if ($this->isEnabled()) {
+            $roles[] = "ROLE_ORGA";
+            if ($this->getPrivileges() !== null) {
+                if (isset(Orga::$rolesMapping[intval($this->getPrivileges())]) && !empty(Orga::$rolesMapping[intval($this->getPrivileges())])) {
+                    $roles[] = Orga::$rolesMapping[intval($this->getPrivileges())];
+                }
+            }
+            if ($this->getMembreBureau())
+                $roles[] = "ROLE_BUREAU";
+        } else {
+            $roles[] = "ROLE_USER";
+        }
+
+        $this->setRoles($roles);
     }
 }

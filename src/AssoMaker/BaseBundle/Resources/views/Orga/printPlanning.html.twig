@@ -71,7 +71,7 @@ overflow:auto;
 	  <div class="horaires">
 	  <h3>
 	      {{ creneau.debut | format_datetime('EEEE dd MMM HH:mm') }}
-	  	    <i class="icon-arrow-right"></i>
+	  	    <i class="fa fa-arrow-right"></i>
 	  	  {%  if (creneau.debut | format_datetime('dd'))==(creneau.fin | format_datetime('dd')) %}
 	  	  {{ creneau.fin | format_datetime('HH:mm') }}
 	  	  {% else %}

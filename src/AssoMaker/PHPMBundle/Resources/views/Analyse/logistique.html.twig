@@ -9,7 +9,7 @@
 <div ng-app ng-controller="Ctrl">
 <div class="row-fluid">       
         	<div class="page-header">
-                    <h1>Logistique <a ng-click="showHelp=!showHelp"><i class="icon-question-sign" ></i> </a></h1>
+                    <h1>Logistique <a ng-click="showHelp=!showHelp"><i class="fa fa-question-circle" ></i> </a></h1>
 
                     
 	        </div>
@@ -20,7 +20,7 @@
                     Les orgas logistiques sont seuls à pouvoir changer le champ "Check Log"<br>
                     Si ce champ commence par non, le matériel n'a pas été checké, et la ligne s'affiche en rouge<br>
                     En cas de modification d'une fiche tâche affectant une ligne, le Check Log revient à non, et comprend entre parenthèses l'ancienne valeur.<br>
-                    <b>Pour la log : </b> Cliquer sur le bouton <i class="icon-ok"></i> pour valider les modifications.
+                    <b>Pour la log : </b> Cliquer sur le bouton <i class="fa fa-check"></i> pour valider les modifications.
 	            
 	        </div>
 </div>
@@ -118,8 +118,8 @@ $scope.successTacheMaj[$id] = false;
         </tr>
     <td ROWSPAN="100" style="width: 30em;"  >
                 <input type="text" ng-change="successTacheMaj[t.id]=false" class="input-large danger" ng-model="t.commentaireLog">
-    <button class="btn"type="submit"  ng-click="changeTacheCom(t.id,t.commentaireLog)" ng-class="{false: 'btn-warning', true: 'btn-success'}[successTacheMaj[t.id]]" ><i class="icon-ok"></i></button>
-<button class="btn btn-danger" type="submit"  ng-click="changeTacheCom(t.id,'raf');t.commentaireLog='raf'" ><i class="icon-remove"></i> RAF</button><br>
+    <button class="btn"type="submit"  ng-click="changeTacheCom(t.id,t.commentaireLog)" ng-class="{false: 'btn-warning', true: 'btn-success'}[successTacheMaj[t.id]]" ><i class="fa fa-check"></i></button>
+<button class="btn btn-danger" type="submit"  ng-click="changeTacheCom(t.id,'raf');t.commentaireLog='raf'" ><i class="fa fa-remove"></i> RAF</button><br>
         
         <div class="alert" ng-class="{false: 'alert-success', true: 'alert-error'}[non(t.commentaireLog)]"><b>Matériel supplémentaire : </b><br>{{t.materielSupplementaire}}</div>
 
@@ -139,8 +139,8 @@ $scope.successTacheMaj[$id] = false;
 
 <form class="form-search ">
   <input type="text" ng-change="successMaj[b.id]=false" class="input-large danger" ng-model="b.commentaireLog">
-<button class="btn"type="submit"  ng-click="changeCom(b.id,b.commentaireLog)" ng-class="{false: 'btn-warning', true: 'btn-success'}[successMaj[b.id]]" ><i class="icon-ok"></i></button>
-<button class="btn btn-danger" type="submit"  ng-click="changeCom(b.id,'raf');b.commentaireLog='raf'" ><i class="icon-remove"></i> RAF</button>
+<button class="btn"type="submit"  ng-click="changeCom(b.id,b.commentaireLog)" ng-class="{false: 'btn-warning', true: 'btn-success'}[successMaj[b.id]]" ><i class="fa fa-check"></i></button>
+<button class="btn btn-danger" type="submit"  ng-click="changeCom(b.id,'raf');b.commentaireLog='raf'" ><i class="fa fa-remove"></i> RAF</button>
 </form>
 
 </td> 
