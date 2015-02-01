@@ -224,7 +224,7 @@ class AnalyseController extends Controller {
 
 
             $t = $em
-                    ->createQuery("SELECT count(c) FROM AssoMakerPHPMBundle:Creneau c WHERE c.debut < :fin AND c.fin > :debut")
+                    ->createQuery("SELECT count(c) FROM AssoMakerPHPMBundle:Creneau c JOIN c.plageHoraire p JOIN p.tache t WHERE c.debut < :fin AND c.fin > :debut AND t.statut >= 2")
                     ->setParameter('debut', $debut->format('Y-m-d H:i:s'))
                     ->setParameter('fin', $fin->format('Y-m-d H:i:s'))
                     ->getSingleScalarResult();
