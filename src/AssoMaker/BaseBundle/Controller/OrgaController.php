@@ -382,7 +382,7 @@ class OrgaController extends Controller {
                 "confiance" => $equipe->getConfiance()->getId(),
                 "charisme" => $orga['charisme'],
                 "equipe" => $equipe->getId(),
-                "dateDeNaissance" => $orga[0]->getDateDeNaissance()->format('Y-m-d H:i:s'),
+                "dateDeNaissance" => ($orga[0]->getDateDeNaissance()!=null)?$orga[0]->getDateDeNaissance()->format('Y-m-d H:i:s'):'1900-1-1 0:0:0',
                 "departement" => $orga[0]->getDepartement(),
                 "statut" => $orga[0]->getStatut(),
                 "commentaire" => $orga[0]->getCommentaire()
