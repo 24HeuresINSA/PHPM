@@ -2,6 +2,7 @@
 
 namespace AssoMaker\PHPMBundle\Controller;
 
+use AssoMaker\PHPMBundle\Entity\CreneauRepository;
 use AssoMaker\PHPMBundle\Form\BesoinMaterielType;
 use AssoMaker\PHPMBundle\Entity\BesoinMateriel;
 use AssoMaker\PHPMBundle\Entity\PlageHoraire;
@@ -327,6 +328,9 @@ class TacheController extends Controller {
             if ($param['action'] == 'creneaumaker') {
                 return $this->redirect($this->generateUrl('creneaumaker_tache', array('id' => $entity->getId())));
             }
+            if ($param['action'] == 'affectation') {
+                return $this->redirect($this->generateUrl('tache_okaffectation', array('id' => $entity->getId())));
+            }
         }
 
         if ($param['action'] == 'add_plage') {
@@ -368,7 +372,10 @@ class TacheController extends Controller {
             throw new \Exception("La tâche doit être validée");
         }
 
-
+        // On génère les créneaux
+        /** @var CreneauRepository $creneauRepository */
+        $creneauRepository = $this->getDoctrine()->getRepository('AssoMakerPHPMBundle:Creneau');
+        $creneauRepository->generateCreneauForTache($id);
 
         $commentaire = new Commentaire();
         $commentaire->setAuteur($user);
