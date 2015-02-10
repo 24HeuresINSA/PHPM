@@ -1,0 +1,17 @@
+{% extends "AssoMakerBaseBundle::layout.html.twig" %}
+{% set pageTitle = "Nouvel Artist" %}
+
+
+{% block body -%}
+    <h1>Artist creation</h1>
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('artist') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}
