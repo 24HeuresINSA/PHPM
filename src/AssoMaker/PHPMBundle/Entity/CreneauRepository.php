@@ -2,8 +2,12 @@
 
 namespace AssoMaker\PHPMBundle\Entity;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Proxies\__CG__\AssoMaker\PHPMBundle\Entity\PlageHoraire;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * CreneauRepository
@@ -69,11 +73,9 @@ class CreneauRepository extends EntityRepository {
         $rsm->addFieldResult('c', 'debut', 'debut');
         $rsm->addFieldResult('c', 'fin', 'fin');
         $rsm->addFieldResult('c', 'id', 'id');
-        $rsm->addJoinedEntityResult("AssoMaker\PHPMBundle\Entity\PlageHoraire", "p", "c", "plageHoraire");
-
+        $rsm->addJoinedEntityResult("AssoMaker\\PHPMBundle\\Entity\\PlageHoraire", "p", "c", "plageHoraire");
 
         $rsm->addScalarResult('d', 'd');
-
 
         $query = $this->_em->createNativeQuery(
                 'SELECT c.*, p.id as p_id, WEEKDAY(c.debut) d
@@ -83,8 +85,6 @@ class CreneauRepository extends EntityRepository {
 
 
         $creneaux = $query->getResult();
-        var_dump($creneaux);
-        exit();
 
         foreach ($creneaux as $c) {
             var_dump($c);
@@ -93,8 +93,6 @@ class CreneauRepository extends EntityRepository {
             $a[$c['w']][$co->getId()] = $co;
             //$a[$c['w'][($c[0])->getId()]]=$c;
         }
-        var_dump($a);
-        exit();
 
         return $a;
     }
@@ -195,6 +193,19 @@ class CreneauRepository extends EntityRepository {
         return $query->getResult();
     }
 
+    public function isCreneauGeneratedFor($tache_id, $ph_id){
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('count(c.id)')
+            ->from('AssoMakerPHPMBundle:Creneau','c')
+            ->leftJoin('c.plageHoraire','ph')
+            ->leftJoin('ph.tache','t')
+            ->where('t.id = ?1')
+            ->andWhere('ph.id = ?2')
+            ->setParameters(array(1=>intval($tache_id),2=>intval($ph_id)));
+        $query = $query->getQuery();
+        return $query->getSingleScalarResult() != 0;
+    }
+
     // récupère les créneaux d'une tache sur une plage donnée
     // le 1er paramètre est obligatoire
     public function getTacheCreneau($tache_id, $plage_id) {
@@ -234,6 +245,117 @@ class CreneauRepository extends EntityRepository {
         $query->setParameter(1, $tache_id); // PDO \o/
 
         return $query->getArrayResult();
+    }
+
+    /**
+     * Génère les Créneaux pour une Tâche donnée.
+     * @param $tache_id int l'ID de la Tache.
+     * @throws \Exception Dans le cas ou il est impossible de faire la génration
+     */
+    public function generateCreneauForTache($tache_id){
+        $em = $this->getEntityManager();
+        /** @var Tache $tache */
+        $tache = $em->getRepository('AssoMakerPHPMBundle:Tache')->find($tache_id);
+
+        /** @var PlageHoraire $ph */
+        foreach ($tache->getPlagesHoraire() as $ph){
+            $ph_id = $ph->getId();
+            if(!$this->isCreneauGeneratedFor($tache_id,$ph_id)) { // On vérifie que ce n'est pas déjà généré
+                $this->generateCreneauForPlageHoraire($ph_id);
+            }
+        }
+    }
+
+    /**
+     * Génère les Créneaux pour une plage horaire donnée.
+     * @param $plage_id int L'ID de la plage
+     * @throws \Exception Dans le cas ou il est impossible de faire la génération.
+     */
+    public function generateCreneauForPlageHoraire($plage_id){
+        $em = $this->getEntityManager();
+
+        $entity = $em->getRepository('AssoMakerPHPMBundle:PlageHoraire')->find($plage_id);
+
+        if (!$entity) {
+            throw new NotFoundHttpException('Cette plage horaire n\'existe pas.');
+        }
+        if ($entity->getTache()->getStatut()<2){
+            throw new \Exception("La tâche doit être validée");
+        }
+
+        // Géneration des créneaux
+        if($entity->getCreneauUnique()){
+            $this->genererCreneaux($entity,$entity->getDebut(),$entity->getFin(),$em);
+        }else{
+            $duree = $entity->getDureeCreneau();
+
+
+            $debutCreneau = clone $entity->getDebut();
+            $finCreneau = clone $entity->getDebut();
+            $finCreneau->add(new \DateInterval('PT'.($duree + 1*$entity->getRecoupementCreneau()).'S'));
+
+            $creationTerminee = false;
+
+            while ($finCreneau <=$entity->getFin()){
+                $this->genererCreneaux($entity,$debutCreneau,$finCreneau,$em);
+
+                if($finCreneau >= $entity->getFin()){
+                    $creationTerminee = true;
+                }
+                $debutCreneau = clone $debutCreneau;
+                $debutCreneau->add(new \DateInterval('PT'.($duree).'S'));
+                $finCreneau = clone $debutCreneau;
+                $finCreneau->add(new \DateInterval('PT'.($duree + 1*$entity->getRecoupementCreneau()).'S'));
+
+            }
+
+            if(!$creationTerminee){
+                $this->genererCreneaux($entity,$debutCreneau,$entity->getFin(),$em);
+            }
+        }
+
+        $em->flush();
+    }
+
+    /**
+     * Définie la façon de générer des créneaux à partir d'une plage horaire unique.
+     * @param $plageHoraire PlageHoraire La plage horaire en question
+     * @param $debut \DateTime Le début du créneau
+     * @param $fin \DateTime La fin du créneau
+     * @param $em EntityManager L'entity manager pour les modifications
+     */
+    private function genererCreneaux($plageHoraire,$debut,$fin,$em){
+        foreach ($plageHoraire->getBesoinsOrga() as $besoinOrga){
+            if($besoinOrga->getOrgaHint() == NULL){
+                for ($i=0;$i<$besoinOrga->getNbOrgasNecessaires();$i++){
+                    $creneau = new Creneau();
+                    $creneau->setDebut($debut);
+                    $creneau->setFin($fin);
+                    $creneau->setPlageHoraire($plageHoraire);
+                    $creneau->setEquipeHint($besoinOrga->getEquipe());
+                    $em->persist($creneau);
+                }
+            }else{
+                $creneau = new Creneau();
+                $creneau->setDebut($debut);
+                $creneau->setFin($fin);
+                $creneau->setPlageHoraire($plageHoraire);
+                $creneau->setOrgaHint($besoinOrga->getOrgaHint());
+                $creneau->setEquipeHint($besoinOrga->getOrgaHint()->getEquipe());
+                $em->persist($creneau);
+            }
+
+        }
+        if($plageHoraire->getRespNecessaire()){
+            $creneau = new Creneau();
+            $creneau->setDebut($debut);
+            $creneau->setFin($fin);
+            $creneau->setPlageHoraire($plageHoraire);
+            $creneau->setOrgaHint($plageHoraire->getTache()->getResponsable());
+            $creneau->setEquipeHint($plageHoraire->getTache()->getGroupeTache()->getEquipe());
+            $em->persist($creneau);
+        }
+
     }
 
 }

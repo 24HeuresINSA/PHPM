@@ -360,7 +360,7 @@ class OrgaController extends Controller {
             $maxDateNaissance = $maxDateNaissance->format("Y-m-d H:i:s");
         }
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         // on peut avoir 2 usages assez différents, donc 2 fonctions dans le repo
         if ($creneau_id === '') {
@@ -382,7 +382,7 @@ class OrgaController extends Controller {
                 "confiance" => $equipe->getConfiance()->getId(),
                 "charisme" => $orga['charisme'],
                 "equipe" => $equipe->getId(),
-                "dateDeNaissance" => $orga[0]->getDateDeNaissance()->format('Y-m-d H:i:s'),
+                "dateDeNaissance" => ($orga[0]->getDateDeNaissance()!=null)?$orga[0]->getDateDeNaissance()->format('Y-m-d H:i:s'):'1900-1-1 0:0:0',
                 "departement" => $orga[0]->getDepartement(),
                 "statut" => $orga[0]->getStatut(),
                 "commentaire" => $orga[0]->getCommentaire()
