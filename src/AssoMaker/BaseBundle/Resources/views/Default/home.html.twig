@@ -229,9 +229,7 @@
                                         Imprimer mon planning »</a>
                                 </p>
                                 <p>
-                                    <a class="btn btn-large btn-block"
-                                       href="https://www.google.com/calendar/render?cid={{ url('orga_ical', {'orgaid':app.user.id }) }}"><i
-                                                class="icon-arrow-right"></i> Exporter mon planning vers Google Agenda »</a>
+                                    <a class="btn btn-large btn-block" href="{{ url('orga_ical', {'orgaid':app.user.id }) }}"><i class="icon-calendar"></i> Exporter mon planning en ICS »</a>
                                 </p>
                             {% endif %}
                         </div>
