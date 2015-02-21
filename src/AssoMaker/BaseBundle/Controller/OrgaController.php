@@ -401,10 +401,8 @@ class OrgaController extends Controller {
      * Print orga planning.
      *
      * @Route("/{orgaid}/print",  name="orga_print")
-     * @Template("AssoMakerBaseBundle:Orga:printPlanning.html.twig")
      */
     public function printAction($orgaid) {
-        $em = $this->getDoctrine()->getEntityManager();
         $config = $this->get('config.extension');
 
         if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN') && $user = $this->get('security.context')->getToken()->getUser()->getId() != $orgaid) {
@@ -414,13 +412,32 @@ class OrgaController extends Controller {
         $debut = new \DateTime();
         $fin = new \DateTime($config->getValue('phpm_planning_fin'));
 
-
         $em = $this->getDoctrine()->getEntityManager();
-        $orgas = $em->getRepository('AssoMakerBaseBundle:Orga')->getPlanning($orgaid, 'all', $debut, $fin);
+        $pdfGenerator = $this->get('spraed.pdf.generator');
+        try{
+
+            $orga = $em->getRepository('AssoMakerBaseBundle:Orga')->getPlanning($orgaid, 'all', $debut, $fin)[0];
 
 
-        return array('orgas' => $orgas, 'debut' => $debut, 'fin' => $fin
-        );
+            $html = $this->renderView('AssoMakerBaseBundle:Orga:printPlanning.html.twig',array('orga'=>$orga));
+
+            return new Response($pdfGenerator->generatePDF($html),
+                200,
+                array(
+                    'Content-Type' => 'application/pdf',
+                    'Content-Disposition' => 'inline; filename="out.pdf"'
+                )
+            );
+        } catch(\Exception $e){
+            return new Response($pdfGenerator->generatePDF("Erreur : ".$e->getMessage()),
+                200,
+                array(
+                    'Content-Type' => 'application/pdf',
+                    'Content-Disposition' => 'inline; filename="out.pdf"'
+                )
+            );
+        }
+
     }
 
     /**
