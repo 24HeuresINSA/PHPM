@@ -53,7 +53,7 @@
 }
 
 .tache{
-    background: #cccccc;
+    background: #e5e5e5;
 }
 
 .disclamer{
@@ -128,7 +128,7 @@ float:right;
     {% if tachesResp| length > 1 %}
         <div style="padding:0.2cm; width:15cm;margin:20px auto 0px auto;border: dotted 2px #000000">
             <img src="http://cdns2.freepik.com/free-photo/information_318-10929.jpg" width="50px" style="float: left;margin:0 0.2cm">
-            <div class="important"> Attention ! Tu es responsable d'au moins une tâche. Tu trouveras à la fin de ton planning la liste des tâche que tu dois cheffer.<br>
+            <div class="important"> Attention ! Tu es responsable d'au moins une tâche. Tu trouveras à la fin de ton planning la liste des tâches que tu dois cheffer.<br>
             Pour éviter que tu ne confondes avec ton planning, ces cases sont <b>grisées</b>.</div>
         </div>
     {% endif %}
@@ -182,7 +182,7 @@ float:right;
                 {% endif %}
                     {% if creneau.plageHoraire.tache.besoinsMateriel | length >0 %}
                         <div class="consignes">
-                            <b>Matériel Nécessaire&nbsp;:&nbsp;</b>
+                            <b>Matériel nécessaire&nbsp;:&nbsp;</b>
                             {% for bm in creneau.plageHoraire.tache.besoinsMateriel if bm.quantite > 0 %}
                                 {{ bm.materiel.nom }},
                             {% endfor %}
@@ -195,14 +195,14 @@ float:right;
         {% endfor %}
     {% if tachesResp| length > 1 %}
         <div class="taches" style="page-break-before: always">
-            <h1>Tes infos de resp de taches</h1>
+            <h1>Tes infos de resp de t&acirc;ches</h1>
             {% for tache in tachesResp %}
             <div id="tache-{{ tache.id }}" class="tache block">
                 <div class="block-title"><div class="left">#{{ tache.id }} - {{ tache.nom }}</div><div class="right"> {{ tache.lieu }} </div></div>
                 <div class="block-content"> {% set counter = 1 %}
                 <ul>
                     <li><b>Consignes : </b><div>{{ tache.consignes | raw }}</div></li>
-                    <li><b>Crenaux : </b>
+                    <li><b>Créneaux : </b>
                         <ul>
                             {% for creneau in tache.creneaux %}
                                 <li>{{ creneau.nom }} {{ creneau.prenom }} ({{ creneau.telephone }}) - {{ creneau.debut | format_datetime('EEEE') }} de {{ creneau.debut | format_datetime('HH:mm') }}&nbsp;à&nbsp;{%  if (creneau.debut | format_datetime('dd'))==(creneau.fin | format_datetime('dd')) %}{{ creneau.fin | format_datetime('HH:mm') }}
