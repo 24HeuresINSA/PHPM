@@ -125,7 +125,7 @@ float:right;
         <div style="width:300pt; margin: 10px auto; text-align: center;"><h1>{{ entitiesMacro.orga(orga) }}</h1></div>
     </div>
     <div class="" style="clear: both">
-    {% if tachesResp| length > 1 %}
+    {% if tachesResp| length >= 1 %}
         <div style="padding:0.2cm; width:15cm;margin:20px auto 0px auto;border: dotted 2px #000000">
             <img src="http://cdns2.freepik.com/free-photo/information_318-10929.jpg" width="50px" style="float: left;margin:0 0.2cm">
             <div class="important"> Attention ! Tu es responsable d'au moins une tâche. Tu trouveras à la fin de ton planning la liste des tâches que tu dois cheffer.<br>
@@ -193,7 +193,7 @@ float:right;
             {% set counter = counter + 1 %}
         {% endfor %}
         {% endfor %}
-    {% if tachesResp| length > 1 %}
+    {% if tachesResp| length >= 1 %}
         <div class="taches" style="page-break-before: always">
             <h1>Tes infos de resp de t&acirc;ches</h1>
             {% for tache in tachesResp %}
