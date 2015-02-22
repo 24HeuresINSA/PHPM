@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new AssoMaker\PassSecuBundle\AssoMakerPassSecuBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+            new Spraed\PDFGeneratorBundle\SpraedPDFGeneratorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
