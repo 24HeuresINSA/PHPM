@@ -13,6 +13,14 @@
         }
     }
 
+    @page :left{
+        margin:1.5cm 0.3in 1.5cm 0.3in;
+    }
+
+    @page :right{
+        margin:1.5cm 0.3in 1.5cm 0.3in;
+    }
+
     @page  {
         font-size: 11px;
         margin:1.5cm 0.3in;
@@ -43,9 +51,14 @@
     border: outset 1px #000000;
 }
 
+.tache{
+    background: #cccccc;
+}
+
 .disclamer{
-    margin-top: 50px;
+    margin-top: 5px;
     background: #d3d3d3;
+    clear: both;
 }
 
 .block-title{
@@ -85,6 +98,11 @@
      border-bottom:solid 1pt lightgray;
 }
 
+.taches h1{
+    text-align: center;
+    font-size: 40px;
+}
+
 .horaires{
 float:left;
 }
@@ -100,12 +118,19 @@ float:right;
 
 </style>
 <div class="row-fluid " >
-    <div style="margin-bottom:10px;">
-        <img src="https://raw.githubusercontent.com/BdEINSALyon/logos-bde/master/Gala_Noir.png" style="float: left;">
+    <div style="min-height:60px; margin-bottom:10px;">
+        <img src="https://raw.githubusercontent.com/BdEINSALyon/logos-bde/master/Gala_Noir.png" style="float: left;margin-bottom: 1cm">
         <img src="https://raw.githubusercontent.com/BdEINSALyon/logos-bde/master/Logo%20BdE%20noir.png" style="float: right; height:50px;">
         <div style="width:300pt; margin: 10px auto; text-align: center;"><h1>{{ entitiesMacro.orga(orga) }}</h1></div>
     </div>
     <div class="" style="clear: both">
+    {% if tachesResp| length > 1 %}
+        <div style="padding:0.2cm; width:15cm;margin:20px auto 0px auto;border: dotted 2px #000000">
+            <img src="http://cdns2.freepik.com/free-photo/information_318-10929.jpg" width="50px" style="float: left;margin:0 0.2cm">
+            <div class="important"> Attention ! Tu es responsable d'au moins une tâche. Tu trouveras à la fin de ton planning la liste des tâche que tu dois cheffer.<br>
+            Pour éviter que tu ne confondes avec ton planning, ces cases sont <b>grisées</b>.</div>
+        </div>
+    {% endif %}
         {% if phpm_planning_message != "" %}
         <div class="block block-content disclamer">
             {{ phpm_planning_message | raw }}
@@ -167,5 +192,31 @@ float:right;
             {% set counter = counter + 1 %}
         {% endfor %}
         {% endfor %}
+    {% if tachesResp| length > 1 %}
+        <div class="taches" style="page-break-before: always">
+            <h1>Tes infos de resp de taches</h1>
+            {% for tache in tachesResp %}
+            <div id="tache-{{ tache.id }}" class="tache block">
+                <div class="block-title"><div class="left">#{{ tache.id }} - {{ tache.nom }}</div><div class="right"> {{ tache.lieu }} </div></div>
+                <div class="block-content"> {% set counter = 1 %}
+                <ul>
+                    <li><b>Consignes : </b><div>{{ tache.consignes | raw }}</div></li>
+                    <li><b>Crenaux : </b>
+                        <ul>
+                            {% for creneau in tache.creneaux %}
+                                <li>{{ creneau.nom }} {{ creneau.prenom }} ({{ creneau.telephone }}) - {{ creneau.debut | format_datetime('EEEE') }} de {{ creneau.debut | format_datetime('HH:mm') }}&nbsp;à&nbsp;{%  if (creneau.debut | format_datetime('dd'))==(creneau.fin | format_datetime('dd')) %}{{ creneau.fin | format_datetime('HH:mm') }}
+                                    {% else %}
+                                        {{ creneau.fin | format_datetime('EEEE HH:mm') }}
+                                    {% endif %}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+                    </div>
+            </div>
+            {% endfor %}
+
+        </div>
+        {% endif %}
 </div>
 {% endblock %}

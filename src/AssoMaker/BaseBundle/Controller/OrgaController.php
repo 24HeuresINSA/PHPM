@@ -417,10 +417,25 @@ class OrgaController extends Controller {
         $pdfGenerator = $this->get('spraed.pdf.generator');
         try{
 
+            // On prend le planning de l'orga
             $orga = $em->getRepository('AssoMakerBaseBundle:Orga')->getPlanning($orgaid, 'all', $debut, $fin)[0];
 
+            // Si il est resp on cherche les infos de ses taches
+            $tachesResp = $em->createQueryBuilder()->select('t')->from('AssoMakerPHPMBundle:Tache','t')->where('t.responsable = ?1')->andWhere('t.statut>=2')->getQuery()->setParameter(1,$orgaid)->getArrayResult();
+            $max = count($tachesResp);
+            $request = "SELECT o0_.id AS oid, o0_.nom AS nom, o0_.prenom AS prenom, o0_.telephone AS telephone, c1_.debut AS debut, c1_.fin AS fin
+FROM Creneau c1_
+INNER JOIN Disponibilite d2_ ON ( d2_.id = c1_.disponibilite_id )
+INNER JOIN PlageHoraire p3_ ON ( c1_.plageHoraire_id = p3_.id )
+INNER JOIN Tache t4_ ON ( t4_.id = p3_.tache_id )
+INNER JOIN Orga o0_ ON ( o0_.id = d2_.orga_id )
+WHERE t4_.id = ?";
+            for($i = 0; $i < $max; $i++){
+                $result = $em->getConnection()->fetchAll($request,array('0'=>$tachesResp[$i]['id']));
+                $tachesResp[$i]["creneaux"]=$result;
+            }
 
-            $html = $this->renderView('AssoMakerBaseBundle:Orga:printPlanning.html.twig',array('orga'=>$orga));
+            $html = $this->renderView('AssoMakerBaseBundle:Orga:printPlanning.html.twig',array('orga'=>$orga,'tachesResp'=>$tachesResp));
 
             return new Response($pdfGenerator->generatePDF($html),
                 200,
