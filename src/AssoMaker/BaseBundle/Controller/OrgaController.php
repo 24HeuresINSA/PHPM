@@ -429,7 +429,7 @@ INNER JOIN Disponibilite d2_ ON ( d2_.id = c1_.disponibilite_id )
 INNER JOIN PlageHoraire p3_ ON ( c1_.plageHoraire_id = p3_.id )
 INNER JOIN Tache t4_ ON ( t4_.id = p3_.tache_id )
 INNER JOIN Orga o0_ ON ( o0_.id = d2_.orga_id )
-WHERE t4_.id = ?";
+WHERE t4_.id = ? ORDER BY debut";
             for($i = 0; $i < $max; $i++){
                 $result = $em->getConnection()->fetchAll($request,array('0'=>$tachesResp[$i]['id']));
                 $tachesResp[$i]["creneaux"]=$result;
@@ -490,7 +490,7 @@ INNER JOIN Disponibilite d2_ ON ( d2_.id = c1_.disponibilite_id )
 INNER JOIN PlageHoraire p3_ ON ( c1_.plageHoraire_id = p3_.id )
 INNER JOIN Tache t4_ ON ( t4_.id = p3_.tache_id )
 INNER JOIN Orga o0_ ON ( o0_.id = d2_.orga_id )
-WHERE t4_.id = ?";
+WHERE t4_.id = ? ORDER BY debut";
             for($i = 0; $i < $max; $i++){
                 $result = $em->getConnection()->fetchAll($request,array('0'=>$taches[$i]['id']));
                 $taches[$i]["creneaux"]=$result;
