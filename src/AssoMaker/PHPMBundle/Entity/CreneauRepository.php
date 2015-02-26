@@ -5,7 +5,7 @@ namespace AssoMaker\PHPMBundle\Entity;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
-use Proxies\__CG__\AssoMaker\PHPMBundle\Entity\PlageHoraire;
+//use Proxies\__CG__\AssoMaker\PHPMBundle\Entity\PlageHoraire;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\Constraints\DateTime;
 
