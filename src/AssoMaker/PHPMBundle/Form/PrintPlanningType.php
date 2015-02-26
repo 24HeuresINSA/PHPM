@@ -32,7 +32,7 @@ class PrintPlanningType extends AbstractType
     					'widget' => 'single_text',
     					'label'=>'Fin',
     					'attr'=>array('class'=>'datep')))
-    	->add('orga', 'entity', array('label'=>'Orga',  'required'=> false,
+    	->add('orga', 'entity', array('label'=>'Orga',  'required'=> false, 'property' => 'fullName',
     							'class' => 'AssoMakerBaseBundle:Orga'    			))
     	->add('equipe', 'entity', array('label'=>'Équipe',  'required'=> false,
     									'class' => 'AssoMakerBaseBundle:Equipe'    			))				

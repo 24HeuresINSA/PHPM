@@ -73,7 +73,7 @@
 {% macro tacheCom(tache) %}
 {% if tache.commentaires.count >0 %}
 <span class="lcom"><span class="com_auteur">
-    {{tache.commentaires.last.auteur}}
+    {{ tache.commentaires.last.auteur.prenom }} {{ tache.commentaires.last.auteur.nom }} 
 </span>
 <span class="com_heure"> 
     {{ tache.commentaires.last.heure|format_datetime('EEEE dd MMM HH:mm') }} : </span>

@@ -40,7 +40,7 @@
 				    {% for entity in taches %}
                                 <tr>
                                     <td>{{ entitiesMacro.tache(entity) }}</td>
-                                    <td>{{ entity.responsable }}</td>
+                                    <td>{{ entitiesMacro.orga(entity.responsable) }}</td>
                                 </tr>
 				    {% endfor %}
                             </tbody>

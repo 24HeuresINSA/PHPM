@@ -1398,4 +1398,12 @@ class Orga extends BaseUser implements UserInterface {
 
         $this->setRoles($roles);
     }
+
+    public function getFullName()
+    {
+        $string = $this->getPrenom() . " " . $this->getNom();
+        if ($this->getSurnom())
+            $string .= " (" . $this->getSurnom() . ")";
+        return $string;
+    }
 }

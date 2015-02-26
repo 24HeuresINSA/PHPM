@@ -861,7 +861,7 @@ class Animation {
 
     public function addCommentaire(Orga $auteur, $texte, $type = 0) {
 
-        $this->commentaires[] = array('auteur' => $auteur->__toString(),
+        $this->commentaires[] = array('auteur' => $auteur->getFullName(),
             'type' => $type,
             'texte' => $texte,
             'date' => (new \DateTime()));

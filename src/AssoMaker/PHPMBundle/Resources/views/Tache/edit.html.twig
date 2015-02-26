@@ -152,7 +152,7 @@ height:40em;
 				                	{% if bo.orgaHint is null %}
 				                		({{ bo.equipe }} : {{ bo.nbOrgasNecessaires }})
 				                	{% else %}
-				                		<strong>({{ bo.orgaHint }})</strong>
+				                		<strong>({{ entitiesMacro.orga(bo.orgaHint) }})</strong>
 				                	{% endif %}
 				                {% endfor %}
 			                </td>
@@ -205,7 +205,7 @@ height:40em;
 				          		{% endif %}
 					            <div class="com">
 					                <div class="com_infos">{{loop.index}}/{{loop.length}}
-					                    <span class="com_auteur">{{com.auteur}}</span>
+					                    <span class="com_auteur">{{ entitiesMacro.orga(com.auteur) }}</span>
 					                    <span class="com_heure"> {{ com.heure|format_datetime('EEEE dd MMM HH:mm') }}</span>
 					                </div>
 					                <div class="com_texte">{{  entitiesMacro.iconCom(com) }} {{com.texte}} {{  entitiesMacro.supTextCom(com) }}</div>
@@ -215,7 +215,7 @@ height:40em;
 	                	{% for com in entity.commentaires %}
 				           <div class="com">
 				                <div class="com_infos">{{loop.index}}/{{loop.length}}
-				                    <span class="com_auteur">{{com.auteur}}</span>
+				                    <span class="com_auteur">{{ entitiesMacro.orga(com.auteur) }}</span>
 				                    <span class="com_heure"> {{ com.heure|format_datetime('EEEE dd MMM HH:mm') }}</span>
 				                </div>
 				                <div class="com_texte">{{  entitiesMacro.iconCom(com) }} {{com.texte}} {{  entitiesMacro.supTextCom(com) }}

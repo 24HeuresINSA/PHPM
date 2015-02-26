@@ -21,7 +21,9 @@ class GroupeTacheType extends AbstractType {
 
         $builder
                 ->add('nom')
-                ->add('responsable')
+                ->add('responsable', 'entity', array(
+                    'property' => 'fullName',
+                    'class' => 'AssoMakerBaseBundle:Orga'))
                 ->add('equipe')
                 ->add('animLiee', 'entity', array('class' => 'AssoMakerAnimBundle:Animation', 'required' => false, 'label' => 'Animation Liée',
                     'query_builder' => function(AnimationRepository $ar) {

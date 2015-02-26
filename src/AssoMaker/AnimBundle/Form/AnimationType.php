@@ -34,12 +34,14 @@ class AnimationType extends AbstractType {
                     'label' => 'Responsable',
                     'class' => 'AssoMakerBaseBundle:Orga',
                     'disabled' => $this->disabled['h'],
+                    'property' => 'fullName',
                     'query_builder' => function(OrgaRepository $or)use($minConfianceResp) {
                         return $or->findAllWithConfianceValueMin($minConfianceResp);
                     }))
                 ->add('orgaManif', 'entity', array(
                     'label' => 'Orga sur la manif',
                     'class' => 'AssoMakerBaseBundle:Orga',
+                    'property' => 'fullName',
                     'query_builder' => function(OrgaRepository $or)use($minConfianceResp) {
                         return $or->findAllWithConfianceValueMin($minConfianceResp);
                     }, 'disabled' => $this->disabled['h']))

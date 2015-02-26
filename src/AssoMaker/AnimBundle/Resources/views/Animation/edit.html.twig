@@ -457,7 +457,7 @@
                             {% for c in entity.commentaires%}
                                                                                                                                 <div class="com">
                                                                                                                                     <div class="com_infos">{{loop.index}}/{{loop.length}}
-                                                                                                                                        <span class="com_auteur">{{c.auteur}}</span>
+                                                                                                                                        <span class="com_auteur">{{ c.auteur }}</span>
                                                                                                                                         <span class="com_heure"> {{ c.date|format_datetime('EEEE dd MMM HH:mm') }}</span>
                                                                                                                                     </div>
                                                                                                                                     <span class="com_texte">{{  entitiesMacro.iconCom(c) }} {{c.texte}} {{  entitiesMacro.supTextCom(c) }}</span>

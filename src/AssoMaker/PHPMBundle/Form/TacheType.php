@@ -43,6 +43,7 @@ class TacheType extends AbstractType
 		->add('consignes')
 		->add('permisNecessaire', 'choice', array('label' => 'Permis Nécessaire', 'choices' => $libellesPermis))
 		->add('responsable','entity',array(
+				'property' => 'fullName',
 				'class' => 'AssoMakerBaseBundle:Orga',
 				'query_builder' => function(OrgaRepository $or)use($minConfianceResp){return $or->findAllWithConfianceValueMin($minConfianceResp);}))
 		->add('materielSupplementaire');

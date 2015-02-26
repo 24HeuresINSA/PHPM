@@ -22,6 +22,7 @@ class BesoinOrgaType extends AbstractType {
 
         $builder
                 ->add('orgaHint', 'entity', array('label' => 'Orga précis nécessaire', 'empty_value' => 'N\'importe qui', 'required' => false,
+                    'property' => 'fullName',
                     'class' => 'AssoMakerBaseBundle:Orga',
                     'query_builder' => function(OrgaRepository $or)use($minConfianceOrgaHint) {
                         return $or->findAllWithConfianceValueMin($minConfianceOrgaHint);
