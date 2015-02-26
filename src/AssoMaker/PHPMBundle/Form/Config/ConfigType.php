@@ -5,6 +5,7 @@ namespace AssoMaker\PHPMBundle\Form\Config;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use AssoMaker\PHPMBundle\Form\EventListener\ConfigFormSubscriber;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ConfigType extends AbstractType
 {
@@ -19,14 +20,14 @@ class ConfigType extends AbstractType
     	
         
     }
-    
-    public function getDefaultOptions(array $options)
+
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
-                'data_class' => 'AssoMaker\PHPMBundle\Entity\Config',
-        );
+        $resolver->setDefaults(array(
+            'data_class' => 'AssoMaker\PHPMBundle\Entity\Config',
+        ));
     }
-    
 
     public function getName()
     {

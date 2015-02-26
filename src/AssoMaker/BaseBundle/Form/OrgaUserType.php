@@ -101,7 +101,7 @@ class OrgaUserType extends AbstractType {
                     ->add('equipe', 'entity', array('label' => 'Équipe', 'class' => 'AssoMakerBaseBundle:Equipe'))
             ;
         }
-        if ($this->securityContext->isGranted('ROLE_BUREAU')) {
+        if ($this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
             $builder->add('membreBureau', null, array('label' => 'Membre du Bureau', 'required' => false));
             $builder->add('privileges', 'choice', array('choices' => Orga::$privilegesTypes));
         }

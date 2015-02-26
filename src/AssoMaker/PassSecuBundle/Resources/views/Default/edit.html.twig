@@ -65,7 +65,6 @@ function Ctrl($scope){
                     {% if is_granted('ROLE_USER') %} 
                     <ol>
                         <li>Préremplissez cette demande en renseignant toutes les infos que vous connaissez.</li>
-                        <li>Si l'entité (boîte, asso, etc) est susceptible de faire une demande pour plusieures personnes, envoyez-lui <a style="font-weight: bolder;" href="{{ path('pass_pass_edit',{"id":entity.id,"code":entity.accessCode}) }}">ce lien</a> en lui demandant de renseigner les différentes personnes qui auront besoin d'un pass.</li>
                         <li>La personne va remplir ses infos et cliquer sur envoyer. Quand l'équipe sécurité aura validé le pass, la personne indiqué dans contact recevra un mail avec les instructions pour télécharger ses pass.</li>
                     </ol>
                     {% else %}   

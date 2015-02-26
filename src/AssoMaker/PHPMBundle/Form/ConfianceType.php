@@ -4,6 +4,7 @@ namespace AssoMaker\PHPMBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ConfianceType extends AbstractType
 {
@@ -17,12 +18,12 @@ class ConfianceType extends AbstractType
             ->add('code')
         ;
     }
-    
-    public function getDefaultOptions(array $options)
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
-                'data_class' => 'AssoMaker\BaseBundle\Entity\Confiance',
-        );
+        $resolver->setDefaults(array(
+            'data_class' => 'AssoMaker\BaseBundle\Entity\Confiance',
+        ));
     }
 
     public function getName()

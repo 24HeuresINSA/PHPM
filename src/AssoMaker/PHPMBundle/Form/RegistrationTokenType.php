@@ -4,6 +4,7 @@ namespace AssoMaker\PHPMBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class RegistrationTokenType extends AbstractType {
 
@@ -15,10 +16,11 @@ class RegistrationTokenType extends AbstractType {
         ;
     }
 
-    public function getDefaultOptions(array $options) {
-        return array(
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
             'data_class' => 'AssoMaker\BaseBundle\Entity\Equipe',
-        );
+        ));
     }
 
     public function getName() {

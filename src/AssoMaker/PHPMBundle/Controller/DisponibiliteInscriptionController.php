@@ -317,13 +317,30 @@ class DisponibiliteInscriptionController extends Controller
             throw $this->createNotFoundException('Unable to find DisponibiliteInscription entity.');
         }
 
+        $limitesOrigine = $entity->getLimitesInscriptions();
+
         $editForm   = $this->createForm(new DisponibiliteInscriptionType(), $entity);
 
         $request = $this->getRequest();
 
         $editForm->handleRequest($request);
+        $data = $editForm->getData();
 
         if ($editForm->isValid()) {
+
+            $limitesNouvelles=$data->getLimitesInscriptions();
+
+            if($limitesOrigine!=null&&$limitesNouvelles!=null) {
+                foreach ($limitesOrigine as $ob) {
+                    if (!$limitesNouvelles->contains($ob)) {
+                        $em->remove($ob);
+                    }
+                }
+                foreach ($limitesNouvelles as $limite) {
+                    $limite->setDisponibiliteInscription($entity);
+                }
+            }
+
             $em->persist($entity);
             $em->flush();
 

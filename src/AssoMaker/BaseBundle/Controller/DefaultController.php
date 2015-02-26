@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use AssoMaker\PHPMBundle\Entity\Config;
 use AssoMaker\BaseBundle\Entity\Orga as BaseUser;
 use AssoMaker\PHPMBundle\Form\PrintPlanningType;
@@ -30,8 +31,8 @@ class DefaultController extends Controller
 
     /**
      * @Route("/home", name="base_accueil")
-     * @Route("/home")
      * @Template()
+     * @Secure("ROLE_ORGA")
      */
     public function homeAction()
     {
@@ -90,45 +91,10 @@ class DefaultController extends Controller
     }
 
     /**
-     * Link login
-     *
-     * @Route("/autologin/{id}/{loginkey}",requirements={"loginkey" = ".+"}, name="autologin")
-     *
-     */
-    public function autologinAction($id, $loginkey)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-        $config = $this->get('config.extension');
-
-        $user = $em->getRepository('AssoMakerBaseBundle:Orga')->findOneById($id);
-        $secretSalt = $config->getValue('phpm_secret_salt');
-
-
-        if ((!$user) || ($loginkey != urlencode(md5($secretSalt . $id, 'slt')))) {
-
-            return $this->redirect($config->getValue('phpm_orgasoft_inscription_returnURL'));
-        }
-
-        $this->get('security.context')->setToken($user->generateUserToken());
-
-        return $this->redirect($this->generateUrl('base_accueil'));
-    }
-
-    public function adminLogin()
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-        $config = $this->get('config.extension');
-        $orgas = $em->getRepository('AssoMakerBaseBundle:Orga')->findAll();
-        $admin = $orgas[0];
-        $this->get('security.context')->setToken($admin->generateUserToken());
-        return $this->redirect($this->generateUrl('base_accueil'));
-    }
-
-    /**
      * Login
      *
      * @Route("/login/token/{token}", defaults={"token":""}, name="login_token")
-     *
+     * @Template()
      */
     public function loginTokenAction(Request $request, $token) {
         $session = $request->getSession();
@@ -139,7 +105,7 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('base_publichome'));
         } else {
             $session->set('token_id', $token->getId());
-            return $this->redirect($this->generateUrl('register'));
+            //return $this->redirect($this->generateUrl('hwi_oauth_service_redirect',array('service'=>'google')));
         }
     }
 
@@ -153,35 +119,16 @@ class DefaultController extends Controller
      *
      */
     public function loginAction(Request $request) {
-        $request = $this->container->get('request');
-        /* @var $request \Symfony\Component\HttpFoundation\Request */
-        $session = $request->getSession();
-        /* @var $session \Symfony\Component\HttpFoundation\Session\Session */
+        return $this->redirect($this->generateUrl('base_publichome'));
+    }
 
-        // get the error if any (works with forward and redirect -- see below)
-        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
-        } elseif (null !== $session && $session->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
-            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
-        } else {
-            $error = '';
-        }
+    /**
+     *
+     * @Route("/preRegistration", name="preregistration")
+     * @Template()
+     */
+    public function preRegisterAction(){
 
-        if ($error) {
-            // TODO: this is a potential security risk (see http://trac.symfony-project.org/ticket/9523)
-            $error = $error->getMessage();
-        }
-        // last username entered by the user
-        $lastUsername = (null === $session) ? '' : $session->get(SecurityContext::LAST_USERNAME);
-
-        $csrfToken = $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate');
-
-        return array(
-            'last_username' => $lastUsername,
-            'error'         => $error,
-            'csrf_token' => $csrfToken,
-        );
     }
 
     /**

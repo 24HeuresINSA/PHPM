@@ -3,6 +3,7 @@
 namespace AssoMaker\PHPMBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class MaterielType extends AbstractType
 {
@@ -13,9 +14,11 @@ class MaterielType extends AbstractType
                 ->add('type', 'choice', array('label' => ' ', 'choices' => array('0' => 'Indénombrable', '1' => 'Dénombrable')));
     }
 
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array('data_class' => 'AssoMaker\PHPMBundle\Entity\Materiel');
+        $resolver->setDefaults(array(
+            'data_class' => 'AssoMaker\PHPMBundle\Entity\Materiel',
+        ));
     }
 
     public function getName()

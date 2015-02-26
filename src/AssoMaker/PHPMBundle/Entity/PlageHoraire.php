@@ -275,7 +275,7 @@ class PlageHoraire {
     }
 
     /**
-     * Get creneaux
+     * Get creneauxcascade={"persist"}
      *
      * @return Doctrine\Common\Collections\Collection
      */

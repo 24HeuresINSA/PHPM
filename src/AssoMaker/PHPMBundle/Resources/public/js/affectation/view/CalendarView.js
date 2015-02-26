@@ -284,7 +284,7 @@ CalendarView.prototype = {
 	},
 	// handler de clic, directement ici pour simplifier
 	clickCreneauMaker: function(idTache) {
-		var _popup = window.open(pmAffectation.urls.creneauMaker+'/'+idTache, '');
+		var _popup = window.open(pmAffectation.urls.creneauMaker.replace('_ID_',idTache), '');
 				
 		// à la fermeture, refresh la liste des créneaux
 		// unload est firé au chargement (unload de about:blank),

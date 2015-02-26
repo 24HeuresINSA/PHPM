@@ -7,24 +7,23 @@
 {% endblock %}
 
 {% block content %}
-{% if (app.request.get('new')==true) %}
-<script>
-    function unloadMess() {
-        mess = "Attention, tes changements n'ont pas été enregistrés";
-        return mess;
-    }
-    function setBunload(on) {
-        window.onbeforeunload = (on) ? unloadMess : null;
-    }
-    setBunload(true);
-    </script>
-{% endif %}
     <script>
+        function unloadMess() {
+            mess = "Attention, tes changements n'ont pas été enregistrés";
+            return mess;
+        }
+        function setBunload(on) {
+            window.onbeforeunload = (on) ? unloadMess : null;
+        }
+        setBunload(true);
+    </script>
+    <script>
+
         function Ctrl($scope) {
 
             $scope.messageCharisme = function() {
                 messages = {{ messagesCharisme |raw }};
-                        for (var key in messages) {
+                for (var key in messages) {
                     if ($scope.charisme() >= key) {
                         message = messages[key];
                     }
@@ -66,10 +65,11 @@
             $scope.dispos = new Array();
             $scope.points = new Array();
     {% for categorie,di_jour in entities%}
-    {% for jour,d in di_jour %}
-    {% for e in d %}
+            {% for jour,d in di_jour %}
+            {% for e in d %}
             $scope.dispos[{{ e.id }}] = {% if e in orga.disponibilitesInscription %}true{% else %}false{% endif %};
-                    $scope.points[{{ e.id }}] = {{ e.pointsCharisme }};    {% endfor %}
+                    $scope.points[{{ e.id }}] = {{ e.pointsCharisme }};
+            {% endfor %}
     {% endfor %}
     {% endfor %}
 
@@ -79,7 +79,7 @@
         </script>
 
 
-        <form ng-app ng-controller="Ctrl" {% if (app.request.get('new')==true) %}onsubmit="javascript:setBunload(false);"{% endif %} action="{{ path('orga_inputdispos',{'id':orga.id }) }}" method="post" {{ form_enctype(form) }}>
+        <form ng-app ng-controller="Ctrl" onsubmit="javascript:setBunload(false);" action="{{ path('register_oauth') }}" method="post" {{ form_enctype(form) }}>
             <div class="row-fluid">
                 <div class="well">
 	         	{% if is_granted('ROLE_HUMAIN') %}
@@ -118,7 +118,7 @@
                             <h4>{{ jour }}</h4>
 							{% for e in d %}<div>
                                 <label class="checkbox {% if e.statut == 1 %}statut1{% endif %}">
-					    			{{ e.debut |format_datetime('HH:mm')}} <i class="fa fa-arrow-right"></i> {{ e.fin |format_datetime('HH:mm')}} <span class="badge badge-info">{{ e.pointsCharisme }}</span>
+					    			{{ e.debut |format_datetime('HH:mm')}} <i class="icon-arrow-right"></i> {{ e.fin |format_datetime('HH:mm')}} <span class="badge badge-info">{{ e.pointsCharisme }}</span>
                                         <input class="shiftkeybox"type="checkbox" name="phpm_bundle_inputdispostype[disponibiliteInscriptionItems][{{ e.id }}]"
                                                id="phpm_bundle_inputdispostype_disponibiliteInscriptionItems_{{ e.id }}" value="{{ e.id }}"
 					    			{% if e in orga.disponibilitesInscription %}checked="checked"{% endif %}
@@ -147,8 +147,6 @@
 
 {{ form_widget(form._token) }}
                 </form>
-
-
 
 {% endblock %}
 

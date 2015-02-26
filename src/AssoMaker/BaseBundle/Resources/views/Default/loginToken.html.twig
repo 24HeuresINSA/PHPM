@@ -1,0 +1,41 @@
+{% extends "AssoMakerBaseBundle::layout.html.twig"  %}
+
+{% block content %}
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="page-header">
+                <h1>Bienvenue aux 24 heures de l'INSA <small>Inscription</small></h1>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span3"></div>
+        <div class="span6">
+             {% for flashMessage in app.session.flashbag.get('error') %}
+                <div class="alert alert-error">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="alert alert-warning">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+            <div id="welcome" style="text-align: justify; font-size: large">
+                <p>Tu viens t'inscrire comme orga pour les 24 heures de l'INSA ? Tu as bien raison, il y a ici une ambiance de folie, organiser le plus grand festival étudiant de France est très excitant !</p>
+                <p>Ce site va te permettre de t'inscrire et de donner tes disponibilités sur l'événement. Pour te connecter, utilise un compte Google (il t'en faut forcément un) :</p>
+            </div>
+            <div id="logins" style="width: 100%">
+                <a
+                        class="btn btn-large btn-primary"
+                        href="{{ hwi_oauth_login_url('google') }}">Inscription avec Google</a>
+            </div>
+            <div class="well well-small" style="margin-top:50px">
+                En cas de problème, contacte le responsable :
+                <a href="mailto:{{ admin_email }}">{{ admin_email }}</a><br/>
+                Clef : {{ token }}
+            </div>
+        </div>
+        <div class="span3"></div>
+    </div>
+{% endblock %}
