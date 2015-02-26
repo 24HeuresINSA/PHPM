@@ -4,11 +4,84 @@
 
 {% block content %}
 <form action="{{ path('disponibiliteinscription_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
+    <div class="row">
+    <div class="span6">
+        {{ form_row(edit_form.debut) }}
+        {{ form_row(edit_form.fin) }}
+        {{ form_row(edit_form.statut) }}
+        {{ form_row(edit_form.mission) }}
+        {{ form_row(edit_form.pointsCharisme) }}
+    </div>
+    <div class="span6">
+        <fieldset>
+            <legend>Besoins en Orgas</legend>
+            <em>Pour chaque niveau de confiance, un nombre maximum d'orga pourront d'inscrire sur le créneau</em>
+            <br /><br />
+            {{ form_errors(edit_form.limitesInscriptions) }}
+            <div id="assomaker_phpm_bundle_plagehorairetype_besoinsorga" data-prototype="{{ form_widget(edit_form.limitesInscriptions.vars.prototype, { 'attr': {'class': 'well'} }) | e }}">
+                {{ form_widget(edit_form.limitesInscriptions.vars.prototype, { 'attr': {'class': 'well'} }) | e }}
+                {% for bo in edit_form.limitesInscriptions %}
+                    <div class="well">
+                        Limiter les confiances : {{ form_widget(bo.confiance) }} à {{ form_widget(bo.max) }}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="btn-group" style="padding-left: 150px;">
+                <a class="btn btn-success" id="addBOButton" href="#"><i class="icon-plus"></i></a>
+                <a class="btn btn-danger"  id="rmBOButton" href="#"><i class="icon-minus"></i></a>
+            </div>
+        </fieldset>
+    </div>
+        </div>
     <p>
-        <button type="submit">Valider</button>
+        <button type="submit" class="btn">Valider</button>
     </p>
+    {{ form_rest(edit_form) }}
 </form>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#infosCreneaux").toggle($('#assomaker_phpm_bundle_plagehorairetype_creneauUnique:checked').val() ==undefined);
+        });
+
+        $('#assomaker_phpm_bundle_plagehorairetype_creneauUnique').click(function() {
+            $("#infosCreneaux").toggle();
+        });
+
+        function addTagForm() {
+            var collectionHolder = $('#assomaker_phpm_bundle_plagehorairetype_besoinsorga');
+
+            // Get the data-prototype we explained earlier
+            var prototype = collectionHolder.attr('data-prototype');
+
+            // Replace '$$name$$' in the prototype's HTML to
+            // instead be a number based on the current collection's length.
+            form = prototype.replace(/\_\_name\_\_/g, collectionHolder.children().length);
+
+            // Display the form in the page
+            collectionHolder.append(form);
+
+            // On a pas à gérer la DateTimePicker, ui.js s'en occupe
+        }
+
+        function rmTagForm() {
+            var last = $('#assomaker_phpm_bundle_plagehorairetype_besoinsorga > :last-child');
+
+            last.remove();
+        }
+
+        $('#addBOButton').click(function(event){
+            addTagForm();
+        });
+        $('#rmBOButton').click(function(event){
+            rmTagForm();
+        });
+
+        function dureer(value) {
+            champ = $('#phpm_bundle_plagehorairetype_recoupementCreneau');
+
+            champ.val(value);
+        }
+    </script>
 {% endblock %}
 
 

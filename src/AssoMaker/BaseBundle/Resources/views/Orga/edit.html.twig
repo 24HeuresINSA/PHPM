@@ -80,8 +80,6 @@
                                 {% endif %}
 
 					              {{ form_row(form.statut) }}
-
-
                             </fieldset>
                         </div>
                     </div>
@@ -101,8 +99,7 @@
 				{% if entity.groupePC%}
                             <a class="btn" target="_blank" href="http://cipcnet.insa-lyon.fr/scol/php/apprec_groupe?id_annee={{phpm_anneetrombi}}&id_groupe={{ entity.groupePC |url_encode }}"><i class="fa fa-search"></i> Afficher le trombi du groupe</a>
 				{% endif %}
-                            <a class="btn" href="{{ path('autologin', { 'id': entity.id, 'loginkey': (entity.id)|phpm_crypt }) }}">Se connecter en tant que cet orga.</a>
-			{% endif %}
+            {% endif %}
 
                         </div>
                     </div>

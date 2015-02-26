@@ -12,6 +12,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class DisponibiliteInscriptionRepository extends EntityRepository
 {
+
+    public function countRegistredOrgaOnDIWithConfiance($entity,$confiance){
+    }
     
     public function findAllWithOrgacount($config)
     {

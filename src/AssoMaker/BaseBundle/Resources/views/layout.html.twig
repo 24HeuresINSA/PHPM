@@ -28,8 +28,7 @@
 				    {% endblock %}
 			    </style>
 				<link rel="stylesheet" href="{{ asset('vendor/twitter/bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" />
-				<style type="text/css"> [class^="icon-"], [class*=" icon-"] {background-image:none;} </style>
-                <link rel="stylesheet" href="{{ asset('vendor/fortawesome/font-awesome/css/font-awesome.min.css') }}" type="text/css" />
+				<link rel="stylesheet" href="{{ asset('vendor/fortawesome/font-awesome/css/font-awesome.min.css') }}" type="text/css" />
                 
         	{# Rewritten CSS #}
         	
@@ -101,8 +100,9 @@
         {% endblock %}
     </head>
     <body>
-    {% block body %}
+
     {% include 'AssoMakerBaseBundle::navbar.html.twig' with {}  %}
+    {% block body %}
 
     
 	        

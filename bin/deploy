@@ -1,6 +1,6 @@
 #!/bin/sh
-set -e
-composer.phar update
+#set -e
+#composer.phar update
 #cd vendor/twitter/bootstrap/
 #make bootstrap
 #cd ../../../
@@ -13,7 +13,7 @@ cp -r vendor/fortawesome/font-awesome/ web/lib/
 cp -r vendor/angular/angularJS web/lib/
 cp -r vendor/sanisoft/shiftcheckbox/jquery.shiftcheckbox.js web/lib/
 app/console assets:install web --symlink
-app/console cache:clear --env=prod
-app/console assetic:dump --env=prod
+app/console cache:clear --env=dev
+app/console assetic:dump --env=dev
 echo "\nSucessfully deployed PHPlanningMaker"
 

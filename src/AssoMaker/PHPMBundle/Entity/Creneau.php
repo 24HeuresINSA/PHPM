@@ -132,7 +132,7 @@ class Creneau
     /**
      * Set disponibilite
      *
-     * @param AssoMaker\PHPMBundle\Entity\Disponibilite $disponibilite
+     * @param \AssoMaker\PHPMBundle\Entity\Disponibilite $disponibilite
      */
     public function setDisponibilite(\AssoMaker\PHPMBundle\Entity\Disponibilite $disponibilite = null)
     {
@@ -142,7 +142,7 @@ class Creneau
     /**
      * Get disponibilite
      *
-     * @return AssoMaker\PHPMBundle\Entity\Disponibilite 
+     * @return \AssoMaker\PHPMBundle\Entity\Disponibilite
      */
     public function getDisponibilite()
     {

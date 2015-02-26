@@ -1,9 +1,11 @@
 {% macro navBarItem(nom,route,params) %}
 
     {% if params !="" %}
-<li{% if route == app.request.attributes.get('_route') %} class="active" {% endif %}><a href="{{ path(route,params) }}">{{ nom| raw }}</a></li>
+        <li{% if route == app.request.attributes.get('_route') %} class="active" {% endif %}><a
+                    href="{{ path(route,params) }}">{{ nom| raw }}</a></li>
     {% else %}
-    <li{% if route == app.request.attributes.get('_route') %} class="active" {% endif %}><a href="{{ path(route) }}">{{ nom | raw}}</a></li>
+        <li{% if route == app.request.attributes.get('_route') %} class="active" {% endif %}><a
+                    href="{{ path(route) }}">{{ nom | raw }}</a></li>
     {% endif %}
 
 {% endmacro %}
@@ -27,7 +29,8 @@
             {% if anim_actif ==1 and is_granted("ROLE_HARD") %}
                 {% if is_granted("ROLE_SECU") and pass_actif %}
                                 <li class="dropdown" id="menu_topnav_anim">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="">Animations <b class="caret"></b></a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="">Animations <b
+                                                class="caret"></b></a>
                                     <ul class="dropdown-menu">
                            {{ _self.navBarItem('Liste','anim_animation_index') }}
                            {{ _self.navBarItem('Pass Sécurité','pass_pass_index') }}
@@ -42,7 +45,7 @@
                                     <li class="dropdown" id="menu_topnav_orgas">
                                         <a class="dropdown-toggle" data-toggle="dropdown" href="">Orgas <b class="caret"></b></a>
                                         <ul class="dropdown-menu">
-                                            {% if is_granted('ROLE_USER') and (phpm_actif ==1) %}
+                                            {% if is_granted('ROLE_HARD') and (phpm_actif ==1) %}
                                             {{ _self.navBarItem('Liste','orga') }}
                                             {% endif %}
 
@@ -130,3 +133,5 @@
                  </div>
             </div>
         </div>
+    </div>
+</div>

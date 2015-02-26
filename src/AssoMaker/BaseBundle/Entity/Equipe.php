@@ -30,11 +30,9 @@ class Equipe
      */
     protected $nom;
     
-
-    
     /**
-     * @ORM\ManyToOne(targetEntity="Orga", inversedBy="equipesResponsable",cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id",onDelete="SET NULL", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Orga", inversedBy="equipesResponsable")
+     * @ORM\JoinColumn(name="responsable_id", referencedColumnName="id", nullable=true)
      * @Assert\Valid
      */
     protected $responsable;

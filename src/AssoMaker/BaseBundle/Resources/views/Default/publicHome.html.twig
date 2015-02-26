@@ -3,7 +3,6 @@
 {% block content %}
     <div class="row-fluid">
         <div class="span12">
-            <h1>Bienvenue sur PlanningMaker</h1>
             {% for flashMessage in app.session.flashbag.get('error') %}
                 <div class="alert alert-error">
                     {{ flashMessage }}
@@ -18,11 +17,9 @@
             <div class="hero-unit">
                 {{ phpm_contenu_page_principale |raw}}
                 <a class="btn btn-primary btn-large" href="{{ hwi_oauth_login_url('google') }}">Connexion rapide avec Google</a>
-                <a class="btn btn-large" href="{{ path('login') }}">Autres méthodes »</a>
-                
             </div>
 
-            <p>Sinon, pour tout problème ou pour t'inscrire, contacte le responsable : <a href="mailto:{{ admin_email }}">{{ admin_email }}</a></p>
+            <p>Pour tout problème ou pour t'inscrire, contacte le responsable : <a href="mailto:{{ admin_email }}">{{ admin_email }}</a></p>
 
         </div>
 
