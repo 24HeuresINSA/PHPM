@@ -56,7 +56,7 @@ security:
              - { path: ^/sponso/.*, roles: ROLE_HARD}
              - { path: ^/analyse/.*, roles: ROLE_ADMIN}
              - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-             - { path: ^/pass/.*, roles: ROLE_SECU }
+             - { path: ^/pass/.*, roles: ROLE_HARD }
              - { path: ^/comptesPerso/virement, roles: ROLE_HARD }
              - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/.*json, roles: IS_AUTHENTICATED_ANONYMOUSLY }

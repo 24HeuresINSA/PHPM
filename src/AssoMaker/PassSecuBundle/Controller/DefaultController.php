@@ -9,11 +9,12 @@ use AssoMaker\PassSecuBundle\Entity\Pass;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  *
  * @Route("/pass")
- *
+ * @Security("has_role('ROLE_HARD')")
  *
  */
 class DefaultController extends Controller {
