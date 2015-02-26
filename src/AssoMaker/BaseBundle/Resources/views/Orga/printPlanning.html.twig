@@ -1,4 +1,4 @@
-{% extends "AssoMakerPHPMBundle::layout.html.twig"  %}
+{% import "AssoMakerBaseBundle:Macros:entities.html.twig" as entitiesMacro %}
 {% set pageTitle = 'Impression Planning' %}
 
 {% block style %}
@@ -7,20 +7,88 @@
 
 <style>
 
+    @page :first {
+        @top-center {
+            content: "Planning Gala XIX"
+        }
+    }
 
+    @page :left{
+        margin:1.5cm 0.3in 1.5cm 0.3in;
+    }
 
+    @page :right{
+        margin:1.5cm 0.3in 1.5cm 0.3in;
+    }
 
+    @page  {
+        size: A4;
+        font-size: 11px;
+        margin:1.5cm 0.3in;
 
-.orga{
-	width:100%;
-    
-    
-}
+        @top-center {
+            content: "Planning de {{ entitiesMacro.orga(orga) }}";
+        }
+        @bottom-center  {
+        content: "Page " counter(page) " sur " counter(pages);
+            margin-bottom: 50px;
+        }
+
+    }
+
 
 .pagebreak{
     page-break-before:always;
+}
 
-    
+#map{
+    page-break-after: always;
+}
+
+.block{
+    margin: 5px;
+    border-radius: 2px;
+    page-break-inside: avoid;
+    border: outset 1px #000000;
+}
+
+.tache{
+    background: #e5e5e5;
+}
+
+.disclamer{
+    margin-top: 5px;
+    background: #d3d3d3;
+    clear: both;
+}
+
+.block-title{
+    clear: both;
+    background: #505050;
+    color: #E0E0E0;
+    font-size: 16px;
+}
+.block-title .right{
+    padding: 5px;
+    height: 100%;
+    width: 30%;
+    background: #000000;
+    color: #ffffff;
+    border-left: dotted 2px #ffffff;
+    float: right;
+}
+.block-title .left{
+    padding: 5px;
+    width: 66.8%;
+    float: left;
+    background: #505050;
+    color: #E0E0E0;
+}
+
+.block-content{
+    clear: both;
+    font-size: 13px;
+    padding: 5px
 }
 
 .creneau{
@@ -29,100 +97,118 @@
     page-break-before:auto;
     page-break-after: auto;
      border-bottom:solid 1pt lightgray;
-    
 }
 
+.taches h1{
+    text-align: center;
+    font-size: 40px;
+}
 
 .horaires{
 float:left;
 }
 
-.responsable{
-float:right;
-text-align:center;
+.important{
+    font-size: 16px;
 }
-
 .lieu{
 float:right;
-}
-.infos{
-overflow:auto;
 }
 
 
 
 </style>
 <div class="row-fluid " >
-{% for key,orga in orgas %}
+    <div style="min-height:60px; margin-bottom:10px;">
+        <img src="https://raw.githubusercontent.com/24HeuresINSA/logos-24heures/master/logo-24heures.png" style="float: left;margin-bottom: 1cm;height:50px">
+        <div style="width:300pt; margin: 10px auto; text-align: center;"><h1>{{ entitiesMacro.orga(orga) }}</h1></div>
+    </div>
+    <div class="" style="clear: both">
+    {% if tachesResp| length >= 1 %}
+        <div style="padding:0.2cm; width:15cm;margin:20px auto 0px auto;border: dotted 2px #000000">
+            <img src="http://cdns2.freepik.com/free-photo/information_318-10929.jpg" width="50px" style="float: left;margin:0 0.2cm">
+            <div class="important"> Attention ! Tu es responsable d'au moins une tâche. Tu trouveras à la fin de ton planning la liste des tâches que tu dois cheffer.<br>
+            Pour éviter que tu ne les confondes avec ton planning, ces cases sont <b>grisées</b>.</div>
+        </div>
+    {% endif %}
+        {% if phpm_planning_message != "" %}
+        <div class="block block-content disclamer">
+            {{ phpm_planning_message | raw }}
+        </div>
+        {% endif %}
 
-<div class="pagebreak"></div>&nbsp;
-<div class="pagebreak"></div>
+        <div class="block">
+            <div class="block-title" style="padding: 5px">SOS</div>
+            <div class="block-content important">
+                Plus d'informations prochainement.
+            </div>
+        </div>
 
-<div class="orga">
-<h1>{{ entitiesMacro.orga(orga) }}</h1>
-{{ phpm_planning_message |raw }} Planning valable du {{ debut | format_datetime('EEEE dd MMM HH:mm') }} au  {{ fin | format_datetime('EEEE dd MMM HH:mm') }}.
+        {% set counter = 1 %}
+        {% for d in orga.disponibilites %}
+        {% for creneau in d.creneaux if creneau%}
 
+            <div class="block">
+                <div class="block-title">
+                    <div class="left">T&acirc;che {{ counter }}&nbsp;: {{ creneau.plageHoraire.tache.nom }}</div>
+                    <div class="right">Où ? {{ creneau.plageHoraire.tache.lieu }}</div>
+                </div>
+                <div class="block-content">
+                    <span class="important"><b>Quand ?</b> {{ creneau.debut | format_datetime('EEEE') }} de {{ creneau.debut | format_datetime('HH:mm') }}&nbsp;à&nbsp;{%  if (creneau.debut | format_datetime('dd'))==(creneau.fin | format_datetime('dd')) %}{{ creneau.fin | format_datetime('HH:mm') }}
+                    {% else %}
+                        {{ creneau.fin | format_datetime('EEEE HH:mm') }}
+                    {% endif %}<br>
+                    <b>Responsable :</b> {{ entitiesMacro.orga(creneau.plageHoraire.tache.responsable) }}</span>
+                    {{ creneau.plageHoraire.tache.responsable.telephone }}<br>
+                    {% if creneau.plageHoraire.creneaux| length > 1 %}
+                    <b>Avec :</b> {% for c2 in creneau.plageHoraire.creneaux if  c2.id != creneau.id %}
+                        {{ entitiesMacro.orga(c2.disponibilite.orga) }},&nbsp;
+                    {% endfor %}<br>
+                    {% endif %}
+            {% if creneau.plageHoraire.tache.consignes  %}
+                    <b>Consignes :</b>
+                    <div class="consignes">
+                        {{ creneau.plageHoraire.tache.consignes |raw}}
+                    </div>
+                {% endif %}
+                    {% if creneau.plageHoraire.tache.besoinsMateriel | length >0 %}
+                        <div class="consignes">
+                            <b>Matériel nécessaire&nbsp;:&nbsp;</b>
+                            {% for bm in creneau.plageHoraire.tache.besoinsMateriel if bm.quantite > 0 %}
+                                {{ bm.materiel.nom }},
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% set counter = counter + 1 %}
+        {% endfor %}
+        {% endfor %}
+    {% if tachesResp| length >= 1 %}
+        <div class="taches" style="page-break-before: always">
+            <h1>Tes infos de resp de t&acirc;ches</h1>
+            {% for tache in tachesResp %}
+            <div id="tache-{{ tache.id }}" class="tache block">
+                <div class="block-title"><div class="left">#{{ tache.id }} - {{ tache.nom }}</div><div class="right"> {{ tache.lieu }} </div></div>
+                <div class="block-content"> {% set counter = 1 %}
+                <ul>
+                    <li><b>Consignes : </b><div>{{ tache.consignes | raw }}</div></li>
+                    <li><b>Créneaux : </b>
+                        <ul>
+                            {% for creneau in tache.creneaux %}
+                                <li>{{ creneau.nom }} {{ creneau.prenom }} ({{ creneau.telephone }}) - {{ creneau.debut | format_datetime('EEEE') }} de {{ creneau.debut | format_datetime('HH:mm') }}&nbsp;à&nbsp;{%  if (creneau.debut | format_datetime('dd'))==(creneau.fin | format_datetime('dd')) %}{{ creneau.fin | format_datetime('HH:mm') }}
+                                    {% else %}
+                                        {{ creneau.fin | format_datetime('EEEE HH:mm') }}
+                                    {% endif %}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+                    </div>
+            </div>
+            {% endfor %}
 
-	{% for d in orga.disponibilites %}
-	{% for creneau in d.creneaux if creneau%}
-	
-	  <div class="creneau">
-	  <div class="infos">
-	  <div class="horaires">
-	  <h3>
-	      {{ creneau.debut | format_datetime('EEEE dd MMM HH:mm') }}
-	  	    <i class="fa fa-arrow-right"></i>
-	  	  {%  if (creneau.debut | format_datetime('dd'))==(creneau.fin | format_datetime('dd')) %}
-	  	  {{ creneau.fin | format_datetime('HH:mm') }}
-	  	  {% else %}
-	  	  {{ creneau.fin | format_datetime('EEEE dd MMM HH:mm') }}
-	  	  {% endif %}
-	  	  </h3>
-	  	</div>
-	  	
-	  <div class="lieu"><h3><small>{{ creneau.plageHoraire.tache.lieu }}</small></h2></div>
-	 </div>
-	 	<div>
-	 		<div class="titre"><h3>{{ creneau.plageHoraire.tache.groupeTache.nom }} / {{ creneau.plageHoraire.tache.nom }}</h3></div>
-	 		{% if creneau.plageHoraire.creneaux| length > 1 %}
-		 		<b>Avec : </b>
-		 		{% for c2 in creneau.plageHoraire.creneaux if  c2.id != creneau.id %}
-		 			{{ entitiesMacro.orga(c2.disponibilite.orga) }}
-		 		{% endfor %}
-				<br>
-	 		{% endif %}
-	 		<b>Responsable : </b>{{ entitiesMacro.orga(creneau.plageHoraire.tache.responsable) }} 
-	 									{{ creneau.plageHoraire.tache.responsable.telephone }}<br>
-	 		
-
-	 									
-	 	</div>
-	  {% if creneau.plageHoraire.tache.consignes  %}
-		  <div class="consignes">
-		    <h3>Consignes</h3>{{ creneau.plageHoraire.tache.consignes |raw}}
-		  </div>
-	  {% endif %}
-	  {% if creneau.plageHoraire.tache.besoinsMateriel | length >0 %}
-		  <div class="consignes">
-		    <h4>Matériel Nécessaire</h4>
-				{% for bm in creneau.plageHoraire.tache.besoinsMateriel if bm.quantite > 0 %}
-					{{ bm.materiel.nom }},
-		    	{% endfor %}
-		  </div>
-	  {% endif %}
-	  
-	   
-	  
-	
-		</div>
-
- 	{% endfor %}
-	{% endfor %}
- 
-
-</div>
-
-	{% endfor %}
-
+        </div>
+        {% endif %}
 </div>
 {% endblock %}

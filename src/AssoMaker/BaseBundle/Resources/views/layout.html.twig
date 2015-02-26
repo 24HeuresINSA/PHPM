@@ -28,8 +28,7 @@
 				    {% endblock %}
 			    </style>
 				<link rel="stylesheet" href="{{ asset('vendor/twitter/bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" />
-				<style type="text/css"> [class^="icon-"], [class*=" icon-"] {background-image:none;} </style>
-                <link rel="stylesheet" href="{{ asset('vendor/fortawesome/font-awesome/css/font-awesome.min.css') }}" type="text/css" />
+				<link rel="stylesheet" href="{{ asset('vendor/fortawesome/font-awesome/css/font-awesome.min.css') }}" type="text/css" />
                 
         	{# Rewritten CSS #}
         	
@@ -101,8 +100,9 @@
         {% endblock %}
     </head>
     <body>
-    {% block body %}
+
     {% include 'AssoMakerBaseBundle::navbar.html.twig' with {}  %}
+    {% block body %}
 
     
 	        
@@ -121,9 +121,7 @@
 	{% endblock %}
 <hr>
 <footer>
-	&copy;
-	<a href="http://www.24heures.org">24 Heures de l'INSA</a>
-	- PHPM v1.1
+	PHPM v1.1
 	@ <a href="https://github.com/24HeuresINSA/PHPM" target="_blank">Github</a><br/>
 	<small><i>Si vous rencontrez un bug dans ce logiciel, veuillez contacter <a href="mailto:{{ admin_email }}">{{ admin_email }}</a></i></small>
 </footer>

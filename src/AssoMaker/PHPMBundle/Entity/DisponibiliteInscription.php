@@ -2,6 +2,7 @@
 
 namespace AssoMaker\PHPMBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AssoMaker\PHPMBundle\Validator\DebutAvantFin;
@@ -49,8 +50,8 @@ class DisponibiliteInscription
      * @QuartHeure()
      */
     protected  $fin;
-    
-    
+
+
     /**
      * @var smallint $statut
      * @Assert\Choice(choices = {"0", "1", "2"})
@@ -64,7 +65,6 @@ class DisponibiliteInscription
      * @ORM\Column(name="pointsCharisme", type="smallint")
      */
     protected $pointsCharisme;
-    
 
     /**
      * 
@@ -79,6 +79,10 @@ class DisponibiliteInscription
      */
     protected $mission;
 
+    /**
+     * @ORM\OneToMany(targetEntity="LimiteInscription", mappedBy="disponibiliteInscription",orphanRemoval=true, cascade={"persist", "remove"})
+     */
+    protected $limitesInscriptions;
     
 
     /**
@@ -148,7 +152,7 @@ class DisponibiliteInscription
     /**
      * Get orgas
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getOrgas()
     {
@@ -191,6 +195,14 @@ class DisponibiliteInscription
     public function getStatut()
     {
         return $this->statut;
+    }
+
+    /**
+     * Determine status for DI depending on User
+     */
+    public function statutFor($orga){
+
+        return $this->getStatut();
     }
 
     /**
@@ -242,5 +254,21 @@ class DisponibiliteInscription
     public function removeOrga(\AssoMaker\BaseBundle\Entity\Orga $orgas)
     {
         $this->orgas->removeElement($orgas);
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLimitesInscriptions()
+    {
+        return $this->limitesInscriptions;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\Collection $limitesInscriptions
+     */
+    public function setLimitesInscriptions($limitesInscriptions)
+    {
+        $this->limitesInscriptions = $limitesInscriptions;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace AssoMaker\BaseBundle\Controller;
 
+use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use AssoMaker\PHPMBundle\Form\InputDisposType;
@@ -89,120 +90,7 @@ class OrgaController extends Controller {
     }
 
     /**
-     * Displays a form to create a new Orga Hard entity.
-     *
-     * @Route("/register/", name="orga_register_user")
-     *
-     *    @Template("AssoMakerBaseBundle:Orga:edit.html.twig")
-     */
-    public function registerUserAction() {
-        $em = $this->getDoctrine()->getEntityManager();
-        $config = $this->get('config.extension');
-        $request = $this->getRequest();
-
-        $confianceCode = $this->getRequest()->getSession()->get('confianceCode');
-        $email = $this->getRequest()->getSession()->get('email');
-
-        $confiance = $em->getRepository('AssoMakerBaseBundle:Confiance')->findOneByCode($confianceCode);
-        if (!$confiance) {
-            throw new \Exception('Code d\'inscription incorrect!');
-        }
-
-        $entity = new Orga();
-        $entity->setEmail($email);
-
-        $entity->setEquipe($confiance->getEquipes()->first());
-
-        $form = $this->createForm($this->get('form.type.orga'), $entity, array("confianceCode" => $confianceCode));
-        $form->forcedConfiance = $confianceCode;
-
-        if ($this->get('request')->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            $data = $form->getData();
-
-            if ($form->isValid()) {
-                $equipe = $data->getEquipe();
-                $entity->setPrivileges($equipe->getConfiance()->getPrivileges());
-                $entity->setRole("Équipe " . $entity->getEquipe()->getNom());
-                $entity->setEmail($email);
-                $entity->setStatut(0);
-                $em->persist($entity);
-                $em->flush();
-                return $this->redirect($this->generateUrl('login'));
-            }
-        }
-
-
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-            'confianceCode' => $confianceCode
-        );
-    }
-
-    /**
-     * Displays a form to create a new Orga Soft entity.
-     *
-     * @Route("/inscriptionorgasoft/{equipeId}/{confianceCode}/{libelle}", defaults={"libelle"="", "confianceCode"="","equipeId"=""}, name="orga_registersoft")
-     *
-     * @Template()
-     */
-    public function registerSoftAction($confianceCode, $equipeId) {
-
-        $em = $this->getDoctrine()->getEntityManager();
-        $config = $this->get('config.extension');
-        $request = $this->getRequest();
-
-        $equipe = $em->getRepository('AssoMakerBaseBundle:Equipe')->find($equipeId);
-
-        if (!$equipe || $equipe->getConfiance()->getCode() != $confianceCode) {
-            throw new AccessDeniedException();
-        }
-
-        $entity = new Orga();
-        $entity->setStatut(0);
-        $entity->setEquipe($equipe);
-        $form = $this->createForm($this->get('form.type.orga'), $entity);
-
-
-
-        if ($this->get('request')->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            $data = $form->getData();
-
-            if ($form->isValid()) {
-
-                $entity->setPrivileges($equipe->getConfiance()->getPrivileges());
-                $entity->setEquipe($equipe);
-                $entity->setLastActivity(new \DateTime());
-                $em->persist($entity);
-                $em->flush();
-
-                $this->get('security.context')->setToken($entity->generateUserToken());
-
-
-                $message = \Swift_Message::newInstance()
-                        ->setSubject('Inscription orga soft ' . $config->getValue('manifestation_nom'))
-                        ->setFrom(array($config->getValue('phpm_admin_email') => 'Orga ' . $config->getValue('manifestation_nom')))
-                        ->setReplyTo($config->getValue('phpm_admin_email'))
-                        ->setTo($entity->getEmail())
-                        ->setBody($this->renderView('AssoMakerBaseBundle:Orga:emailConfirmationSoft.html.twig', array('orga' => $entity)), 'text/html')
-                ;
-                $this->get('mailer')->send($message);
-
-
-
-                return $this->redirect($this->generateUrl('orga_inputdispos', array('id' => $entity->getId(), "new" => true)));
-            }
-        }
-
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView()
-        );
-    }
-
-    /**
+     * Génère la signature de Mail pour un orga hard
      * @Route("/signature", name="orga_signature")
      * @Secure("ROLE_HARD")
      * @Template()
@@ -232,7 +120,7 @@ class OrgaController extends Controller {
         }
 
         if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN') && $user = $this->get('security.context')->getToken()->getUser() != $entity) {
-            throw new AccessDeniedException();
+            throw new AccessDeniedException("Vous n'êtes pas administrateur");
         }
         $editForm = $this->createForm($this->get('form.type.orga'), $entity, array("confianceCode" => $entity->getEquipe()->getConfiance()->getCode()));
 
@@ -243,16 +131,14 @@ class OrgaController extends Controller {
 
             if ($editForm->isValid()) {
 
-
                 $param = $request->request->all();
                 if ($param['action'] == 'delPermis') {
                     $entity->setFichierPermisSet(false);
                 }
 
-
                 $entity->uploadProfilePicture();
                 $entity->uploadFichierPermis();
-                $entity->refreshRoles();
+                $entity->updateRoles();
                 $em->persist($entity);
                 $em->flush();
 
@@ -312,7 +198,6 @@ class OrgaController extends Controller {
         $format = $this->get('request')->getRequestFormat();
 
         if ($format == 'html') {
-
             return $this->redirect($this->getRequest()->headers->get('referer'));
         }
 
@@ -476,7 +361,7 @@ class OrgaController extends Controller {
             $maxDateNaissance = $maxDateNaissance->format("Y-m-d H:i:s");
         }
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         // on peut avoir 2 usages assez différents, donc 2 fonctions dans le repo
         if ($creneau_id === '') {
@@ -498,7 +383,7 @@ class OrgaController extends Controller {
                 "confiance" => $equipe->getConfiance()->getId(),
                 "charisme" => $orga['charisme'],
                 "equipe" => $equipe->getId(),
-                "dateDeNaissance" => $orga[0]->getDateDeNaissance()->format('Y-m-d H:i:s'),
+                "dateDeNaissance" => ($orga[0]->getDateDeNaissance()!=null)?$orga[0]->getDateDeNaissance()->format('Y-m-d H:i:s'):'1900-1-1 0:0:0',
                 "departement" => $orga[0]->getDepartement(),
                 "statut" => $orga[0]->getStatut(),
                 "commentaire" => $orga[0]->getCommentaire()
@@ -517,10 +402,8 @@ class OrgaController extends Controller {
      * Print orga planning.
      *
      * @Route("/{orgaid}/print",  name="orga_print")
-     * @Template("AssoMakerBaseBundle:Orga:printPlanning.html.twig")
      */
     public function printAction($orgaid) {
-        $em = $this->getDoctrine()->getEntityManager();
         $config = $this->get('config.extension');
 
         if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN') && $user = $this->get('security.context')->getToken()->getUser()->getId() != $orgaid) {
@@ -530,13 +413,100 @@ class OrgaController extends Controller {
         $debut = new \DateTime();
         $fin = new \DateTime($config->getValue('phpm_planning_fin'));
 
+        $em = $this->getDoctrine()->getEntityManager();
+        $pdfGenerator = $this->get('spraed.pdf.generator');
+        try{
+
+            // On prend le planning de l'orga
+            $orga = $em->getRepository('AssoMakerBaseBundle:Orga')->getPlanning($orgaid, 'all', $debut, $fin)[0];
+
+            // Si il est resp on cherche les infos de ses taches
+            $tachesResp = $em->createQueryBuilder()->select('t')->from('AssoMakerPHPMBundle:Tache','t')->where('t.responsable = ?1')->andWhere('t.statut>=2')->getQuery()->setParameter(1,$orgaid)->getArrayResult();
+            $max = count($tachesResp);
+            $request = "SELECT o0_.id AS oid, o0_.nom AS nom, o0_.prenom AS prenom, o0_.telephone AS telephone, c1_.debut AS debut, c1_.fin AS fin
+FROM Creneau c1_
+INNER JOIN Disponibilite d2_ ON ( d2_.id = c1_.disponibilite_id )
+INNER JOIN PlageHoraire p3_ ON ( c1_.plageHoraire_id = p3_.id )
+INNER JOIN Tache t4_ ON ( t4_.id = p3_.tache_id )
+INNER JOIN Orga o0_ ON ( o0_.id = d2_.orga_id )
+WHERE t4_.id = ? ORDER BY debut";
+            for($i = 0; $i < $max; $i++){
+                $result = $em->getConnection()->fetchAll($request,array('0'=>$tachesResp[$i]['id']));
+                $tachesResp[$i]["creneaux"]=$result;
+            }
+
+            $html = $this->renderView('AssoMakerBaseBundle:Orga:printPlanning.html.twig',array('orga'=>$orga,'tachesResp'=>$tachesResp));
+
+            return new Response($pdfGenerator->generatePDF($html),
+                200,
+                array(
+                    'Content-Type' => 'application/pdf',
+                    'Content-Disposition' => 'inline; filename="out.pdf"'
+                )
+            );
+        } catch(\Exception $e){
+            return new Response($pdfGenerator->generatePDF("Erreur : ".$e->getMessage()),
+                200,
+                array(
+                    'Content-Type' => 'application/pdf',
+                    'Content-Disposition' => 'inline; filename="out.pdf"'
+                )
+            );
+        }
+
+    }
+
+    /**
+     * Print all orga summary planning.
+     *
+     * @Route("/printAll",  name="orga_print_all")
+     */
+    public function printAllAction() {
+        $config = $this->get('config.extension');
+
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
+            throw new AccessDeniedException();
+        }
+
+        $debut = new \DateTime();
+        $fin = new \DateTime($config->getValue('phpm_planning_fin'));
 
         $em = $this->getDoctrine()->getEntityManager();
-        $orgas = $em->getRepository('AssoMakerBaseBundle:Orga')->getPlanning($orgaid, 'all', $debut, $fin);
+        $pdfGenerator = $this->get('spraed.pdf.generator');
+        {
 
+            $orgas = $em->createQuery("SELECT o,d,cr,p,t,g,r FROM AssoMakerBaseBundle:Orga o JOIN o.disponibilites d JOIN d.creneaux cr JOIN
+					cr.plageHoraire p JOIN p.tache t JOIN t.groupeTache g JOIN t.responsable r
+					ORDER BY o.nom,d.debut,cr.debut")->execute();
 
-        return array('orgas' => $orgas, 'debut' => $debut, 'fin' => $fin
-        );
+            $taches = $em->createQueryBuilder()->
+            select("t,g,r")->from("AssoMakerPHPMBundle:Tache","t")->
+            join("t.groupeTache",'g')->join("t.responsable",'r')
+                ->where("t.statut>=2")->orderBy("t.id")->getQuery()->getArrayResult();
+            $max = count($taches);
+            $request = "SELECT o0_.id AS oid, o0_.nom AS nom, o0_.prenom AS prenom, o0_.telephone AS telephone, c1_.debut AS debut, c1_.fin AS fin
+FROM Creneau c1_
+INNER JOIN Disponibilite d2_ ON ( d2_.id = c1_.disponibilite_id )
+INNER JOIN PlageHoraire p3_ ON ( c1_.plageHoraire_id = p3_.id )
+INNER JOIN Tache t4_ ON ( t4_.id = p3_.tache_id )
+INNER JOIN Orga o0_ ON ( o0_.id = d2_.orga_id )
+WHERE t4_.id = ? ORDER BY debut";
+            for($i = 0; $i < $max; $i++){
+                $result = $em->getConnection()->fetchAll($request,array('0'=>$taches[$i]['id']));
+                $taches[$i]["creneaux"]=$result;
+            }
+
+            $html = $this->renderView('AssoMakerBaseBundle:Orga:printAllPlanning.html.twig',array('orgas'=>$orgas,'taches'=>$taches,'debut'=>$debut));
+
+            return new Response($pdfGenerator->generatePDF($html),
+                200,
+                array(
+                    'Content-Type' => 'application/pdf',
+                    'Content-Disposition' => 'inline; filename="out.pdf"'
+                )
+            );
+        }
+
     }
 
     /**
@@ -697,47 +667,6 @@ class OrgaController extends Controller {
         return array('orga' => $user, 'stats' => $stats);
     }
 
-// 	/**
-// 	 * Manually generate DI -> Dispo
-// 	 *
-// 	 * @Route("/{id}/genDispo", name="orga_gendispo")
-// 	 */
-// 	public function genDispoAction($id)
-// 	{
-// 		if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
-// 			throw new AccessDeniedException();
-// 		}
-// 		$em = $this->getDoctrine()->getEntityManager();
-// // 		if($id = "all"){
-// // 			$orgas = $em->createQuery("SELECT o FROM AssoMakerBaseBundle:Orga o")->getResult();
-// // 		}else
-// 		{
-// 		$orgas = $em->getRepository('AssoMakerBaseBundle:Orga')->find($id);
-// 		if (!$orgas ) {
-// 			throw $this->createNotFoundException('Unable to find Orga.');
-// 		}
-// 		}
-// 		$allDI = $em->createQuery("SELECT d FROM AssoMakerPHPMBundle:DisponibiliteInscription d")->getResult();
-// 		foreach ($orgas as $orga){
-//             foreach ($allDI as $di)
-//             {
-//             		if(!$orga->getDisponibilitesInscription()->contains($di)){
-//             			$orga->removeDIFromDisponibilites($di);
-//             		}
-//             }
-//             foreach ($allDI as $di)
-//             {
-//             	if($orga->getDisponibilitesInscription()->contains($di)){
-//             		$orga->addDIToDisponibilites($di);
-//             	}
-//             }
-//             	$em->flush();
-// 	            $orga->cleanDisponibilites();
-// 	            $em->flush();
-// 		}
-// 		return $this->redirect($this->getRequest()->headers->get('referer'));
-// 	}
-
     /**
      * Auto affect Orga using orga Hints
      *
@@ -855,7 +784,7 @@ class OrgaController extends Controller {
         $em = $this->getDoctrine()->getEntityManager();
         $config = $e = $this->get('config.extension');
 
-        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN') && $user = $this->get('security.context')->getToken()->getUser()->getId() != $orgaid) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
             throw new AccessDeniedException();
         }
 

@@ -17,7 +17,7 @@
     <div class="row-fluid">   
 	    {% for ph in tache.plagesHoraire %}
 	    	<div>
-		    	<h3>Plage horaire : {{ ph.debut | format_datetime }} <i class="fa fa-arrow-right my-inline-icon"></i> {{ ph.fin | format_datetime }}</h3>
+		    	<h3>Plage horaire : {{ ph.debut|date('d/m/Y H:i') }} <i class="icon-arrow-right my-inline-icon"></i> {{ ph.fin|date('d/m/Y H:i') }}</h3>
 		    	<div class="pad10">
 			    	{% if ph.creneauUnique %}
 			    		<h4>Créneau unique !</h4>
@@ -55,7 +55,7 @@
 						{% for c in ph.creneaux %}
 				            <tr>
 				            	<td>
-				                	{{ c.debut | format_datetime }} <i class="fa fa-arrow-right"></i> {{ c.fin | format_datetime }}
+				                	{{ c.debut|date('d/m/Y H:i') }} <i class="icon-arrow-right"></i> {{ c.fin|date('d/m/Y H:i')}}
 				                </td>
 				                <td>
 					                {% if c.orgaHint is not null %}
@@ -80,7 +80,6 @@
 				                </td>
 				                
 					                <td>
-						                <a class="btn " href="{{ path('creneau_edit', { 'id': c.id }) }}"><i class="fa fa-pencil"></i> Éditer</a>
 						                {% if  c.disponibilite is not null%}
 						                <a class="btn  btn-warning" href="{{ path('creneau_desaffecter', { 'cid': c.id }) }}"> Désaffecter</a>
 						                {% else %}
