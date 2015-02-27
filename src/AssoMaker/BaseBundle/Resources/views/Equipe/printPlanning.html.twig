@@ -1,0 +1,171 @@
+{% import "AssoMakerBaseBundle:Macros:entities.html.twig" as entitiesMacro %}
+
+{% block content %}
+    <html>
+    <head>
+        <style>
+            @page :first{
+                margin-top : 10cm;
+                @top-center {
+                    content: ""
+                }
+                @bottom-center  {
+                    content: "Il y a " counter(pages) " pages";
+                }
+            }
+
+            @page :left{
+                margin:1.5cm 0.3in 1.5cm 0.3in;
+            }
+
+            @page :right{
+                margin:1.5cm 0.3in 1.5cm 0.3in;
+            }
+            @page  {
+                size: A4;
+                @top-center {
+                    content: "Planning {{ title }}";
+                }
+                @bottom-center  {
+                    content: "Page " counter(page) " sur " counter(pages);
+                    margin-bottom: 50px;
+                }
+            }
+            a{
+                color: #000000;
+            }
+            #toc ul li a{
+                color: #000000;
+                text-decoration: none;
+                list-style: square;
+            }
+            #toc ul a::after {
+                content: leader('.') target-counter(attr(href), page);
+            }
+
+            .tache, .orga{
+                page-break-inside: avoid;
+            }
+            .pagebreak{
+                page-break-before:always;
+            }
+
+            #map{
+                page-break-after: always;
+            }
+
+            .block{
+                margin: 5px;
+                clear: both;
+                page-break-inside: avoid;
+            }
+
+            .disclamer{
+                margin-top: 50px;
+                background: #d3d3d3;
+            }
+
+            .block-title{
+                clear: both;
+                font-size: 16px;
+            }
+            .block-title .right{
+                padding: 5px;
+                height: 100%;
+                width: 30%;
+                float: right;
+            }
+            .block-title .left{
+                padding: 5px;
+                width: 66.8%;
+                float: left;
+            }
+
+            .block-content{
+                clear: both;
+                font-size: 13px;
+                padding: 5px
+            }
+
+            .orga{
+                margin-top: 1cm;
+                page-break-inside: avoid;
+            }
+
+            .creneau{
+                width:100%;
+                page-break-inside: avoid;
+                page-break-before:auto;
+                page-break-after: auto;
+                border-bottom:solid 1pt lightgray;
+            }
+
+            .horaires{
+                float:left;
+            }
+
+            .important{
+                font-size: 16px;
+            }
+            .lieu{
+                float:right;
+            }
+        </style>
+    </head>
+    <body>
+    <div style="margin-bottom:10px; page-break-after: always">
+        <div style="width:300pt; margin: 10px auto; text-align: center;"><h1>Planning {{ title }}</h1>
+            <img src="https://raw.githubusercontent.com/BdEINSALyon/logos-bde/master/Gala_Noir.png" style="padding-right:0.5cm;margin-right: 0.5cm; border-right: solid 2px #000000">
+            <img id="bde" src="https://raw.githubusercontent.com/BdEINSALyon/logos-bde/master/Logo%20BdE%20noir.png" style="height:50px;">
+
+            <div class="" style="clear: both">
+                {% if phpm_planning_message != "" %}
+                    <div class="block block-content disclamer">
+                        Gala XIX - Version du {{ debut | format_datetime("d MMM à H:mm") }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div id="toc" style="page-break-after: always">
+        <h1>Sommaire</h1>
+        <ul>
+            <li>
+                <a href="#taches" id="taches-toc">Taches par ID</a>
+                <ul>
+                    {% for tache in taches %}
+                        <li><a href="#tache-{{ tache.id }}">#{{ tache.id }} - {{ tache.nom }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+    </div>
+   <div id="taches">
+        <h1>T&acirc;ches</h1>
+        {% for tache in taches %}
+            <div id="tache-{{ tache.id }}" class="tache">
+                <h2 style="clear: both">#{{ tache.id }} - {{ tache.nom }}</h2>
+                {% set counter = 1 %}
+                <ul>
+                    <li><b>Lieu : </b>{{ tache.lieu }}</li>
+                    <li><b>Responsable : </b><a href="#orga-{{ tache.responsable.id }}">{{ entitiesMacro.orga(tache.responsable) }}
+                            ({{ tache.responsable.telephone }})</a></li>
+                    <li><b>Consignes : </b><div>{{ tache.consignes | raw }}</div></li>
+                    <li><b>Crenaux : </b>
+                        <ul>
+                            {% for creneau in tache.creneaux %}
+                                <li><a href="#orga-{{ creneau.oid }}">{{ creneau.nom }} {{ creneau.prenom }} ({{ creneau.telephone }})</a> - {{ creneau.debut | format_datetime('EEEE') }} de {{ creneau.debut | format_datetime('HH:mm') }}&nbsp;à&nbsp;{%  if (creneau.debut | format_datetime('dd'))==(creneau.fin | format_datetime('dd')) %}{{ creneau.fin | format_datetime('HH:mm') }}
+                                    {% else %}
+                                        {{ creneau.fin | format_datetime('EEEE HH:mm') }}
+                                    {% endif %}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+    </body>
+    </html>
+{% endblock %}
+
