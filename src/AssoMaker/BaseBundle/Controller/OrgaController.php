@@ -2,6 +2,7 @@
 
 namespace AssoMaker\BaseBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use JMS\SecurityExtraBundle\Annotation\Secure;
@@ -208,12 +209,96 @@ class OrgaController extends Controller {
         }
     }
 
+    /**
+     * @param $orgaid int           L'ID de l'orga en question
+     * @param $em     EntityManager L'entity Manger pour charger les données
+     * @param $debut  \DateTime     Le début du planning
+     * @param $fin    \DateTime     La fin du planning
+     * @return array
+     */
+    public function getPlanningDataForOrga($orgaid, $em, $debut, $fin)
+    {
+// On prend le planning de l'orga
+        $orga = $em->getRepository('AssoMakerBaseBundle:Orga')->getPlanning($orgaid, 'all', $debut, $fin)[0];
+
+        // Si il est resp on cherche les infos de ses taches
+        $tachesResp = $em->createQueryBuilder()->select('t')->from('AssoMakerPHPMBundle:Tache', 't')->where('t.responsable = ?1')->andWhere('t.statut>=2')->getQuery()->setParameter(1, $orgaid)->getArrayResult();
+        $max = count($tachesResp);
+        $request = "SELECT o0_.id AS oid, o0_.nom AS nom, o0_.prenom AS prenom, o0_.telephone AS telephone, c1_.debut AS debut, c1_.fin AS fin
+FROM Creneau c1_
+INNER JOIN Disponibilite d2_ ON ( d2_.id = c1_.disponibilite_id )
+INNER JOIN PlageHoraire p3_ ON ( c1_.plageHoraire_id = p3_.id )
+INNER JOIN Tache t4_ ON ( t4_.id = p3_.tache_id )
+INNER JOIN Orga o0_ ON ( o0_.id = d2_.orga_id )
+WHERE t4_.id = ? ORDER BY debut";
+        for ($i = 0; $i < $max; $i++) {
+            $result = $em->getConnection()->fetchAll($request, array('0' => $tachesResp[$i]['id']));
+            $tachesResp[$i]["creneaux"] = $result;
+        }
+        return array($orga, $tachesResp);
+    }
+
     private function createDeleteForm($id) {
 
         return $this->createFormBuilder(array('id' => $id))
                         ->add('id', 'hidden')
                         ->getForm()
         ;
+    }
+
+    /**
+     * Exporte plusieurs ou tous les planning des orgas validés.
+     *
+     * Permet de télécharger un fichier zip des plannings.
+     *
+     * @Route("/print/all",name="printall")
+     * @return Response
+     */
+    public function exportAction() {
+
+        $config = $this->get('config.extension');
+
+        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
+            throw new AccessDeniedException();
+        }
+
+        // Setup data
+        $debut = new \DateTime();
+        $fin = new \DateTime($config->getValue('phpm_planning_fin'));
+        $em = $this->getDoctrine()->getEntityManager();
+        $orgas = $em->getConnection()->fetchAll("SELECT id FROM Orga WHERE statut>=1");
+
+        // Create the zip archive
+        $zip = new \ZipArchive();
+        $zipName = tempnam("/tmp", "PLN");;
+        $zip->open($zipName,  \ZipArchive::CREATE);
+        $pdfGenerator = $this->get('spraed.pdf.generator');
+
+        // Generate planning for each orga (could take a long)
+        foreach ($orgas as $o) {
+            try{
+                list($orga, $tachesResp) = $this->getPlanningDataForOrga($o['id'], $em, $debut, $fin);
+                $pdf = $pdfGenerator->generatePDF($this->renderView('AssoMakerBaseBundle:Orga:printPlanning.html.twig',array('orga'=>$orga,'tachesResp'=>$tachesResp)));
+            } catch(\Exception $e){
+                $pdf = $pdfGenerator->generatePDF("User ".$o['id']." Erreur : ".$e->getMessage());
+            }
+            $zip->addFromString($o['id'].".pdf",  $pdf);
+        }
+        $zip->close();
+        // Generate response
+        $response = new Response();
+
+        // Set headers
+        $response->headers->set('Cache-Control', 'private');
+        $response->headers->set('Content-type', mime_content_type($zipName));
+        $response->headers->set('Content-Disposition', 'attachment; filename="planning.zip";');
+        $response->headers->set('Content-length', filesize($zipName));
+
+        // Send headers before outputting anything
+        $response->sendHeaders();
+
+        $response->setContent(readfile($zipName));
+        return $response;
     }
 
     /**
@@ -416,24 +501,7 @@ class OrgaController extends Controller {
         $em = $this->getDoctrine()->getEntityManager();
         $pdfGenerator = $this->get('spraed.pdf.generator');
         try{
-
-            // On prend le planning de l'orga
-            $orga = $em->getRepository('AssoMakerBaseBundle:Orga')->getPlanning($orgaid, 'all', $debut, $fin)[0];
-
-            // Si il est resp on cherche les infos de ses taches
-            $tachesResp = $em->createQueryBuilder()->select('t')->from('AssoMakerPHPMBundle:Tache','t')->where('t.responsable = ?1')->andWhere('t.statut>=2')->getQuery()->setParameter(1,$orgaid)->getArrayResult();
-            $max = count($tachesResp);
-            $request = "SELECT o0_.id AS oid, o0_.nom AS nom, o0_.prenom AS prenom, o0_.telephone AS telephone, c1_.debut AS debut, c1_.fin AS fin
-FROM Creneau c1_
-INNER JOIN Disponibilite d2_ ON ( d2_.id = c1_.disponibilite_id )
-INNER JOIN PlageHoraire p3_ ON ( c1_.plageHoraire_id = p3_.id )
-INNER JOIN Tache t4_ ON ( t4_.id = p3_.tache_id )
-INNER JOIN Orga o0_ ON ( o0_.id = d2_.orga_id )
-WHERE t4_.id = ? ORDER BY debut";
-            for($i = 0; $i < $max; $i++){
-                $result = $em->getConnection()->fetchAll($request,array('0'=>$tachesResp[$i]['id']));
-                $tachesResp[$i]["creneaux"]=$result;
-            }
+            list($orga, $tachesResp) = $this->getPlanningDataForOrga($orgaid, $em, $debut, $fin);
 
             $html = $this->renderView('AssoMakerBaseBundle:Orga:printPlanning.html.twig',array('orga'=>$orga,'tachesResp'=>$tachesResp));
 
@@ -459,7 +527,7 @@ WHERE t4_.id = ? ORDER BY debut";
     /**
      * Print all orga summary planning.
      *
-     * @Route("/printAll",  name="orga_print_all")
+     * @Route("/print/bibleMaman",  name="orga_print_all")
      */
     public function printAllAction() {
         $config = $this->get('config.extension');
