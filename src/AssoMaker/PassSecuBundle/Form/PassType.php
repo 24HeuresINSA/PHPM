@@ -51,7 +51,7 @@ class PassType extends AbstractType
         ->add('entite',null,array('label'=>'Nom de l\'entité','required'=>true,'disabled'=>$this->guest))
         ->add('validiteDebut', 'choice',array('label'=>'Laissez-passer valable de','choices'=>Pass::$validiteChoices,'disabled'=>$this->guest))
         ->add('validiteFin','choice',array('label'=>'à','choices'=>Pass::$validiteChoices,'disabled'=>$this->guest))
-        ->add('emailDemandeur',null,array('label'=>'Adresse email de l\'entité'))
+        //->add('emailDemandeur',null,array('label'=>'Adresse email de l\'entité'))
         ->add('telephoneDemandeur',null,array('label'=>'Numéro de téléphone de l\'entité'));
         
     }

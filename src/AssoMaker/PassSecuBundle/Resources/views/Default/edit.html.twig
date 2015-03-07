@@ -83,8 +83,7 @@ function Ctrl($scope){
                     {% if is_granted('ROLE_SECU') %} 
                     <ol>
                         <li>Préremplissez cette demande en renseignant toutes les infos que vous connaissez.</li>
-                        <li>Si l'entité (boîte, asso, etc) est susceptible de faire une demande pour plusieures personnes, envoyez-lui <a style="font-weight: bolder;" href="{{ path('pass_pass_edit',{"id":entity.id,"code":entity.accessCode}) }}">ce lien</a> en lui demandant de renseigner les différentes personnes qui auront besoin d'un pass.</li>
-                        <li>La personne va remplir ses infos et cliquer sur envoyer. Quand l'équipe sécurité aura validé le pass, la personne indiqué dans contact recevra un mail avec les instructions pour télécharger ses pass.</li>
+                         <li>La personne va remplir ses infos et cliquer sur envoyer. Quand l'équipe sécurité aura validé le pass, la personne indiqué dans contact recevra un mail avec les instructions pour télécharger ses pass.</li>
                     </ol>
                     {% else %}   
                     <p>
@@ -101,7 +100,7 @@ function Ctrl($scope){
          <div class="row-fluid">
          <legend>Informations sur le demandeur</legend>
          {{ form_row(form.entite) }}
-         {{ form_row(form.emailDemandeur) }}
+         {# form_row(form.emailDemandeur) #}
          {{ form_row(form.telephoneDemandeur) }}
          </div>
          
@@ -212,8 +211,8 @@ function Ctrl($scope){
                                 
 			    {% if entity.statut >=2 %}
 			     <a href="{{ path('pass_pass_print',{"id":entity.id,"code":entity.accessCode}) }}" class="btn"><i class="fa fa-print"></i> Imprimer les pass</a>
-			    <a class="btn btn-info" href="mailto:{{entity.emailDemandeur}}?&subject=Votre%20laissez-passer%2024Heures%20INSA&body=Bonjour%2C%0A%0AVous+avez+demand%C3%A9+un+pass+s%C3%A9curit%C3%A9+afin+d%27acc%C3%A9der+au+campus+LyonTech-La+Doua+pendant+le+festival+des+24+heures+de+l%27INSA.%0ACette+demande+vient+d%27%C3%AAtre+accept%C3%A9e+par+la+direction+s%C3%A9curit%C3%A9+du+festival.%0AVous+pouvez+imprimer+vos+laissez-passer+%C3%A0+l%27adresse+suivante+%3A%0A%0A{{ url('pass_pass_index') }}print/{{ entity.id }}/{{ entity.accessCode }}%0A%0ATr%C3%A8s+Cordialement%2C">
-                            <i class="fa fa-envelope"></i> Envoyer le pass par mail</a> 
+			    {# <a class="btn btn-info" href="mailto:{{entity.emailDemandeur}}?&subject=Votre%20laissez-passer%2024Heures%20INSA&body=Bonjour%2C%0A%0AVous+avez+demand%C3%A9+un+pass+s%C3%A9curit%C3%A9+afin+d%27acc%C3%A9der+au+campus+LyonTech-La+Doua+pendant+le+festival+des+24+heures+de+l%27INSA.%0ACette+demande+vient+d%27%C3%AAtre+accept%C3%A9e+par+la+direction+s%C3%A9curit%C3%A9+du+festival.%0AVous+pouvez+imprimer+vos+laissez-passer+%C3%A0+l%27adresse+suivante+%3A%0A%0A{{ url('pass_pass_index') }}print/{{ entity.id }}/{{ entity.accessCode }}%0A%0ATr%C3%A8s+Cordialement%2C">
+                            <i class="fa fa-envelope"></i> Envoyer le pass par mail</a>#}
 			    {% endif %}
 			    
 			    {% if is_granted('ROLE_SECU') and (entity.statut < 2) %}
