@@ -129,6 +129,10 @@
                     $scope.pub = true;
             {% endif %}
 
+            {% if entity.mobile %}
+                    $scope.mob = true;
+            {% endif %}
+
             {% if entity.extPresent %}
                     $scope.extPresent = true;
             {% endif %}
@@ -208,11 +212,48 @@
                                             {% else %}
                                                 Pas de Photo
                                             {% endif %}
-						{{ form_row(form.entity.pubPicture) }}
+                        {{ form_row(form.entity.pubPicture) }}
                                             </div>
                                         </div>
                                     </div>
 
+
+                                </fieldset>
+                        <fieldset>
+
+
+                            <legend>Appli mobile</legend>
+
+                            <div class="row-fluid">
+                                <div class="span9">
+                                    <div class="row-fluid">
+                                        <div class="span5">{{ form_row(form.entity.mobile,{'attr':{'ng-model':'mob'}} ) }}</div>
+                                    </div>
+                                    <div class="row-fluid" ng-show="mob">
+                                        <div class="span12">{{ form_row(form.entity.categorieMobile,{'attr':{'class':'input-block-level'}}) }}</div>
+                                    </div>
+                                    <div class="row-fluid" ng-show="mob">
+                                        {{ form_row(form.entity.descriptionMobile) }}
+                                        <b>Photos pour l'appli :</b>
+                                        <ul>
+                                            {% for photo in entity.photosMobile %}
+                                                <li>
+                                                    <img src='/up/animPicturesMobile/{{ photo.nom|url_encode }}' style='min-width: 150px; min-height: 150px'> 
+                                                    {% if (entity.statut == 0) or (is_granted('ROLE_HUMAIN') and (entity.statut >= 1)) %}
+                                                        <a href="{{ path('anim_animation_delete_photo_mobile', {'id': photo.id, 'token': csrf_token('anim_animation_delete_photo_mobile')}) }}"><i class="fa fa-remove"></i></a>
+                                                    {% endif %}
+                                                </li>
+                                            {% else %}
+                                                <li><i>Aucune photo actuellement !</i>
+                                            {% endfor %}
+                                        </ul>
+                                        {{ form_row(form.photoMob) }}
+                                    </div>
+                                </div>
+                                <div class="span3">
+                                        
+                                </div>
+                            </div>
 
                                 </fieldset>
                                 <fieldset>

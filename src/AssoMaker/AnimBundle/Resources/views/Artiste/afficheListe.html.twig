@@ -1,0 +1,17 @@
+{% if entities %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nom</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%  for entity in entities %}
+            <tr>
+                <td>
+	            <a href="{{path('artiste_edit',{'id':entity.id})}}" target="_blank">{{entity.id}} - {{entity.nom}}</a> </td>
+                            </tr>
+        {%   endfor %}
+                        </tbody>
+                    </table>
+{% endif %}

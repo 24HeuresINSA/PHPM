@@ -194,6 +194,13 @@ class Animation {
     private $description;
 
     /**
+     * @var string $descriptionMobile
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $descriptionMobile;
+
+    /**
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
@@ -303,6 +310,23 @@ class Animation {
      * @ORM\Column( type="boolean")
      */
     protected $pubPictureSet = false;
+
+    /**
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $mobile = false;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AssoMaker\AnimBundle\Entity\CategorieMobile", inversedBy="animations")
+     * @ORM\JoinColumn(referencedColumnName="id",onDelete="SET NULL")
+     */
+    protected $categorieMobile;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AssoMaker\AnimBundle\Entity\PhotoAnimation", mappedBy="animation")
+     */
+    private $photosMobile;
 
     /**
      * Get id
@@ -629,6 +653,48 @@ class Animation {
     }
 
     /**
+     * Set mobile
+     *
+     * @param boolean $mobile
+     * @return Animation
+     */
+    public function setMobile($mobile) {
+        $this->mobile = $mobile;
+
+        return $this;
+    }
+
+    /**
+     * Get mobile
+     *
+     * @return boolean
+     */
+    public function getMobile() {
+        return $this->mobile;
+    }
+
+    /**
+     * Set categorieMobile
+     *
+     * @param \AssoMaker\AnimBundle\Entity\CategorieMobile $categorieMobile
+     * @return Animation
+     */
+    public function setCategorieMobile(CategorieMobile $categorieMobile = null) {
+        $this->categorieMobile = $categorieMobile;
+
+        return $this;
+    }
+
+    /**
+     * Get categorieMobile
+     *
+     * @return \AssoMaker\AnimBundle\Entity\CategorieMobile
+     */
+    public function getCategorieMobile() {
+        return $this->categorieMobile;
+    }
+
+    /**
      * Set description
      *
      * @param string $description
@@ -647,6 +713,27 @@ class Animation {
      */
     public function getDescription() {
         return $this->description;
+    }
+
+    /**
+     * Set descriptionMobile
+     *
+     * @param string $descriptionMobile
+     * @return Animation
+     */
+    public function setDescriptionMobile($descriptionMobile) {
+        $this->descriptionMobile = $descriptionMobile;
+
+        return $this;
+    }
+
+    /**
+     * Get descriptionMobile
+     *
+     * @return string
+     */
+    public function getDescriptionMobile() {
+        return $this->descriptionMobile;
     }
 
     /**
@@ -1170,6 +1257,7 @@ class Animation {
      */
     public function __construct() {
         $this->passAssocies = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->photosMobile = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -1200,6 +1288,36 @@ class Animation {
      */
     public function getPassAssocies() {
         return $this->passAssocies;
+    }
+
+    /**
+     * Add PhotoAnimation
+     *
+     * @param \AssoMaker\AnimBundle\Entity\PhotoAnimation $photoMobile
+     * @return Animation
+     */
+    public function addPhotoMobile(\AssoMaker\AnimBundle\Entity\PhotoAnimation $photoMobile) {
+        $this->photosMobile[] = $photoMobile;
+
+        return $this;
+    }
+
+    /**
+     * Remove PhotoAnimation
+     *
+     * @param \AssoMaker\AnimBundle\Entity\PhotoAnimation $photoMobile
+     */
+    public function removePhotoMobile(\AssoMaker\AnimBundle\Entity\PhotoAnimation $photoMobile) {
+        $this->photosMobile->removeElement($photoMobile);
+    }
+
+    /**
+     * Get photosMobile
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotosMobile() {
+        return $this->photosMobile;
     }
 
     /**

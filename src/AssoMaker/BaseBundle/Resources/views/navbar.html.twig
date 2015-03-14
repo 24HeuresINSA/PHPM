@@ -32,12 +32,18 @@
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="">Animations <b
                                                 class="caret"></b></a>
                                     <ul class="dropdown-menu">
-                           {{ _self.navBarItem('Liste','anim_animation_index') }}
-                           {{ _self.navBarItem('Pass Sécurité','pass_pass_index') }}
+                            {{ _self.navBarItem('Liste','anim_animation_index') }}
+                            {% if is_granted("ROLE_CONCERT") %}
+                                {{ _self.navBarItem('Artistes','artiste_index') }}
+                            {% endif %}
+                            {{ _self.navBarItem('Pass Sécurité','pass_pass_index') }}
                                         </ul>
                                     </li>
                 {% else %}
                     {{ _self.navBarItem('Animations','anim_animation_index') }}
+                    {% if is_granted("ROLE_CONCERT") %}
+                        {{ _self.navBarItem('Artistes','artiste_index') }}
+                    {% endif %}
                 {% endif %}
             {% endif %}
 

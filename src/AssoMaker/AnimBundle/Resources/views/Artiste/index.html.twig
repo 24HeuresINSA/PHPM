@@ -1,0 +1,94 @@
+{% extends "AssoMakerBaseBundle::layout.html.twig"  %}
+{% set pageTitle = 'Liste des artistes' %}
+
+{% block content %}
+<script type="text/javascript">
+
+
+    function Ctrl($scope) {
+
+
+        
+        $scope.search = {'statut': ''};
+        $scope.artistes ={{ artistes |raw }}
+
+        $scope.countStatut = function(statut) {
+            var count = 0;
+            angular.forEach($scope.artistes, function(art) {
+                if (art.statut == statut) {
+                    count = count + 1;
+                }
+
+            });
+            return count;
+        }
+    }
+        
+    </script>
+
+    <div class="row-fluid" ng-app ng-controller="Ctrl">
+
+        <div class="span2">
+            <ul class="nav nav-list">
+                <li class="nav-header">Actions</li>
+                <li>
+                    <a href="{{ path('artiste_new') }}"><i class="fa fa-plus"></i> Nouvelle fiche artiste</a>
+                </li>
+
+                <li class="nav-header">Rechercher</li>
+			{%raw%}
+                    <li>
+                        <a><input type="text" class="input-medium search-query" ng-model="search.$"></a>
+                    </li>
+                    <li class="nav-header">Statut</li>
+                    <li ng-class="{active: search.statut==''}">
+                        <a ng-click="search.statut=''" >Toutes</a>
+                    </li>
+                    <li ng-class="{active: search.statut=='0'}">
+                        <a ng-click="search.statut='0'" ><i class="fa fa-pencil"></i> En rédaction</a>
+                    </li>
+                    <li ng-class="{active: search.statut=='2'}">
+                        <a ng-click="search.statut='1'" >
+                            <i class="fa fa-check"></i> Publiées
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="span10">
+                <div class="row-fluid" ng:repeat="a in artistes | filter:search">
+                    <div class="span12 well well-small">
+                        <div class="row-fluid">
+                            <div class="span5" ><a href="{{ a.id }}/edit" class="statut{{ a.statut }}">
+                            {{a.nom}}
+                                            <i class="fa fa-check" ng-show="a.statut"> </i>
+
+                                        </a>
+                                    </div>
+                                    <div class="span7">Dernier commentaire : {{ a.commentaires[a.commentaires.length-1].auteur }}:{{ a.commentaires[a.commentaires.length-1].texte}}</div>
+
+                                </div>
+                                <div class="row-fluid">
+                                </div>
+
+
+                                <div class="row-fluid">
+                                    <div class="row-fluid">
+                                        <div class="span12" >
+                                            <p>
+                                                <b>Description :</b>
+                                                {{ a.description }}
+                                            </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+   {% endraw %}
+
+
+                        </div>
+
+                    </div>
+
+{% endblock %}
