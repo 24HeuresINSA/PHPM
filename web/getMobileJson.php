@@ -14,7 +14,7 @@ if ($_GET['version'] && $_GET['version'] == intval($_GET['version']))
     }
     else
     {
-        echo 'nothing new';
+        header('HTTP/1.0 204 No Content');
     }
 }
 else

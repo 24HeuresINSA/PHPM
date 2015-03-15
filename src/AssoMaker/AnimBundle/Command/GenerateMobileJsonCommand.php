@@ -35,7 +35,7 @@ class GenerateMobileJsonCommand extends ContainerAwareCommand
             $animArray = array();
             $animArray['_id'] = $animation->getId();
             $animArray['name'] = $animation->getNom();
-            $animArray['descirption'] = $animation->getDescriptionMobile();
+            $animArray['description'] = $animation->getDescriptionMobile();
             $animArray['localisation'] = array($animation->getLocX(), $animation->getLocY());
             $animArray['main_picture_url'] = $animation->getPhotosMobile()[0] ? urlencode('http://' . $config->getValue('mobile_baseurl') . '/up/animPicturesMobile/' . $animation->getPhotosMobile()[0]->getNom()) : null;
             $animArray['pictures'] = array();
@@ -56,7 +56,7 @@ class GenerateMobileJsonCommand extends ContainerAwareCommand
             $catArray['_id'] = $categorie->getId();
             $catArray['name'] = $categorie->getIdentifiant();
             $catArray['display_name'] = $categorie->getNom();
-            $catArray['icone_name'] = $categorie->getIcone();
+            $catArray['icon_name'] = $categorie->getIcone();
             $categoriesArray[] = $catArray;
         }
         
