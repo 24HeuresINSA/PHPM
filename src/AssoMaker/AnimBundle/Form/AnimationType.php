@@ -94,9 +94,10 @@ class AnimationType extends AbstractType {
                     new Image(array(
                         'mimeTypes' => array('image/jpeg', 'image/png'),
                         'maxSize' => '1M')
-                    ))
-                )
-            );
+                    )
+                ),
+                'required' => false
+            ));
             $builder->add('commentaire', 'textarea', array('label' => 'Ajouter un commentaire', 'required' => false));
         }
     }
