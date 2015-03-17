@@ -76,6 +76,9 @@ class GenerateMobileJsonCommand extends ContainerAwareCommand
             }
             $artArray['schedule'] = $artiste->getHoraires();
             $artArray['stage'] = $artiste->getStage();
+            $artArray['site_url'] = $artiste->getWebsiteUrl();
+            $artArray['facebook_url'] = $artiste->getFacebookUrl();
+            $artArray['twitter_url'] = $artiste->getTwitterUrl();
             $artistesArray[] = $artArray;
         }
 

@@ -57,6 +57,30 @@ class Artiste {
     private $description;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Url()
+     */
+    private $facebookUrl;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Url()
+     */
+    private $twitterUrl;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Url()
+     */
+    private $websiteUrl;
+
+    /**
      * @ORM\Column(type="array")
      *
      */
@@ -101,6 +125,69 @@ class Artiste {
      */
     public function getNom() {
         return $this->nom;
+    }
+
+    /**
+     * Set facebookUrl
+     *
+     * @param string $facebookUrl
+     * @return Artiste
+     */
+    public function setFacebookUrl($facebookUrl) {
+        $this->facebookUrl = $facebookUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get facebookUrl
+     *
+     * @return string
+     */
+    public function getFacebookUrl() {
+        return $this->facebookUrl;
+    }
+
+    /**
+     * Set twitterUrl
+     *
+     * @param string $twitterUrl
+     * @return Artiste
+     */
+    public function setTwitterUrl($twitterUrl) {
+        $this->twitterUrl = $twitterUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get twitterUrl
+     *
+     * @return string
+     */
+    public function getTwitterUrl() {
+        return $this->twitterUrl;
+    }
+
+    /**
+     * Set websiteUrl
+     *
+     * @param string $websiteUrl
+     * @return Artiste
+     */
+    public function setWebsiteuRl($websiteUrl) {
+        $this->websiteUrl = $websiteUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get websiteUrl
+     *
+     * @return string
+     */
+    public function getWebsiteUrl() {
+        return $this->websiteUrl;
     }
 
     /**
