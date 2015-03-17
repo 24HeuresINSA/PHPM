@@ -298,7 +298,7 @@ class Animation {
 
     /**
      * @Assert\Image(
-     *     maxSize = 1M,
+     *     maxSize = "1M",
      *     mimeTypes = {"image/jpeg", "image/png"}
      * )
      */
