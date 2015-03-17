@@ -299,7 +299,7 @@ class Animation {
     /**
      * @Assert\Image(
      *     maxSize = 1M,
-     *     mimeTypes = {"image/jpeg"}
+     *     mimeTypes = {"image/jpeg", "image/png"}
      * )
      */
     protected $pubPicture;
