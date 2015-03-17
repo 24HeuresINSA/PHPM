@@ -93,7 +93,8 @@ class AnimationType extends AbstractType {
                 'constraints' => array(
                     new Image(array(
                         'mimeTypes' => array('image/jpeg', 'image/png'),
-                        'maxSize' => '1M')
+                        'maxSize' => '1M',
+                        'allowPortrait' => false)
                     )
                 ),
                 'required' => false
