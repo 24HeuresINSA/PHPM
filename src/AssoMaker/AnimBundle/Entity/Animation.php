@@ -311,6 +311,11 @@ class Animation {
     protected $pubPictureSet = false;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $pictureExtension;
+
+    /**
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
@@ -1356,7 +1361,8 @@ class Animation {
         }
 
 
-        $this->pubPicture->move(__DIR__ . '/../../../../web/up/animPictures', $this->getId() . '.jpg');
+        $this->pubPicture->move(__DIR__ . '/../../../../web/up/animPictures', $this->getId() . '.' . $this->pubPicture->getExtension());
+        $this->pictureExtension = $this->pubPicture->getExtension();
         $this->pubPicture = null;
         $this->setPubPictureSet(true);
     }
@@ -1390,6 +1396,27 @@ class Animation {
         $this->pubPicture = $pubPicture;
 
         return $this;
+    }
+
+    /**
+     * Set pictureExtension
+     *
+     * @param string $pictureExtension
+     * @return Animation
+     */
+    public function setPictureExtension($pictureExtension) {
+        $this->pictureExtension = $pictureExtension;
+
+        return $this;
+    }
+
+    /**
+     * Get pictureExtension
+     *
+     * @return string
+     */
+    public function getPictureExtension() {
+        return $this->pictureExtension;
     }
 
     /**
