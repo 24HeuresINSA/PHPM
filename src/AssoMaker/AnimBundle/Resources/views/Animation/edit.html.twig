@@ -171,6 +171,11 @@
 
 
                                 Animation {{ entity.nom }} - Infos Générales <a class="btn btn-small" href="{{ path("anim_animation_index") }}"><i class="fa fa-share"></i> Retour</a></legend>
+                                {% if not form.vars.valid %}
+                                <div class="alert alert-error">
+                                    <b>Attention !</b> Une ou plusieurs erreurs sont survenues lors de l'enregistrement. Merci de corriger les erreurs indiquées en rouge.
+                                </div>
+                                {% endif %}
                             <div class="row-fluid">
                                 <div class="span8">{{ form_row(form.entity.nom,{'attr':{'class':'input-block-level'}}) }}</div>
                                 <div class="span4">{{ form_row(form.entity.type,{'attr':{'class':'input-block-level'}}) }}</div>
