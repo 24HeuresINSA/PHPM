@@ -313,7 +313,7 @@ class Animation {
     protected $pubPictureSet = false;
 
     /**
-     * @ORM\Column(type="string", length=255, , nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $pictureExtension;
 
