@@ -107,5 +107,12 @@ class GenerateMobileJsonCommand extends ContainerAwareCommand
         {
             $output->writeln('No new data.');
         }
+
+        // Version de l'appli mobile
+        $version = array('android' => $config->getValue('mobile_version'));
+        $versionFile = fopen($this->getContainer()->get('kernel')->getRootDir() . '/../web/up/jsonMobile/version.json', 'w');
+        fwrite($versionFile, json_encode($version));
+        fclose($versionFile);
+        $output->writeln('Version file successfully updated.');
     }
 }

@@ -68,6 +68,14 @@ class BaseConfigFixture implements FixtureInterface {
                 ->persist(
                         new Config('phpm_anneetrombi', 'Annee du trombi PC', 2013, NULL));
 
+        // Mobile
+        $manager
+                ->persist(
+                        new Config('mobile_baseurl', 'URL mobile', '', NULL));
+        $manager
+                ->persist(
+                        new Config('mobile_version', 'Version courante de l\'appli mobile', '', NULL));
+
 
         $manager->flush();
 
