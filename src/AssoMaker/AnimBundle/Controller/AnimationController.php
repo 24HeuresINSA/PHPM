@@ -88,6 +88,7 @@ class AnimationController extends Controller {
             $animArray['gosses'] = $animation->getAnimGosses();
             $animArray['phare'] = $animation->getAnimPhare();
             $animArray['description'] = $animation->getDescription();
+            $animArray['pictureExtension'] = $animation->getPictureExtension();
 
 
             $animationsArray[$animation->getType()][] = $animArray;
