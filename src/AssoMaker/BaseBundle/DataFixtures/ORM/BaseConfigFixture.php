@@ -76,6 +76,10 @@ class BaseConfigFixture implements FixtureInterface {
                 ->persist(
                         new Config('mobile_version', 'Version courante de l\'appli mobile', '', NULL));
 
+        $manager
+                ->persist(
+                        new Config('mobile_publish_concert_schedule', 'Publier les horaires des concerts', '', NULL));
+
 
         $manager->flush();
 
