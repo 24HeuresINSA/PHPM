@@ -244,9 +244,7 @@
                                             {% for photo in entity.photosMobile %}
                                                 <li>
                                                     <img src='/up/animPicturesMobile/{{ photo.nom|url_encode }}' style='max-width: 150px; max-height: 150px'> 
-                                                    {% if (entity.statut == 0) or (is_granted('ROLE_HUMAIN') and (entity.statut >= 1)) %}
-                                                        <a href="{{ path('anim_animation_delete_photo_mobile', {'id': photo.id, 'token': csrf_token('anim_animation_delete_photo_mobile')}) }}"><i class="fa fa-remove"></i></a>
-                                                    {% endif %}
+                                                    <a href="{{ path('anim_animation_delete_photo_mobile', {'id': photo.id, 'token': csrf_token('anim_animation_delete_photo_mobile')}) }}"><i class="fa fa-remove"></i></a>
                                                 </li>
                                             {% else %}
                                                 <li><i>Aucune photo actuellement !</i>

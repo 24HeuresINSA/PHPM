@@ -66,14 +66,13 @@ class AnimationType extends AbstractType {
                     ->add('locX', 'hidden', array('disabled' => $this->disabled['h']))
                     ->add('locY', 'hidden', array('disabled' => $this->disabled['h']))
                     ->add('public', null, array('label' => 'Publier sur le site / plaquette', 'disabled' => $this->disabled['h']))
-                    ->add('mobile', null, array('label' => 'Publier sur l\'appli mobile', 'disabled' => $this->disabled['h']))
+                    ->add('mobile', null, array('label' => 'Publier sur l\'appli mobile'))
                     ->add('description', null, array('label' => 'Description de l\'animation', 'disabled' => $this->disabled['h']))
-                    ->add('descriptionMobile', null, array('label' => 'Description pour appli mobile', 'attr' => array('placeholder' => 'Description de quelques lignes.'), 'disabled' => $this->disabled['h']))
+                    ->add('descriptionMobile', null, array('label' => 'Description pour appli mobile', 'attr' => array('placeholder' => 'Description de quelques lignes.')))
                     ->add('categorieMobile', 'entity', array(
                         'label' => 'Catégorie mobile',
-                        'class' => 'AssoMakerAnimBundle:CategorieMobile',
-                        'disabled' => $this->disabled['h']))
-                  ->add('pubPicture', null, array('label' => 'Image à mettre sur le site', 'disabled' => $this->disabled['h']))
+                        'class' => 'AssoMakerAnimBundle:CategorieMobile'))
+                    ->add('pubPicture', null, array('label' => 'Image à mettre sur le site', 'disabled' => $this->disabled['h']))
                     ->add('animPhare', null, array('label' => 'Anim Phare', 'disabled' => $this->disabled['h']))
                     ->add('animGosses', null, array('label' => 'Anim pour les gosses', 'disabled' => $this->disabled['h']))
                     ->add('elec', null, array('label' => 'Besoin d\'éléctricité', 'disabled' => $this->disabled['l']))

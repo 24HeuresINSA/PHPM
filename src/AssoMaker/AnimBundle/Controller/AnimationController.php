@@ -315,11 +315,6 @@ class AnimationController extends Controller {
             throw $this->createNotFoundException('Unable to find PhotoAnimation entity.');
         }
 
-        if ((!$admin) && (!$humain) && ($entity->getAnimation()->getValidHumain() || ($entity->getAnimation()->getStatut() >= 1)))
-        {
-            throw new AccessDeniedException();
-        }
-
         $idAnim = $entity->getAnimation()->getId();
         unlink($this->get('kernel')->getRootDir() . '/../web/up/animPicturesMobile/' . $entity->getNom());
         $em->remove($entity);
