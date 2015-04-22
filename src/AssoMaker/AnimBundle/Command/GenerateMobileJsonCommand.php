@@ -42,6 +42,9 @@ class GenerateMobileJsonCommand extends ContainerAwareCommand
             foreach ($animation->getPhotosMobile() as $photo) {
                 $animArray['pictures'][] = urlencode('http://' . $config->getValue('mobile_baseurl') . '/up/animPicturesMobile/' . $photo->getNom());
             }
+            if (count($animArray['pictures']) >= 1)
+                unset($animArray['pictures'][0]); // Retrait de la main_picture
+            
             $animArray['schedule'] = $animation->getHoraires();
             $animArray['category'] = $animation->getCategorieMobile() ? $animation->getCategorieMobile()->getId() : null;
             $animationsArray[] = $animArray;
