@@ -68,7 +68,8 @@ class GenerateMobileJsonCommand extends ContainerAwareCommand
             $artArray = array();
             $artArray['_id'] = $artiste->getId();
             $artArray['name'] = $artiste->getNom();
-            $artArray['descirption'] = $artiste->getDescription();
+            $artArray['description'] = $artiste->getDescription();
+            $artArray['position'] = $artiste->getPosition();
             $artArray['main_picture_url'] = $artiste->getPhotos()[0] ? urlencode('http://' . $config->getValue('mobile_baseurl') . '/up/artistsPicturesMobile/' . $artiste->getPhotos()[0]->getNom()) : null;
             $artArray['pictures'] = array();
             foreach ($artiste->getPhotos() as $photo) {

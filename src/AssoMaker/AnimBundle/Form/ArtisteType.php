@@ -30,6 +30,7 @@ class ArtisteType extends AbstractType {
         if (!$this->create) {
             $a
                     ->add('description', null, array('label' => 'Description de l\'artiste', 'attr' => array('placeholder' => 'Description de quelques lignes.')))
+                    ->add('position', null, array('label' => 'Position (ordre d\'importance pour l\'appli mobile)', 'required' => false))
                     ->add('facebookUrl', null, array('label' => 'URL de la page Facebook (avec http://)', 'required' => false))
                     ->add('twitterUrl', null, array('label' => 'URL de la page Twitter (avec http://)', 'required' => false))
                     ->add('websiteUrl', null, array('label' => 'URL de la page web (avec http://)', 'required' => false))

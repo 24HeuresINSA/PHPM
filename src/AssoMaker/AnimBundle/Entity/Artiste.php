@@ -98,6 +98,11 @@ class Artiste {
     private $photos;
 
     /**
+     * @ORM\Column(name="position", type="integer")
+     */
+    private $position;
+
+    /**
      * Get id
      *
      * @return integer
@@ -251,6 +256,27 @@ class Artiste {
      */
     public function getDescription() {
         return $this->description;
+    }
+
+    /**
+     * Set position
+     *
+     * @param string $position
+     * @return Artiste
+     */
+    public function setPosition($position) {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer
+     */
+    public function getPosition() {
+        return $this->position;
     }
 
     /**
