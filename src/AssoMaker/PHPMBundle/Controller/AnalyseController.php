@@ -26,7 +26,7 @@ class AnalyseController extends Controller {
      * @Template()
      */
     public function analyseAction() {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HARD')) {
             throw new AccessDeniedException();
         }
 
@@ -42,7 +42,7 @@ class AnalyseController extends Controller {
      * @Template()
      */
     public function statsAction() {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HARD')) {
             throw new AccessDeniedException();
         }
         $em = $this->getDoctrine()->getEntityManager();
@@ -92,7 +92,7 @@ class AnalyseController extends Controller {
      * @Template()
      */
     public function usageMaterielAction() {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HARD')) {
             throw new AccessDeniedException();
         }
 
@@ -118,7 +118,7 @@ class AnalyseController extends Controller {
      * @Template()
      */
     public function logistiqueAction() {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HARD')) {
             throw new AccessDeniedException();
         }
 
@@ -162,7 +162,7 @@ class AnalyseController extends Controller {
      * @Template()
      */
     public function plagesOrgaAction($orgaid) {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HARD')) {
             throw new AccessDeniedException();
         }
 
@@ -198,7 +198,7 @@ class AnalyseController extends Controller {
      */
     public function besoinsOrgaAction($plageId, $showBonusOrgas) {
 
-        if (false === $this->get('security.context')->isGranted('ROLE_HUMAIN')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HARD')) {
             throw new AccessDeniedException();
         }
 
@@ -315,7 +315,7 @@ class AnalyseController extends Controller {
      * @Template()
      */
     public function tachesAction($groupeid) {
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+        if (false === $this->get('security.context')->isGranted('ROLE_HARD')) {
             throw new AccessDeniedException();
         }
 
