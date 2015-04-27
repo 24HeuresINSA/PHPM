@@ -54,7 +54,7 @@ security:
              - { path: ^/tache/.*, roles: ROLE_ORGA}
              - { path: ^/anim/.*, roles: ROLE_HARD}
              - { path: ^/sponso/.*, roles: ROLE_HARD}
-             - { path: ^/analyse/.*, roles: ROLE_ADMIN}
+             - { path: ^/analyse/.*, roles: ROLE_HARD}
              - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
              - { path: ^/pass/.*, roles: ROLE_HARD }
              - { path: ^/comptesPerso/virement, roles: ROLE_HARD }
