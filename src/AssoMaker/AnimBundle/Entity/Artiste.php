@@ -98,7 +98,7 @@ class Artiste {
     private $photos;
 
     /**
-     * @ORM\Column(name="position", type="integer")
+     * @ORM\Column(name="position", type="integer", nullable=true)
      */
     private $position;
 
