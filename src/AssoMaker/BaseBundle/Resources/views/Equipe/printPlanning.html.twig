@@ -1,7 +1,7 @@
 {% import "AssoMakerBaseBundle:Macros:entities.html.twig" as entitiesMacro %}
 
 {% block content %}
-<html>
+    <html>
     <head>
         <style>
             @page :first{
@@ -24,7 +24,7 @@
             @page  {
                 size: A4;
                 @top-center {
-                    content: "Liste des tâches d'orga pour les Mamans";
+                    content: "Planning {{ title }}";
                 }
                 @bottom-center  {
                     content: "Page " counter(page) " sur " counter(pages);
@@ -33,9 +33,10 @@
             }
             a{
                 color: #000000;
-                text-decoration: none;
             }
-            #toc ul li{
+            #toc ul li a{
+                color: #000000;
+                text-decoration: none;
                 list-style: square;
             }
             #toc ul a::after {
@@ -113,7 +114,7 @@
     </head>
     <body>
     <div style="margin-bottom:10px; page-break-after: always">
-        <div style="width:300pt; margin: 10px auto; text-align: center;"><h1>Planning des Mamans</h1>
+        <div style="width:300pt; margin: 10px auto; text-align: center;"><h1>Planning {{ title }}</h1>
             <img src="https://raw.githubusercontent.com/24HeuresINSA/logos-24heures/master/logo-24heures.png" style="float: left;margin-bottom: 1cm;height:50px">
 
             <div class="" style="clear: both">
@@ -126,16 +127,8 @@
         </div>
     </div>
     <div id="toc" style="page-break-after: always">
-        <h1>Liste des orgas</h1>
+        <h1>Sommaire</h1>
         <ul>
-            <li>
-                <a href="#planning" id="planning-toc">Plannings par Orga</a>
-                <ul>
-                {% for orga in orgas %}
-                <li><a href="#orga-{{ orga.id }}">{{ orga.nom }} {{ orga.prenom }} ({{ orga.telephone }}), {{ orga.equipe }}</a></li>
-                {% endfor %}
-                </ul>
-            </li>
             <li>
                 <a href="#taches" id="taches-toc">Taches par ID</a>
                 <ul>
@@ -146,57 +139,32 @@
             </li>
         </ul>
     </div>
-    <div id="planning">
-        <h1>Plannings</h1>
-            {% for orga in orgas %}
-            <div id="orga-{{ orga.id }}" class="orga">
-                <h2 style="clear: both">{{ orga.nom }} {{ orga.prenom }} ({{ orga.telephone }})</h2>
-                {% set counter = 1 %}
-                {% for d in orga.disponibilites %}
-                    {% for creneau in d.creneaux if creneau%}
-
-                        <div class="block">
-                            <div class="block-title">
-                                <div class="left">T&acirc;che <a href="#tache-{{ creneau.plageHoraire.tache.id }}">#{{ creneau.plageHoraire.tache.id }}</a>&nbsp;: {{ creneau.plageHoraire.tache.nom }},
-                                    {{ creneau.debut | format_datetime('EEEE') }} de {{ creneau.debut | format_datetime('HH:mm') }}&nbsp;à&nbsp;{%  if (creneau.debut | format_datetime('dd'))==(creneau.fin | format_datetime('dd')) %}{{ creneau.fin | format_datetime('HH:mm') }}
-                                    {% else %}
-                                        {{ creneau.fin | format_datetime('EEEE HH:mm') }}
-                                    {% endif %}<br></div>
-                                <div class="right">Où ? {{ creneau.plageHoraire.tache.lieu }}</div>
-                            </div>
-                        </div>
-                        {% set counter = counter + 1 %}
-                    {% endfor %}
-                {% endfor %}
-            </div>
-            {% endfor %}
-    </div>
-    <div id="taches">
+   <div id="taches">
         <h1>T&acirc;ches</h1>
-            {% for tache in taches %}
+        {% for tache in taches %}
             <div id="tache-{{ tache.id }}" class="tache">
                 <h2 style="clear: both">#{{ tache.id }} - {{ tache.nom }}</h2>
                 {% set counter = 1 %}
                 <ul>
                     <li><b>Lieu : </b>{{ tache.lieu }}</li>
                     <li><b>Responsable : </b><a href="#orga-{{ tache.responsable.id }}">{{ entitiesMacro.orga(tache.responsable) }}
-                        ({{ tache.responsable.telephone }})</a></li>
+                            ({{ tache.responsable.telephone }})</a></li>
                     <li><b>Consignes : </b><div>{{ tache.consignes | raw }}</div></li>
                     <li><b>Crenaux : </b>
                         <ul>
                             {% for creneau in tache.creneaux %}
-                            <li><a href="#orga-{{ creneau.oid }}">{{ creneau.nom }} {{ creneau.prenom }} ({{ creneau.telephone }})</a> - {{ creneau.debut | format_datetime('EEEE') }} de {{ creneau.debut | format_datetime('HH:mm') }}&nbsp;à&nbsp;{%  if (creneau.debut | format_datetime('dd'))==(creneau.fin | format_datetime('dd')) %}{{ creneau.fin | format_datetime('HH:mm') }}
-                                {% else %}
-                                    {{ creneau.fin | format_datetime('EEEE HH:mm') }}
-                                {% endif %}</li>
+                                <li><a href="#orga-{{ creneau.oid }}">{{ creneau.nom }} {{ creneau.prenom }} ({{ creneau.telephone }})</a> - {{ creneau.debut | format_datetime('EEEE') }} de {{ creneau.debut | format_datetime('HH:mm') }}&nbsp;à&nbsp;{%  if (creneau.debut | format_datetime('dd'))==(creneau.fin | format_datetime('dd')) %}{{ creneau.fin | format_datetime('HH:mm') }}
+                                    {% else %}
+                                        {{ creneau.fin | format_datetime('EEEE HH:mm') }}
+                                    {% endif %}</li>
                             {% endfor %}
                         </ul>
                     </li>
                 </ul>
             </div>
-            {% endfor %}
+        {% endfor %}
     </div>
     </body>
-</html>
+    </html>
 {% endblock %}
 
