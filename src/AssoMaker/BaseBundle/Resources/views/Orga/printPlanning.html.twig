@@ -156,9 +156,9 @@ float:right;
                     <div class="right">Où ? {{ creneau.plageHoraire.tache.lieu }}</div>
                 </div>
                 <div class="block-content">
-                    <span class="important"><b>Quand ?</b> {{ creneau.debut | format_datetime('EEEE') }} de {{ creneau.debut | format_datetime('HH:mm') }}&nbsp;à&nbsp;{%  if (creneau.debut | format_datetime('dd'))==(creneau.fin | format_datetime('dd')) %}{{ creneau.fin | format_datetime('HH:mm') }}
+                    <span class="important"><b>Quand ?</b> {{ creneau.debut | format_datetime('EEEE dd MMMM') }} de {{ creneau.debut | format_datetime('HH:mm') }}&nbsp;à&nbsp;{%  if (creneau.debut | format_datetime('dd'))==(creneau.fin | format_datetime('dd')) %}{{ creneau.fin | format_datetime('HH:mm') }}
                     {% else %}
-                        {{ creneau.fin | format_datetime('EEEE HH:mm') }}
+                        {{ creneau.fin | format_datetime('EEEE dd MMMM HH:mm') }}
                     {% endif %}<br>
                     <b>Responsable :</b> {{ entitiesMacro.orga(creneau.plageHoraire.tache.responsable) }}</span>
                     {{ creneau.plageHoraire.tache.responsable.telephone }}<br>
@@ -198,9 +198,9 @@ float:right;
                     <li><b>Créneaux : </b>
                         <ul>
                             {% for creneau in tache.creneaux %}
-                                <li>{{ creneau.nom }} {{ creneau.prenom }} ({{ creneau.telephone }}) - {{ creneau.debut | format_datetime('EEEE') }} de {{ creneau.debut | format_datetime('HH:mm') }}&nbsp;à&nbsp;{%  if (creneau.debut | format_datetime('dd'))==(creneau.fin | format_datetime('dd')) %}{{ creneau.fin | format_datetime('HH:mm') }}
+                                <li>{{ creneau.nom }} {{ creneau.prenom }} ({{ creneau.telephone }}) - {{ creneau.debut | format_datetime('EEEE dd MMMM') }} de {{ creneau.debut | format_datetime('HH:mm') }}&nbsp;à&nbsp;{%  if (creneau.debut | format_datetime('dd'))==(creneau.fin | format_datetime('dd')) %}{{ creneau.fin | format_datetime('HH:mm') }}
                                     {% else %}
-                                        {{ creneau.fin | format_datetime('EEEE HH:mm') }}
+                                        {{ creneau.fin | format_datetime('EEEE dd MMMM HH:mm') }}
                                     {% endif %}</li>
                             {% endfor %}
                         </ul>
