@@ -32,7 +32,7 @@ class MobileClientController extends Controller
             'message' => 'b'
         );
 
-        $chunks = array_chunk($devices);
+        $chunks = array_chunk($devices,950);
         
         $results = array();
         
