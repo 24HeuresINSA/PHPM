@@ -44,7 +44,7 @@ class MobileClientController extends Controller
 
     /**
      * @Route("/", name="mobileclient_add")
-     * @Method("post")
+     * @Method({"POST"})
      */
     public function newAction() {
         $request = $this->getRequest();
@@ -55,8 +55,8 @@ class MobileClientController extends Controller
         $entity->setGcm_regid($gcm_regid);
         $em->persist($entity);
         $em->flush();
-       
-       
+        
+        
         $response = new Response();
         $response->setContent(json_encode("ok"));
         $response->headers->set('Content-Type', 'application/json');
