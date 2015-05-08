@@ -38,7 +38,7 @@ class MobileClientController extends Controller
         
         foreach ( $chunks as $chunk ) {
             $d = array();
-            foreach ($devices as $key => $value) {
+            foreach ($chunk as $key => $value) {
                 $d[] = $value['gcm_regid'];
             }
             $results[] = $gcm->send($data, $d);
