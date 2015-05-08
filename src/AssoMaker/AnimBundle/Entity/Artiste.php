@@ -301,6 +301,22 @@ class Artiste {
     }
 
     /**
+     * Get days
+     *
+     *
+     */
+    public function getDays() {
+        $horaires = $this->horaires;
+        foreach ($horaires as $key => $value) {
+            $horaires[$key]['debut'] = null;
+            $horaires[$key]['fin'] = null;
+        }
+        return $horaires;
+    }
+
+
+
+    /**
      * Set commentaires
      *
      * @param array $commentaires
