@@ -85,6 +85,9 @@ doctrine:
                           datetime_functions:
                               timediff: AssoMaker\PHPMBundle\DQL\TimeDiff
 
+endroid_gcm:
+    api_key: %android.api.key%
+
 # Swiftmailer Configuration
 swiftmailer:
     transport: %mailer_transport%

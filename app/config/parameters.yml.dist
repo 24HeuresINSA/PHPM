@@ -18,3 +18,5 @@ parameters:
     
     oauth.google.id: ""
     oauth.google.secret: ""
+
+    android.api.key: ""

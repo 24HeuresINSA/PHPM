@@ -36,7 +36,8 @@
         "angular/angularUI": "0.4.0",
         "friendsofsymfony/user-bundle": "v1.3.5",
         "hwi/oauth-bundle": "0.4.*@dev",
-        "spraed/pdf-generator-bundle": "v1.2"
+        "spraed/pdf-generator-bundle": "v1.2",
+        "endroid/gcm-bundle": "dev-master"
     },
     "repositories": [
         {
