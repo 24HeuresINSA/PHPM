@@ -28,7 +28,8 @@ class MobileClientController extends Controller
          
         $gcm = $this->get('endroid.gcm');
         $data = array(
-            ''
+            'title' => 'a',
+            'message' => 'b'
         );
 
         $d = array();
