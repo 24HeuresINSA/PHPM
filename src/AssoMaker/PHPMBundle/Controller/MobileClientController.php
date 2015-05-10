@@ -32,13 +32,18 @@ class MobileClientController extends Controller
             'message' => 'b'
         );
 
-        $d = array();
-        foreach ($devices as $key => $value) {
-            $d[] = $value['gcm_regid'];
+        $chunks = array_chunk($devices,950);
+        
+        $results = array();
+        
+        foreach ( $chunks as $chunk ) {
+            $d = array();
+            foreach ($chunk as $key => $value) {
+                $d[] = $value['gcm_regid'];
+            }
+            $results[] = $gcm->send($data, $d);
         }
-
-        $result = $gcm->send($data, $d);
-        $response = new Response(json_encode($result));
+        $response = new Response(json_encode($results));
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
