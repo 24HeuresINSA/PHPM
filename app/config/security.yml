@@ -59,7 +59,7 @@ security:
              - { path: ^/analyse/.*, roles: ROLE_HARD}
              - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
              - { path: ^/pass/.*, roles: ROLE_HARD }
-             - { path: ^/comptesPerso/virement, roles: ROLE_HARD }
+             - { path: ^/comptesPerso/virement, roles: ROLE_ORGA }
              - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/.*json, roles: IS_AUTHENTICATED_ANONYMOUSLY }
              - { path: ^/oauth, roles: ROLE_USER }
