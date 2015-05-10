@@ -75,7 +75,7 @@ class GenerateMobileJsonCommand extends ContainerAwareCommand
             $artArray['main_picture_url'] = $artiste->getPhotos()[0] ? urlencode('http://' . $config->getValue('mobile_baseurl') . '/up/artistsPicturesMobile/' . $artiste->getPhotos()[0]->getNom()) : null;
             $artArray['pictures'] = array();
             foreach ($artiste->getPhotos() as $photo) {
-                $animArray['pictures'][] = urlencode('http://' . $config->getValue('mobile_baseurl') . '/up/artistsPicturesMobile/' . $photo->getNom());
+                $artArray['pictures'][] = urlencode('http://' . $config->getValue('mobile_baseurl') . '/up/artistsPicturesMobile/' . $photo->getNom());
             }
             $artArray['schedule'] = $config->getValue('mobile_publish_concert_schedule') == 1 ? $artiste->getHoraires() : $artiste->getDays();
             $artArray['stage'] = $artiste->getStage();
