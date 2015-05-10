@@ -43,6 +43,7 @@ class MobileClientController extends Controller
             }
             $results[] = $gcm->send($data, $d);
         }
+        $response = new Response(json_encode($results));
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
