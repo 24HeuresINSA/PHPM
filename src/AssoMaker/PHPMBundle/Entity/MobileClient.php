@@ -2,12 +2,14 @@
 
 namespace AssoMaker\PHPMBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * MobileClient
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @UniqueEntity("email")
  */
 class MobileClient
 {
@@ -23,7 +25,7 @@ class MobileClient
     /**
      * @var text $gcm_regid
      *
-     * @ORM\Column(name="gcm_regid", type="text", nullable=true)
+     * @ORM\Column(name="gcm_regid", type="text", nullable=true, unique=true)
      */
     protected $gcm_regid;
     
