@@ -487,6 +487,7 @@ WHERE t4_.id = ? ORDER BY debut";
      * Print orga planning.
      *
      * @Route("/{orgaid}/print",  name="orga_print")
+     * @Secure("ROLE_HARD")
      */
     public function printAction($orgaid) {
         $config = $this->get('config.extension');
