@@ -190,7 +190,7 @@
                 </div>
             {% endif %}
 
-            {% if is_granted('ROLE_HARD') %}
+            {% if is_granted('ROLE_ORGA') %}
                 {% if (planning[0] is defined) %}
                     <div class="row-fluid">
 
@@ -222,7 +222,7 @@
                                       href="{{ path('orga_inputdispos',{'id':app.user.id }) }}"><i
                                                 class="icon-calendar"></i> Renseigner mes disponibilités »</a></p>
                             {% endif %}
-                            {% if (planning[0] is defined) and is_granted('ROLE_HARD') %}
+                            {% if (planning[0] is defined) and is_granted('ROLE_ORGA') %}
                                 <p>
                                     <a class="btn btn-large btn-block"
                                        href="{{ path('orga_print', {'orgaid':app.user.id }) }}"><i class="icon-print"></i>
